@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Stuff like containers, buttons, cards, etc. */
+@layer components {
+  .btn {
+    @apply inline-block border-0 bg-transparent cursor-pointer animation-fade;
+  }
+
+  .btn-primary {
+    @apply bg-primary-color-P1 text-primary-color-P12;
+  }
+
+  .btn-primary:hover {
+    @apply bg-primary-color-P4 text-primary-color-P12;
+  }
+
+  .btn-primary:active {
+    @apply bg-primary-color-P6 text-primary-color-P12;
+  }
+
+  .btn-tertiary {
+    @apply bg-primary-color-P12 text-primary-color-P1;
+  }
+}
+
+/* Utility classes for specific styles, sizes, and animations */
+@layer utilities {
+  .container-page {
+    @apply max-w-[900px] mx-auto md:px-4 px-10;
+  }
+
+  .animation-fade {
+    @apply transition-all duration-250 ease-out;
+  }
+
+  .LT-SB-1 {
+    @apply text-[28px] font-[600];
+  }
+
+  .LT-SB-2 {
+    @apply text-[32px] font-[600];
+  }
+
+  .MT-SB-3 {
+    @apply text-[24px] font-[600];
+  }
+
+  .MT-SB-2 {
+    @apply text-[20px] font-[600];
+  }
+
+  .MT-SB-1 {
+    @apply text-[16px] font-[600];
+  }
+
+  .MT-1 {
+    @apply text-[16px] font-[500];
+  }
+
+  .ST-SB-4 {
+    @apply text-[14.4px] font-[600];
+  }
+
+  .ST-SB-3 {
+    @apply text-[13px] font-[600];
+  }
+
+  .ST-SB-2 {
+    @apply text-[11.2px] font-[600];
+  }
+
+  .ST-SB-1 {
+    @apply text-[9.6px] font-[600];
+  }
+
+  .ST-4 {
+    @apply text-[14.4px] font-[500];
+  }
+
+  .ST-3 {
+    @apply text-[13px] font-[500];
+  }
+
+  .ST-2 {
+    @apply text-[11.2px] font-[500];
+  }
+
+  .ST-1 {
+    @apply text-[9.6px] font-[500];
+  }
+}
+
+/* Countries Carousel */
+.averagePricesLanguaguesCarousel .swiper-wrapper {
+  padding: 0 2rem !important;
+}
+
+/* .subjects-carousel .swiper-wrapper {
+  padding: 1rem 0 !important;
+} */
+
+@media (min-width: 340px) {
+  .averagePricesLanguaguesCarousel .swiper-wrapper {
+    padding: 0 0 !important;
+  }
+}
