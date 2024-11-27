@@ -78,11 +78,11 @@ const AveragePricesLanguaguesCarousel = () => {
         })}
       </Swiper>
 
-      <div className="countries-carousel-swiper-button-prev absolute transform -translate-y-1/2 top-1/2 left-4 z-50 cursor-pointer w-[25px] h-[25px] object-contain animation-fade transition-all duration-300 ease-in rounded-md p-2 hover:bg-[#C0BDB9]">
+      <div className="countries-carousel-swiper-button-prev absolute transform -translate-y-1/2 top-1/2 left-4 z-50 cursor-pointer w-[25px] h-[25px] object-contain animation-fade rounded-md p-2 hover:bg-[#C0BDB9]">
         <Image className="w-3.5" alt="Chevron Left" src={chevronLeft} />
       </div>
 
-      <div className="countries-carousel-swiper-button-next absolute transform -translate-y-1/2 top-1/2 right-4 z-50 cursor-pointer w-[25px] h-[25px] object-contain animation-fade transition-all duration-300 ease-in rounded-md p-2 hover:bg-[#C0BDB9]">
+      <div className="countries-carousel-swiper-button-next absolute transform -translate-y-1/2 top-1/2 right-4 z-50 cursor-pointer w-[25px] h-[25px] object-contain animation-fade rounded-md p-2 hover:bg-[#C0BDB9]">
         <Image className="w-3.5" alt="Chevron Right" src={chevronRight} />
       </div>
     </section>
