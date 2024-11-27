@@ -5,7 +5,7 @@
 /* Stuff like containers, buttons, cards, etc. */
 @layer components {
   .btn {
-    @apply inline-block border-0 bg-transparent cursor-pointer animation-fade;
+    @apply inline-block border-0 bg-transparent cursor-pointer animation-fade text-center;
   }
 
   .btn-primary {
@@ -20,6 +20,18 @@
     @apply bg-primary-color-P6 text-primary-color-P12;
   }
 
+  .btn-secondary {
+    @apply bg-secondary-color-SC5 text-primary-color-P12;
+  }
+
+  .btn-secondary:hover {
+    @apply bg-secondary-color-SC6 text-primary-color-P12;
+  }
+
+  .btn-secondary:active {
+    @apply bg-secondary-color-SC7 text-primary-color-P12;
+  }
+  
   .btn-tertiary {
     @apply bg-primary-color-P12 text-primary-color-P1;
   }
@@ -97,9 +109,9 @@
   padding: 0 2rem !important;
 }
 
-/* .subjects-carousel .swiper-wrapper {
+.subjects-carousel .swiper-wrapper {
   padding: 1rem 0 !important;
-} */
+} 
 
 @media (min-width: 340px) {
   .averagePricesLanguaguesCarousel .swiper-wrapper {
