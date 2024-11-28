@@ -3,6 +3,7 @@ import BrowseSubjectsAndTutors from "../components/Home/BrowseSubjectsAndTutors"
 import EasyStepsGetStarted from "../components/Home/EasyStepsGetStarted";
 import MeetOurServices from "../components/Home/MeetOurServices";
 import VariousInterestingSubject from "../components/Home/VariousInterestingSubject";
+import LessonsSupport from "../components/Home/LessonsSupport";
 
 const page = () => {
   return (
@@ -21,6 +22,9 @@ const page = () => {
 
       {/* Various Interesting Subject */}
       <VariousInterestingSubject />
+
+      {/* Discover how online lessons can suport you */}
+      <LessonsSupport />
     </main>
   );
 };
