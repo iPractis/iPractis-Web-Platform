@@ -4,6 +4,7 @@ import EasyStepsGetStarted from "../components/Home/EasyStepsGetStarted";
 import MeetOurServices from "../components/Home/MeetOurServices";
 import VariousInterestingSubject from "../components/Home/VariousInterestingSubject";
 import LessonsSupport from "../components/Home/LessonsSupport";
+import SafeLearning from "../components/Home/SafeLearning";
 
 const page = () => {
   return (
@@ -25,6 +26,9 @@ const page = () => {
 
       {/* Discover how online lessons can suport you */}
       <LessonsSupport />
+
+      {/* Safe learning environment */}
+      <SafeLearning />
     </main>
   );
 };
