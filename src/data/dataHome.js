@@ -77,82 +77,66 @@ export const averagePricesLanguagues = [
 export const subjects = [
   {
     name: "English",
-    selected: true,
   },
 
   {
     name: "French",
-    selected: false,
   },
 
   {
     name: "Italian",
-    selected: false,
   },
 
   {
     name: "Spanish",
-    selected: false,
   },
 
   {
     name: "Chinese",
-    selected: false,
   },
 
   {
     name: "Mathematic",
-    selected: false,
   },
 
   {
     name: "Physics",
-    selected: false,
   },
 
   {
     name: "Science",
-    selected: false,
   },
 
   {
     name: "English",
-    selected: false,
   },
 
   {
     name: "French",
-    selected: false,
   },
 
   {
     name: "Italian",
-    selected: false,
   },
 
   {
     name: "Spanish",
-    selected: false,
   },
 
   {
     name: "Chinese",
-    selected: false,
   },
 
   {
     name: "Mathematic",
-    selected: false,
   },
 
   {
     name: "Physics",
-    selected: false,
   },
 
   {
     name: "Science",
-    selected: false,
   },
 ];
 

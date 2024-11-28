@@ -10,6 +10,7 @@ import "swiper/css/navigation";
 import { averagePricesLanguagues } from "@/src/data/dataHome";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import CarouselArrow from "../../Globals/CarouselArrow";
 
 // Images && Icons
 import chevronRight from "@/public/icons/chevron-right.png";
@@ -35,7 +36,7 @@ const AveragePricesLanguaguesCarousel = () => {
               slidesPerView: 1,
               spaceBetween: 20,
             },
-            
+
             // when window width is >= 550px
             550: {
               slidesPerView: 2,
@@ -51,7 +52,7 @@ const AveragePricesLanguaguesCarousel = () => {
             // when window width is >= 1140px
             1140: {
               slidesPerView: 4,
-              spaceBetween: 32,
+              spaceBetween: 16,
             },
           }}
           modules={[Navigation, Pagination]}
@@ -83,13 +84,17 @@ const AveragePricesLanguaguesCarousel = () => {
         </Swiper>
       </div>
 
-      <div className="countries-carousel-swiper-button-prev flex items-center absolute transform -translate-y-1/2 top-1/2 left-4 z-50 cursor-pointer w-[25px] h-[25px] animation-fade rounded-md p-2 hover:bg-secondary-color-S6">
-        <Image className="w-6" alt="Chevron Left" src={chevronLeft} />
-      </div>
+      <CarouselArrow
+        carouselSwiperButtonName={"countries-carousel-swiper-button-prev"}
+        srcArrow={chevronLeft}
+        arrowPosition={"left"}
+      />
 
-      <div className="countries-carousel-swiper-button-next flex items-center absolute transform -translate-y-1/2 top-1/2 right-4 z-50 cursor-pointer w-[25px] h-[25px] animation-fade rounded-md p-2 hover:bg-secondary-color-S6">
-        <Image className="w-6" alt="Chevron Right" src={chevronRight} />
-      </div>
+      <CarouselArrow
+        carouselSwiperButtonName={"countries-carousel-swiper-button-next"}
+        srcArrow={chevronRight}
+        arrowPosition={"right"}
+      />
     </section>
   );
 };

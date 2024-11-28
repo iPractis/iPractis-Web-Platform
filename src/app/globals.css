@@ -123,8 +123,3 @@
     @apply text-[9.6px] font-[500];
   }
 }
-
-/* Countries Carousel */
-.subjects-carousel .swiper-wrapper {
-  padding: 1rem 0 !important;
-} 
