@@ -5,6 +5,7 @@ import MeetOurServices from "../components/Home/MeetOurServices";
 import VariousInterestingSubject from "../components/Home/VariousInterestingSubject";
 import LessonsSupport from "../components/Home/LessonsSupport";
 import SafeLearning from "../components/Home/SafeLearning";
+import PlatformExperience from "../components/Home/PlatformExperience";
 
 const page = () => {
   return (
@@ -29,6 +30,9 @@ const page = () => {
 
       {/* Safe learning environment */}
       <SafeLearning />
+
+      {/* Cross platform experience */}
+      <PlatformExperience />
     </main>
   );
 };
