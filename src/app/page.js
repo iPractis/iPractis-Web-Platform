@@ -1,6 +1,7 @@
 import Hero from "@/src/components/Home/Hero";
 import BrowseSubjectsAndTutors from "../components/Home/BrowseSubjectsAndTutors";
 import EasyStepsGetStarted from "../components/Home/EasyStepsGetStarted";
+import MeetOurServices from "../components/Home/MeetOurServices";
 
 const page = () => {
   return (
@@ -13,6 +14,9 @@ const page = () => {
 
       {/* Only few easy steps to get started */}
       <EasyStepsGetStarted />
+
+      {/* Meet Our Services */}
+      <MeetOurServices />
     </main>
   );
 };

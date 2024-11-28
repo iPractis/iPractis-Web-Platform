@@ -1,13 +1,9 @@
+import { easyStepsGetStarted } from "@/src/data/dataHome";
 import SectionHeader from "../../Globals/SectionHeader";
 
 // Icons && images
-import userScreen from "@/public/icons/user-screen.png";
-import threeUsers from "@/public/icons/3-users.png";
-import calendar from "@/public/icons/calendar.png";
 import walking from "@/public/icons/walking.png";
-import card from "@/public/icons/card.png";
 import Image from "next/image";
-import { easyStepsGetStarted } from "@/src/data/dataHome";
 
 const EasyStepsGetStarted = () => {
   return (
