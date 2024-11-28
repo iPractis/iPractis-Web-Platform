@@ -44,6 +44,17 @@
     @apply bg-secondary-color-S8 text-primary-color-P1;
   }
   
+  .btn-quaternary {
+    @apply bg-transparent text-current;
+  }
+
+  .btn-quaternary:hover {
+    @apply bg-primary-color-P12 text-current;
+  }
+
+  .btn-quaternary:active {
+    @apply bg-secondary-color-S6 text-primary-color-P1;
+  }
 }
 
 /* Utility classes for specific styles, sizes, and animations */
@@ -114,16 +125,6 @@
 }
 
 /* Countries Carousel */
-.averagePricesLanguaguesCarousel .swiper-wrapper {
-  padding: 0 2rem !important;
-}
-
 .subjects-carousel .swiper-wrapper {
   padding: 1rem 0 !important;
 } 
-
-@media (min-width: 340px) {
-  .averagePricesLanguaguesCarousel .swiper-wrapper {
-    padding: 0 0 !important;
-  }
-}
