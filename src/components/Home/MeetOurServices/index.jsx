@@ -18,9 +18,8 @@ const MeetOurServices = () => {
           titleText="Meet our services"
           descriptionText="Start learning today"
         />
-
-        <article className="grid flex-col-reverse md:grid-cols-3 grid-cols-2 sm:gap-4 gap-[30px] mt-[30px]">
-          <div className="md:order-first order-last md:col-span-1 col-span-full">
+        <article className="flex flex-col-reverse md:flex-row sm:gap-4 gap-[30px] mt-[30px]">
+          <div className="flex-1">
             <div className="flex flex-col h-full sm:gap-4 gap-[30px] justify-between">
               <div className="bg-primary-color-P12 flex-1 text-center rounded-[20px] py-8 px-4">
                 <Image
@@ -57,7 +56,7 @@ const MeetOurServices = () => {
             </div>
           </div>
 
-          <div className="md:order-last order-first col-span-2">
+          <div className="flex-[20%]">
             <Image
               alt="Woman Working"
               className="w-full h-full object-cover rounded-[20px]"
