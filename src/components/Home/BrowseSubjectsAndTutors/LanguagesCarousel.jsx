@@ -51,6 +51,7 @@ const LanguagesCarousel = () => {
           return (
             <SwiperSlide key={index} className="flex place-content-center">
               <button
+                type="button"
                 className={`${
                   subject?.selected
                     ? "bg-[#1C1C1E] hover:bg-[#48484A] focus:bg-[#8E8E93] text-primary-color-P12 rounded-lg w-fit mx-auto px-3.5"

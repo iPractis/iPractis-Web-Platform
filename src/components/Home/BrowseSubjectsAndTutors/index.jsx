@@ -99,7 +99,10 @@ const BrowseSubjectsAndTutors = () => {
 
                   {/* Buttons that appear on hover */}
                   <div className="sm:hidden sm:group-hover:flex gap-4 transition-all duration-300 ease-in-out">
-                    <button className="btn btn-primary px-4 py-2 rounded-lg sm:w-auto w-[155px] ST-SB-4">
+                    <button
+                      className="btn btn-primary px-4 py-2 rounded-lg sm:w-auto w-[155px] ST-SB-4"
+                      type="button"
+                    >
                       Book a trial
                     </button>
                   </div>
