@@ -40,7 +40,7 @@ const LanguagesCarousel = () => {
           },
           // when window width is >= 950px
           950: {
-            slidesPerView: 8,
+            slidesPerView: 6,
             spaceBetween: 0,
           },
         }}
@@ -54,9 +54,9 @@ const LanguagesCarousel = () => {
                 type="button"
                 className={`${
                   subject?.selected
-                    ? "bg-[#1C1C1E] hover:bg-[#48484A] focus:bg-[#8E8E93] text-primary-color-P12 rounded-lg w-fit mx-auto px-3.5"
-                    : "w-full px-3.5"
-                } ST-SB-3 cursor-pointer py-2 text-center block transition-all duration-300`}
+                    ? "btn-primary"
+                    : "btn-tertiary"
+                } w-[118px] ST-SB-3 mx-auto px-4 py-1.5 text-center block animation-fade rounded-lg`}
               >
                 {subject?.name}
               </button>

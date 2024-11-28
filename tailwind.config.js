@@ -11,6 +11,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // P1 to P12 (Primary)
         "primary-color": {
           P1: "#1C1C1E",
           P2: "#2C2C2E",
@@ -26,7 +27,24 @@ module.exports = {
           P12: "#FFFFFF",
         },
 
+        // S1 to S12 (Secondary)
         "secondary-color": {
+          S1: "#27261F",
+          S2: "#615E59",
+          S3: "#7B7771",
+          S4: "#918E89",
+          S5: "#B5B2AD",
+          S6: "#C0BDB9",
+          S7: "#CECCC7",
+          S8: "#DFDDD9",
+          S9: "#EAE9E6",
+          S10: "#F1F0ED",
+          S11: "#F8F7F5",
+          S12: "#FBFAF8",
+        },
+
+        // SC1 to SC12 (Select && Commercial)
+        "tertiary-color": {
           SC1: "#082082",
           SC2: "#0A2594",
           SC3: "#1031B8",
@@ -41,7 +59,24 @@ module.exports = {
           SC12: "#F8F9FD",
         },
 
-        "tertiary-color": {
+        // A1 to A12 (Attention)
+        "quaternary-color": {
+          A1: "#705E00",
+          A2: "#856F00",
+          A3: "#AD9200",
+          A4: "#D6B400",
+          A5: "#FFD600",
+          A6: "#FFDD29",
+          A7: "#FFE352",
+          A8: "#FFEA7A",
+          A9: "#FFED8F",
+          A10: "#FFF0A3",
+          A11: "#F0F3FF",
+          A12: "#F8F9FD",
+        },
+
+        // VS1 to SU15 (Valid && Success)
+        "quinary-color": {
           VS1: "#00701F",
           VS2: "#008525",
           VS3: "#00AD30",

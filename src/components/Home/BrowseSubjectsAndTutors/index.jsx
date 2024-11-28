@@ -44,7 +44,7 @@ const BrowseSubjectsAndTutors = () => {
                       className="w-[46px] rounded-[10px]"
                       src={subjectAndTutor?.tutorImagePreview}
                     />
-                    <div className="absolute right-1 bottom-1 rounded-full w-2 h-2 bg-tertiary-color-VS5"></div>
+                    <div className="absolute right-1 bottom-1 rounded-full w-2 h-2 bg-quinary-color-VS5"></div>
                   </div>
 
                   <div>
@@ -75,7 +75,7 @@ const BrowseSubjectsAndTutors = () => {
 
                     <li className="ST-SB-2 text-primary-color-P1">French</li>
 
-                    <li className="ST-1 py-[2px] px-1.5 rounded-md bg-tertiary-color-VS10 text-primary-color-P1">
+                    <li className="ST-1 py-[2px] px-1.5 rounded-md bg-quinary-color-VS10 text-primary-color-P1">
                       Fluent C2
                     </li>
                   </ul>

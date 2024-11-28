@@ -21,20 +21,29 @@
   }
 
   .btn-secondary {
-    @apply bg-secondary-color-SC5 text-primary-color-P12;
+    @apply bg-tertiary-color-SC5 text-primary-color-P12;
   }
 
   .btn-secondary:hover {
-    @apply bg-secondary-color-SC6 text-primary-color-P12;
+    @apply bg-tertiary-color-SC6 text-primary-color-P12;
   }
 
   .btn-secondary:active {
-    @apply bg-secondary-color-SC7 text-primary-color-P12;
+    @apply bg-tertiary-color-SC7 text-primary-color-P12;
   }
   
   .btn-tertiary {
     @apply bg-primary-color-P12 text-primary-color-P1;
   }
+
+  .btn-tertiary:hover {
+    @apply bg-secondary-color-S10 text-primary-color-P1;
+  }
+
+  .btn-tertiary:active {
+    @apply bg-secondary-color-S8 text-primary-color-P1;
+  }
+  
 }
 
 /* Utility classes for specific styles, sizes, and animations */
