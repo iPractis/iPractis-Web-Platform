@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export const OneFooterColumn = ({ column }) => {
-  console.log(column?.columns?.[1]?.icons?.length);
   return (
     <div>
       <div>
@@ -18,7 +17,7 @@ export const OneFooterColumn = ({ column }) => {
           ))}
 
           {column?.columns?.[1]?.icons?.length && (
-            <div className="flex items-center gap-2.5">
+            <div className="flex min-[430px]:justify-start justify-center items-center gap-2.5">
               {column?.columns?.[1]?.icons?.map((icon, index) => (
                 <Link href={"#"} className="mt-[31px]">
                   <Image
