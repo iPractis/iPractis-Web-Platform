@@ -29,7 +29,7 @@ const NavDesktop = () => {
       <div>
         <Link href="/">
           <Image
-            className="w-[148px]"
+            className="w-[148px] p-1.5"
             alt="Logo iPractis"
             rel="preload"
             as="image"
