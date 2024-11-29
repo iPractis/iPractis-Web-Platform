@@ -20,8 +20,8 @@ const LanguagesCarousel = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   return (
-    <div className="relative rounded-xl bg-white px-4 py-1.5 my-[30px]">
-      <div className="relative px-11">
+    <div className="relative rounded-xl bg-white min-[430px]:px-4 px-3 py-1.5 my-[30px]">
+      <div className="relative min-[430px]:px-11 px-6">
         <Swiper
           loop={true}
           pagination={{
@@ -32,17 +32,14 @@ const LanguagesCarousel = () => {
             prevEl: ".subjects-carousel-swiper-button-prev",
           }}
           breakpoints={{
-            // when window width is >= 340px
             340: {
-              slidesPerView: 3,
-              spaceBetween: 0,
+              slidesPerView: 2,
+              spaceBetween: 8,
             },
-            // when window width is >= 720px
             720: {
               slidesPerView: 4,
               spaceBetween: 10,
             },
-            // when window width is >= 950px
             950: {
               slidesPerView: 6,
               spaceBetween: 16,
@@ -53,15 +50,18 @@ const LanguagesCarousel = () => {
         >
           {subjects?.map((subject, index) => {
             return (
-              <SwiperSlide className="w-[118px]" key={index}>
+              <SwiperSlide
+                className="md:w-[118px] w-[108px] animation-fade"
+                key={index}
+              >
                 <button
-                  type="button"
                   className={`${
                     selectedLanguage === subject?.name
                       ? "btn-primary"
                       : "btn-tertiary"
                   } w-full ST-SB-3 mx-auto px-4 py-1.5 text-center block animation-fade rounded-lg`}
                   onClick={() => setSelectedLanguage(subject?.name)}
+                  type="button"
                 >
                   {subject?.name}
                 </button>
