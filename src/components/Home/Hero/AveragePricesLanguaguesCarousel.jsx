@@ -61,18 +61,18 @@ const AveragePricesLanguaguesCarousel = () => {
           {averagePricesLanguagues?.map((country, index) => {
             return (
               <SwiperSlide className="w-[149px]" key={index}>
-                <div className="flex animation-fade mx-auto w-fit cursor-pointer p-1.5 rounded-[10px] btn-quaternary group leading-4 items-center">
-                  <div className="me-1.5">
+                <div className="flex animation-fade mx-auto w-fit cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-4 items-center">
+                  <div className="me-3">
                     <Image
                       alt={"Country Image"}
                       src={country?.image}
-                      className="w-12"
+                      className="w-[51px]"
                     />
                   </div>
 
                   <div>
                     <h3 className="ST-SB-2">{country?.title}</h3>
-                    <p className="text-primary-color-P6 group-active:text-primary-color-P1">
+                    <p className="text-primary-color-P6 group-active:text-primary-color-P12">
                       <span className="ST-SB-2">{country?.price}</span>{" "}
                       <span className="ST-1">{country?.time}</span>
                     </p>

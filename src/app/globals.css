@@ -53,7 +53,7 @@
   }
 
   .btn-quaternary:active {
-    @apply bg-secondary-color-S6 text-primary-color-P1;
+    @apply bg-tertiary-color-SC5 text-primary-color-P12;
   }
 }
 
