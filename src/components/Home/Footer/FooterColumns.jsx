@@ -19,7 +19,7 @@ export const OneFooterColumn = ({ column }) => {
           {column?.columns?.[1]?.icons?.length && (
             <div className="flex xs:justify-start justify-center items-center gap-2.5">
               {column?.columns?.[1]?.icons?.map((icon, index) => (
-                <Link href={"#"} className="mt-[31px]">
+                <Link key={index} href={"#"} className="mt-[31px]">
                   <Image
                     className={icon?.size || "w-[30px]"}
                     alt={icon?.alt || "Social Media Icon"}
