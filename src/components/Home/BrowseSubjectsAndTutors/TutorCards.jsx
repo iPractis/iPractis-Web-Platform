@@ -33,7 +33,7 @@ const TutorCards = () => {
               {playingVideo ? (
                 <iframe
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  className="w-full h-[180px] rounded-t-2xl"
+                  className="w-full h-[190px] rounded-t-2xl"
                   src={subjectAndTutor?.videoSrc}
                   title="Tutor Video"
                   allowFullScreen
@@ -44,14 +44,17 @@ const TutorCards = () => {
                   onClick={() => setPlayingVideo(true)}
                   className="cursor-pointer"
                 >
-                  <Image
-                    alt={"Tutor Video Image"}
-                    className="w-full h-[180px] rounded-t-2xl"
-                    src={thumbnailError ? videoThumbnail404 : videoThumbnail}
-                    onError={handleImageError}
-                    height={180}
-                    width={500}
-                  />
+                  <div className="relative w-full h-[190px]">
+                    <Image
+                      src={thumbnailError ? videoThumbnail404 : videoThumbnail}
+                      sizes="(max-width: 640px) 100vw, 100%"
+                      style={{ objectFit: "cover" }}
+                      onError={handleImageError}
+                      className="rounded-t-2xl"
+                      alt="Tutor Video Image"
+                      fill
+                    />
+                  </div>
 
                   <div className="absolute cursor-pointer left-4 bottom-4 flex items-center justify-center text-white">
                     <Image
