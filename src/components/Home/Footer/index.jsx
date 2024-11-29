@@ -12,7 +12,7 @@ const Footer = () => {
     <footer>
       <div className="bg-primary-color-P2">
         <div className="container-page md:py-[60px] py-10">
-          <article className="grid min-[430px]:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch min-[430px]:text-start text-center gap-[30px]">
+          <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px]">
             <TwoFooterColumn
               columnOne={{
                 title: "About iPractis",
@@ -83,7 +83,7 @@ const Footer = () => {
             />
           </article>
 
-          <article className="grid min-[430px]:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch min-[430px]:text-start text-center gap-[30px] min-[430px]:mt-[100px] mt-[31px]">
+          <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px] xs:mt-[100px] mt-[31px]">
             <OneFooterColumn
               column={{
                 title: "Linguistic subjects",

@@ -12,7 +12,7 @@ const SmallFooter = () => {
             </p>
           </div>
 
-          <div className="flex flex-col min-[430px]:flex-row items-center text-primary-color-P12 min-[430px]:gap-10 gap-4 ST-2">
+          <div className="flex flex-col xs:flex-row items-center text-primary-color-P12 xs:gap-10 gap-4 ST-2">
             <Link href={"#"}>About us</Link>
             <Link href={"#"}>Careers</Link>
             <Link href={"#"}>Contact us</Link>

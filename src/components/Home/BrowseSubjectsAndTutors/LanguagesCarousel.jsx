@@ -20,8 +20,8 @@ const LanguagesCarousel = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   return (
-    <div className="relative rounded-xl bg-white min-[430px]:px-4 px-3 py-1.5 my-[30px]">
-      <div className="relative min-[430px]:px-11 px-6">
+    <div className="relative rounded-xl bg-white xs:px-4 px-3 py-1.5 my-[30px]">
+      <div className="relative xs:px-11 px-6">
         <Swiper
           loop={true}
           pagination={{

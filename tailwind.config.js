@@ -123,6 +123,10 @@ module.exports = {
           A15: "#FFCCCF",
         },
       },
+
+      screens: {
+        xs: "430px",
+      },
     },
   },
   darkMode: "class",
