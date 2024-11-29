@@ -148,6 +148,7 @@ export const subjectsAndTutors = [
     tutorFlag: unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
+    videoSrc: "https://www.youtube.com/embed/NCtzkaL2t_Y?si=PmnDqW2Y6oKvkJ3L",
   },
 
   {
@@ -157,6 +158,7 @@ export const subjectsAndTutors = [
     tutorFlag: unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
+    videoSrc: "https://www.youtube.com/embed/A_MjCqQoLLA?si=zffSiFsL7n2tV6vc",
   },
 
   {
@@ -166,6 +168,7 @@ export const subjectsAndTutors = [
     tutorFlag: unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
+    videoSrc: "https://www.youtube.com/embed/CGj85pVzRJs?si=IT7cp45C3LXmoTgL",
   },
 
   {
@@ -175,6 +178,7 @@ export const subjectsAndTutors = [
     tutorFlag: unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
+    videoSrc: "https://www.youtube.com/embed/2RicaUqd9Hg?si=hAQ-TEynRpyKSdPt",
   },
 
   {
@@ -184,6 +188,7 @@ export const subjectsAndTutors = [
     tutorFlag: unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
+    videoSrc: "https://www.youtube.com/embed/VOgFZfRVaww?si=qThhJhk_G_4GzOY3",
   },
 ];
 
