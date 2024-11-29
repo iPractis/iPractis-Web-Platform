@@ -252,3 +252,8 @@ export const variousInterestingSubjects = [
       "Learn career-focused skills like coding, business, and digital marketing.",
   },
 ];
+
+export const availableTranslatedLanguages = [
+  { value: "en", language: "English" },
+  { value: "es", language: "Español" },
+];

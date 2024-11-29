@@ -6,6 +6,7 @@ import VariousInterestingSubject from "../components/Home/VariousInterestingSubj
 import LessonsSupport from "../components/Home/LessonsSupport";
 import SafeLearning from "../components/Home/SafeLearning";
 import PlatformExperience from "../components/Home/PlatformExperience";
+import Footer from "../components/Home/Footer";
 
 const page = () => {
   return (
@@ -33,6 +34,9 @@ const page = () => {
 
       {/* Cross platform experience */}
       <PlatformExperience />
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 };
