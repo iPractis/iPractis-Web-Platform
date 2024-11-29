@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Nav = () => {
   return (
-    <nav className="bg-primary-color-P1 md:m-4 m-2 p-1.5 rounded-2xl">
+    <nav className="bg-primary-color-P1 m-2 p-1.5 rounded-2xl">
       <div className="md:block hidden">
         <NavDesktop />
       </div>
