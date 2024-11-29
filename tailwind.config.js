@@ -90,6 +90,38 @@ module.exports = {
           VS11: "#B8FFCB",
           SU15: "#CCFFDA",
         },
+
+        // W1 to W15 (Warning)
+        "senary-color": {
+          W1: "#AA4013",
+          W2: "#B64819",
+          W3: "#CF5826",
+          W4: "#E76832",
+          W5: "#FF783F",
+          W6: "#FF9264",
+          W7: "#FFAC89",
+          W8: "#FFC5AD",
+          W9: "#FFD2C0",
+          W10: "#FFDFD2",
+          W11: "#FFECE5",
+          W15: "#FFF9F7",
+        },
+
+        // MA1 to A1 (Mistake & Alert)
+        "septenary-color": {
+          MA1: "#700007",
+          MA2: "#850009",
+          MA3: "#AD000B",
+          MA4: "#D6000E",
+          MA5: "#FF0011",
+          MA6: "#FF2937",
+          MA7: "#FF525D",
+          MA8: "#FF7A83",
+          MA9: "#FF8F96",
+          MA10: "#FFA3A9",
+          MA11: "#FFB8BC",
+          A15: "#FFCCCF",
+        },
       },
     },
   },
