@@ -12,7 +12,7 @@ import Image from "next/image";
 const LessonsSupport = () => {
   return (
     <section className="bg-primary-color-P11">
-      <div className="container-page md:py-[60px] py-10">
+      <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
           iconSrc={sparkle}
           iconClassName="w-[20px]"

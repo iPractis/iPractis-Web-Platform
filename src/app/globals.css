@@ -59,8 +59,12 @@
 
 /* Utility classes for specific styles, sizes, and animations */
 @layer utilities {
-  .container-page {
+  .container-page-v1 {
     @apply max-w-[900px] mx-auto md:px-4 px-10;
+  }
+
+  .container-page-v2 {
+    @apply max-w-[900px] mx-auto md:px-0 px-2;
   }
 
   .animation-fade {

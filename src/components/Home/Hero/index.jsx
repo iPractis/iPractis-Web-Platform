@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <section className="container-page md:my-[60px] my-10">
+    <section className="container-page-v1 md:my-[60px] my-10">
       {/* Hero */}
       <div className="flex flex-col md:flex-row md:gap-[55px]">
         <div className="flex-1">

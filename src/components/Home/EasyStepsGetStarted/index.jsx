@@ -7,7 +7,7 @@ import Image from "next/image";
 
 const EasyStepsGetStarted = () => {
   return (
-    <section className="container-page md:my-[60px] my-10">
+    <section className="container-page-v1 md:my-[60px] my-10">
       <SectionHeader
         iconSrc={walking}
         iconClassName="w-[14px]"

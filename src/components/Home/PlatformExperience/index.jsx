@@ -10,7 +10,7 @@ import apple from "@/public/icons/apple.png";
 const PlatformExperience = () => {
   return (
     <section className="bg-primary-color-P1">
-      <div className="container-page md:py-[60px] py-10">
+      <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
           iconSrc={checkedShield}
           iconClassName="w-4"

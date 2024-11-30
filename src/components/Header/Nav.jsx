@@ -31,8 +31,6 @@ const NavDesktop = () => {
           <Image
             className="w-[148px] p-1.5"
             alt="Logo iPractis"
-            rel="preload"
-            as="image"
             src={logo}
             priority
           />
@@ -41,11 +39,11 @@ const NavDesktop = () => {
 
       <div className="flex items-center gap-7">
         <Link
-          href="#"
+          href="/login"
           className="flex items-center gap-1.5 text-primary-color-P12 ST-SB-4"
         >
           Log in{" "}
-          <Image className="w-5" alt="Logo iPractis" src={whiteDoor} priority />
+          <Image alt="Logo iPractis" src={whiteDoor} className="w-5" priority />
         </Link>
 
         <Link
@@ -68,8 +66,6 @@ const NavResponsive = () => {
             className="w-8"
             alt="Logo iPractis"
             src={ipractisIcon}
-            rel="preload"
-            as="image"
             priority
           />
         </Link>

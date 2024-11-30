@@ -11,7 +11,7 @@ const Footer = () => {
   return (
     <footer>
       <div className="bg-primary-color-P2">
-        <div className="container-page md:py-[60px] py-10">
+        <div className="container-page-v1 md:py-[60px] py-10">
           <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px]">
             <TwoFooterColumn
               columnOne={{

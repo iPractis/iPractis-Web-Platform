@@ -11,7 +11,7 @@ import TutorCards from "./TutorCards";
 const BrowseSubjectsAndTutors = () => {
   return (
     <section className="bg-primary-color-P11">
-      <div className="container-page md:py-[60px] py-10">
+      <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
           iconSrc={bookOpened}
           iconAlt={"Opened Book Icon"}

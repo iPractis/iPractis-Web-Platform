@@ -4,7 +4,7 @@ import Link from "next/link";
 const SmallFooter = () => {
   return (
     <div className="bg-primary-color-P1">
-      <div className="container-page py-2.5">
+      <div className="container-page-v1 py-2.5">
         <div className="flex flex-col-reverse sm:flex-row items-center sm:gap-[65px] gap-4">
           <div>
             <p className="ST-2 text-primary-color-P12">

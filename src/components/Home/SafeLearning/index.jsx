@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const SafeLearning = () => {
   return (
-    <section className="container-page md:my-[60px] my-10">
+    <section className="container-page-v1 md:my-[60px] my-10">
       <SectionHeader
         iconSrc={checkedShield}
         iconClassName="w-[16px]"
