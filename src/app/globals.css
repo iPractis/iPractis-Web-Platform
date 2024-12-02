@@ -67,8 +67,16 @@
     @apply max-w-[900px] mx-auto md:px-0 px-2;
   }
 
+  .container-page-v3 {
+    @apply max-w-[473px] mx-auto md:px-0 px-2;
+  }
+  
   .pis-4 {
     @apply pl-4 !important;
+  }
+
+  .pis-0 {
+    @apply pl-0 !important;
   }
 
   .animation-fade {

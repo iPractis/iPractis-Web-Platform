@@ -11,7 +11,7 @@ const CustomNextUiInput = extendVariants(Input, {
           "rounded-2xl",
           "h-auto",
           "p-1.5",
-          "data-[hover=true]:bg-secondary-color-S9"
+          "data-[hover=true]:bg-secondary-color-S9",
         ],
         input: [
           "placeholder:text-primary-color-P4",
