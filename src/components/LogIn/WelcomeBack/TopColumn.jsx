@@ -25,7 +25,7 @@ const TopColumn = () => {
 
       {/* Log In Section */}
       <div className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
-        <div className="flex flex-col md:flex-row items-start gap-[50px]">
+        <div className="flex flex-col md:flex-row items-start sm:gap-[50px]">
           <div className="flex-1 w-full">
             <SectionHeader
               descriptionText="Enter your account details to access to your account."

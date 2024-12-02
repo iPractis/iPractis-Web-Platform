@@ -12,7 +12,7 @@ import apple from "@/public/icons/apple.png";
 const Form = () => {
   return (
     <form className="space-y-8">
-      <div className="flex gap-3 mt-[50px]">
+      <div className="flex gap-3 sm:mt-[50px] mt-8">
         <button
           className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
           type="button"
