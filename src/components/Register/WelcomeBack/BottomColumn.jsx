@@ -18,7 +18,7 @@ const BottomColumn = () => {
       />
 
       <Link
-        className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4 mt-[50px]"
+        className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4 sm:mt-[50px] mt-8"
         href={"/login"}
       >
         Log in
