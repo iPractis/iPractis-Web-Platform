@@ -31,7 +31,7 @@ const TopColumn = () => {
 
         <OTPInput
           renderInput={(props) => <input {...props} />}
-          containerStyle={"justify-between gap-4"}
+          containerStyle={"justify-between sm:gap-4 gap-2"}
           skipDefaultStyles
           onChange={setOtp}
           shouldAutoFocus
@@ -43,7 +43,7 @@ const TopColumn = () => {
           }
         />
 
-        <div className="flex gap-2">
+        <div className="flex gap-4">
           <button
             type="button"
             className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4"
