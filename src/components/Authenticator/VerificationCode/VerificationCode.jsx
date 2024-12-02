@@ -1,5 +1,5 @@
 import SectionHeader from "../../Globals/SectionHeader";
-import OTPInputs from "./OTPInputs";
+import Form from "./Form";
 
 // Icons && images
 import sparkle from "@/public/icons/sparkle.png";
@@ -22,7 +22,7 @@ const VerificationCode = () => {
           </div>
 
           {/* Login with verification code */}
-          <OTPInputs />
+          <Form />
         </article>
       </div>
     </section>
