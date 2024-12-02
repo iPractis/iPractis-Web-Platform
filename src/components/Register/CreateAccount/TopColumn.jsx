@@ -1,5 +1,3 @@
-"use client";
-
 import SectionHeader from "../../Globals/SectionHeader";
 import Form from "./Form";
 
