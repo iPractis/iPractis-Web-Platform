@@ -1,4 +1,4 @@
-import CreateAccount from "@/src/components/Register/WelcomeBack";
+import CreateAccount from "@/src/components/Register/CreateAccount";
 
 const Register = () => {
   return <CreateAccount />;

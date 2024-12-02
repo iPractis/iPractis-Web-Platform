@@ -2,10 +2,10 @@
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import SectionHeader from "../../Globals/SectionHeader";
+import PasswordLevels from "./PasswordLevels";
 import Image from "next/image";
 
 // Images && icons
-import ErrorMessageiPractis from "../../Globals/ErrorMessageiPractis";
 import userAddCircle from "@/public/icons/user-add-circle.png";
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
@@ -20,16 +20,13 @@ import { useState } from "react";
 
 const TopColumn = () => {
   const [password, setPassword] = useState("");
-  const [securityLevel, setSecurityLevel] = useState(0);
+  const [securityLevel, setSecurityLevel] = useState("");
 
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
     setPassword(newPassword);
 
-    if (newPassword === "") {
-      setSecurityLevel(0);
-      return;
-    }
+    if (!newPassword.trim(" ")) return setSecurityLevel("");
 
     if (newPassword.length < 6) {
       setSecurityLevel(1);
@@ -48,8 +45,8 @@ const TopColumn = () => {
       <div className="p-4">
         <SectionHeader
           descriptionText="Start using iPractis by signing up quickly."
-          titleClassName="MT-SB-1"
           titleText="Create an account"
+          titleClassName="MT-SB-1"
           iconClassName="w-[20px]"
           iconAlt={"Sparkle Icon"}
           iconSrc={sparkle}
@@ -159,57 +156,20 @@ const TopColumn = () => {
                 value={password}
               />
 
-              <div className="flex gap-3 px-2.5 text-[#1C1C1E] mt-2.5">
-                <div
-                  className={`flex-1 h-1.5 rounded-full transition-colors ${
-                    securityLevel >= 1
-                      ? securityLevel >= 2
-                        ? securityLevel >= 3
-                          ? securityLevel >= 4
-                            ? "bg-[#29FF64]" // Level 4
-                            : "bg-[#FFDD29]" // Level 3
-                          : "bg-[#FF9264]" // Level 2
-                        : "bg-[#FF2937]" // Level 1
-                      : "bg-[#E5E5EA]" // Without color
-                  }`}
-                ></div>
-                <div
-                  className={`flex-1 h-1.5 rounded-full transition-colors ${
-                    securityLevel >= 2
-                      ? securityLevel >= 3
-                        ? securityLevel >= 4
-                          ? "bg-[#29FF64]" // Level 4
-                          : "bg-[#FFDD29]" // Level 3
-                        : "bg-[#FF9264]" // Level 2
-                      : "bg-[#E5E5EA]" // Without color
-                  }`}
-                ></div>
-                <div
-                  className={`flex-1 h-1.5 rounded-full transition-colors ${
-                    securityLevel >= 3
-                      ? securityLevel >= 4
-                        ? "bg-[#29FF64]" // Level 4
-                        : "bg-[#FFDD29]" // Level 3
-                      : "bg-[#E5E5EA]" // Without color
-                  }`}
-                ></div>
-                <div
-                  className={`flex-1 h-1.5 rounded-full transition-colors ${
-                    securityLevel >= 4 ? "bg-[#29FF64]" : "bg-[#E5E5EA]"
-                  }`}
-                ></div>
-              </div>
+              <PasswordLevels securityLevel={securityLevel} />
 
-              <h3 className="px-2.5 mt-2 ST-4">
-                Password Security Level{securityLevel > 0 ? ":" : ""}{" "}
-                {getSecurityLevelMessage(securityLevel)}
+              <h3 className="px-2.5 mt-2 ST-4 text-primary-color-P1">
+                Password Security Level{securityLevel && ":"}
+                <span className="ps-1">
+                  {getSecurityLevelMessage(securityLevel)}
+                </span>
               </h3>
             </div>
           </div>
 
           <button
-            type="submit"
             className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+            type="submit"
           >
             Create an account
           </button>
