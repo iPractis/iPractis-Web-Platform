@@ -46,7 +46,7 @@ const TopColumn = () => {
             <div className="space-y-8">
               <div className="flex gap-3 mt-[50px]">
                 <button
-                  className="btn w-full py-3 px-4 bg-primary-color-P11 rounded-2xl"
+                  className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
                   type="button"
                 >
                   <Image
@@ -57,7 +57,7 @@ const TopColumn = () => {
                 </button>
 
                 <button
-                  className="btn w-full py-3 px-4 bg-primary-color-P11 rounded-2xl"
+                  className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
                   type="button"
                 >
                   <Image
@@ -68,7 +68,7 @@ const TopColumn = () => {
                 </button>
 
                 <button
-                  className="btn w-full py-3 px-4 bg-primary-color-P11 rounded-2xl"
+                  className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
                   type="button"
                 >
                   <Image
