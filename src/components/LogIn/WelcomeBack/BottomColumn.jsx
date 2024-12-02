@@ -1,3 +1,4 @@
+import Link from "next/link";
 import SectionHeader from "../../Globals/SectionHeader";
 
 // Images && icons
@@ -20,12 +21,12 @@ const BottomColumn = () => {
         </div>
 
         <div className="flex-1">
-          <button
+          <Link
             className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4"
-            type="button"
+            href={"/register"}
           >
             Register
-          </button>
+          </Link>
         </div>
       </div>
     </div>
