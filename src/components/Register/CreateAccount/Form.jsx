@@ -23,7 +23,9 @@ const Form = () => {
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
-    setPassword(newPassword);
+
+    // Regex - to prevent user to not SPACE in the input!
+    setPassword(newPassword.replace(/\s/g, ""));
 
     if (!newPassword.trim(" ")) return setSecurityLevel("");
 
