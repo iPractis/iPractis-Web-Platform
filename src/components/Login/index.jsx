@@ -1,5 +1,8 @@
-import BottomColumn from "./BottomColumn";
+import AccountPrompt from "../Globals/AccountPrompt";
 import TopColumn from "./TopColumn";
+
+// Images && icons
+import userAdd from "@/public/icons/user-add.png";
 
 export const Login = () => {
   return (
@@ -9,7 +12,15 @@ export const Login = () => {
         <TopColumn />
 
         {/* Register if user doesn't have an account */}
-        <BottomColumn />
+        <AccountPrompt
+          titleText={`You don't have an account yet?`}
+          descText={'Press on "Register" to create your account.'}
+          iconAlt={"User Add Icon"}
+          btnColor={"btn-primary"}
+          hrefLink={"/register"}
+          textLink={"Register"}
+          iconSrc={userAdd}
+        />
       </div>
     </section>
   );

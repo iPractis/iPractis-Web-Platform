@@ -1,5 +1,8 @@
-import BottomColumn from "./BottomColumn";
+import AccountPrompt from "../Globals/AccountPrompt";
 import TopColumn from "./TopColumn";
+
+// Images && icons
+import lockedUser from "@/public/icons/locked-user.png";
 
 export const Register = () => {
   return (
@@ -9,7 +12,16 @@ export const Register = () => {
         <TopColumn />
 
         {/* Login if user have an account */}
-        <BottomColumn />
+        <AccountPrompt
+          titleText={`You already have an account?`}
+          descText={'Press on "Log in" to access to your account.'}
+          accountPromptPosition="vertical"
+          iconAlt={"Locked User Icon"}
+          btnColor={"btn-primary"}
+          hrefLink={"/login"}
+          textLink={"Log in"}
+          iconSrc={lockedUser}
+        />
       </div>
     </section>
   );
