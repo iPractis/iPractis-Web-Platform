@@ -1,4 +1,4 @@
-import VerificationCode from "@/src/components/Authenticator/VerificationCode/VerificationCode";
+import VerificationCode from "@/src/components/Authenticator/VerificationCode/index";
 
 const Authenticator = () => {
   return <VerificationCode />;
