@@ -44,6 +44,8 @@ const Form = () => {
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
             }
+            onChange={handlePasswordChange}
+            value={password}
           />
         </div>
         {/* Retape password */}
@@ -55,8 +57,6 @@ const Form = () => {
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
             }
-            onChange={handlePasswordChange}
-            value={password}
           />
         </div>
 
