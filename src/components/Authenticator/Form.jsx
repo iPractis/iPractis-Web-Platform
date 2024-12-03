@@ -1,5 +1,6 @@
 "use client";
 import SectionHeader from "../Globals/SectionHeader";
+import DualButton from "../Globals/DualButton";
 import OTPInput from "react-otp-input";
 import { useState } from "react";
 import Image from "next/image";
@@ -43,21 +44,7 @@ const TopColumn = () => {
           }
         />
 
-        <div className="flex gap-4">
-          <button
-            type="button"
-            className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4"
-          >
-            Cancel
-          </button>
-
-          <button
-            type="submit"
-            className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
-          >
-            Log in
-          </button>
-        </div>
+        <DualButton leftButtonText={"Cancel"} rightButtonText={"Log in"} />
 
         <p className="text-primary-color-P4 text-center ST-4">
           Haven’t receive the code? 3:00 Minutes

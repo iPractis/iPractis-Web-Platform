@@ -3,6 +3,7 @@
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import PasswordLevels from "../Register/PasswordLevels";
+import DualButton from "../Globals/DualButton";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -68,21 +69,10 @@ const Form = () => {
         </h3>
       </div>
 
-      <div className="flex gap-4 items-center">
-        <button
-          className="btn btn-primary w-full py-3 px-4 rounded-2xl MT-SB-1"
-          type="button"
-        >
-          Cancel
-        </button>
-
-        <button
-          className="btn btn-secondary w-full py-3 px-4 rounded-2xl MT-SB-1"
-          type="submit"
-        >
-          Change password
-        </button>
-      </div>
+      <DualButton
+        leftButtonText={"Cancel"}
+        rightButtonText={"Change password"}
+      />
     </form>
   );
 };
