@@ -1,7 +1,7 @@
-import WelcomeBack from "@/src/components/LogIn/WelcomeBack";
+import { Login as LoginComponent } from "@/src/components/Login/index";
 
 const Login = () => {
-  return <WelcomeBack />;
+  return <LoginComponent />;
 };
 
 export default Login;

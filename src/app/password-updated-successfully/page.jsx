@@ -1,7 +1,7 @@
-import AccountSupportService from "@/src/components/PasswordUpdatedSuccessfully/index";
+import { PasswordUpdatedSuccessfully as PasswordUpdatedSuccessfullyComponent } from "@/src/components/PasswordUpdatedSuccessfully/index";
 
-const AccountAssitance = () => {
-  return <AccountSupportService />;
+const PasswordUpdatedSuccessfully = () => {
+  return <PasswordUpdatedSuccessfullyComponent />;
 };
 
-export default AccountAssitance;
+export default PasswordUpdatedSuccessfully;

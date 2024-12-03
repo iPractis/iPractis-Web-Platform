@@ -1,5 +1,5 @@
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import ErrorMessageiPractis from "../../Globals/ErrorMessageiPractis";
+import CustomNextUiInput from "../Globals/CustomNextUiInput";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import Image from "next/image";
 
 // Images && icons

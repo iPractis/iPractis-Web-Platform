@@ -1,7 +1,7 @@
-import CreateAccount from "@/src/components/Register/CreateAccount";
+import { Register as RegisterComponent } from "@/src/components/Register/index";
 
 const Register = () => {
-  return <CreateAccount />;
+  return <RegisterComponent />;
 };
 
 export default Register;

@@ -1,4 +1,4 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 import Image from "next/image";
 
 // Images && icons

@@ -1,7 +1,7 @@
-import AccountSupportService from "@/src/components/AccountAssistance/CreateAccount";
+import { AccountAssistance as AccountAssistanceComponent } from "@/src/components/AccountAssistance/index";
 
-const AccountAssitance = () => {
-  return <AccountSupportService />;
+const AccountAssistance = () => {
+  return <AccountAssistanceComponent />;
 };
 
-export default AccountAssitance;
+export default AccountAssistance;

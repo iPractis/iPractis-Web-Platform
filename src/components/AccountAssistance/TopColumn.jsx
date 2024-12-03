@@ -1,4 +1,4 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 
 // Images && icons
 import sparkle from "@/public/icons/sparkle.png";

@@ -1,7 +1,7 @@
-import AccountSupportService from "@/src/components/PasswordRecovery/AccountSupportService";
+import { PasswordRecovery as PasswordRecoveryComponent } from "@/src/components/PasswordRecovery/index";
 
 const PasswordRecovery = () => {
-  return <AccountSupportService />;
+  return <PasswordRecoveryComponent />;
 };
 
 export default PasswordRecovery;

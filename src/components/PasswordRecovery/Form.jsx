@@ -1,4 +1,4 @@
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import Image from "next/image";
 
 // Icons && images

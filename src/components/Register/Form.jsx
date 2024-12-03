@@ -2,7 +2,7 @@
 
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
 import { useState } from "react";
 import Image from "next/image";

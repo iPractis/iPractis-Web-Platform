@@ -1,7 +1,7 @@
-import AccountSupportService from "@/src/components/NewPassword/index";
+import { NewPassword as NewPasswordComponent } from "@/src/components/NewPassword/index";
 
 const NewPassword = () => {
-  return <AccountSupportService />;
+  return <NewPasswordComponent />;
 };
 
 export default NewPassword;

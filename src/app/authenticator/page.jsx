@@ -1,7 +1,7 @@
-import VerificationCode from "@/src/components/Authenticator/VerificationCode/index";
+import { Authenticator as AuthenticatorComponent } from "@/src/components/Authenticator/index";
 
 const Authenticator = () => {
-  return <VerificationCode />;
+  return <AuthenticatorComponent />;
 };
 
 export default Authenticator;

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 
 // Images && icons
 import lockedUser from "@/public/icons/locked-user.png";

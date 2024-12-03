@@ -1,5 +1,5 @@
 "use client";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 import OTPInput from "react-otp-input";
 import { useState } from "react";
 import Image from "next/image";

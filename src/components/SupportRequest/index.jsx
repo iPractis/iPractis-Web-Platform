@@ -1,18 +1,16 @@
 import BottomColumn from "./BottomColumn";
 import TopColumn from "./TopColumn";
 
-const AccountSupportService = () => {
+export const SupportRequest = () => {
   return (
-    <section className="container-page-v3">
+    <section className="container-page-v2">
       <div className="mt-2.5 p-4 md:mb-[100px] rounded-[32px] bg-primary-color-P11">
-        {/* Account support service */}
+        {/* Login if there's an account */}
         <TopColumn />
 
-        {/* Account Assistance */}
+        {/* Register if user doesn't have an account */}
         <BottomColumn />
       </div>
     </section>
   );
 };
-
-export default AccountSupportService;

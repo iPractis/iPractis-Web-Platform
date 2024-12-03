@@ -1,10 +1,10 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../Globals/SectionHeader";
 import Form from "./Form";
 
 // Icons && images
 import sparkle from "@/public/icons/sparkle.png";
 
-const VerificationCode = () => {
+export const Authenticator = () => {
   return (
     <section className="container-page-v3">
       <div className="mt-2.5 p-4 md:mb-[100px] rounded-[32px] bg-primary-color-P11">
@@ -28,5 +28,3 @@ const VerificationCode = () => {
     </section>
   );
 };
-
-export default VerificationCode;
