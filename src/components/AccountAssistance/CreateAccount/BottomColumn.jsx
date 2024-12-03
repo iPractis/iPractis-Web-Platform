@@ -1,5 +1,6 @@
 import SectionHeader from "../../Globals/SectionHeader";
 import Image from "next/image";
+import Link from "next/link";
 
 // Images && icons
 import circleHelpBlack from "@/public/icons/circle-help-black.png";
@@ -20,9 +21,9 @@ const BottomColumn = () => {
       />
 
       <div className="mt-[50px]">
-        <button
-          type="button"
+        <Link
           className="btn btn-primary w-full py-3 px-4 rounded-2xl flex justify-center items-center MT-SB-1"
+          href={"/password-recovery"}
         >
           <div className="flex-1">
             <Image
@@ -33,7 +34,7 @@ const BottomColumn = () => {
           </div>
 
           <span className="sm:flex-[85%] flex-[80%]">Password Recovery</span>
-        </button>
+        </Link>
 
         <button
           type="button"
