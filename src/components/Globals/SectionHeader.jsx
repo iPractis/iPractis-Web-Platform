@@ -4,6 +4,7 @@ const SectionHeader = ({
   iconClassName = "w-[22px]",
   titleClassName = "MT-SB-2",
   descriptionClassName = "mt-1.5",
+  wrapperSectionHeaderClassName = "",
   descriptionText,
   theme = "white",
   titleText,
@@ -11,7 +12,7 @@ const SectionHeader = ({
   iconSrc,
 }) =>
   theme === "white" ? (
-    <div>
+    <div className={wrapperSectionHeaderClassName}>
       <h3
         className={`flex gap-2.5 text-primary-color-P1 items-center ${titleClassName}`}
       >
@@ -24,7 +25,7 @@ const SectionHeader = ({
       </p>
     </div>
   ) : (
-    <div className="text-primary-color-P12">
+    <div className={`${wrapperSectionHeaderClassName} text-primary-color-P12`}>
       <h3 className="flex gap-2.5 items-center MT-SB-2">
         <Image className={iconClassName} alt={iconAlt} src={iconSrc} />
         {titleText}
