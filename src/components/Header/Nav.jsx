@@ -47,7 +47,7 @@ const NavDesktop = () => {
         </Link>
 
         <Link
-          href="#"
+          href="/register"
           className="btn btn-tertiary ST-SB-4 py-2 px-4 rounded-[10px]"
         >
           Register
