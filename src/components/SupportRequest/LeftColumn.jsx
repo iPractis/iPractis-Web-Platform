@@ -36,7 +36,6 @@ const Form = () => {
         {/* Reason */}
         <div>
           <CustomNextUiInput
-            color="modern"
             type="email"
             placeholder="Select a reason"
             startContent={
@@ -48,7 +47,6 @@ const Form = () => {
         {/* Contact email */}
         <div className="mt-2.5">
           <CustomNextUiInput
-            color="modern"
             type="email"
             maxLength={32}
             placeholder="Contact Email"
@@ -61,7 +59,6 @@ const Form = () => {
         {/* Email related to your account */}
         <div className="mt-2.5">
           <CustomNextUiInput
-            color="modern"
             type="email"
             maxLength={32}
             placeholder="Enter email related to your account"

@@ -39,7 +39,6 @@ const Form = () => {
         {/* New Password */}
         <div>
           <CustomNextUiInput
-            color="modern"
             type="password"
             maxLength={32}
             placeholder="Enter your new password"
@@ -53,7 +52,6 @@ const Form = () => {
         {/* Retape password */}
         <div className="mt-2.5">
           <CustomNextUiInput
-            color="modern"
             type="password"
             maxLength={32}
             placeholder="Retape your new password"

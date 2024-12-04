@@ -9,7 +9,6 @@ const Form = () => {
     <form>
       <div className="my-[50px]">
         <CustomNextUiInput
-          color="modern"
           type="email"
           placeholder="Enter your email address"
           startContent={<Image className="w-9" src={email} alt="Email Input" />}

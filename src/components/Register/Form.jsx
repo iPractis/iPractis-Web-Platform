@@ -92,7 +92,6 @@ const Form = () => {
           {/* Firtname && Lastname input */}
           <div className="flex gap-3 items-center">
             <CustomNextUiInput
-              color="modern"
               type="text"
               placeholder="First name"
               startContent={
@@ -101,7 +100,6 @@ const Form = () => {
             />
 
             <CustomNextUiInput
-              color="modern"
               type="text"
               placeholder="Last name"
               startContent={
@@ -113,7 +111,6 @@ const Form = () => {
           {/* Email Input */}
           <div className="flex gap-3">
             <CustomNextUiInput
-              color="modern"
               type="email"
               placeholder="Enter your email address"
               startContent={
@@ -133,7 +130,6 @@ const Form = () => {
           {/* Password Input */}
           <div>
             <CustomNextUiInput
-              color="modern"
               type="password"
               maxLength={32}
               placeholder="Enter your password"

@@ -21,7 +21,6 @@ const RightColumn = () => {
         <CustomNextUiTextarea
           placeholder="Describe the situation"
           disableAutosize
-          color="modern"
           size="md"
         />
       </div>
