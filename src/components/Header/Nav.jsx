@@ -1,6 +1,8 @@
 // Images
 import profileSettingsIcon from "@/public/icons/profile-settings-icon.png";
 import ipractisIcon from "@/public/icons/ipractis-icon.png";
+import themeLight from "@/public/icons/theme-light.png";
+import world from "@/public/icons/world.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import whiteDoor from "@/public/icons/white-door.png";
 
@@ -37,10 +39,10 @@ const NavDesktop = () => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-7">
+      <div className="flex items-center gap-1.5">
         <Link
           href="/login"
-          className="flex items-center gap-1.5 text-primary-color-P12 ST-SB-4"
+          className="flex items-center px-4 py-2 gap-1.5 text-primary-color-P12 ST-SB-4"
         >
           Log in{" "}
           <Image alt="Logo iPractis" src={whiteDoor} className="w-5" priority />
@@ -52,6 +54,20 @@ const NavDesktop = () => {
         >
           Register
         </Link>
+
+        <button
+          className="btn btn-tertiary py-2 px-4 rounded-[10px]"
+          button="button"
+        >
+          <Image alt="Theme Light" src={world} className="w-5" priority />
+        </button>
+
+        <button
+          className="btn btn-tertiary py-2 px-4 rounded-[10px]"
+          button="button"
+        >
+          <Image alt="Theme Light" src={themeLight} className="w-5" priority />
+        </button>
       </div>
     </div>
   );
