@@ -20,8 +20,8 @@ const RightColumn = () => {
       <div className="my-[50px] w-full">
         <CustomNextUiTextarea
           placeholder="Describe the situation"
+          size="primaryiPractis"
           disableAutosize
-          size="md"
         />
       </div>
     </article>

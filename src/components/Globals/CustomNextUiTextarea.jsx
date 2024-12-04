@@ -6,28 +6,14 @@ const CustomNextUiTextarea = extendVariants(Textarea, {
   variants: {
     color: {
       modern: {
-        inputWrapper: [
-          "bg-primary-color-P11",
-          "rounded-2xl",
-          "p-2.5 pe-1.5",
-          "data-[hover=true]:bg-secondary-color-S9",
-        ],
-        input: [
-          "placeholder:text-primary-color-P4",
-          "text-primary-color-P4",
-        ],
+        inputWrapper: ["textarea-wrapper"],
+        input: ["textarea-ipractis"],
       },
     },
     size: {
-      md: {
-        input: "h-[222px] ST-3",
+      primaryiPractis: {
+        input: "h-[222px]",
       },
-    },
-    removeLabel: {
-      true: {
-        label: "hidden",
-      },
-      false: {},
     },
   },
   defaultVariants: {

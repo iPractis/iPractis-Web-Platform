@@ -63,6 +63,14 @@
   .input-ipractis {
     @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 !important;
   }
+  
+  .textarea-wrapper {
+    @apply bg-primary-color-P11 rounded-2xl p-2.5 pe-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
+  }
+
+  .textarea-ipractis {
+    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 !important;
+  }
 }
 
 /* Utility classes for specific styles, sizes, and animations */
