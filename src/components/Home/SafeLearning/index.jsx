@@ -20,7 +20,7 @@ const SafeLearning = () => {
 
       <article className="flex flex-col md:flex-row sm:gap-4 gap-[30px] mt-[30px]">
         <div className="flex-1">
-          <div className="bg-primary-color-P11 flex-1 text-center rounded-[20px] py-[30px] px-4">
+          <div className="bg-primary-color-P11 flex-1 text-center rounded-[20px] py-[30px] px-4 h-full">
             <Image
               alt={"Icon Left Camera"}
               className="w-[41px] mx-auto"
@@ -37,17 +37,17 @@ const SafeLearning = () => {
           </div>
         </div>
 
-        <div className="flex-[20%]">
+        <div className="flex-[45%]">
           {/* From 768px to up */}
           <Image
-            alt="Woman Working"
+            alt="Child Studying"
             className="md:block hidden w-full h-full object-cover rounded-[20px]"
             src={happyChildDesktop}
           />{" "}
 
           {/* From 768px to bottom */}
           <Image
-            alt="Woman Working"
+            alt="Child Studying"
             className="md:hidden block w-full h-[202px] object-cover rounded-[20px]"
             src={happyChildResponsive}
           />{" "}

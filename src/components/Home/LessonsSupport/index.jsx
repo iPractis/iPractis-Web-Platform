@@ -74,10 +74,10 @@ const LessonsSupport = () => {
             </div>
           </div>
 
-          <div className="flex-[20%]">
+          <div className="flex-[30%]">
             <Image
               alt="Woman Working"
-              className="w-full h-full object-cover rounded-[20px]"
+              className="w-full sm:h-[650px] h-full object-cover rounded-[20px]"
               src={teacherOnline}
             />{" "}
           </div>

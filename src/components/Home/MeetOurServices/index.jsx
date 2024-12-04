@@ -57,10 +57,10 @@ const MeetOurServices = () => {
             </div>
           </div>
 
-          <div className="flex-[20%]">
+          <div className="flex-[25%] h-full">
             <Image
               alt="Woman Working"
-              className="w-full h-full object-cover rounded-[20px]"
+              className="w-full sm:h-[412px] h-full object-cover rounded-[20px]"
               src={womanWorking}
             />{" "}
           </div>

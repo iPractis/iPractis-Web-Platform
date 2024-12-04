@@ -8,10 +8,10 @@ import Image from "next/image";
 const BottomSection = () => {
   return (
     <article className="flex flex-col md:flex-row sm:gap-4 gap-[30px]">
-      <div className="flex-[20%]">
+      <div className="flex-[30%]">
         <Image
           alt="Woman Taking Classes"
-          className="w-full h-full object-cover rounded-[20px]"
+          className="w-full sm:h-[428px] h-full object-cover rounded-[20px]"
           src={womanComputer}
         />{" "}
       </div>
