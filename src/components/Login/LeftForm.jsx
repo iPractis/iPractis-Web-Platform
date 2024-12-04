@@ -58,11 +58,6 @@ const LeftForm = () => {
               <Image className="w-9" src={userInput} alt="User Input" />
             }
           />
-
-          <ErrorMessageiPractis
-            typeError={"Invalid Email"}
-            descError={"Check your spelling email"}
-          />
         </div>
 
         {/* Password Input */}
@@ -70,6 +65,7 @@ const LeftForm = () => {
           <CustomNextUiInput
             color="modern"
             type="password"
+            maxLength={32}
             placeholder="Enter your password"
             startContent={
               <Image className="w-9" src={passwordInput} alt="User Input" />

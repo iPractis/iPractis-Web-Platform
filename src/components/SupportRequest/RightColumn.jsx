@@ -1,3 +1,4 @@
+import CustomNextUiTextarea from "../Globals/CustomNextUiTextarea";
 import SectionHeader from "../Globals/SectionHeader";
 
 // Icons && images
@@ -16,7 +17,13 @@ const RightColumn = () => {
         iconSrc={wrench}
       />
 
-      <div className="my-[50px]"></div>
+      <div className="my-[50px]">
+        <CustomNextUiTextarea
+          placeholder="Describe the situation"
+          color="modern"
+          size="md"
+        />
+      </div>
     </article>
   );
 };

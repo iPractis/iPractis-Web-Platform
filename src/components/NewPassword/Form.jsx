@@ -41,6 +41,7 @@ const Form = () => {
           <CustomNextUiInput
             color="modern"
             type="password"
+            maxLength={32}
             placeholder="Enter your new password"
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
@@ -54,6 +55,7 @@ const Form = () => {
           <CustomNextUiInput
             color="modern"
             type="password"
+            maxLength={32}
             placeholder="Retape your new password"
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />

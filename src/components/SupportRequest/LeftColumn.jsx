@@ -44,6 +44,7 @@ const Form = () => {
           <CustomNextUiInput
             color="modern"
             type="password"
+            maxLength={32}
             placeholder="Enter your password"
             startContent={
               <Image className="w-9" src={passwordInput} alt="User Input" />

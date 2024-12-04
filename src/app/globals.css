@@ -74,13 +74,17 @@
   .container-page-v4 {
     @apply max-w-[476px] mx-auto md:px-0 px-2;
   }
-  
+
   .pis-4 {
     @apply pl-4 !important;
   }
 
   .pis-0 {
     @apply pl-0 !important;
+  }
+
+  .h-55 {
+    @apply h-[222px] !important;
   }
 
   .animation-fade {
