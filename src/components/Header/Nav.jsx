@@ -25,11 +25,11 @@ export default Nav;
 
 const NavDesktop = () => {
   return (
-    <div className="flex justify-between items-center gap-1.5">
+    <div className="flex justify-between items-end gap-1.5">
       <div>
         <Link href="/">
           <Image
-            className="w-[148px] p-1.5"
+            className="w-[113px]"
             alt="Logo iPractis"
             src={logo}
             priority
