@@ -20,8 +20,7 @@ const CustomNextUiTextarea = extendVariants(Textarea, {
     },
     size: {
       md: {
-        inputWrapper: "h-55 min-h-full",
-        input: "ST-3",
+        input: "h-[222px] ST-3",
       },
     },
     removeLabel: {

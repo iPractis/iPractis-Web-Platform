@@ -6,19 +6,8 @@ const CustomNextUiInput = extendVariants(Input, {
   variants: {
     color: {
       modern: {
-        inputWrapper: [
-          "bg-primary-color-P11",
-          "rounded-2xl",
-          "h-auto",
-          "p-1.5",
-          "data-[hover=true]:bg-secondary-color-S9",
-        ],
-        input: [
-          "placeholder:text-primary-color-P4",
-          "text-primary-color-P4",
-          "ST-3",
-          "pis-4",
-        ],
+        inputWrapper: ["input-wrapper-ipractis"],
+        input: ["input-ipractis"],
       },
     },
     size: {

@@ -17,9 +17,10 @@ const RightColumn = () => {
         iconSrc={wrench}
       />
 
-      <div className="my-[50px]">
+      <div className="my-[50px] w-full">
         <CustomNextUiTextarea
           placeholder="Describe the situation"
+          disableAutosize
           color="modern"
           size="md"
         />

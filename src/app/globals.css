@@ -10,50 +10,58 @@
 
   .btn-primary {
     @apply bg-primary-color-P1 text-primary-color-P12;
-  }
 
-  .btn-primary:hover {
-    @apply bg-primary-color-P4 text-primary-color-P12;
-  }
+    &:hover {
+      @apply bg-primary-color-P4 text-primary-color-P12;
+    }
 
-  .btn-primary:active {
-    @apply bg-primary-color-P6 text-primary-color-P12;
+    &:active {
+      @apply bg-primary-color-P6 text-primary-color-P12;
+    }
   }
 
   .btn-secondary {
     @apply bg-tertiary-color-SC5 text-primary-color-P12;
-  }
 
-  .btn-secondary:hover {
-    @apply bg-tertiary-color-SC6 text-primary-color-P12;
-  }
+    &:hover {
+      @apply bg-tertiary-color-SC6 text-primary-color-P12;
+    }
 
-  .btn-secondary:active {
-    @apply bg-tertiary-color-SC7 text-primary-color-P12;
+    &:active {
+      @apply bg-tertiary-color-SC7 text-primary-color-P12;
+    }
   }
 
   .btn-tertiary {
     @apply bg-primary-color-P12 text-primary-color-P1;
-  }
 
-  .btn-tertiary:hover {
-    @apply bg-secondary-color-S10 text-primary-color-P1;
-  }
+    &:hover {
+      @apply bg-secondary-color-S10 text-primary-color-P1;
+    }
 
-  .btn-tertiary:active {
-    @apply bg-secondary-color-S8 text-primary-color-P1;
+    &:active {
+      @apply bg-secondary-color-S8 text-primary-color-P1;
+    }
   }
 
   .btn-quaternary {
     @apply bg-transparent text-current;
+
+    &:hover {
+      @apply bg-primary-color-P12 text-current;
+    }
+
+    &:active {
+      @apply bg-tertiary-color-SC5 text-primary-color-P12;
+    }
   }
 
-  .btn-quaternary:hover {
-    @apply bg-primary-color-P12 text-current;
+  .input-wrapper-ipractis {
+    @apply bg-primary-color-P11 rounded-2xl h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
   }
 
-  .btn-quaternary:active {
-    @apply bg-tertiary-color-SC5 text-primary-color-P12;
+  .input-ipractis {
+    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 !important;
   }
 }
 
@@ -75,75 +83,64 @@
     @apply max-w-[476px] mx-auto md:px-0 px-2;
   }
 
-  .pis-4 {
-    @apply pl-4 !important;
-  }
-
-  .pis-0 {
-    @apply pl-0 !important;
-  }
-
-  .h-55 {
-    @apply h-[222px] !important;
-  }
-
   .animation-fade {
     @apply transition-all duration-250 ease-out;
   }
 
+  /* All sizes have !important because we don't want other libraries to inherit our created ones */
   .LT-SB-1 {
-    @apply text-[28px] font-[600];
+    @apply text-[28px] font-[600] !important;
   }
 
   .LT-SB-2 {
-    @apply text-[32px] font-[600];
+    @apply text-[32px] font-[600] !important;
   }
 
   .MT-SB-3 {
-    @apply text-[24px] font-[600];
+    @apply text-[24px] font-[600] !important;
   }
 
   .MT-SB-2 {
-    @apply text-[20px] font-[600];
+    @apply text-[20px] font-[600] !important;
   }
 
   .MT-SB-1 {
-    @apply text-[16px] font-[600];
+    @apply text-[16px] font-[600] !important;
   }
 
   .MT-1 {
-    @apply text-[16px] font-[500];
+    @apply text-[16px] font-[500] !important;
   }
 
   .ST-SB-4 {
-    @apply text-[14.4px] font-[600];
+    @apply text-[14.4px] font-[600] !important;
   }
 
   .ST-SB-3 {
-    @apply text-[13px] font-[600];
+    @apply text-[13px] font-[600] !important;
   }
 
   .ST-SB-2 {
-    @apply text-[11.2px] font-[600];
+    @apply text-[11.2px] font-[600] !important;
   }
 
   .ST-SB-1 {
-    @apply text-[9.6px] font-[600];
+    @apply text-[9.6px] font-[600] !important;
   }
 
   .ST-4 {
-    @apply text-[14.4px] font-[500];
+    @apply text-[14.4px] font-[500] !important;
   }
 
   .ST-3 {
-    @apply text-[13px] font-[500];
+    @apply text-[13px] font-[500] !important;
   }
 
   .ST-2 {
-    @apply text-[11.2px] font-[500];
+    @apply text-[11.2px] font-[500] !important;
   }
 
   .ST-1 {
-    @apply text-[9.6px] font-[500];
+    @apply text-[9.6px] font-[500] !important;
   }
 }

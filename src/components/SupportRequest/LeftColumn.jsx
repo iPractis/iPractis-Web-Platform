@@ -1,14 +1,25 @@
+"use client";
+
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import SectionHeader from "../Globals/SectionHeader";
+import { useState } from "react";
 import Image from "next/image";
 
 // Images && icons
-import passwordInput from "@/public/icons/password-input.png";
+import circleHelpInput from "@/public/icons/circle-help-input.png";
 import circleAlert from "@/public/icons/circle-alert.png";
-import userInput from "@/public/icons/user-input.png";
+import pinInput from "@/public/icons/pin-input.png";
+import emailInput from "@/public/icons/email.png";
 
 const Form = () => {
+  const [fileName, setFileName] = useState("");
+
+  const handleFileChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setFileName(e.target.files[0].name);
+    }
+  };
+
   return (
     <article className="flex-1 w-full">
       <SectionHeader
@@ -22,34 +33,58 @@ const Form = () => {
       />
 
       <div className="my-[50px]">
-        {/* Email Input */}
+        {/* Reason */}
         <div>
           <CustomNextUiInput
             color="modern"
             type="email"
-            placeholder="Enter your phone or email address"
+            placeholder="Select a reason"
             startContent={
-              <Image className="w-9" src={userInput} alt="User Input" />
+              <Image className="w-9" src={circleHelpInput} alt="User Input" />
             }
           />
+        </div>
 
-          <ErrorMessageiPractis
-            typeError={"Invalid Email"}
-            descError={"Check your spelling email"}
+        {/* Contact email */}
+        <div className="mt-2.5">
+          <CustomNextUiInput
+            color="modern"
+            type="email"
+            maxLength={32}
+            placeholder="Contact Email"
+            startContent={
+              <Image className="w-9" src={emailInput} alt="Email Input" />
+            }
+          />
+        </div>
+
+        {/* Email related to your account */}
+        <div className="mt-2.5">
+          <CustomNextUiInput
+            color="modern"
+            type="email"
+            maxLength={32}
+            placeholder="Enter email related to your account"
+            startContent={
+              <Image className="w-9" src={emailInput} alt="Email Input" />
+            }
           />
         </div>
 
         {/* Password Input */}
-        <div className="mt-3">
-          <CustomNextUiInput
-            color="modern"
-            type="password"
-            maxLength={32}
-            placeholder="Enter your password"
-            startContent={
-              <Image className="w-9" src={passwordInput} alt="User Input" />
-            }
+        <div className="mt-2.5 relative">
+          <input
+            type="file"
+            onChange={handleFileChange}
+            className="opacity-0 absolute inset-0 z-10 cursor-pointer"
           />
+
+          <div className="flex items-center rounded-2xl p-1.5 ST-3 bg-primary-color-P11 hover:bg-secondary-color-S9">
+            <Image className="w-9" src={pinInput} alt="Pin Input" />
+            <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
+              {fileName || "Upload a screenshot (Optional)"}{" "}
+            </span>
+          </div>
         </div>
       </div>
     </article>
