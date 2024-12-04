@@ -41,7 +41,7 @@ const TutorCard = ({ subjectAndTutor }) => {
                 <Image
                   src={thumbnailError ? videoThumbnail404 : videoThumbnail}
                   sizes="(max-width: 640px) 100vw, 100%"
-                  style={{ objectFit: "cover" }}
+                  style={{ objectFit: "inherit" }}
                   onError={handleImageError}
                   className="rounded-t-2xl"
                   alt="Tutor Video Image"
@@ -61,7 +61,7 @@ const TutorCard = ({ subjectAndTutor }) => {
         </div>
 
         {/* Additional Tutor Information */}
-        <div className="p-4">
+        <div className="p-5">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Image
@@ -90,7 +90,7 @@ const TutorCard = ({ subjectAndTutor }) => {
             </div>
           </div>
 
-          <div className="flex gap-3 items-center justify-between my-[15px]">
+          <div className="flex gap-3 items-center justify-between my-5">
             <ul className="flex items-center gap-[10px]">
               <li className="ST-SB-2 text-primary-color-P1">English</li>
 
@@ -112,10 +112,10 @@ const TutorCard = ({ subjectAndTutor }) => {
             </div>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex justify-between py-1">
             {/* Lesson Rate which disappears on hover */}
             <div>
-              <h4 className="text-primary-color-P6 ST-1">Lesson rate</h4>
+              <h4 className="text-primary-color-P6 ST-1 pb-[2px]">Lesson rate</h4>
               <h3 className="sm:text-primary-color-P1 text-primary-color-P4">
                 <span className="MT-SB-1">8 USD/</span>
                 <span className="ST-3">30 mins</span>

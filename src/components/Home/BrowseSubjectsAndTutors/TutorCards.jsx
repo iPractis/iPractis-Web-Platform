@@ -9,11 +9,11 @@ const TutorCards = () => {
         return <TutorCard subjectAndTutor={subjectAndTutor} key={index} />;
       })}
 
-      <div className="bg-primary-color-P12 h-[357px] p-5 rounded-2xl">
+      <div className="bg-primary-color-P12 h-full p-5 rounded-2xl">
         <div className="flex flex-col justify-between h-full">
           <div>
             <h3 className="MT-SB-3 text-primary-color-P1">
-              Discover more <span className="sm:block inline">teachers</span>
+              Discover more teachers
             </h3>
 
             <p className="ST-4 text-primary-color-P4 mt-5">
