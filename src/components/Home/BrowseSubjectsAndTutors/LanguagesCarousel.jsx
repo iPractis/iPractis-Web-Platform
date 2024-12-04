@@ -41,7 +41,7 @@ const LanguagesCarousel = () => {
               spaceBetween: 10,
             },
             950: {
-              slidesPerView: 6,
+              slidesPerView: 8,
               spaceBetween: 16,
             },
           }}

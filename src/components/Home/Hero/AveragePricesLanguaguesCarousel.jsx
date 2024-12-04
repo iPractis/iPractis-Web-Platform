@@ -18,11 +18,10 @@ import chevronLeft from "@/public/icons/chevron-left.png";
 
 const AveragePricesLanguaguesCarousel = () => {
   return (
-    <section className="relative rounded-2xl py-2.5 md:px-4 px-5 mt-10 bg-primary-color-P11">
-      <div className="relative md:px-16 px-12">
+    <section className="relative rounded-2xl py-2.5 px-4 mt-10 bg-primary-color-P11">
+      <div className="relative px-8">
         <Swiper
           loop={true}
-          spaceBetween={30}
           pagination={{
             clickable: true,
           }}
@@ -37,22 +36,28 @@ const AveragePricesLanguaguesCarousel = () => {
               spaceBetween: 20,
             },
 
-            // when window width is >= 550px
-            550: {
+            // when window width is >= 500px
+            500: {
               slidesPerView: 2,
+              spaceBetween: 0,
+            },
+
+            // when window width is >= 700px
+            700: {
+              slidesPerView: 3,
               spaceBetween: 0,
             },
 
             // when window width is >= 860px
             860: {
-              slidesPerView: 3,
+              slidesPerView: 4,
               spaceBetween: 0,
             },
 
             // when window width is >= 1140px
             1140: {
-              slidesPerView: 4,
-              spaceBetween: 16,
+              slidesPerView: 6,
+              spaceBetween: 0,
             },
           }}
           modules={[Navigation, Pagination]}
@@ -60,8 +65,8 @@ const AveragePricesLanguaguesCarousel = () => {
         >
           {averagePricesLanguagues?.map((country, index) => {
             return (
-              <SwiperSlide className="w-[149px]" key={index}>
-                <div className="flex animation-fade mx-auto w-fit cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-4 items-center">
+              <SwiperSlide className="w-[153px]" key={index}>
+                <div className="flex mx-auto w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center">
                   <div className="me-3">
                     <Image
                       alt={"Country Image"}
@@ -71,10 +76,9 @@ const AveragePricesLanguaguesCarousel = () => {
                   </div>
 
                   <div>
-                    <h3 className="ST-SB-2">{country?.title}</h3>
-                    <p className="text-primary-color-P6 group-active:text-primary-color-P12">
-                      <span className="ST-SB-2">{country?.price}</span>{" "}
-                      <span className="ST-1">{country?.time}</span>
+                    <h3 className="ST-SB-1">{country?.title}</h3>
+                    <p className="text-primary-color-P6 group-active:text-primary-color-P12 ST-1">
+                      {`${country?.price}${country?.time}`}
                     </p>
                   </div>
                 </div>
