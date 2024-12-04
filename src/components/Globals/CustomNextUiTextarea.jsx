@@ -10,11 +10,6 @@ const CustomNextUiTextarea = extendVariants(Textarea, {
         input: ["textarea-ipractis"],
       },
     },
-    size: {
-      primaryiPractis: {
-        input: "h-[222px]",
-      },
-    },
   },
   defaultVariants: {
     color: "modern",
