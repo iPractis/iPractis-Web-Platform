@@ -1,5 +1,5 @@
 import AccountPrompt from "../Globals/AccountPrompt";
-import TopColumn from "./TopColumn";
+import ContainerForm from "./ContainerForm";
 
 // Images && icons
 import userAdd from "@/public/icons/user-add.png";
@@ -9,7 +9,7 @@ export const Login = () => {
     <section className="container-page-v2">
       <div className="mt-2.5 p-4 md:mb-[100px] rounded-[32px] bg-primary-color-P11">
         {/* Login if there's an account */}
-        <TopColumn />
+        <ContainerForm />
 
         {/* Register if user doesn't have an account */}
         <AccountPrompt

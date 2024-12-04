@@ -1,16 +1,15 @@
 import SectionHeader from "../Globals/SectionHeader";
-import Image from "next/image";
+import LeftForm from "./LeftForm";
 
 // Images && icons
 import qrCodeUser from "@/public/icons/qr-code-user.png";
 import lockedUser from "@/public/icons/locked-user.png";
 import sparkle from "@/public/icons/sparkle.png";
-import qrCode from "@/public/icons/qr-code.png";
-import Form from "./Form";
+import RightForm from "./RightForm";
 
-const TopColumn = () => {
+const ContainerForm = () => {
   return (
-    <article>
+    <form>
       {/* Heading Title */}
       <div className="p-4">
         <SectionHeader
@@ -37,7 +36,7 @@ const TopColumn = () => {
               titleText="Log in"
             />
 
-            <Form />
+            <LeftForm />
           </div>
 
           <div className="md:block hidden flex-1 w-full">
@@ -51,22 +50,12 @@ const TopColumn = () => {
               iconClassName="w-6"
             />
 
-            <div className="flex gap-4 mt-[50px]">
-              <div className="flex-1 bg-primary-color-P11 rounded-2xl p-4">
-                <Image alt="QR Code" className="w-full" src={qrCode} />
-              </div>
-
-              <div className="flex-1 py-4">
-                <p className="text-primary-color-P4 ST-3">
-                  Use the iPractis Mobile App sign in via QR code
-                </p>
-              </div>
-            </div>
+            <RightForm />
           </div>
         </div>
       </div>
-    </article>
+    </form>
   );
 };
 
-export default TopColumn;
+export default ContainerForm;

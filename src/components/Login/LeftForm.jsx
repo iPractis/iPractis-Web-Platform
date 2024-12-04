@@ -9,9 +9,9 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
-const Form = () => {
+const LeftForm = () => {
   return (
-    <form className="space-y-8">
+    <div className="space-y-8">
       <div className="flex gap-3 sm:mt-[50px] mt-8">
         <button
           className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
@@ -88,8 +88,8 @@ const Form = () => {
       <p className="text-primary-color-P4 text-center ST-4">
         I can’t sing in, help!
       </p>
-    </form>
+    </div>
   );
 };
 
-export default Form;
+export default LeftForm;
