@@ -7,7 +7,7 @@ const Nav = () => {
   const userInfo = {
     name: "Josh",
     email: "joshuadeveloper25@gmail.com",
-    access_token: true,
+    access_token: false,
   };
 
   return (
