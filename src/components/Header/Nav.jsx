@@ -27,11 +27,11 @@ export default Nav;
 
 const NavDesktop = () => {
   return (
-    <div className="flex justify-between items-end gap-1.5">
+    <div className="flex justify-between items-center gap-1.5">
       <div>
         <Link href="/">
           <Image
-            className="w-[113px]"
+            className="w-[113px] p-1.5"
             alt="Logo iPractis"
             src={logo}
             priority
@@ -56,17 +56,27 @@ const NavDesktop = () => {
         </Link>
 
         <button
-          className="btn btn-tertiary py-2 px-4 rounded-[10px]"
+          className="btn btn-tertiary rounded-[10px] h-[38px] w-[38px]"
           button="button"
         >
-          <Image alt="Theme Light" src={world} className="w-5" priority />
+          <Image
+            alt="Theme Light"
+            src={world}
+            className="w-5 mx-auto"
+            priority
+          />
         </button>
 
         <button
-          className="btn btn-tertiary py-2 px-4 rounded-[10px]"
+          className="btn btn-tertiary rounded-[10px] h-[38px] w-[38px]"
           button="button"
         >
-          <Image alt="Theme Light" src={themeLight} className="w-5" priority />
+          <Image
+            alt="Theme Light"
+            src={themeLight}
+            className="w-5 mx-auto"
+            priority
+          />
         </button>
       </div>
     </div>
