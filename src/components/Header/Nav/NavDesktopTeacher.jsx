@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images && icons
+import hamburguer from "@/public/icons/profile-settings-icon-transparent.png";
 import messageNotification from "@/public/icons/message-notifications.png";
 import tutor from "@/public/images/tutor-image-preview.png";
 import notification from "@/public/icons/notification.png";
 import themeLight from "@/public/icons/theme-light.png";
-import hamburguer from "@/public/icons/hamburguer.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import dashboard from "@/public/icons/dashboard.png";
 import teacher from "@/public/icons/teacher.png";

@@ -2,11 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images
+import hamburguer from "@/public/icons/profile-settings-icon-transparent.png";
 import messageNotification from "@/public/icons/message-notifications.png";
 import tutor from "@/public/images/tutor-image-preview.png";
 import ipractisIcon from "@/public/icons/ipractis-icon.png";
 import notification from "@/public/icons/notification.png";
-import hamburguer from "@/public/icons/hamburguer.png";
 
 const NavResponsiveTeacher = () => {
   return (
