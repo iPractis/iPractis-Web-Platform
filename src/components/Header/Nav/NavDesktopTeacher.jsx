@@ -18,7 +18,7 @@ const NavDesktopTeacher = () => {
   return (
     <div className="flex justify-between items-center gap-1.5">
       {/* Left Column */}
-      <div className="flex items-center gap-[50px]">
+      <div className="flex items-center lg:gap-[50px]">
         <Link href="/">
           <Image
             className="w-[113px] p-1.5"
@@ -30,7 +30,7 @@ const NavDesktopTeacher = () => {
 
         <div className="flex items-center gap-4">
           <Link
-            className="flex items-center px-4 py-2 gap-3 text-primary-color-P12 ST-SB-4"
+            className="flex items-center lg:px-4 lg:py-2 gap-3 text-primary-color-P12 ST-SB-4"
             href="#"
           >
             <Image
@@ -43,7 +43,7 @@ const NavDesktopTeacher = () => {
           </Link>
 
           <Link
-            className="flex items-center px-4 py-2 gap-1 text-primary-color-P12 ST-SB-4"
+            className="flex items-center lg:px-4 lg:py-2 gap-1 text-primary-color-P12 ST-SB-4"
             href="#"
           >
             <Image alt="Teacher icon" src={teacher} className="w-5" priority />{" "}

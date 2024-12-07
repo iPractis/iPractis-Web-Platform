@@ -90,6 +90,10 @@
   .container-page-v4 {
     @apply max-w-[476px] mx-auto md:px-0 px-2;
   }
+  
+  .container-page-v5 {
+    @apply max-w-[900px] mx-auto lg:px-0 px-10;
+  }
 
   .animation-fade {
     @apply transition-all duration-250 ease-out;
