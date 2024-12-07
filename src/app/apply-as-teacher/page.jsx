@@ -1,7 +1,7 @@
-const ApplyAsTeacher = () => {
-  return (
-    <div>ApplyAsTeacher</div>
-  )
-}
+import { ApplyAsATeacher as ApplyAsATeacherComponent } from "@/src/components/ApplyAsATeacher/index";
 
-export default ApplyAsTeacher
+const ApplyAsATeacher = () => {
+  return <ApplyAsATeacherComponent />;
+};
+
+export default ApplyAsATeacher;
