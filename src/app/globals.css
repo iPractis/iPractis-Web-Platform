@@ -56,6 +56,18 @@
     }
   }
 
+  .btn-quinary {
+    @apply bg-primary-color-P1 text-primary-color-P12;
+
+    &:hover {
+      @apply bg-secondary-color-S10 text-primary-color-P1;
+    }
+
+    &:active {
+      @apply bg-secondary-color-S8 text-primary-color-P1;
+    }
+  }
+
   .input-wrapper-ipractis {
     @apply bg-primary-color-P11 rounded-2xl h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
   }
