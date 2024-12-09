@@ -1,12 +1,12 @@
 "use client";
 
+import LeftColumnReasonsSelect from "./LeftColumnReasonsSelect";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import SectionHeader from "../Globals/SectionHeader";
 import { useState } from "react";
 import Image from "next/image";
 
 // Images && icons
-import circleHelpInput from "@/public/icons/circle-help-input.png";
 import circleAlert from "@/public/icons/circle-alert.png";
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
@@ -34,15 +34,7 @@ const Form = () => {
 
       <div className="my-[50px]">
         {/* Reason */}
-        <div>
-          <CustomNextUiInput
-            type="email"
-            placeholder="Select a reason"
-            startContent={
-              <Image className="w-9" src={circleHelpInput} alt="User Input" />
-            }
-          />
-        </div>
+        <LeftColumnReasonsSelect />
 
         {/* Contact email */}
         <div className="mt-2.5">

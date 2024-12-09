@@ -75,13 +75,21 @@
   .input-ipractis {
     @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 !important;
   }
-  
+
   .textarea-wrapper {
     @apply bg-primary-color-P11 rounded-2xl p-2.5 pe-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
   }
 
   .textarea-ipractis {
-    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 !important;
+    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 [&::-webkit-scrollbar]:[width:4px] [&::-webkit-scrollbar-thumb]:bg-primary-color-P4 [&::-webkit-scrollbar-thumb]:rounded-[5px] !important;
+  }
+
+  .select-wrapper-ipractis {
+    @apply bg-primary-color-P11 rounded-2xl animation-fade h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
+  }
+
+  .select-ipractis {
+    @apply placeholder:text-primary-color-P4 text-primary-color-P4 gap-4 ST-3 !important;
   }
 }
 
@@ -102,7 +110,7 @@
   .container-page-v4 {
     @apply max-w-[476px] mx-auto md:px-0 px-2;
   }
-  
+
   .container-page-v5 {
     @apply max-w-[900px] mx-auto lg:px-0 px-10;
   }
