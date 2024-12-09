@@ -15,6 +15,7 @@ const LeftColumnReasonsSelect = () => {
         onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
         placeholder="Select a reason"
         selectorIcon={<span></span>}
+        aria-label="reason"
         isOpen={isOpen}
         startContent={
           <Image className="w-9" src={circleHelpInput} alt="User Input" />
@@ -22,7 +23,10 @@ const LeftColumnReasonsSelect = () => {
         classNames={{
           trigger: ["select-wrapper-ipractis"],
           innerWrapper: ["select-ipractis"],
-          value: ["group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3"]
+          value: [
+            "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+          ],
+          listbox: ["text-primary-color-P4"],
         }}
       >
         {["Reason 1", "Reason 2"].map((reason) => (
