@@ -6,7 +6,7 @@ import teacherOnline from "@/public/images/teacher-online.jpg";
 import twoUsersSpeaking from "@/public/icons/2-users-speaking.png";
 import userParachute from "@/public/icons/user-parachute.png";
 import starBadge from "@/public/icons/star-badge.png";
-import sparkle from "@/public/icons/sparkle.png";
+import { SparkleIcon } from "../../Icons";
 import Image from "next/image";
 
 const LessonsSupport = () => {
@@ -14,9 +14,7 @@ const LessonsSupport = () => {
     <section className="bg-primary-color-P11">
       <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
-          iconSrc={sparkle}
-          iconClassName="w-[20px]"
-          iconAlt={"Sparkle Icon"}
+          titleIcon={<SparkleIcon />}
           titleText="Discover how online lessons can support You"
           descriptionText="From school support to professional skill improvement, find lessons that fit your needs and learning style."
         />

@@ -1,11 +1,7 @@
+import { PadLockUserIcon, QRCodeUserIcon, SparkleIcon } from "../Icons";
 import SectionHeader from "../Globals/SectionHeader";
-import LeftForm from "./LeftForm";
-
-// Images && icons
-import qrCodeUser from "@/public/icons/qr-code-user.png";
-import lockedUser from "@/public/icons/locked-user.png";
-import sparkle from "@/public/icons/sparkle.png";
 import RightForm from "./RightForm";
+import LeftForm from "./LeftForm";
 
 const ContainerForm = () => {
   return (
@@ -14,11 +10,9 @@ const ContainerForm = () => {
       <div className="p-4">
         <SectionHeader
           descriptionText="Sign in to continue your journey with iPractis."
+          titleIcon={<SparkleIcon />}
           titleClassName="MT-SB-1"
           titleText="Welcome back"
-          iconClassName="w-[20px]"
-          iconAlt={"Sparkle Icon"}
-          iconSrc={sparkle}
         />
       </div>
 
@@ -28,11 +22,9 @@ const ContainerForm = () => {
           <div className="flex-1 w-full">
             <SectionHeader
               descriptionText="Enter your account details to access to your account."
-              iconAlt={"Locked User Icon"}
+              titleIcon={<PadLockUserIcon />}
               descriptionClassName="mt-1"
-              iconClassName="w-[19px]"
               titleClassName="MT-SB-1"
-              iconSrc={lockedUser}
               titleText="Log in"
             />
 
@@ -43,11 +35,9 @@ const ContainerForm = () => {
             <SectionHeader
               descriptionText="Log in with a QR code or a sign-in code."
               titleText="Alternative Login Methods"
-              iconAlt={"QR Code User Icon"}
+              titleIcon={<QRCodeUserIcon />}
               descriptionClassName="mt-1"
               titleClassName="MT-SB-1"
-              iconSrc={qrCodeUser}
-              iconClassName="w-6"
             />
 
             <RightForm />

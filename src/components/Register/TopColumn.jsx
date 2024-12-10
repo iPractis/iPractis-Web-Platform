@@ -1,8 +1,6 @@
 import SectionHeader from "../Globals/SectionHeader";
+import { SparkleIcon } from "../Icons";
 import Form from "./Form";
-
-// Images && icons
-import sparkle from "@/public/icons/sparkle.png";
 
 const TopColumn = () => {
   return (
@@ -12,10 +10,8 @@ const TopColumn = () => {
         <SectionHeader
           descriptionText="Start using iPractis by signing up quickly."
           titleText="Create an account"
+          titleIcon={<SparkleIcon />}
           titleClassName="MT-SB-1"
-          iconClassName="w-[20px]"
-          iconAlt={"Sparkle Icon"}
-          iconSrc={sparkle}
         />
       </div>
 

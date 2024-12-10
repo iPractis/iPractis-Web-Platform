@@ -4,10 +4,10 @@ import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
+import { UserAddCircleIcon } from "../Icons";
 import { useState } from "react";
 import Image from "next/image";
 
-import userAddCircle from "@/public/icons/user-add-circle.png";
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
@@ -39,17 +39,15 @@ const Form = () => {
       setSecurityLevel(4);
     }
   };
-  
+
   return (
     <form className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
       <SectionHeader
         descriptionText="Manually enter your details to create a secure account."
         titleText="Create an account using ID"
+        titleIcon={<UserAddCircleIcon />}
         descriptionClassName="mt-1"
-        iconAlt={"Add User Icon"}
-        iconClassName="w-[24px]"
         titleClassName="MT-SB-1"
-        iconSrc={userAddCircle}
       />
 
       <div className="sm:space-y-[50px] space-y-[32px]">

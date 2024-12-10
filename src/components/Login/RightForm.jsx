@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+// Images && icons
 import qrCode from "@/public/icons/qr-code.png";
 
 const RightForm = () => {

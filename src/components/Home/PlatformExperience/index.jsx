@@ -1,8 +1,8 @@
 import SectionHeader from "../../Globals/SectionHeader";
 import PlatformButton from "../../Globals/PlatformButton";
+import { CheckedShieldIcon } from "../../Icons";
 
 // Images && icons
-import checkedShield from "@/public/icons/checked-shield-2.png";
 import microsoftStore from "@/public/icons/microsoft.png";
 import googlePlay from "@/public/icons/google-play.png";
 import apple from "@/public/icons/apple.png";
@@ -12,12 +12,11 @@ const PlatformExperience = () => {
     <section className="bg-primary-color-P1">
       <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
-          iconSrc={checkedShield}
-          iconClassName="w-4"
-          iconAlt={"Checked Shield Icon"}
-          titleText="Cross platform experience"
           descriptionText="Our platform provides a secure, monitored space with verified tutors, ensuring a safe and supportive learning experience for all."
-          theme="dark"
+          titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P12"} />}
+          descriptionClassName="mt-1.5 text-white"
+          titleText="Cross platform experience"
+          titleClassName="MT-SB-2 text-white"
         />
 
         <div className="flex flex-wrap items-center justify-center gap-4 mt-[30px]">

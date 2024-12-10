@@ -1,8 +1,6 @@
 import CustomNextUiTextarea from "../Globals/CustomNextUiTextarea";
 import SectionHeader from "../Globals/SectionHeader";
-
-// Icons && images
-import wrench from "@/public/icons/wrench.png";
+import { WrenchIcon } from "../Icons";
 
 const RightColumn = () => {
   return (
@@ -11,10 +9,8 @@ const RightColumn = () => {
         descriptionText="Briefly explain the problem to help us assist you."
         titleText="Describe Your Issue"
         descriptionClassName="mt-1"
+        titleIcon={<WrenchIcon />}
         titleClassName="MT-SB-1"
-        iconAlt={"Wrench Icon"}
-        iconClassName="w-6"
-        iconSrc={wrench}
       />
 
       <div className="my-[50px] w-full">

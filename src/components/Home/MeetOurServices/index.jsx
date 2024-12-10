@@ -4,7 +4,7 @@ import SectionHeader from "../../Globals/SectionHeader";
 import womanWorking from "@/public/images/working-woman.jpg";
 import twoUsers from "@/public/icons/2-users.png";
 import library from "@/public/icons/library.png";
-import sparkle from "@/public/icons/sparkle.png";
+import { SparkleIcon } from "../../Icons";
 import Image from "next/image";
 
 const MeetOurServices = () => {
@@ -12,13 +12,11 @@ const MeetOurServices = () => {
     <main className="bg-primary-color-P11">
       <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
-          iconSrc={sparkle}
-          iconClassName="w-[20px]"
-          iconAlt={"Sparkle Icon"}
+          titleIcon={<SparkleIcon />}
           titleText="Meet our services"
           descriptionText="Start learning today"
         />
-        
+
         <article className="flex flex-col-reverse md:flex-row sm:gap-4 gap-[30px] mt-[30px]">
           <div className="flex-1">
             <div className="flex flex-col h-full sm:gap-4 gap-[30px] justify-between">

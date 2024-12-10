@@ -3,13 +3,12 @@ import Link from "next/link";
 
 const AccountPrompt = ({
   accountPromptPosition = "horizontal",
-  titleText,
   descText,
-  iconAlt,
-  iconSrc,
   hrefLink,
   textLink,
   btnColor,
+  titleIcon,
+  titleText,
 }) => {
   return (
     <div className="bg-primary-color-P12 p-8 mt-4 rounded-2xl">
@@ -25,10 +24,8 @@ const AccountPrompt = ({
             descriptionClassName="mt-1"
             descriptionText={descText}
             titleClassName="MT-SB-1"
-            iconClassName="w-[24px]"
+            titleIcon={titleIcon}
             titleText={titleText}
-            iconAlt={iconAlt}
-            iconSrc={iconSrc}
           />
         </div>
 

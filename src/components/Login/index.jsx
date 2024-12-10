@@ -1,8 +1,6 @@
 import AccountPrompt from "../Globals/AccountPrompt";
 import ContainerForm from "./ContainerForm";
-
-// Images && icons
-import userAdd from "@/public/icons/user-add.png";
+import { UserAddIcon } from "../Icons";
 
 export const Login = () => {
   return (
@@ -15,11 +13,10 @@ export const Login = () => {
         <AccountPrompt
           titleText={`You don't have an account yet?`}
           descText={'Press on "Register" to create your account.'}
-          iconAlt={"User Add Icon"}
+          titleIcon={<UserAddIcon />}
           btnColor={"btn-primary"}
           hrefLink={"/register"}
           textLink={"Register"}
-          iconSrc={userAdd}
         />
       </div>
     </section>

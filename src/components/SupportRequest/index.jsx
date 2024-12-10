@@ -1,8 +1,6 @@
 import SectionHeader from "../Globals/SectionHeader";
+import { SparkleIcon } from "../Icons";
 import Form from "./Form";
-
-// Icons && images
-import sparkle from "@/public/icons/sparkle.png";
 
 export const SupportRequest = () => {
   return (
@@ -12,11 +10,9 @@ export const SupportRequest = () => {
         <div className="p-4">
           <SectionHeader
             descriptionText="We are sorry to see you here, we hope your problem will be resolved soon."
-            titleClassName="MT-SB-1"
             titleText="Account support service"
-            iconClassName="w-[20px]"
-            iconAlt={"Sparkle Icon"}
-            iconSrc={sparkle}
+            titleIcon={<SparkleIcon />}
+            titleClassName="MT-SB-1"
           />
         </div>
 

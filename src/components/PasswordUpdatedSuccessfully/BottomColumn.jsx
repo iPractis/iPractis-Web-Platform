@@ -1,8 +1,6 @@
 import SectionHeader from "@/src/components/Globals/SectionHeader";
+import { PadLockOpenedIcon } from "../Icons";
 import Link from "next/link";
-
-// Images && icons
-import lockOpened from "@/public/icons/locked-opened.png";
 
 const BottomColumn = () => {
   return (
@@ -10,11 +8,9 @@ const BottomColumn = () => {
       <SectionHeader
         descriptionText={`Your password has been updated. You can now log in with your new password.`}
         titleText={`Password Changed Successfully`}
+        titleIcon={<PadLockOpenedIcon />}
         descriptionClassName="mt-1"
-        iconAlt={"Lock Opened Icon"}
-        iconClassName="w-[16px]"
         titleClassName="MT-SB-1"
-        iconSrc={lockOpened}
       />
 
       <div className="mt-[50px]">

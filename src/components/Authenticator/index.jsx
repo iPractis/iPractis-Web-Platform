@@ -1,8 +1,6 @@
 import SectionHeader from "../Globals/SectionHeader";
+import { SparkleIcon } from "../Icons";
 import Form from "./Form";
-
-// Icons && images
-import sparkle from "@/public/icons/sparkle.png";
 
 export const Authenticator = () => {
   return (
@@ -15,9 +13,7 @@ export const Authenticator = () => {
               descriptionText="Sign in to continue your journey with iPractis."
               titleClassName="MT-SB-1"
               titleText="Welcome back"
-              iconClassName="w-[20px]"
-              iconAlt={"Sparkle Icon"}
-              iconSrc={sparkle}
+              titleIcon={<SparkleIcon />}
             />
           </div>
 

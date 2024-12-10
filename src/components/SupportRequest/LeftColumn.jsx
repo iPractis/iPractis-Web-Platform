@@ -3,11 +3,11 @@
 import LeftColumnReasonsSelect from "./LeftColumnReasonsSelect";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import SectionHeader from "../Globals/SectionHeader";
+import { CircleImportantIcon } from "../Icons";
 import { useState } from "react";
 import Image from "next/image";
 
 // Images && icons
-import circleAlert from "@/public/icons/circle-alert.png";
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
 
@@ -24,12 +24,10 @@ const Form = () => {
     <article className="flex-1 w-full">
       <SectionHeader
         descriptionText="We need this information to assist you effectively"
-        iconAlt={"Locked User Icon"}
+        titleIcon={<CircleImportantIcon />}
         descriptionClassName="mt-1"
-        iconClassName="w-[24px]"
         titleClassName="MT-SB-1"
         titleText="Contact ID"
-        iconSrc={circleAlert}
       />
 
       <div className="my-[50px]">

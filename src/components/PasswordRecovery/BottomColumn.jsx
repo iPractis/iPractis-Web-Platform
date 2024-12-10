@@ -1,8 +1,6 @@
 import SectionHeader from "../Globals/SectionHeader";
+import { PadLockUserIcon } from "../Icons";
 import Form from "./Form";
-
-// Images && icons
-import lockedUser from "@/public/icons/locked-user.png";
 
 const BottomColumn = () => {
   return (
@@ -11,10 +9,8 @@ const BottomColumn = () => {
         descriptionText={`Please enter your email address to receive a password recovery link.`}
         titleText={`Request password changes`}
         descriptionClassName="mt-1"
-        iconAlt={"Locked User Icon"}
-        iconClassName="w-[19px]"
+        titleIcon={<PadLockUserIcon />}
         titleClassName="MT-SB-1"
-        iconSrc={lockedUser}
       />
 
       <Form />

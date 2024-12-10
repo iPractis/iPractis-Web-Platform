@@ -1,8 +1,6 @@
 import AccountPrompt from "../Globals/AccountPrompt";
+import { PadLockUserIcon } from "../Icons";
 import TopColumn from "./TopColumn";
-
-// Images && icons
-import lockedUser from "@/public/icons/locked-user.png";
 
 export const Register = () => {
   return (
@@ -16,11 +14,10 @@ export const Register = () => {
           titleText={`You already have an account?`}
           descText={'Press on "Log in" to access to your account.'}
           accountPromptPosition="vertical"
-          iconAlt={"Locked User Icon"}
+          titleIcon={<PadLockUserIcon />}
           btnColor={"btn-primary"}
           hrefLink={"/login"}
           textLink={"Log in"}
-          iconSrc={lockedUser}
         />
       </div>
     </section>

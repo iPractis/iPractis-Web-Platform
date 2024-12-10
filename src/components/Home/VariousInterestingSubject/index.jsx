@@ -1,17 +1,13 @@
 import { variousInterestingSubjects } from "@/src/data/dataHome";
 import SectionHeader from "../../Globals/SectionHeader";
-
-// Icons && images
-import badge from "@/public/icons/badge.png";
+import { BadgeStarIcon } from "../../Icons";
 import Image from "next/image";
 
 const VariousInterestingSubject = () => {
   return (
     <section className="container-page-v1 md:my-[60px] my-10">
       <SectionHeader
-        iconSrc={badge}
-        iconClassName="w-[24px]"
-        iconAlt={"Badge Icon"}
+        titleIcon={<BadgeStarIcon />}
         titleText="Various interesting subject"
         descriptionText="Start learning today"
       />

@@ -1,17 +1,13 @@
 import { easyStepsGetStarted } from "@/src/data/dataHome";
 import SectionHeader from "../../Globals/SectionHeader";
-
-// Icons && images
-import walking from "@/public/icons/walking.png";
+import { UserWalkingIcon } from "../../Icons";
 import Image from "next/image";
 
 const EasyStepsGetStarted = () => {
   return (
     <section className="container-page-v1 md:my-[60px] my-10">
       <SectionHeader
-        iconSrc={walking}
-        iconClassName="w-[14px]"
-        iconAlt={"User Walking Icon"}
+        titleIcon={<UserWalkingIcon />}
         titleText="Only few easy steps to get started"
         descriptionText="In only four words, choose, schedule, pay, start."
       />

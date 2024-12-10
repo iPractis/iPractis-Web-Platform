@@ -1,5 +1,5 @@
 import { Select, SelectItem } from "@nextui-org/react";
-import { ChevronDown } from "../Icons";
+import { ChevronDownIcon } from "../Icons";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -39,7 +39,7 @@ const LeftColumnReasonsSelect = () => {
         onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
-        <ChevronDown />
+        <ChevronDownIcon />
       </button>
     </div>
   );
