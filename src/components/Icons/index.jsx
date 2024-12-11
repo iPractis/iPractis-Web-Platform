@@ -436,6 +436,28 @@ export const UserIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const UserBigIcon = ({ fillColor }) => (
+  <svg
+    width="50"
+    height="50"
+    viewBox="0 0 50 50"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <ellipse
+      cx="25.0013"
+      cy="12.5001"
+      rx="8.33333"
+      ry="8.33333"
+      className={fillColor}
+    />
+    <path
+      d="M41.6673 38.0042C41.6673 46.3368 33.9585 45.8274 24.7537 45.8274C15.549 45.8274 8.33398 46.3368 8.33398 38.0042C8.33398 29.6716 15.7959 22.9167 25.0007 22.9167C34.2054 22.9167 41.6673 29.6716 41.6673 38.0042Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const QRCodeUserIcon = () => (
   <svg
     width="24"

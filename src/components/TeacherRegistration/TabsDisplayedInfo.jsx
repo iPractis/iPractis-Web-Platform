@@ -3,11 +3,11 @@ import TabProfile from "./TabProfile";
 
 const TabsDisplayedInfo = () => {
   return (
-    <form className="p-4 rounded-[32px] space-y-[50px] bg-primary-color-P11">
+    <form className="p-4 rounded-[32px] bg-primary-color-P11">
       <TabProfile />
 
       <DualButton
-        dualButtonWrapper={"gap-[50px]"}
+        dualButtonWrapper={"gap-[50px] mt-[50px]"}
         leftButtonText={"Back"}
         rightButtonText={"Save, and continue"}
         rightButtonType={"submit"}
