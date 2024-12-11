@@ -3,6 +3,21 @@ import SectionHeader from "../Globals/SectionHeader";
 import { DocumentIcon } from "../Icons";
 
 const TabsButtons = ({ activeTab, setActiveTab }) => {
+  // We do this because texts changes at the beggining and at the end of form submission
+  const sectionHeaderContent = [
+    {
+      titleText: "Complete the application form",
+      descriptionText:
+        "Fill the form with all the necessary information, we will review them as soon as possible.",
+    },
+
+    {
+      titleText: "Form completed and send seccesfully",
+      descriptionText:
+        "Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we’ll update you as soon as possible. Thank you for your patience!",
+    },
+  ];
+
   return (
     <section className="p-4 rounded-[32px] bg-primary-color-P11">
       <div
@@ -34,8 +49,8 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
-        descriptionText="Fill the form with all the necessary information, we will review them as soon as possible."
-        titleText="Complete the application form"
+        titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
+        descriptionText={activeTab < 4 ? sectionHeaderContent[0]?.descriptionText : sectionHeaderContent[1]?.descriptionText}
         wrapperSectionHeaderClassName={"p-4"}
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"
