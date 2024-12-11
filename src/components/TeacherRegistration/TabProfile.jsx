@@ -1,9 +1,9 @@
 import SectionHeader from "../Globals/SectionHeader";
 import { UserBigIcon, UserIcon } from "../Icons";
 
-const TabProfile = () => {
+const TabProfile = ({ activeTab }) => {
   return (
-    <div>
+    <div className={`${activeTab !== 0 && "hidden"}`}>
       <SectionHeader
         descriptionText="Provide your personal details and complete your profile to start your application process."
         titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
@@ -39,7 +39,10 @@ const TabProfile = () => {
               <li>You must be clearly visible and centered in the picture.</li>
               <li>Use a plain background to avoid distractions.</li>
               <li>The picture should be a recent, high-quality image.</li>
-              <li>Ensure good lighting so your face is well-lit and clearly visible.</li>
+              <li>
+                Ensure good lighting so your face is well-lit and clearly
+                visible.
+              </li>
               <li>Avoid using filters or overly edited images.</li>
             </ul>
           </div>

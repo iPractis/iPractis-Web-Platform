@@ -14,7 +14,7 @@ export const TeacherRegistration = () => {
       <TabsButtons setActiveTab={setActiveTab} activeTab={activeTab} />
 
       {/* Tabs displayed info */}
-      <TabsDisplayedInfo />
+      <TabsDisplayedInfo setActiveTab={setActiveTab} activeTab={activeTab} />
     </main>
   );
 };
