@@ -39,7 +39,11 @@ const TopColumn = () => {
           }
         />
 
-        <DualButton leftButtonText={"Cancel"} rightButtonText={"Log in"} />
+        <DualButton
+          leftButtonText={"Cancel"}
+          rightButtonText={"Log in"}
+          rightButtonType={"submit"}
+        />
 
         <p className="text-primary-color-P4 ST-4">
           Haven’t receive the code? 3:00 Minutes

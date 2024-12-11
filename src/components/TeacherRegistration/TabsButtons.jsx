@@ -4,7 +4,7 @@ import { DocumentIcon } from "../Icons";
 
 const TabsButtons = ({ activeTab, setActiveTab }) => {
   return (
-    <article className="p-4 rounded-[32px] bg-primary-color-P11">
+    <section className="p-4 rounded-[32px] bg-primary-color-P11">
       <div
         className={`flex items-center gap-2.5 rounded-2xl py-2 px-1.5 mb-4 bg-primary-color-P1`}
       >
@@ -40,7 +40,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"
       />
-    </article>
+    </section>
   );
 };
 

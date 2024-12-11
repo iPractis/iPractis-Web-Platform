@@ -1,6 +1,13 @@
-const DualButton = ({ leftButtonText, rightButtonText }) => {
+import { twMerge } from "tailwind-merge";
+
+const DualButton = ({
+  leftButtonText,
+  rightButtonText,
+  rightButtonType,
+  dualButtonWrapper,
+}) => {
   return (
-    <div className="flex gap-4 items-center">
+    <div className={twMerge("flex gap-4 items-center", dualButtonWrapper)}>
       <button
         type="button"
         className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4"
@@ -10,7 +17,7 @@ const DualButton = ({ leftButtonText, rightButtonText }) => {
 
       <button
         className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
-        type="submit"
+        type={rightButtonType}
       >
         {rightButtonText}
       </button>

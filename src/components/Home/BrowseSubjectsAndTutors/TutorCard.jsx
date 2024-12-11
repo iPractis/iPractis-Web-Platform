@@ -49,7 +49,7 @@ const TutorCard = ({ subjectAndTutor }) => {
                 />
               </div>
 
-              <div className="absolute cursor-pointer left-4 bottom-4 flex items-center justify-center text-white">
+              <div className="absolute cursor-pointer left-4 bottom-4 flex items-center justify-center text-primary-color-P12">
                 <Image
                   alt={"Play Video Icon"}
                   src={playVideo}

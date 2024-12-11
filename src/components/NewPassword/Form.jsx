@@ -72,6 +72,7 @@ const Form = () => {
       <DualButton
         leftButtonText={"Cancel"}
         rightButtonText={"Change password"}
+        rightButtonType="submit"
       />
     </form>
   );

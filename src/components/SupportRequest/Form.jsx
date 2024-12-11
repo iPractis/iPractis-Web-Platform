@@ -11,7 +11,11 @@ const Form = () => {
         <RightColumn />
       </div>
 
-      <DualButton leftButtonText={"Cancel"} rightButtonText={"Send"} />
+      <DualButton
+        leftButtonText={"Cancel"}
+        rightButtonText={"Send"}
+        rightButtonType={"submit"}
+      />
     </form>
   );
 };

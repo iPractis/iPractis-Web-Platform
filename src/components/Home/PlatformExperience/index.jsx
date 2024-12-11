@@ -14,9 +14,9 @@ const PlatformExperience = () => {
         <SectionHeader
           descriptionText="Our platform provides a secure, monitored space with verified tutors, ensuring a safe and supportive learning experience for all."
           titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P12"} />}
-          descriptionClassName="mt-1.5 text-white"
+          descriptionClassName="mt-1.5 text-primary-color-P12"
+          titleClassName="MT-SB-2 text-primary-color-P12"
           titleText="Cross platform experience"
-          titleClassName="MT-SB-2 text-white"
         />
 
         <div className="flex flex-wrap items-center justify-center gap-4 mt-[30px]">
