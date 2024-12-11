@@ -8,30 +8,29 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       <div
         className={`flex items-center gap-2.5 rounded-2xl py-2 px-1.5 mb-4 bg-primary-color-P1`}
       >
-        {tabsButtons.map((tabButton, tabIndex) => {
-          return (
-            <button
-              key={tabIndex}
-              className={`w-full flex items-center py-2 px-2 rounded-lg ST-SB-4 ${
-                activeTab === tabIndex ? "btn btn-tertiary" : "btn btn-primary"
-              }`}
-              onClick={() => setActiveTab(tabIndex)}
-            >
-              <span className="me-auto self-start">
-                <tabButton.Icon
-                  fillColor={
-                    activeTab === tabIndex
-                      ? "fill-primary-color-P1"
-                      : "fill-primary-color-P12"
-                  }
-                />
-              </span>
-              <span className="w-full text-center">
-                {tabButton?.textButton}
-              </span>
-            </button>
-          );
-        })}
+        {tabsButtons.map((TabButton, TabIndex) => (
+          <button
+            key={TabIndex}
+            className={`w-full flex items-center py-2 px-2 rounded-lg ST-SB-4 ${
+              activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
+            }`}
+            onClick={() => setActiveTab(TabIndex)}
+          >
+            <span className="md:me-auto mx-auto self-start">
+              <TabButton.Icon
+                fillColor={
+                  activeTab === TabIndex
+                    ? "fill-primary-color-P1"
+                    : "fill-primary-color-P12"
+                }
+              />
+            </span>
+
+            <span className="md:block hidden w-full text-center">
+              {TabButton?.textButton}
+            </span>
+          </button>
+        ))}
       </div>
 
       <SectionHeader
