@@ -24,33 +24,32 @@ const NavDesktopTeacher = () => {
   return (
     <div className="flex justify-between items-center gap-1.5">
       {/* Left Column */}
-      <div className="flex items-center lg:gap-[50px]">
-        <Link href="/">
-          <Image
-            className="w-[113px] p-1.5"
-            alt="Logo iPractis"
-            src={logo}
-            priority
-          />
+      <Link href="/">
+        <Image
+          className="w-[113px] p-1.5"
+          alt="Logo iPractis"
+          src={logo}
+          priority
+        />
+      </Link>
+
+      {/* Center Column */}
+      <div className="flex items-center gap-4">
+        <Link
+          className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-3 ST-SB-4 group"
+          href="#"
+        >
+          <DashboardIcon />
+          Dashboard
         </Link>
 
-        <div className="flex items-center gap-4">
-          <Link
-            className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-3 ST-SB-4 group"
-            href="#"
-          >
-            <DashboardIcon />
-            Dashboard
-          </Link>
-
-          <Link
-            className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-1 ST-SB-4 group"
-            href="#"
-          >
-            <UserScreenIcon />
-            Find a teacher
-          </Link>
-        </div>
+        <Link
+          className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-1 ST-SB-4 group"
+          href="#"
+        >
+          <UserScreenIcon />
+          Find a teacher
+        </Link>
       </div>
 
       {/* Right Column */}
@@ -81,7 +80,7 @@ const NavDesktopTeacher = () => {
           <div className="flex px-4 py-2">
             <button className="relative">
               <NewMessageIcon />
-              
+
               <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
             </button>
           </div>
