@@ -119,6 +119,10 @@
     @apply max-w-[1200px] mx-auto sm:mt-[50px] mt-10 sm:mb-[100px] mb-10 xl:px-0 px-10;
   }
 
+  .container-page-v7 {
+    @apply max-w-[1006px] mx-auto mb-[100px];
+
+  }
   .animation-fade {
     @apply transition-all duration-250 ease-out;
   }
