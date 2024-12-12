@@ -77,7 +77,7 @@
   }
 
   .input-label-ipractis {
-    @apply text-primary-color-P4 pb-2 MT-SB-1 !important; 
+    @apply text-primary-color-P4 MT-SB-1 -top-7 translate-y-0 !important; 
   }
 
   .textarea-wrapper {

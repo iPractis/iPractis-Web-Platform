@@ -1,7 +1,7 @@
 import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import SectionHeader from "../Globals/SectionHeader";
-import { UserBigIcon, UserIcon } from "../Icons";
+import { ThreeUsersIcon, UserBigIcon, UserIcon } from "../Icons";
 
 const TabProfile = ({ activeTab }) => {
   return (
@@ -62,36 +62,47 @@ const TabProfile = ({ activeTab }) => {
 
           <div className="flex items-start gap-[50px]">
             <div className="flex-1">
-              <CustomNextUiInput
-                type="text"
-                placeholder="Enter your first name"
-                label={"First name"}
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-              />
+              <div>
+                <CustomNextUiInput
+                  type="text"
+                  placeholder="Enter your first name"
+                  label={"First name"}
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                />
+              </div>
 
-              <CustomNextUiInput
-                type="text"
-                placeholder="Enter your middle name (Optional)"
-                label={"Middle name"}
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-              />
+              <div className="my-12">
+                <CustomNextUiInput
+                  type="text"
+                  placeholder="Enter your middle name (Optional)"
+                  label={"Middle name"}
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                />
+              </div>
 
-              <CustomNextUiInput
-                type="text"
-                placeholder="Enter your last name"
-                label={"Last name"}
-                labelPlacement="outside"
-              />
+              <div>
+                <CustomNextUiInput
+                  type="text"
+                  placeholder="Enter your last name"
+                  label={"Last name"}
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
+                    </InputBGWrapperIcon>
+                  }
+                />
+              </div>
             </div>
 
             <div className="flex-1">
