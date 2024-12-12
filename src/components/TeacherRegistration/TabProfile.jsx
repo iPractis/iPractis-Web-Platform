@@ -1,3 +1,4 @@
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import SectionHeader from "../Globals/SectionHeader";
 import { UserBigIcon, UserIcon } from "../Icons";
@@ -66,13 +67,39 @@ const TabProfile = ({ activeTab }) => {
                 placeholder="Enter your first name"
                 label={"First name"}
                 labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
+              />
+
+              <CustomNextUiInput
+                type="text"
+                placeholder="Enter your middle name (Optional)"
+                label={"Middle name"}
+                labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
+              />
+
+              <CustomNextUiInput
+                type="text"
+                placeholder="Enter your last name"
+                label={"Last name"}
+                labelPlacement="outside"
               />
             </div>
 
             <div className="flex-1">
               <CustomNextUiInput
                 type="text"
-                placeholder="Enter your first name"
+                placeholder="Enter your last name"
+                label={"Last name"}
+                labelPlacement="outside"
               />
             </div>
           </div>
