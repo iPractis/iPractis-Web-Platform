@@ -4,11 +4,8 @@ import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Globals/DualButton";
+import { AsterisksBGIcon } from "../Icons";
 import { useState } from "react";
-import Image from "next/image";
-
-// Icons && images
-import passwordStars from "@/public/icons/password-stars.png";
 
 const Form = () => {
   const [password, setPassword] = useState("");

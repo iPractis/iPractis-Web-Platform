@@ -76,6 +76,10 @@
     @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 !important;
   }
 
+  .input-label-ipractis {
+    @apply text-primary-color-P4 pb-2 MT-SB-1 !important; 
+  }
+
   .textarea-wrapper {
     @apply bg-primary-color-P11 rounded-2xl p-2.5 pe-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
   }

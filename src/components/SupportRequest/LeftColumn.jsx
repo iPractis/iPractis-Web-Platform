@@ -38,7 +38,6 @@ const Form = () => {
         <div className="mt-2.5">
           <CustomNextUiInput
             type="email"
-            maxLength={32}
             placeholder="Contact Email"
             startContent={
               <Image className="w-9" src={emailInput} alt="Email Input" />
@@ -50,7 +49,6 @@ const Form = () => {
         <div className="mt-2.5">
           <CustomNextUiInput
             type="email"
-            maxLength={32}
             placeholder="Enter email related to your account"
             startContent={
               <Image className="w-9" src={emailInput} alt="Email Input" />

@@ -1,5 +1,5 @@
 import SectionHeader from "../Globals/SectionHeader";
-import { HelpIcon, PadLockIcon } from "../Icons";
+import { HelpIcon, PadLockClosedIcon } from "../Icons";
 import Link from "next/link";
 
 const BottomColumn = () => {
@@ -19,7 +19,7 @@ const BottomColumn = () => {
           href={"/password-recovery"}
         >
           <div className="flex-1">
-            <PadLockIcon fillColor={"fill-primary-color-P12"} />
+            <PadLockClosedIcon fillColor={"fill-primary-color-P12"} />
           </div>
 
           <span className="sm:flex-[85%] flex-[80%]">Password Recovery</span>

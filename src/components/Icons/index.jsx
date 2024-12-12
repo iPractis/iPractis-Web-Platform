@@ -256,7 +256,7 @@ export const SparkleIcon = () => (
   </svg>
 );
 
-export const PadLockIcon = ({ fillColor, versionIcon = 1 }) =>
+export const PadLockClosedIcon = ({ fillColor, versionIcon = 1 }) =>
   versionIcon === 1 ? (
     <svg
       xmlns="http://www.w3.org/2000/svg"

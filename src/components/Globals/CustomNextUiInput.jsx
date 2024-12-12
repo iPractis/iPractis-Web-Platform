@@ -8,6 +8,7 @@ const CustomNextUiInput = extendVariants(Input, {
       modern: {
         inputWrapper: ["input-wrapper-ipractis"],
         input: ["input-ipractis"],
+        label: ["input-label-ipractis"]
       },
     },
   },

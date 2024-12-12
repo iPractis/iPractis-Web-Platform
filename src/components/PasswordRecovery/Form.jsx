@@ -1,8 +1,5 @@
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import Image from "next/image";
-
-// Icons && images
-import email from "@/public/icons/email.png";
+import { EmailBGIcon } from "../Icons";
 
 const Form = () => {
   return (
@@ -11,7 +8,7 @@ const Form = () => {
         <CustomNextUiInput
           type="email"
           placeholder="Enter your email address"
-          startContent={<Image className="w-9" src={email} alt="Email Input" />}
+          startContent={<EmailBGIcon fillColor={"fill-primary-color-P4"} />}
         />
       </div>
 
