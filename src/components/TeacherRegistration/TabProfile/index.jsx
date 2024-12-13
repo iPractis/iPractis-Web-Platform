@@ -1,6 +1,14 @@
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import SectionHeader from "../Globals/SectionHeader";
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from "@nextui-org/react";
+
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import SectionHeader from "../../Globals/SectionHeader";
 import Image from "next/image";
 import {
   ChevronDownSmallIcon,
@@ -9,10 +17,10 @@ import {
   ThreeUsersIcon,
   UserBigIcon,
   UserIcon,
-} from "../Icons";
+} from "../../Icons";
 
 import ukFlag from "@/public/flags/united-kingdom.png";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 const TabProfile = ({ activeTab }) => {
   const [openCountrySelect, setOpenCountrySelect] = useState(false);
@@ -151,7 +159,7 @@ const TabProfile = ({ activeTab }) => {
                         <FlagIcon />
                       </InputBGWrapperIcon>
 
-                      <InputBGWrapperIcon
+                      {/* <InputBGWrapperIcon
                         className={
                           "flex justify-between gap-1 cursor-pointer w-[60px] h-[36px]"
                         }
@@ -166,9 +174,10 @@ const TabProfile = ({ activeTab }) => {
                         <div className="mx-auto">
                           <ChevronDownSmallIcon />
                         </div>
-                      </InputBGWrapperIcon>
+                      </InputBGWrapperIcon> */}
+                      <DropdownCountries />
 
-                      {openCountrySelect && "Listo"}
+                      {/* {openCountrySelect && "Listo"} */}
                     </span>
                   }
                 />
@@ -182,3 +191,36 @@ const TabProfile = ({ activeTab }) => {
 };
 
 export default TabProfile;
+
+const DropdownCountries = () => {
+  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
+
+  const selectedValue = useMemo(
+    () => Array.from(selectedKeys).join(", ").replace(/_/g, ""),
+    [selectedKeys]
+  );
+
+  return (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button className="capitalize" variant="bordered">
+          {selectedValue}
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
+        disallowEmptySelection
+        aria-label="Single selection example"
+        selectedKeys={selectedKeys}
+        selectionMode="single"
+        variant="flat"
+        onSelectionChange={setSelectedKeys}
+      >
+        <DropdownItem key="text">Text</DropdownItem>
+        <DropdownItem key="number">Number</DropdownItem>
+        <DropdownItem key="date">Date</DropdownItem>
+        <DropdownItem key="single_date">Single Date</DropdownItem>
+        <DropdownItem key="iteration">Iteration</DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
+  );
+};

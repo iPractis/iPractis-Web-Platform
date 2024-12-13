@@ -1,9 +1,9 @@
 import DualButton from "../Globals/DualButton";
-import TabAvailability from "./TabAvailability";
-import TabBackground from "./TabBackground";
-import TabSubject from "./TabSubject";
-import TabProfile from "./TabProfile";
-import TabStatus from "./TabStatus";
+import TabAvailability from "./TabAvailability/index";
+import TabBackground from "./TabBackground/index";
+import TabProfile from "./TabProfile/index";
+import TabSubject from "./TabSubject/index";
+import TabStatus from "./TabStatus/index";
 
 const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
   return (
