@@ -2,6 +2,7 @@
 
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
+import passwordStars from "@/public/icons/password-stars.png";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Globals/DualButton";
 import { useState } from "react";
