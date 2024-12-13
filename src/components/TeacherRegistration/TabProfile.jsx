@@ -76,7 +76,7 @@ const TabProfile = ({ activeTab }) => {
                 />
               </div>
 
-              <div className="my-12">
+              <div>
                 <CustomNextUiInput
                   type="text"
                   placeholder="Enter your middle name (Optional)"

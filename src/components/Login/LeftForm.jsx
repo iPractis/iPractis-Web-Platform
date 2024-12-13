@@ -1,10 +1,12 @@
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import { PadLockClosedBGIcon, UserBGIcon } from "../Icons";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import Image from "next/image";
 
 // Images && icons
 import microsoft from "@/public/icons/microsoft-original.png";
+import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
+import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
 const LeftForm = () => {
