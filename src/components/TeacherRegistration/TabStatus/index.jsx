@@ -1,5 +1,5 @@
-import SectionHeader from "../Globals/SectionHeader";
-import { AnalyticIcon, UserBigIcon, UserIcon } from "../Icons";
+import { AnalyticIcon, UserBigIcon, UserIcon } from "../../Icons";
+import SectionHeader from "../../Globals/SectionHeader";
 
 const TabStatus = ({ activeTab }) => {
   return (

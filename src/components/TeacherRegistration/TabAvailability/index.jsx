@@ -1,5 +1,5 @@
-import SectionHeader from "../Globals/SectionHeader";
-import { CalendarIcon, UserBigIcon, UserIcon } from "../Icons";
+import SectionHeader from "../../Globals/SectionHeader";
+import { CalendarIcon, UserBigIcon, UserIcon } from "../../Icons";
 
 const TabAvailability = ({ activeTab }) => {
   return (

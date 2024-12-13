@@ -1,5 +1,5 @@
-import SectionHeader from "../Globals/SectionHeader";
-import { NotebookOpenedIcon, UserBigIcon, UserIcon } from "../Icons";
+import { NotebookOpenedIcon, UserBigIcon, UserIcon } from "../../Icons";
+import SectionHeader from "../../Globals/SectionHeader";
 
 const TabSubject = ({ activeTab }) => {
   return (
