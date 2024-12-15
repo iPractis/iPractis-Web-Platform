@@ -101,22 +101,6 @@ const PersonalInfo = () => {
                     <FlagIcon />
                   </InputBGWrapperIcon>
 
-                  <InputBGWrapperIcon
-                    className={
-                      "flex justify-between gap-1 cursor-pointer w-[60px] h-[36px]"
-                    }
-                  >
-                    <Image
-                      className="w-[26px] h-[24px] rounded-[5px] object-cover"
-                      alt="Country Flag"
-                      src={ukFlag}
-                    />
-
-                    <div className="mx-auto">
-                      <ChevronDownSmallIcon />
-                    </div>
-                  </InputBGWrapperIcon>
-
                   <PersonalInfoCountrySelect />
                 </span>
               }

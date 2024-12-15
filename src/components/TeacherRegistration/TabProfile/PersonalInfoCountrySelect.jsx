@@ -14,7 +14,19 @@ import Image from "next/image";
 import ukFlag from "@/public/flags/united-kingdom.png";
 
 const PersonalInfoCountrySelect = () => {
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
+  const [selectedCountry, setSelectedCountry] = useState({
+    key: "uk",
+    image: ukFlag,
+    alt: "United Kingdom",
+  });
+
+  const handleSelectionChange = (keys) => {
+    const selectedKey = Array.from(keys)[0];
+    const country = countriesSelection.find(
+      (country) => country.key === selectedKey
+    );
+    setSelectedCountry(country);
+  };
 
   return (
     <Dropdown>
@@ -22,8 +34,8 @@ const PersonalInfoCountrySelect = () => {
         <Button className="country-ipractis-dropdown">
           <Image
             className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt="Country Flag"
-            src={ukFlag}
+            alt={selectedCountry.alt}
+            src={selectedCountry.image}
           />
 
           <div className="mx-auto">
@@ -33,20 +45,25 @@ const PersonalInfoCountrySelect = () => {
       </DropdownTrigger>
 
       <DropdownMenu
+        selectedKeys={new Set([selectedCountry.key])}
+        onSelectionChange={handleSelectionChange}
         aria-label="Single Country Selection"
-        onSelectionChange={setSelectedKeys}
-        selectedKeys={selectedKeys}
         disallowEmptySelection
         selectionMode="single"
         variant="flat"
       >
         {countriesSelection?.map((country) => (
-          <DropdownItem textValue={country?.alt} key={country?.key}>
+          <DropdownItem
+            className="flex items-center"
+            textValue={country?.alt}
+            key={country?.key}
+          >
             <Image
-              className="w-[26px] h-[24px] rounded-[5px] object-cover"
+              className="w-[26px] h-[24px] rounded-[5px] object-cover inline"
               src={country?.image}
               alt={country?.alt}
             />
+            <span className="ml-2 inline">{country?.key}</span>
           </DropdownItem>
         ))}
       </DropdownMenu>
