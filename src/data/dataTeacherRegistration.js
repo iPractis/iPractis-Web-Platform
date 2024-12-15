@@ -6,6 +6,12 @@ import {
   UserIcon,
 } from "../components/Icons";
 
+// Images && icons
+import unitedKingdom from "@/public/flags/united-kingdom.png";
+import france from "@/public/flags/france.png";
+import italy from "@/public/flags/italy.png";
+import spain from "@/public/flags/spain.png";
+
 export const tabsButtons = [
   {
     textButton: "Profile",
@@ -30,5 +36,31 @@ export const tabsButtons = [
   {
     textButton: "Status",
     Icon: AnalyticIcon,
+  },
+];
+
+export const countriesSelection = [
+  {
+    image: unitedKingdom,
+    key: "United Kingdom",
+    alt: "Flag of United Kindgom",
+  },
+
+  {
+    image: france,
+    key: "France",
+    alt: "Flag of France",
+  },
+
+  {
+    image: italy,
+    key: "Italy",
+    alt: "Flag of Italy",
+  },
+
+  {
+    image: spain,
+    key: "Spain",
+    alt: "Flag of Spain",
   },
 ];

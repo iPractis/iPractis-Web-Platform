@@ -5,6 +5,7 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
+import { countriesSelection } from "@/src/data/dataTeacherRegistration";
 import { ChevronDownSmallIcon } from "../../Icons";
 import { useState } from "react";
 import Image from "next/image";
@@ -39,29 +40,15 @@ const PersonalInfoCountrySelect = () => {
         selectionMode="single"
         variant="flat"
       >
-        <DropdownItem key="text">
-          <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt="Country Flag"
-            src={ukFlag}
-          />
-        </DropdownItem>
-
-        <DropdownItem key="portugal">
-          <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt="Country Flag"
-            src={ukFlag}
-          />
-        </DropdownItem>
-
-        <DropdownItem key="spain">
-          <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt="Country Flag"
-            src={ukFlag}
-          />
-        </DropdownItem>
+        {countriesSelection?.map((country) => (
+          <DropdownItem textValue={country?.alt} key={country?.key}>
+            <Image
+              className="w-[26px] h-[24px] rounded-[5px] object-cover"
+              src={country?.image}
+              alt={country?.alt}
+            />
+          </DropdownItem>
+        ))}
       </DropdownMenu>
     </Dropdown>
   );
