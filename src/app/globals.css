@@ -95,6 +95,10 @@
   .select-ipractis {
     @apply placeholder:text-primary-color-P4 text-primary-color-P4 gap-4 ST-3 !important;
   }
+
+  .country-ipractis-dropdown {
+    @apply bg-primary-color-P12 flex justify-between gap-1 cursor-pointer w-[60px] h-[36px] !important;
+  }
 }
 
 /* Utility classes for specific styles, sizes, and animations */
