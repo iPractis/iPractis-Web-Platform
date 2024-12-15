@@ -4,16 +4,14 @@ import {
   ThreeUsersIcon,
   UserBigIcon,
   UserIcon,
-  ChevronDownSmallIcon,
 } from "../../Icons";
 
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
-import ukFlag from "@/public/flags/united-kingdom.png";
-import Image from "next/image"
 
 const PersonalInfo = () => {
   return (
@@ -26,7 +24,7 @@ const PersonalInfo = () => {
       />
 
       <div className="flex items-start gap-[50px]">
-        <div className="flex-1">
+        <div className="flex-1 space-y-12">
           <div>
             <CustomNextUiInput
               type="text"
@@ -46,7 +44,7 @@ const PersonalInfo = () => {
             />
           </div>
 
-          <div className="my-11">
+          <div>
             <CustomNextUiInput
               type="text"
               placeholder="Enter your middle name (Optional)"
@@ -84,7 +82,7 @@ const PersonalInfo = () => {
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 space-y-6">
           <div>
             <CustomNextUiInput
               type="text"
@@ -105,6 +103,10 @@ const PersonalInfo = () => {
                 </span>
               }
             />
+          </div>
+
+          <div>
+            <PersonalInfoGenderCheck />
           </div>
         </div>
       </div>
