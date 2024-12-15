@@ -1,12 +1,4 @@
 import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "@nextui-org/react";
-
-import {
   FlagIcon,
   QuestionMark,
   ThreeUsersIcon,
@@ -15,18 +7,15 @@ import {
   ChevronDownSmallIcon,
 } from "../../Icons";
 
+import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
-
 import ukFlag from "@/public/flags/united-kingdom.png";
-import { useState } from "react";
-import Image from "next/image";
+import Image from "next/image"
 
-const PersonalInfomartions = () => {
-  const [selectedKeys, setSelectedKeys] = useState(new Set(["text"]));
-
+const PersonalInfo = () => {
   return (
     <WhiteSpaceWrapper className={"space-y-[50px]"}>
       <SectionHeader
@@ -128,54 +117,7 @@ const PersonalInfomartions = () => {
                     </div>
                   </InputBGWrapperIcon>
 
-                  <Dropdown>
-                    <DropdownTrigger>
-                      <Button className="country-ipractis-dropdown">
-                        <Image
-                          className="w-[26px] h-[24px] rounded-[5px] object-cover"
-                          alt="Country Flag"
-                          src={ukFlag}
-                        />
-
-                        <div className="mx-auto">
-                          <ChevronDownSmallIcon />
-                        </div>
-                      </Button>
-                    </DropdownTrigger>
-
-                    <DropdownMenu
-                      aria-label="Single Country Selection"
-                      onSelectionChange={setSelectedKeys}
-                      selectedKeys={selectedKeys}
-                      disallowEmptySelection
-                      selectionMode="single"
-                      variant="flat"
-                    >
-                      <DropdownItem key="text">
-                        <Image
-                          className="w-[26px] h-[24px] rounded-[5px] object-cover"
-                          alt="Country Flag"
-                          src={ukFlag}
-                        />
-                      </DropdownItem>
-
-                      <DropdownItem key="portugal">
-                        <Image
-                          className="w-[26px] h-[24px] rounded-[5px] object-cover"
-                          alt="Country Flag"
-                          src={ukFlag}
-                        />
-                      </DropdownItem>
-
-                      <DropdownItem key="spain">
-                        <Image
-                          className="w-[26px] h-[24px] rounded-[5px] object-cover"
-                          alt="Country Flag"
-                          src={ukFlag}
-                        />
-                      </DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
+                  <PersonalInfoCountrySelect />
                 </span>
               }
             />
@@ -186,4 +128,4 @@ const PersonalInfomartions = () => {
   );
 };
 
-export default PersonalInfomartions;
+export default PersonalInfo;

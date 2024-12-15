@@ -1,6 +1,6 @@
-import PersonalInfomartions from "./PersonalInfomartions";
 import SectionHeader from "../../Globals/SectionHeader";
 import ProfilePicture from "./ProfilePicture";
+import PersonalInfo from "./PersonalInfo";
 import { UserIcon } from "../../Icons";
 
 const TabProfile = ({ activeTab }) => {
@@ -19,7 +19,7 @@ const TabProfile = ({ activeTab }) => {
         <ProfilePicture />
 
         {/* Personal Informations */}
-        <PersonalInfomartions />
+        <PersonalInfo />
       </div>
     </div>
   );
