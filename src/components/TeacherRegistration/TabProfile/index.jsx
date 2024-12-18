@@ -1,5 +1,6 @@
 import SectionHeader from "../../Globals/SectionHeader";
 import ProfilePicture from "./ProfilePicture";
+import IDVerification from "./IDVerification";
 import PersonalInfo from "./PersonalInfo";
 import { UserIcon } from "../../Icons";
 
@@ -20,6 +21,9 @@ const TabProfile = ({ activeTab }) => {
 
         {/* Personal Informations */}
         <PersonalInfo />
+
+        {/* ID Verification */}
+        <IDVerification />
       </div>
     </div>
   );
