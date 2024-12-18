@@ -184,6 +184,21 @@ export const ChevronRightIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const ChevronLeftIcon = ({ fillColor }) => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7.37819 11.778C6.88301 11.3778 6.88301 10.6229 7.37819 10.2226L11.6624 6.75972C12.3163 6.23115 13.291 6.69659 13.291 7.53744L13.291 14.4632C13.291 15.3041 12.3163 15.7695 11.6624 15.2409L7.37819 11.778Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const DocumentIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

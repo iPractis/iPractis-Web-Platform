@@ -1,6 +1,7 @@
-import DualButton from "../Globals/DualButton";
+import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 import TabAvailability from "./TabAvailability/index";
 import TabBackground from "./TabBackground/index";
+import DualButton from "../Globals/DualButton";
 import TabProfile from "./TabProfile/index";
 import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
@@ -26,8 +27,24 @@ const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
       {activeTab !== 4 && (
         <DualButton
           dualButtonWrapper={"gap-[50px] mt-[50px]"}
-          leftButtonText={"Back"}
-          rightButtonText={"Save, and continue"}
+          leftButtonText={
+            <div className="flex justify-center items-center">
+              <div className="flex-1">
+                <ChevronLeftIcon fillColor={"fill-primary-color-P12"} />
+              </div>
+
+              <span className="flex-[100%]">Back</span>
+            </div>
+          }
+          rightButtonText={
+            <div className="flex justify-center items-center">
+              <span className="flex-[100%]">Save, and continue</span>
+
+              <div className="flex-1">
+                <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
+              </div>
+            </div>
+          }
           rightButtonType={"submit"}
         />
       )}
