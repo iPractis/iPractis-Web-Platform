@@ -23,8 +23,8 @@ const PersonalInfo = () => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="flex items-start gap-[50px]">
-        <div className="flex-1 space-y-12">
+      <div className="flex flex-col sm:flex-row items-start sm:gap-[50px] gap-6">
+        <div className="flex-1 w-full space-y-12">
           <div>
             <CustomNextUiInput
               type="text"
@@ -82,7 +82,7 @@ const PersonalInfo = () => {
           </div>
         </div>
 
-        <div className="flex-1 space-y-6">
+        <div className="flex-1 w-full space-y-6">
           <div>
             <CustomNextUiInput
               type="text"
