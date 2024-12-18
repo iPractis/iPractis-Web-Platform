@@ -3,6 +3,7 @@ import ProfilePicture from "./ProfilePicture";
 import IDVerification from "./IDVerification";
 import PersonalInfo from "./PersonalInfo";
 import { UserIcon } from "../../Icons";
+import AboutYourself from "./AboutYourself";
 
 const TabProfile = ({ activeTab }) => {
   return (
@@ -21,6 +22,9 @@ const TabProfile = ({ activeTab }) => {
 
         {/* Personal Informations */}
         <PersonalInfo />
+
+        {/* Tell students about yourself */}
+        <AboutYourself />
 
         {/* ID Verification */}
         <IDVerification />
