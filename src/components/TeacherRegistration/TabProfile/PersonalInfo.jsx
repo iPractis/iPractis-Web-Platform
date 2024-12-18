@@ -86,6 +86,7 @@ const PersonalInfo = () => {
           <div>
             <CustomNextUiInput
               type="text"
+              isReadOnly
               placeholder="Select your country"
               label={
                 <span className="flex gap-1.5 items-center">

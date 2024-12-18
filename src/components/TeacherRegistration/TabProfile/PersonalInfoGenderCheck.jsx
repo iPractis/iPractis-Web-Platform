@@ -1,7 +1,7 @@
+import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { FemaleIcon, MaleIcon, QuestionMark } from "../../Icons";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import { Checkbox } from "@nextui-org/react";
 import { useState } from "react";
 
 const PersonalInfoGenderCheck = () => {
@@ -29,8 +29,8 @@ const PersonalInfoGenderCheck = () => {
           </InputBGWrapperIcon>
         }
         endContent={
-          <Checkbox
-            className="border border-red-500"
+          <CustomNextUiCheckbox
+            className="checkbox-label-ipractis"
             isSelected={selectedGender === "male"}
             onChange={() => handleCheckboxChange("male")}
           />
@@ -48,7 +48,8 @@ const PersonalInfoGenderCheck = () => {
           </InputBGWrapperIcon>
         }
         endContent={
-          <Checkbox
+          <CustomNextUiCheckbox
+            className="checkbox-label-ipractis"
             isSelected={selectedGender === "female"}
             onChange={() => handleCheckboxChange("female")}
           />

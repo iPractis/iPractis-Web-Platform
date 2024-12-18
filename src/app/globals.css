@@ -2,7 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Stuff like containers, buttons, cards, etc. */
+:root {
+  --primary-color-P1: #1c1c1e;
+}
+
+/* Styles of Checkbox NextUI */
+/* This is for border of checkbox when it's not selected */
+.before\:border-default::before {
+  border-color: var(--primary-color-P1) !important;
+}
+
 @layer components {
   .btn {
     @apply inline-block border-0 bg-transparent cursor-pointer animation-fade text-center;
