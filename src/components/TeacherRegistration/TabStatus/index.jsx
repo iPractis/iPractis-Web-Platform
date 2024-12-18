@@ -1,5 +1,7 @@
-import { AnalyticIcon, UserBigIcon, UserIcon } from "../../Icons";
+import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
+import { AnalyticIcon, ChevronRightIcon } from "../../Icons";
 import SectionHeader from "../../Globals/SectionHeader";
+import DualLink from "../../Globals/DualLink";
 
 const TabStatus = ({ activeTab }) => {
   return (
@@ -12,42 +14,65 @@ const TabStatus = ({ activeTab }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="space-y-16">
-        <div className="space-y-8 p-8 rounded-2xl bg-primary-color-P12">
+      <WhiteSpaceWrapper className="space-y-[50px]">
+        <div className="flex flex-col sm:flex-row md:gap-[50px] gap-4">
           <SectionHeader
-            descriptionText="Upload a photo to personalize your profile."
-            titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
-            titleText="Profile Picture"
+            descriptionText={
+              <>
+                Your application is currently pending approval. We appreciate
+                your patience and will notify you as soon as your application
+                has been reviewed.
+                <span className="block">
+                  Feel free to edit your profile to improve it.
+                </span>
+              </>
+            }
+            titleIcon={<AnalyticIcon fillColor={"fill-primary-color-P1"} />}
+            titleText="How it works"
             titleClassName="MT-SB-1"
           />
 
-          <div className="flex items-start gap-8">
-            {/* Profile Image Input */}
-            <div className="relative">
-              <input
-                type="file"
-                className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              />
+          <SectionHeader
+            descriptionText={
+              <>
+                Your application is currently pending approval. We appreciate
+                your patience and will notify you as soon as your application
+                has been reviewed.
+                <span className="block">
+                  Feel free to edit your profile to improve it.
+                </span>
+              </>
+            }
+            titleIcon={<AnalyticIcon fillColor={"fill-primary-color-P1"} />}
+            titleText="Start improving your teaching skills"
+            titleClassName="MT-SB-1"
+          />
+        </div>
 
-              <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
-                <UserBigIcon fillColor={"fill-primary-color-P6"} />
+        <DualLink
+          dualLinkWrapper={"flex-col sm:flex-row sm:gap-[50px] gap-4"}
+          leftLinkText={
+            <div className="flex justify-center items-center">
+              <span className="flex-[90%]">Preview my profile</span>
+
+              <div className="flex-1">
+                <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
               </div>
             </div>
+          }
+          leftLinkHref={"#"}
+          rightLinkText={
+            <div className="flex justify-center items-center">
+              <span className="flex-[90%]">Start learning</span>
 
-            {/* Instructions Image Input */}
-            <ul className="ps-4 ST-1 list-disc text-primary-color-P4">
-              <li>You must be clearly visible and centered in the picture.</li>
-              <li>Use a plain background to avoid distractions.</li>
-              <li>The picture should be a recent, high-quality image.</li>
-              <li>
-                Ensure good lighting so your face is well-lit and clearly
-                visible.
-              </li>
-              <li>Avoid using filters or overly edited images.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
+              <div className="flex-1">
+                <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
+              </div>
+            </div>
+          }
+          rightLinkHref={"#"}
+        />
+      </WhiteSpaceWrapper>
     </div>
   );
 };

@@ -23,12 +23,14 @@ const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
       {/* 4 */}
       <TabStatus activeTab={activeTab} />
 
-      <DualButton
-        dualButtonWrapper={"gap-[50px] mt-[50px]"}
-        leftButtonText={"Back"}
-        rightButtonText={"Save, and continue"}
-        rightButtonType={"submit"}
-      />
+      {activeTab !== 4 && (
+        <DualButton
+          dualButtonWrapper={"gap-[50px] mt-[50px]"}
+          leftButtonText={"Back"}
+          rightButtonText={"Save, and continue"}
+          rightButtonType={"submit"}
+        />
+      )}
     </form>
   );
 };
