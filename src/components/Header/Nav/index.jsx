@@ -1,9 +1,15 @@
+import { auth } from "@/src/auth";
+
 import NavResponsiveTeacher from "./NavResponsiveTeacher";
 import NavDesktopTeacher from "./NavDesktopTeacher";
 import NavResponsive from "./NavResponsive";
 import NavDesktop from "./NavDestop";
 
-const Nav = () => {
+const Nav = async () => {
+  // const session = await auth();
+  // console.log(session);
+  // if (!session?.user) return null;
+
   const userInfo = {
     name: "Josh",
     email: "joshuadeveloper25@gmail.com",

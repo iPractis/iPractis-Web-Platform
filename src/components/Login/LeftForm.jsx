@@ -52,6 +52,7 @@ const LeftForm = () => {
         <div>
           <CustomNextUiInput
             type="email"
+            name="email"
             placeholder="Enter your phone or email address"
             startContent={
               <Image className="w-9" src={userInput} alt="User Input" />
@@ -63,6 +64,7 @@ const LeftForm = () => {
         <div className="mt-3">
           <CustomNextUiInput
             type="password"
+            name="password"
             maxLength={32}
             placeholder="Enter your password"
             startContent={

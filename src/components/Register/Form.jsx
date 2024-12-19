@@ -2,10 +2,12 @@
 
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import { useActionState, useState, startTransition } from "react";
+import { registerUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
 import { UserAddCircleIcon } from "../Icons";
-import { useState } from "react";
 import Image from "next/image";
 
 import microsoft from "@/public/icons/microsoft-original.png";
@@ -18,8 +20,9 @@ import email from "@/public/icons/email.png";
 import phone from "@/public/icons/phone.png";
 
 const Form = () => {
-  const [password, setPassword] = useState("");
+  const [state, formAction, isPending] = useActionState(registerUser, {});
   const [securityLevel, setSecurityLevel] = useState("");
+  const [password, setPassword] = useState("");
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -40,8 +43,23 @@ const Form = () => {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    // Send data to server action
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
   return (
-    <form className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
+    <form
+      className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
+      onSubmit={handleSubmit}
+      action={formAction}
+    >
       <SectionHeader
         descriptionText="Manually enter your details to create a secure account."
         titleText="Create an account using ID"
@@ -92,6 +110,7 @@ const Form = () => {
             <CustomNextUiInput
               type="text"
               placeholder="First name"
+              name="firstName"
               startContent={
                 <Image className="w-9" src={userInput} alt="User Input" />
               }
@@ -99,6 +118,7 @@ const Form = () => {
 
             <CustomNextUiInput
               type="text"
+              name="lastName"
               placeholder="Last name"
               startContent={
                 <Image className="w-9" src={usersBox} alt="Users Input" />
@@ -109,26 +129,34 @@ const Form = () => {
           {/* Email Input */}
           <div className="flex gap-3">
             <CustomNextUiInput
-              type="email"
               placeholder="Enter your email address"
               startContent={
                 <Image className="w-9" src={email} alt="Email Input" />
               }
+              type="email"
+              name="email"
             />
 
             <div className="w-12 animation-fade bg-primary-color-P11 hover:bg-secondary-color-S9 cursor-pointer rounded-2xl p-3">
               <Image
                 className="w-6 h-6 object-cover"
-                src={phone}
                 alt="Phone Input"
+                name="phone"
+                src={phone}
               />
             </div>
           </div>
+
+          <ErrorMessageiPractis
+            typeError={state.title}
+            descError={state.message}
+          />
 
           {/* Password Input */}
           <div>
             <CustomNextUiInput
               type="password"
+              name="password"
               maxLength={32}
               placeholder="Enter your password"
               startContent={
@@ -151,9 +179,10 @@ const Form = () => {
 
         <button
           className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+          disabled={isPending}
           type="submit"
         >
-          Create an account
+          {isPending ? "Loading..." : "Create an account"}
         </button>
       </div>
     </form>

@@ -1,11 +1,17 @@
+"use client";
 import { PadLockUserIcon, QRCodeUserIcon, SparkleIcon } from "../Icons";
 import SectionHeader from "../Globals/SectionHeader";
+import { signIn } from "next-auth/react";
 import RightForm from "./RightForm";
 import LeftForm from "./LeftForm";
 
 const ContainerForm = () => {
+  const credentialsAction = (formData) => {
+    signIn("credentials", formData);
+  };
+
   return (
-    <form>
+    <form action={credentialsAction}>
       {/* Heading Title */}
       <div className="p-4">
         <SectionHeader
