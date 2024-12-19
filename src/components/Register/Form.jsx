@@ -133,7 +133,7 @@ const Form = () => {
               startContent={
                 <Image className="w-9" src={email} alt="Email Input" />
               }
-              type="email"
+              type="text"
               name="email"
             />
 

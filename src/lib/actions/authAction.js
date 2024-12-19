@@ -1,5 +1,7 @@
 "use server";
 
+import { redirect } from "next/navigation";
+
 export async function registerUser(prevState, formData) {
   const rawFormData = {
     email: formData.get("email"),
@@ -21,4 +23,6 @@ export async function registerUser(prevState, formData) {
   if (!res.ok) {
     return json;
   }
+
+  redirect("/login");
 }
