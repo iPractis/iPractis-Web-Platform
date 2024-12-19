@@ -147,10 +147,13 @@ const Form = () => {
             </div>
           </div>
 
-          <ErrorMessageiPractis
-            typeError={state.title}
-            descError={state.message}
-          />
+          {/* If there's error we display this */}
+          {state?.message && state?.title && (
+            <ErrorMessageiPractis
+              typeError={state.title}
+              descError={state.message}
+            />
+          )}
 
           {/* Password Input */}
           <div>

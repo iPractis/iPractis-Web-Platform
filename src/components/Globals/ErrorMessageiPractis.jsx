@@ -3,10 +3,10 @@ import Image from "next/image";
 
 const ErrorMessageiPractis = ({ typeError, descError }) => {
   return (
-    <div className="flex gap-2.5 items-center p-1.5 rounded-2xl mt-2 bg-quaternary-color-A8">
-      <div>
+    <div className="flex items-start gap-2.5 p-1.5 rounded-2xl mt-2 bg-quaternary-color-A8">
+      <div className="max-w-9">
         <Image
-          className="w-9"
+          className="w-full h-full"
           src={warningTriangle}
           alt="Warning Icon Triangle"
         />
