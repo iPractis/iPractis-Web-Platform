@@ -1,17 +1,42 @@
 "use client";
+
 import { PadLockUserIcon, QRCodeUserIcon, SparkleIcon } from "../Icons";
+import { logInUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
-import { signIn } from "next-auth/react";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import RightForm from "./RightForm";
 import LeftForm from "./LeftForm";
+import { useState } from "react";
 
 const ContainerForm = () => {
-  const credentialsAction = (formData) => {
-    signIn("credentials", formData);
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      setIsPending(true);
+      const formData = new FormData(e.currentTarget);
+      const response = await logInUser(formData);
+
+      if (!!response?.error) {
+        setError(response.error.message);
+      } else {
+        await getSession();
+        router.replace("/");
+      }
+    } catch (e) {
+      setError("Check Your Credentials!");
+    } finally {
+      setIsPending(false);
+    }
   };
 
   return (
-    <form action={credentialsAction}>
+    <form onSubmit={handleSubmit}>
       {/* Heading Title */}
       <div className="p-4">
         <SectionHeader
@@ -34,7 +59,7 @@ const ContainerForm = () => {
               titleText="Log in"
             />
 
-            <LeftForm />
+            <LeftForm isPending={isPending} />
           </div>
 
           <div className="md:block hidden flex-1 w-full">

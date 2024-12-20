@@ -32,6 +32,13 @@ class customError extends AuthError {
 
 // 2700940340074938
 //clave secreta 7493169cff3baf4356989053155a8bad
+class customError extends AuthError {
+  constructor(message) {
+    super();
+    this.message = message;
+  }
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
@@ -44,31 +51,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
 
       authorize: async (credentials) => {
+        console.log(credentials, "authorize");
         try {
-          //   const response = await fetch(
-          //     "http://127.0.0.1:8000/api/users/login",
-          //     {
-          //       method: "POST",
-          //       body: JSON.stringify(credentials),
-          //       headers: {
-          //         "Content-Type": "application/json",
-          //       },
-          //     }
-          //   );
+          const response = await fetch(`${process.env.BASE_URL}/auth/login`, {
+            method: "POST",
+            body: JSON.stringify(credentials),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-          //   const user = await response.json();
-          //   console.log(user, "desde auth");
-
-          //   if (!response.ok) {
-          //     console.log("en el if del error");
-          //     const errorMessage = user.detail;
-          //     throw new customError(errorMessage);
-          //   }
-          const user = {
-            name: "Joshua",
-            email: "joshuadeveloper25@gmail.com",
-            access_token: "f5sdf45dsf6sd515c6",
-          };
+          const user = await response.json();
+          console.log(user, "user autthorize");
+          console.log(user, "desde auth");
+          if (!response.ok) {
+            console.log("en el if del error");
+            const errorMessage = user.message;
+            throw new customError(errorMessage);
+          }
 
           return user;
         } catch (error) {
@@ -93,12 +93,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, user, account }) {
       if (account?.provider == "credentials") {
-        token.access_token = user.access_token;
+        token.token = user.token;
+        token.firstName = user.firstName;
       }
 
-      // console.log(token, "el token");
-      // console.log(user, "el user");
-      // console.log(account, "el account");
+      console.log(token, "el token callback");
+      console.log(user, "el user callback");
+      console.log(account, "el account callback");
 
       if (account?.provider == "google") {
         // console.log("entonces estoy aqui");
@@ -128,10 +129,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       if (token) {
-        session.user.access_token = token.access_token;
+        session.user.token = token.token;
+        session.user.firstName = token.firstName;
         // session.user.role = token.role;
       }
-
+      console.log(session, "session de authjs");
       return session;
     },
   },

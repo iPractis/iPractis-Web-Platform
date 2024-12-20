@@ -1,24 +1,16 @@
-import { auth } from "@/src/auth";
-
+'use client'
 import NavResponsiveTeacher from "./NavResponsiveTeacher";
 import NavDesktopTeacher from "./NavDesktopTeacher";
+import { useSession } from "next-auth/react";
 import NavResponsive from "./NavResponsive";
 import NavDesktop from "./NavDestop";
 
-const Nav = async () => {
-  // const session = await auth();
-  // console.log(session);
-  // if (!session?.user) return null;
-
-  const userInfo = {
-    name: "Josh",
-    email: "joshuadeveloper25@gmail.com",
-    access_token: true,
-  };
+const Nav = () => {
+  const { data: session } = useSession();
 
   return (
     <nav className="bg-primary-color-P1 m-2 p-1.5 rounded-2xl">
-      {userInfo?.access_token ? (
+      {session?.user?.token ? (
         <>
           <div className="md:block hidden">
             <NavDesktopTeacher />

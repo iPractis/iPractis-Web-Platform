@@ -9,7 +9,7 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
-const LeftForm = () => {
+const LeftForm = ({ isPending }) => {
   return (
     <div className="space-y-8">
       <div className="flex gap-3 sm:mt-[50px] mt-8">
@@ -76,9 +76,10 @@ const LeftForm = () => {
 
       <button
         type="submit"
+        disabled={isPending}
         className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
       >
-        Log in
+        {isPending ? "Loading..." : "Log in"}
       </button>
 
       <p className="text-primary-color-P4 text-center ST-4">
