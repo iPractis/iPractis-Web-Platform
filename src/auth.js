@@ -66,7 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           console.log(user, "desde auth");
           if (!response.ok) {
             console.log("en el if del error");
-            const errorMessage = user.message;
+            const errorMessage = user;
             throw new customError(errorMessage);
           }
 

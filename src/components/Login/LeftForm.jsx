@@ -9,7 +9,22 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
-const LeftForm = ({ isPending }) => {
+const LeftForm = ({ error, isPending }) => {
+  const validPasswordErrors = [
+    "Wrong password",
+    "Account Locked: Too many login attempts",
+    "Character limit",
+  ];
+
+  const validEmailErrors = [
+    "Invalid Email",
+    "No account exists for this email address.",
+    "Email recently changed",
+  ];
+  
+  const isValidEmailError = error?.message && validEmailErrors.includes(error?.title);
+  const isValidPasswordError = error?.message && validPasswordErrors.includes(error?.title);
+
   return (
     <div className="space-y-8">
       <div className="flex gap-3 sm:mt-[50px] mt-8">
@@ -57,7 +72,17 @@ const LeftForm = ({ isPending }) => {
             startContent={
               <Image className="w-9" src={userInput} alt="User Input" />
             }
+            classNames={{
+              inputWrapper: isValidEmailError && "form-input-error",
+            }}
           />
+
+          {isValidEmailError && (
+            <ErrorMessageiPractis
+              typeError={error?.title}
+              descError={error?.message}
+            />
+          )}
         </div>
 
         {/* Password Input */}
@@ -71,6 +96,13 @@ const LeftForm = ({ isPending }) => {
               <Image className="w-9" src={passwordInput} alt="User Input" />
             }
           />
+
+          {isValidPasswordError && (
+            <ErrorMessageiPractis
+              typeError={error?.title}
+              descError={error?.message}
+            />
+          )}
         </div>
       </div>
 

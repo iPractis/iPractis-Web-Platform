@@ -22,8 +22,9 @@ const ContainerForm = () => {
       const formData = new FormData(e.currentTarget);
       const response = await logInUser(formData);
 
-      if (!!response?.error) {
-        setError(response.error.message);
+      if (!!response?.formError) {
+        console.log(response);
+        setError(response.formError);
       } else {
         await getSession();
         router.replace("/");
@@ -59,7 +60,7 @@ const ContainerForm = () => {
               titleText="Log in"
             />
 
-            <LeftForm isPending={isPending} />
+            <LeftForm error={error} isPending={isPending} />
           </div>
 
           <div className="md:block hidden flex-1 w-full">

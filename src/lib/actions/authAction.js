@@ -40,7 +40,7 @@ export async function logInUser(formData) {
   } catch (err) {
     if (err instanceof Error && "type" in err && err.type === "AuthError") {
       return {
-        error: { message: err.message },
+        formError: err.message,
       };
     }
 

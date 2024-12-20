@@ -160,6 +160,10 @@
     @apply p-0 !important;
   }
 
+  .form-input-error {
+    @apply bg-senary-color-W10 data-[hover=true]:bg-senary-color-W10 !important;
+  }
+
   /* All sizes have !important because we don't want other libraries to inherit our created ones */
   .LT-SB-1 {
     @apply text-[28px] font-[600] !important;
