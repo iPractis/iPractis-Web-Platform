@@ -17,20 +17,29 @@ const ContainerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!e?.target?.email?.value.trim(" ")) {
+      const invalidEmailError = {
+        title: "Invalid Email",
+        message: "Check your spelling email.",
+      };
+
+      return setError(invalidEmailError);
+    }
+
     try {
       setIsPending(true);
+      
       const formData = new FormData(e.currentTarget);
       const response = await logInUser(formData);
 
       if (!!response?.formError) {
-        console.log(response);
         setError(response.formError);
       } else {
         await getSession();
         router.replace("/");
       }
-    } catch (e) {
-      setError("Check Your Credentials!");
+    } catch (error) {
+      console.log(error);
     } finally {
       setIsPending(false);
     }

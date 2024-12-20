@@ -95,6 +95,9 @@ const LeftForm = ({ error, isPending }) => {
             startContent={
               <Image className="w-9" src={passwordInput} alt="User Input" />
             }
+            classNames={{
+              inputWrapper: isValidPasswordError && "form-input-error",
+            }}
           />
 
           {isValidPasswordError && (
