@@ -15,6 +15,7 @@ import tutor from "@/public/images/tutor-image-preview.png";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
+import { signOut } from "next-auth/react"
 
 const NavDesktopTeacher = () => {
   return (
@@ -46,6 +47,8 @@ const NavDesktopTeacher = () => {
           <UserScreenIcon />
           Find a teacher
         </Link>
+
+        <button className="text-white" onClick={() => signOut(  { callbackUrl: "/" })}>Sign Out</button>
       </div>
 
       {/* Right Column */}

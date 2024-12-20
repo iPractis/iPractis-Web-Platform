@@ -77,6 +77,18 @@
     }
   }
 
+  .btn-senary {
+    @apply bg-primary-color-P12 text-primary-color-P1;
+
+    &:hover {
+      @apply bg-primary-color-P4 text-primary-color-P12;
+    }
+
+    &:active {
+      @apply bg-primary-color-P6 text-primary-color-P12;
+    }
+  }
+
   .input-wrapper-ipractis {
     @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 !important;
   }
@@ -139,8 +151,13 @@
   .container-page-v7 {
     @apply max-w-[1006px] mx-auto mb-[100px];
   }
+
   .animation-fade {
     @apply transition-all duration-250 ease-out;
+  }
+
+  .disable-hover {
+    @apply p-0 !important;
   }
 
   /* All sizes have !important because we don't want other libraries to inherit our created ones */

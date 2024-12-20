@@ -805,3 +805,68 @@ export const FemaleIcon = () => (
     />
   </svg>
 );
+
+export const ChevronRightDoorIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="none"
+    height="20"
+    width="20"
+  >
+    <path
+      d="M9.58366 10.5923C9.91316 10.2662 9.91316 9.73389 9.58366 9.40777L7.22663 7.07491C6.70043 6.55411 5.80708 6.92685 5.80708 7.6672V9.16672L2.50033 9.16671C2.04009 9.16671 1.66699 9.53981 1.66699 10C1.66699 10.4603 2.04009 10.8334 2.50033 10.8334L5.80708 10.8334V12.3329C5.80708 13.0733 6.70043 13.446 7.22663 12.9252L9.58366 10.5923Z"
+      className="fill-primary-color-P12 group-hover:fill-primary-color-P1"
+    />
+    <path
+      d="M11.667 3.80138C11.667 3.03661 12.1875 2.36997 12.9294 2.18448L16.2628 1.35112C17.3147 1.08814 18.3337 1.88374 18.3337 2.96803V17.0321C18.3337 18.1164 17.3147 18.912 16.2628 18.649L12.9294 17.8157C12.1875 17.6302 11.667 16.9635 11.667 16.1988V3.80138Z"
+      className="fill-primary-color-P12 group-hover:fill-primary-color-P1"
+    />
+  </svg>
+);
+
+export const ChevronRightDoorBoldIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M10 2.5H13.8333C14.9379 2.5 15.8333 3.39543 15.8333 4.5V15.5C15.8333 16.6046 14.9379 17.5 13.8333 17.5H10"
+      strokeWidth="2"
+      strokeLinecap="round"
+      className="stroke-primary-color-P1 group-hover:stroke-primary-color-P12"
+    />
+
+    <path
+      d="M4.16797 10L7.5013 10"
+      className="stroke-primary-color-P1 group-hover:stroke-primary-color-P12"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M10.9717 9.29663C11.3574 9.6863 11.3574 10.3139 10.9717 10.7035L8.37871 13.3234C7.75025 13.9584 6.66797 13.5134 6.66797 12.62L6.66797 7.38019C6.66797 6.4868 7.75025 6.04177 8.37871 6.67674L10.9717 9.29663Z"
+      className="fill-primary-color-P1 group-hover:fill-primary-color-P12"
+    />
+  </svg>
+);
+
+export const SearchIcon = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M13.8354 9.33191C13.8354 11.08 12.4183 12.4971 10.6703 12.4971C8.9222 12.4971 7.50511 11.08 7.50511 9.33191C7.50511 7.58384 8.9222 6.16675 10.6703 6.16675C12.4183 6.16675 13.8354 7.58384 13.8354 9.33191ZM15.8354 9.33191C15.8354 12.1846 13.5229 14.4971 10.6703 14.4971C9.60539 14.4971 8.61577 14.1748 7.79362 13.6225L5.56648 15.8497C5.17596 16.2402 4.54279 16.2402 4.15227 15.8497C3.76174 15.4591 3.76174 14.826 4.15227 14.4354L6.37946 12.2083C5.82728 11.3862 5.50511 10.3967 5.50511 9.33191C5.50511 6.47927 7.81763 4.16675 10.6703 4.16675C13.5229 4.16675 15.8354 6.47927 15.8354 9.33191Z"
+      className="fill-primary-color-P1 group-hover:fill-primary-color-P12"
+    />
+  </svg>
+);
