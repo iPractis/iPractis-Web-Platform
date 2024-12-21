@@ -21,10 +21,10 @@ import {
 // Images && icons
 import hamburguer from "@/public/icons/profile-settings-icon-transparent.png";
 import tutor from "@/public/images/tutor-image-preview.png";
+import { logOutUser } from "@/src/lib/actions/authAction";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
-import { signOut } from "next-auth/react";
 
 const NavDesktopTeacher = () => {
   return (
@@ -56,8 +56,6 @@ const NavDesktopTeacher = () => {
           <UserScreenIcon />
           Find a teacher
         </Link>
-
-        {/* <button className="text-white" onClick={() => signOut( )}>Sign Out</button> */}
       </div>
 
       {/* Right Column */}
@@ -127,18 +125,20 @@ const NavDesktopTeacher = () => {
             }}
           >
             <DropdownItem className="disable-hover" key="logOut">
-              <Link
-                href="/login"
-                className="btn btn-senary group w-full px-4 py-2 rounded-lg flex justify-center items-center"
-              >
-                <div className="flex-1">
-                  <ChevronRightDoorBoldIcon
-                    fillColor={"fill-primary-color-P12"}
-                  />
-                </div>
+              <form action={logOutUser}>
+                <button
+                  type="submit"
+                  className="btn btn-senary group w-full px-4 py-2 rounded-lg flex justify-center items-center"
+                >
+                  <div className="flex-1">
+                    <ChevronRightDoorBoldIcon
+                      fillColor={"fill-primary-color-P12"}
+                    />
+                  </div>
 
-                <span className="sm:flex-[85%] flex-[80%]">Log out</span>
-              </Link>
+                  <span className="sm:flex-[85%] flex-[80%]">Log out</span>
+                </button>
+              </form>
             </DropdownItem>
 
             <DropdownItem

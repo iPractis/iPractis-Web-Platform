@@ -66,7 +66,7 @@ const LeftForm = ({ error, isPending }) => {
         {/* Email Input */}
         <div>
           <CustomNextUiInput
-            type="email"
+            type="text"
             name="email"
             placeholder="Enter your phone or email address"
             startContent={

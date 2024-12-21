@@ -17,18 +17,32 @@ const ContainerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!e?.target?.email?.value.trim(" ")) {
+    const email = e?.target?.email?.value.trim();
+
+    // Validation of empty field
+    if (!email) {
       const invalidEmailError = {
         title: "Invalid Email",
-        message: "Check your spelling email.",
+        message: "Email can't be empty.",
       };
-
+      console.log('entro al primer if')
+      return setError(invalidEmailError);
+    }
+    
+    // Validation of gmail format
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    
+    if (!gmailRegex.test(email)) {
+      const invalidEmailError = {
+        title: "Invalid Email",
+        message: "Check your spelling email",
+      };
       return setError(invalidEmailError);
     }
 
     try {
       setIsPending(true);
-      
+
       const formData = new FormData(e.currentTarget);
       const response = await logInUser(formData);
 

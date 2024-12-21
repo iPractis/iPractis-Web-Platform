@@ -1,7 +1,7 @@
 "use server";
 
+import { signIn, signOut } from "@/src/auth";
 import { redirect } from "next/navigation";
-import { signIn } from "@/src/auth";
 
 export async function registerUser(prevState, formData) {
   const rawFormData = {
@@ -46,4 +46,14 @@ export async function logInUser(formData) {
 
     return { error: { message: "Failed to login!", error: String(err) } };
   }
+}
+
+export async function logOutUser() {
+  try {
+    await signOut();
+  } catch (error) {
+    console.log(error);
+  }
+
+  redirect("/login");
 }
