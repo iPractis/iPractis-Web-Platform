@@ -2,7 +2,6 @@ import {
   AddIcon,
   CameraBoxIcon,
   ChevronRightDoorBoldestIcon,
-  ChevronRightDoorBoldIcon,
   DashboardIcon,
   DialogMarkIcon,
   NewMessageIcon,
@@ -201,7 +200,7 @@ const NavDesktopTeacher = () => {
             <DropdownItem className="p-0 mb-1.5" key="profile">
               <button
                 type="button"
-                className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+                className="btn btn-quinary rounded-lg flex items-center gap-4 px-4 py-1.5 w-full group"
               >
                 <UserIcon
                   fillColor={
@@ -322,17 +321,19 @@ const NavDesktopTeacher = () => {
             </DropdownItem>
 
             <DropdownItem className="p-0" key="logout">
-              <button
-                type="button"
-                className="btn btn-quinary text-septenary-color-MA6 hover:text-septenary-color-MA6 rounded-lg flex gap-4 px-4 py-1.5 w-full group"
-              >
-                <ChevronRightDoorBoldestIcon
-                  fillColor={"fill-septenary-color-MA6"}
-                  strokeColor={"stroke-septenary-color-MA6"}
-                />
+              <form action={logOutUser}>
+                <button
+                  type="submit"
+                  className="btn btn-quinary text-septenary-color-MA6 hover:text-septenary-color-MA6 rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+                >
+                  <ChevronRightDoorBoldestIcon
+                    fillColor={"fill-septenary-color-MA6"}
+                    strokeColor={"stroke-septenary-color-MA6"}
+                  />
 
-                <h3>Log out</h3>
-              </button>
+                  <h3>Log out</h3>
+                </button>
+              </form>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
