@@ -50,7 +50,7 @@ const NavDesktopTeacher = () => {
       {/* Center Column */}
       <div className="flex items-center gap-4">
         <Link
-          className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-3 ST-SB-4 group"
+          className="btn btn-quinary flex items-center px-4 rounded-[10px] py-2 gap-3 ST-SB-4 group"
           href="#"
         >
           <DashboardIcon />
@@ -58,7 +58,7 @@ const NavDesktopTeacher = () => {
         </Link>
 
         <Link
-          className="btn btn-quinary flex items-center lg:px-4 rounded-[10px] lg:py-2 gap-1 ST-SB-4 group"
+          className="btn btn-quinary flex items-center px-4 rounded-[10px] py-2 gap-1 ST-SB-4 group"
           href="#"
         >
           <UserScreenIcon />
