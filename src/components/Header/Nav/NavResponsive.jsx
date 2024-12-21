@@ -60,7 +60,7 @@ const NavResponsive = () => {
                   />
                 </div>
 
-                <span className="sm:flex-[85%] flex-[80%]">Log out</span>
+                <span className="sm:flex-[85%] flex-[80%]">Log in</span>
               </Link>
             </DropdownItem>
 
