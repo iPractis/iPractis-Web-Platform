@@ -18,6 +18,17 @@ const ContainerForm = () => {
     e.preventDefault();
 
     const email = e?.target?.email?.value.trim();
+    const password = e?.target?.password?.value.trim();
+
+    // Validation of exceed the character limit (password)
+    if (password.length >= 32) {
+      const invalidEmailError = {
+        title: "Character limit",
+        message: "The input exceeds the allowed character limit.",
+      };
+
+      return setError(invalidEmailError);
+    }
 
     // Validation of empty field
     if (!email) {
@@ -25,7 +36,7 @@ const ContainerForm = () => {
         title: "Invalid Email",
         message: "Email can't be empty.",
       };
-      console.log('entro al primer if')
+
       return setError(invalidEmailError);
     }
     
@@ -37,6 +48,7 @@ const ContainerForm = () => {
         title: "Invalid Email",
         message: "Check your spelling email",
       };
+
       return setError(invalidEmailError);
     }
 
