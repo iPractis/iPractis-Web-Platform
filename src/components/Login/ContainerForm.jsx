@@ -20,16 +20,6 @@ const ContainerForm = () => {
 
     const email = e?.target?.email?.value.trim();
 
-    // Validation of exceed the character limit (password)
-    if (password?.length > 30) {
-      const invalidPasswordError = {
-        title: "Character limit",
-        message: "The input exceeds the allowed character limit.",
-      };
-
-      return setError(invalidPasswordError);
-    }
-
     // Validation of empty field (email)
     if (!email) {
       const invalidEmailError = {
@@ -60,6 +50,16 @@ const ContainerForm = () => {
       };
 
       return setError(invalidEmailError);
+    }
+
+    // Validation of exceed the character limit (password)
+    if (password?.length > 30) {
+      const invalidPasswordError = {
+        title: "Character limit",
+        message: "The input exceeds the allowed character limit.",
+      };
+
+      return setError(invalidPasswordError);
     }
 
     try {

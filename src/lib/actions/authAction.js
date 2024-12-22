@@ -4,7 +4,8 @@ import { signIn, signOut } from "@/src/auth";
 import { redirect } from "next/navigation";
 
 export async function registerUser(prevState, formData) {
-  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/; // Regex to check for accents and hyphen (-)
+  // Regex to check for accents and hyphen (-)
+  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/;
 
   const rawFormData = {
     email: formData.get("email"),
