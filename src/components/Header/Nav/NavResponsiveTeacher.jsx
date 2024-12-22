@@ -2,11 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images
-import hamburguer from "@/public/icons/profile-settings-icon-transparent.png";
 import messageNotification from "@/public/icons/message-notifications.png";
-import tutor from "@/public/images/tutor-image-preview.png";
 import ipractisIcon from "@/public/icons/ipractis-icon.png";
 import notification from "@/public/icons/notification.png";
+import NavDropdown from "./NavDropdown";
 
 const NavResponsiveTeacher = () => {
   return (
@@ -54,21 +53,7 @@ const NavResponsiveTeacher = () => {
         </div>
 
         {/* Tutor Dropdown */}
-        <button className="flex items-center gap-1 p-1.5 rounded-[10px] bg-primary-color-P12">
-          <Image
-            className="w-[26px] rounded"
-            alt="Tutor Profile Image"
-            src={tutor}
-            priority
-          />
-
-          <Image
-            className="w-[26px]"
-            alt="Hamburguer Icon"
-            src={hamburguer}
-            priority
-          />
-        </button>
+        <NavDropdown />
       </div>
     </div>
   );
