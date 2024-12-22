@@ -23,7 +23,7 @@ const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
   const [securityLevel, setSecurityLevel] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
 
@@ -53,6 +53,19 @@ const Form = () => {
       formAction(formData);
     });
   };
+
+  const validEmailErrors = ["Invalid Email", "You already have an account"];
+
+  const validPasswordErrors = [
+    "Invalid Password",
+    "Password too short",
+    "Password too long",
+  ];
+
+  const isValidEmailError =
+    state?.message && validEmailErrors.includes(state?.title);
+  const isValidPasswordError =
+    state?.message && validPasswordErrors.includes(state?.title);
 
   return (
     <form
@@ -134,7 +147,7 @@ const Form = () => {
                 <Image className="w-9" src={email} alt="Email Input" />
               }
               classNames={{
-                inputWrapper: state?.title && "form-input-error",
+                inputWrapper: isValidEmailError && "form-input-error",
               }}
               type="text"
               name="email"
@@ -150,8 +163,7 @@ const Form = () => {
             </div>
           </div>
 
-          {/* If there's error we display this */}
-          {state?.message && state?.title && (
+          {isValidEmailError && (
             <ErrorMessageiPractis
               typeError={state.title}
               descError={state.message}
@@ -163,14 +175,23 @@ const Form = () => {
             <CustomNextUiInput
               type="password"
               name="password"
-              maxLength={32}
               placeholder="Enter your password"
               startContent={
                 <Image className="w-9" src={passwordInput} alt="User Input" />
               }
+              classNames={{
+                inputWrapper: isValidPasswordError && "form-input-error",
+              }}
               onChange={handlePasswordChange}
               value={password}
             />
+
+            {isValidPasswordError && (
+              <ErrorMessageiPractis
+                typeError={state.title}
+                descError={state.message}
+              />
+            )}
 
             <PasswordLevels securityLevel={securityLevel} />
 

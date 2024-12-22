@@ -91,7 +91,6 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
           <CustomNextUiInput
             type="password"
             name="password"
-            maxLength={32}
             value={password}
             onChange={handlePasswordChange}
             placeholder="Enter your password"

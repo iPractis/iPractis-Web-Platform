@@ -33,6 +33,36 @@ export async function registerUser(prevState, formData) {
     return invalidEmailError;
   }
 
+  // Check if password input is not empty
+  if (!rawFormData.password) {
+    const invalidPasswordError = {
+      title: "Invalid Password",
+      message: "Password can't be empty.",
+    };
+
+    return invalidPasswordError;
+  }
+
+  // Check if password input is too short (can't be less than 8)
+  if (rawFormData.password.length < 8) {
+    const invalidPasswordError = {
+      title: "Password too short",
+      message: "You need at least 8 characters to make a password.",
+    };
+
+    return invalidPasswordError;
+  }
+
+  // Check if password input is too long (can't excess 30)
+  if (rawFormData.password.length > 30) {
+    const invalidPasswordError = {
+      title: "Password too long",
+      message: "Your password should not exceed 30 characters.",
+    };
+
+    return invalidPasswordError;
+  }
+
   const res = await fetch(`${process.env.BASE_URL}/auth/register`, {
     method: "POST",
     headers: {
