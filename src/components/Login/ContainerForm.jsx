@@ -20,20 +20,11 @@ const ContainerForm = () => {
 
     const email = e?.target?.email?.value.trim();
 
-    // Validation of empty field (email && password)
+    // Validation of empty field (email)
     if (!email) {
       const invalidEmailError = {
         title: "Invalid Email",
         message: "Email can't be empty.",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    if (!password) {
-      const invalidEmailError = {
-        title: "Invalid Password",
-        message: "Password can't be empty.",
       };
 
       return setError(invalidEmailError);
@@ -46,6 +37,16 @@ const ContainerForm = () => {
       const invalidEmailError = {
         title: "Invalid Email",
         message: "Check your spelling email",
+      };
+
+      return setError(invalidEmailError);
+    }
+
+    // Validation of empty field (password)
+    if (!password) {
+      const invalidEmailError = {
+        title: "Invalid Password",
+        message: "Password can't be empty.",
       };
 
       return setError(invalidEmailError);
