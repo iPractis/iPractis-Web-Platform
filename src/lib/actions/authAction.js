@@ -4,6 +4,8 @@ import { signIn, signOut } from "@/src/auth";
 import { redirect } from "next/navigation";
 
 export async function registerUser(prevState, formData) {
+  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/; // Regex to check for accents and hyphen (-)
+
   const rawFormData = {
     email: formData.get("email"),
     firstName: formData.get("firstName"),
@@ -42,10 +44,11 @@ export async function registerUser(prevState, formData) {
   }
 
   // Check if firstname contains invalid characters (guion - and accents)
-  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/; // Regex to check for accents and hyphen (-)
-  const containsInvalidChars = invalidCharsRegex.test(rawFormData.firstName);
+  const containsFirstNameInvalidChars = invalidCharsRegex.test(
+    rawFormData.firstName
+  );
 
-  if (containsInvalidChars) {
+  if (containsFirstNameInvalidChars) {
     const invalidFirstNameError = {
       title: "Invalid First Name",
       message:
@@ -53,6 +56,51 @@ export async function registerUser(prevState, formData) {
     };
 
     return invalidFirstNameError;
+  }
+
+  // Check if lastname input is not empty
+  if (!rawFormData.lastName.trim(" ")) {
+    const invalidLastNameError = {
+      title: "Invalid Last Name",
+      message: "Last name can't be empty.",
+    };
+
+    return invalidLastNameError;
+  }
+
+  // Check if lastname input is too short (can't be less than 2)
+  if (rawFormData.lastName.length < 2) {
+    const invalidLastNameError = {
+      title: "Last name too short",
+      message: "You need at least 2 characters.",
+    };
+
+    return invalidLastNameError;
+  }
+
+  // Check if lastname input is too long (can't exceed 30)
+  if (rawFormData.lastName.length > 30) {
+    const invalidLastNameError = {
+      title: "Last name too long",
+      message: "Your last name should not exceed 30 characters.",
+    };
+
+    return invalidLastNameError;
+  }
+
+  // Check if lastname contains invalid characters (hyphen - and accents)
+  const containsLastNameInvalidChars = invalidCharsRegex.test(
+    rawFormData.lastName
+  );
+
+  if (containsLastNameInvalidChars) {
+    const invalidLastNameError = {
+      title: "Invalid Last Name",
+      message:
+        "Last name should not contain hyphen (-) or accents (á, é, í, ó, ú).",
+    };
+
+    return invalidLastNameError;
   }
 
   // Check if email input is not empty

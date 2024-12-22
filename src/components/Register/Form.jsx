@@ -168,6 +168,13 @@ const Form = () => {
             />
           )}
 
+          {isValidLastNameError && (
+            <ErrorMessageiPractis
+              typeError={state.title}
+              descError={state.message}
+            />
+          )}
+
           {/* Email Input */}
           <div className="flex gap-3">
             <CustomNextUiInput
