@@ -19,14 +19,21 @@ const ContainerForm = () => {
     e.preventDefault();
 
     const email = e?.target?.email?.value.trim();
-    const password = e?.target?.password?.value.trim();
 
-    console.log(password);
     // Validation of empty field (email && password)
     if (!email) {
       const invalidEmailError = {
         title: "Invalid Email",
         message: "Email can't be empty.",
+      };
+
+      return setError(invalidEmailError);
+    }
+
+    if (!password) {
+      const invalidEmailError = {
+        title: "Invalid Password",
+        message: "Password can't be empty.",
       };
 
       return setError(invalidEmailError);

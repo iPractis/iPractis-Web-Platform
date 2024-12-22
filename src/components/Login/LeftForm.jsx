@@ -11,6 +11,7 @@ import apple from "@/public/icons/apple.png";
 
 const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
   const validPasswordErrors = [
+    "Invalid Password",
     "Wrong password",
     "Account Locked: Too many login attempts",
     "Character limit",
