@@ -10,6 +10,12 @@ import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
 const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
+  const validEmailErrors = [
+    "Invalid Email",
+    "No account exists for this email address.",
+    "Email recently changed",
+  ];
+  
   const validPasswordErrors = [
     "Invalid Password",
     "Wrong password",
@@ -17,14 +23,10 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
     "Character limit",
   ];
 
-  const validEmailErrors = [
-    "Invalid Email",
-    "No account exists for this email address.",
-    "Email recently changed",
-  ];
-  
-  const isValidEmailError = error?.message && validEmailErrors.includes(error?.title);
-  const isValidPasswordError = error?.message && validPasswordErrors.includes(error?.title);
+  const isValidEmailError =
+    error?.message && validEmailErrors.includes(error?.title);
+  const isValidPasswordError =
+    error?.message && validPasswordErrors.includes(error?.title);
 
   return (
     <div className="space-y-8">
