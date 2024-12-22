@@ -33,6 +33,7 @@ import { logOutUser } from "@/src/lib/actions/authAction";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
+import { signOut } from "next-auth/react";
 
 const NavDesktopTeacher = () => {
   return (
@@ -320,20 +321,19 @@ const NavDesktopTeacher = () => {
               </button>
             </DropdownItem>
 
-            <DropdownItem className="p-0" key="logout">
-              <form action={logOutUser}>
-                <button
-                  type="submit"
-                  className="btn btn-quinary text-septenary-color-MA6 hover:text-septenary-color-MA6 rounded-lg flex gap-4 px-4 py-1.5 w-full group"
-                >
-                  <ChevronRightDoorBoldestIcon
-                    fillColor={"fill-septenary-color-MA6"}
-                    strokeColor={"stroke-septenary-color-MA6"}
-                  />
+            <DropdownItem className="p-0 disable-hover" key="logOut">
+              <button
+                type="submit"
+                onClick={() => signOut()}
+                className="btn btn-quinary text-septenary-color-MA6 hover:text-septenary-color-MA6 rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              >
+                <ChevronRightDoorBoldestIcon
+                  fillColor={"fill-septenary-color-MA6"}
+                  strokeColor={"stroke-septenary-color-MA6"}
+                />
 
-                  <h3>Log out</h3>
-                </button>
-              </form>
+                <h3>Log out</h3>
+              </button>
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>

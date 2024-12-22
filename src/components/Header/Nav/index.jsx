@@ -7,7 +7,7 @@ import NavDesktop from "./NavDestop";
 
 const Nav = () => {
   const { data: session } = useSession();
-
+  
   return (
     <nav className="bg-primary-color-P1 m-2 p-1.5 rounded-2xl">
       {session?.user?.token ? (
