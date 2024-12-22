@@ -11,6 +11,28 @@ export async function registerUser(prevState, formData) {
     password: formData.get("password"),
   };
 
+  // Check if email input is not empty
+  if (!rawFormData.email) {
+    const invalidEmailError = {
+      title: "Invalid Email",
+      message: "Email can't be empty.",
+    };
+
+    return invalidEmailError;
+  }
+
+  // Validation of gmail format
+  const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+  if (!gmailRegex.test(rawFormData.email)) {
+    const invalidEmailError = {
+      title: "Invalid Email",
+      message: "Check your spelling email",
+    };
+
+    return invalidEmailError;
+  }
+
   const res = await fetch(`${process.env.BASE_URL}/auth/register`, {
     method: "POST",
     headers: {

@@ -23,10 +23,8 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
     "Character limit",
   ];
 
-  const isValidEmailError =
-    error?.message && validEmailErrors.includes(error?.title);
-  const isValidPasswordError =
-    error?.message && validPasswordErrors.includes(error?.title);
+  const isValidEmailError = error?.message && validEmailErrors.includes(error?.title);
+  const isValidPasswordError = error?.message && validPasswordErrors.includes(error?.title);
 
   return (
     <div className="space-y-8">

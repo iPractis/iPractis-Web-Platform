@@ -23,7 +23,7 @@ const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
   const [securityLevel, setSecurityLevel] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
 
@@ -133,7 +133,10 @@ const Form = () => {
               startContent={
                 <Image className="w-9" src={email} alt="Email Input" />
               }
-              type="email"
+              classNames={{
+                inputWrapper: state?.title && "form-input-error",
+              }}
+              type="text"
               name="email"
             />
 
