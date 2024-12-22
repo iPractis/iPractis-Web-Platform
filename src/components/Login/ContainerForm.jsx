@@ -6,11 +6,12 @@ import SectionHeader from "../Globals/SectionHeader";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RightForm from "./RightForm";
-import LeftForm from "./LeftForm";
 import { useState } from "react";
+import LeftForm from "./LeftForm";
 
 const ContainerForm = () => {
   const [isPending, setIsPending] = useState(false);
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
 
@@ -20,17 +21,8 @@ const ContainerForm = () => {
     const email = e?.target?.email?.value.trim();
     const password = e?.target?.password?.value.trim();
 
-    // Validation of exceed the character limit (password)
-    if (password.length >= 32) {
-      const invalidEmailError = {
-        title: "Character limit",
-        message: "The input exceeds the allowed character limit.",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Validation of empty field
+    console.log(password);
+    // Validation of empty field (email && password)
     if (!email) {
       const invalidEmailError = {
         title: "Invalid Email",
@@ -39,10 +31,10 @@ const ContainerForm = () => {
 
       return setError(invalidEmailError);
     }
-    
+
     // Validation of gmail format
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-    
+
     if (!gmailRegex.test(email)) {
       const invalidEmailError = {
         title: "Invalid Email",
@@ -71,6 +63,11 @@ const ContainerForm = () => {
     }
   };
 
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword.replace(/\s/g, ""));
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       {/* Heading Title */}
@@ -95,7 +92,12 @@ const ContainerForm = () => {
               titleText="Log in"
             />
 
-            <LeftForm error={error} isPending={isPending} />
+            <LeftForm
+              handlePasswordChange={handlePasswordChange}
+              password={password}
+              error={error}
+              isPending={isPending}
+            />
           </div>
 
           <div className="md:block hidden flex-1 w-full">

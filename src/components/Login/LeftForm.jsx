@@ -9,7 +9,7 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 
-const LeftForm = ({ error, isPending }) => {
+const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
   const validPasswordErrors = [
     "Wrong password",
     "Account Locked: Too many login attempts",
@@ -91,6 +91,8 @@ const LeftForm = ({ error, isPending }) => {
             type="password"
             name="password"
             maxLength={32}
+            value={password}
+            onChange={handlePasswordChange}
             placeholder="Enter your password"
             startContent={
               <Image className="w-9" src={passwordInput} alt="User Input" />
