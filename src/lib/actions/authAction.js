@@ -11,6 +11,50 @@ export async function registerUser(prevState, formData) {
     password: formData.get("password"),
   };
 
+  // Check if firstname input is not empty
+  if (!rawFormData.firstName.trim(" ")) {
+    const invalidFirstNameError = {
+      title: "Invalid First Name",
+      message: "First name can't be empty.",
+    };
+
+    return invalidFirstNameError;
+  }
+
+  // Check if firstname input is too short (can't be less than 2)
+  if (rawFormData.firstName.length < 2) {
+    const invalidFirstNameError = {
+      title: "First name too short",
+      message: "You need at least 2 characters.",
+    };
+
+    return invalidFirstNameError;
+  }
+
+  // Check if password input is too long (can't excess 30)
+  if (rawFormData.firstName.length > 30) {
+    const invalidFirstNameError = {
+      title: "First name too long",
+      message: "Your first name should not exceed 30 characters.",
+    };
+
+    return invalidFirstNameError;
+  }
+
+  // Check if firstname contains invalid characters (guion - and accents)
+  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/; // Regex to check for accents and hyphen (-)
+  const containsInvalidChars = invalidCharsRegex.test(rawFormData.firstName);
+
+  if (containsInvalidChars) {
+    const invalidFirstNameError = {
+      title: "Invalid First Name",
+      message:
+        "First name should not contain hyphen (-) or accents (á, é, í, ó, ú).",
+    };
+
+    return invalidFirstNameError;
+  }
+
   // Check if email input is not empty
   if (!rawFormData.email) {
     const invalidEmailError = {

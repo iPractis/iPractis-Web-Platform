@@ -62,10 +62,26 @@ const Form = () => {
     "Password too long",
   ];
 
+  const validFirstNameErrors = [
+    "Invalid First Name",
+    "First name too short",
+    "First name too long",
+  ];
+
+  const validLastNameErrors = [
+    "Invalid Last Name",
+    "Last name too short",
+    "Last name too long",
+  ];
+
   const isValidEmailError =
     state?.message && validEmailErrors.includes(state?.title);
   const isValidPasswordError =
     state?.message && validPasswordErrors.includes(state?.title);
+  const isValidFirstNameError =
+    state?.message && validFirstNameErrors.includes(state?.title);
+  const isValidLastNameError =
+    state?.message && validLastNameErrors.includes(state?.title);
 
   return (
     <form
@@ -127,6 +143,9 @@ const Form = () => {
               startContent={
                 <Image className="w-9" src={userInput} alt="User Input" />
               }
+              classNames={{
+                inputWrapper: isValidFirstNameError && "form-input-error",
+              }}
             />
 
             <CustomNextUiInput
@@ -136,8 +155,18 @@ const Form = () => {
               startContent={
                 <Image className="w-9" src={usersBox} alt="Users Input" />
               }
+              classNames={{
+                inputWrapper: isValidLastNameError && "form-input-error",
+              }}
             />
           </div>
+
+          {isValidFirstNameError && (
+            <ErrorMessageiPractis
+              typeError={state.title}
+              descError={state.message}
+            />
+          )}
 
           {/* Email Input */}
           <div className="flex gap-3">
