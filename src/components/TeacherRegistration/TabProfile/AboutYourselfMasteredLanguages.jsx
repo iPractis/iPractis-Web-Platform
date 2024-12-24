@@ -12,7 +12,37 @@ import { languages } from "@/src/data/dataTeacherRegistration";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfMasteredLanguages = () => {
+  const [masteredLanguages, setMasteredLanguages] = useState([]);
+  const [masteredLanguage, setMasteredLanguage] = useState("");
+  const [languageLevel, setLanguageLevel] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+
+  // Add Mastered Language
+  const handleAddMasteredLanguage = (e) => {
+    const languageSelected = e?.target?.value;
+
+    // Grab the selected language that the user masters
+    setMasteredLanguage(languageSelected);
+
+    // Save to "DB" mastered languages
+    const masteredLanguageDetails = {
+      language: languageSelected,
+      level: languageLevel,
+    };
+
+    setMasteredLanguages([...masteredLanguages, masteredLanguageDetails]);
+
+    // Reset value (but it's not working)
+    // setMasteredLanguage("");
+  };
+
+  // Delete Mastered Language
+  const handleDeleteMasteredLanguage = (language) => {
+    const filteredMasteredLanguages = masteredLanguages?.filter(
+      (item) => item?.language !== language
+    );
+    setMasteredLanguages(filteredMasteredLanguages);
+  };
 
   return (
     <div className="flex-1 w-full">
@@ -31,6 +61,8 @@ const AboutYourselfMasteredLanguages = () => {
               </span>
             </div>
           }
+          value={masteredLanguage}
+          onChange={handleAddMasteredLanguage}
           onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
           labelPlacement="outside"
           placeholder="Add language"
@@ -62,7 +94,15 @@ const AboutYourselfMasteredLanguages = () => {
       </div>
 
       {/* Select Level Language */}
-      <AboutYourselfLevelLanguage />
+      {masteredLanguages?.map((masteredIndividualLanguage, index) => (
+        <AboutYourselfLevelLanguage
+          handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
+          setLanguageLevel={setLanguageLevel}
+          {...masteredIndividualLanguage}
+          languageLevel={languageLevel}
+          key={index}
+        />
+      ))}
     </div>
   );
 };

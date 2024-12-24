@@ -11,7 +11,12 @@ import { languagesLevels } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
-const AboutYourselfLevelLanguage = () => {
+const AboutYourselfLevelLanguage = ({
+  language,
+  languageLevel,
+  setLanguageLevel,
+  handleDeleteMasteredLanguage,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -20,7 +25,7 @@ const AboutYourselfLevelLanguage = () => {
         label={
           <div className="mb-2">
             <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
-              Spanish <QuestionMark fillColor={"fill-primary-color-P4"} />
+              {language} <QuestionMark fillColor={"fill-primary-color-P4"} />
             </span>
           </div>
         }
@@ -29,6 +34,8 @@ const AboutYourselfLevelLanguage = () => {
         placeholder="Select your level"
         selectorIcon={<span></span>}
         isOpen={isOpen}
+        value={languageLevel}
+        onChange={(e) => setLanguageLevel(e?.target?.value)}
         endContent={
           <InputBGWrapperIcon>
             <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
@@ -55,6 +62,7 @@ const AboutYourselfLevelLanguage = () => {
 
       <button
         className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+        onClick={() => handleDeleteMasteredLanguage(language)}
         type="button"
       >
         <TrashBinIcon
