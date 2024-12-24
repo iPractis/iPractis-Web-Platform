@@ -1,8 +1,18 @@
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import SectionHeader from "../../Globals/SectionHeader";
 import { UserBigIcon, UserIcon } from "../../Icons";
+import { useState } from "react";
+import Image from "next/image";
 
 const ProfilePicture = () => {
+  const [image, setImage] = useState(null);
+
+  const onImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setImage(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
   return (
     <WhiteSpaceWrapper className={"space-y-8"}>
       <SectionHeader
@@ -18,11 +28,22 @@ const ProfilePicture = () => {
           <input
             type="file"
             className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+            onChange={onImageChange}
           />
 
-          <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
-            <UserBigIcon fillColor={"fill-primary-color-P6"} />
-          </div>
+          {image ? (
+            <Image
+              className="w-[100px] h-[100px] rounded-2xl object-cover"
+              alt={"User Profile Picture"}
+              width={100}
+              height={100}
+              src={image}
+            />
+          ) : (
+            <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
+              <UserBigIcon fillColor={"fill-primary-color-P6"} />
+            </div>
+          )}
         </div>
 
         {/* Instructions Image Input */}

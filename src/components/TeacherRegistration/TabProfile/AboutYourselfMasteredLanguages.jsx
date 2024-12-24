@@ -1,9 +1,14 @@
 import { useState } from "react";
 
 // Images && icons
-import { ChevronDownBigIcon, ChevronDownIcon, QuestionMark, UserSpeakingIcon } from "../../Icons";
+import {
+  ChevronDownBigIcon,
+  QuestionMark,
+  UserSpeakingIcon,
+} from "../../Icons";
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import { languages } from "@/src/data/dataTeacherRegistration";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfMasteredLanguages = () => {
@@ -32,7 +37,7 @@ const AboutYourselfMasteredLanguages = () => {
           selectorIcon={<span></span>}
           isOpen={isOpen}
           startContent={
-             <InputBGWrapperIcon>
+            <InputBGWrapperIcon>
               <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
@@ -50,11 +55,9 @@ const AboutYourselfMasteredLanguages = () => {
             listbox: ["text-primary-color-P4"],
           }}
         >
-          {["Spanish", "English", "French", "Italian", "Portuguese"].map(
-            (reason) => (
-              <SelectItem key={reason}>{reason}</SelectItem>
-            )
-          )}
+          {languages?.map((language) => (
+            <SelectItem key={language}>{language}</SelectItem>
+          ))}
         </Select>
       </div>
 

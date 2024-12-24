@@ -7,6 +7,7 @@ import {
   TrashBinIcon,
   UserSpeakingIcon,
 } from "../../Icons";
+import { languagesLevels } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
@@ -47,8 +48,8 @@ const AboutYourselfLevelLanguage = () => {
           listbox: ["text-primary-color-P4"],
         }}
       >
-        {["A1", "A2", "B1", "B2", "C1", "C2"].map((reason) => (
-          <SelectItem key={reason}>{reason}</SelectItem>
+        {languagesLevels?.map((languageLevel) => (
+          <SelectItem key={languageLevel}>{languageLevel}</SelectItem>
         ))}
       </Select>
 
