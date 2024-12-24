@@ -1,9 +1,8 @@
 import { useState } from "react";
-import Image from "next/image";
 
 // Images && icons
-import circleHelpInput from "@/public/icons/circle-help-input.png";
-import { ChevronDownIcon, QuestionMark } from "../../Icons";
+import { ChevronDownIcon, QuestionMark, UserSpeakingIcon } from "../../Icons";
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfLevelLanguage = () => {
@@ -25,7 +24,9 @@ const AboutYourselfLevelLanguage = () => {
         selectorIcon={<span></span>}
         isOpen={isOpen}
         startContent={
-          <Image className="w-9" src={circleHelpInput} alt="User Input" />
+          <InputBGWrapperIcon>
+            <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
+          </InputBGWrapperIcon>
         }
         classNames={{
           trigger: ["select-wrapper-ipractis"],
