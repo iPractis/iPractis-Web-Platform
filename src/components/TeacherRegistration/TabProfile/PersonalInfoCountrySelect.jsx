@@ -33,7 +33,7 @@ const PersonalInfoCountrySelect = () => {
       <DropdownTrigger>
         <Button className="country-ipractis-dropdown">
           <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
+            className="w-[40px] h-[24px] rounded-[5px] object-cover"
             alt={selectedCountry.alt}
             src={selectedCountry.image}
           />
