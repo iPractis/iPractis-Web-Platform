@@ -16,7 +16,7 @@ const RightColumn = () => {
       <div className="my-[50px] w-full">
         <CustomNextUiTextarea
           placeholder="Describe the situation"
-          classNames={{ input: "h-[203px]" }}
+          classNames={{ input: "h-[222px]" }}
           size="primaryiPractis"
           disableAutosize
         />

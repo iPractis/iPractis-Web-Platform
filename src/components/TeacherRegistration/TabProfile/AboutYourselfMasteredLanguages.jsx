@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 // Images && icons
-import { ChevronDownIcon, QuestionMark, UserSpeakingIcon } from "../../Icons";
+import { ChevronDownBigIcon, ChevronDownIcon, QuestionMark, UserSpeakingIcon } from "../../Icons";
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
@@ -36,9 +36,14 @@ const AboutYourselfMasteredLanguages = () => {
               <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
+          endContent={
+            <InputBGWrapperIcon>
+              <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+            </InputBGWrapperIcon>
+          }
           classNames={{
             trigger: ["select-wrapper-ipractis"],
-            innerWrapper: ["select-ipractis"],
+            innerWrapper: ["select-ipractis", "w-full"],
             value: [
               "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
             ],
@@ -51,14 +56,6 @@ const AboutYourselfMasteredLanguages = () => {
             )
           )}
         </Select>
-
-        <button
-          className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-        >
-          <ChevronDownIcon />
-        </button>
       </div>
 
       {/* Select Level Language */}

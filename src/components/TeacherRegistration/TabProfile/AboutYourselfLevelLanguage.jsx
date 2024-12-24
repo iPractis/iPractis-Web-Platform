@@ -1,7 +1,12 @@
 import { useState } from "react";
 
 // Images && icons
-import { ChevronDownIcon, QuestionMark, UserSpeakingIcon } from "../../Icons";
+import {
+  ChevronDownBigIcon,
+  QuestionMark,
+  TrashBinIcon,
+  UserSpeakingIcon,
+} from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
@@ -9,7 +14,7 @@ const AboutYourselfLevelLanguage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex items-end mt-14 gap-2">
+    <div className="flex items-end mt-10 gap-2">
       <Select
         label={
           <div className="mb-2">
@@ -23,6 +28,11 @@ const AboutYourselfLevelLanguage = () => {
         placeholder="Select your level"
         selectorIcon={<span></span>}
         isOpen={isOpen}
+        endContent={
+          <InputBGWrapperIcon>
+            <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+          </InputBGWrapperIcon>
+        }
         startContent={
           <InputBGWrapperIcon>
             <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
@@ -30,7 +40,7 @@ const AboutYourselfLevelLanguage = () => {
         }
         classNames={{
           trigger: ["select-wrapper-ipractis"],
-          innerWrapper: ["select-ipractis"],
+          innerWrapper: ["select-ipractis", "w-full"],
           value: [
             "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
           ],
@@ -44,10 +54,12 @@ const AboutYourselfLevelLanguage = () => {
 
       <button
         className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-        onClick={() => setIsOpen(!isOpen)}
         type="button"
       >
-        <ChevronDownIcon />
+        <TrashBinIcon
+          fillColor={"fill-primary-color-P4"}
+          strokeColor={"stroke-primary-color-P4"}
+        />
       </button>
     </div>
   );

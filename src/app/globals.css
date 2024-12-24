@@ -118,11 +118,11 @@
   }
 
   .textarea-wrapper {
-    @apply bg-primary-color-P11 rounded-2xl p-2.5 pe-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
+    @apply bg-primary-color-P11 rounded-2xl data-[hover=true]:bg-secondary-color-S9 p-0 !important;
   }
 
   .textarea-ipractis {
-    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 [&::-webkit-scrollbar]:[width:4px] [&::-webkit-scrollbar-thumb]:bg-primary-color-P4 [&::-webkit-scrollbar-thumb]:rounded-[5px] !important;
+    @apply placeholder:text-primary-color-P4 p-2.5 pe-1.5 text-primary-color-P4 ST-3 [&::-webkit-scrollbar]:[width:4px] [&::-webkit-scrollbar-thumb]:bg-primary-color-P4 [&::-webkit-scrollbar-thumb]:rounded-[5px] !important;
   }
 
   .select-wrapper-ipractis {
