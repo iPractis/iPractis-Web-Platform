@@ -15,6 +15,8 @@ const ContainerForm = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
+  console.log(error);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

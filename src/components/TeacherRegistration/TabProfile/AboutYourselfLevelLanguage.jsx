@@ -6,11 +6,11 @@ import circleHelpInput from "@/public/icons/circle-help-input.png";
 import { ChevronDownIcon, QuestionMark } from "../../Icons";
 import { Select, SelectItem } from "@nextui-org/react";
 
-const AboutYourselfIndividualMasterLanguage = () => {
+const AboutYourselfLevelLanguage = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex items-end gap-2">
+    <div className="flex items-end mt-14 gap-2">
       <Select
         label={
           <div className="mb-2">
@@ -52,4 +52,4 @@ const AboutYourselfIndividualMasterLanguage = () => {
   );
 };
 
-export default AboutYourselfIndividualMasterLanguage;
+export default AboutYourselfLevelLanguage;

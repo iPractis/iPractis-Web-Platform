@@ -17,6 +17,7 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
   ];
   
   const validPasswordErrors = [
+    "Account Locked: Too many login attempts",
     "Invalid Password",
     "Wrong password",
     "Account Locked: Too many login attempts",
