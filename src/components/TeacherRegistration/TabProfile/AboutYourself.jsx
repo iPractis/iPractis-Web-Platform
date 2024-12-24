@@ -14,7 +14,7 @@ const AboutYourself = () => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:gap-[50px] gap-6">
+      <div className="flex flex-col sm:flex-row items-center sm:gap-[50px] gap-6">
         <AboutYourselfMasteredLanguages />
 
         <div className="flex-1 w-full">

@@ -1,9 +1,9 @@
 import SectionHeader from "../../Globals/SectionHeader";
 import ProfilePicture from "./ProfilePicture";
 import IDVerification from "./IDVerification";
+import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
 import { UserIcon } from "../../Icons";
-import AboutYourself from "./AboutYourself";
 
 const TabProfile = ({ activeTab }) => {
   return (
