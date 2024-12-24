@@ -89,7 +89,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
     }),
   ],
-
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user, account }) {
       if (account?.provider == "credentials") {
@@ -137,7 +137,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return session;
     },
   },
-
   pages: {
     signIn: "/login",
     error: "/login",
