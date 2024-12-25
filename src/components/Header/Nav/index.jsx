@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import NavResponsiveTeacher from "./NavResponsiveTeacher";
 import NavDesktopTeacher from "./NavDesktopTeacher";
 import { useSession } from "next-auth/react";
@@ -7,17 +7,17 @@ import NavDesktop from "./NavDestop";
 
 const Nav = () => {
   const { data: session } = useSession();
-  
+
   return (
     <nav className="bg-primary-color-P1 m-2 p-1.5 rounded-2xl">
       {session?.user?.token ? (
         <>
           <div className="md:block hidden">
-            <NavDesktopTeacher />
+            <NavDesktopTeacher userName={session?.user?.name} />
           </div>
 
           <div className="md:hidden block">
-            <NavResponsiveTeacher />
+            <NavResponsiveTeacher userName={session?.user?.name} />
           </div>
         </>
       ) : (

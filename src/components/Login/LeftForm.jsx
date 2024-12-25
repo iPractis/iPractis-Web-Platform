@@ -8,6 +8,7 @@ import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
+import { signIn } from "next-auth/react";
 
 const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
   const validEmailErrors = [
@@ -15,7 +16,7 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
     "No account exists for this email address.",
     "Email recently changed",
   ];
-  
+
   const validPasswordErrors = [
     "Account Locked: Too many login attempts",
     "Invalid Password",
@@ -24,14 +25,17 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
     "Character limit",
   ];
 
-  const isValidEmailError = error?.message && validEmailErrors.includes(error?.title);
-  const isValidPasswordError = error?.message && validPasswordErrors.includes(error?.title);
+  const isValidEmailError =
+    error?.message && validEmailErrors.includes(error?.title);
+  const isValidPasswordError =
+    error?.message && validPasswordErrors.includes(error?.title);
 
   return (
     <div className="space-y-8">
       <div className="flex gap-3 sm:mt-[50px] mt-8">
         <button
           className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
+          onClick={() => signIn("google", { redirect: false })}
           type="button"
         >
           <Image

@@ -7,7 +7,7 @@ import ipractisIcon from "@/public/icons/ipractis-icon.png";
 import notification from "@/public/icons/notification.png";
 import NavDropdown from "./NavDropdown";
 
-const NavResponsiveTeacher = () => {
+const NavResponsiveTeacher = ({ userName }) => {
   return (
     <div className="flex justify-between items-center gap-1.5">
       <div>
@@ -53,7 +53,7 @@ const NavResponsiveTeacher = () => {
         </div>
 
         {/* Tutor Dropdown */}
-        <NavDropdown />
+        <NavDropdown isDropdownHidden={"md:hidden block"} userName={userName} />
       </div>
     </div>
   );

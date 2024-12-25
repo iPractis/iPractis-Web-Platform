@@ -52,6 +52,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
       authorization: {
         params: {
+          prompt: "consent",
           access_type: "offline",
           response_type: "code",
         },
@@ -67,19 +68,30 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.provider == "google") {
-        const response = await fetch(`http://127.0.0.1:8000/api/users/login`, {
-          method: "POST",
-          body: JSON.stringify({ email: user.email, password: "45" }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        // console.log(account, "account de google");
+        // console.log(token, "este token");
+        // console.log(user, "este user");
+        // console.log("entro al google provider");
+
+        const response = await fetch(
+          `${process.env.BASE_URL}/auth/login-google`,
+          {
+            method: "POST",
+            body: JSON.stringify({ access_token: account.access_token }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         const data = await response.json();
+        // console.log(data, 'data de google')
 
-        if (response.ok && data?.access_token) {
-          token.access_token = data.access_token;
+        if (response.ok && data?.token) {
+          // console.log("entro en if")
+          token.token = data.token;
         } else {
+          // console.log("entro en else")
           throw new Error(data.detail);
         }
       }
@@ -98,7 +110,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: "/authenticator",
-    error: "/authenticator",
+    error: "/login",
   },
   trustHost: true,
 });

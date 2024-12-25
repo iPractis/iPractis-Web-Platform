@@ -15,7 +15,7 @@ import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
 import NavDropdown from "./NavDropdown";
 
-const NavDesktopTeacher = () => {
+const NavDesktopTeacher = ({ userName }) => {
   return (
     <div className="flex justify-between items-center gap-1.5">
       {/* Left Column */}
@@ -82,7 +82,7 @@ const NavDesktopTeacher = () => {
         </div>
 
         {/* Tutor Dropdown */}
-        <NavDropdown />
+        <NavDropdown isDropdownHidden={"md:block hidden"} userName={userName} />
 
         {/* Theme and language buttons */}
         <button
