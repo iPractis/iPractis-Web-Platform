@@ -89,6 +89,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (response.ok && data?.token) {
           // console.log("entro en if")
+          token.firstName = user.name;
           token.token = data.token;
         } else {
           // console.log("entro en else")

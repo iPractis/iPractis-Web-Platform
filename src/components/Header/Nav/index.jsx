@@ -13,11 +13,11 @@ const Nav = () => {
       {session?.user?.token ? (
         <>
           <div className="md:block hidden">
-            <NavDesktopTeacher userName={session?.user?.name} />
+            <NavDesktopTeacher userName={session?.user?.firstName} />
           </div>
 
           <div className="md:hidden block">
-            <NavResponsiveTeacher userName={session?.user?.name} />
+            <NavResponsiveTeacher userName={session?.user?.firstName} />
           </div>
         </>
       ) : (

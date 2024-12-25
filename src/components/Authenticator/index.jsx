@@ -1,6 +1,6 @@
 import SectionHeader from "../Globals/SectionHeader";
 import { SparkleIcon } from "../Icons";
-import { Suspense } from 'react'
+import { Suspense } from "react";
 import Form from "./Form";
 
 export const Authenticator = () => {
@@ -20,8 +20,8 @@ export const Authenticator = () => {
 
           {/* Login with verification code */}
           <Suspense>
-          <Form />
-          </Suspense >
+            <Form />
+          </Suspense>
         </article>
       </div>
     </section>

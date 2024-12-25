@@ -67,8 +67,9 @@ const ContainerForm = () => {
       const formData = new FormData(e.currentTarget);
       const response = await logInUser(formData);
 
+      // If there's error we display the error
       if (response?.message && response?.title) {
-        setError({ message: response.message, title: response.title });
+        return setError({ message: response.message, title: response.title });
       } else {
         router.push(`/authenticator?email=${formData.get("email")}`);
       }
