@@ -3,19 +3,16 @@
 import { PadLockUserIcon, QRCodeUserIcon, SparkleIcon } from "../Icons";
 import { logInUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
-import { getSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import RightForm from "./RightForm";
-import { useState } from "react";
 import LeftForm from "./LeftForm";
+import { useState } from "react";
 
 const ContainerForm = () => {
   const [isPending, setIsPending] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-
-  console.log(error);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,11 +67,10 @@ const ContainerForm = () => {
       const formData = new FormData(e.currentTarget);
       const response = await logInUser(formData);
 
-      if (!!response?.formError) {
-        setError(response.formError);
+      if (response?.message && response?.title) {
+        setError({ message: response.message, title: response.title });
       } else {
-        await getSession();
-        router.replace("/");
+        router.push(`/authenticator?email=${formData.get("email")}`);
       }
     } catch (error) {
       console.log(error);

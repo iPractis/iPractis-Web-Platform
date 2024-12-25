@@ -1,7 +1,7 @@
 "use server";
 
-import { signIn, signOut } from "@/src/auth";
 import { redirect } from "next/navigation";
+import { signOut } from "@/src/auth";
 
 export async function registerUser(prevState, formData) {
   // Regex to check for accents and hyphen (-)
@@ -174,22 +174,27 @@ export async function registerUser(prevState, formData) {
 }
 
 export async function logInUser(formData) {
+  const rawFormData = {
+    email: formData.get("email"),
+    password: formData.get("password"),
+  };
+
   try {
-    await signIn("credentials", {
-      redirect: false,
-      email: formData.get("email"),
-      password: formData.get("password"),
+    const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify(rawFormData),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
-    return { success: "ok" };
-  } catch (err) {
-    if (err instanceof Error && "type" in err && err.type === "AuthError") {
-      return {
-        formError: err.message,
-      };
+    const json = await res.json();
+    
+    if (!res.ok) {
+      return json;
     }
-
-    return { error: { message: "Failed to login!", error: String(err) } };
+  } catch (err) {
+    console.log(err);
   }
 }
 

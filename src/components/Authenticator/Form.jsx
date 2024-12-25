@@ -1,16 +1,38 @@
 "use client";
 
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import { startTransition, useActionState, useState } from "react";
+import { logInUserOtp } from "@/src/lib/actions/authAction";
 import { CheckedShieldIcon, HelpIcon } from "../Icons";
 import SectionHeader from "../Globals/SectionHeader";
-import DualButton from "../Globals/DualButton";
+import { useSearchParams } from "next/navigation";
+import DualAction from "../Globals/DualAction";
 import OTPInput from "react-otp-input";
-import { useState } from "react";
 
 const TopColumn = () => {
+  const [state, formAction, isPending] = useActionState(logInUserOtp, {});
+  const searchParams = useSearchParams();
   const [otp, setOtp] = useState("");
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    formData.append("otp", otp);
+    formData.append("email", searchParams?.get("email"));
+
+    // Send data to server action
+    startTransition(() => {
+      formAction(formData);
+    });
+  };
+
   return (
-    <form className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
+    <form
+      onSubmit={handleSubmit}
+      action={formAction}
+      className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
+    >
       <SectionHeader
         descriptionText="Enter your account details to access to your account."
         titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
@@ -39,11 +61,20 @@ const TopColumn = () => {
           }
         />
 
-        <DualButton
-          leftButtonText={"Cancel"}
-          rightButtonText={"Log in"}
+        <DualAction
+          leftLinkText={"Cancel"}
+          leftLinkHref={"/login"}
+          rightButtonText={isPending ? "Loading..." : "Log in"}
+          rightButtonDisabled={isPending}
           rightButtonType={"submit"}
         />
+
+        {state?.title && (
+          <ErrorMessageiPractis
+            typeError={state?.title}
+            descError={state?.message}
+          />
+        )}
 
         <p className="text-primary-color-P4 ST-4">
           Haven’t receive the code? 3:00 Minutes
