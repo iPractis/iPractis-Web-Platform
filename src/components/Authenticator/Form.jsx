@@ -1,11 +1,11 @@
 "use client";
 
+import { startTransition, useActionState, useEffect, useState } from "react";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import { startTransition, useActionState, useState } from "react";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
 import { CheckedShieldIcon, HelpIcon } from "../Icons";
 import SectionHeader from "../Globals/SectionHeader";
-import { useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import DualAction from "../Globals/DualAction";
 import OTPInput from "react-otp-input";
 
@@ -14,6 +14,13 @@ const TopColumn = () => {
   const searchParams = useSearchParams();
   const [otp, setOtp] = useState("");
 
+  // Waiting for sever action response and if everything is SUCCESS we redirect to homepage
+  useEffect(() => {
+    if (state?.success === "ok") {
+      window.location.href = "/";
+    }
+  }, [state?.success]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -21,7 +28,6 @@ const TopColumn = () => {
     formData.append("otp", otp);
     formData.append("email", searchParams?.get("email"));
 
-    // Send data to server action
     startTransition(() => {
       formAction(formData);
     });
@@ -30,7 +36,7 @@ const TopColumn = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      action={formAction}
+      // action={formAction}
       className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
     >
       <SectionHeader
@@ -69,10 +75,10 @@ const TopColumn = () => {
           rightButtonType={"submit"}
         />
 
-        {state?.title && (
+        {state?.formError?.message && (
           <ErrorMessageiPractis
-            typeError={state?.title}
-            descError={state?.message}
+            typeError={state?.formError?.title}
+            descError={state?.formError?.message}
           />
         )}
 

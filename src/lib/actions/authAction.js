@@ -1,8 +1,9 @@
 "use server";
 
+import { signOut, signIn } from "@/src/auth";
 import { redirect } from "next/navigation";
-import { signOut } from "@/src/auth";
 
+// WITHOUT AUTHJS
 export async function registerUser(prevState, formData) {
   // Regex to check for accents and hyphen (-)
   const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/;
@@ -173,6 +174,7 @@ export async function registerUser(prevState, formData) {
   redirect("/login");
 }
 
+// WITHOUT AUTHJS
 export async function logInUser(formData) {
   const rawFormData = {
     email: formData.get("email"),
@@ -189,7 +191,7 @@ export async function logInUser(formData) {
     });
 
     const json = await res.json();
-    
+
     if (!res.ok) {
       return json;
     }
@@ -198,6 +200,32 @@ export async function logInUser(formData) {
   }
 }
 
+// WITH AUTHJS
+export async function logInUserOtp(prevState, formData) {
+  const rawFormData = {
+    redirect: false,
+    email: formData.get("email"),
+    otp: formData.get("otp"),
+  };
+
+  try {
+    await signIn("credentials", rawFormData);
+    
+    return { success: "ok" };
+  } catch (err) {
+    if (err instanceof Error && "type" in err && err.type === "AuthError") {
+      return {
+        formError: err.message,
+      };
+    }
+
+    return {
+      formError: { message: "Failed to login", title: String(err) },
+    };
+  }
+}
+
+// WITH AUTHJS
 export async function logOutUser() {
   try {
     await signOut();

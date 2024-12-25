@@ -1,5 +1,5 @@
-import NextAuth, { AuthError, DefaultSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import NextAuth, { AuthError } from "next-auth";
 import Google from "next-auth/providers/google";
 import "next-auth/jwt";
 
@@ -16,32 +16,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   providers: [
     Credentials({
-      credentials: {
-        email: {},
-        password: {},
-      },
-
       authorize: async (credentials) => {
-        console.log(credentials, "authorize");
-        try {
-          const response = await fetch(`${process.env.BASE_URL}/auth/login-verify-otp`, {
-            method: "POST",
-            body: JSON.stringify(credentials),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+        const credentialsLogInInfo = {
+          email: credentials?.email,
+          otp: credentials?.otp,
+        };
 
-          const user = await response.json();
-          console.log(user, "user autthorize");
-          console.log(user, "desde auth");
-          if (!response.ok) {
-            console.log("en el if del error");
-            const errorMessage = user;
-            throw new customError(errorMessage);
+        try {
+          const res = await fetch(
+            `${process.env.BASE_URL}/auth/login-verify-otp`,
+            {
+              method: "POST",
+              body: JSON.stringify(credentialsLogInInfo),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const json = await res.json();
+
+          if (!res.ok) {
+            throw new customError(json);
           }
 
-          return user;
+          return json;
         } catch (error) {
           throw error;
         }
@@ -66,10 +65,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.token = user.token;
         token.firstName = user.firstName;
       }
-
-      console.log(token, "el token callback");
-      console.log(user, "el user callback");
-      console.log(account, "el account callback");
 
       if (account?.provider == "google") {
         const response = await fetch(`http://127.0.0.1:8000/api/users/login`, {
@@ -97,13 +92,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.token = token.token;
         session.user.firstName = token.firstName;
       }
-      console.log(session, "session de authjs");
+
       return session;
     },
   },
   pages: {
-    signIn: "/login",
-    error: "/login",
+    signIn: "/authenticator",
+    error: "/authenticator",
   },
   trustHost: true,
 });
