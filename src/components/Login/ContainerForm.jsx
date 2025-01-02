@@ -1,10 +1,9 @@
 "use client";
 
-import { PadLockUserIcon, QRCodeUserIcon, SparkleIcon } from "../Icons";
+import { PadLockUserIcon, SparkleIcon } from "../Icons";
 import { logInUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
 import { useRouter } from "next/navigation";
-import RightForm from "./RightForm";
 import LeftForm from "./LeftForm";
 import { useState } from "react";
 
@@ -99,36 +98,20 @@ const ContainerForm = () => {
 
       {/* Log In Section */}
       <div className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
-        <div className="flex flex-col md:flex-row items-start sm:gap-[50px]">
-          <div className="flex-1 w-full">
-            <SectionHeader
-              descriptionText="Enter your account details to access to your account."
-              titleIcon={<PadLockUserIcon />}
-              descriptionClassName="mt-1"
-              titleClassName="MT-SB-1"
-              titleText="Log in"
-            />
+        <SectionHeader
+          descriptionText="Enter your account details to access to your account."
+          titleIcon={<PadLockUserIcon />}
+          descriptionClassName="mt-1"
+          titleClassName="MT-SB-1"
+          titleText="Log in"
+        />
 
-            <LeftForm
-              handlePasswordChange={handlePasswordChange}
-              password={password}
-              error={error}
-              isPending={isPending}
-            />
-          </div>
-
-          <div className="md:block hidden flex-1 w-full">
-            <SectionHeader
-              descriptionText="Log in with a QR code or a sign-in code."
-              titleText="Alternative Login Methods"
-              titleIcon={<QRCodeUserIcon />}
-              descriptionClassName="mt-1"
-              titleClassName="MT-SB-1"
-            />
-
-            <RightForm />
-          </div>
-        </div>
+        <LeftForm
+          handlePasswordChange={handlePasswordChange}
+          password={password}
+          error={error}
+          isPending={isPending}
+        />
       </div>
     </form>
   );

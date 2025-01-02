@@ -15,8 +15,8 @@ const AccountPrompt = ({
       <div
         className={
           accountPromptPosition === "horizontal"
-            ? "flex flex-col md:flex-row md:items-center items-stretch md:gap-[50px] gap-8"
-            : "flex flex-col md:gap-[50px] gap-8"
+            ? "flex flex-col lg:flex-row lg:items-center items-stretch lg:gap-[50px] gap-8"
+            : "flex flex-col lg:gap-[50px] gap-8"
         }
       >
         <div className="flex-1">

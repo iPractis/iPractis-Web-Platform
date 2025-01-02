@@ -1,12 +1,12 @@
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import EmailPhoneSwitcher from "../Globals/EmailPhoneSwitcher";
 import Image from "next/image";
 
 // Images && icons
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
-import userInput from "@/public/icons/user-input.png";
 import apple from "@/public/icons/apple.png";
 import { signIn } from "next-auth/react";
 
@@ -70,26 +70,11 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
 
       <div>
         {/* Email Input */}
-        <div>
-          <CustomNextUiInput
-            type="text"
-            name="email"
-            placeholder="Enter your phone or email address"
-            startContent={
-              <Image className="w-9" src={userInput} alt="User Input" />
-            }
-            classNames={{
-              inputWrapper: isValidEmailError && "form-input-error",
-            }}
-          />
-
-          {isValidEmailError && (
-            <ErrorMessageiPractis
-              typeError={error?.title}
-              descError={error?.message}
-            />
-          )}
-        </div>
+        <EmailPhoneSwitcher
+          isValidEmailError={isValidEmailError}
+          titleError={error?.title}
+          messageError={error?.message}
+        />
 
         {/* Password Input */}
         <div className="mt-3">
