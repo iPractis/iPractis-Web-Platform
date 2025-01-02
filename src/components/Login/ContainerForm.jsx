@@ -44,12 +44,12 @@ const ContainerForm = () => {
 
         return setError(invalidEmailError);
       }
-    }
-     else { // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
+    } else {
+      // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
       const number = e?.target?.number?.value?.trim();
 
       // Validation of empty field (phone number)
-      if (!number) {
+      if (!number.trim(" ")) {
         const invalidPhoneNumberError = {
           title: "Invalid Phone Number",
           message: "Phone number can't be empty.",

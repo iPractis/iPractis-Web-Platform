@@ -47,6 +47,7 @@ const Form = () => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
+    formData.append("toggleInput", toggleInput);
 
     // Send data to server action
     startTransition(() => {
@@ -79,7 +80,7 @@ const Form = () => {
   const isValidEmailError =
     state?.message && validEmailErrors.includes(state?.title);
   const isValidPhoneNumberError =
-  state?.message && validPhoneNumberErrors.includes(state?.title);
+    state?.message && validPhoneNumberErrors.includes(state?.title);
   const isValidPasswordError =
     state?.message && validPasswordErrors.includes(state?.title);
   const isValidFirstNameError =
@@ -188,13 +189,6 @@ const Form = () => {
             toggleInput={toggleInput}
             titleError={state?.title}
           />
-
-          {isValidEmailError && (
-            <ErrorMessageiPractis
-              typeError={state.title}
-              descError={state.message}
-            />
-          )}
 
           {/* Password Input */}
           <div>

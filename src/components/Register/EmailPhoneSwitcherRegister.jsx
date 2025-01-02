@@ -2,13 +2,7 @@ import SelectCountryAreaCode from "../Globals/SelectCountryAreaCode";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import { MailIcon, PhoneIcon, UserIcon } from "../Icons";
-
-// React imports
-import Image from "next/image";
-
-// Images && icons
-import userInput from "@/public/icons/user-input.png";
+import { MailIcon, PhoneIcon } from "../Icons";
 
 const EmailPhoneSwitcherRegister = ({
   isValidPhoneNumberError,

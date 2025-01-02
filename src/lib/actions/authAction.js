@@ -5,11 +5,15 @@ import { redirect } from "next/navigation";
 
 // WITHOUT AUTHJS
 export async function registerUser(prevState, formData) {
+  // This is the request if user chooses between EMAIL or PHONE NUMBER
+  const toggleInput = formData.get("toggleInput");
+
   // Regex to check for accents and hyphen (-)
   const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/;
 
   const rawFormData = {
-    email: formData.get("email"),
+    email: formData.get("email") ? formData.get("email") : "",
+    phone: formData.get("number") ? formData.get("number") : "",
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     password: formData.get("password"),
@@ -105,26 +109,42 @@ export async function registerUser(prevState, formData) {
     return invalidLastNameError;
   }
 
-  // Check if email input is not empty
-  if (!rawFormData.email) {
-    const invalidEmailError = {
-      title: "Invalid Email",
-      message: "Email can't be empty.",
-    };
+  if (toggleInput === "email") {
+    // Check if email input is not empty
+    if (!rawFormData.email) {
+      const invalidEmailError = {
+        title: "Invalid Email",
+        message: "Email can't be empty.",
+      };
 
-    return invalidEmailError;
-  }
+      return invalidEmailError;
+    }
 
-  // Validation of gmail format
-  const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+    // Validation of gmail format
+    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
-  if (!gmailRegex.test(rawFormData.email)) {
-    const invalidEmailError = {
-      title: "Invalid Email",
-      message: "Check your spelling email",
-    };
+    // If user chooses email we're gonna get the EMAIL INPUT (ignore phone number)
+    if (!gmailRegex.test(rawFormData.email)) {
+      const invalidEmailError = {
+        title: "Invalid Email",
+        message: "Check your spelling email",
+      };
 
-    return invalidEmailError;
+      return invalidEmailError;
+    }
+  } else {
+    // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
+    const number = rawFormData?.phone;
+
+    // Validation of empty field (phone number)
+    if (!number.trim(" ")) {
+      const invalidPhoneNumberError = {
+        title: "Invalid Phone Number",
+        message: "Phone number can't be empty.",
+      };
+
+      return invalidPhoneNumberError;
+    }
   }
 
   // Check if password input is not empty
