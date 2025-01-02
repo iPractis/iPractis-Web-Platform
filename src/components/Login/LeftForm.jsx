@@ -11,6 +11,8 @@ import apple from "@/public/icons/apple.png";
 import { signIn } from "next-auth/react";
 
 const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
+  const validPhoneNumberErrors = ["Invalid Phone Number"];
+
   const validEmailErrors = [
     "Invalid Email",
     "No account exists for this email address.",
@@ -27,6 +29,8 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
 
   const isValidEmailError =
     error?.message && validEmailErrors.includes(error?.title);
+  const isValidPhoneNumberError =
+    error?.message && validPhoneNumberErrors.includes(error?.title);
   const isValidPasswordError =
     error?.message && validPasswordErrors.includes(error?.title);
 
@@ -71,9 +75,10 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
       <div>
         {/* Email Input */}
         <EmailPhoneSwitcher
+          isValidPhoneNumberError={isValidPhoneNumberError}
           isValidEmailError={isValidEmailError}
-          titleError={error?.title}
           messageError={error?.message}
+          titleError={error?.title}
         />
 
         {/* Password Input */}

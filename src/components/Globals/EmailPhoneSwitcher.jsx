@@ -12,6 +12,7 @@ import { useState } from "react";
 import userInput from "@/public/icons/user-input.png";
 
 const EmailPhoneSwitcher = ({
+  isValidPhoneNumberError,
   isValidEmailError,
   titleError,
   messageError,
@@ -66,12 +67,12 @@ const EmailPhoneSwitcher = ({
             </span>
           }
           classNames={{
-            inputWrapper: isValidEmailError && "form-input-error",
-            input: ["ml-5"]
+            inputWrapper: isValidPhoneNumberError && "form-input-error",
+            input: ["ml-5"],
           }}
         />
 
-        {isValidEmailError && (
+        {isValidPhoneNumberError && (
           <ErrorMessageiPractis
             typeError={titleError}
             descError={messageError}

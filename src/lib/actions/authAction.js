@@ -210,7 +210,7 @@ export async function logInUserOtp(prevState, formData) {
 
   try {
     await signIn("credentials", rawFormData);
-    
+
     return { success: "ok" };
   } catch (err) {
     if (err instanceof Error && "type" in err && err.type === "AuthError") {

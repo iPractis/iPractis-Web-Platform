@@ -17,6 +17,7 @@ const ContainerForm = () => {
     e.preventDefault();
 
     const email = e?.target?.email?.value.trim();
+    const number = e?.target?.number?.value?.trim();
 
     // Validation of empty field (email)
     if (!email) {
@@ -38,6 +39,16 @@ const ContainerForm = () => {
       };
 
       return setError(invalidEmailError);
+    }
+
+    // Validation of empty field (phone number)
+    if (!number) {
+      const invalidPhoneNumberError = {
+        title: "Invalid Phone Number",
+        message: "Phone number can't be empty.",
+      };
+
+      return setError(invalidPhoneNumberError);
     }
 
     // Validation of empty field (password)
