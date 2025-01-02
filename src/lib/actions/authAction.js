@@ -177,8 +177,9 @@ export async function registerUser(prevState, formData) {
 // WITHOUT AUTHJS
 export async function logInUser(formData) {
   const rawFormData = {
-    email: formData.get("email"),
     password: formData.get("password"),
+    email: formData.get("email") ? formData.get("email") : "",
+    phone: formData.get("number") ? formData.get("number") : "",
   };
 
   try {
