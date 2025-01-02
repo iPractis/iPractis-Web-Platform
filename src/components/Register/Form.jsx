@@ -4,6 +4,7 @@ import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import { useActionState, useState, startTransition } from "react";
+import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
 import { registerUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
@@ -16,11 +17,10 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import usersBox from "@/public/icons/users-box.png";
 import apple from "@/public/icons/apple.png";
-import email from "@/public/icons/email.png";
-import phone from "@/public/icons/phone.png";
 
 const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
+  const [toggleInput, setToggleInput] = useState("email");
   const [securityLevel, setSecurityLevel] = useState("");
   const [password, setPassword] = useState("");
 
@@ -56,6 +56,8 @@ const Form = () => {
 
   const validEmailErrors = ["Invalid Email", "You already have an account"];
 
+  const validPhoneNumberErrors = ["Invalid Phone Number"];
+
   const validPasswordErrors = [
     "Invalid Password",
     "Password too short",
@@ -76,6 +78,8 @@ const Form = () => {
 
   const isValidEmailError =
     state?.message && validEmailErrors.includes(state?.title);
+  const isValidPhoneNumberError =
+  state?.message && validPhoneNumberErrors.includes(state?.title);
   const isValidPasswordError =
     state?.message && validPasswordErrors.includes(state?.title);
   const isValidFirstNameError =
@@ -175,29 +179,15 @@ const Form = () => {
             />
           )}
 
-          {/* Email Input */}
-          <div className="flex gap-3">
-            <CustomNextUiInput
-              placeholder="Enter your email address"
-              startContent={
-                <Image className="w-9" src={email} alt="Email Input" />
-              }
-              classNames={{
-                inputWrapper: isValidEmailError && "form-input-error",
-              }}
-              type="text"
-              name="email"
-            />
-
-            <div className="w-12 animation-fade bg-primary-color-P11 hover:bg-secondary-color-S9 cursor-pointer rounded-2xl p-3">
-              <Image
-                className="w-6 h-6 object-cover"
-                alt="Phone Input"
-                name="phone"
-                src={phone}
-              />
-            </div>
-          </div>
+          {/* Email || Phone Number Input */}
+          <EmailPhoneSwitcherRegister
+            isValidPhoneNumberError={isValidPhoneNumberError}
+            isValidEmailError={isValidEmailError}
+            setToggleInput={setToggleInput}
+            messageError={state?.message}
+            toggleInput={toggleInput}
+            titleError={state?.title}
+          />
 
           {isValidEmailError && (
             <ErrorMessageiPractis

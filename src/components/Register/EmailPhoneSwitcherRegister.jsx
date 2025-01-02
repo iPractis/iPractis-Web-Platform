@@ -1,8 +1,8 @@
-import SelectCountryAreaCode from "./SelectCountryAreaCode";
-import ErrorMessageiPractis from "./ErrorMessageiPractis";
-import InputBGWrapperIcon from "./InputBGWrapperIcon";
-import CustomNextUiInput from "./CustomNextUiInput";
-import { MailIcon, PhoneIcon } from "../Icons";
+import SelectCountryAreaCode from "../Globals/SelectCountryAreaCode";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import CustomNextUiInput from "../Globals/CustomNextUiInput";
+import { MailIcon, PhoneIcon, UserIcon } from "../Icons";
 
 // React imports
 import Image from "next/image";
@@ -10,7 +10,7 @@ import Image from "next/image";
 // Images && icons
 import userInput from "@/public/icons/user-input.png";
 
-const EmailPhoneSwitcher = ({
+const EmailPhoneSwitcherRegister = ({
   isValidPhoneNumberError,
   isValidEmailError,
   setToggleInput,
@@ -25,9 +25,15 @@ const EmailPhoneSwitcher = ({
         <CustomNextUiInput
           type="text"
           name="email"
-          placeholder="Enter your phone or email address"
+          placeholder="Enter your email address"
           startContent={
-            <Image className="w-9" src={userInput} alt="User Input" />
+            <InputBGWrapperIcon
+              className={
+                "bg-primary-color-P12 h-[36px] w-[36px] rounded-[10px]"
+              }
+            >
+              <MailIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
           }
           classNames={{
             inputWrapper: isValidEmailError && "form-input-error",
@@ -46,7 +52,7 @@ const EmailPhoneSwitcher = ({
         <InputBGWrapperIcon
           className={"bg-primary-color-P11 h-[48px] w-[48px] rounded-2xl"}
         >
-          <PhoneIcon fillColor={"fill-primary-color-P1"} />
+          <PhoneIcon fillColor={"fill-primary-color-P4"} />
         </InputBGWrapperIcon>
       </button>
     </div>
@@ -57,17 +63,23 @@ const EmailPhoneSwitcher = ({
         <CustomNextUiInput
           type="text"
           name="number"
-          placeholder="Enter your phone ID"
+          placeholder="Phone number"
           startContent={
             <span className="flex items-center gap-1.5">
-              <Image className="w-9" src={userInput} alt="User Input" />
+              {/* <Image className="w-9" src={userInput} alt="User Input" /> */}
+              <InputBGWrapperIcon
+                className={
+                  "bg-primary-color-P12 h-[36px] w-[36px] rounded-[10px]"
+                }
+              >
+                <PhoneIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
 
               <SelectCountryAreaCode />
             </span>
           }
           classNames={{
             inputWrapper: isValidPhoneNumberError && "form-input-error",
-            input: ["ml-5"],
           }}
         />
 
@@ -90,4 +102,4 @@ const EmailPhoneSwitcher = ({
   );
 };
 
-export default EmailPhoneSwitcher;
+export default EmailPhoneSwitcherRegister;

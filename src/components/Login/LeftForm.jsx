@@ -1,6 +1,6 @@
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import EmailPhoneSwitcher from "../Globals/EmailPhoneSwitcher";
+import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
 import Image from "next/image";
 
 // Images && icons
@@ -80,7 +80,7 @@ const LeftForm = ({
       </div>
 
       <div>
-        {/* Email Input */}
+        {/* Email || Phone Number Input */}
         <EmailPhoneSwitcher
           isValidPhoneNumberError={isValidPhoneNumberError}
           isValidEmailError={isValidEmailError}
