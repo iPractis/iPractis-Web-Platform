@@ -6,7 +6,6 @@ import { MailIcon, PhoneIcon } from "../Icons";
 
 // React imports
 import Image from "next/image";
-import { useState } from "react";
 
 // Images && icons
 import userInput from "@/public/icons/user-input.png";
@@ -14,13 +13,13 @@ import userInput from "@/public/icons/user-input.png";
 const EmailPhoneSwitcher = ({
   isValidPhoneNumberError,
   isValidEmailError,
-  titleError,
+  setToggleInput,
   messageError,
+  toggleInput,
+  titleError,
 }) => {
-  const [toggleInput, setToggleInput] = useState("email");
-
   return toggleInput === "email" ? (
-    // This is if the user switches to EMAIL
+    // This is if the user switches to EMAIL (Default ONE)
     <div className="flex justify-between gap-2">
       <div className="flex-1">
         <CustomNextUiInput

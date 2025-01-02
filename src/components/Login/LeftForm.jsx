@@ -10,7 +10,14 @@ import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
 import { signIn } from "next-auth/react";
 
-const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
+const LeftForm = ({
+  handlePasswordChange,
+  password,
+  error,
+  isPending,
+  setToggleInput,
+  toggleInput,
+}) => {
   const validPhoneNumberErrors = ["Invalid Phone Number"];
 
   const validEmailErrors = [
@@ -77,7 +84,9 @@ const LeftForm = ({ handlePasswordChange, password, error, isPending }) => {
         <EmailPhoneSwitcher
           isValidPhoneNumberError={isValidPhoneNumberError}
           isValidEmailError={isValidEmailError}
+          setToggleInput={setToggleInput}
           messageError={error?.message}
+          toggleInput={toggleInput}
           titleError={error?.title}
         />
 

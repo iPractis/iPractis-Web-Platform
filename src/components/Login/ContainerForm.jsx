@@ -3,11 +3,14 @@
 import { PadLockUserIcon, SparkleIcon } from "../Icons";
 import { logInUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
-import { useRouter } from "next/navigation";
 import LeftForm from "./LeftForm";
+
+// React imports
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const ContainerForm = () => {
+  const [toggleInput, setToggleInput] = useState("email");
   const [isPending, setIsPending] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,39 +19,44 @@ const ContainerForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const email = e?.target?.email?.value.trim();
-    const number = e?.target?.number?.value?.trim();
+    // If user chooses email we're gonna get the EMAIL INPUT (ignore phone number)
+    if (toggleInput === "email") {
+      const email = e?.target?.email?.value.trim();
 
-    // Validation of empty field (email)
-    if (!email) {
-      const invalidEmailError = {
-        title: "Invalid Email",
-        message: "Email can't be empty.",
-      };
+      // Validation of empty field (email)
+      if (!email) {
+        const invalidEmailError = {
+          title: "Invalid Email",
+          message: "Email can't be empty.",
+        };
 
-      return setError(invalidEmailError);
+        return setError(invalidEmailError);
+      }
+
+      // Validation of gmail format
+      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+      if (!gmailRegex.test(email)) {
+        const invalidEmailError = {
+          title: "Invalid Email",
+          message: "Check your spelling email",
+        };
+
+        return setError(invalidEmailError);
+      }
     }
+     else { // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
+      const number = e?.target?.number?.value?.trim();
 
-    // Validation of gmail format
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      // Validation of empty field (phone number)
+      if (!number) {
+        const invalidPhoneNumberError = {
+          title: "Invalid Phone Number",
+          message: "Phone number can't be empty.",
+        };
 
-    if (!gmailRegex.test(email)) {
-      const invalidEmailError = {
-        title: "Invalid Email",
-        message: "Check your spelling email",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Validation of empty field (phone number)
-    if (!number) {
-      const invalidPhoneNumberError = {
-        title: "Invalid Phone Number",
-        message: "Phone number can't be empty.",
-      };
-
-      return setError(invalidPhoneNumberError);
+        return setError(invalidPhoneNumberError);
+      }
     }
 
     // Validation of empty field (password)
@@ -118,6 +126,8 @@ const ContainerForm = () => {
         />
 
         <LeftForm
+          setToggleInput={setToggleInput}
+          toggleInput={toggleInput}
           handlePasswordChange={handlePasswordChange}
           password={password}
           error={error}
