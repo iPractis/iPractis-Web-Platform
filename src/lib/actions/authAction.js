@@ -221,6 +221,31 @@ export async function logInUser(formData) {
   }
 }
 
+// WITHOUT AUTHJS
+export async function requestPasswordInput(formData) {
+  const rawFormData = {
+    email: formData.get("email") ? formData.get("email") : "",
+  };
+
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/auth/recover-password`, {
+      method: "POST",
+      body: JSON.stringify(rawFormData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      return json;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // WITH AUTHJS
 export async function logInUserOtp(prevState, formData) {
   const rawFormData = {
