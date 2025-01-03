@@ -4,6 +4,7 @@ const DualButton = ({
   leftButtonText,
   rightButtonText,
   rightButtonType,
+  rightButtonDisabled,
   dualButtonWrapper,
   onClickLeftButton,
   onClickRightButton,
@@ -20,6 +21,7 @@ const DualButton = ({
 
       <button
         className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+        disabled={rightButtonDisabled}
         onClick={onClickRightButton}
         type={rightButtonType}
       >

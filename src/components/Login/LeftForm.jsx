@@ -33,7 +33,6 @@ const LeftForm = ({
     "Account Locked: Too many login attempts",
     "Invalid Password",
     "Wrong password",
-    "Account Locked: Too many login attempts",
     "Character limit",
   ];
 

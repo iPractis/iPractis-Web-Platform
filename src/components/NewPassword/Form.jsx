@@ -2,15 +2,87 @@
 
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import { newPasswordInputs } from "@/src/lib/actions/authAction";
 import passwordStars from "@/public/icons/password-stars.png";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Globals/DualButton";
+
+// React imports
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
 const Form = () => {
+  const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [securityLevel, setSecurityLevel] = useState("");
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState("");
+  const token = searchParams.get("token");
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
+
+    // Check if password input is not empty
+    if (!password) {
+      const invalidPasswordError = {
+        title: "Invalid Password",
+        message: "Password can't be empty.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    // Check if password input is too short (can't be less than 8)
+    if (password.length < 8) {
+      const invalidPasswordError = {
+        title: "Password too short",
+        message: "You need at least 8 characters to make a password.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    // Check if password input is too long (can't excess 30)
+    if (password.length > 30) {
+      const invalidPasswordError = {
+        title: "Password too long",
+        message: "Your password should not exceed 30 characters.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    if (password !== repeatPassword) {
+      const invalidPasswordError = {
+        title: "Passwords are not the same",
+        message: "Make sure both passwords are the same before proceeding.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    try {
+      setIsPending(true);
+
+      const formData = new FormData(e.currentTarget);
+      const response = await newPasswordInputs(formData);
+      formData.append("token", token);
+
+      // If there's error we display the error
+      if (response?.message && response?.title) {
+        return setError({ message: response.message, title: response.title });
+      } else {
+        router.push(`/password-updated-successfully`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsPending(false);
+    }
+  };
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
@@ -31,33 +103,63 @@ const Form = () => {
     }
   };
 
+  const validPasswordErrors = [
+    "Password too short",
+    "Password too long",
+    "Passwords are not the same",
+    "Invalid Password",
+    "Wrong password",
+    "Character limit",
+  ];
+
+  const isValidPasswordError =
+    error?.message && validPasswordErrors.includes(error?.title);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="my-[50px]">
         {/* New Password */}
         <div>
           <CustomNextUiInput
             type="password"
-            maxLength={32}
+            name="password"
             placeholder="Enter your new password"
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
             }
             onChange={handlePasswordChange}
             value={password}
+            classNames={{
+              inputWrapper: isValidPasswordError && "form-input-error",
+            }}
           />
         </div>
+
         {/* Retape password */}
         <div className="mt-2.5">
           <CustomNextUiInput
             type="password"
-            maxLength={32}
+            name="repeatPassword"
             placeholder="Retape your new password"
+            onChange={(e) =>
+              setRepeatPassword(e?.target?.value?.replace(/\s/g, ""))
+            }
+            value={repeatPassword}
             startContent={
               <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
             }
+            classNames={{
+              inputWrapper: isValidPasswordError && "form-input-error",
+            }}
           />
         </div>
+
+        {isValidPasswordError && (
+          <ErrorMessageiPractis
+            typeError={error?.title}
+            descError={error?.message}
+          />
+        )}
 
         <PasswordLevels securityLevel={securityLevel} />
 
@@ -69,7 +171,8 @@ const Form = () => {
 
       <DualButton
         leftButtonText={"Cancel"}
-        rightButtonText={"Change password"}
+        rightButtonDisabled={isPending}
+        rightButtonText={isPending ? "Loading..." : "Change password"}
         rightButtonType="submit"
       />
     </form>

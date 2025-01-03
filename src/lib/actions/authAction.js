@@ -246,6 +246,32 @@ export async function requestPasswordInput(formData) {
   }
 }
 
+// WITHOUT AUTHJS
+export async function newPasswordInputs(formData) {
+  const rawFormData = {
+    newPassword: formData.get("password"),
+    token: formData.get("token"),
+  };
+
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/auth/confirm-password`, {
+      method: "POST",
+      body: JSON.stringify(rawFormData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      return json;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // WITH AUTHJS
 export async function logInUserOtp(prevState, formData) {
   const rawFormData = {
