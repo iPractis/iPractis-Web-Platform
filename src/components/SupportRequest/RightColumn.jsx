@@ -18,6 +18,7 @@ const RightColumn = () => {
           placeholder="Describe the situation"
           classNames={{ input: "h-[222px]" }}
           size="primaryiPractis"
+          name="situation"
           disableAutosize
         />
       </div>

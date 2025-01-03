@@ -12,6 +12,7 @@ const LeftColumnReasonsSelect = () => {
   return (
     <div className="flex items-center gap-2">
       <Select
+        name="reason"
         onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
         placeholder="Select a reason"
         selectorIcon={<span></span>}

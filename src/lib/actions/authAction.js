@@ -272,6 +272,35 @@ export async function newPasswordInputs(formData) {
   }
 }
 
+// WITHOUT AUTHJS
+export async function supportRequestIssue(formData) {
+  const rawFormData = {
+    email: formData.get("email"),
+    email_related: formData.get("email_related"),
+    reason: formData.get("reason"),
+    uploaded_image: formData.get("uploaded_image") ? formData.get("uploaded_image") : "",
+    situation: formData.get("situation"),
+  };
+
+  try {
+    const res = await fetch(`${process.env.BASE_URL}/auth/support-request`, {
+      method: "POST",
+      body: JSON.stringify(rawFormData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      return json;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 // WITH AUTHJS
 export async function logInUserOtp(prevState, formData) {
   const rawFormData = {

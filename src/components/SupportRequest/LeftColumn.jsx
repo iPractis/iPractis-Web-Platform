@@ -37,6 +37,7 @@ const Form = () => {
         {/* Contact email */}
         <div className="mt-2.5">
           <CustomNextUiInput
+            name="email"
             type="email"
             placeholder="Contact Email"
             startContent={
@@ -49,6 +50,7 @@ const Form = () => {
         <div className="mt-2.5">
           <CustomNextUiInput
             type="email"
+            name="emailRelated"
             placeholder="Enter email related to your account"
             startContent={
               <Image className="w-9" src={emailInput} alt="Email Input" />
@@ -56,10 +58,11 @@ const Form = () => {
           />
         </div>
 
-        {/* Password Input */}
+        {/* File Input */}
         <div className="mt-2.5 relative">
           <input
             type="file"
+            name="upload_image"
             onChange={handleFileChange}
             className="opacity-0 absolute inset-0 z-10 cursor-pointer"
           />
