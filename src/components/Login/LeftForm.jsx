@@ -1,14 +1,17 @@
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
+import { signIn } from "next-auth/react";
+
+// React imports
 import Image from "next/image";
+import Link from "next/link";
 
 // Images && icons
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
-import { signIn } from "next-auth/react";
 
 const LeftForm = ({
   handlePasswordChange,
@@ -123,9 +126,12 @@ const LeftForm = ({
         {isPending ? "Loading..." : "Log in"}
       </button>
 
-      <p className="text-primary-color-P4 text-center ST-4">
-        I can’t sing in, help!
-      </p>
+        <Link
+          className="text-center block text-primary-color-P4 ST-4"
+          href={"/account-assistance"}
+        >
+          I can’t sing in, help!
+        </Link>
     </div>
   );
 };

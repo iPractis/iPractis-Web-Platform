@@ -25,8 +25,8 @@ const BottomColumn = () => {
           <span className="sm:flex-[85%] flex-[80%]">Password Recovery</span>
         </Link>
 
-        <button
-          type="button"
+        <Link
+          href={"/support-request"}
           className="btn btn-primary w-full py-3 px-4 rounded-2xl flex justify-center items-center MT-SB-1 mt-3"
         >
           <div className="flex-1">
@@ -34,7 +34,7 @@ const BottomColumn = () => {
           </div>
 
           <span className="sm:flex-[85%] flex-[80%]">Contact Support</span>
-        </button>
+        </Link>
       </div>
     </div>
   );

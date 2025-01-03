@@ -224,7 +224,7 @@ export async function logInUser(formData) {
 // WITHOUT AUTHJS
 export async function requestPasswordInput(formData) {
   const rawFormData = {
-    email: formData.get("email") ? formData.get("email") : "",
+    email: formData.get("email"),
   };
 
   try {

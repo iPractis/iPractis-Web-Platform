@@ -54,7 +54,7 @@ const Form = () => {
       if (response?.message && response?.title) {
         return setError({ message: response.message, title: response.title });
       } else {
-        router.push(`/authenticator?email=${formData.get("email")}`);
+        router.push(`/password-updated-successfully`);
       }
     } catch (error) {
       console.log(error);
@@ -63,7 +63,10 @@ const Form = () => {
     }
   };
 
-  const validEmailErrors = ["Invalid Email"];
+  const validEmailErrors = [
+    "Invalid Email",
+    "No account exists for this email address.",
+  ];
 
   const isValidEmailError =
     error?.message && validEmailErrors.includes(error?.title);
