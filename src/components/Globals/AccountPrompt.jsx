@@ -12,13 +12,7 @@ const AccountPrompt = ({
 }) => {
   return (
     <div className="bg-primary-color-P12 p-8 mt-4 rounded-2xl">
-      <div
-        className={
-          accountPromptPosition === "horizontal"
-            ? "flex flex-col lg:flex-row lg:items-center items-stretch lg:gap-[50px] gap-8"
-            : "flex flex-col lg:gap-[50px] gap-8"
-        }
-      >
+      <div className={"flex flex-col items-stretch gap-8"}>
         <div className="flex-1">
           <SectionHeader
             descriptionClassName="mt-1"
