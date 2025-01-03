@@ -54,7 +54,7 @@ const Form = () => {
       if (response?.message && response?.title) {
         return setError({ message: response.message, title: response.title });
       } else {
-        router.push(`/password-updated-successfully`);
+        router.push(`/new-password-request-sent-sucessfully`);
       }
     } catch (error) {
       console.log(error);
