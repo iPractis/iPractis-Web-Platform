@@ -9,7 +9,7 @@ import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Globals/DualButton";
 
 // React imports
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -21,6 +21,7 @@ const Form = () => {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState("");
   const token = searchParams.get("token");
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
