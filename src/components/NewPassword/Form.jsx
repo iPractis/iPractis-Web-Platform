@@ -69,8 +69,9 @@ const Form = () => {
       setIsPending(true);
 
       const formData = new FormData(e.currentTarget);
-      const response = await newPasswordInputs(formData);
       formData.append("token", token);
+
+      const response = await newPasswordInputs(formData);
 
       // If there's error we display the error
       if (response?.message && response?.title) {
