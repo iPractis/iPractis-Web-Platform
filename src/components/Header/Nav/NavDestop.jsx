@@ -33,13 +33,13 @@ const NavDesktop = () => {
 
         <Link
           href="/register"
-          className="btn btn-tertiary ST-SB-4 py-2 px-4 rounded-[10px]"
+          className="btn btn-tertiary ST-SB-4 py-2 px-4 rounded-2xl w-[120px]"
         >
           Register
         </Link>
 
         <button
-          className="btn btn-tertiary rounded-[10px] h-[38px] w-[38px]"
+          className="btn btn-tertiary rounded-2xl h-[38px] w-[38px]"
           button="button"
         >
           <Image
@@ -51,7 +51,7 @@ const NavDesktop = () => {
         </button>
 
         <button
-          className="btn btn-tertiary rounded-[10px] h-[38px] w-[38px]"
+          className="btn btn-tertiary rounded-2xl h-[38px] w-[38px]"
           button="button"
         >
           <Image
