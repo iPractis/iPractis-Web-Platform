@@ -16,20 +16,12 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const supportRequestUserInfo = {
-      email: e?.target?.email?.value,
-      email_related: e?.target?.emailRelated?.value,
-      reason: e?.target?.reason?.value,
-      uploaded_image: e?.target?.upload_image?.files[0],
-      situation: e?.target?.situation?.value,
-    };
-
+    
     try {
       setIsPending(true);
 
       const formData = new FormData(e.currentTarget);
-      formData.append("uploaded_image", supportRequestUserInfo?.uploaded_image);
+      formData.append("uploaded_image", e?.target?.upload_image?.files[0]);
 
       const response = await supportRequestIssue(formData);
 

@@ -276,14 +276,14 @@ export async function newPasswordInputs(formData) {
 export async function supportRequestIssue(formData) {
   const rawFormData = {
     email: formData.get("email"),
-    email_related: formData.get("email_related"),
+    emailRelated: formData.get("emailRelated"),
     reason: formData.get("reason"),
-    uploaded_image: formData.get("uploaded_image") ? formData.get("uploaded_image") : "",
+    uploadedImage: formData.get("uploaded_image") !== 'undefined' ? formData.get("uploaded_image") : "",
     situation: formData.get("situation"),
   };
 
   try {
-    const res = await fetch(`${process.env.BASE_URL}/auth/support-request`, {
+    const res = await fetch(`${process.env.BASE_URL}/support/issue`, {
       method: "POST",
       body: JSON.stringify(rawFormData),
       headers: {
