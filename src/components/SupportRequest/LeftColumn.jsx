@@ -10,8 +10,14 @@ import Image from "next/image";
 // Images && icons
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 
-const Form = () => {
+const Form = ({
+  isValidReasonErrors,
+  isValidEmailErrors,
+  isValidEmailRelatedErrors,
+  error,
+}) => {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (e) => {
@@ -32,30 +38,53 @@ const Form = () => {
 
       <div className="my-[50px]">
         {/* Reason */}
-        <LeftColumnReasonsSelect />
+        <LeftColumnReasonsSelect
+          isValidReasonErrors={isValidReasonErrors}
+          error={error}
+        />
 
         {/* Contact email */}
         <div className="mt-2.5">
           <CustomNextUiInput
             name="email"
-            type="email"
+            type="text"
             placeholder="Contact Email"
             startContent={
               <Image className="w-9" src={emailInput} alt="Email Input" />
             }
+            classNames={{
+              inputWrapper: isValidEmailErrors && "form-input-error",
+            }}
           />
+
+          {isValidEmailErrors && (
+            <ErrorMessageiPractis
+              typeError={error?.title}
+              descError={error?.message}
+            />
+          )}
         </div>
 
         {/* Email related to your account */}
         <div className="mt-2.5">
           <CustomNextUiInput
-            type="email"
+            type="text"
             name="emailRelated"
             placeholder="Enter email related to your account"
             startContent={
               <Image className="w-9" src={emailInput} alt="Email Input" />
             }
+            classNames={{
+              inputWrapper: isValidEmailRelatedErrors && "form-input-error",
+            }}
           />
+
+          {isValidEmailRelatedErrors && (
+            <ErrorMessageiPractis
+              typeError={error?.title}
+              descError={error?.message}
+            />
+          )}
         </div>
 
         {/* File Input */}

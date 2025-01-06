@@ -1,8 +1,9 @@
 import CustomNextUiTextarea from "../Globals/CustomNextUiTextarea";
+import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import SectionHeader from "../Globals/SectionHeader";
 import { WrenchIcon } from "../Icons";
 
-const RightColumn = () => {
+const RightColumn = ({ isValidSituationError, error }) => {
   return (
     <article className="flex-1 w-full">
       <SectionHeader
@@ -15,12 +16,22 @@ const RightColumn = () => {
 
       <div className="my-[50px] w-full">
         <CustomNextUiTextarea
+          classNames={{
+            inputWrapper: isValidSituationError && "form-input-error",
+            input: "h-[222px]",
+          }}
           placeholder="Describe the situation"
-          classNames={{ input: "h-[222px]" }}
           size="primaryiPractis"
           name="situation"
           disableAutosize
         />
+
+        {isValidSituationError && (
+          <ErrorMessageiPractis
+            typeError={error?.title}
+            descError={error?.message}
+          />
+        )}
       </div>
     </article>
   );
