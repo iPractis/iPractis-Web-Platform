@@ -14,6 +14,8 @@ const RelatedSubTopics = () => {
   const [tempSelectedKey, setTempSelectedKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log(selectedSubSubjects);
+
   // Add sub-subject
   const handleAddSubSubject = (e) => {
     const subSubjectSelected = e?.target?.value;
@@ -47,8 +49,18 @@ const RelatedSubTopics = () => {
   const descriptionSubSubjectOnChange = (e, selected) => {
     const textValue = e?.target?.value;
 
-    if (textValue?.length !== 21) return setDescriptionSubSubject(textValue);
+    if (textValue?.length <= 20) {
+      // Update the VALUE directly in the object before returning!
+      const updatedSubSubjects = selectedSubSubjects?.map((item) =>
+        item?.selected === selected ? { ...item, description: textValue } : item
+      );
 
+      setSelectedSubSubjects(updatedSubSubjects);
+
+      return setDescriptionSubSubject(textValue);
+    }
+
+    // If we reach to 20 characters, we update as we normally do!
     const updatedSubSubjects = selectedSubSubjects?.map((item) =>
       item?.selected === selected ? { ...item, description: textValue } : item
     );
