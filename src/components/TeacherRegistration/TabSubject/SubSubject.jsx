@@ -8,7 +8,7 @@ const SubSubject = ({
   handleDeleteSelectedSubSuject,
   descriptionSubSubjectOnChange,
   descriptionSubSubject,
-  selectedSubSubject,
+  tempSelectedKey,
   selected,
 }) => {
   return (
@@ -18,7 +18,7 @@ const SubSubject = ({
         <CustomNextUiInput
           isReadOnly
           type="text"
-          defaultValue={selectedSubSubject}
+          defaultValue={tempSelectedKey}
           name="selectedSubSuject"
           className="pointer-events-none"
           placeholder="Selected sub-subject"

@@ -11,10 +11,8 @@ const RelatedSubTopics = () => {
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
   const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
+  const [tempSelectedKey, setTempSelectedKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(selectedSubSubjects);
-  console.log(descriptionSubSubject);
 
   // Add sub-subject
   const handleAddSubSubject = (e) => {
@@ -26,7 +24,12 @@ const RelatedSubTopics = () => {
     };
 
     setSelectedSubSubjects([...selectedSubSubjects, selectedSubSubjectDetails]);
-    setSelectedSubSubject(subSubjectSelected);
+
+    // We clear the selected sub-subject from select
+    setSelectedSubSubject("");
+
+    // We create other state to input the value in bottom
+    setTempSelectedKey(subSubjectSelected);
   };
 
   // Delete sub-subject
@@ -37,13 +40,14 @@ const RelatedSubTopics = () => {
 
     setSelectedSubSubjects(filteredSelectedSubSubjects);
     setSelectedSubSubject("");
+    setDescriptionSubSubject("")
   };
 
   // Add description text
   const descriptionSubSubjectOnChange = (e, selected) => {
     const textValue = e?.target?.value;
 
-    if (textValue?.length <= 20) return setDescriptionSubSubject(textValue);
+    if (textValue?.length !== 21) return setDescriptionSubSubject(textValue);
 
     const updatedSubSubjects = selectedSubSubjects?.map((item) =>
       item?.selected === selected ? { ...item, description: textValue } : item
@@ -111,7 +115,7 @@ const RelatedSubTopics = () => {
           handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
           descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
           descriptionSubSubject={descriptionSubSubject}
-          selectedSubSubject={selectedSubSubject}
+          tempSelectedKey={tempSelectedKey}
           {...subSubject}
           key={index}
         />

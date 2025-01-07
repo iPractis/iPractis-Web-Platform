@@ -1,6 +1,5 @@
 import ErrorMessageiPractis from "./ErrorMessageiPractis";
 import CustomNextUiTextarea from "./CustomNextUiTextarea";
-import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import CustomNextUiInput from "./CustomNextUiInput";
 import { QuestionMark } from "../Icons";
 
