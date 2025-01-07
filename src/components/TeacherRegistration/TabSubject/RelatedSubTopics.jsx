@@ -40,7 +40,7 @@ const RelatedSubTopics = () => {
 
     setSelectedSubSubjects(filteredSelectedSubSubjects);
     setSelectedSubSubject("");
-    setDescriptionSubSubject("")
+    setDescriptionSubSubject("");
   };
 
   // Add description text
@@ -110,14 +110,14 @@ const RelatedSubTopics = () => {
       </div>
 
       {/* Selected Sub-subjects */}
-      {selectedSubSubjects?.map((subSubject, index) => (
+      {selectedSubSubjects?.map((subSubject) => (
         <SubSubject
           handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
           descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
           descriptionSubSubject={descriptionSubSubject}
           tempSelectedKey={tempSelectedKey}
+          key={subSubject?.selected}
           {...subSubject}
-          key={index}
         />
       ))}
     </div>
