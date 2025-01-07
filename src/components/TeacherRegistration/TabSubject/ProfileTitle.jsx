@@ -35,14 +35,17 @@ const ProfileTitle = () => {
           typeError={"Max Length Exceeded"}
           descError={"The text cannot exceed 120 characters."}
           labelDisabled={true}
-          endContent={
-            <InputBGWrapperIcon>
-              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          }
           startContent={
             <InputBGWrapperIcon>
               <ThreeXBlocks fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
+          endContent={
+            <InputBGWrapperIcon
+              className={"cursor-pointer"}
+              onClick={() => setProfileTitleText("")}
+            >
+              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
         />
