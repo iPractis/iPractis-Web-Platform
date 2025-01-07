@@ -52,6 +52,7 @@ const SubSubject = ({
         typeError={"Max Length Exceeded"}
         descError={"The text cannot exceed 20 characters."}
         labelDisabled={true}
+        maxCharactersLengthText={2}
       />
     </div>
   );

@@ -6,6 +6,7 @@ import { QuestionMark } from "../Icons";
 
 export const CustomNextUiTextareaWithMaxLength = ({
   labelDisabled = false,
+  maxCharactersLengthText = 1,
   onChange,
   value,
   labelTitle,
@@ -18,7 +19,6 @@ export const CustomNextUiTextareaWithMaxLength = ({
   nameTextarea,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
-
   return (
     <>
       <CustomNextUiTextarea
@@ -53,10 +53,14 @@ export const CustomNextUiTextareaWithMaxLength = ({
       <div
         className={`flex items-center justify-between mt-0.5 ST-2 px-2.5 text-primary-color-P4`}
       >
-        <h4>Limited to {maxCharactersLength} characters</h4>
         <h4>
-          {value?.length}/{maxCharactersLength}
+          {maxCharactersLengthText === 1
+            ? `Limited to ${maxCharactersLength} characters`
+            : `Supporting text`}
         </h4>
+        <h3>
+          {value?.length}/{maxCharactersLength}
+        </h3>
       </div>
 
       {exceedValueMaxLength && (
