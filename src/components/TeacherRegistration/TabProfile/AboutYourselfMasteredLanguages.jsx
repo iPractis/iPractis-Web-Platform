@@ -1,15 +1,16 @@
 import { useRef, useState } from "react";
 
+import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import { languages } from "@/src/data/dataTeacherRegistration";
+import { Select, SelectItem } from "@nextui-org/react";
+
 // Images && icons
 import {
   ChevronDownBigIcon,
   QuestionMark,
   UserSpeakingIcon,
 } from "../../Icons";
-import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { languages } from "@/src/data/dataTeacherRegistration";
-import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfMasteredLanguages = () => {
   const [masteredLanguages, setMasteredLanguages] = useState([]);
