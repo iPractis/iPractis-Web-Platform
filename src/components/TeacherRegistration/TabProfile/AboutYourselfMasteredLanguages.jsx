@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 // Images && icons
 import {
@@ -13,19 +13,19 @@ import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfMasteredLanguages = () => {
   const [masteredLanguages, setMasteredLanguages] = useState([]);
-  const [masteredLanguage, setMasteredLanguage] = useState("");
   const [languageLevel, setLanguageLevel] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const masteredLanguageRef = useRef("");
 
   // Add Mastered Language
   const handleAddMasteredLanguage = (e) => {
     const languageSelected = e?.target?.value;
-  
+
     const masteredLanguageDetails = {
       language: languageSelected,
       level: languageLevel,
     };
-  
+
     setMasteredLanguages([...masteredLanguages, masteredLanguageDetails]);
   };
 
@@ -41,7 +41,9 @@ const AboutYourselfMasteredLanguages = () => {
   const handleLanguageLevel = (e, language) => {
     const levelSelected = e?.target?.value;
 
-    const updatedLanguages = masteredLanguages?.map((item) => item?.language === language ? { ...item, level: levelSelected } : item);
+    const updatedLanguages = masteredLanguages?.map((item) =>
+      item?.language === language ? { ...item, level: levelSelected } : item
+    );
 
     setMasteredLanguages(updatedLanguages);
   };
@@ -63,7 +65,7 @@ const AboutYourselfMasteredLanguages = () => {
               </span>
             </div>
           }
-          value={masteredLanguage}
+          selectedKeys={masteredLanguageRef?.current?.value ? [masteredLanguageRef?.current?.value] : []}
           onChange={handleAddMasteredLanguage}
           onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
           labelPlacement="outside"
