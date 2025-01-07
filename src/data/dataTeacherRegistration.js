@@ -76,3 +76,13 @@ export const languages = [
   "Italian",
   "Portuguese",
 ];
+
+export const teachingSubjects = [
+  "English",
+  "Spanish",
+  "French",
+  "Mandarin",
+  "German",
+  "Italian",
+  "Arabic",
+];

@@ -1,9 +1,8 @@
-import { useRef, useState } from "react";
-
-import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { languages } from "@/src/data/dataTeacherRegistration";
 import { Select, SelectItem } from "@nextui-org/react";
+import SubSubject from "./SubSubject";
+import { useRef, useState } from "react";
 
 // Images && icons
 import {
@@ -12,7 +11,7 @@ import {
   UserSpeakingIcon,
 } from "../../Icons";
 
-const AboutYourselfMasteredLanguages = () => {
+const RelatedSubTopics = () => {
   const [masteredLanguages, setMasteredLanguages] = useState([]);
   const [languageLevel, setLanguageLevel] = useState("");
   const [isOpen, setIsOpen] = useState(false);
@@ -57,17 +56,21 @@ const AboutYourselfMasteredLanguages = () => {
           name="masteredLanguage"
           label={
             <div className="mb-2">
-              <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
-                Select the languages your masters{" "}
+              <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                Select the subject you wish to teach{" "}
                 <QuestionMark fillColor={"fill-primary-color-P4"} />
               </span>
 
               <span className="text-primary-color-P4 ST-3">
-                Select only the languages you can use to teach.
+                You can teach only one subject.
               </span>
             </div>
           }
-          selectedKeys={masteredLanguageRef?.current?.value ? [masteredLanguageRef?.current?.value] : []}
+          selectedKeys={
+            masteredLanguageRef?.current?.value
+              ? [masteredLanguageRef?.current?.value]
+              : []
+          }
           onChange={handleAddMasteredLanguage}
           onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
           labelPlacement="outside"
@@ -101,7 +104,7 @@ const AboutYourselfMasteredLanguages = () => {
 
       {/* Select Level Language */}
       {masteredLanguages?.map((masteredIndividualLanguage, index) => (
-        <AboutYourselfLevelLanguage
+        <SubSubject
           handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
           handleLanguageLevel={handleLanguageLevel}
           setLanguageLevel={setLanguageLevel}
@@ -113,4 +116,4 @@ const AboutYourselfMasteredLanguages = () => {
   );
 };
 
-export default AboutYourselfMasteredLanguages;
+export default RelatedSubTopics;

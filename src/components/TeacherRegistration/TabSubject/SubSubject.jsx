@@ -11,7 +11,7 @@ import { languagesLevels } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
-const AboutYourselfLevelLanguage = ({
+const SubSubject = ({
   language,
   languageLevel,
   handleLanguageLevel,
@@ -75,4 +75,4 @@ const AboutYourselfLevelLanguage = ({
   );
 };
 
-export default AboutYourselfLevelLanguage;
+export default SubSubject;

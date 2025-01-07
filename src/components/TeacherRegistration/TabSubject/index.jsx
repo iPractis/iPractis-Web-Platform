@@ -1,5 +1,9 @@
-import { NotebookOpenedIcon, UserBigIcon, UserIcon } from "../../Icons";
 import SectionHeader from "../../Globals/SectionHeader";
+import RelatedSubTopics from "./RelatedSubTopics";
+import SubjectsToTeach from "./SubjectsToTeach";
+
+// Icons
+import { NotebookOpenedIcon, TagIcon } from "../../Icons";
 
 const TabSubject = ({ activeTab }) => {
   return (
@@ -13,38 +17,31 @@ const TabSubject = ({ activeTab }) => {
       />
 
       <div className="space-y-16">
-        <div className="space-y-8 p-8 rounded-2xl bg-primary-color-P12">
-          <SectionHeader
-            descriptionText="Upload a photo to personalize your profile."
-            titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
-            titleText="Profile Picture"
-            titleClassName="MT-SB-1"
-          />
+        <div className="flex items-start flex-col sm:flex-row gap-[50px] p-8 rounded-2xl bg-primary-color-P12">
+          <div className="flex-1">
+            <SectionHeader
+              wrapperSectionHeaderClassName={"pb-[50px]"}
+              descriptionText="Remember, students rely on this information to choose their teacher."
+              titleIcon={
+                <NotebookOpenedIcon fillColor={"fill-primary-color-P1"} />
+              }
+              titleText="Set up your teaching subject"
+              titleClassName="MT-SB-1"
+            />
 
-          <div className="flex items-start gap-8">
-            {/* Profile Image Input */}
-            <div className="relative">
-              <input
-                type="file"
-                className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              />
+            <SubjectsToTeach />
+          </div>
 
-              <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
-                <UserBigIcon fillColor={"fill-primary-color-P6"} />
-              </div>
-            </div>
+          <div className="flex-1">
+            <SectionHeader
+              wrapperSectionHeaderClassName={"pb-[50px]"}
+              descriptionText="Highlight your teaching methods and the subtopics you've mastered."
+              titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
+              titleText="Choose your specialties"
+              titleClassName="MT-SB-1"
+            />
 
-            {/* Instructions Image Input */}
-            <ul className="ps-4 ST-1 list-disc text-primary-color-P4">
-              <li>You must be clearly visible and centered in the picture.</li>
-              <li>Use a plain background to avoid distractions.</li>
-              <li>The picture should be a recent, high-quality image.</li>
-              <li>
-                Ensure good lighting so your face is well-lit and clearly
-                visible.
-              </li>
-              <li>Avoid using filters or overly edited images.</li>
-            </ul>
+            <RelatedSubTopics />
           </div>
         </div>
       </div>

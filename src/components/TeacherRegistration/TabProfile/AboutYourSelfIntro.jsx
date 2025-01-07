@@ -1,6 +1,4 @@
-import CustomNextUiTextarea from "../../Globals/CustomNextUiTextarea";
-import ErrorMessageiPractis from "../../Globals/ErrorMessageiPractis";
-import { QuestionMark } from "../../Icons";
+import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
 import { useState } from "react";
 
 const AboutYourSelfIntro = () => {
@@ -14,42 +12,20 @@ const AboutYourSelfIntro = () => {
 
   return (
     <div className="flex-1 w-full">
-      <CustomNextUiTextarea
-        label={
-          <div className="mb-2">
-            <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-              Write Introduction about yourself{" "}
-              <QuestionMark fillColor={"fill-primary-color-P4"} />
-            </span>
-
-            <span className="text-primary-color-P4 ST-3">
-              Introduce yourself and highlight your unique interests.
-            </span>
-          </div>
-        }
-        onChange={introTextOnChange}
+      <CustomNextUiTextareaWithMaxLength
+        nameTextarea="introductionAboutYourself"
+        inputClassName={"h-[150px]"}
         value={introText}
-        labelPlacement="outside"
-        placeholder="Enter a text"
-        classNames={{
-          input: "h-[150px]",
-          inputWrapper: introText?.length === 1000 && "form-input-error",
-        }}
-        size="primaryiPractis"
-        disableAutosize
+        onChange={introTextOnChange}
+        placeholder={"Enter a text"}
+        maxCharactersLength={1000}
+        typeError={"Max Length Exceeded"}
+        descError={"The text cannot exceed 1000 characters."}
+        labelTitle={"Write Introduction about yourself"}
+        labelSubtitle={
+          "Introduce yourself and highlight your unique interests."
+        }
       />
-
-      <div className="flex items-center justify-between text-primary-color-P4 mt-0.5 ST-2">
-        <h4>Limited to 1000 characters</h4>
-        <h4>{introText?.length}/1000</h4>
-      </div>
-
-      {introText?.length === 1000 && (
-        <ErrorMessageiPractis
-          typeError={"Max Length Exceeded"}
-          descError={"The text cannot exceed 1000 characters."}
-        />
-      )}
     </div>
   );
 };
