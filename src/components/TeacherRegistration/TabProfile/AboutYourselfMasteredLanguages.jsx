@@ -20,20 +20,13 @@ const AboutYourselfMasteredLanguages = () => {
   // Add Mastered Language
   const handleAddMasteredLanguage = (e) => {
     const languageSelected = e?.target?.value;
-
-    // Grab the selected language that the user masters
-    setMasteredLanguage(languageSelected);
-
-    // Save to "DB" mastered languages
+  
     const masteredLanguageDetails = {
       language: languageSelected,
       level: languageLevel,
     };
-
+  
     setMasteredLanguages([...masteredLanguages, masteredLanguageDetails]);
-
-    // Reset value (but it's not working)
-    // setMasteredLanguage("");
   };
 
   // Delete Mastered Language
@@ -42,6 +35,15 @@ const AboutYourselfMasteredLanguages = () => {
       (item) => item?.language !== language
     );
     setMasteredLanguages(filteredMasteredLanguages);
+  };
+
+  // Add language level
+  const handleLanguageLevel = (e, language) => {
+    const levelSelected = e?.target?.value;
+
+    const updatedLanguages = masteredLanguages?.map((item) => item?.language === language ? { ...item, level: levelSelected } : item);
+
+    setMasteredLanguages(updatedLanguages);
   };
 
   return (
@@ -97,9 +99,9 @@ const AboutYourselfMasteredLanguages = () => {
       {masteredLanguages?.map((masteredIndividualLanguage, index) => (
         <AboutYourselfLevelLanguage
           handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
+          handleLanguageLevel={handleLanguageLevel}
           setLanguageLevel={setLanguageLevel}
           {...masteredIndividualLanguage}
-          languageLevel={languageLevel}
           key={index}
         />
       ))}

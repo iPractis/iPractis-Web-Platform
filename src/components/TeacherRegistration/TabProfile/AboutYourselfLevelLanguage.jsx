@@ -14,7 +14,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 const AboutYourselfLevelLanguage = ({
   language,
   languageLevel,
-  setLanguageLevel,
+  handleLanguageLevel,
   handleDeleteMasteredLanguage,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const AboutYourselfLevelLanguage = ({
         selectorIcon={<span></span>}
         isOpen={isOpen}
         value={languageLevel}
-        onChange={(e) => setLanguageLevel(e?.target?.value)}
+        onChange={(e) => handleLanguageLevel(e, language)}
         endContent={
           <InputBGWrapperIcon>
             <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
