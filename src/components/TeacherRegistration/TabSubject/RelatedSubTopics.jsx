@@ -1,85 +1,88 @@
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { languages } from "@/src/data/dataTeacherRegistration";
+import { subSubjects } from "@/src/data/dataTeacherRegistration";
 import { Select, SelectItem } from "@nextui-org/react";
 import SubSubject from "./SubSubject";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // Images && icons
-import {
-  ChevronDownBigIcon,
-  QuestionMark,
-  UserSpeakingIcon,
-} from "../../Icons";
+import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
 const RelatedSubTopics = () => {
-  const [masteredLanguages, setMasteredLanguages] = useState([]);
-  const [languageLevel, setLanguageLevel] = useState("");
+  const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
+  const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
+  const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const masteredLanguageRef = useRef("");
 
-  // Add Mastered Language
-  const handleAddMasteredLanguage = (e) => {
-    const languageSelected = e?.target?.value;
+  console.log(selectedSubSubjects);
+  console.log(descriptionSubSubject);
 
-    const masteredLanguageDetails = {
-      language: languageSelected,
-      level: languageLevel,
+  // Add sub-subject
+  const handleAddSubSubject = (e) => {
+    const subSubjectSelected = e?.target?.value;
+
+    const selectedSubSubjectDetails = {
+      selected: subSubjectSelected,
+      description: descriptionSubSubject,
     };
 
-    setMasteredLanguages([...masteredLanguages, masteredLanguageDetails]);
+    setSelectedSubSubjects([...selectedSubSubjects, selectedSubSubjectDetails]);
+    setSelectedSubSubject(subSubjectSelected);
   };
 
-  // Delete Mastered Language
-  const handleDeleteMasteredLanguage = (language) => {
-    const filteredMasteredLanguages = masteredLanguages?.filter(
-      (item) => item?.language !== language
+  // Delete sub-subject
+  const handleDeleteSelectedSubSuject = (selected) => {
+    const filteredSelectedSubSubjects = selectedSubSubjects?.filter(
+      (item) => item?.selected !== selected
     );
-    setMasteredLanguages(filteredMasteredLanguages);
+
+    setSelectedSubSubjects(filteredSelectedSubSubjects);
+    setSelectedSubSubject("");
   };
 
-  // Add language level
-  const handleLanguageLevel = (e, language) => {
-    const levelSelected = e?.target?.value;
+  // Add description text
+  const descriptionSubSubjectOnChange = (e, selected) => {
+    const textValue = e?.target?.value;
 
-    const updatedLanguages = masteredLanguages?.map((item) =>
-      item?.language === language ? { ...item, level: levelSelected } : item
+    if (textValue?.length <= 20) return setDescriptionSubSubject(textValue);
+
+    const updatedSubSubjects = selectedSubSubjects?.map((item) =>
+      item?.selected === selected ? { ...item, description: textValue } : item
     );
 
-    setMasteredLanguages(updatedLanguages);
+    setSelectedSubSubjects(updatedSubSubjects);
   };
 
   return (
     <div className="flex-1 w-full">
-      {/* Select Language */}
+      {/* Select Sub-subject */}
       <div className="flex items-end gap-2 mt-7">
         <Select
-          name="masteredLanguage"
+          name="selectSubSubject"
           label={
-            <div className="mb-2">
+            <div className="flex flex-col mb-2">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                Select the subject you wish to teach{" "}
+                Related sub topics{" "}
                 <QuestionMark fillColor={"fill-primary-color-P4"} />
               </span>
 
-              <span className="text-primary-color-P4 ST-3">
-                You can teach only one subject.
-              </span>
+              <div className="self-start">
+                <span className=" text-primary-color-P4 ST-3">
+                  Sub topics allow you to match with students needs.
+                </span>
+              </div>
             </div>
           }
-          selectedKeys={
-            masteredLanguageRef?.current?.value
-              ? [masteredLanguageRef?.current?.value]
-              : []
-          }
-          onChange={handleAddMasteredLanguage}
+          value={selectedSubSubject}
+          selectedKeys={selectedSubSubject ? [selectedSubSubject] : []}
+          onChange={handleAddSubSubject}
           onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
           labelPlacement="outside"
-          placeholder="Add language"
+          placeholder="Select a sub-subject"
           selectorIcon={<span></span>}
           isOpen={isOpen}
           startContent={
             <InputBGWrapperIcon>
-              <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
+              <TagIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
           endContent={
@@ -96,19 +99,20 @@ const RelatedSubTopics = () => {
             listbox: ["text-primary-color-P4"],
           }}
         >
-          {languages?.map((language) => (
-            <SelectItem key={language}>{language}</SelectItem>
+          {subSubjects?.map((subSuject) => (
+            <SelectItem key={subSuject}>{subSuject}</SelectItem>
           ))}
         </Select>
       </div>
 
-      {/* Select Level Language */}
-      {masteredLanguages?.map((masteredIndividualLanguage, index) => (
+      {/* Selected Sub-subjects */}
+      {selectedSubSubjects?.map((subSubject, index) => (
         <SubSubject
-          handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
-          handleLanguageLevel={handleLanguageLevel}
-          setLanguageLevel={setLanguageLevel}
-          {...masteredIndividualLanguage}
+          handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
+          descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
+          descriptionSubSubject={descriptionSubSubject}
+          selectedSubSubject={selectedSubSubject}
+          {...subSubject}
           key={index}
         />
       ))}

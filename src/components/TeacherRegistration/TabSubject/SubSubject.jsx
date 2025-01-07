@@ -1,76 +1,58 @@
-import { useState } from "react";
-
 // Images && icons
-import {
-  ChevronDownBigIcon,
-  QuestionMark,
-  TrashBinIcon,
-  UserSpeakingIcon,
-} from "../../Icons";
-import { languagesLevels } from "@/src/data/dataTeacherRegistration";
+import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
+import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { Select, SelectItem } from "@nextui-org/react";
+import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 
 const SubSubject = ({
-  language,
-  languageLevel,
-  handleLanguageLevel,
-  handleDeleteMasteredLanguage,
+  handleDeleteSelectedSubSuject,
+  descriptionSubSubjectOnChange,
+  descriptionSubSubject,
+  selectedSubSubject,
+  selected,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <div className="flex items-end mt-10 gap-2">
-      <Select
-        name="masteredLanguageLevel"
-        label={
-          <div className="mb-2">
-            <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
-              {language} <QuestionMark fillColor={"fill-primary-color-P4"} />
-            </span>
-          </div>
-        }
-        onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-        labelPlacement="outside"
-        placeholder="Select your level"
-        selectorIcon={<span></span>}
-        isOpen={isOpen}
-        value={languageLevel}
-        onChange={(e) => handleLanguageLevel(e, language)}
-        endContent={
-          <InputBGWrapperIcon>
-            <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-          </InputBGWrapperIcon>
-        }
-        startContent={
-          <InputBGWrapperIcon>
-            <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
-          </InputBGWrapperIcon>
-        }
-        classNames={{
-          trigger: ["select-wrapper-ipractis"],
-          innerWrapper: ["select-ipractis", "w-full"],
-          value: [
-            "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-          ],
-          listbox: ["text-primary-color-P4"],
-        }}
-      >
-        {languagesLevels?.map((languageLevel) => (
-          <SelectItem key={languageLevel}>{languageLevel}</SelectItem>
-        ))}
-      </Select>
-
-      <button
-        className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-        onClick={() => handleDeleteMasteredLanguage(language)}
-        type="button"
-      >
-        <TrashBinIcon
-          fillColor={"fill-primary-color-P4"}
-          strokeColor={"stroke-primary-color-P4"}
+    <div>
+      <div className="flex items-end mt-10 mb-2.5 gap-2">
+        {/* Selected sub-subject */}
+        <CustomNextUiInput
+          isReadOnly
+          type="text"
+          defaultValue={selectedSubSubject}
+          name="selectedSubSuject"
+          className="pointer-events-none"
+          placeholder="Selected sub-subject"
+          startContent={
+            <InputBGWrapperIcon>
+              <UserSpeakingRightIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
         />
-      </button>
+
+        <button
+          className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+          onClick={() => handleDeleteSelectedSubSuject(selected)}
+          type="button"
+        >
+          <TrashBinIcon
+            fillColor={"fill-primary-color-P4"}
+            strokeColor={"stroke-primary-color-P4"}
+          />
+        </button>
+      </div>
+
+      {/* Enter a text - textarea */}
+      <CustomNextUiTextareaWithMaxLength
+        nameTextarea={"descriptionSubjectToTeach"}
+        inputClassName={"h-[150px]"}
+        value={descriptionSubSubject}
+        onChange={(e) => descriptionSubSubjectOnChange(e, selected)}
+        placeholder={"Enter a text"}
+        maxCharactersLength={20}
+        typeError={"Max Length Exceeded"}
+        descError={"The text cannot exceed 20 characters."}
+        labelDisabled={true}
+      />
     </div>
   );
 };

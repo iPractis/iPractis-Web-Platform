@@ -67,7 +67,12 @@ const AboutYourselfMasteredLanguages = () => {
               </span>
             </div>
           }
-          selectedKeys={masteredLanguageRef?.current?.value ? [masteredLanguageRef?.current?.value] : []}
+          ref={masteredLanguageRef}
+          selectedKeys={
+            masteredLanguageRef?.current?.value
+              ? [masteredLanguageRef?.current?.value]
+              : []
+          }
           onChange={handleAddMasteredLanguage}
           onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
           labelPlacement="outside"

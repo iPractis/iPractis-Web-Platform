@@ -86,3 +86,13 @@ export const teachingSubjects = [
   "Italian",
   "Arabic",
 ];
+
+export const subSubjects = [
+  "Conversationnal",
+  "Professional Field-Specific",
+  "Initiation for beginner",
+  "Children class",
+  "School support",
+  "Exam's preparation",
+  "Literature and Culture",
+];
