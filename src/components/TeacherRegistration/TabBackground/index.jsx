@@ -1,5 +1,5 @@
-import SectionHeader from "../../Globals/SectionHeader";
 import { LuggageIcon, UserBigIcon, UserIcon } from "../../Icons";
+import SectionHeader from "../../Globals/SectionHeader";
 
 const TabBackground = ({ activeTab }) => {
   return (
