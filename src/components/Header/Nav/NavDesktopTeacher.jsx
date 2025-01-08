@@ -50,7 +50,7 @@ const NavDesktopTeacher = ({ userName }) => {
       {/* Right Column */}
       <div className="flex items-center gap-1.5">
         <div className="flex items-center gap-3 text-primary-color-P12">
-          <WalletIcon />
+          <WalletIcon fillColor={'fill-primary-color-P12'} />
 
           <p className="ST-SB-4">0</p>
 

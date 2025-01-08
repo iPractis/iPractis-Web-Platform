@@ -5,6 +5,7 @@ import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
 import AveragePrice from "./AveragePrice";
+import Withdrawal from "./Withdrawal";
 import StudentAge from "./StudentAge";
 
 // Icons
@@ -45,7 +46,7 @@ const TabSubject = ({ activeTab }) => {
         <WhiteSpaceWrapper className="flex items-start flex-col sm:flex-row gap-[50px]">
           <AveragePrice />
 
-          <StudentAge />
+          <Withdrawal />
         </WhiteSpaceWrapper>
       </div>
     </div>

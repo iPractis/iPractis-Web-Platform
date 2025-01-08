@@ -14,6 +14,7 @@ const StudentAge = () => {
       />
 
       <Switch
+        defaultSelected
         size="sm"
         classNames={{
           base: "mb-2.5",
@@ -34,6 +35,7 @@ const StudentAge = () => {
       </Switch>
 
       <Switch
+        defaultSelected
         size="sm"
         classNames={{
           wrapper:
