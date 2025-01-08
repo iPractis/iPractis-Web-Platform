@@ -1,9 +1,18 @@
-import { CheckIcon, CloseBoxIcon } from "../../Icons";
+import { CheckIcon, CloseBoxIcon, TagIcon } from "../../Icons";
+import SectionHeader from "../../Globals/SectionHeader";
 import { Switch } from "@nextui-org/react";
 
 const StudentAge = () => {
   return (
-    <>
+    <div className="flex-1">
+      <SectionHeader
+        wrapperSectionHeaderClassName={"pb-[30px]"}
+        descriptionText="iPractis considers all students aged between 5 and 14 as young students. By activating this option, you agree to teach this age group."
+        titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
+        titleText="Student's age"
+        titleClassName="MT-SB-1"
+      />
+
       <Switch
         size="sm"
         classNames={{
@@ -42,7 +51,7 @@ const StudentAge = () => {
       >
         I accept to teach to mature student
       </Switch>
-    </>
+    </div>
   );
 };
 
