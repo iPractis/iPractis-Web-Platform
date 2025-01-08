@@ -7,8 +7,11 @@ import Image from "next/image";
 import { QuestionMark, TownhallIcon, WalletIcon } from "../../Icons";
 import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
+import { useState } from "react";
 
 const Withdrawal = () => {
+  const [withdrawal, setWithdrawal] = useState("");
+
   return (
     <div className="flex-1">
       <SectionHeader
@@ -19,17 +22,43 @@ const Withdrawal = () => {
       />
 
       <div className="flex gap-5 mt-8 mb-14">
-        <div className="btn-septenary p-4 cursor-pointer rounded-2xl flex-1">
-          <Image className="w-[66px] mx-auto" src={wiseLogo} alt="Logo Wise" />{" "}
-        </div>
+        <button
+          className="w-full"
+          type="button"
+          onClick={() => setWithdrawal("wise")}
+        >
+          <div
+            className={`p-4 rounded-2xl flex-1 ${
+              withdrawal === "wise" ? "bg-quinary-color-SU15" : "btn-septenary"
+            }`}
+          >
+            <Image
+              className="w-[66px] mx-auto"
+              src={wiseLogo}
+              alt="Logo Wise"
+            />{" "}
+          </div>
+        </button>
 
-        <div className="btn-septenary p-4 cursor-pointer rounded-2xl flex-1">
-          <Image
-            className="w-[66px] mx-auto"
-            src={paypalLogo}
-            alt="Logo Paypal"
-          />{" "}
-        </div>
+        <button
+          className="w-full"
+          type="button"
+          onClick={() => setWithdrawal("paypal")}
+        >
+          <div
+            className={`p-4 rounded-2xl flex-1 ${
+              withdrawal === "paypal"
+                ? "bg-quinary-color-SU15"
+                : "btn-septenary"
+            }`}
+          >
+            <Image
+              className="w-[66px] mx-auto"
+              src={paypalLogo}
+              alt="Logo Paypal"
+            />{" "}
+          </div>
+        </button>
       </div>
 
       <div className="flex items-end gap-2 mt-7">
