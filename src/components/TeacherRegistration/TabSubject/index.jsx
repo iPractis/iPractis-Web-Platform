@@ -4,10 +4,11 @@ import StudentPreference from "./StudentPreferences";
 import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
+import AveragePrice from "./AveragePrice";
 import StudentAge from "./StudentAge";
 
 // Icons
-import { NotebookOpenedIcon, TagIcon } from "../../Icons";
+import { DollarSignIcon, NotebookOpenedIcon, TagIcon } from "../../Icons";
 
 const TabSubject = ({ activeTab }) => {
   return (
@@ -66,6 +67,32 @@ const TabSubject = ({ activeTab }) => {
             />
 
             <StudentPreference />
+          </div>
+
+          <div className="flex-1">
+            <SectionHeader
+              wrapperSectionHeaderClassName={"pb-[30px]"}
+              descriptionText="iPractis considers all students aged between 5 and 14 as young students. By activating this option, you agree to teach this age group."
+              titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
+              titleText="Student's age"
+              titleClassName="MT-SB-1"
+            />
+
+            <StudentAge />
+          </div>
+        </WhiteSpaceWrapper>
+
+        {/* Average price and withdrawal */}
+        <WhiteSpaceWrapper className="flex items-start flex-col sm:flex-row gap-[50px]">
+          <div className="flex-1">
+            <SectionHeader
+              descriptionText="Price is crucial for students when choosing a tutor as it determines affordability and value for money."
+              titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
+              titleText="Average price"
+              titleClassName="MT-SB-1"
+            />
+
+            <AveragePrice />
           </div>
 
           <div className="flex-1">

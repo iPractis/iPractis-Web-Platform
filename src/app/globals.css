@@ -4,9 +4,9 @@
 
 :root {
   --primary-color-P1: #1c1c1e;
-  --quinary-color-VS5: #00FF47;
-  --septenary-color-MA5: #FF0011;
-  --quaternary-color-A5: #FFD600;
+  --quinary-color-VS5: #00ff47;
+  --septenary-color-MA5: #ff0011;
+  --quaternary-color-A5: #ffd600;
 }
 
 /* Styles of Checkbox NextUI */
@@ -16,15 +16,18 @@
 }
 
 /* This is for styles the border of radio buttons of nextui */
-.connected.group[data-selected="true"] .group-data-\[selected\=true\]\:border-primary {
+.connected.group[data-selected="true"]
+  .group-data-\[selected\=true\]\:border-primary {
   border-color: var(--quinary-color-VS5) !important;
 }
 
-.busy.group[data-selected="true"] .group-data-\[selected\=true\]\:border-primary {
+.busy.group[data-selected="true"]
+  .group-data-\[selected\=true\]\:border-primary {
   border-color: var(--septenary-color-MA5) !important;
 }
 
-.absent.group[data-selected="true"] .group-data-\[selected\=true\]\:border-primary {
+.absent.group[data-selected="true"]
+  .group-data-\[selected\=true\]\:border-primary {
   border-color: var(--quaternary-color-A5) !important;
 }
 
