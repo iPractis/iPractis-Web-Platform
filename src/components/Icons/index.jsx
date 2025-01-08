@@ -538,6 +538,24 @@ export const CheckedShieldIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const CheckIcon = ({ strokeColor }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="16" height="16" rx="8" fill="white" />
+    <path
+      d="M5 8.5L6.77298 10L11 6"
+      className={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const UserAddIcon = () => (
   <svg
     width="24"
@@ -1243,6 +1261,30 @@ export const CloseIcon = ({ strokeColor }) => (
       strokeWidth="2"
       strokeLinecap="round"
       className={strokeColor}
+    />
+  </svg>
+);
+
+export const CloseBoxIcon = ({ strokeColor }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="16" height="16" rx="8" fill="white" />
+    <path
+      d="M11 5L5 11"
+      className={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M11 11L5 5"
+      className={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </svg>
 );
