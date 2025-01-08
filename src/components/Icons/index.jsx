@@ -918,6 +918,35 @@ export const AnalyticIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const AnalyticVerticalLinesIcon = ({ strokeColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M4.80078 16.7998L4.80078 13.5998"
+      className={strokeColor}
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+    <path
+      d="M12 16.7998L12 10.3998"
+      className={strokeColor}
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+    <path
+      d="M19.1992 16.7998L19.1992 7.1998"
+      className={strokeColor}
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const QuestionMark = ({ fillColor }) => (
   <svg
     width="14"

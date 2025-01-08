@@ -1,12 +1,13 @@
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import SectionHeader from "../../Globals/SectionHeader";
+import StudentPreference from "./StudentPreferences";
 import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
+import PresentYourSelf from "./PresentYourSelf";
+import StudentAge from "./StudentAge";
 
 // Icons
 import { NotebookOpenedIcon, TagIcon } from "../../Icons";
-import PresentYourSelf from "./PresentYourSelf";
-import StudentAge from "./StudentAge";
 
 const TabSubject = ({ activeTab }) => {
   return (
@@ -64,7 +65,7 @@ const TabSubject = ({ activeTab }) => {
               titleClassName="MT-SB-1"
             />
 
-            <SubjectsToTeach />
+            <StudentPreference />
           </div>
 
           <div className="flex-1">
