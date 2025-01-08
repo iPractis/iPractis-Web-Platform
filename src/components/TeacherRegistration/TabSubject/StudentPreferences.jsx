@@ -2,11 +2,19 @@ import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
 import SectionHeader from "../../Globals/SectionHeader";
 
 // Icons
-import { AnalyticVerticalLinesIcon } from "../../Icons";
+import { AnalyticVerticalLinesIcon, NotebookOpenedIcon } from "../../Icons";
 
 const StudentPreference = () => {
   return (
-    <>
+    <div className="flex-1">
+      <SectionHeader
+        wrapperSectionHeaderClassName={"pb-[50px]"}
+        descriptionText="You are about to create a teacher’s profile on iPractis platform, please fill the fields with the right information."
+        titleIcon={<NotebookOpenedIcon fillColor={"fill-primary-color-P1"} />}
+        titleText="Student preferences"
+        titleClassName="MT-SB-1"
+      />
+
       <SectionHeader
         descriptionText="Select the level you can teach"
         titleIcon={
@@ -50,7 +58,7 @@ const StudentPreference = () => {
           Advanced
         </CustomNextUiCheckbox>
       </div>
-    </>
+    </div>
   );
 };
 

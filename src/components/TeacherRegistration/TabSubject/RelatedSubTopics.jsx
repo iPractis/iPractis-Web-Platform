@@ -1,5 +1,6 @@
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { subSubjects } from "@/src/data/dataTeacherRegistration";
+import SectionHeader from "../../Globals/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
 import SubSubject from "./SubSubject";
 import { useState } from "react";
@@ -13,8 +14,6 @@ const RelatedSubTopics = () => {
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [tempSelectedKey, setTempSelectedKey] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
-  console.log(selectedSubSubjects);
 
   // Add sub-subject
   const handleAddSubSubject = (e) => {
@@ -69,69 +68,79 @@ const RelatedSubTopics = () => {
   };
 
   return (
-    <div className="flex-1 w-full space-y-[50px]">
-      {/* Select Sub-subject */}
-      <div className="flex items-end gap-2 mt-7">
-        <Select
-          name="selectSubSubject"
-          label={
-            <div className="flex flex-col mb-2">
-              <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                Related sub topics{" "}
-                <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
+    <div className="flex-1">
+      <SectionHeader
+        wrapperSectionHeaderClassName={"pb-[50px]"}
+        descriptionText="Highlight your teaching methods and the subtopics you've mastered."
+        titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
+        titleText="Choose your specialties"
+        titleClassName="MT-SB-1"
+      />
 
-              <div className="self-start">
-                <span className=" text-primary-color-P4 ST-3">
-                  Sub topics allow you to match with students needs.
+      <div className="space-y-[50px]">
+        {/* Select Sub-subject */}
+        <div className="flex items-end gap-2 mt-7">
+          <Select
+            name="selectSubSubject"
+            label={
+              <div className="flex flex-col mb-2">
+                <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                  Related sub topics{" "}
+                  <QuestionMark fillColor={"fill-primary-color-P4"} />
                 </span>
-              </div>
-            </div>
-          }
-          value={selectedSubSubject}
-          selectedKeys={selectedSubSubject ? [selectedSubSubject] : []}
-          onChange={handleAddSubSubject}
-          onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-          labelPlacement="outside"
-          placeholder="Select a sub-subject"
-          selectorIcon={<span></span>}
-          isOpen={isOpen}
-          startContent={
-            <InputBGWrapperIcon>
-              <TagIcon fillColor={"fill-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          }
-          endContent={
-            <InputBGWrapperIcon>
-              <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-            </InputBGWrapperIcon>
-          }
-          classNames={{
-            trigger: ["select-wrapper-ipractis"],
-            innerWrapper: ["select-ipractis", "w-full"],
-            value: [
-              "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-            ],
-            listbox: ["text-primary-color-P4"],
-          }}
-        >
-          {subSubjects?.map((subSuject) => (
-            <SelectItem key={subSuject}>{subSuject}</SelectItem>
-          ))}
-        </Select>
-      </div>
 
-      {/* Selected Sub-subjects */}
-      {selectedSubSubjects?.map((subSubject) => (
-        <SubSubject
-          handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
-          descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
-          descriptionSubSubject={descriptionSubSubject}
-          tempSelectedKey={tempSelectedKey}
-          key={subSubject?.selected}
-          {...subSubject}
-        />
-      ))}
+                <div className="self-start">
+                  <span className=" text-primary-color-P4 ST-3">
+                    Sub topics allow you to match with students needs.
+                  </span>
+                </div>
+              </div>
+            }
+            value={selectedSubSubject}
+            selectedKeys={selectedSubSubject ? [selectedSubSubject] : []}
+            onChange={handleAddSubSubject}
+            onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+            labelPlacement="outside"
+            placeholder="Select a sub-subject"
+            selectorIcon={<span></span>}
+            isOpen={isOpen}
+            startContent={
+              <InputBGWrapperIcon>
+                <TagIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <InputBGWrapperIcon>
+                <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
+            }
+            classNames={{
+              trigger: ["select-wrapper-ipractis"],
+              innerWrapper: ["select-ipractis", "w-full"],
+              value: [
+                "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+              ],
+              listbox: ["text-primary-color-P4"],
+            }}
+          >
+            {subSubjects?.map((subSuject) => (
+              <SelectItem key={subSuject}>{subSuject}</SelectItem>
+            ))}
+          </Select>
+        </div>
+
+        {/* Selected Sub-subjects */}
+        {selectedSubSubjects?.map((subSubject) => (
+          <SubSubject
+            handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
+            descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
+            descriptionSubSubject={descriptionSubSubject}
+            tempSelectedKey={tempSelectedKey}
+            key={subSubject?.selected}
+            {...subSubject}
+          />
+        ))}
+      </div>
     </div>
   );
 };
