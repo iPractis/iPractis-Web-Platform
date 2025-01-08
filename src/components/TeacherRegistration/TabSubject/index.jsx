@@ -1,9 +1,11 @@
+import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import SectionHeader from "../../Globals/SectionHeader";
 import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
 
 // Icons
 import { NotebookOpenedIcon, TagIcon } from "../../Icons";
+import PresentYourSelf from "./PresentYourSelf";
 
 const TabSubject = ({ activeTab }) => {
   return (
@@ -16,8 +18,8 @@ const TabSubject = ({ activeTab }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="space-y-16">
-        <div className="flex items-start flex-col sm:flex-row gap-[50px] p-8 rounded-2xl bg-primary-color-P12">
+      <div className="space-y-4">
+        <WhiteSpaceWrapper className="flex items-start flex-col sm:flex-row gap-[50px]">
           <div className="flex-1">
             <SectionHeader
               wrapperSectionHeaderClassName={"pb-[50px]"}
@@ -43,7 +45,9 @@ const TabSubject = ({ activeTab }) => {
 
             <RelatedSubTopics />
           </div>
-        </div>
+        </WhiteSpaceWrapper>
+
+        <PresentYourSelf />
       </div>
     </div>
   );

@@ -1081,6 +1081,54 @@ export const CameraBoxIcon = ({ fillColor, strokeColor }) => (
   </svg>
 );
 
+export const CameraIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M2 9.00008C2 7.89552 2.89542 7.00009 3.99998 7.00008L13 7.00001C14.1046 7.00001 15 7.89544 15 9.00002V14.9999C15 16.1045 14.1046 16.9999 13 16.9999L4.00002 17C2.89544 17 2 16.1046 2 15V9.00008Z"
+      className={fillColor}
+    />
+    <path
+      d="M17.3143 9.87428L21.3143 8.27428C21.6427 8.14291 22 8.38478 22 8.73852V15.2615C22 15.6152 21.6427 15.8571 21.3143 15.7257L17.3143 14.1257C17.1245 14.0498 17 13.8659 17 13.6615V10.3385C17 10.1341 17.1245 9.95021 17.3143 9.87428Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
+export const LinkIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M4 12C4 9.79086 5.79086 8 8 8H10C10.5523 8 11 8.44772 11 9C11 9.55229 10.5523 10 10 10H8C6.89543 10 6 10.8954 6 12C6 13.1046 6.89543 14 8 14H10C10.5523 14 11 14.4477 11 15C11 15.5523 10.5523 16 10 16H8C5.79086 16 4 14.2091 4 12Z"
+      className={fillColor}
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M20 12C20 14.2091 18.2091 16 16 16L14 16C13.4477 16 13 15.5523 13 15C13 14.4477 13.4477 14 14 14L16 14C17.1046 14 18 13.1046 18 12C18 10.8954 17.1046 10 16 10L14 10C13.4477 10 13 9.55228 13 9C13 8.44772 13.4477 8 14 8L16 8C18.2091 8 20 9.79086 20 12Z"
+      className={fillColor}
+    />
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M7 12C7 11.4477 7.44772 11 8 11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H8C7.44772 13 7 12.5523 7 12Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const DialogMarkIcon = ({ fillColor }) => (
   <svg
     width="18"

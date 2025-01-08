@@ -69,7 +69,7 @@ const RelatedSubTopics = () => {
   };
 
   return (
-    <div className="flex-1 w-full">
+    <div className="flex-1 w-full space-y-[50px]">
       {/* Select Sub-subject */}
       <div className="flex items-end gap-2 mt-7">
         <Select
