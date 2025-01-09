@@ -8,9 +8,9 @@ import { useState } from "react";
 // Images && icons
 import {
   ChevronDownBigIcon,
-  NotebookOpenedIcon,
   NotebookOpenedIconBigger,
   QuestionMark,
+  UserBoxIcon,
 } from "../../Icons";
 
 const SubjectsToTeach = () => {
@@ -21,7 +21,7 @@ const SubjectsToTeach = () => {
       <SectionHeader
         descriptionText="Remember, students rely on this information to choose their teacher."
         wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
-        titleIcon={<NotebookOpenedIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<UserBoxIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Set up your teaching subject"
         titleClassName="MT-SB-1"
       />

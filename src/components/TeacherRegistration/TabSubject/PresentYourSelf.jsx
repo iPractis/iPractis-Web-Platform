@@ -2,7 +2,7 @@ import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import SectionHeader from "../../Globals/SectionHeader";
-import { CameraIcon, LinkIcon } from "../../Icons";
+import { CameraIcon, LinkIcon, QuestionMark } from "../../Icons";
 import React from "react";
 
 const PresentYourSelf = () => {
@@ -13,23 +13,36 @@ const PresentYourSelf = () => {
         titleText="Present yourself"
         titleIcon={<CameraIcon fillColor={"fill-primary-color-P1"} />}
         titleClassName="MT-SB-1"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px] mb-28 mt-16"
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:gap-[50px] gap-4">
-        <div className="flex-1 w-full">
-          <CustomNextUiInput
-            type="text"
-            name="videoLink"
-            placeholder="Enter your video link"
-            startContent={
-              <InputBGWrapperIcon>
-                <LinkIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-          />
-        </div>
+      <div className="md:px-8">
+        <CustomNextUiInput
+          type="text"
+          name="videoLink"
+          label={
+            <div className="mb-2">
+              <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                Video link <QuestionMark fillColor={"fill-primary-color-P4"} />
+              </span>
 
-        <ul className="flex-1 ps-4 ST-1 list-disc text-primary-color-P4">
+              <span className="text-primary-color-P4 ST-3">
+                Upload your video on YouTube and paste the link in the field
+                below.
+              </span>
+            </div>
+          }
+          classNames={{ label: "!-top-16" }}
+          labelPlacement="outside"
+          placeholder="Enter your video link"
+          startContent={
+            <InputBGWrapperIcon>
+              <LinkIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
+        />
+
+        <ul className="ps-4 ST-1 list-disc text-primary-color-P4 mt-4">
           <li>You must appear in the video.</li>
           <li>Record in horizontal mode and at eye level.</li>
           <li>The video aspect ratio should be 16:9</li>

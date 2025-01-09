@@ -13,12 +13,13 @@ const Withdrawal = () => {
   const [withdrawal, setWithdrawal] = useState("");
 
   return (
-    <div className="flex-1">
+    <div className="md:px-8 mt-[50px]">
       <SectionHeader
         descriptionText="You have the freedom to establish a rate that aligns with your professional standards."
         titleIcon={<WalletIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Withdrawal"
         titleClassName="MT-SB-1"
+        wrapperSectionHeaderClassName="mb-[50px]"
       />
 
       <div className="flex gap-5 mt-8 mb-14">
