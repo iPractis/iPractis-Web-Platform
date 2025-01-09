@@ -180,7 +180,7 @@
   }
 
   .container-page-v7 {
-    @apply max-w-[1000px] mx-auto mb-[100px];
+    @apply max-w-[1000px] mx-auto mb-16;
   }
 
   .container-page-v8 {
