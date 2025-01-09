@@ -268,7 +268,7 @@ export const NewMessageIcon = () => (
   </svg>
 );
 
-export const ChevronDownIcon = () => (
+export const ChevronDownIcon = ({ fillColor }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="14"
@@ -278,7 +278,7 @@ export const ChevronDownIcon = () => (
   >
     <path
       d="M5.77771 7.03783C5.37747 7.533 4.62253 7.533 4.22229 7.03783L0.254219 2.12862C-0.274355 1.47468 0.191083 0.5 1.03193 0.5L8.96807 0.500001C9.80892 0.500001 10.2744 1.47468 9.74578 2.12862L5.77771 7.03783Z"
-      className="fill-primary-color-P4"
+      className={fillColor}
     />
   </svg>
 );

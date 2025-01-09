@@ -45,7 +45,7 @@ const LeftColumnReasonsSelect = ({ isValidReasonErrors, error }) => {
           onClick={() => setIsOpen(!isOpen)}
           type="button"
         >
-          <ChevronDownIcon />
+          <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
         </button>
       </div>
 

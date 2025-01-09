@@ -1,3 +1,4 @@
+import CustomNextUiTextarea from "../../Globals/CustomNextUiTextarea";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
@@ -16,12 +17,20 @@ import {
   TrashBinIcon,
   UserTieIcon,
 } from "../../Icons";
-import { DatePicker } from "@nextui-org/react";
-import CustomNextUiTextarea from "../../Globals/CustomNextUiTextarea";
+
+// Next ui imports
+import {
+  Calendar,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  Button,
+  DropdownItem,
+} from "@nextui-org/react";
 
 const TabBackground = ({ activeTab }) => {
-  const [isOpenFromCalendar, setIsOpenFromCalendar] = useState(false);
-  const [isOpenToCalendar, setIsOpenToCalendar] = useState(false);
+  let [dateFromSelected, setDateFromSelected] = useState("");
+  let [dateToSelected, setDateToSelected] = useState("");
 
   return (
     <div className={`${activeTab !== 2 && "hidden"}`}>
@@ -95,11 +104,13 @@ const TabBackground = ({ activeTab }) => {
           <div className="flex-1">
             <div className="flex items-center gap-2">
               <div className="flex-[50%]">
-                {" "}
                 <CustomNextUiInput
+                  isReadOnly
                   type="text"
+                  value={dateFromSelected}
                   name="fromCalendar"
                   placeholder="From"
+                  className="pointer-events-none"
                   startContent={
                     <InputBGWrapperIcon>
                       <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
@@ -109,13 +120,37 @@ const TabBackground = ({ activeTab }) => {
               </div>
 
               <div className="flex-1">
-                <button
-                  className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-                  onClick={() => setIsOpenFromCalendar(!isOpenFromCalendar)}
-                  type="button"
+                <Dropdown
+                  classNames={{
+                    content: "p-0",
+                  }}
+                  closeOnSelect={false}
                 >
-                  <ChevronDownIcon />
-                </button>
+                  <DropdownTrigger>
+                    <Button
+                      className="border-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
+                      variant="flat"
+                      type="button"
+                    >
+                      <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
+                    </Button>
+                  </DropdownTrigger>
+
+                  <DropdownMenu
+                    className="p-0 h-0"
+                    itemClasses={{
+                      base: "data-[hover=true]:bg-transparent",
+                    }}
+                  >
+                    <DropdownItem className="p-0">
+                      <Calendar
+                        value={dateFromSelected}
+                        onChange={setDateFromSelected}
+                        disableAnimation
+                      />
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </div>
             </div>
           </div>
@@ -124,9 +159,12 @@ const TabBackground = ({ activeTab }) => {
             <div className="flex items-center gap-2">
               <div className="flex-[50%]">
                 <CustomNextUiInput
+                  isReadOnly
                   type="text"
-                  name="toCalendar"
+                  name="fromCalendar"
                   placeholder="To"
+                  value={dateToSelected}
+                  className="pointer-events-none"
                   startContent={
                     <InputBGWrapperIcon>
                       <CalendarCloseIcon fillColor={"fill-primary-color-P4"} />
@@ -136,13 +174,37 @@ const TabBackground = ({ activeTab }) => {
               </div>
 
               <div className="flex-1">
-                <button
-                  className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-                  onClick={() => setIsOpenToCalendar(!isOpenToCalendar)}
-                  type="button"
+                <Dropdown
+                  classNames={{
+                    content: "p-0",
+                  }}
+                  closeOnSelect={false}
                 >
-                  <ChevronDownIcon />
-                </button>
+                  <DropdownTrigger>
+                    <Button
+                      className="border-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
+                      variant="flat"
+                      type="button"
+                    >
+                      <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
+                    </Button>
+                  </DropdownTrigger>
+
+                  <DropdownMenu
+                    className="p-0 h-0"
+                    itemClasses={{
+                      base: "data-[hover=true]:bg-transparent",
+                    }}
+                  >
+                    <DropdownItem className="p-0">
+                      <Calendar
+                        value={dateToSelected}
+                        onChange={setDateToSelected}
+                        disableAnimation
+                      />
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </div>
             </div>
           </div>
