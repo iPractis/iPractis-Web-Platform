@@ -50,9 +50,9 @@ const AboutYourselfMasteredLanguages = () => {
   };
 
   return (
-    <div className="flex-1 w-full">
+    <div className="px-8">
       {/* Select Language */}
-      <div className="flex items-end gap-2 mt-7">
+      <div className="flex items-end gap-2 mt-[75px]">
         <Select
           name="masteredLanguage"
           label={

@@ -11,7 +11,7 @@ const AboutYourSelfIntro = () => {
   };
 
   return (
-    <div className="flex-1 w-full">
+    <div className="!mt-6">
       <CustomNextUiTextareaWithMaxLength
         nameTextarea="introductionAboutYourself"
         inputClassName={"h-[150px]"}

@@ -14,15 +14,16 @@ const ProfilePicture = () => {
   };
 
   return (
-    <WhiteSpaceWrapper className={"space-y-8"}>
+    <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader
         descriptionText="Upload a photo to personalize your profile."
         titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
         titleText="Profile Picture"
         titleClassName="MT-SB-1"
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:gap-8 gap-4">
+      <div className="flex flex-col sm:flex-row items-start sm:gap-8 gap-4 mt-[50px] mb-16 px-8">
         {/* Profile Image Input */}
         <div className="relative">
           <input

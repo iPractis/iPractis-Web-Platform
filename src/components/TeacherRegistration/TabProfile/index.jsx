@@ -1,34 +1,22 @@
-import SectionHeader from "../../Globals/SectionHeader";
+// import IDVerification from "./IDVerification";
 import ProfilePicture from "./ProfilePicture";
-import IDVerification from "./IDVerification";
 import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
-import { UserIcon } from "../../Icons";
 
 const TabProfile = ({ activeTab }) => {
   return (
     <div className={`${activeTab !== 0 && "hidden"}`}>
-      <SectionHeader
-        descriptionText="Provide your personal details and complete your profile to start your application process."
-        titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
-        wrapperSectionHeaderClassName={"p-4 mb-[50px]"}
-        titleText="Profile Section"
-        titleClassName="MT-SB-1"
-      />
+      {/* Profile Picture */}
+      <ProfilePicture />
 
-      <div className="space-y-4">
-        {/* Profile Picture */}
-        <ProfilePicture />
+      {/* Personal Informations */}
+      <PersonalInfo />
 
-        {/* Personal Informations */}
-        <PersonalInfo />
+      {/* Tell students about yourself */}
+      <AboutYourself />
 
-        {/* Tell students about yourself */}
-        <AboutYourself />
-
-        {/* ID Verification */}
-        <IDVerification />
-      </div>
+      {/* ID Verification */}
+      {/* <IDVerification /> */}
     </div>
   );
 };
