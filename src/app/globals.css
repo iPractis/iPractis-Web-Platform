@@ -180,7 +180,7 @@
   }
 
   .container-page-v7 {
-    @apply max-w-[1006px] mx-auto mb-[100px];
+    @apply max-w-[1000px] mx-auto mb-[100px];
   }
 
   .container-page-v8 {
@@ -254,5 +254,9 @@
 
   .ST-1 {
     @apply text-[9.6px] font-[500] !important;
+  }
+
+  .font-bold-custom {
+    @apply font-[900] !important;
   }
 }

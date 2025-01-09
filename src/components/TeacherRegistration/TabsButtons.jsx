@@ -19,14 +19,14 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <section className="p-4 rounded-[32px] bg-primary-color-P11">
+    <section>
       <div
-        className={`flex items-center gap-2.5 rounded-2xl py-2 px-1.5 mb-4 bg-primary-color-P1`}
+        className={`flex items-center gap-2.5 rounded-[22px] p-1.5 mb-4 bg-primary-color-P1`}
       >
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
             key={TabIndex}
-            className={`w-full flex items-center py-2 px-2 rounded-lg ST-SB-4 ${
+            className={`w-full flex items-center py-2 px-4 rounded-2xl ST-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
             onClick={() => setActiveTab(TabIndex)}
@@ -41,7 +41,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
               />
             </span>
 
-            <span className="md:block hidden w-full text-center">
+            <span className="md:block hidden w-full text-center font-bold">
               {TabButton?.textButton}
             </span>
           </button>
@@ -51,7 +51,8 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       <SectionHeader
         titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
         descriptionText={activeTab < 4 ? sectionHeaderContent[0]?.descriptionText : sectionHeaderContent[1]?.descriptionText}
-        wrapperSectionHeaderClassName={"p-4"}
+        descriptionClassName={"mt-[4px] font-bold-custom"}
+        wrapperSectionHeaderClassName={"p-4 rounded-[22px] bg-quaternary-color-A6"}
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"
       />

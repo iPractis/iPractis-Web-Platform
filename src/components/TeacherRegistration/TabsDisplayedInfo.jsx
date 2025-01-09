@@ -7,7 +7,7 @@ import TabStatus from "./TabStatus/index";
 
 const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
   return (
-    <form>
+    <form className="max-w-[494px] mx-auto">
       {/* 0 */}
       <TabProfile activeTab={activeTab} />
 
@@ -15,9 +15,7 @@ const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
       <TabSubject activeTab={activeTab} />
 
       {/* 2 */}
-      <div className="max-w-[494px] mx-auto">
-        <TabBackground activeTab={activeTab} />
-      </div>
+      <TabBackground activeTab={activeTab} />
 
       {/* 3 */}
       <TabAvailability activeTab={activeTab} />
