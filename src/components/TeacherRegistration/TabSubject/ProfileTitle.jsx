@@ -4,7 +4,7 @@ import {
   CustomNextUiTextareaWithMaxLength,
 } from "../../Globals/MaxFormLengthFields";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { CloseIcon, ThreeXBlocks } from "../../Icons";
+import { CloseIcon, QuestionMark, ThreeXBlocks } from "../../Icons";
 import { useState } from "react";
 
 const ProfileTitle = () => {
@@ -25,8 +25,14 @@ const ProfileTitle = () => {
 
   return (
     <>
-      <div>
+      <div className="border border-transparent pt-12">
         <CustomNextUiInputWithMaxLength
+          labelTitle={"Write a catchy headline"}
+          labelSubtitle={
+            "Your headline is the first thing peoples are going to read, it will allow you to attract the students you wish to heve."
+          }
+          labelClassName={"!-top-[65px]"}
+          labelDisabled={false}
           nameTextarea={"profileTitle"}
           value={profileTitleText}
           onChange={profileTitleTextOnChange}
@@ -34,7 +40,6 @@ const ProfileTitle = () => {
           maxCharactersLength={120}
           typeError={"Max Length Exceeded"}
           descError={"The text cannot exceed 120 characters."}
-          labelDisabled={true}
           startContent={
             <InputBGWrapperIcon>
               <ThreeXBlocks fillColor={"fill-primary-color-P4"} />
@@ -53,6 +58,11 @@ const ProfileTitle = () => {
 
       <div>
         <CustomNextUiTextareaWithMaxLength
+          labelTitle={"Subject Introduction"}
+          labelSubtitle={
+            "Describe your teaching methods, experience, and expertise in this subject."
+          }
+          labelClassName={"!top-3"}
           nameTextarea={"descriptionSubjectToTeach"}
           inputClassName={"h-[150px]"}
           value={descText}
@@ -61,7 +71,7 @@ const ProfileTitle = () => {
           maxCharactersLength={1000}
           typeError={"Max Length Exceeded"}
           descError={"The text cannot exceed 1000 characters."}
-          labelDisabled={true}
+          labelDisabled={false}
         />
       </div>
     </>

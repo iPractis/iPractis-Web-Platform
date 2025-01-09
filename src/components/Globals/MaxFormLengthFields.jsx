@@ -5,6 +5,7 @@ import { QuestionMark } from "../Icons";
 
 export const CustomNextUiTextareaWithMaxLength = ({
   labelDisabled = false,
+  labelClassName,
   maxCharactersLengthText = 1,
   onChange,
   value,
@@ -44,6 +45,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
         classNames={{
           input: [inputClassName],
           inputWrapper: exceedValueMaxLength && "form-input-error",
+          label: [labelClassName]
         }}
         size="primaryiPractis"
         disableAutosize
@@ -73,6 +75,7 @@ export const CustomNextUiInputWithMaxLength = ({
   labelDisabled = false,
   endContent = false,
   startContent = false,
+  labelClassName,
   onChange,
   value,
   labelTitle,
@@ -97,7 +100,7 @@ export const CustomNextUiInputWithMaxLength = ({
         placeholder={placeholder}
         label={
           // If labelDisabled is false, then we display it!
-          !labelDisabled && (
+         !labelDisabled && (
             <div className="mb-2">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                 {labelTitle}{" "}
@@ -115,6 +118,7 @@ export const CustomNextUiInputWithMaxLength = ({
         endContent={endContent}
         classNames={{
           input: [inputClassName],
+          label: [labelClassName]
         }}
       />
 

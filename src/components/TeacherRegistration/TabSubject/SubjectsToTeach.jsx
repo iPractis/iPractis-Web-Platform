@@ -17,18 +17,18 @@ const SubjectsToTeach = () => {
   const [isOpen, setIsOpen] = useState();
 
   return (
-    <div className="flex-1">
+    <div>
       <SectionHeader
-        wrapperSectionHeaderClassName={"pb-[50px]"}
         descriptionText="Remember, students rely on this information to choose their teacher."
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
         titleIcon={<NotebookOpenedIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Set up your teaching subject"
         titleClassName="MT-SB-1"
       />
 
-      <div className="space-y-[50px]">
+      <div className="space-y-[50px] md:px-8">
         {/* Select subject to teach */}
-        <div className="flex items-end gap-2 mt-7">
+        <div className="flex items-end gap-2 mt-20">
           <Select
             name="subjectToTeach"
             label={
