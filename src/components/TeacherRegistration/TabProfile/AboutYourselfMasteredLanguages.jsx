@@ -50,7 +50,7 @@ const AboutYourselfMasteredLanguages = () => {
   };
 
   return (
-    <div className="px-8">
+    <div className="md:px-8">
       {/* Select Language */}
       <div className="flex items-end gap-2 mt-[75px]">
         <Select

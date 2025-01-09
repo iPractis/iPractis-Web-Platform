@@ -25,7 +25,7 @@ const PersonalInfo = () => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="mt-20 px-8 space-y-12">
+      <div className="mt-20 md:px-8 space-y-12">
         <div>
           <CustomNextUiInput
             type="text"

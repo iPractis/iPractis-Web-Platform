@@ -23,7 +23,7 @@ const ProfilePicture = () => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:gap-8 gap-4 mt-[50px] mb-16 px-8">
+      <div className="flex items-start sm:gap-8 gap-4 mt-[50px] mb-16 md:px-8">
         {/* Profile Image Input */}
         <div className="relative">
           <input
