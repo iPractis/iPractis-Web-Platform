@@ -44,8 +44,8 @@ const WorkScheduleTable = () => {
       </TableHeader>
 
       <TableBody>
-        {rowsWorkSchedule.map((row) => (
-          <TableRow key={row?.key}>
+        {rowsWorkSchedule.map((row, index) => (
+          <TableRow key={index}>
             <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
               <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[75%] mx-auto">
                 {row?.count}
