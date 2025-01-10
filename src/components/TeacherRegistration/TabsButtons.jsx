@@ -2,7 +2,7 @@ import { tabsButtons } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../Globals/SectionHeader";
 import { DocumentIcon } from "../Icons";
 
-const TabsButtons = ({ activeTab, setActiveTab }) => {
+const TabsButtons = ({ activeTab, setActiveTab, setSaved }) => {
   // We do this because texts changes at the beggining and at the end of form submission
   const sectionHeaderContent = [
     {
@@ -29,7 +29,10 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
             className={`w-full flex items-center py-2 px-4 rounded-2xl ST-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
-            onClick={() => setActiveTab(TabIndex)}
+            onClick={() => {
+              setActiveTab(TabIndex);
+              setSaved(false);
+            }}
           >
             <span className="md:me-auto mx-auto self-start">
               <TabButton.Icon
@@ -49,9 +52,19 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
-        wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${activeTab === 4 ? "bg-quinary-color-VS10" : 'bg-quaternary-color-A10'}`}
-        descriptionText={activeTab < 4 ? sectionHeaderContent[0]?.descriptionText : sectionHeaderContent[1]?.descriptionText}
-        titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
+        wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${
+          activeTab === 4 ? "bg-quinary-color-VS10" : "bg-quaternary-color-A10"
+        }`}
+        descriptionText={
+          activeTab < 4
+            ? sectionHeaderContent[0]?.descriptionText
+            : sectionHeaderContent[1]?.descriptionText
+        }
+        titleText={
+          activeTab < 4
+            ? sectionHeaderContent[0]?.titleText
+            : sectionHeaderContent[1]?.titleText
+        }
         descriptionClassName={"mt-[4px]"}
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"

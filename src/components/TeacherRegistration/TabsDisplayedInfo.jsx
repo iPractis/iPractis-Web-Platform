@@ -5,7 +5,7 @@ import TabProfile from "./TabProfile/index";
 import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
 
-const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
+const TabsDisplayedInfo = ({ setActiveTab, activeTab, saved, setSaved }) => {
   return (
     <form className="max-w-[494px] mx-auto">
       {/* 0 */}
@@ -18,13 +18,18 @@ const TabsDisplayedInfo = ({ activeTab, setActiveTab }) => {
       <TabBackground activeTab={activeTab} />
 
       {/* 3 */}
-      <TabAvailability activeTab={activeTab} />
+      <TabAvailability activeTab={activeTab} saved={saved} />
 
       {/* 4 */}
       <TabStatus activeTab={activeTab} />
 
       {/* Back && Save buttons */}
-      <TabsButtonsBottomNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <TabsButtonsBottomNav
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+        setSaved={setSaved}
+        saved={saved}
+      />
     </form>
   );
 };
