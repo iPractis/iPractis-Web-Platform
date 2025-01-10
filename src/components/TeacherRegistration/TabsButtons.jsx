@@ -49,10 +49,10 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
-        titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
+        wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${activeTab === 4 ? "bg-quinary-color-VS10" : 'bg-quaternary-color-A10'}`}
         descriptionText={activeTab < 4 ? sectionHeaderContent[0]?.descriptionText : sectionHeaderContent[1]?.descriptionText}
+        titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
         descriptionClassName={"mt-[4px]"}
-        wrapperSectionHeaderClassName={"p-8 rounded-[22px] bg-quaternary-color-A10"}
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"
       />
