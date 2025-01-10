@@ -137,3 +137,67 @@ export const timeZones = [
   "UTC+13:00",
   "UTC+14:00",
 ];
+
+export const columnsHeaderWorkSchedule = [
+  {
+    key: "Sa",
+    label: "Sa",
+  },
+
+  {
+    key: "Su",
+    label: "Su",
+  },
+
+  {
+    key: "Mo",
+    label: "Mo",
+  },
+
+  {
+    key: "Tu",
+    label: "Tu",
+  },
+
+  {
+    key: "We",
+    label: "We",
+  },
+
+  {
+    key: "Th",
+    label: "Th",
+  },
+
+  {
+    key: "Fr",
+    label: "Fr",
+  },
+];
+
+export const rowsWorkSchedule = [
+  { count: 0, label: "" },
+  { count: 1, label: "" },
+  { count: 2, label: "" },
+  { count: 3, label: "" },
+  { count: 4, label: "" },
+  { count: 5, label: "" },
+  { count: 6, label: "" },
+  { count: 7, label: "" },
+  { count: 8, label: "" },
+  { count: 9, label: "" },
+  { count: 10, label: "" },
+  { count: 11, label: "" },
+  { count: 12, label: "" },
+  { count: 13, label: "" },
+  { count: 14, label: "" },
+  { count: 15, label: "" },
+  { count: 16, label: "" },
+  { count: 17, label: "" },
+  { count: 18, label: "" },
+  { count: 19, label: "" },
+  { count: 20, label: "" },
+  { count: 21, label: "" },
+  { count: 22, label: "" },
+  { count: 23, label: "" },
+];

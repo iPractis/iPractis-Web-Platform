@@ -1620,6 +1620,21 @@ export const CloseIcon = ({ strokeColor }) => (
   </svg>
 );
 
+export const CloseBiggerIcon = ({ fillColor }) => (
+  <svg
+    width="10"
+    height="10"
+    viewBox="0 0 10 10"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M5.9236 5.0032L9.034 10H7.1908L4.93 6.3712L2.8132 10H0.9844L4.0948 5.0032L0.97 -0.00800049H2.8132L5.0884 3.6496L7.2196 -0.00800049H9.0484L5.9236 5.0032Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const CloseBoxIcon = ({ strokeColor }) => (
   <svg
     width="16"
