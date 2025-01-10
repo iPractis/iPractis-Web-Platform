@@ -18,7 +18,7 @@ const ProfilePicture = () => {
       <SectionHeader
         descriptionText="Upload a photo to personalize your profile."
         titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px]"
         titleText="Profile Picture"
         titleClassName="MT-SB-1"
       />

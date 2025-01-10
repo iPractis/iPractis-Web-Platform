@@ -19,7 +19,7 @@ const PersonalInfo = () => {
     <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader
         descriptionText="Fill in your basic details to complete your profile."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px]"
         titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Personal Informations"
         titleClassName="MT-SB-1"

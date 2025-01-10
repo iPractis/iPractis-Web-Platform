@@ -51,8 +51,8 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       <SectionHeader
         titleText={activeTab < 4 ? sectionHeaderContent[0]?.titleText : sectionHeaderContent[1]?.titleText}
         descriptionText={activeTab < 4 ? sectionHeaderContent[0]?.descriptionText : sectionHeaderContent[1]?.descriptionText}
-        descriptionClassName={"mt-[4px] font-bold-custom"}
-        wrapperSectionHeaderClassName={"p-4 rounded-[22px] bg-quaternary-color-A6"}
+        descriptionClassName={"mt-[4px]"}
+        wrapperSectionHeaderClassName={"p-8 rounded-[22px] bg-quaternary-color-A10"}
         titleIcon={<DocumentIcon />}
         titleClassName="MT-SB-1"
       />

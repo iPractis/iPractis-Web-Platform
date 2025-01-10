@@ -255,8 +255,4 @@
   .ST-1 {
     @apply text-[9.6px] font-[500] !important;
   }
-
-  .font-bold-custom {
-    @apply font-[900] !important;
-  }
 }

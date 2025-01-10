@@ -19,8 +19,8 @@ const PersonalInfoGenderCheck = () => {
           type="text"
           placeholder="Male"
           label={
-            <span className="flex gap-1.5 items-center">
-              Gender <QuestionMark fillColor={"fill-primary-color-P4"} />
+            <span className="">
+              Gender
             </span>
           }
           labelPlacement="outside"
