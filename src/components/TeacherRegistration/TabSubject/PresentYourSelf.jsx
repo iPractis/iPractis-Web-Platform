@@ -55,7 +55,7 @@ const PresentYourSelf = () => {
             certification(s)
           </li>
           <li>
-            Uploaded on YouTube and set to 'Public' visibility. Then provide the
+            Uploaded on YouTube and set to &#39;Public&#39; visibility. Then provide the
             link in the right area.
           </li>
         </ul>
