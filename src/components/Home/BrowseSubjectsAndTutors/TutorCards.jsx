@@ -1,6 +1,6 @@
 import { subjectsAndTutors } from "@/src/data/dataHome";
-import Link from "next/link";
 import TutorCard from "./TutorCard";
+import Link from "next/link";
 
 const TutorCards = () => {
   return (
