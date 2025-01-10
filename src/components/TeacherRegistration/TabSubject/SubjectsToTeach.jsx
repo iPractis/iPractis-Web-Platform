@@ -20,7 +20,7 @@ const SubjectsToTeach = () => {
     <div>
       <SectionHeader
         descriptionText="Remember, students rely on this information to choose their teacher."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px]"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px]"
         titleIcon={<UserBoxIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Set up your teaching subject"
         titleClassName="MT-SB-1"

@@ -13,7 +13,7 @@ const PresentYourSelf = () => {
         titleText="Present yourself"
         titleIcon={<CameraIcon fillColor={"fill-primary-color-P1"} />}
         titleClassName="MT-SB-1"
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px] mb-28 mt-16"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-28 mt-16"
       />
 
       <div className="md:px-8">

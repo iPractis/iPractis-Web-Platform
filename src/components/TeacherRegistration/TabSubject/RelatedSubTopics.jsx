@@ -71,7 +71,7 @@ const RelatedSubTopics = () => {
     <div className="flex-1">
       <SectionHeader
         descriptionText="Highlight your teaching methods and the subtopics you've mastered."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px] mb-20 mt-16"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-20 mt-16"
         titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Choose your specialties"
         titleClassName="MT-SB-1"

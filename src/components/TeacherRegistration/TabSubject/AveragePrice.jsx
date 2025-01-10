@@ -12,7 +12,7 @@ const AveragePrice = () => {
     <>
       <SectionHeader
         descriptionText="View key details and manage your transactions."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px] mb-[50px] mt-16"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-[50px] mt-16"
         titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Financial Summary"
         titleClassName="MT-SB-1"

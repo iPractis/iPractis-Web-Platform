@@ -8,7 +8,7 @@ const StudentPreference = () => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-[22px] rounded-[22px] mb-[50px] mt-16"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-[50px] mt-16"
         descriptionText="You are about to create a teacher’s profile on iPractis platform, please fill the fields with the right information."
         titleIcon={<EyeIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Student preferences"
