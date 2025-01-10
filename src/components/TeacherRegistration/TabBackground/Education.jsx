@@ -13,9 +13,9 @@ import {
   CalendarCloseIcon,
   ChevronDownIcon,
   GraduationCapIcon,
-  LuggageBiggerIcon,
   TopArrowCloudIcon,
   TrashBinIcon,
+  UserHatBiggerIcon,
 } from "../../Icons";
 
 // Next ui imports
@@ -65,7 +65,7 @@ const Education = () => {
               placeholder="Example: Google"
               startContent={
                 <InputBGWrapperIcon>
-                  <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                  <UserHatBiggerIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
             />
