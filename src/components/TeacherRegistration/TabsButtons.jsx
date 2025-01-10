@@ -1,8 +1,8 @@
 import { tabsButtons } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../Globals/SectionHeader";
-import { DocumentIcon } from "../Icons";
+import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 
-const TabsButtons = ({ activeTab, setActiveTab, setSaved }) => {
+const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
   // We do this because texts changes at the beggining and at the end of form submission
   const sectionHeaderContent = [
     {
@@ -15,6 +15,12 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved }) => {
       titleText: "Form completed and send seccesfully",
       descriptionText:
         "Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we’ll update you as soon as possible. Thank you for your patience!",
+    },
+
+    {
+      titleText: "Last step, review your profile before appling",
+      descriptionText:
+        "Double-check your info, then click Send application to finalize. Good luck!",
     },
   ];
 
@@ -51,24 +57,55 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved }) => {
         ))}
       </div>
 
-      <SectionHeader
-        wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${
-          activeTab === 4 ? "bg-quinary-color-VS10" : "bg-quaternary-color-A10"
-        }`}
-        descriptionText={
-          activeTab < 4
-            ? sectionHeaderContent[0]?.descriptionText
-            : sectionHeaderContent[1]?.descriptionText
-        }
-        titleText={
-          activeTab < 4
-            ? sectionHeaderContent[0]?.titleText
-            : sectionHeaderContent[1]?.titleText
-        }
-        descriptionClassName={"mt-[4px]"}
-        titleIcon={<DocumentIcon />}
-        titleClassName="MT-SB-1"
-      />
+      {saved ? (
+        <>
+          <SectionHeader
+            wrapperSectionHeaderClassName={`flex flex-col md:flex-row items-center md:gap-[70px] gap-4 p-8 rounded-[22px] bg-quinary-color-VS10 MT-1`}
+            descriptionText={sectionHeaderContent[2]?.descriptionText}
+            titleText={sectionHeaderContent[2]?.titleText}
+            descriptionClassName={"mt-[4px]"}
+            titleIcon={<DocumentIcon />}
+            titleClassName="MT-SB-1"
+          >
+            <div>
+              <button
+                className="btn btn-tertiary flex items-center gap-2.5 p-3 rounded-2xl"
+                onClick={() => {
+                  setActiveTab(4);
+                  setSaved(false);
+                }}
+                type="button"
+              >
+                <span className="px-1.5">
+                  Send your applicaton for reviewing
+                </span>{" "}
+                <ChevronRightBiggerIcon fillColor={"fill-primary-color-P1"} />
+              </button>
+            </div>
+          </SectionHeader>
+        </>
+      ) : (
+        <SectionHeader
+          wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${
+            activeTab === 4
+              ? "bg-quinary-color-VS10"
+              : "bg-quaternary-color-A10"
+          }`}
+          descriptionText={
+            activeTab < 4
+              ? sectionHeaderContent[0]?.descriptionText
+              : sectionHeaderContent[1]?.descriptionText
+          }
+          titleText={
+            activeTab < 4
+              ? sectionHeaderContent[0]?.titleText
+              : sectionHeaderContent[1]?.titleText
+          }
+          descriptionClassName={"mt-[4px]"}
+          titleIcon={<DocumentIcon />}
+          titleClassName="MT-SB-1"
+        />
+      )}
     </section>
   );
 };

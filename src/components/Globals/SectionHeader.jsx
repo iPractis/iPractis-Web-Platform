@@ -7,19 +7,34 @@ const SectionHeader = ({
   descriptionText,
   titleText,
   titleIcon,
+  children,
 }) => (
-  <div className={wrapperSectionHeaderClassName}>
-    <h3
-      className={twMerge("flex gap-2.5 text-primary-color-P1 items-center", titleClassName)}
-    >
-      {titleIcon}
-      {titleText}
-    </h3>
+  <>
+    <div className={wrapperSectionHeaderClassName}>
+      <div>
+        <h3
+          className={twMerge(
+            "flex gap-2.5 text-primary-color-P1 items-center",
+            titleClassName
+          )}
+        >
+          {titleIcon}
+          {titleText}
+        </h3>
 
-    <p className={twMerge("ST-3 text-primary-color-P4", descriptionClassName)}>
-      {descriptionText}
-    </p>
-  </div>
+        <p
+          className={twMerge(
+            "ST-3 text-primary-color-P4",
+            descriptionClassName
+          )}
+        >
+          {descriptionText}
+        </p>
+      </div>
+
+      <div>{children}</div>
+    </div>
+  </>
 );
 
 export default SectionHeader;

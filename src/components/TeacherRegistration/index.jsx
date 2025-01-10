@@ -12,9 +12,10 @@ export const TeacherRegistration = () => {
     <main className="container-page-v7 space-y-16 px-2">
       {/* Tabs buttons (top) */}
       <TabsButtons
-        setSaved={setSaved}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
+        setSaved={setSaved}
+        saved={saved}
       />
 
       {/* Tabs displayed info (bottom) */}
