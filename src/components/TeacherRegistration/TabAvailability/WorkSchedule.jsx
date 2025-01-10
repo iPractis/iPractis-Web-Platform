@@ -1,5 +1,5 @@
 import SectionHeader from "../../Globals/SectionHeader";
-import WorkScheduleTable from "./WorkScheduleTable";
+import WorkScheduleTable from "../../Globals/WorkScheduleTable";
 
 // Icons
 import { LuggageClockIcon } from "../../Icons";
