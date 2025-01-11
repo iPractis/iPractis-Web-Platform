@@ -9,7 +9,11 @@ export const TeacherRegistration = () => {
   const [saved, setSaved] = useState(false);
 
   return (
-    <main className="container-page-v7 space-y-16 px-2">
+    <main
+      className={`container-page-v7 ${
+        saved ? "sm:space-y-16 space-y-0" : "space-y-16"
+      } px-2`}
+    >
       {/* Tabs buttons (top) */}
       <TabsButtons
         setActiveTab={setActiveTab}

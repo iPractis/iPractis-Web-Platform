@@ -7,7 +7,7 @@ import TabStatus from "./TabStatus/index";
 
 const TabsDisplayedInfo = ({ setActiveTab, activeTab, saved, setSaved }) => {
   return (
-    <form className="max-w-[494px] mx-auto">
+    <form className={`${saved ? "max-w-[1000px] sm:px-16 px-8 sm:py-0 py-8": "max-w-[494px]"} mx-auto`}>
       {/* 0 */}
       <TabProfile activeTab={activeTab} />
 
