@@ -48,49 +48,49 @@ const WorkScheduleTable = () => {
         <TableBody>
           {rowsWorkSchedule.map((row, index) => (
             <TableRow key={index}>
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
-                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[75%] mx-auto">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
+                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.count}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[40.50px] pr-1.5 pb-2">
+              <TableCell className="p-0 w-[95.75px] pr-1.5 pb-1">
                 <div className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[90%] mx-auto">
                   {row?.label}
                 </div>
