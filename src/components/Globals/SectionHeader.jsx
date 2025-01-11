@@ -32,7 +32,7 @@ const SectionHeader = ({
         </p>
       </div>
 
-      <div>{children}</div>
+      {children}
     </div>
   </>
 );

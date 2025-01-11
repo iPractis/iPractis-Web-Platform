@@ -60,16 +60,16 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
       {saved ? (
         <>
           <SectionHeader
-            wrapperSectionHeaderClassName={`flex flex-col md:flex-row items-center md:gap-[70px] gap-4 p-8 rounded-[22px] bg-quinary-color-VS10 MT-1`}
+            wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-quinary-color-VS10 MT-1`}
             descriptionText={sectionHeaderContent[2]?.descriptionText}
             titleText={sectionHeaderContent[2]?.titleText}
             descriptionClassName={"mt-[4px]"}
             titleIcon={<DocumentIcon />}
             titleClassName="MT-SB-1"
           >
-            <div>
+            <div className="md:w-auto w-full">
               <button
-                className="btn btn-tertiary flex items-center gap-2.5 p-3 rounded-2xl"
+                className="btn btn-tertiary flex md:justify-start justify-between items-center gap-2.5 p-3 rounded-2xl w-full"
                 onClick={() => {
                   setActiveTab(4);
                   setSaved(false);
