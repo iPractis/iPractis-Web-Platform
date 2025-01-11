@@ -1,6 +1,7 @@
 import WorkScheduleTable from "../../Globals/WorkScheduleTable";
 import TeacherInfoSpecialties from "./TeacherInfoSpecialties";
 import TeacherInfoExperience from "./TeacherInfoExperience";
+import TeacherInfoEducation from "./TeacherInfoEducation";
 import SectionHeader from "../../Globals/SectionHeader";
 import TeacherInfoReviews from "./TeacherInfoReviews";
 import TeacherInfo from "./TeacherInfo";
@@ -27,6 +28,8 @@ const AvailabilityRevision = () => {
       <TeacherInfoReviews />
 
       <TeacherInfoExperience />
+
+      <TeacherInfoEducation />
     </section>
   );
 };
