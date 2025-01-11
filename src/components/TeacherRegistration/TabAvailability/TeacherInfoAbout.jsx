@@ -29,7 +29,7 @@ const TeacherInfoAbout = () => {
       <div className="py-4 mt-5">
         <h3 className="MT-SB-1 text-primary-color-P1 mb-2.5">About me</h3>
         <p className="ST-3 text-primary-color-P4 mb-[26px]">
-          Hi everyone! My name is Irina and, as an English teacher, I'll be
+          Hi everyone! My name is Irina and, as an English teacher, I&#39;ll be
           happy to help you to acquire and develop the necessary skills in
           speaking, listening, reading, and writing. I use different teaching
           techniques, taking into...
@@ -58,7 +58,7 @@ const TeacherInfoAbout = () => {
           English
         </h2>
         <p className="ST-3 text-primary-color-P4">
-          Hi everyone! My name is Irina and, as an English teacher, I'll be
+          Hi everyone! My name is Irina and, as an English teacher, I&#39;ll be
           happy to help you to acquire and develop the necessary skills in
           speaking, listening, reading, and writing. I use different teaching
           techniques, taking into...
