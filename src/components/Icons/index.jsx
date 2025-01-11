@@ -1153,6 +1153,23 @@ export const Clock1220Icon = ({ fillColor }) => (
   </svg>
 );
 
+export const Clock1215Icon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12 20C16.4183 20 20 16.4183 20 12C20 7.58172 16.4183 4 12 4C7.58172 4 4 7.58172 4 12C4 16.4183 7.58172 20 12 20ZM13 9C13 8.44772 12.5523 8 12 8C11.4477 8 11 8.44772 11 9V12V13H12H17C17.5523 13 18 12.5523 18 12C18 11.4477 17.5523 11 17 11H13V9Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const EarthIcon = ({ fillColor }) => (
   <svg
     width="24"
