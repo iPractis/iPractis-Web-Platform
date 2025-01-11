@@ -13,6 +13,7 @@ import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
+import BirthDateInput from "./BirthDateInput";
 
 const PersonalInfo = () => {
   return (
@@ -104,6 +105,8 @@ const PersonalInfo = () => {
         </div>
 
         <PersonalInfoGenderCheck />
+
+        <BirthDateInput />
 
         <AboutYourSelfIntro />
       </div>
