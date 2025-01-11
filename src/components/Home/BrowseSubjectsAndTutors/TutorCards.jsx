@@ -1,6 +1,7 @@
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { subjectsAndTutors } from "@/src/data/dataHome";
+import { ChevronRightBiggerIcon } from "../../Icons";
 import TutorCard from "./TutorCard";
-import Link from "next/link";
 
 const TutorCards = () => {
   return (
@@ -22,13 +23,16 @@ const TutorCards = () => {
             </p>
           </div>
 
-          <div>
-            <Link
-              href={"#"}
-              className="btn btn-secondary MT-SB-1 rounded-2xl w-full px-4 py-3"
+          <div className="sm:mt-0 mt-36">
+            <button
+              className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full"
+              type="button"
             >
-              Discover more teachers
-            </Link>
+              <span className="px-1.5">Discover more teachers</span>{" "}
+              <InputBGWrapperIcon>
+                <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+              </InputBGWrapperIcon>
+            </button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { tabsButtons } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../Globals/SectionHeader";
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 
 const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
   // We do this because texts changes at the beggining and at the end of form submission
@@ -60,7 +61,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
       {saved ? (
         <>
           <SectionHeader
-            wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-quinary-color-VS10 MT-1`}
+            wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1`}
             descriptionText={sectionHeaderContent[2]?.descriptionText}
             titleText={sectionHeaderContent[2]?.titleText}
             descriptionClassName={"mt-[4px]"}
@@ -69,7 +70,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
           >
             <div className="md:w-auto w-full">
               <button
-                className="btn btn-tertiary flex md:justify-start justify-between items-center gap-2.5 p-3 rounded-2xl w-full"
+                className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full"
                 onClick={() => {
                   setActiveTab(4);
                   setSaved(false);
@@ -79,7 +80,9 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
                 <span className="px-1.5">
                   Send your applicaton for reviewing
                 </span>{" "}
-                <ChevronRightBiggerIcon fillColor={"fill-primary-color-P1"} />
+                <InputBGWrapperIcon>
+                  <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+                </InputBGWrapperIcon>
               </button>
             </div>
           </SectionHeader>
