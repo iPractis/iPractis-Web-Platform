@@ -1,4 +1,5 @@
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 
 // Nextui imports
 import {
@@ -43,7 +44,7 @@ const BirthDateInput = () => {
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
             readOnly
-            value={birthDate?.month || ""}
+            value={getMonthNumberAsText(birthDate?.month) || ""}
             name="birthDateMonth"
           />
 
@@ -80,8 +81,8 @@ const BirthDateInput = () => {
           >
             <DropdownItem className="p-0">
               <Calendar
-                value={birthDate}
                 onChange={setBirthDate}
+                value={birthDate}
                 disableAnimation
               />
             </DropdownItem>

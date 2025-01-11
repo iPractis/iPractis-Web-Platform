@@ -201,3 +201,18 @@ export const rowsWorkSchedule = [
   { count: 22, label: "" },
   { count: 23, label: "" },
 ];
+
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
