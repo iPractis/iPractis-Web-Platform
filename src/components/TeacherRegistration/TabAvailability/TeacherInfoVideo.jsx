@@ -76,7 +76,7 @@ const TutorCard = () => {
 
           <div className="border-x border-primary-color-P4 px-4">
             <h4 className="ST-2 text-primary-color-P4">Active students</h4>
-            <h2 className="MT-SB-1 text-primary-color-P1 flex items-start justify-end gap-2.5">
+            <h2 className="MT-SB-1 text-primary-color-P1 flex items-start justify-center gap-2.5">
               50+ <UserHatMediumIcon fillColor={"fill-primary-color-P1"} />
             </h2>
           </div>
