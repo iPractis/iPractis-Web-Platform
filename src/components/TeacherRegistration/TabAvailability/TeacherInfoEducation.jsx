@@ -14,15 +14,15 @@ const TeacherInfoEducation = () => {
       />
 
       <WhiteSpaceWrapper className={"bg-primary-color-P11"}>
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex flex-col md:flex-row items-start justify-between mb-4">
           <div>
             <h3 className="MT-SB-1 text-primary-color-P1">
               Associate Degree in General Studies
             </h3>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <p className="ST-4 text-primary-color-P4">Fom 2018 to 2021</p>
+          <div className="flex items-center gap-2.5 md:mt-0 mt-5">
+            <p className="ST-4 text-primary-color-P4 ">From 2018 to 2021</p>
             <CalendarIcon fillColor={"fill-primary-color-P1"} />
           </div>
         </div>
@@ -43,15 +43,15 @@ const TeacherInfoEducation = () => {
       </WhiteSpaceWrapper>
 
       <WhiteSpaceWrapper className={"bg-primary-color-P11 mt-5"}>
-        <div className="flex items-start justify-between mb-4">
+        <div className="flex flex-col md:flex-row items-start justify-between mb-4">
           <div>
             <h3 className="MT-SB-1 text-primary-color-P1">
               Associate Degree in General Studies
             </h3>
           </div>
 
-          <div className="flex items-center gap-2.5">
-            <p className="ST-4 text-primary-color-P4">Fom 2018 to 2021</p>
+          <div className="flex items-center gap-2.5 md:mt-0 mt-5">
+            <p className="ST-4 text-primary-color-P4 ">From 2018 to 2021</p>
             <CalendarIcon fillColor={"fill-primary-color-P1"} />
           </div>
         </div>
