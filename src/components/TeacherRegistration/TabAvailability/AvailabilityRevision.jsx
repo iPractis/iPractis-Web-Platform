@@ -1,10 +1,10 @@
 import WorkScheduleTable from "../../Globals/WorkScheduleTable";
 import TeacherInfoSpecialties from "./TeacherInfoSpecialties";
 import SectionHeader from "../../Globals/SectionHeader";
+import TeacherInfoReviews from "./TeacherInfoReviews";
 import TeacherInfo from "./TeacherInfo";
 
 // Icons
-import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import { Clock1215Icon } from "../../Icons";
 
 const AvailabilityRevision = () => {
@@ -22,6 +22,8 @@ const AvailabilityRevision = () => {
       <WorkScheduleTable />
 
       <TeacherInfoSpecialties />
+
+      <TeacherInfoReviews />
     </section>
   );
 };
