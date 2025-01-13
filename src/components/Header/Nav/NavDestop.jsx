@@ -5,7 +5,12 @@ import Link from "next/link";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
-import { ChevronRightDoorIcon } from "../../Icons";
+import {
+  ChevronRightDoorIcon,
+  UserAddCircleIcon,
+  UserAddCircleSmallerIcon,
+} from "../../Icons";
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 
 const NavDesktop = () => {
   return (
@@ -26,16 +31,21 @@ const NavDesktop = () => {
           href="/login"
           className="btn btn-quinary flex items-center rounded-[10px] px-4 py-2 gap-1.5 ST-SB-4 group"
         >
-          Log in{" "}
-
-          <ChevronRightDoorIcon />
+          Log in <ChevronRightDoorIcon />
         </Link>
 
         <Link
           href="/register"
-          className="btn btn-tertiary ST-SB-4 py-2 px-4 rounded-2xl w-[120px]"
+          className="btn btn-tertiary flex items-center gap-5 ST-SB-4 ps-4 p-1.5 rounded-2xl w-[131px]"
         >
           Register
+          
+          <InputBGWrapperIcon className={"bg-primary-color-P1 p-0 w-7 h-7"}>
+            <UserAddCircleSmallerIcon
+              fillColor={"fill-primary-color-P1"}
+              strokeColor={"stroke-primary-color-P1"}
+            />
+          </InputBGWrapperIcon>
         </Link>
 
         <button

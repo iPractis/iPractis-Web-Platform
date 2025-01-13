@@ -781,6 +781,34 @@ export const UserAddCircleIcon = () => (
   </svg>
 );
 
+export const UserAddCircleSmallerIcon = ({ fillColor, strokeColor }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <ellipse cx="9.9974" cy="4.99996" rx="3.33333" ry="3.33333" fill="white" />
+    <path
+      d="M16.6654 15.2016C16.6654 18.5347 13.5818 18.3309 9.89993 18.3309C6.21803 18.3309 3.33203 18.5347 3.33203 15.2016C3.33203 11.8686 6.3168 9.16663 9.9987 9.16663C13.6806 9.16663 16.6654 11.8686 16.6654 15.2016Z"
+      fill="white"
+    />
+    <circle cx="14.9987" cy="15" r="4.16667" className={fillColor} />
+    <circle cx="15.0013" cy="15" r="3.33333" fill="white" />
+    <path
+      d="M14.9988 13.8215V16.1785"
+      className={strokeColor}
+      strokeLinecap="round"
+    />
+    <path
+      d="M13.8203 15H16.1773"
+      className={strokeColor}
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const UserWalkingIcon = () => (
   <svg
     width="24"
