@@ -2,15 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images && icons
+import { ChevronRightDoorIcon, UserAddCircleSmallerIcon } from "../../Icons";
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";
-import {
-  ChevronRightDoorIcon,
-  UserAddCircleIcon,
-  UserAddCircleSmallerIcon,
-} from "../../Icons";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import NavSearchBar from "./NavSearchBar";
 
 const NavDesktop = () => {
   return (
@@ -27,6 +24,8 @@ const NavDesktop = () => {
       </div>
 
       <div className="flex items-center gap-4">
+        <NavSearchBar />
+
         <div className="flex items-center gap-1.5">
           <Link
             href="/login"
