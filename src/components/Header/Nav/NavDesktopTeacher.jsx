@@ -1,9 +1,11 @@
 import {
+  AddBGIcon,
   AddIcon,
   DashboardIcon,
   NewMessageIcon,
   NotificationIcon,
   UserScreenIcon,
+  WalletBgIcon,
   WalletIcon,
 } from "../../Icons";
 import Image from "next/image";
@@ -49,15 +51,17 @@ const NavDesktopTeacher = ({ userName }) => {
 
       {/* Right Column */}
       <div className="flex items-center gap-1.5">
-        <div className="flex items-center gap-3 text-primary-color-P12">
-          <WalletIcon fillColor={'fill-primary-color-P12'} />
+        <div className="flex items-center gap-3 rounded-2xl h-[38px] p-1.5 text-primary-color-P1 bg-primary-color-P12">
+          <div className="rounded-[10px] bg-primary-color-P1">
+            <WalletBgIcon fillColor={"fill-primary-color-P1"} />
+          </div>
 
           <p className="ST-SB-4">0</p>
 
           <p className="ST-3">USD</p>
 
-          <button className="flex justify-center items-center rounded-[10px] w-[26px] h-[26px] bg-primary-color-P12">
-            <AddIcon />
+          <button className="rounded-[10px] bg-primary-color-P1">
+            <AddBGIcon strokeColor={"fill-primary-color-P12"} />
           </button>
         </div>
 
