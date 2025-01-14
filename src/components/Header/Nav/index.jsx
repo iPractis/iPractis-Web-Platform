@@ -10,7 +10,7 @@ const Nav = () => {
 
   return (
     <nav className="bg-primary-color-P1 m-2 p-1.5 md:rounded-[22px] rounded-2xl">
-      {!session?.user?.token ? (
+      {session?.user?.token ? (
         <>
           <div className="md:block hidden">
             <NavDesktopTeacher userName={session?.user?.firstName} />
