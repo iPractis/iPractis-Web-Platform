@@ -39,7 +39,7 @@ const PersonalInfoCountrySelect = () => {
           />
 
           <div className="mx-auto">
-            <ChevronDownSmallIcon />
+            <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
           </div>
         </Button>
       </DropdownTrigger>

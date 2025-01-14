@@ -41,7 +41,7 @@ const SelectCountryAreaCode = () => {
           <h2 className="ST-SB-3">{selectedCountry?.areaCode}</h2>
 
           <div className="mx-auto">
-            <ChevronDownSmallIcon />
+            <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
           </div>
         </Button>
       </DropdownTrigger>

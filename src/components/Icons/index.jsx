@@ -431,7 +431,22 @@ export const ChevronDownBigIcon = ({ fillColor }) => (
   </svg>
 );
 
-export const ChevronDownSmallIcon = () => (
+export const ChevronDownMediumIcon = ({ fillColor }) => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.77902 10.3712C8.37877 10.8664 7.62383 10.8664 7.22359 10.3712L5.27625 7.96199C4.74768 7.30805 5.21311 6.33337 6.05396 6.33337L9.94864 6.33337C10.7895 6.33337 11.2549 7.30805 10.7264 7.96199L8.77902 10.3712Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
+export const ChevronDownSmallIcon = ({ fillColor }) => (
   <svg
     width="8"
     height="6"
@@ -441,7 +456,7 @@ export const ChevronDownSmallIcon = () => (
   >
     <path
       d="M4.77771 4.78783C4.37747 5.283 3.62253 5.283 3.22229 4.78783L0.769762 1.75362C0.241188 1.09968 0.706626 0.125 1.54748 0.125L6.45252 0.125001C7.29337 0.125001 7.75881 1.09968 7.23024 1.75362L4.77771 4.78783Z"
-      className={"fill-primary-color-P4"}
+      className={fillColor}
     />
   </svg>
 );

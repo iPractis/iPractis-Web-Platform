@@ -262,3 +262,30 @@ export const availableTranslatedLanguages = [
   { value: "en", language: "English" },
   { value: "es", language: "Español" },
 ];
+
+export const searchBarSubjects = [
+  {
+    subject: "English",
+    key: "english",
+  },
+
+  {
+    subject: "Mathematics",
+    key: "mathematics",
+  },
+
+  {
+    subject: "Science",
+    key: "science",
+  },
+
+  {
+    subject: "Physics",
+    key: "physics",
+  },
+
+  {
+    subject: "Spanish",
+    key: "spanish",
+  },
+];
