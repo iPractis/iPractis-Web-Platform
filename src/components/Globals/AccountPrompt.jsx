@@ -11,7 +11,7 @@ const AccountPrompt = ({
   titleText,
 }) => {
   return (
-    <div className="bg-primary-color-P12 p-8 mt-4 rounded-2xl">
+    <div className="bg-primary-color-P12 sm:px-8 mt-[50px] rounded-2xl">
       <div className={"flex flex-col items-stretch gap-8"}>
         <div className="flex-1">
           <SectionHeader

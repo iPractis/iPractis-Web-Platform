@@ -106,9 +106,12 @@ const ContainerForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       {/* Heading Title */}
-      <div className="p-4">
+      <div>
         <SectionHeader
           descriptionText="Sign in to continue your journey with iPractis."
+          wrapperSectionHeaderClassName={
+            "bg-primary-color-P11 rounded-[32px] p-8"
+          }
           titleIcon={<SparkleIcon />}
           titleClassName="MT-SB-1"
           titleText="Welcome back"
@@ -116,7 +119,7 @@ const ContainerForm = () => {
       </div>
 
       {/* Log In Section */}
-      <div className="bg-primary-color-P12 p-8 mt-8 rounded-2xl">
+      <div className="bg-primary-color-P12 sm:px-8 rounded-2xl mt-[50px]">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
           titleIcon={<PadLockUserIcon />}

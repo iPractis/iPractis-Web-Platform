@@ -47,7 +47,7 @@ const LeftForm = ({
 
   return (
     <div className="space-y-8">
-      <div className="flex gap-3 sm:mt-[50px] mt-8">
+      <div className="flex gap-3 mt-8">
         <button
           className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
           onClick={() => signIn("google", { redirect: false })}
