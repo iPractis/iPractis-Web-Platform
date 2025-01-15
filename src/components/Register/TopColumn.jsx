@@ -6,14 +6,15 @@ const TopColumn = () => {
   return (
     <article>
       {/* Heading Title */}
-      <div className="p-4">
-        <SectionHeader
-          descriptionText="Start using iPractis by signing up quickly."
-          titleText="Create an account"
-          titleIcon={<SparkleIcon />}
-          titleClassName="MT-SB-1"
-        />
-      </div>
+      <SectionHeader
+        descriptionText="Start using iPractis by signing up quickly."
+        titleText="Welcome on iPractis!"
+        titleIcon={<SparkleIcon />}
+        wrapperSectionHeaderClassName={
+          "bg-primary-color-P11 rounded-[32px] p-8"
+        }
+        titleClassName="MT-SB-2"
+      />
 
       {/* Sign Up Section */}
       <Form />

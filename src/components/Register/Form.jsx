@@ -90,20 +90,21 @@ const Form = () => {
 
   return (
     <form
-      className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
+      className="sm:px-8 rounded-2xl sm:mt-[50px] mt-8"
       onSubmit={handleSubmit}
       action={formAction}
     >
       <SectionHeader
         descriptionText="Manually enter your details to create a secure account."
+        wrapperSectionHeaderClassName={"px-4"}
         titleText="Create an account using ID"
         titleIcon={<UserAddCircleIcon />}
         descriptionClassName="mt-1"
         titleClassName="MT-SB-1"
       />
 
-      <div className="sm:space-y-[50px] space-y-[32px]">
-        <div className="flex gap-3 sm:mt-[50px] mt-[32px]">
+      <div className="space-y-8">
+        <div className="flex gap-3 mt-8">
           <button
             className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
             type="button"

@@ -49,7 +49,7 @@ const TopColumn = () => {
         titleClassName={"MT-SB-2"}
       />
 
-      <div className="space-y-8 sm:px-8 sm:mt-[50px] mt-[32px]">
+      <div className="space-y-8 sm:px-8 sm:mt-[50px] mt-8">
         <p className={`ST-3 text-primary-color-P4 mt-[50px]`}>
           We just sent you an authentication number, please check your email and
           recopy the code below.

@@ -4,8 +4,8 @@ import TopColumn from "./TopColumn";
 
 export const Register = () => {
   return (
-    <section className="container-page-v3">
-      <div className="mt-2.5 p-4 md:mb-[100px] rounded-[32px] bg-primary-color-P11">
+    <section className="container-page-v8 sm:px-0 px-8">
+      <div className="sm:my-8 my-4 rounded-[32px]">
         {/* Create an account if the user doesn't have one */}
         <TopColumn />
 
