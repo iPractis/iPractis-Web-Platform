@@ -2,12 +2,13 @@
 
 import { startTransition, useActionState, useEffect, useState } from "react";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
-import { CheckedShieldIcon, HelpIcon } from "../Icons";
+import { CheckedShieldIcon, ChevronRightDoorIcon, HelpIcon } from "../Icons";
 import SectionHeader from "../Globals/SectionHeader";
-import {  useSearchParams } from "next/navigation";
-import DualAction from "../Globals/DualAction";
+import { useSearchParams } from "next/navigation";
 import OTPInput from "react-otp-input";
+import Link from "next/link";
 
 const TopColumn = () => {
   const [state, formAction, isPending] = useActionState(logInUserOtp, {});
@@ -37,17 +38,18 @@ const TopColumn = () => {
     <form
       onSubmit={handleSubmit}
       // action={formAction}
-      className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
     >
       <SectionHeader
         descriptionText="Enter your account details to access to your account."
         titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
         titleText={"Authenticator"}
-        descriptionClassName={"mt-1"}
-        titleClassName={"MT-SB-1"}
+        wrapperSectionHeaderClassName={
+          "bg-primary-color-P11 rounded-[32px] p-8"
+        }
+        titleClassName={"MT-SB-2"}
       />
 
-      <div className="space-y-8">
+      <div className="space-y-8 sm:px-8 sm:mt-[50px] mt-[32px]">
         <p className={`ST-3 text-primary-color-P4 mt-[50px]`}>
           We just sent you an authentication number, please check your email and
           recopy the code below.
@@ -55,25 +57,43 @@ const TopColumn = () => {
 
         <OTPInput
           renderInput={(props) => <input {...props} />}
-          containerStyle={"justify-between sm:gap-4 gap-2"}
+          containerStyle={"justify-between gap-4 sm:px-4"}
           skipDefaultStyles
           onChange={setOtp}
           shouldAutoFocus
           inputType="tel"
           numInputs={6}
           value={otp}
-          inputStyle={
-            `${state?.formError?.message && 'form-input-error'} text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`
-          }
+          inputStyle={`${
+            state?.formError?.message && "form-input-error"
+          } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
         />
 
-        <DualAction
-          leftLinkText={"Cancel"}
-          leftLinkHref={"/login"}
-          rightButtonText={isPending ? "Loading..." : "Log in"}
-          rightButtonDisabled={isPending}
-          rightButtonType={"submit"}
-        />
+        <div className="flex items-center gap-4">
+          <Link
+            className="btn btn-primary w-full MT-1 rounded-2xl py-3 px-4"
+            href={"/login"}
+          >
+            {"Cancel"}
+          </Link>
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
+          >
+            <span className="flex-1">
+              {isPending ? "Loading..." : "Log in"}
+            </span>{" "}
+            <InputBGWrapperIcon>
+              <ChevronRightDoorIcon
+                fillColor={
+                  "fill-tertiary-color-SC5 group-hover:fill-tertiary-color-SC5"
+                }
+              />
+            </InputBGWrapperIcon>
+          </button>
+        </div>
 
         {state?.formError?.message && (
           <ErrorMessageiPractis

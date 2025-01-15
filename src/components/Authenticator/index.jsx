@@ -5,24 +5,12 @@ import Form from "./Form";
 
 export const Authenticator = () => {
   return (
-    <section className="container-page-v3">
-      <div className="mt-2.5 p-4 md:mb-[100px] rounded-[32px] bg-primary-color-P11">
-        <article>
-          <div className="p-4">
-            {/* Heading Title */}
-            <SectionHeader
-              descriptionText="Sign in to continue your journey with iPractis."
-              titleClassName="MT-SB-1"
-              titleText="Welcome back"
-              titleIcon={<SparkleIcon />}
-            />
-          </div>
-
-          {/* Login with verification code */}
-          <Suspense>
-            <Form />
-          </Suspense>
-        </article>
+    <section className="container-page-v8 sm:px-0 px-8">
+      <div className="sm:my-8 my-4 rounded-[32px]">
+        {/* Login with verification code */}
+        <Suspense>
+          <Form />
+        </Suspense>
       </div>
     </section>
   );
