@@ -53,7 +53,7 @@ const NavResponsiveTeacher = ({ userName }) => {
         </div>
 
         {/* Tutor Dropdown */}
-        <NavDropdown isDropdownHidden={"md:hidden block"} userName={userName} />
+        <NavDropdown isDropdownHidden={"lg:hidden block"} userName={userName} />
       </div>
     </div>
   );

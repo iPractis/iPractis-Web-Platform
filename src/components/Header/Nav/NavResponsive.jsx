@@ -41,7 +41,7 @@ const NavResponsive = () => {
           />
         </DropdownTrigger>
 
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <DropdownMenu
             aria-label="Static Actions"
             variant="faded"

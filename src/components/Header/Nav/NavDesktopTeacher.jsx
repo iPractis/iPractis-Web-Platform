@@ -86,7 +86,7 @@ const NavDesktopTeacher = ({ userName }) => {
         </div>
 
         {/* Tutor Dropdown */}
-        <NavDropdown isDropdownHidden={"md:block hidden"} userName={userName} />
+        <NavDropdown isDropdownHidden={"lg:block hidden"} userName={userName} />
 
         {/* Theme and language buttons */}
         <button
