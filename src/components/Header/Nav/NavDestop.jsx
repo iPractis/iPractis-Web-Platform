@@ -31,7 +31,12 @@ const NavDesktop = () => {
             href="/login"
             className="btn btn-quinary flex items-center rounded-[10px] px-4 py-2 gap-1.5 ST-SB-4 group"
           >
-            Log in <ChevronRightDoorIcon />
+            Log in{" "}
+            <ChevronRightDoorIcon
+              fillColor={
+                "fill-primary-color-P12 group-hover:fill-primary-color-P1"
+              }
+            />
           </Link>
 
           <Link

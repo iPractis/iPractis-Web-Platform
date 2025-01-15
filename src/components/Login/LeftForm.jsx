@@ -1,5 +1,6 @@
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import CustomNextUiInput from "../Globals/CustomNextUiInput";
 import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
 import { signIn } from "next-auth/react";
 
@@ -12,6 +13,7 @@ import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
+import { ChevronRightDoorIcon } from "../Icons";
 
 const LeftForm = ({
   handlePasswordChange,
@@ -117,20 +119,40 @@ const LeftForm = ({
         </div>
       </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
-      >
-        {isPending ? "Loading..." : "Log in"}
-      </button>
-
-        <Link
-          className="text-center block text-primary-color-P4 ST-4"
-          href={"/account-assistance"}
+      <div className="flex items-center gap-4">
+        <button
+          type="submit"
+          disabled={isPending}
+          className="btn btn-primary w-full MT-1 rounded-2xl py-3 px-4"
         >
-          I can’t sing in, help!
-        </Link>
+          {isPending ? "Loading..." : "Presskey"}
+        </button>
+
+        <button
+          type="submit"
+          disabled={isPending}
+          className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
+        >
+          <span className="flex-1">
+            {isPending ? "Loading..." : "Log in"}
+          </span>{" "}
+          
+          <InputBGWrapperIcon>
+            <ChevronRightDoorIcon
+              fillColor={
+                "fill-tertiary-color-SC5 group-hover:fill-tertiary-color-SC5"
+              }
+            />
+          </InputBGWrapperIcon>
+        </button>
+      </div>
+
+      <Link
+        className="text-center block text-primary-color-P4 ST-4"
+        href={"/account-assistance"}
+      >
+        I can’t sing in, help!
+      </Link>
     </div>
   );
 };
