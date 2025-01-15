@@ -9,7 +9,7 @@ import Link from "next/link";
 
 // Images
 import profileSettingsIcon from "@/public/icons/profile-settings-icon.png";
-import ipractisIcon from "@/public/icons/ipractis-icon.png";
+import ipractisIcon from "@/public/logos/ipractis-logo-1.png";
 import { ChevronRightDoorBoldIcon, SearchIcon } from "../../Icons";
 
 const NavResponsive = () => {
@@ -18,7 +18,7 @@ const NavResponsive = () => {
       <div>
         <Link href="/">
           <Image
-            className="w-8"
+            className="w-[113px] p-1.5"
             alt="Logo iPractis"
             src={ipractisIcon}
             priority
@@ -34,7 +34,7 @@ const NavResponsive = () => {
       >
         <DropdownTrigger>
           <Image
-            className="w-8 cursor-pointer"
+            className="w-[38px] cursor-pointer"
             alt="Profile Settings Icon"
             src={profileSettingsIcon}
             priority
