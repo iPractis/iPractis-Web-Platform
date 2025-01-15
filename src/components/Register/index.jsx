@@ -1,5 +1,6 @@
+import { ChevronRightDoorIcon, PadLockUserIcon } from "../Icons";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import AccountPrompt from "../Globals/AccountPrompt";
-import { PadLockUserIcon } from "../Icons";
 import TopColumn from "./TopColumn";
 
 export const Register = () => {
@@ -12,12 +13,25 @@ export const Register = () => {
         {/* Login if user have an account */}
         <AccountPrompt
           titleText={`You already have an account?`}
+          linkButtonStyles={"!p-1.5 flex justify-center items-center"}
           descText={'Press on "Log in" to access to your account.'}
           accountPromptPosition="vertical"
           titleIcon={<PadLockUserIcon />}
           btnColor={"btn-primary"}
           hrefLink={"/login"}
-          textLink={"Log in"}
+          textLink={
+            <>
+              <span className="flex-1">Log in</span>
+
+              <InputBGWrapperIcon>
+                <ChevronRightDoorIcon
+                  fillColor={
+                    "fill-primary-color-P1"
+                  }
+                />
+              </InputBGWrapperIcon>
+            </>
+          }
         />
       </div>
     </section>

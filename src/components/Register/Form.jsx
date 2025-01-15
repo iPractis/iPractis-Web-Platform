@@ -2,26 +2,22 @@
 
 import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
+import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
 import { useActionState, useState, startTransition } from "react";
-import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import { registerUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
-import {
-  UserAddCircleIcon,
-  UserAddCircleMediumIcon,
-  UserAddIcon,
-} from "../Icons";
 import Image from "next/image";
 
+import { UserAddCircleIcon, UserAddCircleMediumIcon } from "../Icons";
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import usersBox from "@/public/icons/users-box.png";
 import apple from "@/public/icons/apple.png";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 
 const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
@@ -101,7 +97,7 @@ const Form = () => {
     >
       <SectionHeader
         descriptionText="Manually enter your details to create a secure account."
-        wrapperSectionHeaderClassName={"px-4"}
+        wrapperSectionHeaderClassName={"sm:px-4"}
         titleText="Create an account using ID"
         titleIcon={<UserAddCircleIcon />}
         descriptionClassName="mt-1"

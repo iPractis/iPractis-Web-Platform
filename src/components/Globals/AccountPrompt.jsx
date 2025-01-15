@@ -2,7 +2,7 @@ import SectionHeader from "./SectionHeader";
 import Link from "next/link";
 
 const AccountPrompt = ({
-  accountPromptPosition = "horizontal",
+  linkButtonStyles,
   descText,
   hrefLink,
   textLink,
@@ -25,7 +25,7 @@ const AccountPrompt = ({
 
         <div className="flex-1">
           <Link
-            className={`btn ${btnColor} w-full MT-SB-1 rounded-2xl py-3 px-4`}
+            className={`btn ${btnColor} w-full MT-SB-1 rounded-2xl py-3 px-4 ${linkButtonStyles}`}
             href={hrefLink}
           >
             {textLink}
