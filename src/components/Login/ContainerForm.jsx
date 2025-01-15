@@ -119,7 +119,7 @@ const ContainerForm = () => {
       </div>
 
       {/* Log In Section */}
-      <div className="bg-primary-color-P12 sm:px-8 rounded-2xl mt-[50px]">
+      <div className="bg-primary-color-P12 sm:px-8 rounded-2xl sm:mt-[50px] mt-[32px]">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
           titleIcon={<PadLockUserIcon />}
