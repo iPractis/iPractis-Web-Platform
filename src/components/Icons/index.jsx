@@ -821,6 +821,32 @@ export const UserAddCircleIcon = () => (
   </svg>
 );
 
+export const UserAddCircleMediumIcon = ({ fillColor }) => (
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 22 22"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <ellipse
+      cx="10.9997"
+      cy="5.5026"
+      rx="3.66667"
+      ry="3.66667"
+      className={fillColor}
+    />
+    <path
+      d="M18.3332 16.7244C18.3332 20.3908 14.9413 20.1666 10.8912 20.1666C6.84111 20.1666 3.6665 20.3908 3.6665 16.7244C3.6665 13.0581 6.94975 10.0859 10.9998 10.0859C15.0499 10.0859 18.3332 13.0581 18.3332 16.7244Z"
+      className={fillColor}
+    />
+    <circle cx="16.4998" cy="16.5023" r="4.58333" fill="white" />
+    <circle cx="16.5002" cy="16.5026" r="3.66667" className={fillColor} />
+    <path d="M16.5 15.2061V17.7988" stroke="white" strokeLinecap="round" />
+    <path d="M15.2036 16.5024H17.7963" stroke="white" strokeLinecap="round" />
+  </svg>
+);
+
 export const UserAddCircleSmallerIcon = ({ fillColor, strokeColor }) => (
   <svg
     width="20"

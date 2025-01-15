@@ -7,7 +7,7 @@ const TopColumn = () => {
     <article>
       {/* Heading Title */}
       <SectionHeader
-        descriptionText="Start using iPractis by signing up quickly."
+        descriptionText="Create an account to begin your journey with iPractis."
         titleText="Welcome on iPractis!"
         titleIcon={<SparkleIcon />}
         wrapperSectionHeaderClassName={

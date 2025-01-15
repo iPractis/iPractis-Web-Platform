@@ -8,7 +8,11 @@ import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
 import { registerUser } from "@/src/lib/actions/authAction";
 import SectionHeader from "../Globals/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
-import { UserAddCircleIcon } from "../Icons";
+import {
+  UserAddCircleIcon,
+  UserAddCircleMediumIcon,
+  UserAddIcon,
+} from "../Icons";
 import Image from "next/image";
 
 import microsoft from "@/public/icons/microsoft-original.png";
@@ -17,6 +21,7 @@ import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import usersBox from "@/public/icons/users-box.png";
 import apple from "@/public/icons/apple.png";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 
 const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
@@ -226,11 +231,17 @@ const Form = () => {
         </div>
 
         <button
-          className="btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+          className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center"
           disabled={isPending}
           type="submit"
         >
-          {isPending ? "Loading..." : "Create an account"}
+          <span className="flex-1">
+            {isPending ? "Loading..." : "Create an account"}
+          </span>
+
+          <InputBGWrapperIcon>
+            <UserAddCircleMediumIcon fillColor={"fill-tertiary-color-SC5"} />
+          </InputBGWrapperIcon>
         </button>
       </div>
     </form>
