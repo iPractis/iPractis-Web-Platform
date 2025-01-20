@@ -33,8 +33,6 @@ export const TabBody = ({ draftData }) => {
   const [activeTab, setActiveTab] = useState(0);
   const [saved, setSaved] = useState(false);
 
-  console.log(draft?.firstName);
-
   return (
     <main
       className={`container-page-v7 ${

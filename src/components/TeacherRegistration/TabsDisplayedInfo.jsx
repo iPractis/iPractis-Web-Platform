@@ -25,7 +25,8 @@ const TabsDisplayedInfo = ({
     image: ukFlag,
     alt: "United Kingdom",
   });
-  const [birthDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState(draft?.birthDate);
+  console.log(birthDate)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -33,6 +34,7 @@ const TabsDisplayedInfo = ({
     const actualDraftInfo = draft;
 
     if (activeTab === 0) {
+      actualDraftInfo.birthDate = `${birthDate?.day}/${birthDate?.month}/${birthDate?.year}`;
       actualDraftInfo.middleName = e?.target?.middleName?.value;
       actualDraftInfo.firstName = e?.target?.firstName?.value;
       actualDraftInfo.lastName = e?.target?.lastName?.value;
@@ -40,10 +42,6 @@ const TabsDisplayedInfo = ({
       actualDraftInfo.languages = masteredLanguages;
       actualDraftInfo.introduction = introText;
       actualDraftInfo.gender = selectedGender;
-
-      actualDraftInfo.birthDate = `${birthDate.day}/${birthDate?.month}/${birthDate?.year}`;
-
-      console.log(draft);
 
       return;
     }
