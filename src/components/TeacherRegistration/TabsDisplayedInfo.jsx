@@ -19,6 +19,7 @@ const TabsDisplayedInfo = ({
   // setDraft,
 }) => {
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
+  const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
   const [introText, setIntroText] = useState(draft?.introduction);
   const [selectedCountry, setSelectedCountry] = useState({
@@ -26,8 +27,6 @@ const TabsDisplayedInfo = ({
     image: ukFlag,
     alt: "United Kingdom",
   });
-
-  const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
 
   const handleSubmit = (e) => {
     e.preventDefault();
