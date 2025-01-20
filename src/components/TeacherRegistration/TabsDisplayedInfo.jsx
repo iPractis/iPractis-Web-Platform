@@ -5,10 +5,13 @@ import TabProfile from "./TabProfile/index";
 import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
 
-import { parseDate } from "@internationalized/date";
+// React imports
+import { CalendarDate, parseDate } from "@internationalized/date";
 import { useState } from "react";
 
+// Images && icons
 import ukFlag from "@/public/flags/united-kingdom.png";
+import axios from "axios";
 
 const TabsDisplayedInfo = ({
   setActiveTab,
@@ -28,32 +31,45 @@ const TabsDisplayedInfo = ({
     alt: "United Kingdom",
   });
 
-  const handleSubmit = (e) => {
+  let validBirthDate = new CalendarDate(
+    birthDate?.year,
+    birthDate?.month,
+    birthDate?.day
+  );
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const actualDraftInfo = draft;
 
-    if (activeTab === 0) {
-      actualDraftInfo.birthDate = birthDate;
-      actualDraftInfo.middleName = e?.target?.middleName?.value;
-      actualDraftInfo.firstName = e?.target?.firstName?.value;
-      actualDraftInfo.lastName = e?.target?.lastName?.value;
-      actualDraftInfo.country = selectedCountry?.key;
-      actualDraftInfo.languages = masteredLanguages;
-      actualDraftInfo.introduction = introText;
-      actualDraftInfo.gender = selectedGender;
+    try {
+      if (activeTab === 0) {
+        actualDraftInfo.middleName = e?.target?.middleName?.value;
+        actualDraftInfo.firstName = e?.target?.firstName?.value;
+        actualDraftInfo.lastName = e?.target?.lastName?.value;
+        actualDraftInfo.birthDate = validBirthDate.toString();
+        actualDraftInfo.country = selectedCountry?.key;
+        actualDraftInfo.languages = masteredLanguages;
+        actualDraftInfo.introduction = introText;
+        actualDraftInfo.gender = selectedGender;
 
-      return;
-    }
+        const res = await axios.post(`/teacher/set/profile`, actualDraftInfo);
 
-    if (activeTab === 1) {
-      return;
-    }
+        console.log(res);
+        return;
+      }
 
-    if (activeTab === 3) {
-      setSaved(true);
-    } else {
-      setActiveTab((prev) => prev + 1);
+      if (activeTab === 1) {
+        return;
+      }
+
+      if (activeTab === 3) {
+        setSaved(true);
+      } else {
+        setActiveTab((prev) => prev + 1);
+      }
+    } catch (err) {
+      console.log(err);
     }
 
     // setDraft(actualDraftInfo);
