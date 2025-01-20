@@ -15,7 +15,13 @@ import SectionHeader from "../../Globals/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
 
-const PersonalInfo = () => {
+const PersonalInfo = ({
+  setSelectedGender,
+  selectedGender,
+  setBirthDate,
+  birthDate,
+  draft,
+}) => {
   return (
     <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader
@@ -29,6 +35,8 @@ const PersonalInfo = () => {
       <div className="mt-20 md:px-8 space-y-12">
         <div>
           <CustomNextUiInput
+            name="firstName"
+            defaultValue={draft?.firstName}
             type="text"
             placeholder="Enter your first name"
             label={
@@ -47,6 +55,8 @@ const PersonalInfo = () => {
 
         <div>
           <CustomNextUiInput
+            name="middleName"
+            defaultValue={draft?.middleName}
             type="text"
             placeholder="Enter your middle name (Optional)"
             label={
@@ -65,6 +75,8 @@ const PersonalInfo = () => {
 
         <div>
           <CustomNextUiInput
+            name="lastName"
+            defaultValue={draft?.lastName}
             type="text"
             placeholder="Enter your last name"
             label={
@@ -104,9 +116,15 @@ const PersonalInfo = () => {
           />
         </div>
 
-        <PersonalInfoGenderCheck />
+        <PersonalInfoGenderCheck
+          setSelectedGender={setSelectedGender}
+          selectedGender={selectedGender}
+        />
 
-        <BirthDateInput />
+        <BirthDateInput
+          setBirthDate={setBirthDate}
+          birthDate={birthDate}
+        />
 
         <AboutYourSelfIntro />
       </div>

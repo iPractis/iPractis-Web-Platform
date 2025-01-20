@@ -1,12 +1,9 @@
 import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { FemaleIcon, MaleIcon, QuestionMark } from "../../Icons";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import { useState } from "react";
+import { FemaleIcon, MaleIcon } from "../../Icons";
 
-const PersonalInfoGenderCheck = () => {
-  const [selectedGender, setSelectedGender] = useState(null);
-
+const PersonalInfoGenderCheck = ({ setSelectedGender, selectedGender }) => {
   const handleCheckboxChange = (gender) => {
     setSelectedGender(gender);
   };
@@ -18,11 +15,7 @@ const PersonalInfoGenderCheck = () => {
           isReadOnly
           type="text"
           placeholder="Male"
-          label={
-            <span className="">
-              Gender
-            </span>
-          }
+          label={<span className="">Gender</span>}
           labelPlacement="outside"
           startContent={
             <InputBGWrapperIcon>

@@ -1,5 +1,5 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 
 // Nextui imports
 import {
@@ -11,15 +11,10 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 
-// React imports
-import { useState } from "react";
-
 // Icons
 import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
 
-const BirthDateInput = () => {
-  const [birthDate, setBirthDate] = useState("");
-
+const BirthDateInput = ({ birthDate, setBirthDate }) => {
   return (
     <div className="!mt-3 group">
       <span className=" flex gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
@@ -37,14 +32,13 @@ const BirthDateInput = () => {
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
             readOnly
             name="birthDateNumber"
-            value={birthDate?.day || ""}
+            value={birthDate?.day}
           />
 
           <input
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
-            readOnly
-            value={getMonthNumberAsText(birthDate?.month) || ""}
+            value={getMonthNumberAsText(birthDate?.month)}
             name="birthDateMonth"
           />
 
@@ -52,7 +46,7 @@ const BirthDateInput = () => {
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
             readOnly
-            value={birthDate?.year || ""}
+            value={birthDate?.year}
             name="birthDateYear"
           />
         </div>

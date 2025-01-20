@@ -12,10 +12,10 @@ import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 
 const AboutYourselfLevelLanguage = ({
-  language,
-  languageLevel,
-  handleLanguageLevel,
   handleDeleteMasteredLanguage,
+  handleLanguageLevel,
+  name: nameLanguage,
+  languageLevel,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,7 +26,7 @@ const AboutYourselfLevelLanguage = ({
         label={
           <div className="mb-2">
             <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
-              {language} <QuestionMark fillColor={"fill-primary-color-P4"} />
+              {nameLanguage} <QuestionMark fillColor={"fill-primary-color-P4"} />
             </span>
           </div>
         }
@@ -36,7 +36,7 @@ const AboutYourselfLevelLanguage = ({
         selectorIcon={<span></span>}
         isOpen={isOpen}
         value={languageLevel}
-        onChange={(e) => handleLanguageLevel(e, language)}
+        onChange={(e) => handleLanguageLevel(e, nameLanguage)}
         endContent={
           <InputBGWrapperIcon>
             <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
@@ -63,7 +63,7 @@ const AboutYourselfLevelLanguage = ({
 
       <button
         className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-        onClick={() => handleDeleteMasteredLanguage(language)}
+        onClick={() => handleDeleteMasteredLanguage(nameLanguage)}
         type="button"
       >
         <TrashBinIcon

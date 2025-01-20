@@ -1,9 +1,8 @@
-import AboutYourselfMasteredLanguages from "./AboutYourselfMasteredLanguages";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import SectionHeader from "../../Globals/SectionHeader";
 import { UserIcon } from "../../Icons";
 
-const AboutYourself = () => {
+const AboutYourself = ({ children }) => {
   return (
     <WhiteSpaceWrapper className={"p-0 mt-16"}>
       <SectionHeader
@@ -14,7 +13,7 @@ const AboutYourself = () => {
         titleClassName="MT-SB-1"
       />
 
-      <AboutYourselfMasteredLanguages />
+      {children}
     </WhiteSpaceWrapper>
   );
 };

@@ -12,8 +12,10 @@ import {
   UserSpeakingIcon,
 } from "../../Icons";
 
-const AboutYourselfMasteredLanguages = () => {
-  const [masteredLanguages, setMasteredLanguages] = useState([]);
+const AboutYourselfMasteredLanguages = ({
+  setMasteredLanguages,
+  masteredLanguages,
+}) => {
   const [languageLevel, setLanguageLevel] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
@@ -23,7 +25,7 @@ const AboutYourselfMasteredLanguages = () => {
     const languageSelected = e?.target?.value;
 
     const masteredLanguageDetails = {
-      language: languageSelected,
+      name: languageSelected,
       level: languageLevel,
     };
 
@@ -33,7 +35,7 @@ const AboutYourselfMasteredLanguages = () => {
   // Delete Mastered Language
   const handleDeleteMasteredLanguage = (language) => {
     const filteredMasteredLanguages = masteredLanguages?.filter(
-      (item) => item?.language !== language
+      (item) => item?.name !== language
     );
     setMasteredLanguages(filteredMasteredLanguages);
   };
@@ -43,7 +45,7 @@ const AboutYourselfMasteredLanguages = () => {
     const levelSelected = e?.target?.value;
 
     const updatedLanguages = masteredLanguages?.map((item) =>
-      item?.language === language ? { ...item, level: levelSelected } : item
+      item?.name === language ? { ...item, level: levelSelected } : item
     );
 
     setMasteredLanguages(updatedLanguages);
@@ -109,6 +111,7 @@ const AboutYourselfMasteredLanguages = () => {
         <AboutYourselfLevelLanguage
           handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
           handleLanguageLevel={handleLanguageLevel}
+          masteredIndividualLanguage={masteredIndividualLanguage}
           setLanguageLevel={setLanguageLevel}
           {...masteredIndividualLanguage}
           key={index}

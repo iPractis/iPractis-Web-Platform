@@ -2,7 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 import DualButton from "../Globals/DualButton";
 import { redirect } from "next/navigation";
 
-const TabsButtonsBottomNav = ({ setActiveTab, activeTab, setSaved, saved }) => {
+const TabsButtonsBottomNav = ({ setActiveTab, activeTab, saved }) => {
   return (
     !saved &&
     activeTab !== 4 && (
@@ -24,13 +24,6 @@ const TabsButtonsBottomNav = ({ setActiveTab, activeTab, setSaved, saved }) => {
             <span className="flex-[100%]">Back</span>
           </div>
         }
-        onClickRightButton={() => {
-          if (activeTab === 3) {
-            setSaved(true);
-          } else {
-            setActiveTab((prev) => prev + 1);
-          }
-        }}
         rightButtonText={
           <div className="flex justify-center items-center">
             <span className="md:hidden block flex-[100%]">Continue</span>
@@ -44,7 +37,7 @@ const TabsButtonsBottomNav = ({ setActiveTab, activeTab, setSaved, saved }) => {
             </div>
           </div>
         }
-        rightButtonType={"button"}
+        rightButtonType={"submit"}
       />
     )
   );

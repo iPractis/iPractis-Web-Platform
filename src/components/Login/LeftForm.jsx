@@ -121,11 +121,10 @@ const LeftForm = ({
 
       <div className="flex items-center gap-4">
         <button
-          type="submit"
-          disabled={isPending}
           className="btn btn-primary w-full MT-1 rounded-2xl py-3 px-4"
+          type="button"
         >
-          {isPending ? "Loading..." : "Presskey"}
+          Presskey
         </button>
 
         <button
@@ -133,10 +132,7 @@ const LeftForm = ({
           disabled={isPending}
           className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
         >
-          <span className="flex-1">
-            {isPending ? "Loading..." : "Log in"}
-          </span>{" "}
-          
+          <span className="flex-1">{isPending ? "Loading..." : "Log in"}</span>{" "}
           <InputBGWrapperIcon>
             <ChevronRightDoorIcon
               fillColor={
