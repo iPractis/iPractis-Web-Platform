@@ -32,13 +32,13 @@ const BirthDateInput = ({ birthDate, setBirthDate }) => {
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
             readOnly
             name="birthDateNumber"
-            value={birthDate?.day}
+            defaultValue={birthDate?.day}
           />
 
           <input
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
-            value={getMonthNumberAsText(birthDate?.month)}
+            defaultValue={getMonthNumberAsText(birthDate?.month)}
             name="birthDateMonth"
           />
 
@@ -46,7 +46,7 @@ const BirthDateInput = ({ birthDate, setBirthDate }) => {
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
             readOnly
-            value={birthDate?.year}
+            defaultValue={birthDate?.year}
             name="birthDateYear"
           />
         </div>

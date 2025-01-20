@@ -5,6 +5,7 @@ import TabProfile from "./TabProfile/index";
 import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
 
+import { parseDate } from "@internationalized/date";
 import { useState } from "react";
 
 import ukFlag from "@/public/flags/united-kingdom.png";
@@ -15,7 +16,7 @@ const TabsDisplayedInfo = ({
   saved,
   setSaved,
   draft,
-  setDraft,
+  // setDraft,
 }) => {
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
@@ -25,8 +26,8 @@ const TabsDisplayedInfo = ({
     image: ukFlag,
     alt: "United Kingdom",
   });
-  const [birthDate, setBirthDate] = useState(draft?.birthDate);
-  console.log(birthDate)
+
+  const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ const TabsDisplayedInfo = ({
     const actualDraftInfo = draft;
 
     if (activeTab === 0) {
-      actualDraftInfo.birthDate = `${birthDate?.day}/${birthDate?.month}/${birthDate?.year}`;
+      actualDraftInfo.birthDate = birthDate;
       actualDraftInfo.middleName = e?.target?.middleName?.value;
       actualDraftInfo.firstName = e?.target?.firstName?.value;
       actualDraftInfo.lastName = e?.target?.lastName?.value;
