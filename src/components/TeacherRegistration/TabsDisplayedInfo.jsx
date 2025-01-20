@@ -7,6 +7,8 @@ import TabStatus from "./TabStatus/index";
 
 import { useState } from "react";
 
+import ukFlag from "@/public/flags/united-kingdom.png";
+
 const TabsDisplayedInfo = ({
   setActiveTab,
   activeTab,
@@ -17,7 +19,12 @@ const TabsDisplayedInfo = ({
 }) => {
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
-
+  const [introText, setIntroText] = useState(draft?.introduction);
+  const [selectedCountry, setSelectedCountry] = useState({
+    key: draft?.country,
+    image: ukFlag,
+    alt: "United Kingdom",
+  });
   const [birthDate, setBirthDate] = useState("");
 
   const handleSubmit = (e) => {
@@ -26,15 +33,15 @@ const TabsDisplayedInfo = ({
     const actualDraftInfo = draft;
 
     if (activeTab === 0) {
+      actualDraftInfo.middleName = e?.target?.middleName?.value;
       actualDraftInfo.firstName = e?.target?.firstName?.value;
       actualDraftInfo.lastName = e?.target?.lastName?.value;
-      actualDraftInfo.middleName = e?.target?.middleName?.value;
-
-      // actualDraftInfo.country = e?.target?.firstName?.value;
-      actualDraftInfo.birthDate = `${birthDate.day}/${birthDate?.month}/${birthDate?.year}`;
+      actualDraftInfo.country = selectedCountry?.key;
+      actualDraftInfo.languages = masteredLanguages;
+      actualDraftInfo.introduction = introText;
       actualDraftInfo.gender = selectedGender;
 
-      actualDraftInfo.languages = masteredLanguages;
+      actualDraftInfo.birthDate = `${birthDate.day}/${birthDate?.month}/${birthDate?.year}`;
 
       console.log(draft);
 
@@ -64,10 +71,14 @@ const TabsDisplayedInfo = ({
       {/* 0 */}
       <TabProfile
         setMasteredLanguages={setMasteredLanguages}
+        setSelectedCountry={setSelectedCountry}
         setSelectedGender={setSelectedGender}
         masteredLanguages={masteredLanguages}
+        selectedCountry={selectedCountry}
         selectedGender={selectedGender}
         setBirthDate={setBirthDate}
+        setIntroText={setIntroText}
+        introText={introText}
         birthDate={birthDate}
         activeTab={activeTab}
         draft={draft}

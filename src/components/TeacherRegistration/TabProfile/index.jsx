@@ -5,10 +5,14 @@ import PersonalInfo from "./PersonalInfo";
 
 const TabProfile = ({
   setMasteredLanguages,
+  setSelectedCountry,
   setSelectedGender,
   masteredLanguages,
+  selectedCountry,
   selectedGender,
   setBirthDate,
+  setIntroText,
+  introText,
   birthDate,
   activeTab,
   draft,
@@ -20,9 +24,13 @@ const TabProfile = ({
 
       {/* Personal Informations */}
       <PersonalInfo
+        setSelectedCountry={setSelectedCountry}
         setSelectedGender={setSelectedGender}
+        selectedCountry={selectedCountry}
         selectedGender={selectedGender}
         setBirthDate={setBirthDate}
+        setIntroText={setIntroText}
+        introText={introText}
         birthDate={birthDate}
         draft={draft}
       />

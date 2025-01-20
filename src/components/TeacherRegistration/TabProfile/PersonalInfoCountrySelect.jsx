@@ -7,19 +7,9 @@ import {
 } from "@nextui-org/react";
 import { countriesSelection } from "@/src/data/dataTeacherRegistration";
 import { ChevronDownSmallIcon } from "../../Icons";
-import { useState } from "react";
 import Image from "next/image";
 
-// Icons && images
-import ukFlag from "@/public/flags/united-kingdom.png";
-
-const PersonalInfoCountrySelect = () => {
-  const [selectedCountry, setSelectedCountry] = useState({
-    key: "uk",
-    image: ukFlag,
-    alt: "United Kingdom",
-  });
-
+const PersonalInfoCountrySelect = ({ selectedCountry, setSelectedCountry }) => {
   const handleSelectionChange = (keys) => {
     const selectedKey = Array.from(keys)[0];
     const country = countriesSelection.find(

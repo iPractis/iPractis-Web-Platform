@@ -16,9 +16,13 @@ import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
 
 const PersonalInfo = ({
+  setSelectedCountry, 
   setSelectedGender,
+  selectedCountry,
   selectedGender,
   setBirthDate,
+  setIntroText,
+  introText,
   birthDate,
   draft,
 }) => {
@@ -110,7 +114,10 @@ const PersonalInfo = ({
                   <FlagIcon />
                 </InputBGWrapperIcon>
 
-                <PersonalInfoCountrySelect />
+                <PersonalInfoCountrySelect
+                  selectedCountry={selectedCountry}
+                  setSelectedCountry={setSelectedCountry}
+                />
               </span>
             }
           />
@@ -121,12 +128,9 @@ const PersonalInfo = ({
           selectedGender={selectedGender}
         />
 
-        <BirthDateInput
-          setBirthDate={setBirthDate}
-          birthDate={birthDate}
-        />
+        <BirthDateInput setBirthDate={setBirthDate} birthDate={birthDate} />
 
-        <AboutYourSelfIntro />
+        <AboutYourSelfIntro introText={introText} setIntroText={setIntroText} />
       </div>
     </WhiteSpaceWrapper>
   );

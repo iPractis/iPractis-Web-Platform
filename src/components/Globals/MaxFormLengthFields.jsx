@@ -17,11 +17,13 @@ export const CustomNextUiTextareaWithMaxLength = ({
   typeError,
   descError,
   nameTextarea,
+  defaultValue,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
   return (
     <>
       <CustomNextUiTextarea
+        defaultValue={defaultValue}
         name={nameTextarea}
         label={
           // If labelDisabled is false, then we display it!
@@ -45,7 +47,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
         classNames={{
           input: [inputClassName],
           inputWrapper: exceedValueMaxLength && "form-input-error",
-          label: [labelClassName]
+          label: [labelClassName],
         }}
         size="primaryiPractis"
         disableAutosize
@@ -100,7 +102,7 @@ export const CustomNextUiInputWithMaxLength = ({
         placeholder={placeholder}
         label={
           // If labelDisabled is false, then we display it!
-         !labelDisabled && (
+          !labelDisabled && (
             <div className="mb-2">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                 {labelTitle}{" "}
@@ -118,7 +120,7 @@ export const CustomNextUiInputWithMaxLength = ({
         endContent={endContent}
         classNames={{
           input: [inputClassName],
-          label: [labelClassName]
+          label: [labelClassName],
         }}
       />
 

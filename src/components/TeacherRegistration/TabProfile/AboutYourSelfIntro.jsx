@@ -1,9 +1,6 @@
 import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
-import { useState } from "react";
 
-const AboutYourSelfIntro = () => {
-  const [introText, setIntroText] = useState("");
-
+const AboutYourSelfIntro = ({ introText, setIntroText }) => {
   const introTextOnChange = (e) => {
     const textValue = e?.target?.value;
 
@@ -13,9 +10,9 @@ const AboutYourSelfIntro = () => {
   return (
     <div className="!mt-6">
       <CustomNextUiTextareaWithMaxLength
-        nameTextarea="introductionAboutYourself"
-        inputClassName={"h-[150px]"}
         value={introText}
+        nameTextarea="introduction"
+        inputClassName={"h-[150px]"}
         onChange={introTextOnChange}
         placeholder={"Enter a text"}
         maxCharactersLength={1000}
