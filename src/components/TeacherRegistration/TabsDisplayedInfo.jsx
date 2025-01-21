@@ -50,9 +50,9 @@ const TabsDisplayedInfo = ({
   // TAB SUBJECT STATES
   const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(draft?.teachToYoungPersons);
   const [teachToYoungPersons, setTeachToYoungPersons] = useState(draft?.teachToAmateurPersons);
+  const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
   const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
   const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
-  const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
   const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
   
   const handleSubmit = async (e) => {

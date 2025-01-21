@@ -10,9 +10,8 @@ import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
 const RelatedSubTopics = () => {
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
-  const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
-  const [tempSelectedKey, setTempSelectedKey] = useState("");
+  const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   // Add sub-subject
@@ -28,9 +27,6 @@ const RelatedSubTopics = () => {
 
     // We clear the selected sub-subject from select
     setSelectedSubSubject("");
-
-    // We create other state to input the value in bottom
-    setTempSelectedKey(subSubjectSelected);
   };
 
   // Delete sub-subject
@@ -44,7 +40,7 @@ const RelatedSubTopics = () => {
     setDescriptionSubSubject("");
   };
 
-  // Add description text
+  // Update description text
   const descriptionSubSubjectOnChange = (e, selected) => {
     const textValue = e?.target?.value;
 
@@ -135,7 +131,6 @@ const RelatedSubTopics = () => {
             handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
             descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
             descriptionSubSubject={descriptionSubSubject}
-            tempSelectedKey={tempSelectedKey}
             key={subSubject?.selected}
             {...subSubject}
           />
