@@ -8,10 +8,13 @@ import TabStatus from "./TabStatus/index";
 // React imports
 import { CalendarDate, parseDate } from "@internationalized/date";
 import { useState } from "react";
+import axios from "axios";
 
 // Images && icons
 import ukFlag from "@/public/flags/united-kingdom.png";
-import axios from "axios";
+import italyFlag from "@/public/flags/italy.png";
+import franceFlag from "@/public/flags/france.png";
+import spainFlag from "@/public/flags/spain.png";
 
 const TabsDisplayedInfo = ({
   setActiveTab,
@@ -25,10 +28,18 @@ const TabsDisplayedInfo = ({
   const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
   const [introText, setIntroText] = useState(draft?.introduction);
+
+  const countryFlags = {
+    UnitedKingdom: ukFlag,
+    France: franceFlag,
+    Spain: spainFlag,
+    Italy: italyFlag,
+  };
+
   const [selectedCountry, setSelectedCountry] = useState({
     key: draft?.country,
-    image: ukFlag,
-    alt: "United Kingdom",
+    image: countryFlags[draft?.country] || ukFlag,
+    alt: `Flag of ${draft?.country}`,
   });
 
   let validBirthDate = new CalendarDate(
@@ -47,7 +58,7 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
         actualDraftInfo.lastName = e?.target?.lastName?.value;
-        actualDraftInfo.birthDate = validBirthDate.toString();
+        actualDraftInfo.birthDate = validBirthDate?.toString();
         actualDraftInfo.country = selectedCountry?.key;
         actualDraftInfo.languages = masteredLanguages;
         actualDraftInfo.introduction = introText;
