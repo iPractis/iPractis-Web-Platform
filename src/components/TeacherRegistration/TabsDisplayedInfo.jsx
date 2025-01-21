@@ -71,11 +71,6 @@ const TabsDisplayedInfo = ({
         const res = await axios.post(`/teacher/set/profile`, actualDraftInfo);
 
         console.log(res);
-        return;
-      }
-
-      if (activeTab === 1) {
-        return;
       }
 
       if (activeTab === 3) {

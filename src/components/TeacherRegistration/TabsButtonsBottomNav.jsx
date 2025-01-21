@@ -14,7 +14,7 @@ const TabsButtonsBottomNav = ({
       <DualButton
         dualButtonWrapper={"gap-4 mt-16"}
         rightButtonClassName={"md:flex-[40%] flex-1 disabled:opacity-20 disabled:pointer-events-none"}
-        leftButtonClassName={"flex-1"}
+        leftButtonClassName={"flex-1 disabled:opacity-20 disabled:pointer-events-none"}
         onClickLeftButton={() =>
           setActiveTab((prev) =>
             prev < 1 ? redirect("/apply-as-teacher") : prev - 1
