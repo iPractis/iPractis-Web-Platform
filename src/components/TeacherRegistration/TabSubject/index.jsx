@@ -24,7 +24,7 @@ const TabSubject = ({
 
         <RelatedSubTopics />
 
-        <PresentYourSelf />
+        <PresentYourSelf draft={draft} />
 
         <StudentPreference />
 
@@ -32,7 +32,7 @@ const TabSubject = ({
 
         <AveragePrice />
 
-        <Withdrawal />
+        <Withdrawal draft={draft} />
       </WhiteSpaceWrapper>
     </div>
   );

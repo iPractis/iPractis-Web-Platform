@@ -1,16 +1,16 @@
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import SectionHeader from "../../Globals/SectionHeader";
+import { useState } from "react";
 import Image from "next/image";
 
 // Icons && images
 import { QuestionMark, TownhallIcon, WalletIcon } from "../../Icons";
 import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
-import { useState } from "react";
 
-const Withdrawal = () => {
-  const [withdrawal, setWithdrawal] = useState("");
+const Withdrawal = ({ draft }) => {
+  const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
 
   return (
     <div className="md:px-8 mt-[50px]">
@@ -64,6 +64,7 @@ const Withdrawal = () => {
 
       <div className="flex items-end gap-2 mt-7">
         <CustomNextUiInput
+          defaultValue={draft?.emailWithdrawal}
           type="text"
           name="widthdrawalEmailAddress"
           placeholder="Email address"

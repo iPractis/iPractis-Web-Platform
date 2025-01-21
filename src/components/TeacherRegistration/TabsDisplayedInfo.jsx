@@ -81,6 +81,13 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.subject = subjectToTeach;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
+        actualDraftInfo.videoLink = e?.target?.videoLink?.value;
+        actualDraftInfo.studentLevel = e?.target?.studentLevel?.value;
+        actualDraftInfo.teachToYoungPersons = e?.target?.teachToYoungPersons?.value;
+        actualDraftInfo.teachToAmateurPersons = e?.target?.teachToAmateurPersons?.value;
+        actualDraftInfo.hourlyPrice = e?.target?.hourlyPrice?.value;
+        actualDraftInfo.withdrawal = e?.target?.withdrawal?.value;
+        actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
 
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 

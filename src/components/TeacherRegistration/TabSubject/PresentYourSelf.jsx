@@ -1,11 +1,10 @@
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import SectionHeader from "../../Globals/SectionHeader";
 import { CameraIcon, LinkIcon, QuestionMark } from "../../Icons";
+import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import SectionHeader from "../../Globals/SectionHeader";
 import React from "react";
 
-const PresentYourSelf = () => {
+const PresentYourSelf = ({ draft }) => {
   return (
     <>
       <SectionHeader
@@ -18,6 +17,7 @@ const PresentYourSelf = () => {
 
       <div className="md:px-8">
         <CustomNextUiInput
+          defaultValue={draft?.videoLink}
           type="text"
           name="videoLink"
           label={
@@ -55,8 +55,8 @@ const PresentYourSelf = () => {
             certification(s)
           </li>
           <li>
-            Uploaded on YouTube and set to &#39;Public&#39; visibility. Then provide the
-            link in the right area.
+            Uploaded on YouTube and set to &#39;Public&#39; visibility. Then
+            provide the link in the right area.
           </li>
         </ul>
       </div>
