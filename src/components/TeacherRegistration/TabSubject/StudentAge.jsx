@@ -2,7 +2,13 @@ import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
 import SectionHeader from "../../Globals/SectionHeader";
 import { Switch } from "@nextui-org/react";
 
-const StudentAge = () => {
+const StudentAge = ({
+  setTeachToAmateurPersons,
+  setTeachToYoungPersons,
+  teachToAmateurPersons,
+  teachToYoungPersons,
+}) => {
+
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -14,7 +20,8 @@ const StudentAge = () => {
       />
 
       <Switch
-        defaultSelected
+        checked={teachToYoungPersons}
+        onChange={(e) => setTeachToYoungPersons(e.target.checked)}
         size="sm"
         classNames={{
           base: "mb-2.5",
@@ -35,7 +42,8 @@ const StudentAge = () => {
       </Switch>
 
       <Switch
-        defaultSelected
+        checked={teachToAmateurPersons}
+        onChange={(e) => setTeachToAmateurPersons(e.target.checked)}
         size="sm"
         classNames={{
           wrapper:

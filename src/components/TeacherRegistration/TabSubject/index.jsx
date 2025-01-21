@@ -8,10 +8,16 @@ import Withdrawal from "./Withdrawal";
 import StudentAge from "./StudentAge";
 
 const TabSubject = ({
+  setTeachToAmateurPersons,
+  setTeachToYoungPersons,
+  teachToAmateurPersons,
+  teachToYoungPersons,
   setSubjectToTeach,
   setSelectedLevel,
   subjectToTeach,
   selectedLevel,
+  setWithdrawal,
+  withdrawal,
   activeTab,
   draft,
 }) => {
@@ -33,11 +39,20 @@ const TabSubject = ({
           selectedLevel={selectedLevel}
         />
 
-        <StudentAge />
+        <StudentAge
+          setTeachToAmateurPersons={setTeachToAmateurPersons}
+          setTeachToYoungPersons={setTeachToYoungPersons}
+          teachToAmateurPersons={teachToAmateurPersons}
+          teachToYoungPersons={teachToYoungPersons}
+        />
 
         <AveragePrice draft={draft} />
 
-        <Withdrawal draft={draft} />
+        <Withdrawal
+          setWithdrawal={setWithdrawal}
+          withdrawal={withdrawal}
+          draft={draft}
+        />
       </WhiteSpaceWrapper>
     </div>
   );

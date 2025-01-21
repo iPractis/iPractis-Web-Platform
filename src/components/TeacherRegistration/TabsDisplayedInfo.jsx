@@ -48,10 +48,13 @@ const TabsDisplayedInfo = ({
   );
 
   // TAB SUBJECT STATES
+  const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(draft?.teachToYoungPersons);
+  const [teachToYoungPersons, setTeachToYoungPersons] = useState(draft?.teachToAmateurPersons);
   const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
   const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
   const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
-
+  const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -82,15 +85,17 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
         actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
-        actualDraftInfo.studentLevel = e?.target?.studentLevel?.value;
+        actualDraftInfo.teachToAmateurPersons = teachToAmateurPersons;
         actualDraftInfo.hourlyPrice = e?.target?.hourlyPrice?.value;
-        actualDraftInfo.withdrawal = e?.target?.withdrawal?.value;
+        actualDraftInfo.teachToYoungPersons = teachToYoungPersons;
+        actualDraftInfo.subSubject = e?.target?.subSubject?.value;
         actualDraftInfo.videoLink = e?.target?.videoLink?.value;
+        actualDraftInfo.studentLevel = selectedLevel;
         actualDraftInfo.subject = subjectToTeach;
+        actualDraftInfo.withdrawal = withdrawal;
+        console.log(actualDraftInfo);
 
-        actualDraftInfo.teachToYoungPersons = e?.target?.teachToYoungPersons?.value;
-        actualDraftInfo.teachToAmateurPersons = e?.target?.teachToAmateurPersons?.value;
-
+        return;
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
         console.log(res);
@@ -136,10 +141,16 @@ const TabsDisplayedInfo = ({
 
       {/* 1 */}
       <TabSubject
+        setTeachToAmateurPersons={setTeachToAmateurPersons}
+        setTeachToYoungPersons={setTeachToYoungPersons}
+        teachToAmateurPersons={teachToAmateurPersons}
+        teachToYoungPersons={teachToYoungPersons}
         setSubjectToTeach={setSubjectToTeach}
         setSelectedLevel={setSelectedLevel}
         subjectToTeach={subjectToTeach}
+        setWithdrawal={setWithdrawal}
         selectedLevel={selectedLevel}
+        withdrawal={withdrawal}
         activeTab={activeTab}
         draft={draft}
       />

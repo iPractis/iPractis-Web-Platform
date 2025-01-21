@@ -31,7 +31,7 @@ const AveragePrice = ({ draft }) => {
           <CustomNextUiInput
             defaultValue={draft?.hourlyPrice}
             type="text"
-            name="hourlyBaseRate"
+            name="hourlyPrice"
             placeholder="Set your hourly base rate"
             classNames={{
               label: "!-top-11",

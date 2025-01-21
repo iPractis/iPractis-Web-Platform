@@ -9,9 +9,7 @@ import { QuestionMark, TownhallIcon, WalletIcon } from "../../Icons";
 import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
 
-const Withdrawal = ({ draft }) => {
-  const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
-
+const Withdrawal = ({ setWithdrawal, withdrawal, draft }) => {
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -66,7 +64,7 @@ const Withdrawal = ({ draft }) => {
         <CustomNextUiInput
           defaultValue={draft?.emailWithdrawal}
           type="text"
-          name="widthdrawalEmailAddress"
+          name="emailWithdrawal"
           placeholder="Email address"
           classNames={{
             label: "!-top-11",
