@@ -4,7 +4,7 @@ import SectionHeader from "../../Globals/SectionHeader";
 // Icons
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
 
-const StudentPreference = () => {
+const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
   return (
     <div>
       <SectionHeader
@@ -28,13 +28,15 @@ const StudentPreference = () => {
           titleClassName="MT-SB-1"
         />
 
-        {/* Checkboxes */}
+        {/* Radio Buttons */}
         <div>
           <CustomNextUiCheckbox
             classNames={{
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
             }}
+            isSelected={selectedLevel === "Beginner"}
+            onChange={() => setSelectedLevel("Beginner")}
           >
             Beginner
           </CustomNextUiCheckbox>
@@ -46,6 +48,8 @@ const StudentPreference = () => {
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
             }}
+            isSelected={selectedLevel === "Intermediate"}
+            onChange={() => setSelectedLevel("Intermediate")}
           >
             Intermediate
           </CustomNextUiCheckbox>
@@ -57,6 +61,8 @@ const StudentPreference = () => {
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
             }}
+            isSelected={selectedLevel === "Advanced"}
+            onChange={() => setSelectedLevel("Advanced")}
           >
             Advanced
           </CustomNextUiCheckbox>

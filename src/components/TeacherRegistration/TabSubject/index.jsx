@@ -9,7 +9,9 @@ import StudentAge from "./StudentAge";
 
 const TabSubject = ({
   setSubjectToTeach,
+  setSelectedLevel,
   subjectToTeach,
+  selectedLevel,
   activeTab,
   draft,
 }) => {
@@ -26,11 +28,14 @@ const TabSubject = ({
 
         <PresentYourSelf draft={draft} />
 
-        <StudentPreference />
+        <StudentPreference
+          setSelectedLevel={setSelectedLevel}
+          selectedLevel={selectedLevel}
+        />
 
         <StudentAge />
 
-        <AveragePrice />
+        <AveragePrice draft={draft} />
 
         <Withdrawal draft={draft} />
       </WhiteSpaceWrapper>

@@ -50,6 +50,7 @@ const TabsDisplayedInfo = ({
   // TAB SUBJECT STATES
   const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
   const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
+  const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -78,16 +79,17 @@ const TabsDisplayedInfo = ({
 
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subject = subjectToTeach;
-        actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
-        actualDraftInfo.videoLink = e?.target?.videoLink?.value;
+        actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
+        actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.studentLevel = e?.target?.studentLevel?.value;
-        actualDraftInfo.teachToYoungPersons = e?.target?.teachToYoungPersons?.value;
-        actualDraftInfo.teachToAmateurPersons = e?.target?.teachToAmateurPersons?.value;
         actualDraftInfo.hourlyPrice = e?.target?.hourlyPrice?.value;
         actualDraftInfo.withdrawal = e?.target?.withdrawal?.value;
-        actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
+        actualDraftInfo.videoLink = e?.target?.videoLink?.value;
+        actualDraftInfo.subject = subjectToTeach;
+
+        actualDraftInfo.teachToYoungPersons = e?.target?.teachToYoungPersons?.value;
+        actualDraftInfo.teachToAmateurPersons = e?.target?.teachToAmateurPersons?.value;
 
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
@@ -135,7 +137,9 @@ const TabsDisplayedInfo = ({
       {/* 1 */}
       <TabSubject
         setSubjectToTeach={setSubjectToTeach}
+        setSelectedLevel={setSelectedLevel}
         subjectToTeach={subjectToTeach}
+        selectedLevel={selectedLevel}
         activeTab={activeTab}
         draft={draft}
       />

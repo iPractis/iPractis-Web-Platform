@@ -7,7 +7,7 @@ import Image from "next/image";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
-const AveragePrice = () => {
+const AveragePrice = ({ draft }) => {
   return (
     <>
       <SectionHeader
@@ -29,6 +29,7 @@ const AveragePrice = () => {
 
         <div className="flex items-end gap-2 mt-7">
           <CustomNextUiInput
+            defaultValue={draft?.hourlyPrice}
             type="text"
             name="hourlyBaseRate"
             placeholder="Set your hourly base rate"
