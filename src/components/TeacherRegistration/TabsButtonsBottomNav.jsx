@@ -2,13 +2,18 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 import DualButton from "../Globals/DualButton";
 import { redirect } from "next/navigation";
 
-const TabsButtonsBottomNav = ({ setActiveTab, activeTab, saved }) => {
+const TabsButtonsBottomNav = ({
+  isTabProfilePending,
+  setActiveTab,
+  activeTab,
+  saved,
+}) => {
   return (
     !saved &&
     activeTab !== 4 && (
       <DualButton
         dualButtonWrapper={"gap-4 mt-16"}
-        rightButtonClassName={"md:flex-[40%] flex-1"}
+        rightButtonClassName={"md:flex-[40%] flex-1 disabled:opacity-20 disabled:pointer-events-none"}
         leftButtonClassName={"flex-1"}
         onClickLeftButton={() =>
           setActiveTab((prev) =>
@@ -24,17 +29,25 @@ const TabsButtonsBottomNav = ({ setActiveTab, activeTab, saved }) => {
             <span className="flex-[100%]">Back</span>
           </div>
         }
+        leftButtonDisabled={isTabProfilePending}
+        rightButtonDisabled={isTabProfilePending}
         rightButtonText={
           <div className="flex justify-center items-center">
-            <span className="md:hidden block flex-[100%]">Continue</span>
+            {isTabProfilePending ? (
+              "Loading..."
+            ) : (
+              <>
+                <span className="md:hidden block flex-[100%]">Continue</span>
 
-            <span className="md:block hidden flex-[100%]">
-              Save, and continue
-            </span>
+                <span className="md:block hidden flex-[100%]">
+                  Save, and continue
+                </span>
 
-            <div className="flex-1">
-              <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
-            </div>
+                <div className="flex-1">
+                  <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
+                </div>
+              </>
+            )}
           </div>
         }
         rightButtonType={"submit"}

@@ -24,6 +24,8 @@ const TabsDisplayedInfo = ({
   draft,
   // setDraft,
 }) => {
+  const [isTabProfilePending, setIsTabProfilePending] = useState(false);
+
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
@@ -54,6 +56,8 @@ const TabsDisplayedInfo = ({
     const actualDraftInfo = draft;
 
     try {
+      setIsTabProfilePending(true);
+
       if (activeTab === 0) {
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
@@ -81,6 +85,8 @@ const TabsDisplayedInfo = ({
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsTabProfilePending(false);
     }
 
     // setDraft(actualDraftInfo);
@@ -123,6 +129,7 @@ const TabsDisplayedInfo = ({
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav
+        isTabProfilePending={isTabProfilePending}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         setSaved={setSaved}
