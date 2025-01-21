@@ -24,31 +24,30 @@ const TabsDisplayedInfo = ({
   draft,
   // setDraft,
 }) => {
+  // TAB PROFILE STATES
   const [isTabProfilePending, setIsTabProfilePending] = useState(false);
-
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
   const [introText, setIntroText] = useState(draft?.introduction);
-
   const countryFlags = {
     UnitedKingdom: ukFlag,
     France: franceFlag,
     Spain: spainFlag,
     Italy: italyFlag,
   };
-
   const [selectedCountry, setSelectedCountry] = useState({
     key: draft?.country,
     image: countryFlags[draft?.country] || ukFlag,
     alt: `Flag of ${draft?.country}`,
   });
-
   let validBirthDate = new CalendarDate(
     birthDate?.year,
     birthDate?.month,
     birthDate?.day
   );
+
+  // TAB SUBJECT STATES
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -69,6 +68,12 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.gender = selectedGender;
 
         const res = await axios.post(`/teacher/set/profile`, actualDraftInfo);
+
+        console.log(res);
+      }
+
+      if (activeTab === 1) {
+        const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
         console.log(res);
       }
