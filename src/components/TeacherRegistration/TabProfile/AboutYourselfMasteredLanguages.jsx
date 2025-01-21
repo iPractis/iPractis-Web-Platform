@@ -15,8 +15,9 @@ import {
 const AboutYourselfMasteredLanguages = ({
   setMasteredLanguages,
   masteredLanguages,
+  setLanguageLevel,
+  languageLevel,
 }) => {
-  const [languageLevel, setLanguageLevel] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
 

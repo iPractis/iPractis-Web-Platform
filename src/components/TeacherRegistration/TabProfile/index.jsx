@@ -8,8 +8,10 @@ const TabProfile = ({
   setSelectedCountry,
   setSelectedGender,
   masteredLanguages,
+  setLanguageLevel,
   selectedCountry,
   selectedGender,
+  languageLevel,
   setBirthDate,
   setIntroText,
   introText,
@@ -40,6 +42,8 @@ const TabProfile = ({
         <AboutYourselfMasteredLanguages
           setMasteredLanguages={setMasteredLanguages}
           masteredLanguages={masteredLanguages}
+          setLanguageLevel={setLanguageLevel}
+          languageLevel={languageLevel}
         />
       </AboutYourself>
     </div>

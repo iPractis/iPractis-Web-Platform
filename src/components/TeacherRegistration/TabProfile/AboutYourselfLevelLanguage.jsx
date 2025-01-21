@@ -26,7 +26,8 @@ const AboutYourselfLevelLanguage = ({
         label={
           <div className="mb-2">
             <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
-              {nameLanguage} <QuestionMark fillColor={"fill-primary-color-P4"} />
+              {nameLanguage}{" "}
+              <QuestionMark fillColor={"fill-primary-color-P4"} />
             </span>
           </div>
         }
