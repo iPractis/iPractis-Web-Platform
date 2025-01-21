@@ -15,7 +15,7 @@ import {
 
 const SubjectsToTeach = ({ setSubjectToTeach, subjectToTeach, draft }) => {
   const [isOpen, setIsOpen] = useState();
-  
+
   return (
     <div>
       <SectionHeader
@@ -80,7 +80,7 @@ const SubjectsToTeach = ({ setSubjectToTeach, subjectToTeach, draft }) => {
         </div>
 
         {/* Profile title and description */}
-        <ProfileTitle />
+        <ProfileTitle draft={draft} />
       </div>
     </div>
   );

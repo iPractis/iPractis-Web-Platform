@@ -4,12 +4,12 @@ import {
   CustomNextUiTextareaWithMaxLength,
 } from "../../Globals/MaxFormLengthFields";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import { CloseIcon, QuestionMark, ThreeXBlocks } from "../../Icons";
+import { CloseIcon, ThreeXBlocks } from "../../Icons";
 import { useState } from "react";
 
-const ProfileTitle = () => {
-  const [profileTitleText, setProfileTitleText] = useState("");
-  const [descText, setDescText] = useState("");
+const ProfileTitle = ({ draft }) => {
+  const [profileTitleText, setProfileTitleText] = useState(draft?.profileTitle);
+  const [descText, setDescText] = useState(draft?.subjectIntroduction);
 
   const descTextOnChange = (e) => {
     const textValue = e?.target?.value;
@@ -27,6 +27,8 @@ const ProfileTitle = () => {
     <>
       <div className="border border-transparent pt-12">
         <CustomNextUiInputWithMaxLength
+          defaultValue={draft?.profileTitle}
+          nameInput={"profileTitle"}
           labelTitle={"Write a catchy headline"}
           labelSubtitle={
             "Your headline is the first thing peoples are going to read, it will allow you to attract the students you wish to heve."
@@ -58,12 +60,13 @@ const ProfileTitle = () => {
 
       <div>
         <CustomNextUiTextareaWithMaxLength
+          defaultValue={draft?.subjectIntroduction}
           labelTitle={"Subject Introduction"}
           labelSubtitle={
             "Describe your teaching methods, experience, and expertise in this subject."
           }
           labelClassName={"!top-3"}
-          nameTextarea={"descriptionSubjectToTeach"}
+          nameTextarea={"subjectIntroduction"}
           inputClassName={"h-[150px]"}
           value={descText}
           onChange={descTextOnChange}

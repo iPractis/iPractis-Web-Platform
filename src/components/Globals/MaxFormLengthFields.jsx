@@ -74,6 +74,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
 };
 
 export const CustomNextUiInputWithMaxLength = ({
+  defaultValue,
   labelDisabled = false,
   endContent = false,
   startContent = false,
@@ -95,6 +96,7 @@ export const CustomNextUiInputWithMaxLength = ({
   return (
     <>
       <CustomNextUiInput
+        defaultValue={defaultValue}
         onChange={onChange}
         value={value}
         type={inputType}

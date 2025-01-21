@@ -79,6 +79,8 @@ const TabsDisplayedInfo = ({
       // TAB SUBJECT
       if (activeTab === 1) {
         actualDraftInfo.subject = subjectToTeach;
+        actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
+        actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
 
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
