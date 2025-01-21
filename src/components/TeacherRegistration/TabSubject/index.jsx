@@ -7,11 +7,20 @@ import AveragePrice from "./AveragePrice";
 import Withdrawal from "./Withdrawal";
 import StudentAge from "./StudentAge";
 
-const TabSubject = ({ activeTab }) => {
+const TabSubject = ({
+  setSubjectToTeach,
+  subjectToTeach,
+  activeTab,
+  draft,
+}) => {
   return (
     <div className={`${activeTab !== 1 && "hidden"}`}>
       <WhiteSpaceWrapper className={"p-0"}>
-        <SubjectsToTeach />
+        <SubjectsToTeach
+          setSubjectToTeach={setSubjectToTeach}
+          subjectToTeach={subjectToTeach}
+          draft={draft}
+        />
 
         <RelatedSubTopics />
 

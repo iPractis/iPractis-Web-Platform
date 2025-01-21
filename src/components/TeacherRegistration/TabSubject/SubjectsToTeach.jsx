@@ -13,9 +13,9 @@ import {
   UserBoxIcon,
 } from "../../Icons";
 
-const SubjectsToTeach = () => {
+const SubjectsToTeach = ({ setSubjectToTeach, subjectToTeach, draft }) => {
   const [isOpen, setIsOpen] = useState();
-
+  
   return (
     <div>
       <SectionHeader
@@ -46,6 +46,7 @@ const SubjectsToTeach = () => {
               </div>
             }
             onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+            selectedKeys={[subjectToTeach]}
             labelPlacement="outside"
             placeholder="Select a teaching subject"
             selectorIcon={<span></span>}
@@ -68,9 +69,12 @@ const SubjectsToTeach = () => {
               ],
               listbox: ["text-primary-color-P4"],
             }}
+            onChange={(e) => setSubjectToTeach(e.target.value)}
           >
             {teachingSubjects?.map((teachingSubject) => (
-              <SelectItem key={teachingSubject}>{teachingSubject}</SelectItem>
+              <SelectItem key={teachingSubject} value={teachingSubject}>
+                {teachingSubject}
+              </SelectItem>
             ))}
           </Select>
         </div>

@@ -49,6 +49,7 @@ const TabsDisplayedInfo = ({
 
   // TAB SUBJECT STATES
   const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
+  const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -77,6 +78,8 @@ const TabsDisplayedInfo = ({
 
       // TAB SUBJECT
       if (activeTab === 1) {
+        actualDraftInfo.subject = subjectToTeach;
+
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
         console.log(res);
@@ -121,7 +124,12 @@ const TabsDisplayedInfo = ({
       />
 
       {/* 1 */}
-      <TabSubject activeTab={activeTab} />
+      <TabSubject
+        setSubjectToTeach={setSubjectToTeach}
+        subjectToTeach={subjectToTeach}
+        activeTab={activeTab}
+        draft={draft}
+      />
 
       {/* 2 */}
       <TabBackground activeTab={activeTab} />
