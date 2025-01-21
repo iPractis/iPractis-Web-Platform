@@ -15,8 +15,6 @@ import {
 const AboutYourselfMasteredLanguages = ({
   setMasteredLanguages,
   masteredLanguages,
-  setLanguageLevel,
-  languageLevel,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
@@ -27,7 +25,7 @@ const AboutYourselfMasteredLanguages = ({
 
     const masteredLanguageDetails = {
       name: languageSelected,
-      level: languageLevel,
+      level: "",
     };
 
     setMasteredLanguages([...masteredLanguages, masteredLanguageDetails]);
@@ -41,10 +39,8 @@ const AboutYourselfMasteredLanguages = ({
     setMasteredLanguages(filteredMasteredLanguages);
   };
 
-  // Add language level
-  const handleLanguageLevel = (e, language) => {
-    const levelSelected = e?.target?.value;
-
+  // Update language level
+  const handleLanguageLevel = (levelSelected, language) => {
     const updatedLanguages = masteredLanguages?.map((item) =>
       item?.name === language ? { ...item, level: levelSelected } : item
     );
@@ -111,10 +107,8 @@ const AboutYourselfMasteredLanguages = ({
       {masteredLanguages?.map((masteredIndividualLanguage, index) => (
         <AboutYourselfLevelLanguage
           handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
-          handleLanguageLevel={handleLanguageLevel}
           masteredIndividualLanguage={masteredIndividualLanguage}
-          setLanguageLevel={setLanguageLevel}
-          {...masteredIndividualLanguage}
+          handleLanguageLevel={handleLanguageLevel}
           key={index}
         />
       ))}

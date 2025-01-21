@@ -25,8 +25,6 @@ const TabsDisplayedInfo = ({
   // setDraft,
 }) => {
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
-  const [languageLevel, setLanguageLevel] = useState("");
-
   const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
   const [introText, setIntroText] = useState(draft?.introduction);
@@ -101,10 +99,8 @@ const TabsDisplayedInfo = ({
         setSelectedCountry={setSelectedCountry}
         setSelectedGender={setSelectedGender}
         masteredLanguages={masteredLanguages}
-        setLanguageLevel={setLanguageLevel}
         selectedCountry={selectedCountry}
         selectedGender={selectedGender}
-        languageLevel={languageLevel}
         setBirthDate={setBirthDate}
         setIntroText={setIntroText}
         introText={introText}
