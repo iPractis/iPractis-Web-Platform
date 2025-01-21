@@ -59,6 +59,7 @@ const TabsDisplayedInfo = ({
       setIsTabProfilePending(true);
       setIsTabSubjectPending(true);
 
+      // TAB PROFILE
       if (activeTab === 0) {
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
@@ -74,6 +75,7 @@ const TabsDisplayedInfo = ({
         console.log(res);
       }
 
+      // TAB SUBJECT
       if (activeTab === 1) {
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
