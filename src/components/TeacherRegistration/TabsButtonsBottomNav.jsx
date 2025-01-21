@@ -3,6 +3,7 @@ import DualButton from "../Globals/DualButton";
 import { redirect } from "next/navigation";
 
 const TabsButtonsBottomNav = ({
+  isTabSubjectPending,
   isTabProfilePending,
   setActiveTab,
   activeTab,
@@ -13,8 +14,12 @@ const TabsButtonsBottomNav = ({
     activeTab !== 4 && (
       <DualButton
         dualButtonWrapper={"gap-4 mt-16"}
-        rightButtonClassName={"md:flex-[40%] flex-1 disabled:opacity-20 disabled:pointer-events-none"}
-        leftButtonClassName={"flex-1 disabled:opacity-20 disabled:pointer-events-none"}
+        rightButtonClassName={
+          "md:flex-[40%] flex-1 disabled:opacity-20 disabled:pointer-events-none"
+        }
+        leftButtonClassName={
+          "flex-1 disabled:opacity-20 disabled:pointer-events-none"
+        }
         onClickLeftButton={() =>
           setActiveTab((prev) =>
             prev < 1 ? redirect("/apply-as-teacher") : prev - 1
@@ -29,11 +34,11 @@ const TabsButtonsBottomNav = ({
             <span className="flex-[100%]">Back</span>
           </div>
         }
-        leftButtonDisabled={isTabProfilePending}
-        rightButtonDisabled={isTabProfilePending}
+        leftButtonDisabled={isTabProfilePending || isTabSubjectPending}
+        rightButtonDisabled={isTabProfilePending || isTabSubjectPending}
         rightButtonText={
           <div className="flex justify-center items-center">
-            {isTabProfilePending ? (
+            {isTabProfilePending || isTabSubjectPending ? (
               "Loading..."
             ) : (
               <>

@@ -48,6 +48,7 @@ const TabsDisplayedInfo = ({
   );
 
   // TAB SUBJECT STATES
+  const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +57,7 @@ const TabsDisplayedInfo = ({
 
     try {
       setIsTabProfilePending(true);
+      setIsTabSubjectPending(true);
 
       if (activeTab === 0) {
         actualDraftInfo.middleName = e?.target?.middleName?.value;
@@ -87,6 +89,7 @@ const TabsDisplayedInfo = ({
       console.log(err);
     } finally {
       setIsTabProfilePending(false);
+      setIsTabSubjectPending(false);
     }
 
     // setDraft(actualDraftInfo);
@@ -129,6 +132,7 @@ const TabsDisplayedInfo = ({
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav
+        isTabSubjectPending={isTabSubjectPending}
         isTabProfilePending={isTabProfilePending}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
