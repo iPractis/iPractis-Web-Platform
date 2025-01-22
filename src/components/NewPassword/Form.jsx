@@ -119,7 +119,7 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="my-[50px]">
+      <div className="mb-8">
         {/* New Password */}
         <div>
           <CustomNextUiInput
@@ -172,7 +172,10 @@ const Form = () => {
       </div>
 
       <DualButton
+        leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
+        rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         leftButtonText={"Cancel"}
+        leftButtonDisabled={isPending}
         rightButtonDisabled={isPending}
         rightButtonText={isPending ? "Loading..." : "Change password"}
         rightButtonType="submit"
