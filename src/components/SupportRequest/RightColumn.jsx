@@ -5,9 +5,10 @@ import { WrenchIcon } from "../Icons";
 
 const RightColumn = ({ isValidSituationError, error }) => {
   return (
-    <article className="flex-1 w-full">
+    <article className="">
       <SectionHeader
         descriptionText="Briefly explain the problem to help us assist you."
+        wrapperSectionHeaderClassName="sm:px-4"
         titleText="Describe Your Issue"
         descriptionClassName="mt-1"
         titleIcon={<WrenchIcon />}
@@ -18,7 +19,7 @@ const RightColumn = ({ isValidSituationError, error }) => {
         <CustomNextUiTextarea
           classNames={{
             inputWrapper: isValidSituationError && "form-input-error",
-            input: "h-[222px]",
+            input: "h-[169px]",
           }}
           placeholder="Describe the situation"
           size="primaryiPractis"

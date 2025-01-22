@@ -27,11 +27,12 @@ const Form = ({
   };
 
   return (
-    <article className="flex-1 w-full">
+    <article className="">
       <SectionHeader
         descriptionText="We need this information to assist you effectively"
         titleIcon={<CircleImportantIcon />}
         descriptionClassName="mt-1"
+        wrapperSectionHeaderClassName="sm:px-4"
         titleClassName="MT-SB-1"
         titleText="Contact ID"
       />

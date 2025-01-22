@@ -16,7 +16,7 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validation of gmail format
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
@@ -114,26 +114,24 @@ const Form = () => {
     error?.message && validEmailRelatedErrors.includes(error?.title);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-primary-color-P12 p-8 mt-8 rounded-2xl"
-    >
-      <div className="flex flex-col md:flex-row sm:gap-[50px]">
-        <LeftColumn
-          isValidEmailRelatedErrors={isValidEmailRelatedErrors}
-          isValidReasonErrors={isValidReasonErrors}
-          isValidEmailErrors={isValidEmailErrors}
-          error={error}
-        />
+    <form onSubmit={handleSubmit} className="sm:px-8 mt-[50px]">
+      <LeftColumn
+        isValidEmailRelatedErrors={isValidEmailRelatedErrors}
+        isValidReasonErrors={isValidReasonErrors}
+        isValidEmailErrors={isValidEmailErrors}
+        error={error}
+      />
 
-        <RightColumn
-          isValidSituationError={isValidSituationError}
-          error={error}
-        />
-      </div>
+      <RightColumn
+        isValidSituationError={isValidSituationError}
+        error={error}
+      />
 
       <DualButton
         leftButtonText={"Cancel"}
+        leftButtonDisabled={isPending}
+        leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
+        rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         rightButtonDisabled={isPending}
         rightButtonText={isPending ? "Loading..." : "Send"}
         rightButtonType={"submit"}
