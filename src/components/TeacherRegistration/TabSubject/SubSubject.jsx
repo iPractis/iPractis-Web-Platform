@@ -14,7 +14,7 @@ const SubSubject = ({
   const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
 
   const handleInputChange = (field, value) => {
-    if (descriptionSubSubject?.length >= 20) return;
+    if (value?.length > 20) return;
 
     const updatedEducation = { ...subSubject, [field]: value };
 
