@@ -2,11 +2,11 @@ import AvailabilityRevision from "./AvailabilityRevision";
 import WorkTimePreferences from "./WorkTimePreferences";
 import WorkSchedule from "./WorkSchedule";
 
-const TabAvailability = ({ activeTab, saved }) => {
+const TabAvailability = ({ activeTab, saved, draft }) => {
   return (
     <div className={`${activeTab !== 3 && "hidden"}`}>
       <div className={`${!saved ? "block" : "hidden"}`}>
-        <WorkTimePreferences />
+        <WorkTimePreferences draft={draft} />
 
         <WorkSchedule />
       </div>

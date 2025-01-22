@@ -48,13 +48,17 @@ const TabsDisplayedInfo = ({
   );
 
   // TAB SUBJECT STATES
-  const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(draft?.teachToYoungPersons);
-  const [teachToYoungPersons, setTeachToYoungPersons] = useState(draft?.teachToAmateurPersons);
+  const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(
+    draft?.teachToYoungPersons
+  );
+  const [teachToYoungPersons, setTeachToYoungPersons] = useState(
+    draft?.teachToAmateurPersons
+  );
   const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
   const [isTabSubjectPending, setIsTabSubjectPending] = useState(false);
   const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
   const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -77,7 +81,7 @@ const TabsDisplayedInfo = ({
 
         const res = await axios.post(`/teacher/set/profile`, actualDraftInfo);
 
-        console.log(res);
+        console.log(res, "PROFILE");
       }
 
       // TAB SUBJECT
@@ -93,16 +97,21 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.studentLevel = selectedLevel;
         actualDraftInfo.subject = subjectToTeach;
         actualDraftInfo.withdrawal = withdrawal;
-        console.log(actualDraftInfo);
 
-        return;
         const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
 
-        console.log(res);
+        console.log(res, "SUBJECT");
       }
 
+      // TAB AVAILABILITY
       if (activeTab === 3) {
         setSaved(true);
+
+        actualDraftInfo.dailyWorkTime = e?.target?.dailyWorkTime?.value;
+        actualDraftInfo.timeZone = e?.target?.timeZone?.value;
+        
+        const res = await axios.put(`/teacher/set/availability`, actualDraftInfo);
+        console.log(res, "AVAILABILITY");
       } else {
         setActiveTab((prev) => prev + 1);
       }
@@ -159,7 +168,7 @@ const TabsDisplayedInfo = ({
       <TabBackground activeTab={activeTab} />
 
       {/* 3 */}
-      <TabAvailability activeTab={activeTab} saved={saved} />
+      <TabAvailability activeTab={activeTab} saved={saved} draft={draft} />
 
       {/* 4 */}
       <TabStatus activeTab={activeTab} />

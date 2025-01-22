@@ -15,7 +15,7 @@ import {
 } from "../../Icons";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 
-const WorkTimePreferences = () => {
+const WorkTimePreferences = ({ draft }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -57,6 +57,7 @@ const WorkTimePreferences = () => {
                 <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
             }
+            defaultSelectedKeys={[draft?.timeZone]}
             classNames={{
               trigger: ["select-wrapper-ipractis"],
               innerWrapper: ["select-ipractis", "w-full"],
@@ -85,6 +86,7 @@ const WorkTimePreferences = () => {
           <CustomNextUiInput
             type="text"
             name="dailyWorkTime"
+            defaultValue={draft?.dailyWorkTime}
             placeholder="Define your daily work time"
             startContent={
               <InputBGWrapperIcon>
