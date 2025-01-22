@@ -1,18 +1,19 @@
 import SectionHeader from "../Globals/SectionHeader";
-import { SparkleIcon } from "../Icons";
+import { HelpIcon } from "../Icons";
 
 const TopColumn = () => {
   return (
     <article>
       {/* Heading Title */}
-      <div className="p-4">
-        <SectionHeader
-          descriptionText="We are sorry to see you here, we hope your problem will be resolved soon."
-          titleText="Account support service"
-          titleIcon={<SparkleIcon />}
-          titleClassName="MT-SB-1"
-        />
-      </div>
+      <SectionHeader
+        descriptionText="We're here to help! Please let us know how we can assist in resolving your issue promptly."
+        titleText="Account Assistance"
+        titleIcon={<HelpIcon fillColor={"fill-primary-color-P1"} />}
+        titleClassName="MT-SB-1"
+        wrapperSectionHeaderClassName={
+          "sm:bg-primary-color-P11 rounded-[32px] sm:p-8"
+        }
+      />
     </article>
   );
 };

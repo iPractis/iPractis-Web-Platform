@@ -5,7 +5,7 @@ import { UserAddIcon } from "../Icons";
 export const Login = () => {
   return (
     <section className="container-page-v8 sm:px-0 px-8">
-      <div className="sm:my-8 my-4 rounded-[32px]">
+      <div className="sm:my-8 my-4">
         {/* Login if there's an account */}
         <ContainerForm />
 
