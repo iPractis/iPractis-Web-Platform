@@ -38,19 +38,7 @@ const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
   };
 
   // Update description text
-  const handleUpdateSubSubject = (index, updatedEducation, textValue) => {
-    if (textValue?.length <= 20) {
-      // Update the VALUE directly in the object before returning!
-      const updatedSubSubjects = selectedSubSubjects?.map((education, i) =>
-        i === index ? updatedEducation : education
-      );
-
-      setSelectedSubSubjects(updatedSubSubjects);
-
-      return;
-    }
-
-    // If we reach to 20 characters, we update as we normally do!
+  const handleUpdateSubSubject = (index, updatedEducation) => {
     const updatedSubSubjects = selectedSubSubjects?.map((education, i) =>
       i === index ? updatedEducation : education
     );
