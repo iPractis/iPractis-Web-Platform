@@ -3,13 +3,22 @@ import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFi
 import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import { useState } from "react";
 
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
-  descriptionSubSubjectOnChange,
-  descriptionSubSubject,
-  selected,
+  handleUpdateSubSubject,
+  subSubject,
+  index,
 }) => {
+  const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
+
+  const handleInputChange = (field, value) => {
+    const updatedEducation = { ...subSubject, [field]: value };
+    handleUpdateSubSubject(index, updatedEducation, value);
+    setDescriptionSubSubject(value);
+  };
+
   return (
     <div>
       <div className="flex items-end mt-10 mb-2.5 gap-2">
@@ -17,10 +26,10 @@ const SubSubject = ({
         <CustomNextUiInput
           isReadOnly
           type="text"
-          defaultValue={selected}
           name="selectedSubSuject"
           className="pointer-events-none"
           placeholder="Selected sub-subject"
+          defaultValue={subSubject?.selected}
           startContent={
             <InputBGWrapperIcon>
               <UserSpeakingRightIcon fillColor={"fill-primary-color-P4"} />
@@ -30,7 +39,7 @@ const SubSubject = ({
 
         <button
           className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-          onClick={() => handleDeleteSelectedSubSuject(selected)}
+          onClick={() => handleDeleteSelectedSubSuject(index)}
           type="button"
         >
           <TrashBinIcon
@@ -45,7 +54,7 @@ const SubSubject = ({
         nameTextarea={"descriptionSubjectToTeach"}
         inputClassName={"h-[150px]"}
         value={descriptionSubSubject}
-        onChange={(e) => descriptionSubSubjectOnChange(e, selected)}
+        onChange={(e) => handleInputChange("description", e?.target?.value)}
         placeholder={"Enter a text"}
         maxCharactersLength={20}
         typeError={"Max Length Exceeded"}

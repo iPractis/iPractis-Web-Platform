@@ -51,6 +51,7 @@ const TabsDisplayedInfo = ({
 
   // TAB SUBJECT STATES
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
+  console.log(selectedSubSubjects, "selectedSubSubjects");  
   const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(
     draft?.teachToYoungPersons
   );
@@ -100,7 +101,8 @@ const TabsDisplayedInfo = ({
 
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
+        actualDraftInfo.subjectIntroduction =
+          e?.target?.subjectIntroduction?.value;
         actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.teachToAmateurPersons = teachToAmateurPersons;

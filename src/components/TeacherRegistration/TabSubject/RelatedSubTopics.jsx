@@ -10,7 +10,6 @@ import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
 const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
-  const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
   // Add sub-subject
@@ -19,7 +18,7 @@ const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
 
     const selectedSubSubjectDetails = {
       selected: subSubjectSelected,
-      description: descriptionSubSubject,
+      description: "",
     };
 
     setSelectedSubSubjects([...selectedSubSubjects, selectedSubSubjectDetails]);
@@ -36,27 +35,24 @@ const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
 
     setSelectedSubSubjects(filteredSelectedSubSubjects);
     setSelectedSubSubject("");
-    setDescriptionSubSubject("");
   };
 
   // Update description text
-  const descriptionSubSubjectOnChange = (e, selected) => {
-    const textValue = e?.target?.value;
-
+  const handleUpdateSubSubject = (index, updatedEducation, textValue) => {
     if (textValue?.length <= 20) {
       // Update the VALUE directly in the object before returning!
-      const updatedSubSubjects = selectedSubSubjects?.map((item) =>
-        item?.selected === selected ? { ...item, description: textValue } : item
+      const updatedSubSubjects = selectedSubSubjects?.map((education, i) =>
+        i === index ? updatedEducation : education
       );
 
       setSelectedSubSubjects(updatedSubSubjects);
 
-      return setDescriptionSubSubject(textValue);
+      return;
     }
 
     // If we reach to 20 characters, we update as we normally do!
-    const updatedSubSubjects = selectedSubSubjects?.map((item) =>
-      item?.selected === selected ? { ...item, description: textValue } : item
+    const updatedSubSubjects = selectedSubSubjects?.map((education, i) =>
+      i === index ? updatedEducation : education
     );
 
     setSelectedSubSubjects(updatedSubSubjects);
@@ -125,13 +121,13 @@ const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
         </div>
 
         {/* Selected Sub-subjects */}
-        {selectedSubSubjects?.map((subSubject) => (
+        {selectedSubSubjects?.map((subSubject, index) => (
           <SubSubject
             handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
-            descriptionSubSubjectOnChange={descriptionSubSubjectOnChange}
-            descriptionSubSubject={descriptionSubSubject}
-            key={subSubject?.selected}
-            {...subSubject}
+            handleUpdateSubSubject={handleUpdateSubSubject}
+            subSubject={subSubject}
+            index={index}
+            key={index}
           />
         ))}
       </div>
