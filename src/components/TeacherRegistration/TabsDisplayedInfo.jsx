@@ -25,9 +25,11 @@ const TabsDisplayedInfo = ({
   // setDraft,
 }) => {
   // TAB PROFILE STATES
-  const [isTabProfilePending, setIsTabProfilePending] = useState(false);
+  const [birthDate, setBirthDate] = useState(
+    draft?.birthDate && parseDate(draft?.birthDate)
+  );
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
-  const [birthDate, setBirthDate] = useState(parseDate(draft?.birthDate));
+  const [isTabProfilePending, setIsTabProfilePending] = useState(false);
   const [selectedGender, setSelectedGender] = useState(draft?.gender);
   const [introText, setIntroText] = useState(draft?.introduction);
   const countryFlags = {
@@ -59,6 +61,9 @@ const TabsDisplayedInfo = ({
   const [subjectToTeach, setSubjectToTeach] = useState(draft?.subject);
   const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
 
+  // TAB BACKGROUND STATES
+  const [experiences, setExperiences] = useState(draft?.careerExperience);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,7 +91,8 @@ const TabsDisplayedInfo = ({
 
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
+        actualDraftInfo.subjectIntroduction =
+          e?.target?.subjectIntroduction?.value;
         actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.teachToAmateurPersons = teachToAmateurPersons;
@@ -103,14 +109,25 @@ const TabsDisplayedInfo = ({
         console.log(res, "SUBJECT");
       }
 
+      // TAB BACKGROUND
+      if (activeTab === 2) {
+        actualDraftInfo.careerExperience = experiences;
+
+        const res = await axios.put(`/teacher/set/background`, actualDraftInfo);
+        console.log(res, "BACKGROUND");
+      }
+
       // TAB AVAILABILITY
       if (activeTab === 3) {
         setSaved(true);
 
         actualDraftInfo.dailyWorkTime = e?.target?.dailyWorkTime?.value;
         actualDraftInfo.timeZone = e?.target?.timeZone?.value;
-        
-        const res = await axios.put(`/teacher/set/availability`, actualDraftInfo);
+
+        const res = await axios.put(
+          `/teacher/set/availability`,
+          actualDraftInfo
+        );
         console.log(res, "AVAILABILITY");
       } else {
         setActiveTab((prev) => prev + 1);
@@ -165,7 +182,12 @@ const TabsDisplayedInfo = ({
       />
 
       {/* 2 */}
-      <TabBackground activeTab={activeTab} />
+      <TabBackground
+        setExperiences={setExperiences}
+        experiences={experiences}
+        activeTab={activeTab}
+        draft={draft}
+      />
 
       {/* 3 */}
       <TabAvailability activeTab={activeTab} saved={saved} draft={draft} />
