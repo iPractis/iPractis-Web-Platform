@@ -1,18 +1,19 @@
 import SectionHeader from "@/src/components/Globals/SectionHeader";
-import { SparkleIcon } from "../Icons";
+import { PadLockOpenedIcon } from "../Icons";
 
 const TopColumn = () => {
   return (
     <article>
       {/* Heading Title */}
-      <div className="p-4">
-        <SectionHeader
-          descriptionText="We are sorry to see you here, we hope your problem will be resolved soon."
-          titleText="Account support service"
-          titleClassName="MT-SB-1"
-          titleIcon={<SparkleIcon />}
-        />
-      </div>
+      <SectionHeader
+        descriptionText="Your password has been updated. You can now log in with your new password."
+        titleText="Password Changed Successfully"
+        titleClassName="MT-SB-1"
+        wrapperSectionHeaderClassName={
+          "sm:bg-primary-color-P11 rounded-[32px] sm:p-8"
+        }
+        titleIcon={<PadLockOpenedIcon />}
+      />
     </article>
   );
 };
