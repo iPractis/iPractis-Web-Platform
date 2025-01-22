@@ -3,12 +3,20 @@ import DualButton from "../Globals/DualButton";
 import { redirect } from "next/navigation";
 
 const TabsButtonsBottomNav = ({
+  isTabAvailabilityPending,
+  isTabBackgroundPending,
   isTabSubjectPending,
   isTabProfilePending,
   setActiveTab,
   activeTab,
   saved,
 }) => {
+  const pendingConditions =
+    isTabBackgroundPending ||
+    isTabSubjectPending ||
+    isTabAvailabilityPending ||
+    isTabProfilePending;
+
   return (
     !saved &&
     activeTab !== 4 && (
@@ -34,11 +42,11 @@ const TabsButtonsBottomNav = ({
             <span className="flex-[100%]">Back</span>
           </div>
         }
-        leftButtonDisabled={isTabProfilePending || isTabSubjectPending}
-        rightButtonDisabled={isTabProfilePending || isTabSubjectPending}
+        leftButtonDisabled={pendingConditions}
+        rightButtonDisabled={pendingConditions}
         rightButtonText={
           <div className="flex justify-center items-center">
-            {isTabProfilePending || isTabSubjectPending ? (
+            {pendingConditions ? (
               "Loading..."
             ) : (
               <>

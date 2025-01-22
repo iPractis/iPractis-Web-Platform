@@ -62,7 +62,12 @@ const TabsDisplayedInfo = ({
   const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
 
   // TAB BACKGROUND STATES
+  const [isTabBackgroundPending, setIsTabBackgroundPending] = useState(false);
   const [experiences, setExperiences] = useState(draft?.careerExperience);
+
+  // TAB AVAILAIBILITY STATES
+  const [isTabAvailabilityPending, setIsTabAvailabilityPending] =
+    useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +77,8 @@ const TabsDisplayedInfo = ({
     try {
       setIsTabProfilePending(true);
       setIsTabSubjectPending(true);
+      setIsTabBackgroundPending(true);
+      setIsTabAvailabilityPending(true);
 
       // TAB PROFILE
       if (activeTab === 0) {
@@ -137,6 +144,8 @@ const TabsDisplayedInfo = ({
     } finally {
       setIsTabProfilePending(false);
       setIsTabSubjectPending(false);
+      setIsTabBackgroundPending(false);
+      setIsTabAvailabilityPending(false);
     }
 
     // setDraft(actualDraftInfo);
@@ -197,6 +206,8 @@ const TabsDisplayedInfo = ({
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav
+        isTabAvailabilityPending={isTabAvailabilityPending}
+        isTabBackgroundPending={isTabBackgroundPending}
         isTabSubjectPending={isTabSubjectPending}
         isTabProfilePending={isTabProfilePending}
         setActiveTab={setActiveTab}
