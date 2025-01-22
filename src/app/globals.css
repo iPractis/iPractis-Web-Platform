@@ -31,6 +31,18 @@
   border-color: var(--quaternary-color-A5) !important;
 }
 
+/* This is for otp input spacing */
+.otp-inputs-container input:nth-child(3) {
+  margin-right: 2rem;
+}
+
+/* sm(640px) */
+@media (max-width: 40em) {
+  .otp-inputs-container input:nth-child(3) {
+    margin-right: 0;
+  }
+}
+
 @layer components {
   .btn {
     @apply inline-block border-0 bg-transparent cursor-pointer animation-fade text-center;

@@ -57,7 +57,7 @@ const TopColumn = () => {
 
         <OTPInput
           renderInput={(props) => <input {...props} />}
-          containerStyle={"justify-between gap-4 sm:px-4"}
+          containerStyle={"otp-inputs-container justify-between gap-4 sm:px-4"}
           skipDefaultStyles
           onChange={setOtp}
           shouldAutoFocus
