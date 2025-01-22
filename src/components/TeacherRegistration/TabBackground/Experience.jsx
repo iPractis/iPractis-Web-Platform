@@ -14,6 +14,7 @@ const Experience = ({ setExperiences, experiences }) => {
       to: "",
       description: "",
     };
+    
     setExperiences([...experiences, newExperience]);
   };
 

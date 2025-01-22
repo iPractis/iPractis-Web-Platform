@@ -50,6 +50,7 @@ const TabsDisplayedInfo = ({
   );
 
   // TAB SUBJECT STATES
+  const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
   const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(
     draft?.teachToYoungPersons
   );
@@ -99,14 +100,13 @@ const TabsDisplayedInfo = ({
 
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subjectIntroduction =
-          e?.target?.subjectIntroduction?.value;
+        actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
         actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.teachToAmateurPersons = teachToAmateurPersons;
         actualDraftInfo.hourlyPrice = e?.target?.hourlyPrice?.value;
         actualDraftInfo.teachToYoungPersons = teachToYoungPersons;
-        actualDraftInfo.subSubject = e?.target?.subSubject?.value;
+        actualDraftInfo.subSubject = selectedSubSubjects;
         actualDraftInfo.videoLink = e?.target?.videoLink?.value;
         actualDraftInfo.studentLevel = selectedLevel;
         actualDraftInfo.subject = subjectToTeach;
@@ -180,7 +180,9 @@ const TabsDisplayedInfo = ({
       <TabSubject
         setTeachToAmateurPersons={setTeachToAmateurPersons}
         setTeachToYoungPersons={setTeachToYoungPersons}
+        setSelectedSubSubjects={setSelectedSubSubjects}
         teachToAmateurPersons={teachToAmateurPersons}
+        selectedSubSubjects={selectedSubSubjects}
         teachToYoungPersons={teachToYoungPersons}
         setSubjectToTeach={setSubjectToTeach}
         setSelectedLevel={setSelectedLevel}

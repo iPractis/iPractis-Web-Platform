@@ -8,8 +8,7 @@ import { useState } from "react";
 // Images && icons
 import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
-const RelatedSubTopics = () => {
-  const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
+const RelatedSubTopics = ({ selectedSubSubjects, setSelectedSubSubjects }) => {
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);

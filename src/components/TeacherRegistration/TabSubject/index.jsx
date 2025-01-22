@@ -10,7 +10,9 @@ import StudentAge from "./StudentAge";
 const TabSubject = ({
   setTeachToAmateurPersons,
   setTeachToYoungPersons,
+  setSelectedSubSubjects,
   teachToAmateurPersons,
+  selectedSubSubjects,
   teachToYoungPersons,
   setSubjectToTeach,
   setSelectedLevel,
@@ -30,7 +32,10 @@ const TabSubject = ({
           draft={draft}
         />
 
-        <RelatedSubTopics />
+        <RelatedSubTopics
+          setSelectedSubSubjects={setSelectedSubSubjects}
+          selectedSubSubjects={selectedSubSubjects}
+        />
 
         <PresentYourSelf draft={draft} />
 
