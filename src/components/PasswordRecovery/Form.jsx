@@ -2,6 +2,7 @@
 
 import { requestPasswordInput } from "@/src/lib/actions/authAction";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../Globals/CustomNextUiInput";
 
 // React imports
@@ -10,6 +11,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 // Icons && images
+import { ChevronRightBiggerIcon } from "../Icons";
 import email from "@/public/icons/email.png";
 
 const Form = () => {
@@ -73,31 +75,39 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="my-[50px]">
-        <CustomNextUiInput
-          type="text"
-          name="email"
-          placeholder="Enter your email address"
-          startContent={<Image className="w-9" src={email} alt="Email Icon" />}
-          classNames={{
-            inputWrapper: isValidEmailError && "form-input-error",
-          }}
-        />
+      <CustomNextUiInput
+        type="text"
+        name="email"
+        placeholder="Enter your email address"
+        startContent={<Image className="w-9" src={email} alt="Email Icon" />}
+        classNames={{
+          inputWrapper: isValidEmailError && "form-input-error",
+        }}
+      />
 
-        {isValidEmailError && (
-          <ErrorMessageiPractis
-            typeError={error?.title}
-            descError={error?.message}
-          />
-        )}
-      </div>
+      {isValidEmailError && (
+        <ErrorMessageiPractis
+          typeError={error?.title}
+          descError={error?.message}
+        />
+      )}
 
       <button
-        className="btn btn-secondary w-full py-3 px-4 rounded-2xl MT-SB-1"
+        className="btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
         disabled={isPending}
         type="submit"
       >
-        {isPending ? "Loading..." : " Send me an email"}
+        {isPending ? (
+          "Loading..."
+        ) : (
+          <>
+            <span className="flex-1">Send a request</span>
+
+            <InputBGWrapperIcon>
+              <ChevronRightBiggerIcon fillColor={'fill-tertiary-color-SC5'} />
+            </InputBGWrapperIcon>
+          </>
+        )}
       </button>
     </form>
   );

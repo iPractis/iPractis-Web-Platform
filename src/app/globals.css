@@ -184,7 +184,7 @@
   }
 
   .container-page-v8 {
-    @apply max-w-[494px] mx-auto mt-4;
+    @apply max-w-[494px] mx-auto;
   }
 
   .animation-fade {
