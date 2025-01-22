@@ -64,6 +64,7 @@ const TabsDisplayedInfo = ({
   // TAB BACKGROUND STATES
   const [isTabBackgroundPending, setIsTabBackgroundPending] = useState(false);
   const [experiences, setExperiences] = useState(draft?.careerExperience);
+  const [educations, setEducations] = useState(draft?.education);
 
   // TAB AVAILAIBILITY STATES
   const [isTabAvailabilityPending, setIsTabAvailabilityPending] =
@@ -119,6 +120,7 @@ const TabsDisplayedInfo = ({
       // TAB BACKGROUND
       if (activeTab === 2) {
         actualDraftInfo.careerExperience = experiences;
+        actualDraftInfo.education = educations;
 
         const res = await axios.put(`/teacher/set/background`, actualDraftInfo);
         console.log(res, "BACKGROUND");
@@ -193,9 +195,10 @@ const TabsDisplayedInfo = ({
       {/* 2 */}
       <TabBackground
         setExperiences={setExperiences}
+        setEducations={setEducations}
         experiences={experiences}
+        educations={educations}
         activeTab={activeTab}
-        draft={draft}
       />
 
       {/* 3 */}

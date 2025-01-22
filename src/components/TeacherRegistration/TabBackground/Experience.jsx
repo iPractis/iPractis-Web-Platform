@@ -5,7 +5,7 @@ import SectionHeader from "../../Globals/SectionHeader";
 // Icons
 import { AddBoxIcon, UserTieIcon } from "../../Icons";
 
-const Experience = ({ setExperiences, experiences, draft }) => {
+const Experience = ({ setExperiences, experiences }) => {
   // ADD EXPERIENCE
   const handleAddExperience = () => {
     const newExperience = {
