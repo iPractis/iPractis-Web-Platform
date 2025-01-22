@@ -46,7 +46,7 @@ const TopColumn = () => {
         wrapperSectionHeaderClassName={
           "bg-primary-color-P11 rounded-[32px] p-8"
         }
-        titleClassName={"MT-SB-2"}
+        titleClassName={"MT-SB-1"}
       />
 
       <div className="space-y-8 sm:px-8 sm:mt-[50px] mt-8">
@@ -115,13 +115,13 @@ const TopColumn = () => {
 
         <button
           type="button"
-          className="btn btn-primary w-full py-3 px-4 rounded-2xl flex justify-center items-center MT-SB-1"
+          className="btn btn-primary w-full p-1.5 rounded-2xl flex gap-5 items-center MT-SB-1"
         >
-          <div className="flex-1">
-            <HelpIcon fillColor={"fill-primary-color-P12"} />
-          </div>
+          <InputBGWrapperIcon>
+            <HelpIcon fillColor={"fill-primary-color-P1"} />
+          </InputBGWrapperIcon>
 
-          <span className="flex-[90%]">Contact support</span>
+          <span>Contact support</span>
         </button>
       </div>
     </form>
