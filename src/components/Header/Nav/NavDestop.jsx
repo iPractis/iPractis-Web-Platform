@@ -29,9 +29,9 @@ const NavDesktop = () => {
         <div className="flex items-center gap-1.5">
           <Link
             href="/login"
-            className="btn btn-quinary flex items-center rounded-[10px] px-4 py-2 gap-1.5 ST-SB-4 group"
+            className="btn btn-quinary flex items-center pe-4 p-1.5 gap-4 rounded-2xl ST-4 group w-[107px] h-[38px]"
           >
-            Log in{" "}
+            <span className="flex-1">Log in</span>{" "}
             <ChevronRightDoorIcon
               fillColor={
                 "fill-primary-color-P12 group-hover:fill-primary-color-P1"
@@ -41,15 +41,16 @@ const NavDesktop = () => {
 
           <Link
             href="/register"
-            className="btn btn-tertiary flex items-center gap-5 ST-SB-4 ps-4 p-1.5 rounded-2xl w-[131px]"
+            className="btn btn-tertiary flex justify-center items-center ST-4 pe-4 p-1.5 rounded-2xl gap-4 w-[131px]"
           >
-            Register
             <InputBGWrapperIcon className={"bg-primary-color-P1 p-0 w-7 h-7"}>
               <UserAddCircleSmallerIcon
                 fillColor={"fill-primary-color-P1"}
                 strokeColor={"stroke-primary-color-P1"}
               />
             </InputBGWrapperIcon>
+
+            <span className="flex-1">Register</span>
           </Link>
         </div>
 
