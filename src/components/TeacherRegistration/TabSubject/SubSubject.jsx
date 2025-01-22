@@ -19,7 +19,7 @@ const SubSubject = ({
     const updatedEducation = { ...subSubject, [field]: value };
 
     handleUpdateSubSubject(index, updatedEducation);
-    
+
     setDescriptionSubSubject(value);
   };
 
@@ -43,7 +43,7 @@ const SubSubject = ({
 
         <button
           className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-          onClick={() => handleDeleteSelectedSubSuject(index)}
+          onClick={() => handleDeleteSelectedSubSuject(subSubject?.selected)}
           type="button"
         >
           <TrashBinIcon
