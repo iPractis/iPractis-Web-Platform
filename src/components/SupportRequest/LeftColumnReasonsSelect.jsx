@@ -1,6 +1,6 @@
 import { Select, SelectItem } from "@nextui-org/react";
 import { reasons } from "@/src/data/dataSupportRequest";
-import { ChevronDownIcon } from "../Icons";
+import { ChevronDownBigIcon } from "../Icons";
 
 // Nextjs imports
 import { useState } from "react";
@@ -9,6 +9,7 @@ import Image from "next/image";
 // Images && icons
 import circleHelpInput from "@/public/icons/circle-help-input.png";
 import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 
 const LeftColumnReasonsSelect = ({ isValidReasonErrors, error }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,9 +27,17 @@ const LeftColumnReasonsSelect = ({ isValidReasonErrors, error }) => {
           startContent={
             <Image className="w-9" src={circleHelpInput} alt="User Input" />
           }
+          endContent={
+            <InputBGWrapperIcon>
+              <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
           classNames={{
-            trigger: ["select-wrapper-ipractis", isValidReasonErrors && "form-input-error"],
-            innerWrapper: ["select-ipractis"],
+            trigger: [
+              "select-wrapper-ipractis",
+              isValidReasonErrors && "form-input-error",
+            ],
+            innerWrapper: ["select-ipractis w-full"],
             value: [
               "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
             ],
@@ -39,14 +48,6 @@ const LeftColumnReasonsSelect = ({ isValidReasonErrors, error }) => {
             <SelectItem key={reason}>{reason}</SelectItem>
           ))}
         </Select>
-
-        <button
-          className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-          onClick={() => setIsOpen(!isOpen)}
-          type="button"
-        >
-          <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
-        </button>
       </div>
 
       {isValidReasonErrors && (
