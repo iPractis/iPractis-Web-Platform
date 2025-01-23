@@ -35,7 +35,7 @@ export const TabBody = ({ draftData }) => {
 
   return (
     <main
-      className={`container-page-v7 ${
+      className={`max-w-[1000px] mb-[100px] mx-auto ${
         saved ? "sm:space-y-16 space-y-0" : "space-y-16"
       } px-2`}
     >
