@@ -33,7 +33,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
             key={TabIndex}
-            className={`w-full flex items-center py-2 px-4 rounded-2xl ST-4 ${
+            className={`w-full flex gap-3 items-center p-1.5 rounded-2xl ST-SB-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
             onClick={() => {
@@ -41,17 +41,11 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
               setSaved(false);
             }}
           >
-            <span className="md:me-auto mx-auto self-start">
-              <TabButton.Icon
-                fillColor={
-                  activeTab === TabIndex
-                    ? "fill-primary-color-P1"
-                    : "fill-primary-color-P12"
-                }
-              />
+            <span className="bg-primary-color-P1 p-1 rounded-[10px]">
+              <TabButton.Icon fillColor={"fill-primary-color-P12"} />
             </span>
 
-            <span className="md:block hidden w-full text-center font-bold">
+            <span className="md:block hidden font-bold">
               {TabButton?.textButton}
             </span>
           </button>
@@ -81,7 +75,9 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
                   Send your applicaton for reviewing
                 </span>{" "}
                 <InputBGWrapperIcon>
-                  <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+                  <ChevronRightBiggerIcon
+                    fillColor={"fill-tertiary-color-SC5"}
+                  />
                 </InputBGWrapperIcon>
               </button>
             </div>
