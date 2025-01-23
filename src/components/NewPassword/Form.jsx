@@ -175,6 +175,7 @@ const Form = () => {
         leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         leftButtonText={"Cancel"}
+        leftButtonHref="/login"
         leftButtonDisabled={isPending}
         rightButtonDisabled={isPending}
         rightButtonText={isPending ? "Loading..." : "Change password"}

@@ -1,6 +1,8 @@
 import { twMerge } from "tailwind-merge";
+import Link from "next/link";
 
 const DualButton = ({
+  leftButtonHref = "#",
   leftButtonDisabled,
   leftButtonText,
   leftButtonClassName,
@@ -14,17 +16,18 @@ const DualButton = ({
 }) => {
   return (
     <div className={twMerge("flex gap-4 items-center", dualButtonWrapper)}>
-      <button
+      <Link
         className={twMerge(
           `btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4`,
           leftButtonClassName
         )}
+        href={leftButtonHref}
         disabled={leftButtonDisabled}
         onClick={onClickLeftButton}
         type="button"
       >
         {leftButtonText}
-      </button>
+      </Link>
 
       <button
         className={twMerge(

@@ -129,6 +129,7 @@ const Form = () => {
 
       <DualButton
         leftButtonText={"Cancel"}
+        leftButtonHref={"/account-assistance"}
         leftButtonDisabled={isPending}
         leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
