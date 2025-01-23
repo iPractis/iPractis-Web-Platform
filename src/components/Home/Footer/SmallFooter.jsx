@@ -1,4 +1,4 @@
-import LanguageSwitcher from "./LanguageSwitcher";
+// import LanguageSwitcher from "./LanguageSwitcher";
 import Link from "next/link";
 
 const SmallFooter = () => {
@@ -8,7 +8,7 @@ const SmallFooter = () => {
         <div className="flex flex-col-reverse sm:flex-row items-center sm:gap-[65px] gap-4">
           <div>
             <p className="ST-2 text-primary-color-P12">
-              &copy; 2024 iPractis Limited.
+              &copy; 2025 iPractis Limited.
             </p>
           </div>
 
@@ -17,7 +17,7 @@ const SmallFooter = () => {
             <Link href={"#"}>Careers</Link>
             <Link href={"#"}>Contact us</Link>
 
-            <LanguageSwitcher />
+            {/* <LanguageSwitcher /> */}
           </div>
         </div>
       </div>
