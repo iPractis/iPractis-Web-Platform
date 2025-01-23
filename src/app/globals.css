@@ -168,7 +168,7 @@
 /* Utility classes for specific styles, sizes, and animations */
 @layer utilities {
   .container-page-v1 {
-    @apply max-w-[1200px] mx-auto md:px-4 px-10;
+    @apply max-w-[1000px] mx-auto md:px-4 px-10;
   }
 
   .container-page-v2 {

@@ -20,7 +20,7 @@ const PlatformExperience = () => {
         />
 
         <div className="flex flex-wrap items-center justify-center gap-4 mt-[30px]">
-          <div className="lg:min-w-[378px] min-w-full">
+          <div className="lg:min-w-[312px] min-w-full">
             <PlatformButton
               platformStoreLink={"https://www.apple.com/"}
               platformStoreName={"Apple Play"}
@@ -29,7 +29,7 @@ const PlatformExperience = () => {
             />
           </div>
 
-          <div className="lg:min-w-[378px] min-w-full">
+          <div className="lg:min-w-[312px] min-w-full">
             {" "}
             <PlatformButton
               platformStoreLink={"https://play.google.com/store/games"}
@@ -39,7 +39,7 @@ const PlatformExperience = () => {
             />
           </div>
 
-          <div className="lg:min-w-[378px] min-w-full">
+          <div className="lg:min-w-[312px] min-w-full">
             <PlatformButton
               platformStoreLink={"https://www.microsoft.com/en-us/store/b/pc"}
               platformStoreName={"Microsoft Store"}

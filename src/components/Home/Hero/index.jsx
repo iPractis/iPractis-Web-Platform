@@ -11,7 +11,7 @@ const Hero = () => {
         <div className="flex-1">
           <div className="flex flex-col justify-between h-full">
             <h1 className="text-primary-color-P1 md:LT-SB-2 LT-SB-1">
-              Learn any subject with top-rated tutor
+              Learn any subject with <span className="block">top-rated tutor</span>
             </h1>
 
             <div className="md:hidden block max-w-full mx-auto my-10">
