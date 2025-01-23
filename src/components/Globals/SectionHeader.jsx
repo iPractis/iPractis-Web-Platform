@@ -4,6 +4,7 @@ const SectionHeader = ({
   titleClassName = "MT-SB-2",
   descriptionClassName = "mt-1.5",
   wrapperSectionHeaderClassName = "",
+  headerContainerClassName = "",
   descriptionText,
   titleText,
   titleIcon,
@@ -11,7 +12,7 @@ const SectionHeader = ({
 }) => (
   <>
     <div className={wrapperSectionHeaderClassName}>
-      <div>
+      <div className={headerContainerClassName}>
         <h3
           className={twMerge(
             "flex gap-2.5 text-primary-color-P1 items-center",

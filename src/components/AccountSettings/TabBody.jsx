@@ -8,7 +8,7 @@ export const TabBody = () => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <main className={`${activeTab === 0 || activeTab === 1 ? "max-w-[1000px]": "max-w-[900px]"} mx-auto space-y-8 sm:mt-[22px] mt-[18px]`}>
+    <main className={`${activeTab === 0 || activeTab === 1 ? "max-w-[1000px]": "max-w-[900px]"} mx-auto space-y-8 px-4 sm:mt-[22px] mt-[18px]`}>
       {/* Tabs buttons (top) */}
       <TabsButtons setActiveTab={setActiveTab} activeTab={activeTab} />
 

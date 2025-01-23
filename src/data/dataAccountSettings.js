@@ -8,7 +8,7 @@ import {
 
 export const tabsButtons = [
   {
-    textButton: "Subject",
+    textButton: "Dashboard",
     Icon: DashboardMediumIcon,
   },
 
