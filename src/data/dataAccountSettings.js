@@ -1,34 +1,34 @@
 import {
-  DashboardIcon,
-  NotificationIcon,
-  PadLockClosedIcon,
-  UserIcon,
-  WalletIcon,
+  DashboardMediumIcon,
+  NotificationMediumIcon,
+  PadLockClosedMediumIcon,
+  UserMediumIcon,
+  WalletMediumIcon,
 } from "../components/Icons";
 
 export const tabsButtons = [
   {
     textButton: "Subject",
-    Icon: DashboardIcon,
+    Icon: DashboardMediumIcon,
   },
 
   {
     textButton: "Account",
-    Icon: UserIcon,
+    Icon: UserMediumIcon,
   },
 
   {
     textButton: "Security",
-    Icon: PadLockClosedIcon,
+    Icon: PadLockClosedMediumIcon,
   },
 
   {
     textButton: "Notification",
-    Icon: NotificationIcon,
+    Icon: NotificationMediumIcon,
   },
 
   {
     textButton: "Finance",
-    Icon: WalletIcon,
+    Icon: WalletMediumIcon,
   },
 ];
