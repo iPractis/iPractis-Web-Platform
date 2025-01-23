@@ -1535,6 +1535,25 @@ export const ChevronRightDoorIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const ChevronRightDoorSmallIcon = ({ fillColor }) => (
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.625 9.53307C8.92155 9.23956 8.92155 8.76046 8.625 8.46695L6.50367 6.36738C6.03009 5.89866 5.22608 6.23412 5.22608 6.90044V8.25L2.25 8.25C1.83579 8.25 1.5 8.58578 1.5 9C1.5 9.41421 1.83579 9.75 2.25 9.75L5.22608 9.75V11.0996C5.22608 11.7659 6.03009 12.1014 6.50367 11.6326L8.625 9.53307Z"
+      className={fillColor}
+    />
+    <path
+      d="M10.5 3.4212C10.5 2.7329 10.9684 2.13293 11.6362 1.96599L14.6362 1.21597C15.5829 0.979281 16.5 1.69532 16.5 2.67118V15.3288C16.5 16.3047 15.5829 17.0207 14.6362 16.7841L11.6362 16.0341C10.9684 15.8671 10.5 15.2671 10.5 14.5788V3.4212Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const ChevronRightDoorBoldIcon = () => (
   <svg
     width="20"
