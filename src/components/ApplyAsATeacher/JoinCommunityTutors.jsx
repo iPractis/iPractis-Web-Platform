@@ -1,6 +1,8 @@
 import header from "@/public/images/apply-as-teacher-hero.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import { ChevronRightBiggerIcon } from "../Icons";
 
 const JoinCommunityTutors = () => {
   return (
@@ -8,7 +10,7 @@ const JoinCommunityTutors = () => {
       <div className="flex-[20%]">
         <div className="flex flex-col justify-between h-full">
           <h1 className="LT-SB-2 text-primary-color-P1">
-            Join our top rated community tutors
+            Join our top rated <span className="block">community tutors</span>
           </h1>
 
           <ul className="list-disc text-primary-color-P6 ps-5 space-y-1 lg:mt-0 mt-[25px]">
@@ -34,9 +36,13 @@ const JoinCommunityTutors = () => {
 
           <Link
             href={"#"}
-            className="btn btn-primary lg:w-[634px] w-full p-2.5 rounded-xl MT-SB-2 lg:mt-0 mt-[50px]"
+            className="btn btn-primary lg:w-[390px] w-full sm:p-1.5 p-2.5 rounded-xl sm:MT-SB-1 MT-SB-2 lg:mt-0 mt-[50px] flex items-center justify-center"
           >
-            Apply now!
+            <span className="flex-1">Apply now!</span>
+
+            <InputBGWrapperIcon className={"sm:block hidden"}>
+              <ChevronRightBiggerIcon fillColor={"fill-primary-color-P1"} />
+            </InputBGWrapperIcon>
           </Link>
         </div>
       </div>
