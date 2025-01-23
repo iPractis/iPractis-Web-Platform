@@ -51,7 +51,6 @@ const TabsDisplayedInfo = ({
 
   // TAB SUBJECT STATES
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
-  console.log(selectedSubSubjects, "selectedSubSubjects");  
   const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(
     draft?.teachToYoungPersons
   );
