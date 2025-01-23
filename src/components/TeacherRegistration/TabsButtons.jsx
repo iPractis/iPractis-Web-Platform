@@ -1,7 +1,7 @@
 import { tabsButtons } from "@/src/data/dataTeacherRegistration";
-import SectionHeader from "../Globals/SectionHeader";
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import SectionHeader from "../Globals/SectionHeader";
 
 const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
   // We do this because texts changes at the beggining and at the end of form submission
