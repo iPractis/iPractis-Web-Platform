@@ -33,7 +33,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
             key={TabIndex}
-            className={`w-full flex gap-3 items-center p-1.5 rounded-2xl ST-SB-4 ${
+            className={`w-full flex gap-3 items-center md:justify-start justify-center p-1.5 rounded-2xl ST-SB-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
             onClick={() => {
@@ -62,9 +62,9 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
             titleIcon={<DocumentIcon />}
             titleClassName="MT-SB-1"
           >
-            <div className="md:w-auto w-full">
+            <div className="flex-1 w-full">
               <button
-                className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full"
+                className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full MT-SB-1"
                 onClick={() => {
                   setActiveTab(4);
                   setSaved(false);
@@ -72,7 +72,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
                 type="button"
               >
                 <span className="px-1.5">
-                  Send your applicaton for reviewing
+                  Apply now!
                 </span>{" "}
                 <InputBGWrapperIcon>
                   <ChevronRightBiggerIcon
