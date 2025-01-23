@@ -113,16 +113,16 @@ const TopColumn = () => {
           authentication settings.
         </p>
 
-        <button
-          type="button"
+        <Link
           className="btn btn-primary w-full p-1.5 rounded-2xl flex gap-5 items-center MT-SB-1"
+          href={"/support-request"}
         >
           <InputBGWrapperIcon>
             <HelpIcon fillColor={"fill-primary-color-P1"} />
           </InputBGWrapperIcon>
 
           <span>Contact support</span>
-        </button>
+        </Link>
       </div>
     </form>
   );
