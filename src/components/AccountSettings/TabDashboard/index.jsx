@@ -1,4 +1,7 @@
 import SectionHeader from "../../Globals/SectionHeader";
+import SecurityCheckUp from "./SecurityCheckUp";
+
+// Images && icons
 import { DocumentIcon } from "../../Icons";
 
 const TabDashboard = ({ activeTab }) => {
@@ -12,6 +15,8 @@ const TabDashboard = ({ activeTab }) => {
         titleClassName="MT-SB-1"
         titleText={"Important"}
       />
+
+      <SecurityCheckUp />
     </div>
   );
 };
