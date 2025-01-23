@@ -180,7 +180,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           <DropdownItem className="p-0 mb-1.5" key="findTutor">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-lg flex gap-3.5 px-4 py-1.5 w-full group"
             >
               <SearchIcon
                 className={
