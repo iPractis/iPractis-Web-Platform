@@ -41,7 +41,7 @@ const LanguagesCarousel = () => {
               spaceBetween: 10,
             },
             950: {
-              slidesPerView: 8,
+              slidesPerView: 7,
               spaceBetween: 16,
             },
           }}
@@ -51,7 +51,7 @@ const LanguagesCarousel = () => {
           {subjects?.map((subject, index) => {
             return (
               <SwiperSlide
-                className="md:w-[118px] w-[108px] animation-fade"
+                className="w-[113px] animation-fade"
                 key={index}
               >
                 <button
@@ -59,7 +59,7 @@ const LanguagesCarousel = () => {
                     selectedLanguage === subject?.name
                       ? "btn-primary"
                       : "btn-tertiary"
-                  } w-full ST-SB-3 mx-auto px-4 py-1.5 text-center block animation-fade rounded-lg`}
+                  } w-full h-8 ST-SB-3 mx-auto px-4 py-1 text-center animation-fade rounded-xl`}
                   onClick={() => setSelectedLanguage(subject?.name)}
                   type="button"
                 >
