@@ -30,14 +30,14 @@ const AveragePricesLanguaguesCarousel = () => {
             prevEl: ".countries-carousel-swiper-button-prev",
           }}
           breakpoints={{
-            // when window width is >= 340px
-            340: {
+            // when window width is >= 440px
+            440: {
               slidesPerView: 1,
-              spaceBetween: 20,
+              spaceBetween: 0,
             },
 
-            // when window width is >= 500px
-            500: {
+            // when window width is >= 550px
+            550: {
               slidesPerView: 2,
               spaceBetween: 0,
             },
