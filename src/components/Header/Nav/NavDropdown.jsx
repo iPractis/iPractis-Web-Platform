@@ -14,6 +14,7 @@ import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import tutor from "@/public/images/tutor-image-preview.png";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 import {
   Dropdown,
@@ -208,9 +209,9 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           </DropdownItem>
 
           <DropdownItem className="p-0 mb-1.5" key="settings">
-            <button
-              type="button"
+            <Link
               className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              href={"/account-settings"}
             >
               <SettingsIcon
                 fillColor={
@@ -219,7 +220,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               />
 
               <h3>Settings</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           <DropdownItem className="p-0 my-[30px]" key="becomeTeacher">
