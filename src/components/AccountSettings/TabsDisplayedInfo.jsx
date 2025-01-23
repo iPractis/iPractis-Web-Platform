@@ -6,7 +6,7 @@ import TabFinance from "./TabFinance/index";
 
 const TabsDisplayedInfo = ({ activeTab }) => {
   return (
-    <form className={`max-w-[1000px] sm:px-16 px-8 sm:py-0 py-8 mx-auto`}>
+    <form className={`max-w-[1000px] mx-auto`}>
       {/* 0 */}
       <TabDashboard activeTab={activeTab} />
 
