@@ -42,13 +42,13 @@ const EmailPhoneSwitcherRegister = ({
         )}
       </div>
 
-      <button type="button" onClick={() => setToggleInput("phone")}>
+      {/* <button type="button" onClick={() => setToggleInput("phone")}>
         <InputBGWrapperIcon
           className={"bg-primary-color-P11 h-[48px] w-[48px] rounded-2xl"}
         >
           <PhoneIcon fillColor={"fill-primary-color-P4"} />
         </InputBGWrapperIcon>
-      </button>
+      </button> */}
     </div>
   ) : (
     // This is if the user switches to PHONE NUMBER

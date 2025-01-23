@@ -13,7 +13,7 @@ const TopColumn = () => {
         wrapperSectionHeaderClassName={
           "bg-primary-color-P11 rounded-[32px] p-8"
         }
-        titleClassName="MT-SB-2"
+        titleClassName="MT-SB-1"
       />
 
       {/* Sign Up Section */}
