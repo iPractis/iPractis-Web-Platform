@@ -56,7 +56,7 @@ const AveragePricesLanguaguesCarousel = () => {
 
             // when window width is >= 1140px
             1140: {
-              slidesPerView: 6,
+              slidesPerView: 5,
               spaceBetween: 0,
             },
           }}
