@@ -18,12 +18,11 @@ const WorkScheduleTable = () => {
       <Table
         classNames={{
           th: "bg-transparent !bg-none p-0",
-          table: " border-separate border-spacing-y-1",
         }}
         removeWrapper
       >
         <TableHeader>
-          <TableColumn className="pr-1.5 w-[22px]" key="custom-column">
+          <TableColumn className="pr-1.5 w-[24.5px]" key="custom-column">
             <div className="bg-primary-color-P12 ST-SB-3 h-6 w-full">
               <p></p>
             </div>
@@ -34,11 +33,11 @@ const WorkScheduleTable = () => {
           </TableColumn>
 
           {columnsHeaderWorkSchedule.map((column) => (
-            <TableColumn className="h-[54px] w-[22px]" key={column.key}>
-              <div className="bg-primary-color-P12 text-primary-color-P1 text-center rounded-lg p-1 h-full w-[60%] flex flex-col justify-center">
+            <TableColumn className="h-auto mt-auto w-[24.5px]" key={column.key}>
+              <div className="bg-primary-color-P12 text-primary-color-P1 text-center rounded-lg h-full w-[24.5px]">
                 <div className="ST-SB-3 !px-0">{column.label}</div>
 
-                <div className="bg-primary-color-P1 rounded-md flex justify-center items-center mt-1.5 h-5">
+                <div className="bg-primary-color-P1 rounded-md flex justify-center items-center mt-0.5 h-5">
                   <p className="text-primary-color-P12 ST-4">X</p>
                 </div>
               </div>
