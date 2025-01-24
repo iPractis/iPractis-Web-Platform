@@ -16,11 +16,13 @@ import { useState } from "react";
 const WorkScheduleTable = () => {
   const [selectedSlots, setSelectedSlots] = useState([]);
 
-  const handleGetDayAndHour = (hour, label) => {
+  const handleGetDayAndHour = (hour, day) => {
     const slotDetails = {
-      day: hour,
-      hour: label,
+      hour: hour,
+      day: day,
     };
+
+    console.log(slotDetails);
 
     setSelectedSlots([...selectedSlots, slotDetails]);
   };
@@ -59,97 +61,28 @@ const WorkScheduleTable = () => {
         </TableHeader>
 
         <TableBody>
-          {rowsWorkSchedule.map((row, index) => (
-            <TableRow key={index}>
+          {rowsWorkSchedule.map((row) => (
+            <TableRow key={row.hour}>
               <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
                 <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]">
                   {row?.hour}
                 </div>
               </TableCell>
 
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
+              {columnsHeaderWorkSchedule.map((column) => (
+                <TableCell
+                  className="p-0 w-[24.5px] pr-1.5 pb-1.5"
+                  key={column?.key}
                 >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
-
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <button
-                  className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
-                  onClick={() =>
-                    handleGetDayAndHour(row?.hour, row?.label)
-                  }
-                  type="button"
-                >
-                  {row?.label}
-                </button>
-              </TableCell>
+                  <button
+                    className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
+                    onClick={() => handleGetDayAndHour(row?.hour, column?.label)}
+                    type="button"
+                  >
+                    {column?.slot}
+                  </button>
+                </TableCell>
+              ))}
             </TableRow>
           ))}
         </TableBody>

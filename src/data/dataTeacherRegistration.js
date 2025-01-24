@@ -142,36 +142,43 @@ export const columnsHeaderWorkSchedule = [
   {
     key: "Su",
     label: "Su",
+    slot: "",
   },
 
   {
     key: "Mo",
     label: "Mo",
+    slot: "",
   },
 
   {
     key: "Tu",
     label: "Tu",
+    slot: "",
   },
 
   {
     key: "We",
     label: "We",
+    slot: "",
   },
 
   {
     key: "Th",
     label: "Th",
+    slot: "",
   },
 
   {
     key: "Fr",
     label: "Fr",
+    slot: "",
   },
 
   {
     key: "Sa",
     label: "Sa",
+    slot: "",
   },
 ];
 
