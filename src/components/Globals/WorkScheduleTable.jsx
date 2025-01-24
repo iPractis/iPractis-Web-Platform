@@ -25,7 +25,9 @@ const WorkScheduleTable = () => {
     setSelectedSlots((prevSlots) => {
       // If hour and day already exist in the array, remove it
       if (prevSlots.some((slot) => slot.hour === hour && slot.day === day)) {
-        return prevSlots.filter((slot) => !(slot.hour === hour && slot.day === day));
+        return prevSlots.filter(
+          (slot) => !(slot.hour === hour && slot.day === day)
+        );
       }
 
       // If hour and day doesn't exist in the array, add it
@@ -39,8 +41,61 @@ const WorkScheduleTable = () => {
 
   return (
     <>
-      {/* Calendar table */}
+      {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
       <Table
+        className="md:block hidden"
+        classNames={{
+          th: "bg-transparent !bg-none p-0",
+        }}
+        removeWrapper
+      >
+        <TableHeader>
+          <TableColumn className="!h-0 w-[30.17px]" key="empty-column">
+            <div className="h-6 w-[30.17px]"></div>
+          </TableColumn>
+
+          {Array.from({ length: 24 }, (_, index) => (
+            <TableColumn className="!h-0 w-[30.17px]" key={`hour-${index}`}>
+              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[30.17px]">
+                {index}
+              </div>
+            </TableColumn>
+          ))}
+        </TableHeader>
+
+        <TableBody>
+          {columnsHeaderWorkSchedule.map((column, rowIndex) => (
+            <TableRow key={column.key}>
+              <TableCell className="!p-0">
+                <div className="flex gap-0.5 ps-2 p-1 items-center">
+                  <div className="text-black ST-SB-3 w-[22px]">{column.label}</div>
+
+                  <div className="bg-primary-color-P1 h-5 w-[24px] rounded-md flex justify-center items-center">
+                    <p className="text-primary-color-P12 ST-4">X</p>
+                  </div>
+                </div>
+              </TableCell>
+
+              {Array.from({ length: 24 }, (_, hourIndex) => (
+                <TableCell className="!p-0" key={`${column.key}-${hourIndex}`}>
+                  <button
+                    className={`${
+                      isSelected(hourIndex, column.label)
+                        ? "bg-quinary-color-VS10"
+                        : "bg-primary-color-P11"
+                    } flex justify-center items-center rounded-md ST-4 h-5 w-[30.17px]`}
+                    onClick={() => handleGetDayAndHour(hourIndex, column.label)}
+                  ></button>
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom */}
+      <Table
+        className="md:hidden block"
         classNames={{
           th: "bg-transparent !bg-none p-0",
         }}
