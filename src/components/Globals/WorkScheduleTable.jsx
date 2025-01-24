@@ -24,13 +24,17 @@ const WorkScheduleTable = () => {
 
     setSelectedSlots((prevSlots) => {
       // If hour and day already exist in the array, remove it --> some method returns a boolean value
-      if (!prevSlots.some(slot => slot.hour === hour && slot.day === day)) {
+      if (!prevSlots.some((slot) => slot.hour === hour && slot.day === day)) {
         return [...prevSlots, slotDetails];
       }
 
       // If hour and day doesn't exist in the array, add it
       return prevSlots;
     });
+  };
+
+  const isSelected = (hour, day) => {
+    return selectedSlots.some((slot) => slot.hour === hour && slot.day === day);
   };
 
   return (
@@ -81,7 +85,11 @@ const WorkScheduleTable = () => {
                   key={column?.key}
                 >
                   <button
-                    className="bg-primary-color-P11 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]"
+                    className={`${
+                      isSelected(row?.hour, column?.label)
+                        ? "bg-quinary-color-VS10"
+                        : "bg-primary-color-P11"
+                    } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]`}
                     onClick={() =>
                       handleGetDayAndHour(row?.hour, column?.label)
                     }
