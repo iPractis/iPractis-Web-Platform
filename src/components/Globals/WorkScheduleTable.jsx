@@ -66,7 +66,7 @@ const WorkScheduleTable = () => {
         <TableBody>
           {columnsHeaderWorkSchedule.map((column, rowIndex) => (
             <TableRow key={column.key}>
-              <TableCell className="!p-0">
+              <TableCell className="!p-0 !pb-1.5">
                 <div className="flex gap-0.5 ps-2 p-1 items-center">
                   <div className="text-black ST-SB-3 w-[22px]">{column.label}</div>
 
@@ -77,7 +77,7 @@ const WorkScheduleTable = () => {
               </TableCell>
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
-                <TableCell className="!p-0" key={`${column.key}-${hourIndex}`}>
+                <TableCell className="!p-0 !pb-1.5" key={`${column.key}-${hourIndex}`}>
                   <button
                     className={`${
                       isSelected(hourIndex, column.label)
@@ -85,6 +85,7 @@ const WorkScheduleTable = () => {
                         : "bg-primary-color-P11"
                     } flex justify-center items-center rounded-md ST-4 h-5 w-[30.17px]`}
                     onClick={() => handleGetDayAndHour(hourIndex, column.label)}
+                    type="button"
                   ></button>
                 </TableCell>
               ))}
