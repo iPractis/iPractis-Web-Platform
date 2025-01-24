@@ -68,7 +68,9 @@ const WorkScheduleTable = () => {
             <TableRow key={column.key}>
               <TableCell className="!p-0 !pb-1.5">
                 <div className="flex gap-0.5 ps-2 p-1 items-center">
-                  <div className="text-black ST-SB-3 w-[22px]">{column.label}</div>
+                  <div className="text-black ST-SB-3 w-[22px]">
+                    {column.label}
+                  </div>
 
                   <div className="bg-primary-color-P1 h-5 w-[24px] rounded-md flex justify-center items-center">
                     <p className="text-primary-color-P12 ST-4">X</p>
@@ -77,7 +79,10 @@ const WorkScheduleTable = () => {
               </TableCell>
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
-                <TableCell className="!p-0 !pb-1.5" key={`${column.key}-${hourIndex}`}>
+                <TableCell
+                  className="!p-0 !pb-1.5"
+                  key={`${column.key}-${hourIndex}`}
+                >
                   <button
                     className={`${
                       isSelected(hourIndex, column.label)
