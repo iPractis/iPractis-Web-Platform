@@ -21,7 +21,7 @@ const AvailabilityRevision = () => {
         titleText={"Availability"}
       />
 
-      <WorkScheduleTable />
+      <WorkScheduleTable bookedLessonSpot />
 
       <TeacherInfoSpecialties />
 

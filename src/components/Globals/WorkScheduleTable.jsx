@@ -13,7 +13,7 @@ import {
 
 import { useState } from "react";
 
-const WorkScheduleTable = () => {
+const WorkScheduleTable = ({ bookedLessonSpot }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
 
   const handleGetDayAndHour = (hour, day) => {
@@ -167,6 +167,13 @@ const WorkScheduleTable = () => {
 
       {/* Spots */}
       <div className="flex items-center gap-4 mt-4">
+        {bookedLessonSpot && (
+          <div className="flex items-center gap-2.5">
+            <div className="h-[18px] w-[18px] bg-quaternary-color-A10 rounded-md"></div>
+            <h3 className="ST-3 text-primary-color-P1">Booked lesson</h3>
+          </div>
+        )}
+
         <div className="flex items-center gap-2.5">
           <div className="h-[18px] w-[18px] bg-quinary-color-VS10 rounded-md"></div>
           <h3 className="ST-3 text-primary-color-P1">Available for lesson</h3>
