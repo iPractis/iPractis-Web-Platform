@@ -23,13 +23,13 @@ const WorkScheduleTable = () => {
     };
 
     setSelectedSlots((prevSlots) => {
-      // If hour and day already exist in the array, remove it --> some method returns a boolean value
-      if (!prevSlots.some((slot) => slot.hour === hour && slot.day === day)) {
-        return [...prevSlots, slotDetails];
+      // If hour and day already exist in the array, remove it
+      if (prevSlots.some((slot) => slot.hour === hour && slot.day === day)) {
+        return prevSlots.filter((slot) => !(slot.hour === hour && slot.day === day));
       }
 
       // If hour and day doesn't exist in the array, add it
-      return prevSlots;
+      return [...prevSlots, slotDetails];
     });
   };
 
