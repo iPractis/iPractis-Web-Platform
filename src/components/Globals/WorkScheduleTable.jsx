@@ -1,6 +1,7 @@
 import {
   columnsHeaderWorkSchedule,
   rowsWorkSchedule,
+  timeZones,
 } from "@/src/data/dataTeacherRegistration";
 import {
   Table,
@@ -9,12 +10,17 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Select,
+  SelectItem,
 } from "@nextui-org/react";
 
+import { ChevronDownBigIcon, EarthIcon } from "../Icons";
+import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import { useState } from "react";
 
-const WorkScheduleTable = ({ bookedLessonSpot }) => {
+const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleGetDayAndHour = (hour, day) => {
     const slotDetails = {
@@ -166,22 +172,58 @@ const WorkScheduleTable = ({ bookedLessonSpot }) => {
       </Table>
 
       {/* Spots */}
-      <div className="flex items-center gap-4 mt-4">
-        {bookedLessonSpot && (
-          <div className="flex items-center gap-2.5">
-            <div className="h-[18px] w-[18px] bg-quaternary-color-A10 rounded-md"></div>
-            <h3 className="ST-3 text-primary-color-P1">Booked lesson</h3>
-          </div>
-        )}
+      <div className="grid grid-cols-2 gap-4 mt-4">
+        <div className="flex items-center gap-4">
+          {bookedLessonSpot && (
+            <div className="flex items-center gap-2.5">
+              <div className="h-[18px] w-[18px] bg-quaternary-color-A10 rounded-md"></div>
+              <h3 className="ST-3 text-primary-color-P1">Booked lesson</h3>
+            </div>
+          )}
 
-        <div className="flex items-center gap-2.5">
-          <div className="h-[18px] w-[18px] bg-quinary-color-VS10 rounded-md"></div>
-          <h3 className="ST-3 text-primary-color-P1">Available for lesson</h3>
+          <div className="flex items-center gap-2.5">
+            <div className="h-[18px] w-[18px] bg-quinary-color-VS10 rounded-md"></div>
+            <h3 className="ST-3 text-primary-color-P1">Available for lesson</h3>
+          </div>
+
+          <div className="flex items-center gap-2.5">
+            <div className="h-[18px] w-[18px] bg-primary-color-P11 rounded-md"></div>
+            <h3 className="ST-3 text-primary-color-P1">Unavailable</h3>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
-          <div className="h-[18px] w-[18px] bg-primary-color-P11 rounded-md"></div>
-          <h3 className="ST-3 text-primary-color-P1">Unavailable</h3>
+        <div>
+          {timeZoneFilter && (
+            <Select
+              name="timeZoneCalendar"
+              onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+              placeholder="Select a time zone"
+              selectorIcon={<span></span>}
+              isOpen={isOpen}
+              startContent={
+                <InputBGWrapperIcon>
+                  <EarthIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon>
+                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                </InputBGWrapperIcon>
+              }
+              classNames={{
+                trigger: ["select-wrapper-ipractis"],
+                innerWrapper: ["select-ipractis", "w-full"],
+                value: [
+                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                ],
+                listbox: ["text-primary-color-P4"],
+              }}
+            >
+              {timeZones?.map((timeZone) => (
+                <SelectItem key={timeZone}>{timeZone}</SelectItem>
+              ))}
+            </Select>
+          )}
         </div>
       </div>
     </>
