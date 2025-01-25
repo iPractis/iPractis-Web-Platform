@@ -56,13 +56,13 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
         removeWrapper
       >
         <TableHeader>
-          <TableColumn className="!h-0 w-[30.17px]" key="empty-column">
-            <div className="h-6 w-[30.17px]"></div>
+          <TableColumn className="!h-0 w-[27.50px]" key="empty-column">
+            <div className="h-6 w-[27.50px]"></div>
           </TableColumn>
 
           {Array.from({ length: 24 }, (_, index) => (
-            <TableColumn className="!h-0 w-[30.17px]" key={`hour-${index}`}>
-              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[30.17px]">
+            <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
+              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[27.50px]">
                 {index}
               </div>
             </TableColumn>
@@ -72,7 +72,7 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
         <TableBody>
           {columnsHeaderWorkSchedule.map((column, rowIndex) => (
             <TableRow key={column.key}>
-              <TableCell className="!p-0 !pb-1.5">
+              <TableCell className="!p-0 !pb-0.5">
                 <div className="flex gap-0.5 ps-2 p-1 items-center">
                   <div className="text-black ST-SB-3 w-[22px]">
                     {column.label}
@@ -86,7 +86,7 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
                 <TableCell
-                  className="!p-0 !pb-1.5"
+                  className="!p-0 !pb-0.5"
                   key={`${column.key}-${hourIndex}`}
                 >
                   <button
@@ -94,7 +94,7 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
                       isSelected(hourIndex, column.label)
                         ? "bg-quinary-color-VS10"
                         : "bg-primary-color-P11"
-                    } flex justify-center items-center rounded-md ST-4 h-5 w-[30.17px]`}
+                    } flex justify-center items-center rounded-md ST-4 h-5 w-[27.50px]`}
                     onClick={() => handleGetDayAndHour(hourIndex, column.label)}
                     type="button"
                   ></button>

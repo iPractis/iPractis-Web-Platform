@@ -140,6 +140,12 @@ export const timeZones = [
 
 export const columnsHeaderWorkSchedule = [
   {
+    key: "Sa",
+    label: "Sa",
+    slot: "",
+  },
+  
+  {
     key: "Su",
     label: "Su",
     slot: "",
@@ -172,12 +178,6 @@ export const columnsHeaderWorkSchedule = [
   {
     key: "Fr",
     label: "Fr",
-    slot: "",
-  },
-
-  {
-    key: "Sa",
-    label: "Sa",
     slot: "",
   },
 ];

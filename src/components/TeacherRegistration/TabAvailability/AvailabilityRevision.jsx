@@ -11,7 +11,7 @@ import { Clock1215Icon } from "../../Icons";
 
 const AvailabilityRevision = () => {
   return (
-    <section>
+    <section className="md:px-16 px-8">
       <TeacherInfo />
 
       <SectionHeader
