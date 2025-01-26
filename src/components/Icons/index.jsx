@@ -597,6 +597,21 @@ export const ChevronRightBiggerIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const ChevronRightMediumIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M16.0378 11.2223C16.533 11.6225 16.533 12.3775 16.0378 12.7777L11.1286 16.7458C10.4747 17.2744 9.5 16.8089 9.5 15.9681L9.5 8.03193C9.5 7.19108 10.4747 6.72564 11.1286 7.25422L16.0378 11.2223Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const ChevronLeftIcon = ({ fillColor }) => (
   <svg
     width="22"
@@ -607,6 +622,21 @@ export const ChevronLeftIcon = ({ fillColor }) => (
   >
     <path
       d="M7.37819 11.778C6.88301 11.3778 6.88301 10.6229 7.37819 10.2226L11.6624 6.75972C12.3163 6.23115 13.291 6.69659 13.291 7.53744L13.291 14.4632C13.291 15.3041 12.3163 15.7695 11.6624 15.2409L7.37819 11.778Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
+export const ChevronLeftBigIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7.96217 12.7777C7.467 12.3775 7.467 11.6225 7.96217 11.2223L12.8714 7.25422C13.5253 6.72564 14.5 7.19108 14.5 8.03193L14.5 15.9681C14.5 16.8089 13.5253 17.2744 12.8714 16.7458L7.96217 12.7777Z"
       className={fillColor}
     />
   </svg>

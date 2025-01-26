@@ -14,7 +14,12 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
-import { ChevronDownBigIcon, EarthIcon } from "../Icons";
+import {
+  ChevronDownBigIcon,
+  ChevronLeftBigIcon,
+  ChevronRightMediumIcon,
+  EarthIcon,
+} from "../Icons";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import { useEffect, useState } from "react";
 
@@ -22,6 +27,7 @@ const WorkScheduleTable = ({
   bookedLessonSpot,
   timeZoneFilter,
   showCurrentDate,
+  fromToFilter,
 }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [weekDates, setWeekDates] = useState([]);
@@ -45,7 +51,7 @@ const WorkScheduleTable = ({
       const date = new Date(adjustedDate);
 
       // We increment the day by the index
-      date.setDate(adjustedDate.getDate() + index); // Incrementa el día
+      date.setDate(adjustedDate.getDate() + index);
 
       return date.toLocaleDateString("en-US", {
         day: "numeric",
@@ -86,6 +92,64 @@ const WorkScheduleTable = ({
 
   return (
     <>
+      {fromToFilter && (
+        <>
+          <div className="flex items-center justify-center gap-8 px-5 mb-4">
+            <button type="button">
+              <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
+            </button>
+
+            <h3 className="text-primary-color-P1 ST-4">From</h3>
+
+            <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[48px] h-9"
+                name="birthDateNumber"
+              />
+
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
+                name="birthDateMonth"
+              />
+
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
+                name="birthDateYear"
+              />
+            </div>
+
+            <h3 className="text-primary-color-P1 ST-4">To</h3>
+
+            <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
+                name="birthDateNumber"
+              />
+
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
+                name="birthDateMonth"
+              />
+
+              <input
+                type="text"
+                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
+                name="birthDateYear"
+              />
+            </div>
+
+            <button type="button">
+              <ChevronRightMediumIcon fillColor={"fill-primary-color-P1"} />
+            </button>
+          </div>
+        </>
+      )}
+
       {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
       <Table
         className="md:block hidden"
@@ -112,13 +176,29 @@ const WorkScheduleTable = ({
           {columnsHeaderWorkSchedule.map((column, rowIndex) => (
             <TableRow key={column.key}>
               <TableCell className="!p-0 !pb-0.5">
-                <div className="flex gap-0.5 ps-2 p-1 items-center">
-                  <div className="text-black ST-SB-3 w-[22px]">
+                <div
+                  className={`flex gap-0.5 items-center ${
+                    false
+                      ? "w-[60px] bg-tertiary-color-SC5 ps-2 p-1 text-primary-color-P12 rounded-lg"
+                      : "ps-2 p-1"
+                  }`}
+                >
+                  <div
+                    className={`${
+                      false ? "text-primary-color-P12" : "text-primary-color-P1"
+                    } ST-SB-3 w-[22px]`}
+                  >
                     {column.label}
                   </div>
 
-                  <div className="bg-primary-color-P1 h-5 w-[24px] rounded-md flex justify-center items-center">
-                    <p className="text-primary-color-P12 ST-4">
+                  <div
+                    className={`${
+                      false
+                        ? "bg-primary-color-P12 text-tertiary-color-SC5"
+                        : "bg-primary-color-P1 text-primary-color-P12"
+                    } h-5 w-[24px] rounded-md flex justify-center items-center`}
+                  >
+                    <p className="ST-4">
                       {showCurrentDate ? weekDates[rowIndex] || "--" : "X"}
                     </p>
                   </div>
@@ -127,7 +207,7 @@ const WorkScheduleTable = ({
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
                 <TableCell
-                  className="!p-0 !pb-0.5"
+                  className={`!p-0 !pb-0.5`}
                   key={`${column.key}-${hourIndex}`}
                 >
                   <button
@@ -171,7 +251,9 @@ const WorkScheduleTable = ({
                 <div className="ST-SB-3 !px-0">{column.label}</div>
 
                 <div className="bg-primary-color-P1 rounded-md flex justify-center items-center mt-0.5 h-5">
-                  <p className="text-primary-color-P12 ST-4">{showCurrentDate ? weekDates[index] || "--" : "X"}</p>
+                  <p className="text-primary-color-P12 ST-4">
+                    {showCurrentDate ? weekDates[index] || "--" : "X"}
+                  </p>
                 </div>
               </div>
             </TableColumn>
@@ -236,7 +318,7 @@ const WorkScheduleTable = ({
         <div>
           {timeZoneFilter && (
             <Select
-              defaultSelectedKeys={["GMT+00:00"]}
+              defaultSelectedKeys={["GMT+0000"]}
               onChange={handleTimeZoneChange}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}

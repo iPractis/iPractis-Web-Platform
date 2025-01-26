@@ -21,7 +21,12 @@ const AvailabilityRevision = () => {
         titleText={"Availability"}
       />
 
-      <WorkScheduleTable bookedLessonSpot timeZoneFilter showCurrentDate />
+      <WorkScheduleTable
+        bookedLessonSpot
+        timeZoneFilter
+        showCurrentDate
+        fromToFilter
+      />
 
       <TeacherInfoSpecialties />
 
