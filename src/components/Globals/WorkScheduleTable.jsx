@@ -1,4 +1,5 @@
 import {
+  abbreviatedDaysOfWeek,
   columnsHeaderWorkSchedule,
   rowsWorkSchedule,
   timeZones,
@@ -18,9 +19,34 @@ import { ChevronDownBigIcon, EarthIcon } from "../Icons";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import { useState } from "react";
 
-const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
+const WorkScheduleTable = ({
+  bookedLessonSpot,
+  timeZoneFilter,
+  showCurrentDate,
+}) => {
+  const [weekDates, setWeekDates] = useState([]);
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleTimeZoneChange = (event) => {
+    const selectedTimeZone = event.target.value;
+    const offset = parseFloat(
+      selectedTimeZone.replace("GMT", "").replace(":", ".")
+    );
+
+    const localDate = new Date();
+    const adjustedDate = new Date(localDate.getTime() + offset * 3600000); // Apply offset directly
+
+    // Calculate dates for the entire week starting from the adjusted date
+    const currentDay = adjustedDate.getDate();
+    const weekDatesArray = abbreviatedDaysOfWeek.map((_, index) => {
+      const date = new Date(adjustedDate); // Clone adjusted date
+      date.setDate(currentDay + index); // Increment day based on index
+      return date.getDate(); // Get only the day of the month
+    });
+
+    setWeekDates(weekDatesArray);
+  };
 
   const handleGetDayAndHour = (hour, day) => {
     const slotDetails = {
@@ -79,7 +105,9 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
                   </div>
 
                   <div className="bg-primary-color-P1 h-5 w-[24px] rounded-md flex justify-center items-center">
-                    <p className="text-primary-color-P12 ST-4">X</p>
+                    <p className="text-primary-color-P12 ST-4">
+                      {showCurrentDate ? weekDates[rowIndex] || "--" : "X"}
+                    </p>
                   </div>
                 </div>
               </TableCell>
@@ -195,6 +223,7 @@ const WorkScheduleTable = ({ bookedLessonSpot, timeZoneFilter }) => {
         <div>
           {timeZoneFilter && (
             <Select
+              onChange={handleTimeZoneChange}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
               placeholder="Select a time zone"
