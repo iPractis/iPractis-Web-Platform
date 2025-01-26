@@ -165,13 +165,13 @@ const WorkScheduleTable = ({
             </div>
           </TableColumn>
 
-          {columnsHeaderWorkSchedule.map((column) => (
+          {columnsHeaderWorkSchedule.map((column, index) => (
             <TableColumn className="h-auto mt-auto w-[24.5px]" key={column.key}>
               <div className="bg-primary-color-P12 text-primary-color-P1 text-center rounded-lg h-full w-[24.5px]">
                 <div className="ST-SB-3 !px-0">{column.label}</div>
 
                 <div className="bg-primary-color-P1 rounded-md flex justify-center items-center mt-0.5 h-5">
-                  <p className="text-primary-color-P12 ST-4">X</p>
+                  <p className="text-primary-color-P12 ST-4">{showCurrentDate ? weekDates[index] || "--" : "X"}</p>
                 </div>
               </div>
             </TableColumn>
