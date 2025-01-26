@@ -1,5 +1,4 @@
 import {
-  abbreviatedDaysOfWeek,
   columnsHeaderWorkSchedule,
   rowsWorkSchedule,
   timeZones,
@@ -17,7 +16,7 @@ import {
 
 import { ChevronDownBigIcon, EarthIcon } from "../Icons";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
   bookedLessonSpot,
@@ -28,24 +27,38 @@ const WorkScheduleTable = ({
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleTimeZoneChange = (event) => {
-    const selectedTimeZone = event.target.value;
+  useEffect(() => {
+    const defaultTimeZone = "GMT+00:00";
+
+    updateWeekDates(defaultTimeZone);
+  }, []);
+
+  const updateWeekDates = (selectedTimeZone) => {
     const offset = parseFloat(
       selectedTimeZone.replace("GMT", "").replace(":", ".")
     );
 
     const localDate = new Date();
-    const adjustedDate = new Date(localDate.getTime() + offset * 3600000); // Apply offset directly
+    const adjustedDate = new Date(localDate.getTime() + offset * 3600000);
 
-    // Calculate dates for the entire week starting from the adjusted date
-    const currentDay = adjustedDate.getDate();
-    const weekDatesArray = abbreviatedDaysOfWeek.map((_, index) => {
-      const date = new Date(adjustedDate); // Clone adjusted date
-      date.setDate(currentDay + index); // Increment day based on index
-      return date.getDate(); // Get only the day of the month
+    const weekDatesArray = Array.from({ length: 7 }, (_, index) => {
+      const date = new Date(adjustedDate);
+
+      // We increment the day by the index
+      date.setDate(adjustedDate.getDate() + index)// Incrementa el día
+
+      return date.toLocaleDateString("en-US", {
+        day: "numeric",
+      });
     });
 
     setWeekDates(weekDatesArray);
+  };
+
+  const handleTimeZoneChange = (e) => {
+    const selectedTimeZone = e.target.value;
+
+    updateWeekDates(selectedTimeZone);
   };
 
   const handleGetDayAndHour = (hour, day) => {
@@ -223,6 +236,7 @@ const WorkScheduleTable = ({
         <div>
           {timeZoneFilter && (
             <Select
+              defaultSelectedKeys={["GMT+00:00"]}
               onChange={handleTimeZoneChange}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
