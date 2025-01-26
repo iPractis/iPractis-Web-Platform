@@ -318,7 +318,7 @@ const WorkScheduleTable = ({
         <div>
           {timeZoneFilter && (
             <Select
-              defaultSelectedKeys={["GMT+0000"]}
+              defaultSelectedKeys={["GMT+00:00"]}
               onChange={handleTimeZoneChange}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
