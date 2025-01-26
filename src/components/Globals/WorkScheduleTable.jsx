@@ -23,8 +23,8 @@ const WorkScheduleTable = ({
   timeZoneFilter,
   showCurrentDate,
 }) => {
-  const [weekDates, setWeekDates] = useState([]);
   const [selectedSlots, setSelectedSlots] = useState([]);
+  const [weekDates, setWeekDates] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const WorkScheduleTable = ({
       const date = new Date(adjustedDate);
 
       // We increment the day by the index
-      date.setDate(adjustedDate.getDate() + index)// Incrementa el día
+      date.setDate(adjustedDate.getDate() + index); // Incrementa el día
 
       return date.toLocaleDateString("en-US", {
         day: "numeric",
