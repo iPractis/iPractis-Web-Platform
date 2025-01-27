@@ -40,11 +40,13 @@ const WorkScheduleTable = ({
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
 
+  // This is for defaulttimezone, we make sure to update the week dates
   useEffect(() => {
     const defaultTimeZone = "GMT+00:00";
     updateWeekDates(defaultTimeZone, 0);
   }, []);
 
+  // This is the main logic, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone, offsetDays) => {
     const offset = parseFloat(
       selectedTimeZone.replace("GMT", "").replace(":", ".")
@@ -80,11 +82,13 @@ const WorkScheduleTable = ({
     });
   };
 
+  // Once we change the timezone in select, we update the changes to updateWeekDates (Because time changes depending on Timezone)
   const handleTimeZoneChange = (e) => {
     const selectedTimeZone = e.target.value;
     updateWeekDates(selectedTimeZone, currentOffset);
   };
 
+  // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
   const handleGetDayAndHour = (hour, day) => {
     const slotDetails = {
       hour: hour,
