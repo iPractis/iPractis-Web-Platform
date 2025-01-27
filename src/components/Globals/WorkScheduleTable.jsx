@@ -222,7 +222,7 @@ const WorkScheduleTable = ({
 
           {Array.from({ length: 24 }, (_, index) => (
             <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
-              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[27.50px]">
+              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[27.50px] mx-auto">
                 {index}
               </div>
             </TableColumn>
@@ -274,7 +274,7 @@ const WorkScheduleTable = ({
                       isSelected(hourIndex, column.label)
                         ? "bg-quinary-color-VS10"
                         : "bg-primary-color-P11"
-                    } flex justify-center items-center rounded-md ST-4 h-5 w-[27.50px]`}
+                    } flex justify-center items-center rounded-md ST-4 h-5 w-[27.50px] mx-auto`}
                     onClick={() => handleGetDayAndHour(hourIndex, column.label)}
                     type="button"
                   ></button>
