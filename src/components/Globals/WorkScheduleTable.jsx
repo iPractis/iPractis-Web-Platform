@@ -22,6 +22,7 @@ import {
 } from "../Icons";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import { useEffect, useState } from "react";
+import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 
 const WorkScheduleTable = ({
   bookedLessonSpot,
@@ -30,16 +31,18 @@ const WorkScheduleTable = ({
   fromToFilter,
 }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
+  const [currentOffset, setCurrentOffset] = useState(0);
   const [weekDates, setWeekDates] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [minDate, setMinDate] = useState("");
+  const [maxDate, setMaxDate] = useState("");
 
   useEffect(() => {
     const defaultTimeZone = "GMT+00:00";
-
-    updateWeekDates(defaultTimeZone);
+    updateWeekDates(defaultTimeZone, 0);
   }, []);
 
-  const updateWeekDates = (selectedTimeZone) => {
+  const updateWeekDates = (selectedTimeZone, offsetDays) => {
     const offset = parseFloat(
       selectedTimeZone.replace("GMT", "").replace(":", ".")
     );
@@ -49,22 +52,41 @@ const WorkScheduleTable = ({
 
     const weekDatesArray = Array.from({ length: 7 }, (_, index) => {
       const date = new Date(adjustedDate);
-
-      // We increment the day by the index
-      date.setDate(adjustedDate.getDate() + index);
-
-      return date.toLocaleDateString("en-US", {
-        day: "numeric",
-      });
+      date.setDate(adjustedDate.getDate() + index + offsetDays);
+      return date;
     });
 
-    setWeekDates(weekDatesArray);
+    setWeekDates(
+      weekDatesArray.map((date) =>
+        date.toLocaleDateString("en-US", {
+          day: "numeric",
+        })
+      )
+    );
+
+    console.log(weekDatesArray);
+
+    setMinDate({
+      actualDate: weekDatesArray[0].getDate(),
+      actualYear: weekDatesArray[0].getFullYear(),
+      actualMonth: weekDatesArray[0].getMonth(),
+    });
+
+    setMaxDate({
+      actualDate: weekDatesArray[6].getDate(),
+      actualYear: weekDatesArray[6].getFullYear(),
+      actualMonth: weekDatesArray[6].getMonth(),
+    });
   };
+
+  useEffect(() => {
+    const defaultTimeZone = "GMT+00:00";
+    updateWeekDates(defaultTimeZone, 0);
+  }, []);
 
   const handleTimeZoneChange = (e) => {
     const selectedTimeZone = e.target.value;
-
-    updateWeekDates(selectedTimeZone);
+    updateWeekDates(selectedTimeZone, currentOffset);
   };
 
   const handleGetDayAndHour = (hour, day) => {
@@ -90,64 +112,90 @@ const WorkScheduleTable = ({
     return selectedSlots.some((slot) => slot.hour === hour && slot.day === day);
   };
 
+  const handleDecrementWeek = () => {
+    setCurrentOffset((prevOffset) => {
+      const newOffset = prevOffset - 7;
+      updateWeekDates("GMT+00:00", newOffset);
+      return newOffset;
+    });
+  };
+
+  const handleIncrementWeek = () => {
+    setCurrentOffset((prevOffset) => {
+      const newOffset = prevOffset + 7;
+      updateWeekDates("GMT+00:00", newOffset);
+      return newOffset;
+    });
+  };
+
   return (
     <>
       {fromToFilter && (
-        <>
-          <div className="flex items-center justify-center gap-8 px-5 mb-4">
-            <button type="button">
-              <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
-            </button>
+        <div className="flex items-center justify-center gap-8 px-5 mb-4">
+          <button onClick={handleDecrementWeek} type="button">
+            <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
+          </button>
 
-            <h3 className="text-primary-color-P1 ST-4">From</h3>
+          <h3 className="text-primary-color-P1 ST-4">From</h3>
 
-            <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[48px] h-9"
-                name="birthDateNumber"
-              />
+          <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-2 !py-1.5 w-[48px] h-9"
+              defaultValue={minDate?.actualDate}
+              name="birthDateNumber"
+              readOnly
+            />
 
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
-                name="birthDateMonth"
-              />
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
+              defaultValue={getMonthNumberAsText(minDate?.actualMonth + 1)}
+              name="birthDateMonth"
+              readOnly
+            />
 
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-                name="birthDateYear"
-              />
-            </div>
-
-            <h3 className="text-primary-color-P1 ST-4">To</h3>
-
-            <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
-                name="birthDateNumber"
-              />
-
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
-                name="birthDateMonth"
-              />
-
-              <input
-                type="text"
-                className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-                name="birthDateYear"
-              />
-            </div>
-
-            <button type="button">
-              <ChevronRightMediumIcon fillColor={"fill-primary-color-P1"} />
-            </button>
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
+              defaultValue={minDate?.actualYear}
+              name="birthDateYear"
+              readOnly
+            />
           </div>
-        </>
+
+          <h3 className="text-primary-color-P1 ST-4">To</h3>
+
+          <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9 w-[284px]">
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
+              name="birthDateNumber"
+              defaultValue={maxDate?.actualDate}
+              readOnly
+            />
+
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
+              defaultValue={getMonthNumberAsText(maxDate?.actualMonth + 1)}
+              name="birthDateMonth"
+              readOnly
+            />
+
+            <input
+              type="text"
+              className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
+              name="birthDateYear"
+              defaultValue={maxDate?.actualYear}
+              readOnly
+            />
+          </div>
+
+          <button onClick={handleIncrementWeek} type="button">
+            <ChevronRightMediumIcon fillColor={"fill-primary-color-P1"} />
+          </button>
+        </div>
       )}
 
       {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
