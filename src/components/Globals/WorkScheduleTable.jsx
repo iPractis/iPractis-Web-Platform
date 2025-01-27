@@ -46,7 +46,7 @@ const WorkScheduleTable = ({
     updateWeekDates(defaultTimeZone, 0);
   }, []);
 
-  // This is the main logic, the goal of this func is to update the week dates by the timezone of the calendar!
+  // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone, offsetDays) => {
     const offset = parseFloat(
       selectedTimeZone.replace("GMT", "").replace(":", ".")
