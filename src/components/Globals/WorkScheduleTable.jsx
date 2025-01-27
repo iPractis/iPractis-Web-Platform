@@ -3,6 +3,10 @@ import {
   rowsWorkSchedule,
   timeZones,
 } from "@/src/data/dataTeacherRegistration";
+
+import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
+import InputBGWrapperIcon from "./InputBGWrapperIcon";
+
 import {
   Table,
   TableHeader,
@@ -20,9 +24,8 @@ import {
   ChevronRightMediumIcon,
   EarthIcon,
 } from "../Icons";
-import InputBGWrapperIcon from "./InputBGWrapperIcon";
+
 import { useEffect, useState } from "react";
-import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 
 const WorkScheduleTable = ({
   bookedLessonSpot,
