@@ -35,6 +35,7 @@ const WorkScheduleTable = ({
 }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [currentOffset, setCurrentOffset] = useState(0);
+  const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [minDate, setMinDate] = useState("");
@@ -80,6 +81,10 @@ const WorkScheduleTable = ({
       actualYear: weekDatesArray[6].getFullYear(),
       actualMonth: weekDatesArray[6].getMonth(),
     });
+
+    setCurrentDay(
+      adjustedDate.toLocaleDateString("en-US", { weekday: "short" })
+    );
   };
 
   // Once we change the timezone in select, we update the changes to updateWeekDates (Because time changes depending on Timezone)
@@ -227,17 +232,19 @@ const WorkScheduleTable = ({
         <TableBody>
           {columnsHeaderWorkSchedule.map((column, rowIndex) => (
             <TableRow key={column.key}>
-              <TableCell className="!p-0 !pb-0.5">
+              <TableCell className="!p-0 !pb-0.5 !pe-1.5">
                 <div
                   className={`flex gap-0.5 items-center ${
-                    false
+                    currentDay === column.key
                       ? "w-[60px] bg-tertiary-color-SC5 ps-2 p-1 text-primary-color-P12 rounded-lg"
                       : "ps-2 p-1"
                   }`}
                 >
                   <div
                     className={`${
-                      false ? "text-primary-color-P12" : "text-primary-color-P1"
+                      currentDay === column.key
+                        ? "text-primary-color-P12"
+                        : "text-primary-color-P1"
                     } ST-SB-3 w-[22px]`}
                   >
                     {column.label}
@@ -245,7 +252,7 @@ const WorkScheduleTable = ({
 
                   <div
                     className={`${
-                      false
+                      currentDay === column.key
                         ? "bg-primary-color-P12 text-tertiary-color-SC5"
                         : "bg-primary-color-P1 text-primary-color-P12"
                     } h-5 w-[24px] rounded-md flex justify-center items-center`}
@@ -259,7 +266,7 @@ const WorkScheduleTable = ({
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
                 <TableCell
-                  className={`!p-0 !pb-0.5`}
+                  className={`${currentDay === column.key ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg  last:rounded-r-lg h-7 !w-[27.50px] !p-1 !px-0.5" : "!p-0 !pb-0.5"}`}
                   key={`${column.key}-${hourIndex}`}
                 >
                   <button
