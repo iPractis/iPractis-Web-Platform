@@ -64,8 +64,6 @@ const WorkScheduleTable = ({
       )
     );
 
-    console.log(weekDatesArray);
-
     setMinDate({
       actualDate: weekDatesArray[0].getDate(),
       actualYear: weekDatesArray[0].getFullYear(),
@@ -78,11 +76,6 @@ const WorkScheduleTable = ({
       actualMonth: weekDatesArray[6].getMonth(),
     });
   };
-
-  useEffect(() => {
-    const defaultTimeZone = "GMT+00:00";
-    updateWeekDates(defaultTimeZone, 0);
-  }, []);
 
   const handleTimeZoneChange = (e) => {
     const selectedTimeZone = e.target.value;
@@ -108,10 +101,12 @@ const WorkScheduleTable = ({
     });
   };
 
+  // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
     return selectedSlots.some((slot) => slot.hour === hour && slot.day === day);
   };
 
+  // This is for decrementing days of a month (- 7)
   const handleDecrementWeek = () => {
     setCurrentOffset((prevOffset) => {
       const newOffset = prevOffset - 7;
@@ -120,6 +115,7 @@ const WorkScheduleTable = ({
     });
   };
 
+  // This is for incrementing days of a month (+ 7)
   const handleIncrementWeek = () => {
     setCurrentOffset((prevOffset) => {
       const newOffset = prevOffset + 7;
