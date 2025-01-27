@@ -133,6 +133,7 @@ const WorkScheduleTable = ({
 
   return (
     <>
+      {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
       {fromToFilter && (
         <div className="flex items-center justify-center gap-8 px-5 mb-4">
           <button onClick={handleDecrementWeek} type="button">
@@ -345,7 +346,7 @@ const WorkScheduleTable = ({
         </TableBody>
       </Table>
 
-      {/* Spots */}
+      {/* Spots - booked, available, unavailable and also timezone filter */}
       <div className="grid grid-cols-2 gap-4 mt-4">
         <div className="flex items-center gap-4">
           {bookedLessonSpot && (
