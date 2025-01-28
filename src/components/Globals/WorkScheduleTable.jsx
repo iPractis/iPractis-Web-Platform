@@ -55,10 +55,14 @@ const WorkScheduleTable = ({
 
     const localDate = new Date();
     const adjustedDate = new Date(localDate.getTime() + offset * 3600000);
+    adjustedDate.setDate(adjustedDate.getDate() + offsetDays);
+
+    const startOfWeek = new Date(adjustedDate);
+    startOfWeek.setDate(adjustedDate.getDate() - adjustedDate.getDay());
 
     const weekDatesArray = Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(adjustedDate);
-      date.setDate(adjustedDate.getDate() + index + offsetDays);
+      const date = new Date(startOfWeek);
+      date.setDate(startOfWeek.getDate() + index);
       return date;
     });
 
