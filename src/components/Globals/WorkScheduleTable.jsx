@@ -255,7 +255,7 @@ const WorkScheduleTable = ({
         </div>
       )}
 
-      {/* THIS IS FOR DESKTOP SCREENS - 768px to up 
+      {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
       <Table
         className="md:block hidden"
         classNames={{
@@ -306,11 +306,7 @@ const WorkScheduleTable = ({
                     } h-5 w-[24px] rounded-md flex justify-center items-center`}
                   >
                     <p className="ST-4">
-                      {showCurrentDate
-                        ? weekDates[rowIndex]
-                          ? weekDates[rowIndex].toLocaleDateString()
-                          : "--"
-                        : "X"}
+                      {showCurrentDate ? weekDates[rowIndex] ? weekDates[rowIndex]?.toLocaleDateString()?.split('/')[0] : "--" : "X"}
                     </p>
                   </div>
                 </div>
