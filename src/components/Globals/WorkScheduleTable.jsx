@@ -195,19 +195,75 @@ const WorkScheduleTable = ({
 
   // This is for decrementing days of a month (- 7)
   const handleDecrementWeek = () => {
-    setCurrentOffset((prevOffset) => {
-      const newOffset = prevOffset - 7;
-      updateWeekDates(selectedTimeZone, newOffset);
-      return newOffset;
+    setWeekDates((prevDates) =>
+      prevDates.map((date) => {
+        const newDate = new Date(date);
+        newDate.setDate(newDate.getDate() - 7);
+        return newDate;
+      })
+    );
+
+    setMinDate((prevMin) => {
+      const newDate = new Date(
+        prevMin.actualYear,
+        prevMin.actualMonth,
+        prevMin.actualDate - 7
+      );
+      return {
+        actualDate: newDate.getDate(),
+        actualMonth: newDate.getMonth(),
+        actualYear: newDate.getFullYear(),
+      };
+    });
+
+    setMaxDate((prevMax) => {
+      const newDate = new Date(
+        prevMax.actualYear,
+        prevMax.actualMonth,
+        prevMax.actualDate - 7
+      );
+      return {
+        actualDate: newDate.getDate(),
+        actualMonth: newDate.getMonth(),
+        actualYear: newDate.getFullYear(),
+      };
     });
   };
 
   // This is for incrementing days of a month (+ 7)
   const handleIncrementWeek = () => {
-    setCurrentOffset((prevOffset) => {
-      const newOffset = prevOffset + 7;
-      updateWeekDates(selectedTimeZone, newOffset);
-      return newOffset;
+    setWeekDates((prevDates) =>
+      prevDates.map((date) => {
+        const newDate = new Date(date);
+        newDate.setDate(newDate.getDate() + 7);
+        return newDate;
+      })
+    );
+
+    setMinDate((prevMin) => {
+      const newDate = new Date(
+        prevMin.actualYear,
+        prevMin.actualMonth,
+        prevMin.actualDate + 7
+      );
+      return {
+        actualDate: newDate.getDate(),
+        actualMonth: newDate.getMonth(),
+        actualYear: newDate.getFullYear(),
+      };
+    });
+
+    setMaxDate((prevMax) => {
+      const newDate = new Date(
+        prevMax.actualYear,
+        prevMax.actualMonth,
+        prevMax.actualDate + 7
+      );
+      return {
+        actualDate: newDate.getDate(),
+        actualMonth: newDate.getMonth(),
+        actualYear: newDate.getFullYear(),
+      };
     });
   };
 
