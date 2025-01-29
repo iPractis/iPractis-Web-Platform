@@ -57,6 +57,23 @@ const WorkScheduleTable = ({
     const firstDayOfWeek = new Date(today);
     firstDayOfWeek.setDate(today.getDate() + daysToMonday);
 
+    // Calculate the date of the last day of the week (Sunday)
+    const lastDayOfWeek = new Date(firstDayOfWeek);
+    lastDayOfWeek.setDate(firstDayOfWeek.getDate() + 6);
+
+    // Helper function to format a date object into an object with actualDate, actualMonth, and actualYear
+    const formatDateObject = (date) => {
+      return {
+        actualDate: date.getDate(),
+        actualMonth: date.getMonth(),
+        actualYear: date.getFullYear(),
+      };
+    };
+
+    // Format the first and last day of the week
+    const formattedMinDate = formatDateObject(firstDayOfWeek);
+    const formattedMaxDate = formatDateObject(lastDayOfWeek);
+
     // Create an array of 7 consecutive dates (Monday, Tuesday, ..., Sunday)
     const generatedWeekDates = Array.from({ length: 7 }, (_, index) => {
       const newDate = new Date(firstDayOfWeek);
@@ -64,7 +81,12 @@ const WorkScheduleTable = ({
       return newDate;
     });
 
+    // Set the generated week dates
     setWeekDates(generatedWeekDates);
+
+    // Update the state of minDate and maxDate with the formatted objects
+    setMinDate(formattedMinDate);
+    setMaxDate(formattedMaxDate);
   }, []);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
@@ -306,7 +328,13 @@ const WorkScheduleTable = ({
                     } h-5 w-[24px] rounded-md flex justify-center items-center`}
                   >
                     <p className="ST-4">
-                      {showCurrentDate ? weekDates[rowIndex] ? weekDates[rowIndex]?.toLocaleDateString()?.split('/')[0] : "--" : "X"}
+                      {showCurrentDate
+                        ? weekDates[rowIndex]
+                          ? weekDates[rowIndex]
+                              ?.toLocaleDateString()
+                              ?.split("/")[0]
+                          : "--"
+                        : "X"}
                     </p>
                   </div>
                 </div>
