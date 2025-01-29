@@ -33,68 +33,112 @@ const WorkScheduleTable = ({
   showCurrentDate,
   fromToFilter,
 }) => {
-  const [selectedSlots, setSelectedSlots] = useState([]);
+  const [selectedTimeZone, setSelectedTimeZone] = useState("Etc/GMT+12");
   const [currentOffset, setCurrentOffset] = useState(0);
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
 
-  // This is for defaulttimezone, we make sure to update the week dates
+  const [selectedSlots, setSelectedSlots] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
-    const defaultTimeZone = "GMT+00:00";
-    updateWeekDates(defaultTimeZone, 0);
+    // Get actual date
+    const today = new Date();
+
+    // Get day of week (0 - sunday, 1 - monday, ..., 6 - saturday)
+    const currentDay = today.getDay();
+
+    // Calculate the difference of days up to the first day of the week (Monday, for example)
+    const daysToMonday = currentDay === 0 ? -6 : 1 - currentDay; // if it's sunday, we go back 6 days
+
+    // Calculate the date of the first day of the week (Monday)
+    const firstDayOfWeek = new Date(today);
+    firstDayOfWeek.setDate(today.getDate() + daysToMonday);
+
+    // Create an array of 7 consecutive dates (Monday, Tuesday, ..., Sunday)
+    const generatedWeekDates = Array.from({ length: 7 }, (_, index) => {
+      const newDate = new Date(firstDayOfWeek);
+      newDate.setDate(firstDayOfWeek.getDate() + index);
+      return newDate;
+    });
+
+    setWeekDates(generatedWeekDates);
   }, []);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
-  const updateWeekDates = (selectedTimeZone, offsetDays) => {
-    const offset = parseFloat(
-      selectedTimeZone.replace("GMT", "").replace(":", ".")
-    );
+  const updateWeekDates = (selectedTimeZone) => {
+    const adjustedWeekDates = weekDates.map((date) => {
+      const options = {
+        timeZone: selectedTimeZone,
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+      };
 
-    const localDate = new Date();
-    const adjustedDate = new Date(localDate.getTime() + offset * 3600000);
-    adjustedDate.setDate(adjustedDate.getDate() + offsetDays);
-
-    const startOfWeek = new Date(adjustedDate);
-    startOfWeek.setDate(adjustedDate.getDate() - adjustedDate.getDay());
-
-    const weekDatesArray = Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(startOfWeek);
-      date.setDate(startOfWeek.getDate() + index);
-      return date;
+      const dateString = date.toLocaleString("en-US", options);
+      return new Date(dateString);
     });
 
-    setWeekDates(
-      weekDatesArray.map((date) =>
-        date.toLocaleDateString("en-US", {
-          day: "numeric",
-        })
-      )
-    );
+    setWeekDates(adjustedWeekDates);
 
     setMinDate({
-      actualDate: weekDatesArray[0].getDate(),
-      actualYear: weekDatesArray[0].getFullYear(),
-      actualMonth: weekDatesArray[0].getMonth(),
+      actualDate: adjustedWeekDates[0].getDate(),
+      actualYear: adjustedWeekDates[0].getFullYear(),
+      actualMonth: adjustedWeekDates[0].getMonth(),
     });
 
     setMaxDate({
-      actualDate: weekDatesArray[6].getDate(),
-      actualYear: weekDatesArray[6].getFullYear(),
-      actualMonth: weekDatesArray[6].getMonth(),
+      actualDate: adjustedWeekDates[6].getDate(),
+      actualYear: adjustedWeekDates[6].getFullYear(),
+      actualMonth: adjustedWeekDates[6].getMonth(),
     });
 
     setCurrentDay(
-      adjustedDate.toLocaleDateString("en-US", { weekday: "short" })
+      adjustedWeekDates[0].toLocaleDateString("en-US", { weekday: "short" })
+    );
+
+    // Si necesitas imprimir la fecha ajustada en el log, puedes hacerlo aquí:
+    console.log(
+      `Fechas de la semana ajustadas a la zona ${selectedTimeZone}:`,
+      adjustedWeekDates
     );
   };
 
   // Once we change the timezone in select, we update the changes to updateWeekDates (Because time changes depending on Timezone)
   const handleTimeZoneChange = (e) => {
-    const selectedTimeZone = e.target.value;
-    updateWeekDates(selectedTimeZone, currentOffset);
+    const selectedTimezone = e.target.value;
+
+    setSelectedTimeZone(selectedTimezone);
+
+    updateWeekDates(selectedTimezone, currentOffset);
+
+    const date = new Date();
+
+    const options = {
+      timeZone: selectedTimezone,
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+      hour12: true,
+    };
+
+    const timeInSelectedTimezone = new Intl.DateTimeFormat(
+      "en-US",
+      options
+    ).format(date);
+    console.log(
+      `Fecha y hora seleccionada (${selectedTimezone}):`,
+      timeInSelectedTimezone
+    );
   };
 
   // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
@@ -126,7 +170,7 @@ const WorkScheduleTable = ({
   const handleDecrementWeek = () => {
     setCurrentOffset((prevOffset) => {
       const newOffset = prevOffset - 7;
-      updateWeekDates("GMT+00:00", newOffset);
+      updateWeekDates(selectedTimeZone, newOffset);
       return newOffset;
     });
   };
@@ -135,7 +179,7 @@ const WorkScheduleTable = ({
   const handleIncrementWeek = () => {
     setCurrentOffset((prevOffset) => {
       const newOffset = prevOffset + 7;
-      updateWeekDates("GMT+00:00", newOffset);
+      updateWeekDates(selectedTimeZone, newOffset);
       return newOffset;
     });
   };
@@ -211,7 +255,7 @@ const WorkScheduleTable = ({
         </div>
       )}
 
-      {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
+      {/* THIS IS FOR DESKTOP SCREENS - 768px to up 
       <Table
         className="md:block hidden"
         classNames={{
@@ -262,7 +306,11 @@ const WorkScheduleTable = ({
                     } h-5 w-[24px] rounded-md flex justify-center items-center`}
                   >
                     <p className="ST-4">
-                      {showCurrentDate ? weekDates[rowIndex] || "--" : "X"}
+                      {showCurrentDate
+                        ? weekDates[rowIndex]
+                          ? weekDates[rowIndex].toLocaleDateString()
+                          : "--"
+                        : "X"}
                     </p>
                   </div>
                 </div>
@@ -270,7 +318,11 @@ const WorkScheduleTable = ({
 
               {Array.from({ length: 24 }, (_, hourIndex) => (
                 <TableCell
-                  className={`${currentDay === column.key ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg  last:rounded-r-lg h-7 !w-[27.50px] !p-1 !px-0.5" : "!p-0 !pb-0.5"}`}
+                  className={`${
+                    currentDay === column.key
+                      ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg  last:rounded-r-lg h-7 !w-[27.50px] !p-1 !px-0.5"
+                      : "!p-0 !pb-0.5"
+                  }`}
                   key={`${column.key}-${hourIndex}`}
                 >
                   <button
@@ -289,7 +341,7 @@ const WorkScheduleTable = ({
         </TableBody>
       </Table>
 
-      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom */}
+      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom
       <Table
         className="md:hidden block"
         classNames={{
@@ -355,7 +407,7 @@ const WorkScheduleTable = ({
             </TableRow>
           ))}
         </TableBody>
-      </Table>
+      </Table> */}
 
       {/* Spots - booked, available, unavailable and also timezone filter */}
       <div className="grid grid-cols-2 gap-4 mt-4">
@@ -381,8 +433,9 @@ const WorkScheduleTable = ({
         <div>
           {timeZoneFilter && (
             <Select
-              defaultSelectedKeys={["GMT+00:00"]}
+              value={selectedTimeZone}
               onChange={handleTimeZoneChange}
+              defaultSelectedKeys={["Etc/GMT+12"]}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
               placeholder="Select a time zone"
@@ -407,8 +460,10 @@ const WorkScheduleTable = ({
                 listbox: ["text-primary-color-P4"],
               }}
             >
-              {timeZones?.map((timeZone) => (
-                <SelectItem key={timeZone}>{timeZone}</SelectItem>
+              {timeZones?.map((tz) => (
+                <SelectItem key={tz.value} value={tz.value}>
+                  {tz.label}
+                </SelectItem>
               ))}
             </Select>
           )}
