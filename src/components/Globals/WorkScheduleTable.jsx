@@ -34,7 +34,7 @@ const WorkScheduleTable = ({
   showCurrentDate,
   fromToFilter,
 }) => {
-  const [selectedTimeZone, setSelectedTimeZone] = useState("Etc/GMT+12");
+  const [selectedTimeZone, setSelectedTimeZone] = useState("Etc/UTC");
   const [currentOffset, setCurrentOffset] = useState(0);
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
@@ -464,7 +464,7 @@ const WorkScheduleTable = ({
             <Select
               value={selectedTimeZone}
               onChange={handleTimeZoneChange}
-              defaultSelectedKeys={["Etc/GMT+12"]}
+              defaultSelectedKeys={["Etc/UTC"]}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
               placeholder="Select a time zone"
