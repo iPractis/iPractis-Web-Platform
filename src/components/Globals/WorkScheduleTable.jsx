@@ -1,4 +1,5 @@
 import {
+  abbreviatedDaysOfWeek,
   columnsHeaderWorkSchedule,
   rowsWorkSchedule,
   timeZones,
@@ -43,6 +44,7 @@ const WorkScheduleTable = ({
   const [selectedSlots, setSelectedSlots] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
+  // All that happen in this useEffect are the DEFAULT VALUES for the calendar
   useEffect(() => {
     // Get actual date
     const today = new Date();
@@ -87,6 +89,9 @@ const WorkScheduleTable = ({
     // Update the state of minDate and maxDate with the formatted objects
     setMinDate(formattedMinDate);
     setMaxDate(formattedMaxDate);
+
+    // Set the current day of the week
+    setCurrentDay(today.toLocaleDateString("en-US", { weekday: "short" }));
   }, []);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!

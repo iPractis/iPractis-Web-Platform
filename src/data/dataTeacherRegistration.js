@@ -213,4 +213,4 @@ export const months = [
   "December",
 ];
 
-export const abbreviatedDaysOfWeek = ["Sa", "Su", "Mo", "Tu", "We", "Th", "Fr"];
+export const abbreviatedDaysOfWeek = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
