@@ -35,7 +35,6 @@ const WorkScheduleTable = ({
   fromToFilter,
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState("Etc/UTC");
-  const [currentOffset, setCurrentOffset] = useState(0);
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
@@ -108,7 +107,7 @@ const WorkScheduleTable = ({
         hour12: false,
       };
 
-      const dateString = date.toLocaleString("en-US", options);
+      const dateString = date.toLocaleDateString("en-US", options);
       return new Date(dateString);
     });
 
@@ -130,6 +129,8 @@ const WorkScheduleTable = ({
       adjustedWeekDates[0].toLocaleDateString("en-US", { weekday: "short" })
     );
 
+    console.log(adjustedWeekDates[0].toLocaleDateString("en-US", { weekday: "short" }), 'mikuu')
+
     // Si necesitas imprimir la fecha ajustada en el log, puedes hacerlo aquí:
     console.log(
       `Fechas de la semana ajustadas a la zona ${selectedTimeZone}:`,
@@ -143,7 +144,7 @@ const WorkScheduleTable = ({
 
     setSelectedTimeZone(selectedTimezone);
 
-    updateWeekDates(selectedTimezone, currentOffset);
+    updateWeekDates(selectedTimezone);
 
     const date = new Date();
 
