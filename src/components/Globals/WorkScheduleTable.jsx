@@ -457,16 +457,13 @@ const WorkScheduleTable = ({
               columnDate.getFullYear() === new Date().getFullYear();
 
             return (
-              <TableColumn
-                className="h-auto mt-auto mx-auto w-[40.50px]"
-                key={column.key}
-              >
+              <TableColumn className="h-auto w-[40.50px]" key={column.key}>
                 <div
                   className={`${
                     isToday
                       ? "bg-tertiary-color-SC5 text-primary-color-P12"
                       : "bg-primary-color-P12 text-primary-color-P1"
-                  } p-1 text-center rounded-lg h-full w-[40.50px]`}
+                  } p-1 text-center rounded-lg h-full w-[40.50px] mx-auto`}
                 >
                   <div className="ST-SB-3 !px-0">{column.label}</div>
 
@@ -493,33 +490,48 @@ const WorkScheduleTable = ({
 
         <TableBody>
           {rowsWorkSchedule.map((row) => (
-            <TableRow key={row.hour}>
-              <TableCell className="p-0 w-[40.50px] mx-auto">
-                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[32.50px] mx-auto">
+            <TableRow className="" key={row.hour}>
+              <TableCell className="!p-0 w-[40.50px]">
+                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-5 w-[32.50px] mx-auto">
                   {row?.hour}
                 </div>
               </TableCell>
 
-              {columnsHeaderWorkSchedule.map((column) => (
-                <TableCell
-                  className="p-0 w-[40.50px] mx-auto pb-1.5"
-                  key={column?.key}
-                >
-                  <button
+              {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+                const columnDate = weekDates[rowIndex];
+
+                const isToday =
+                  columnDate instanceof Date &&
+                  !isNaN(columnDate) &&
+                  columnDate.getDate() === currentDay &&
+                  columnDate.getMonth() === new Date().getMonth() &&
+                  columnDate.getFullYear() === new Date().getFullYear();
+
+                return (
+                  <TableCell
                     className={`${
-                      isSelected(row?.hour, column?.label)
-                        ? "bg-quinary-color-VS10"
-                        : "bg-primary-color-P11"
-                    } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[32.5px] mx-auto`}
-                    onClick={() =>
-                      handleGetDayAndHour(row?.hour, column?.label)
-                    }
-                    type="button"
+                      isToday
+                        ? "bg-tertiary-color-SC5 isSelected h-5 !w-[32.50px] !p-1"
+                        : "!p-0"
+                    }`}
+                    key={column?.key}
                   >
-                    {column?.slot}
-                  </button>
-                </TableCell>
-              ))}
+                    <button
+                      className={`${
+                        isSelected(row?.hour, column?.label)
+                          ? "bg-quinary-color-VS10"
+                          : "bg-primary-color-P11"
+                      } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-5 !w-[32.50px] mx-auto`}
+                      onClick={() =>
+                        handleGetDayAndHour(row?.hour, column?.label)
+                      }
+                      type="button"
+                    >
+                      {column?.slot}
+                    </button>
+                  </TableCell>
+                );
+              })}
             </TableRow>
           ))}
         </TableBody>

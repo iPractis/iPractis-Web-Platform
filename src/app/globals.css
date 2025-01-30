@@ -31,6 +31,17 @@
   border-color: var(--quaternary-color-A5) !important;
 }
 
+/* This is for rounded corners in calendar when it's today */
+tr:first-of-type td.isSelected {
+  border-top-right-radius: 8px !important;
+  border-top-left-radius: 8px !important;
+}
+
+tr:last-of-type td.isSelected {
+  border-bottom-right-radius: 8px !important;
+  border-bottom-left-radius: 8px !important;
+}
+
 /* This is for otp input spacing */
 .otp-inputs-container input:nth-child(3) {
   margin-right: 2rem;
