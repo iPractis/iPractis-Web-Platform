@@ -157,7 +157,7 @@ const TabsDisplayedInfo = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`max-w-[1000px] sm:px-0 px-8 mx-auto`}
+      className={`max-w-[1000px] sm:px-8 px-0 mx-auto`}
     >
       {/* 0 */}
       <TabProfile

@@ -427,7 +427,7 @@ const WorkScheduleTable = ({
         </TableBody>
       </Table>
 
-      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom
+      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom */}
       <Table
         className="md:hidden block"
         classNames={{
@@ -436,7 +436,7 @@ const WorkScheduleTable = ({
         removeWrapper
       >
         <TableHeader>
-          <TableColumn className="pr-1.5 w-[24.5px]" key="custom-column">
+          <TableColumn className="w-[40.50px] mx-auto" key="custom-column">
             <div className="bg-primary-color-P12 ST-SB-3 h-6 w-full">
               <p></p>
             </div>
@@ -446,33 +446,63 @@ const WorkScheduleTable = ({
             </div>
           </TableColumn>
 
-          {columnsHeaderWorkSchedule.map((column, index) => (
-            <TableColumn className="h-auto mt-auto w-[24.5px]" key={column.key}>
-              <div className="bg-primary-color-P12 text-primary-color-P1 text-center rounded-lg h-full w-[24.5px]">
-                <div className="ST-SB-3 !px-0">{column.label}</div>
+          {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+            const columnDate = weekDates[rowIndex];
 
-                <div className="bg-primary-color-P1 rounded-md flex justify-center items-center mt-0.5 h-5">
-                  <p className="text-primary-color-P12 ST-4">
-                    {showCurrentDate ? weekDates[index] || "--" : "X"}
-                  </p>
+            const isToday =
+              columnDate instanceof Date &&
+              !isNaN(columnDate) &&
+              columnDate.getDate() === currentDay &&
+              columnDate.getMonth() === new Date().getMonth() &&
+              columnDate.getFullYear() === new Date().getFullYear();
+
+            return (
+              <TableColumn
+                className="h-auto mt-auto mx-auto w-[40.50px]"
+                key={column.key}
+              >
+                <div
+                  className={`${
+                    isToday
+                      ? "bg-tertiary-color-SC5 text-primary-color-P12"
+                      : "bg-primary-color-P12 text-primary-color-P1"
+                  } p-1 text-center rounded-lg h-full w-[40.50px]`}
+                >
+                  <div className="ST-SB-3 !px-0">{column.label}</div>
+
+                  <div
+                    className={`${
+                      isToday
+                        ? "bg-primary-color-P12 text-tertiary-color-SC5"
+                        : "bg-primary-color-P1 text-primary-color-P12"
+                    } rounded-md flex justify-center items-center mt-0.5 h-5`}
+                  >
+                    <p className="ST-4">
+                      {showCurrentDate
+                        ? columnDate instanceof Date && !isNaN(columnDate)
+                          ? columnDate.toLocaleDateString().split("/")[0]
+                          : "--"
+                        : "X"}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </TableColumn>
-          ))}
+              </TableColumn>
+            );
+          })}
         </TableHeader>
 
         <TableBody>
           {rowsWorkSchedule.map((row) => (
             <TableRow key={row.hour}>
-              <TableCell className="p-0 w-[24.5px] pr-1.5 pb-1.5">
-                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]">
+              <TableCell className="p-0 w-[40.50px] mx-auto">
+                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[32.50px] mx-auto">
                   {row?.hour}
                 </div>
               </TableCell>
 
               {columnsHeaderWorkSchedule.map((column) => (
                 <TableCell
-                  className="p-0 w-[24.5px] pr-1.5 pb-1.5"
+                  className="p-0 w-[40.50px] mx-auto pb-1.5"
                   key={column?.key}
                 >
                   <button
@@ -480,7 +510,7 @@ const WorkScheduleTable = ({
                       isSelected(row?.hour, column?.label)
                         ? "bg-quinary-color-VS10"
                         : "bg-primary-color-P11"
-                    } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[24.5px]`}
+                    } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-[22px] w-[32.5px] mx-auto`}
                     onClick={() =>
                       handleGetDayAndHour(row?.hour, column?.label)
                     }
@@ -493,7 +523,7 @@ const WorkScheduleTable = ({
             </TableRow>
           ))}
         </TableBody>
-      </Table> */}
+      </Table>
 
       {/* Spots - booked, available, unavailable and also timezone filter */}
       <div className="grid grid-cols-2 gap-4 mt-4">
