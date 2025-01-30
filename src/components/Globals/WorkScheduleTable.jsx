@@ -146,8 +146,6 @@ const WorkScheduleTable = ({
     const correctedDate = new Date(`${year}-${month}-${day}T00:00:00`);
 
     setCurrentDay(correctedDate.getDate());
-
-    console.log(`Nueva fecha en ${selectedTimeZone}:`, correctedDate);
   };
 
   // Once we change the timezone in select, we update the changes to updateWeekDates (Because time changes depending on Timezone)
