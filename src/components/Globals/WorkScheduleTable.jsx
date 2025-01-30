@@ -34,7 +34,7 @@ const WorkScheduleTable = ({
   showCurrentDate,
   fromToFilter,
 }) => {
-  const [selectedTimeZone, setSelectedTimeZone] = useState("Etc/UTC");
+  const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
@@ -90,25 +90,31 @@ const WorkScheduleTable = ({
     setMaxDate(formattedMaxDate);
 
     // Set the current day of the week
-    setCurrentDay(today.toLocaleDateString("en-US", { weekday: "short" }));
+    const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const now = new Date().toLocaleDateString("en-US", {
+      timeZone: userTimeZone,
+    });
+    setCurrentDay(new Date(now).getDate());
   }, []);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
     const adjustedWeekDates = weekDates.map((date) => {
+      // Convertimos la fecha a la zona horaria elegida
       const options = {
         timeZone: selectedTimeZone,
-        day: "numeric",
-        month: "numeric",
         year: "numeric",
-        hour: "numeric",
-        minute: "numeric",
-        second: "numeric",
-        hour12: false,
+        month: "2-digit",
+        day: "2-digit",
       };
 
-      const dateString = date.toLocaleDateString("en-US", options);
-      return new Date(dateString);
+      const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
+        date
+      );
+
+      // Desglosamos correctamente la fecha para reconstruirla en la zona correcta
+      const [month, day, year] = formattedDate.split("/");
+      return new Date(`${year}-${month}-${day}T00:00:00`);
     });
 
     setWeekDates(adjustedWeekDates);
@@ -125,48 +131,31 @@ const WorkScheduleTable = ({
       actualMonth: adjustedWeekDates[6].getMonth(),
     });
 
-    setCurrentDay(
-      adjustedWeekDates[0].toLocaleDateString("en-US", { weekday: "short" })
+    // 🟢 Aquí ajustamos también la fecha actual según la zona horaria
+    const today = new Date();
+    const options = {
+      timeZone: selectedTimeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    };
+    const formattedToday = new Intl.DateTimeFormat("en-US", options).format(
+      today
     );
 
-    console.log(adjustedWeekDates[0].toLocaleDateString("en-US", { weekday: "short" }), 'mikuu')
+    const [month, day, year] = formattedToday.split("/");
+    const correctedDate = new Date(`${year}-${month}-${day}T00:00:00`);
 
-    // Si necesitas imprimir la fecha ajustada en el log, puedes hacerlo aquí:
-    console.log(
-      `Fechas de la semana ajustadas a la zona ${selectedTimeZone}:`,
-      adjustedWeekDates
-    );
+    setCurrentDay(correctedDate.getDate());
+
+    console.log(`Nueva fecha en ${selectedTimeZone}:`, correctedDate);
   };
 
   // Once we change the timezone in select, we update the changes to updateWeekDates (Because time changes depending on Timezone)
   const handleTimeZoneChange = (e) => {
     const selectedTimezone = e.target.value;
-
     setSelectedTimeZone(selectedTimezone);
-
     updateWeekDates(selectedTimezone);
-
-    const date = new Date();
-
-    const options = {
-      timeZone: selectedTimezone,
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true,
-    };
-
-    const timeInSelectedTimezone = new Intl.DateTimeFormat(
-      "en-US",
-      options
-    ).format(date);
-    console.log(
-      `Fecha y hora seleccionada (${selectedTimezone}):`,
-      timeInSelectedTimezone
-    );
   };
 
   // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
@@ -362,68 +351,79 @@ const WorkScheduleTable = ({
         </TableHeader>
 
         <TableBody>
-          {columnsHeaderWorkSchedule.map((column, rowIndex) => (
-            <TableRow key={column.key}>
-              <TableCell className="!p-0 !pb-0.5 !pe-1.5">
-                <div
-                  className={`flex gap-0.5 items-center ${
-                    currentDay === column.key
-                      ? "w-[60px] bg-tertiary-color-SC5 ps-2 p-1 text-primary-color-P12 rounded-lg"
-                      : "ps-2 p-1"
-                  }`}
-                >
-                  <div
-                    className={`${
-                      currentDay === column.key
-                        ? "text-primary-color-P12"
-                        : "text-primary-color-P1"
-                    } ST-SB-3 w-[22px]`}
-                  >
-                    {column.label}
-                  </div>
+          {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+            const columnDate = weekDates[rowIndex];
 
-                  <div
-                    className={`${
-                      currentDay === column.key
-                        ? "bg-primary-color-P12 text-tertiary-color-SC5"
-                        : "bg-primary-color-P1 text-primary-color-P12"
-                    } h-5 w-[24px] rounded-md flex justify-center items-center`}
-                  >
-                    <p className="ST-4">
-                      {showCurrentDate
-                        ? weekDates[rowIndex]
-                          ? weekDates[rowIndex]
-                              ?.toLocaleDateString()
-                              ?.split("/")[0]
-                          : "--"
-                        : "X"}
-                    </p>
-                  </div>
-                </div>
-              </TableCell>
+            const isToday =
+              columnDate instanceof Date &&
+              !isNaN(columnDate) &&
+              columnDate.getDate() === currentDay &&
+              columnDate.getMonth() === new Date().getMonth() &&
+              columnDate.getFullYear() === new Date().getFullYear();
 
-              {Array.from({ length: 24 }, (_, hourIndex) => (
-                <TableCell
-                  className={`${
-                    currentDay === column.key
-                      ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg  last:rounded-r-lg h-7 !w-[27.50px] !p-1 !px-0.5"
-                      : "!p-0 !pb-0.5"
-                  }`}
-                  key={`${column.key}-${hourIndex}`}
-                >
-                  <button
-                    className={`${
-                      isSelected(hourIndex, column.label)
-                        ? "bg-quinary-color-VS10"
-                        : "bg-primary-color-P11"
-                    } flex justify-center items-center rounded-md ST-4 h-5 w-[27.50px] mx-auto`}
-                    onClick={() => handleGetDayAndHour(hourIndex, column.label)}
-                    type="button"
-                  ></button>
+            return (
+              <TableRow key={column.key}>
+                <TableCell className="!p-0 !pb-0.5 !pe-1.5">
+                  <div
+                    className={`flex gap-0.5 items-center ${
+                      isToday
+                        ? "w-[60px] bg-tertiary-color-SC5 ps-2 p-1 text-primary-color-P12 rounded-lg"
+                        : "ps-2 p-1"
+                    }`}
+                  >
+                    <div
+                      className={`${
+                        isToday
+                          ? "text-primary-color-P12"
+                          : "text-primary-color-P1"
+                      } ST-SB-3 w-[22px]`}
+                    >
+                      {column.label}
+                    </div>
+
+                    <div
+                      className={`${
+                        isToday
+                          ? "bg-primary-color-P12 text-tertiary-color-SC5"
+                          : "bg-primary-color-P1 text-primary-color-P12"
+                      } h-5 w-[24px] rounded-md flex justify-center items-center`}
+                    >
+                      <p className="ST-4">
+                        {showCurrentDate
+                          ? columnDate instanceof Date && !isNaN(columnDate)
+                            ? columnDate.toLocaleDateString().split("/")[0]
+                            : "--"
+                          : "X"}
+                      </p>
+                    </div>
+                  </div>
                 </TableCell>
-              ))}
-            </TableRow>
-          ))}
+
+                {Array.from({ length: 24 }, (_, hourIndex) => (
+                  <TableCell
+                    className={`${
+                      isToday
+                        ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1 !px-0.5"
+                        : "!p-0 !pb-0.5"
+                    }`}
+                    key={`${column.key}-${hourIndex}`}
+                  >
+                    <button
+                      className={`${
+                        isSelected(hourIndex, column.label)
+                          ? "bg-quinary-color-VS10"
+                          : "bg-primary-color-P11"
+                      } flex justify-center items-center rounded-md ST-4 h-5 w-[27.50px] mx-auto`}
+                      onClick={() =>
+                        handleGetDayAndHour(hourIndex, column.label)
+                      }
+                      type="button"
+                    ></button>
+                  </TableCell>
+                ))}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
 
@@ -521,7 +521,7 @@ const WorkScheduleTable = ({
             <Select
               value={selectedTimeZone}
               onChange={handleTimeZoneChange}
-              defaultSelectedKeys={["Etc/UTC"]}
+              defaultSelectedKeys={["America/Chicago"]}
               name="timeZoneCalendar"
               onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
               placeholder="Select a time zone"
