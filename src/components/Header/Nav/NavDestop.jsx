@@ -29,10 +29,8 @@ const NavDesktop = () => {
         <div className="flex items-center gap-1.5">
           <Link
             href="/login"
-            className="btn btn-quinary flex items-center pe-4 p-1.5 gap-4 rounded-2xl ST-4 group w-[107px] h-[38px]"
+            className="btn btn-tertiary flex justify-center items-center ST-4 pe-4 p-1.5 rounded-2xl gap-4 w-[124px]"
           >
-            <span className="flex-1">Log in</span>{" "}
-
             <div className="bg-primary-color-P1 rounded-[10px] p-1">
               <ChevronRightDoorSmallIcon
                 fillColor={
@@ -40,11 +38,13 @@ const NavDesktop = () => {
                 }
               />
             </div>
+
+            <span className="flex-1">Log in</span>{" "}
           </Link>
 
           <Link
             href="/register"
-            className="btn btn-tertiary flex justify-center items-center ST-4 pe-4 p-1.5 rounded-2xl gap-4 w-[131px]"
+            className="btn btn-tertiary flex justify-center items-center ST-4 pe-4 p-1.5 rounded-2xl gap-4 w-[124px]"
           >
             <InputBGWrapperIcon className={"bg-primary-color-P1 p-0 w-7 h-7"}>
               <UserAddCircleSmallerIcon
