@@ -70,7 +70,7 @@ const NavResponsive = () => {
             >
               <Link
                 href="/register"
-                className="btn btn-primary w-full px-4 py-2 rounded-lg"
+                className="btn btn-primary w-full px-4 py-2 rounded-full"
               >
                 Register
               </Link>
@@ -78,12 +78,12 @@ const NavResponsive = () => {
 
             <DropdownItem className="disable-hover" key="findTutor">
               <Link
-                className="btn btn-senary group w-full px-4 py-2 rounded-lg flex justify-center items-center"
+                className="btn btn-senary group w-full px-4 py-2 rounded-lg flex justify-between items-center"
                 href="#"
               >
-                <span className="sm:flex-[85%] flex-[80%]">Find a Tutor</span>
+                <span>Find a Tutor</span>
 
-                <div className="flex-1">
+                <div>
                   <SearchIcon fillColor={"fill-primary-color-P12"} />
                 </div>
               </Link>
