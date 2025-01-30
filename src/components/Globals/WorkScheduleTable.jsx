@@ -260,7 +260,7 @@ const WorkScheduleTable = ({
     <>
       {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
       {fromToFilter && (
-        <div className="flex items-center justify-center gap-4 mb-4">
+        <div className="flex items-center justify-center gap-8 mb-4">
           <button onClick={handleDecrementWeek} type="button">
             <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
           </button>
