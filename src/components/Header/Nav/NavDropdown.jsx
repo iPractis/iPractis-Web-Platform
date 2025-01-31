@@ -135,7 +135,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <DashboardMediumIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -149,7 +149,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <CameraBoxMediumIcon
                   fillColor={"fill-primary-color-P1"}
                   strokeColor={"stroke-primary-color-P1"}
@@ -166,7 +166,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <SearchSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -180,7 +180,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <UserSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -194,7 +194,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <UserToolsIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -208,7 +208,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <GearSmallIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -222,7 +222,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <HeartSmallIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -236,7 +236,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <UserTieSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -250,7 +250,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               type="button"
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <HelpSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
@@ -265,7 +265,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               onClick={signOut}
               type="button"
             >
-              <InputBGWrapperIcon className={"size-6 p-0"}>
+              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <ChevronRightSmallerIcon fillColor={"fill-septenary-color-MA6"} />
               </InputBGWrapperIcon>
 
