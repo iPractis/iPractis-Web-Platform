@@ -65,7 +65,7 @@ const NavResponsive = () => {
             </DropdownItem>
 
             <DropdownItem
-              className="disable-hover mt-[5px] mb-[30px]"
+              className="disable-hover mt-[5px] mb-[30px] rounded-full"
               key="register"
             >
               <Link
