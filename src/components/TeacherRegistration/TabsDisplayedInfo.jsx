@@ -26,7 +26,9 @@ const TabsDisplayedInfo = ({
 }) => {
   // TAB PROFILE STATES
   const [birthDate, setBirthDate] = useState(
-    draft?.birthDate && parseDate(draft?.birthDate)
+    draft?.birthDate && !isNaN(Date.parse(draft?.birthDate))
+      ? parseDate(draft?.birthDate)
+      : null
   );
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [isTabProfilePending, setIsTabProfilePending] = useState(false);
