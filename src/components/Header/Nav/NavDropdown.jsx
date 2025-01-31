@@ -5,7 +5,6 @@ import tutor from "@/public/images/tutor-image-preview.png";
 
 import {
   CameraBoxMediumIcon,
-  ChevronRightDoorBoldestIcon,
   ChevronRightSmallerIcon,
   DashboardMediumIcon,
   GearSmallIcon,
