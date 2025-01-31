@@ -198,7 +198,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 <UserToolsIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
-              <h3 className="ST-3">Profile's settings</h3>
+              <h3 className="ST-3">Profile&#39;s settings</h3>
             </button>
           </DropdownItem>
 
@@ -212,7 +212,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 <GearSmallIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
-              <h3 className="ST-3">Account's settings</h3>
+              <h3 className="ST-3">Account&#39;s settings</h3>
             </button>
           </DropdownItem>
 
