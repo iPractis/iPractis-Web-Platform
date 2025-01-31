@@ -1,11 +1,12 @@
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import NavDropdown from "./NavDropdown";
 import Image from "next/image";
 import Link from "next/link";
 
-// Images
-import messageNotification from "@/public/icons/message-notifications.png";
+// Images && icons
 import ipractisIcon from "@/public/icons/ipractis-icon.png";
-import notification from "@/public/icons/notification.png";
-import NavDropdown from "./NavDropdown";
+
+import { NewMessageCustomIcon, NotificationCustomIcon } from "../../Icons";
 
 const NavResponsiveTeacher = ({ userName }) => {
   return (
@@ -21,33 +22,29 @@ const NavResponsiveTeacher = ({ userName }) => {
         </Link>
       </div>
 
-      <div className="flex items-center gap-1.5">
-        <div className="flex items-center">
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1.5">
           {/* Notifications Button */}
-          <div className="flex px-2.5 py-2">
+          <div className="flex p-1.5">
             <button className="relative">
-              <Image
-                className="w-5 rounded"
-                alt="Notification icon"
-                src={notification}
-                priority
-              />
-
-              <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
+              <InputBGWrapperIcon className={"p-1 size-[26px]"}>
+                <NotificationCustomIcon
+                  fillColor={"fill-primary-color-P1"}
+                  fillCircleColor={"fill-septenary-color-MA5"}
+                />
+              </InputBGWrapperIcon>
             </button>
           </div>
 
           {/* Message Button */}
-          <div className="flex px-2.5 py-2">
-            <button type="button" className="relative">
-              <Image
-                className="w-5 rounded"
-                alt="Message icon"
-                src={messageNotification}
-                priority
-              />
-
-              <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
+          <div className="flex p-1.5">
+            <button type="button">
+              <InputBGWrapperIcon className={"p-1 size-[26px]"}>
+                <NewMessageCustomIcon
+                  fillColor={"fill-primary-color-P1"}
+                  fillCircleColor={"fill-septenary-color-MA5"}
+                />
+              </InputBGWrapperIcon>
             </button>
           </div>
         </div>

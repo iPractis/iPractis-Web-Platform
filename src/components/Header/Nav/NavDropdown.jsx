@@ -34,9 +34,9 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
       backdrop="blur"
     >
       <DropdownTrigger>
-        <button className="flex items-center gap-1 p-1.5 rounded-[10px] bg-primary-color-P12">
+        <button className="flex items-center gap-1 p-1.5 rounded-2xl bg-primary-color-P12">
           <Image
-            className="w-[26px] rounded"
+            className="w-[26px] rounded-[10px]"
             alt="Tutor Profile Image"
             src={tutor}
             priority
