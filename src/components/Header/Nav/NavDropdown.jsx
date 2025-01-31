@@ -35,7 +35,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
       classNames={{
         content: "bg-primary-color-P1 min-w-[300px] p-3",
       }}
-      backdrop="blur"
+      backdrop="opaque"
     >
       <DropdownTrigger>
         <button className="flex items-center gap-1 p-1.5 rounded-2xl bg-primary-color-P12">
@@ -258,7 +258,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             </button>
           </DropdownItem>
 
-          {/* Assistance */}
+          {/* Logout */}
           <DropdownItem className="p-0 disable-hover" key="logOut">
             <button
               className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full hover:text-primary-color-P12 hover:bg-primary-color-P4 bg-septenary-color-MA6 "

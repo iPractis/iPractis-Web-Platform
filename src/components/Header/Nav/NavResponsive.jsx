@@ -30,7 +30,7 @@ const NavResponsive = () => {
         classNames={{
           content: "min-w-[300px] p-4",
         }}
-        backdrop="blur"
+        backdrop="opaque"
       >
         <DropdownTrigger>
           <Image
