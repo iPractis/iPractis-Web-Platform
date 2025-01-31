@@ -1,20 +1,25 @@
-import {
-  CameraBoxIcon,
-  ChevronRightDoorBoldestIcon,
-  DashboardIcon,
-  DialogMarkIcon,
-  SearchIcon,
-  SettingsIcon,
-  UserHatIcon,
-  UserIcon,
-} from "../../Icons";
-
+// Icons && images
 import hamburguer from "@/public/icons/profile-settings-icon-transparent.png";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import tutor from "@/public/images/tutor-image-preview.png";
+
+import {
+  CameraBoxMediumIcon,
+  ChevronRightDoorBoldestIcon,
+  ChevronRightSmallerIcon,
+  DashboardMediumIcon,
+  GearSmallIcon,
+  HeartSmallIcon,
+  HelpSmallerIcon,
+  SearchSmallerIcon,
+  UserSmallerIcon,
+  UserTieSmallerIcon,
+  UserToolsIcon,
+} from "../../Icons";
+
+import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 
 import {
   Dropdown,
@@ -59,6 +64,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             base: "p-0",
           }}
         >
+          {/* Hi, User! */}
           <DropdownItem
             className="bg-primary-color-P2 p-1.5 mb-[30px]"
             key="topBox"
@@ -69,7 +75,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 <div>
                   <Image
                     alt={"Tutor Image"}
-                    className="w-[30px] rounded-[10px]"
+                    className="size-9 object-cover rounded-[10px]"
                     src={tutorImagePreview}
                   />
                 </div>
@@ -124,147 +130,147 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             </div>
           </DropdownItem>
 
-          <DropdownItem className="p-0 mb-1.5" key="profile">
-            <button
-              type="button"
-              className="btn btn-quinary rounded-lg flex items-center gap-4 px-4 py-1.5 w-full group"
-            >
-              <div className="me-0">
-                <UserIcon
-                  fillColor={
-                    "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                  }
-                />
-              </div>
-
-              <h3>Profile</h3>
-            </button>
-          </DropdownItem>
-
+          {/* Dashboard */}
           <DropdownItem className="p-0 mb-1.5" key="dashboard">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <div className="me-1">
-                <DashboardIcon
-                  fillColor={
-                    "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                  }
-                />
-              </div>
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <DashboardMediumIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
 
-              <h3>Dashboard</h3>
+              <h3 className="ST-3">Dashboard</h3>
             </button>
           </DropdownItem>
 
+          {/* Classroom */}
           <DropdownItem className="p-0 mb-1.5" key="classroom">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <div className="me-0.5">
-                <CameraBoxIcon
-                  fillColor={
-                    "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                  }
-                  strokeColor={
-                    "stroke-primary-color-P12 group-hover:stroke-primary-color-P1"
-                  }
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <CameraBoxMediumIcon
+                  fillColor={"fill-primary-color-P1"}
+                  strokeColor={"stroke-primary-color-P1"}
                 />
-              </div>
+              </InputBGWrapperIcon>
 
-              <h3>Classroom</h3>
+              <h3 className="ST-3">Classroom</h3>
             </button>
           </DropdownItem>
 
-          <DropdownItem className="p-0 mb-1.5" key="findTutor">
+          {/* Find tutor */}
+          <DropdownItem className="p-0 mb-1.5" key="findATutor">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-3.5 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <SearchIcon
-                className={
-                  "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                }
-              />
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <SearchSmallerIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
 
-              <h3>Find a Tutor</h3>
+              <h3 className="ST-3">Find a Tutor</h3>
             </button>
           </DropdownItem>
 
+          {/* Profile */}
+          <DropdownItem className="p-0 mb-1.5" key="profile">
+            <button
+              type="button"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
+            >
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <UserSmallerIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
+
+              <h3 className="ST-3">Profile</h3>
+            </button>
+          </DropdownItem>
+
+          {/* Profile Settings */}
+          <DropdownItem className="p-0 mb-1.5" key="profileSettings">
+            <button
+              type="button"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
+            >
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <UserToolsIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
+
+              <h3 className="ST-3">Profile's settings</h3>
+            </button>
+          </DropdownItem>
+
+          {/* Account Settings */}
+          <DropdownItem className="p-0 mb-1.5" key="accountSettings">
+            <button
+              type="button"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
+            >
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <GearSmallIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
+
+              <h3 className="ST-3">Account's settings</h3>
+            </button>
+          </DropdownItem>
+
+          {/* Favorite teachers */}
           <DropdownItem className="p-0 mb-1.5" key="favoriteTeachers">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <UserHatIcon
-                fillColor={
-                  "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                }
-              />
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <HeartSmallIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
 
-              <h3>Favorite teachers</h3>
+              <h3 className="ST-3">Favorite teachers</h3>
             </button>
           </DropdownItem>
 
-          <DropdownItem className="p-0 mb-1.5" key="settings">
-            <Link
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
-              href={"/account-settings"}
-            >
-              <SettingsIcon
-                fillColor={
-                  "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                }
-              />
-
-              <h3>Settings</h3>
-            </Link>
-          </DropdownItem>
-
-          <DropdownItem className="p-0 my-[30px]" key="becomeTeacher">
+          {/* Become a teacher */}
+          <DropdownItem className="p-0 my-[30px]" key="becomeATeacher">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <UserHatIcon
-                fillColor={
-                  "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                }
-              />
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <UserTieSmallerIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
 
-              <h3>Become a teacher</h3>
+              <h3 className="ST-3">Become a teacher</h3>
             </button>
           </DropdownItem>
 
-          <DropdownItem className="p-0 mb-1.5" key="assistence">
+          {/* Assistance */}
+          <DropdownItem className="p-0 mb-1.5" key="assistance">
             <button
               type="button"
-              className="btn btn-quinary rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full"
             >
-              <DialogMarkIcon
-                fillColor={
-                  "fill-primary-color-P12 group-hover:fill-primary-color-P1"
-                }
-              />
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <HelpSmallerIcon fillColor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
 
-              <h3>Assistence</h3>
+              <h3 className="ST-3">Assistance</h3>
             </button>
           </DropdownItem>
 
+          {/* Assistance */}
           <DropdownItem className="p-0 disable-hover" key="logOut">
             <button
-              type="submit"
-              onClick={() => signOut()}
-              className="btn btn-quinary text-septenary-color-MA6 hover:text-septenary-color-MA6 rounded-lg flex gap-4 px-4 py-1.5 w-full group"
+              className="btn btn-quinary rounded-xl flex items-center gap-4 p-1 w-full hover:text-primary-color-P12 hover:bg-primary-color-P4 bg-septenary-color-MA6 "
+              onClick={signOut}
+              type="button"
             >
-              <ChevronRightDoorBoldestIcon
-                fillColor={"fill-septenary-color-MA6"}
-                strokeColor={"stroke-septenary-color-MA6"}
-              />
+              <InputBGWrapperIcon className={"size-6 p-0"}>
+                <ChevronRightSmallerIcon fillColor={"fill-septenary-color-MA6"} />
+              </InputBGWrapperIcon>
 
-              <h3>Log out</h3>
+              <h3 className="ST-3">Log out</h3>
             </button>
           </DropdownItem>
         </DropdownMenu>
