@@ -16,6 +16,25 @@ import italyFlag from "@/public/flags/italy.png";
 import franceFlag from "@/public/flags/france.png";
 import spainFlag from "@/public/flags/spain.png";
 
+import { z } from "zod";
+
+const tabProfileSchema = z.object({
+  firstName: z
+    .string({
+      required_error: "Name is required",
+      invalid_type_error: "Name must be a string",
+    })
+    .trim()
+    .min(3),
+  lastName: z.string().trim().min(3, "Last name is required"),
+  // middleName: z.string(),
+  // birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
+  // country: z.string().min(1, "Country is required"),
+  // languages: z.array(z.string()).min(1, "At least one language is required"),
+  // introduction: z.string().min(1, "Introduction is required"),
+  // gender: z.enum(["male", "female"]),
+});
+
 const TabsDisplayedInfo = ({
   setActiveTab,
   activeTab,
@@ -73,6 +92,9 @@ const TabsDisplayedInfo = ({
   const [isTabAvailabilityPending, setIsTabAvailabilityPending] =
     useState(false);
 
+  const [errors, setErrors] = useState([]);
+  console.log(errors, 'errores de jnen')
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -95,9 +117,26 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
 
-        const res = await axios.post(`/teacher/set/profile`, actualDraftInfo);
+        const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
+        console.log(validationResult.error.issues, 'fsdfsdjoifdjsio')
 
-        console.log(res, "PROFILE");
+        if (!validationResult.success) {
+          const formattedErrors = validationResult.error.issues.map(
+            (issue) => ({
+              path: issue.path.join("."),
+              message: issue.message, 
+            })
+          );
+
+          return setErrors(formattedErrors);
+        }
+
+        const response = await axios.post(
+          `/teacher/set/profile`,
+          actualDraftInfo
+        );
+
+        console.log(response, "PROFILE");
       }
 
       // TAB SUBJECT
