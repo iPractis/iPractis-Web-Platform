@@ -11,7 +11,7 @@ import Footer from "../components/Home/Footer";
 const page = () => {
   return (
     <main>
-      {/* Hero and Carousel of Languagues */}
+      {/* Hero and Carousel of Languagues top */}
       <Hero />
 
       {/* Browse our subjects and tutors, cards and carousel */}
