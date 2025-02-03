@@ -62,12 +62,24 @@ const tabProfileSchema = z.object({
   gender: z.enum(["male", "female"], {
     message: "Invalid field --- Must choose a gender.",
   }),
-
+  languages: z
+    .array(
+      z.object({
+        name: z.string(),
+        level: z
+          .string()
+          .min(1, { message: "Invalid field --- Level is required." }),
+      })
+    )
+    .min(1, { message: "Invalid field --- At least one language is required." })
+    .max(6, {
+      message:
+        "Language Limit Reached --- You can only select up to 6 mastered languages.",
+    }),
   // birthDate: z.string().min(1, {
   //   message:
   //     "Invalid date --- Your introduction cannot include personal contact details, such as phone numbers, email addresses, or social media IDs, to ensure platform security and privacy compliance.",
   // }),
-  // languages: z.array(z.string()).min(1, "At least one language is required"),
 });
 
 const TabsDisplayedInfo = ({

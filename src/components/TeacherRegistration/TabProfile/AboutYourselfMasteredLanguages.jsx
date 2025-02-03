@@ -12,9 +12,13 @@ import {
   UserSpeakingIcon,
 } from "../../Icons";
 
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+
 const AboutYourselfMasteredLanguages = ({
   setMasteredLanguages,
   masteredLanguages,
+  errors,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
@@ -53,7 +57,7 @@ const AboutYourselfMasteredLanguages = ({
       {/* Select Language */}
       <div className="flex items-end gap-2 mt-[75px]">
         <Select
-          name="masteredLanguage"
+          name="languages"
           label={
             <div className="mb-2">
               <span className="flex gap-1.5  items-center text-primary-color-P4 MT-SB-1">
@@ -89,7 +93,11 @@ const AboutYourselfMasteredLanguages = ({
             </InputBGWrapperIcon>
           }
           classNames={{
-            trigger: ["select-wrapper-ipractis"],
+            trigger: [
+              "select-wrapper-ipractis",
+              findInputErrorZod(errors, "firstName")?.message &&
+                "form-input-error",
+            ],
             innerWrapper: ["select-ipractis", "w-full"],
             value: [
               "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
@@ -112,6 +120,8 @@ const AboutYourselfMasteredLanguages = ({
           key={index}
         />
       ))}
+
+      <ErrorZodResponse errors={errors} fieldName={"languages"} />
     </div>
   );
 };

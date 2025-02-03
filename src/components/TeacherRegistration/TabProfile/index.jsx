@@ -42,6 +42,7 @@ const TabProfile = ({
         <AboutYourselfMasteredLanguages
           setMasteredLanguages={setMasteredLanguages}
           masteredLanguages={masteredLanguages}
+          errors={errors}
         />
       </AboutYourself>
     </div>
