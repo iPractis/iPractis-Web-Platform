@@ -84,7 +84,14 @@ const PersonalInfo = ({
                 <UserBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
+            classNames={{
+              inputWrapper:
+                findInputErrorZod(errors, "middleName")?.message &&
+                "form-input-error",
+            }}
           />
+
+          <ErrorZodResponse errors={errors} fieldName={"middleName"} />
         </div>
 
         <div>
@@ -104,7 +111,14 @@ const PersonalInfo = ({
                 <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
             }
+            classNames={{
+              inputWrapper:
+                findInputErrorZod(errors, "lastName")?.message &&
+                "form-input-error",
+            }}
           />
+
+          <ErrorZodResponse errors={errors} fieldName={"lastName"} />
         </div>
 
         <div>

@@ -28,11 +28,24 @@ const tabProfileSchema = z.object({
     .regex(/^[^*^%$£]*$/, {
       message: "Invalid character --- Your name contains invalid characters.",
     }),
-  // lastName: z
-  //   .string()
-  //   .trim()
-  //   .min(3, { message: "Lastname must be at least 3 characters long" }),
-  // middleName: z.string(),
+  middleName: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Invalid field --- Must contain 3 or more characters long.",
+    })
+    .regex(/^[^*^%$£]*$/, {
+      message: "Invalid character --- Your name contains invalid characters.",
+    }),
+  lastName: z
+    .string()
+    .trim()
+    .min(1, {
+      message: "Invalid field --- Must contain 3 or more characters long.",
+    })
+    .regex(/^[^*^%$£]*$/, {
+      message: "Invalid character --- Your name contains invalid characters.",
+    }),
   // birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
   // country: z.string().min(1, "Country is required"),
   // languages: z.array(z.string()).min(1, "At least one language is required"),
