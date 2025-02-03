@@ -22,7 +22,12 @@ const tabProfileSchema = z.object({
   firstName: z
     .string()
     .trim()
-    .min(1, { message: "Invalid field --- Must contain 3 or more characters long." }),
+    .min(1, {
+      message: "Invalid field --- Must contain 3 or more characters long.",
+    })
+    .regex(/^[^*^%$£]*$/, {
+      message: "Invalid character --- Your name contains invalid characters.",
+    }),
   // lastName: z
   //   .string()
   //   .trim()
