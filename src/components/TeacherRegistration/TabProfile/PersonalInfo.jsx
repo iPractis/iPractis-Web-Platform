@@ -7,6 +7,7 @@ import {
 } from "../../Icons";
 
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
@@ -56,6 +57,11 @@ const PersonalInfo = ({
                 <UserBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
+            classNames={{
+              inputWrapper:
+                findInputErrorZod(errors, "firstName")?.message &&
+                "form-input-error",
+            }}
           />
 
           <ErrorZodResponse errors={errors} fieldName={"firstName"} />

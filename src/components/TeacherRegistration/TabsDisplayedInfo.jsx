@@ -22,7 +22,7 @@ const tabProfileSchema = z.object({
   firstName: z
     .string()
     .trim()
-    .min(1, { message: "Invalid field --- Must be 3 or more characters long" }),
+    .min(1, { message: "Invalid field --- Must contain 3 or more characters long." }),
   // lastName: z
   //   .string()
   //   .trim()
@@ -127,6 +127,7 @@ const TabsDisplayedInfo = ({
           actualDraftInfo
         );
 
+        setErrors([]);
         console.log(response, "PROFILE");
       }
 
