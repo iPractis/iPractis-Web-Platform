@@ -19,9 +19,10 @@ import spainFlag from "@/public/flags/spain.png";
 import { z } from "zod";
 
 const tabProfileSchema = z.object({
-  firstName: z.string({
-    required_error: "Invalid --- Name is required",
-  }).trim().min(1, { message: "Invalid --- Must be 5 or more characters long" }),
+  firstName: z
+    .string()
+    .trim()
+    .min(1, { message: "Invalid field --- Must be 3 or more characters long" }),
   // lastName: z
   //   .string()
   //   .trim()
@@ -92,7 +93,6 @@ const TabsDisplayedInfo = ({
     useState(false);
 
   const [errors, setErrors] = useState([]);
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,15 +116,11 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
 
-        console.log(actualDraftInfo, 'estoy en el objeto')
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
-        console.log(validationResult, 'validation result')
 
         if (!validationResult.success) {
           return setErrors(validationResult.error.issues);
         }
-        
-        return console.log('llegguee, hizo fetch');
 
         const response = await axios.post(
           `/teacher/set/profile`,
