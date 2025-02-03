@@ -154,7 +154,12 @@ const PersonalInfo = ({
 
         <BirthDateInput setBirthDate={setBirthDate} birthDate={birthDate} />
 
-        <AboutYourSelfIntro introText={introText} setIntroText={setIntroText} />
+        <AboutYourSelfIntro
+          errors={errors}
+          introText={introText}
+          setIntroText={setIntroText}
+          findInputErrorZod={findInputErrorZod}
+        />
       </div>
     </WhiteSpaceWrapper>
   );

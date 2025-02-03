@@ -1,6 +1,12 @@
 import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 
-const AboutYourSelfIntro = ({ introText, setIntroText }) => {
+const AboutYourSelfIntro = ({
+  errors,
+  introText,
+  setIntroText,
+  findInputErrorZod,
+}) => {
   const introTextOnChange = (e) => {
     const textValue = e?.target?.value;
 
@@ -22,7 +28,10 @@ const AboutYourSelfIntro = ({ introText, setIntroText }) => {
         labelSubtitle={
           "Introduce yourself and highlight your unique interests."
         }
+        backgroundError={findInputErrorZod(errors, "introduction")?.message}
       />
+
+      <ErrorZodResponse errors={errors} fieldName={"introduction"} />
     </div>
   );
 };

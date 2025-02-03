@@ -18,6 +18,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
   descError,
   nameTextarea,
   defaultValue,
+  backgroundError,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
   return (
@@ -46,7 +47,9 @@ export const CustomNextUiTextareaWithMaxLength = ({
         placeholder={placeholder}
         classNames={{
           input: [inputClassName],
-          inputWrapper: exceedValueMaxLength && "form-input-error",
+          inputWrapper:
+            (exceedValueMaxLength && "form-input-error") ||
+            (backgroundError && "form-input-error"),
           label: [labelClassName],
         }}
         size="primaryiPractis"
