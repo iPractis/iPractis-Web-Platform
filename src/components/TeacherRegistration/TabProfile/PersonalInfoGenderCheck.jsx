@@ -1,9 +1,15 @@
 import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import { FemaleIcon, MaleIcon } from "../../Icons";
 
-const PersonalInfoGenderCheck = ({ setSelectedGender, selectedGender }) => {
+const PersonalInfoGenderCheck = ({
+  findInputErrorZod,
+  setSelectedGender,
+  selectedGender,
+  errors,
+}) => {
   const handleCheckboxChange = (gender) => {
     setSelectedGender(gender);
   };
@@ -14,6 +20,7 @@ const PersonalInfoGenderCheck = ({ setSelectedGender, selectedGender }) => {
         <CustomNextUiInput
           isReadOnly
           type="text"
+          name="gender"
           placeholder="Male"
           label={<span className="">Gender</span>}
           labelPlacement="outside"
@@ -29,10 +36,16 @@ const PersonalInfoGenderCheck = ({ setSelectedGender, selectedGender }) => {
               onChange={() => handleCheckboxChange("male")}
             />
           }
+          classNames={{
+            inputWrapper:
+              findInputErrorZod(errors, "gender")?.message &&
+              "form-input-error",
+          }}
         />
 
         <CustomNextUiInput
           isReadOnly
+          name="gender"
           type="text"
           placeholder="Female"
           labelPlacement="outside"
@@ -48,8 +61,15 @@ const PersonalInfoGenderCheck = ({ setSelectedGender, selectedGender }) => {
               onChange={() => handleCheckboxChange("female")}
             />
           }
+          classNames={{
+            inputWrapper:
+              findInputErrorZod(errors, "gender")?.message &&
+              "form-input-error",
+          }}
         />
       </div>
+
+      <ErrorZodResponse errors={errors} fieldName={"gender"} />
     </div>
   );
 };

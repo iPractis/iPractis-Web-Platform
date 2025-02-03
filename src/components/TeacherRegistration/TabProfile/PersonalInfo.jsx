@@ -148,8 +148,10 @@ const PersonalInfo = ({
         </div>
 
         <PersonalInfoGenderCheck
+          findInputErrorZod={findInputErrorZod}
           setSelectedGender={setSelectedGender}
           selectedGender={selectedGender}
+          errors={errors}
         />
 
         <BirthDateInput setBirthDate={setBirthDate} birthDate={birthDate} />

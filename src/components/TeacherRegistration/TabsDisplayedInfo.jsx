@@ -59,10 +59,15 @@ const tabProfileSchema = z.object({
           "Don't share your contact ID --- Your introduction cannot include personal contact details, such as phone numbers, email addresses, or social media IDs, to ensure platform security and privacy compliance.",
       }
     ),
-  // birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
-  // country: z.string().min(1, "Country is required"),
+  gender: z.enum(["male", "female"], {
+    message: "Invalid field --- Must choose a gender.",
+  }),
+
+  // birthDate: z.string().min(1, {
+  //   message:
+  //     "Invalid date --- Your introduction cannot include personal contact details, such as phone numbers, email addresses, or social media IDs, to ensure platform security and privacy compliance.",
+  // }),
   // languages: z.array(z.string()).min(1, "At least one language is required"),
-  // gender: z.enum(["male", "female"]),
 });
 
 const TabsDisplayedInfo = ({
