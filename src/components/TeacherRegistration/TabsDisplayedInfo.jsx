@@ -19,14 +19,13 @@ import spainFlag from "@/public/flags/spain.png";
 import { z } from "zod";
 
 const tabProfileSchema = z.object({
-  firstName: z
-    .string({
-      required_error: "Name is required",
-      invalid_type_error: "Name must be a string",
-    })
-    .trim()
-    .min(3),
-  lastName: z.string().trim().min(3, "Last name is required"),
+  firstName: z.string({
+    required_error: "Invalid --- Name is required",
+  }).trim().min(1, { message: "Invalid --- Must be 5 or more characters long" }),
+  // lastName: z
+  //   .string()
+  //   .trim()
+  //   .min(3, { message: "Lastname must be at least 3 characters long" }),
   // middleName: z.string(),
   // birthDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format (YYYY-MM-DD)"),
   // country: z.string().min(1, "Country is required"),
@@ -93,7 +92,7 @@ const TabsDisplayedInfo = ({
     useState(false);
 
   const [errors, setErrors] = useState([]);
-  console.log(errors, 'errores de jnen')
+  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,19 +116,15 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
 
+        console.log(actualDraftInfo, 'estoy en el objeto')
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
-        console.log(validationResult.error.issues, 'fsdfsdjoifdjsio')
+        console.log(validationResult, 'validation result')
 
         if (!validationResult.success) {
-          const formattedErrors = validationResult.error.issues.map(
-            (issue) => ({
-              path: issue.path.join("."),
-              message: issue.message, 
-            })
-          );
-
-          return setErrors(formattedErrors);
+          return setErrors(validationResult.error.issues);
         }
+        
+        return console.log('llegguee, hizo fetch');
 
         const response = await axios.post(
           `/teacher/set/profile`,
@@ -213,6 +208,7 @@ const TabsDisplayedInfo = ({
         introText={introText}
         birthDate={birthDate}
         activeTab={activeTab}
+        errors={errors}
         draft={draft}
       />
 

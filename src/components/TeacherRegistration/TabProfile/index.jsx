@@ -15,6 +15,7 @@ const TabProfile = ({
   introText,
   birthDate,
   activeTab,
+  errors,
   draft,
 }) => {
   return (
@@ -32,6 +33,7 @@ const TabProfile = ({
         setIntroText={setIntroText}
         introText={introText}
         birthDate={birthDate}
+        errors={errors}
         draft={draft}
       />
 

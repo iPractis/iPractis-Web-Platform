@@ -1,3 +1,4 @@
+import { findInputErrorZod, getTitleAndDescZod } from "@/src/lib/utils/getZodValidations";
 import warningTriangle from "@/public/icons/warning-triangle.png";
 import Image from "next/image";
 
@@ -19,3 +20,15 @@ const ErrorMessageiPractis = ({ typeError, descError }) => {
 };
 
 export default ErrorMessageiPractis;
+
+export const ErrorZodResponse = ({ errors, fieldName }) =>
+  findInputErrorZod(errors, fieldName) && (
+    <ErrorMessageiPractis
+      descError={
+        getTitleAndDescZod(findInputErrorZod(errors, fieldName)?.message)?.desc
+      }
+      typeError={
+        getTitleAndDescZod(findInputErrorZod(errors, fieldName)?.message)?.title
+      }
+    />
+  );

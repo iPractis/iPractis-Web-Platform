@@ -6,6 +6,7 @@ import {
   UserIcon,
 } from "../../Icons";
 
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
@@ -16,7 +17,7 @@ import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
 
 const PersonalInfo = ({
-  setSelectedCountry, 
+  setSelectedCountry,
   setSelectedGender,
   selectedCountry,
   selectedGender,
@@ -24,6 +25,7 @@ const PersonalInfo = ({
   setIntroText,
   introText,
   birthDate,
+  errors,
   draft,
 }) => {
   return (
@@ -55,6 +57,8 @@ const PersonalInfo = ({
               </InputBGWrapperIcon>
             }
           />
+
+          <ErrorZodResponse errors={errors} fieldName={"firstName"} />
         </div>
 
         <div>
