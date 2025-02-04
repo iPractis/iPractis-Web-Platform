@@ -76,10 +76,6 @@ const tabProfileSchema = z.object({
       message:
         "Language Limit Reached --- You can only select up to 6 mastered languages.",
     }),
-  // birthDate: z.string().min(1, {
-  //   message:
-  //     "Invalid date --- Your introduction cannot include personal contact details, such as phone numbers, email addresses, or social media IDs, to ensure platform security and privacy compliance.",
-  // }),
 });
 
 const TabsDisplayedInfo = ({
@@ -140,6 +136,7 @@ const TabsDisplayedInfo = ({
     useState(false);
 
   const [errors, setErrors] = useState([]);
+  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

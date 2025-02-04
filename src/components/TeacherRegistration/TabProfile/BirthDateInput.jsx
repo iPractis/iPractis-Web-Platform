@@ -13,16 +13,28 @@ import {
 
 // Icons
 import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 
-const BirthDateInput = ({ birthDate, setBirthDate }) => {
+const BirthDateInput = ({
+  findInputErrorZod,
+  setBirthDate,
+  birthDate,
+  errors,
+}) => {
   return (
     <div className="!mt-3 group">
-      <span className=" flex gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
+      <span className="flex gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
         Birth date <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
 
       <div className="flex items-center gap-2">
-        <div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9">
+        <div
+          className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 ${
+            findInputErrorZod(errors, "birthDate")?.message
+              ? "form-input-error"
+              : "bg-primary-color-P11 group-hover:bg-secondary-color-S9"
+          }`}
+        >
           <InputBGWrapperIcon>
             <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
           </InputBGWrapperIcon>
@@ -38,6 +50,7 @@ const BirthDateInput = ({ birthDate, setBirthDate }) => {
           <input
             type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
+            readOnly
             defaultValue={getMonthNumberAsText(birthDate?.month)}
             name="birthDateMonth"
           />
@@ -83,6 +96,8 @@ const BirthDateInput = ({ birthDate, setBirthDate }) => {
           </DropdownMenu>
         </Dropdown>
       </div>
+
+      <ErrorZodResponse errors={errors} fieldName={"birthDate"} />
     </div>
   );
 };

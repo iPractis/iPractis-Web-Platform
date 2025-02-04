@@ -154,7 +154,12 @@ const PersonalInfo = ({
           errors={errors}
         />
 
-        <BirthDateInput setBirthDate={setBirthDate} birthDate={birthDate} />
+        <BirthDateInput
+          findInputErrorZod={findInputErrorZod}
+          setBirthDate={setBirthDate}
+          birthDate={birthDate}
+          errors={errors}
+        />
 
         <AboutYourSelfIntro
           errors={errors}
