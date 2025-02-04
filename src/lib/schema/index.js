@@ -104,7 +104,11 @@ export const tabSubjectSchema = z.object({
     .regex(
       /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/|playlist\?list=)|youtu\.be\/)[a-zA-Z0-9_-]{11,}(&\S*)?$/,
       {
-        message: "Invalid link --- Please ensure the link provided is a valid Youtube URL.",
+        message:
+          "Invalid link --- Please ensure the link provided is a valid Youtube URL.",
       }
     ),
+  studentLevel: z.enum(["Beginner", "Intermediate", "Advanced"], {
+    message: "Invalid submission --- Must choose a level you can teach.",
+  }),
 });

@@ -45,6 +45,7 @@ const TabSubject = ({
         <StudentPreference
           setSelectedLevel={setSelectedLevel}
           selectedLevel={selectedLevel}
+          errors={errors}
         />
 
         <StudentAge

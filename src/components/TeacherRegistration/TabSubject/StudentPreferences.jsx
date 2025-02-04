@@ -1,10 +1,11 @@
 import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import SectionHeader from "../../Globals/SectionHeader";
 
 // Icons
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
 
-const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
+const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
   return (
     <div>
       <SectionHeader
@@ -31,6 +32,7 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
         {/* Radio Buttons */}
         <div>
           <CustomNextUiCheckbox
+            name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
@@ -44,6 +46,7 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
 
         <div className="my-2">
           <CustomNextUiCheckbox
+            name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
@@ -57,6 +60,7 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
 
         <div>
           <CustomNextUiCheckbox
+            name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
               wrapper: "w-[19px] h-[19px]",
@@ -67,6 +71,8 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel }) => {
             Advanced
           </CustomNextUiCheckbox>
         </div>
+
+        <ErrorZodResponse errors={errors} fieldName={"studentLevel"} />
       </div>
     </div>
   );
