@@ -4,11 +4,13 @@ import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import { useState } from "react";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
   handleUpdateSubSubject,
   subSubject,
+  errors,
   index,
 }) => {
   const [descriptionSubSubject, setDescriptionSubSubject] = useState("");
@@ -65,6 +67,9 @@ const SubSubject = ({
         descError={"The text cannot exceed 20 characters."}
         labelDisabled={true}
         maxCharactersLengthText={2}
+        backgroundError={
+          findInputErrorZod(errors, "subSubject")?.message && "form-input-error"
+        }
       />
     </div>
   );

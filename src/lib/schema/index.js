@@ -87,4 +87,16 @@ export const tabSubjectSchema = z.object({
           "Don't share your contact ID --- Your introduction cannot include personal contact details, such as phone numbers, email addresses, or social media IDs, to ensure platform security and privacy compliance.",
       }
     ),
+  subSubject: z
+    .array(
+      z.object({
+        selected: z.string(),
+        description: z.string().min(3, {
+          message: "Invalid field --- Must contain 3 or more characters long.",
+        }),
+      })
+    )
+    .min(1, {
+      message: "Invalid field --- At least one sub-subject is required.",
+    }),
 });

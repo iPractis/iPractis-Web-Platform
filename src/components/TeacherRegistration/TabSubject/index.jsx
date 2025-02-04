@@ -37,6 +37,7 @@ const TabSubject = ({
         <RelatedSubTopics
           setSelectedSubSubjects={setSelectedSubSubjects}
           selectedSubSubjects={selectedSubSubjects}
+          errors={errors}
         />
 
         <PresentYourSelf draft={draft} />
