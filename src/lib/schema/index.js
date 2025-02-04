@@ -127,7 +127,14 @@ export const tabSubjectSchema = z.object({
         "Invalid characters --- Only numbers are allowed in this field.",
     })
     .int()
-    .min(1, { message: "Invalid field --- Please define your rate." }),
+    .min(8, {
+      message:
+        "Lesson rate too low --- Lesson rate must be between 8 and 60 USD.",
+    })
+    .max(60, {
+      message:
+        "Lesson rate too high --- Lesson rate must be between 8 and 60 USD.",
+    }),
   withdrawal: z
     .string()
     .min(1, { message: "Invalid submission --- Must choose a withdrawal." }),
