@@ -124,4 +124,10 @@ export const tabSubjectSchema = z.object({
   withdrawal: z
     .string()
     .min(1, { message: "Invalid submission --- Must choose a withdrawal." }),
+  emailWithdrawal: z
+    .string()
+    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+      message:
+        "Invalid email --- Please ensure the email provided is a valid one.",
+    }),
 });

@@ -9,8 +9,14 @@ import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
 
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {
+  const withdrawalError = findInputErrorZod(
+    errors,
+    "withdrawal"
+  )?.message;
+
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -30,7 +36,9 @@ const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {
           >
             <div
               className={`p-4 rounded-2xl flex-1 ${
-                withdrawal === "wise"
+                withdrawalError && withdrawal !== "wise"
+                  ? "bg-senary-color-W10"
+                  : withdrawal === "wise"
                   ? "bg-quinary-color-SU15"
                   : "btn-septenary"
               }`}
@@ -50,7 +58,9 @@ const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {
           >
             <div
               className={`p-4 rounded-2xl flex-1 ${
-                withdrawal === "paypal"
+                withdrawalError && withdrawal !== "paypal"
+                  ? "bg-senary-color-W10"
+                  : withdrawal === "paypal"
                   ? "bg-quinary-color-SU15"
                   : "btn-septenary"
               }`}
@@ -67,36 +77,43 @@ const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {
         <ErrorZodResponse errors={errors} fieldName={"withdrawal"} />
       </div>
 
-      <div className="flex items-end gap-2 mt-7">
-        <CustomNextUiInput
-          defaultValue={draft?.emailWithdrawal}
-          type="text"
-          name="emailWithdrawal"
-          placeholder="Email address"
-          classNames={{
-            label: "!-top-11",
-          }}
-          label={
-            <div className="flex flex-col">
-              <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                Withdrawal your revenue
-                <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-
-              <div className="self-start">
-                <span className=" text-primary-color-P4 ST-3">
-                  Enter the email address related to your bank account
+      <div>
+        <div className="flex items-end gap-2 mt-7">
+          <CustomNextUiInput
+            defaultValue={draft?.emailWithdrawal}
+            type="text"
+            name="emailWithdrawal"
+            placeholder="Email address"
+            classNames={{
+              inputWrapper:
+                findInputErrorZod(errors, "emailWithdrawal")?.message &&
+                "form-input-error",
+              label: "!-top-11",
+            }}
+            label={
+              <div className="flex flex-col">
+                <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                  Withdrawal your revenue
+                  <QuestionMark fillColor={"fill-primary-color-P4"} />
                 </span>
+
+                <div className="self-start">
+                  <span className=" text-primary-color-P4 ST-3">
+                    Enter the email address related to your bank account
+                  </span>
+                </div>
               </div>
-            </div>
-          }
-          labelPlacement="outside"
-          startContent={
-            <InputBGWrapperIcon>
-              <TownhallIcon fillColor={"fill-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          }
-        />
+            }
+            labelPlacement="outside"
+            startContent={
+              <InputBGWrapperIcon>
+                <TownhallIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+          />
+        </div>
+
+        <ErrorZodResponse errors={errors} fieldName={"emailWithdrawal"} />
       </div>
     </div>
   );
