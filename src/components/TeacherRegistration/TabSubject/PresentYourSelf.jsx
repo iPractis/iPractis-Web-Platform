@@ -4,7 +4,10 @@ import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
 import React from "react";
 
-const PresentYourSelf = ({ draft }) => {
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+
+const PresentYourSelf = ({ draft, errors }) => {
   return (
     <>
       <SectionHeader
@@ -32,7 +35,12 @@ const PresentYourSelf = ({ draft }) => {
               </span>
             </div>
           }
-          classNames={{ label: "!-top-16" }}
+          classNames={{
+            label: "!-top-16",
+            inputWrapper:
+              findInputErrorZod(errors, "videoLink")?.message &&
+              "form-input-error",
+          }}
           labelPlacement="outside"
           placeholder="Enter your video link"
           startContent={
@@ -41,6 +49,8 @@ const PresentYourSelf = ({ draft }) => {
             </InputBGWrapperIcon>
           }
         />
+
+        <ErrorZodResponse errors={errors} fieldName={"videoLink"} />
 
         <ul className="ps-4 ST-1 list-disc text-primary-color-P4 mt-4">
           <li>You must appear in the video.</li>

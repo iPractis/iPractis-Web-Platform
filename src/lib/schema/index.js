@@ -99,4 +99,12 @@ export const tabSubjectSchema = z.object({
     .min(1, {
       message: "Invalid field --- At least one sub-subject is required.",
     }),
+  videoLink: z
+    .string()
+    .regex(
+      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/|playlist\?list=)|youtu\.be\/)[a-zA-Z0-9_-]{11,}(&\S*)?$/,
+      {
+        message: "Invalid URL --- Please, enter one valid Youtube URL.",
+      }
+    ),
 });

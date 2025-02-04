@@ -40,7 +40,7 @@ const TabSubject = ({
           errors={errors}
         />
 
-        <PresentYourSelf draft={draft} />
+        <PresentYourSelf draft={draft} errors={errors} />
 
         <StudentPreference
           setSelectedLevel={setSelectedLevel}
