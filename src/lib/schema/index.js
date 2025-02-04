@@ -59,3 +59,9 @@ export const tabProfileSchema = z.object({
         "Language Limit Reached --- You can only select up to 6 mastered languages.",
     }),
 });
+
+export const tabSubjectSchema = z.object({
+  subSubject: z
+    .array(z.string())
+    .min(1, { message: "Invalid field --- At least one subject is required." }),
+});

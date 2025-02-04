@@ -21,6 +21,7 @@ const TabSubject = ({
   setWithdrawal,
   withdrawal,
   activeTab,
+  errors,
   draft,
 }) => {
   return (
@@ -29,6 +30,7 @@ const TabSubject = ({
         <SubjectsToTeach
           setSubjectToTeach={setSubjectToTeach}
           subjectToTeach={subjectToTeach}
+          errors={errors}
           draft={draft}
         />
 

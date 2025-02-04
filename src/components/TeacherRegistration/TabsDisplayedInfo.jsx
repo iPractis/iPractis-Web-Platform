@@ -11,7 +11,7 @@ import { useState } from "react";
 import axios from "axios";
 
 // Zod schemas
-import { tabProfileSchema } from "@/src/lib/schema";
+import { tabProfileSchema, tabSubjectSchema } from "@/src/lib/schema";
 
 // Images && icons
 import ukFlag from "@/public/flags/united-kingdom.png";
@@ -131,9 +131,19 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.subject = subjectToTeach;
         actualDraftInfo.withdrawal = withdrawal;
 
-        const res = await axios.put(`/teacher/set/subject`, actualDraftInfo);
+        const validationResult = tabSubjectSchema.safeParse(actualDraftInfo);
 
-        console.log(res, "SUBJECT");
+        if (!validationResult.success) {
+          return setErrors(validationResult.error.issues);
+        }
+
+        const response = await axios.put(
+          `/teacher/set/subject`,
+          actualDraftInfo
+        );
+
+        setErrors([]);
+        console.log(response, "SUBJECT");
       }
 
       // TAB BACKGROUND
@@ -141,7 +151,10 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.careerExperience = experiences;
         actualDraftInfo.education = educations;
 
-        const res = await axios.put(`/teacher/set/background`, actualDraftInfo);
+        const response = await axios.put(
+          `/teacher/set/background`,
+          actualDraftInfo
+        );
         console.log(res, "BACKGROUND");
       }
 
@@ -152,11 +165,11 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.dailyWorkTime = e?.target?.dailyWorkTime?.value;
         actualDraftInfo.timeZone = e?.target?.timeZone?.value;
 
-        const res = await axios.put(
+        const response = await axios.put(
           `/teacher/set/availability`,
           actualDraftInfo
         );
-        console.log(res, "AVAILABILITY");
+        console.log(response, "AVAILABILITY");
       } else {
         setActiveTab((prev) => prev + 1);
       }
@@ -209,6 +222,7 @@ const TabsDisplayedInfo = ({
         selectedLevel={selectedLevel}
         withdrawal={withdrawal}
         activeTab={activeTab}
+        errors={errors}
         draft={draft}
       />
 

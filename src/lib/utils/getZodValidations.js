@@ -4,6 +4,6 @@ export const getTitleAndDescZod = (string) => {
   return { title, desc };
 };
 
-export const findInputErrorZod = (errors, inputName) => {
-  return errors.find((error) => (error.path[0] === inputName ? error : null));
+export const findInputErrorZod = (errors = [], inputName) => {
+  return errors?.find((error) => (error?.path[0] === inputName ? error : null));
 };
