@@ -104,7 +104,7 @@ export const tabSubjectSchema = z.object({
     .regex(
       /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/|playlist\?list=)|youtu\.be\/)[a-zA-Z0-9_-]{11,}(&\S*)?$/,
       {
-        message: "Invalid URL --- Please, enter one valid Youtube URL.",
+        message: "Invalid link --- Please ensure the link provided is a valid Youtube URL.",
       }
     ),
 });
