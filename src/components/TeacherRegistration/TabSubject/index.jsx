@@ -61,6 +61,7 @@ const TabSubject = ({
         <Withdrawal
           setWithdrawal={setWithdrawal}
           withdrawal={withdrawal}
+          errors={errors}
           draft={draft}
         />
       </WhiteSpaceWrapper>

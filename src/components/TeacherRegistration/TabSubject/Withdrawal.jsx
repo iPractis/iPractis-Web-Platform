@@ -1,7 +1,6 @@
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import SectionHeader from "../../Globals/SectionHeader";
-import { useState } from "react";
 import Image from "next/image";
 
 // Icons && images
@@ -9,7 +8,9 @@ import { QuestionMark, TownhallIcon, WalletIcon } from "../../Icons";
 import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
 
-const Withdrawal = ({ setWithdrawal, withdrawal, draft }) => {
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+
+const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -20,44 +21,50 @@ const Withdrawal = ({ setWithdrawal, withdrawal, draft }) => {
         wrapperSectionHeaderClassName="mb-[50px]"
       />
 
-      <div className="flex gap-5 mt-8 mb-14">
-        <button
-          className="w-full"
-          type="button"
-          onClick={() => setWithdrawal("wise")}
-        >
-          <div
-            className={`p-4 rounded-2xl flex-1 ${
-              withdrawal === "wise" ? "bg-quinary-color-SU15" : "btn-septenary"
-            }`}
+      <div className="mb-14">
+        <div className="flex gap-5 mt-8">
+          <button
+            className="w-full"
+            type="button"
+            onClick={() => setWithdrawal("wise")}
           >
-            <Image
-              className="w-[66px] mx-auto"
-              src={wiseLogo}
-              alt="Logo Wise"
-            />{" "}
-          </div>
-        </button>
+            <div
+              className={`p-4 rounded-2xl flex-1 ${
+                withdrawal === "wise"
+                  ? "bg-quinary-color-SU15"
+                  : "btn-septenary"
+              }`}
+            >
+              <Image
+                className="w-[66px] mx-auto"
+                src={wiseLogo}
+                alt="Logo Wise"
+              />{" "}
+            </div>
+          </button>
 
-        <button
-          className="w-full"
-          type="button"
-          onClick={() => setWithdrawal("paypal")}
-        >
-          <div
-            className={`p-4 rounded-2xl flex-1 ${
-              withdrawal === "paypal"
-                ? "bg-quinary-color-SU15"
-                : "btn-septenary"
-            }`}
+          <button
+            className="w-full"
+            type="button"
+            onClick={() => setWithdrawal("paypal")}
           >
-            <Image
-              className="w-[66px] mx-auto"
-              src={paypalLogo}
-              alt="Logo Paypal"
-            />{" "}
-          </div>
-        </button>
+            <div
+              className={`p-4 rounded-2xl flex-1 ${
+                withdrawal === "paypal"
+                  ? "bg-quinary-color-SU15"
+                  : "btn-septenary"
+              }`}
+            >
+              <Image
+                className="w-[66px] mx-auto"
+                src={paypalLogo}
+                alt="Logo Paypal"
+              />{" "}
+            </div>
+          </button>
+        </div>
+
+        <ErrorZodResponse errors={errors} fieldName={"withdrawal"} />
       </div>
 
       <div className="flex items-end gap-2 mt-7">

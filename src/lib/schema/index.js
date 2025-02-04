@@ -112,9 +112,16 @@ export const tabSubjectSchema = z.object({
     message: "Invalid submission --- Must choose a level you can teach.",
   }),
   teachToYoungPersons: z.literal(true, {
-    errorMap: () => ({ message: "Invalid submission --- You have to accept this term." }),
+    errorMap: () => ({
+      message: "Invalid submission --- You have to accept this term.",
+    }),
   }),
   teachToAmateurPersons: z.literal(true, {
-    errorMap: () => ({ message: "Invalid submission --- You have to accept this term." }),
+    errorMap: () => ({
+      message: "Invalid submission --- You have to accept this term.",
+    }),
   }),
+  withdrawal: z
+    .string()
+    .min(1, { message: "Invalid submission --- Must choose a withdrawal." }),
 });
