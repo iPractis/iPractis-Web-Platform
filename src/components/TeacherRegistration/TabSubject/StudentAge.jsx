@@ -3,6 +3,7 @@ import SectionHeader from "../../Globals/SectionHeader";
 import { Switch } from "@nextui-org/react";
 
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const StudentAge = ({
   setTeachToAmateurPersons,
@@ -11,6 +12,15 @@ const StudentAge = ({
   teachToYoungPersons,
   errors,
 }) => {
+  const teachToYoungPersonsError = findInputErrorZod(
+    errors,
+    "teachToYoungPersons"
+  )?.message;
+  const teachToAmateurPersonsError = findInputErrorZod(
+    errors,
+    "teachToAmateurPersons"
+  )?.message;
+
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -28,8 +38,11 @@ const StudentAge = ({
         size="sm"
         classNames={{
           base: "mb-2.5 block",
-          wrapper:
-            "bg-primary-color-P6 group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit",
+          wrapper: `${
+            teachToYoungPersonsError && !teachToYoungPersons
+              ? "form-input-error"
+              : "bg-primary-color-P6"
+          } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
           thumb: "bg-primary-color-P12",
           label: "text-primary-color-P1 ST-4 ml-1",
         }}
@@ -53,8 +66,11 @@ const StudentAge = ({
         size="sm"
         classNames={{
           base: "mt-2.5",
-          wrapper:
-            "bg-primary-color-P6 group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit",
+          wrapper: `${
+            teachToAmateurPersonsError && !teachToAmateurPersons
+              ? "form-input-error"
+              : "bg-primary-color-P6"
+          } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
           thumb: "bg-primary-color-P12",
           label: "text-primary-color-P1 ST-4 ml-1",
         }}
