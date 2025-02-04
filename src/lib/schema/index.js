@@ -121,6 +121,13 @@ export const tabSubjectSchema = z.object({
       message: "Invalid submission --- You have to accept this term.",
     }),
   }),
+  hourlyPrice: z.coerce
+    .number({
+      invalid_type_error:
+        "Invalid characters --- Only numbers are allowed in this field.",
+    })
+    .int()
+    .min(1, { message: "Invalid field --- Please define your rate." }),
   withdrawal: z
     .string()
     .min(1, { message: "Invalid submission --- Must choose a withdrawal." }),

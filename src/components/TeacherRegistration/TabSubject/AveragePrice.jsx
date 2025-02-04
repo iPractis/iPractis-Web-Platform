@@ -7,7 +7,10 @@ import Image from "next/image";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
-const AveragePrice = ({ draft }) => {
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+
+const AveragePrice = ({ errors, draft }) => {
   return (
     <>
       <SectionHeader
@@ -27,36 +30,43 @@ const AveragePrice = ({ draft }) => {
           wrapperSectionHeaderClassName="mb-16"
         />
 
-        <div className="flex items-end gap-2 mt-7">
-          <CustomNextUiInput
-            defaultValue={draft?.hourlyPrice}
-            type="text"
-            name="hourlyPrice"
-            placeholder="Set your hourly base rate"
-            classNames={{
-              label: "!-top-11",
-            }}
-            label={
-              <div className="flex flex-col">
-                <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                  Private lesson rate
-                  <QuestionMark fillColor={"fill-primary-color-P4"} />
-                </span>
-
-                <div className="self-start">
-                  <span className=" text-primary-color-P4 ST-3">
-                    Define your rate for 1:1 private lesson.
+        <div>
+          <div className="flex items-end gap-2 mt-7">
+            <CustomNextUiInput
+              defaultValue={draft?.hourlyPrice}
+              type="text"
+              name="hourlyPrice"
+              placeholder="Set your hourly base rate"
+              classNames={{
+                label: "!-top-11",
+                inputWrapper:
+                  findInputErrorZod(errors, "hourlyPrice")?.message &&
+                  "form-input-error",
+              }}
+              label={
+                <div className="flex flex-col">
+                  <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                    Private lesson rate
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
                   </span>
+
+                  <div className="self-start">
+                    <span className=" text-primary-color-P4 ST-3">
+                      Define your rate for 1:1 private lesson.
+                    </span>
+                  </div>
                 </div>
-              </div>
-            }
-            labelPlacement="outside"
-            startContent={
-              <InputBGWrapperIcon>
-                <DollarSignIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-          />
+              }
+              labelPlacement="outside"
+              startContent={
+                <InputBGWrapperIcon>
+                  <DollarSignIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+            />
+          </div>
+          
+          <ErrorZodResponse errors={errors} fieldName={"hourlyPrice"} />
         </div>
 
         <div className="flex w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center mt-8 mb-14">

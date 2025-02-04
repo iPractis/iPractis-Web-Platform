@@ -56,7 +56,7 @@ const TabSubject = ({
           errors={errors}
         />
 
-        <AveragePrice draft={draft} />
+        <AveragePrice errors={errors} draft={draft} />
 
         <Withdrawal
           setWithdrawal={setWithdrawal}
