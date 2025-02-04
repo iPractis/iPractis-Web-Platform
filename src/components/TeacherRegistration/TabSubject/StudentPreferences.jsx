@@ -1,4 +1,5 @@
 import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import SectionHeader from "../../Globals/SectionHeader";
 
@@ -6,6 +7,8 @@ import SectionHeader from "../../Globals/SectionHeader";
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
 
 const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
+  const studentLevelError = findInputErrorZod(errors, "studentLevel")?.message;
+
   return (
     <div>
       <SectionHeader
@@ -35,7 +38,9 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
             name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
-              wrapper: "w-[19px] h-[19px]",
+              wrapper: `${
+                studentLevelError && "form-input-error"
+              } w-[19px] h-[19px]`,
             }}
             isSelected={selectedLevel === "Beginner"}
             onChange={() => setSelectedLevel("Beginner")}
@@ -49,7 +54,9 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
             name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
-              wrapper: "w-[19px] h-[19px]",
+              wrapper: `${
+                studentLevelError && "form-input-error"
+              } w-[19px] h-[19px]`,
             }}
             isSelected={selectedLevel === "Intermediate"}
             onChange={() => setSelectedLevel("Intermediate")}
@@ -63,7 +70,9 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
             name="studentLevel"
             classNames={{
               label: "ST-4 border-0 ml-1",
-              wrapper: "w-[19px] h-[19px]",
+              wrapper: `${
+                studentLevelError && "form-input-error"
+              } w-[19px] h-[19px]`,
             }}
             isSelected={selectedLevel === "Advanced"}
             onChange={() => setSelectedLevel("Advanced")}
