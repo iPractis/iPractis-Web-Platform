@@ -111,4 +111,10 @@ export const tabSubjectSchema = z.object({
   studentLevel: z.enum(["Beginner", "Intermediate", "Advanced"], {
     message: "Invalid submission --- Must choose a level you can teach.",
   }),
+  teachToYoungPersons: z.literal(true, {
+    errorMap: () => ({ message: "Invalid submission --- You have to accept this term." }),
+  }),
+  teachToAmateurPersons: z.literal(true, {
+    errorMap: () => ({ message: "Invalid submission --- You have to accept this term." }),
+  }),
 });

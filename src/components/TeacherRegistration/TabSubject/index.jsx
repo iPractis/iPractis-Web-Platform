@@ -53,6 +53,7 @@ const TabSubject = ({
           setTeachToYoungPersons={setTeachToYoungPersons}
           teachToAmateurPersons={teachToAmateurPersons}
           teachToYoungPersons={teachToYoungPersons}
+          errors={errors}
         />
 
         <AveragePrice draft={draft} />
