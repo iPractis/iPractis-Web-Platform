@@ -3,11 +3,13 @@ import {
   CustomNextUiInputWithMaxLength,
   CustomNextUiTextareaWithMaxLength,
 } from "../../Globals/MaxFormLengthFields";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { CloseIcon, ThreeXBlocks } from "../../Icons";
 import { useState } from "react";
 
-const ProfileTitle = ({ draft }) => {
+const ProfileTitle = ({ draft, errors }) => {
   const [profileTitleText, setProfileTitleText] = useState(draft?.profileTitle);
   const [descText, setDescText] = useState(draft?.subjectIntroduction);
 
@@ -55,7 +57,10 @@ const ProfileTitle = ({ draft }) => {
               <CloseIcon strokeColor={"stroke-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
+          backgroundError={findInputErrorZod(errors, "profileTitle")?.message}
         />
+
+        <ErrorZodResponse errors={errors} fieldName={"profileTitle"} />
       </div>
 
       <div>
@@ -75,7 +80,12 @@ const ProfileTitle = ({ draft }) => {
           typeError={"Max Length Exceeded"}
           descError={"The text cannot exceed 1000 characters."}
           labelDisabled={false}
+          backgroundError={
+            findInputErrorZod(errors, "subjectIntroduction")?.message
+          }
         />
+
+        <ErrorZodResponse errors={errors} fieldName={"subjectIntroduction"} />
       </div>
     </>
   );

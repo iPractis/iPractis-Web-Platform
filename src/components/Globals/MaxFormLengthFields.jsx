@@ -93,6 +93,7 @@ export const CustomNextUiInputWithMaxLength = ({
   descError,
   nameInput,
   inputType,
+  backgroundError,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
 
@@ -125,6 +126,9 @@ export const CustomNextUiInputWithMaxLength = ({
         endContent={endContent}
         classNames={{
           input: [inputClassName],
+          inputWrapper:
+            (exceedValueMaxLength && "form-input-error") ||
+            (backgroundError && "form-input-error"),
           label: [labelClassName],
         }}
       />

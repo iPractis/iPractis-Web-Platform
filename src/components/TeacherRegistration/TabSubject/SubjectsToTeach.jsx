@@ -98,7 +98,7 @@ const SubjectsToTeach = ({
         </div>
 
         {/* Profile title and description */}
-        <ProfileTitle draft={draft} />
+        <ProfileTitle errors={errors} draft={draft} />
       </div>
     </div>
   );
