@@ -39,7 +39,7 @@ const SubjectsToTeach = ({
         <div>
           <div className="flex items-end gap-2 mt-20">
             <Select
-              name="subSubject"
+              name="subject"
               label={
                 <div className="flex flex-col mb-2">
                   <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
@@ -75,7 +75,7 @@ const SubjectsToTeach = ({
               classNames={{
                 trigger: [
                   "select-wrapper-ipractis",
-                  findInputErrorZod(errors, "subSubject")?.message &&
+                  findInputErrorZod(errors, "subject")?.message &&
                     "form-input-error",
                 ],
                 innerWrapper: ["select-ipractis", "w-full"],
@@ -94,7 +94,7 @@ const SubjectsToTeach = ({
             </Select>
           </div>
 
-          <ErrorZodResponse errors={errors} fieldName={"subSubject"} />
+          <ErrorZodResponse errors={errors} fieldName={"subject"} />
         </div>
 
         {/* Profile title and description */}

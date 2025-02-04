@@ -4,7 +4,7 @@ export const tabProfileSchema = z.object({
   firstName: z
     .string()
     .trim()
-    .min(1, {
+    .min(3, {
       message: "Invalid field --- Must contain 3 or more characters long.",
     })
     .regex(/^[^*^%$£]*$/, {
@@ -13,7 +13,7 @@ export const tabProfileSchema = z.object({
   middleName: z
     .string()
     .trim()
-    .min(1, {
+    .min(3, {
       message: "Invalid field --- Must contain 3 or more characters long.",
     })
     .regex(/^[^*^%$£]*$/, {
@@ -22,7 +22,7 @@ export const tabProfileSchema = z.object({
   lastName: z
     .string()
     .trim()
-    .min(1, {
+    .min(3, {
       message: "Invalid field --- Must contain 3 or more characters long.",
     })
     .regex(/^[^*^%$£]*$/, {
@@ -31,7 +31,7 @@ export const tabProfileSchema = z.object({
   introduction: z
     .string()
     .trim()
-    .min(1, {
+    .min(3, {
       message: "Invalid field --- Must contain 3 or more characters long.",
     })
     .regex(
@@ -61,7 +61,10 @@ export const tabProfileSchema = z.object({
 });
 
 export const tabSubjectSchema = z.object({
-  subSubject: z
-    .array(z.string())
-    .min(1, { message: "Invalid field --- At least one subject is required." }),
+  subject: z.string().min(1, {
+    message: "Invalid field --- You must select a subject.",
+  }),
+  profileTitle: z.string().min(3, {
+    message: "Invalid field --- Must contain 3 or more characters long.",
+  }),
 });

@@ -95,7 +95,7 @@ const AboutYourselfMasteredLanguages = ({
           classNames={{
             trigger: [
               "select-wrapper-ipractis",
-              findInputErrorZod(errors, "firstName")?.message &&
+              findInputErrorZod(errors, "languages")?.message &&
                 "form-input-error",
             ],
             innerWrapper: ["select-ipractis", "w-full"],
