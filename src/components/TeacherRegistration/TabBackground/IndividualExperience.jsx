@@ -113,6 +113,11 @@ const IndividualExperience = ({
                     <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 }
+                classNames={{
+                  inputWrapper:
+                    findInputMultipleErrorZod(errors, "from", 2)?.message &&
+                    "form-input-error",
+                }}
               />
             </div>
 
@@ -157,6 +162,12 @@ const IndividualExperience = ({
               </Dropdown>
             </div>
           </div>
+
+          <ErrorMultipleZodResponse
+            fieldName={"from"}
+            errors={errors}
+            pathIndex={2}
+          />
         </div>
 
         <div className="flex-1">
@@ -174,6 +185,11 @@ const IndividualExperience = ({
                     <CalendarCloseIcon fillColor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 }
+                classNames={{
+                  inputWrapper:
+                    findInputMultipleErrorZod(errors, "to", 2)?.message &&
+                    "form-input-error",
+                }}
               />
             </div>
 
@@ -218,6 +234,12 @@ const IndividualExperience = ({
               </Dropdown>
             </div>
           </div>
+
+          <ErrorMultipleZodResponse
+            fieldName={"to"}
+            errors={errors}
+            pathIndex={2}
+          />
         </div>
       </div>
 
@@ -226,12 +248,21 @@ const IndividualExperience = ({
         value={experience?.description}
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
+          inputWrapper:
+            findInputMultipleErrorZod(errors, "description", 2)?.message &&
+            "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
         size="primaryiPractis"
         name="descriptionExperience"
         disableAutosize
+      />
+
+      <ErrorMultipleZodResponse
+        fieldName={"description"}
+        errors={errors}
+        pathIndex={2}
       />
     </div>
   );
