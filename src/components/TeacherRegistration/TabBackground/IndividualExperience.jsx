@@ -33,6 +33,8 @@ const IndividualExperience = ({
   errors,
   index,
 }) => {
+  const certainExperiencePosition = experience?.index === index;
+
   const handleInputChange = (field, value) => {
     const updatedExperience = { ...experience, [field]: value };
     handleUpdateExperience(index, updatedExperience);
@@ -56,6 +58,7 @@ const IndividualExperience = ({
             }
             classNames={{
               inputWrapper:
+                certainExperiencePosition &&
                 findInputMultipleErrorZod(errors, "company", 2)?.message &&
                 "form-input-error",
             }}
@@ -90,11 +93,13 @@ const IndividualExperience = ({
         </div>
       </div>
 
-      <ErrorMultipleZodResponse
-        fieldName={"company"}
-        errors={errors}
-        pathIndex={2}
-      />
+      {certainExperiencePosition && (
+        <ErrorMultipleZodResponse
+          fieldName={"company"}
+          errors={errors}
+          pathIndex={2}
+        />
+      )}
 
       {/* Calendars FROM and TO */}
       <div className="flex items-center gap-2.5 my-2.5">
@@ -115,6 +120,7 @@ const IndividualExperience = ({
                 }
                 classNames={{
                   inputWrapper:
+                    certainExperiencePosition &&
                     findInputMultipleErrorZod(errors, "from", 2)?.message &&
                     "form-input-error",
                 }}
@@ -163,11 +169,13 @@ const IndividualExperience = ({
             </div>
           </div>
 
-          <ErrorMultipleZodResponse
-            fieldName={"from"}
-            errors={errors}
-            pathIndex={2}
-          />
+          {certainExperiencePosition && (
+            <ErrorMultipleZodResponse
+              fieldName={"from"}
+              errors={errors}
+              pathIndex={2}
+            />
+          )}
         </div>
 
         <div className="flex-1">
@@ -187,6 +195,7 @@ const IndividualExperience = ({
                 }
                 classNames={{
                   inputWrapper:
+                    certainExperiencePosition &&
                     findInputMultipleErrorZod(errors, "to", 2)?.message &&
                     "form-input-error",
                 }}
@@ -235,11 +244,13 @@ const IndividualExperience = ({
             </div>
           </div>
 
-          <ErrorMultipleZodResponse
-            fieldName={"to"}
-            errors={errors}
-            pathIndex={2}
-          />
+          {certainExperiencePosition && (
+            <ErrorMultipleZodResponse
+              fieldName={"to"}
+              errors={errors}
+              pathIndex={2}
+            />
+          )}
         </div>
       </div>
 
@@ -249,6 +260,7 @@ const IndividualExperience = ({
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
           inputWrapper:
+            certainExperiencePosition &&
             findInputMultipleErrorZod(errors, "description", 2)?.message &&
             "form-input-error",
           input: "h-[150px]",
@@ -259,11 +271,13 @@ const IndividualExperience = ({
         disableAutosize
       />
 
-      <ErrorMultipleZodResponse
-        fieldName={"description"}
-        errors={errors}
-        pathIndex={2}
-      />
+      {certainExperiencePosition && (
+        <ErrorMultipleZodResponse
+          fieldName={"description"}
+          pathIndex={2}
+          errors={errors}
+        />
+      )}
     </div>
   );
 };
