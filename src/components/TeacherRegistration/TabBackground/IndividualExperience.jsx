@@ -23,11 +23,15 @@ import {
 } from "../../Icons";
 import { CalendarDate } from "@internationalized/date";
 
+import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+
 const IndividualExperience = ({
-  index,
-  experience,
-  handleUpdateExperience,
   handleDeleteExperience,
+  handleUpdateExperience,
+  experience,
+  errors,
+  index,
 }) => {
   const handleInputChange = (field, value) => {
     const updatedExperience = { ...experience, [field]: value };
@@ -50,6 +54,11 @@ const IndividualExperience = ({
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
+            classNames={{
+              inputWrapper:
+                findInputMultipleErrorZod(errors, "company", 2)?.message &&
+                "form-input-error",
+            }}
           />
         </div>
 
@@ -80,6 +89,12 @@ const IndividualExperience = ({
           </button>
         </div>
       </div>
+
+      <ErrorMultipleZodResponse
+        fieldName={"company"}
+        errors={errors}
+        pathIndex={2}
+      />
 
       {/* Calendars FROM and TO */}
       <div className="flex items-center gap-2.5 my-2.5">

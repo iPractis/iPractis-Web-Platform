@@ -11,7 +11,11 @@ import { useState } from "react";
 import axios from "axios";
 
 // Zod schemas
-import { tabProfileSchema, tabSubjectSchema } from "@/src/lib/schema";
+import {
+  tabBackgroundSchema,
+  tabProfileSchema,
+  tabSubjectSchema,
+} from "@/src/lib/schema";
 
 // Images && icons
 import ukFlag from "@/public/flags/united-kingdom.png";
@@ -151,11 +155,19 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.careerExperience = experiences;
         actualDraftInfo.education = educations;
 
+        const validationResult = tabBackgroundSchema.safeParse(actualDraftInfo);
+
+        if (!validationResult.success) {
+          return setErrors(validationResult.error.issues);
+        }
+
         const response = await axios.put(
           `/teacher/set/background`,
           actualDraftInfo
         );
-        console.log(res, "BACKGROUND");
+
+        setErrors([]);
+        console.log(response, "BACKGROUND");
       }
 
       // TAB AVAILABILITY
@@ -233,6 +245,7 @@ const TabsDisplayedInfo = ({
         experiences={experiences}
         educations={educations}
         activeTab={activeTab}
+        errors={errors}
       />
 
       {/* 3 */}
