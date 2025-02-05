@@ -150,12 +150,9 @@ export const tabBackgroundSchema = z.object({
   careerExperience: z
     .array(
       z.object({
-        company: z
-          .string()
-          .min(1, {
-            message:
-              "Invalid field --- Must contain 3 or more characters long.",
-          }),
+        company: z.string().min(1, {
+          message: "Invalid field --- Must contain 3 or more characters long.",
+        }),
         from: z
           .string()
           .min(1, { message: "Invalid date --- Must input a date." }),
