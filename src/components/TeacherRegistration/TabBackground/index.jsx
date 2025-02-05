@@ -19,7 +19,11 @@ const TabBackground = ({
       />
 
       {/* Education Section */}
-      <Education setEducations={setEducations} educations={educations} />
+      <Education
+        setEducations={setEducations}
+        educations={educations}
+        errors={errors}
+      />
     </div>
   );
 };

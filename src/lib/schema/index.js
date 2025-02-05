@@ -177,4 +177,34 @@ export const tabBackgroundSchema = z.object({
     .min(1, {
       message: "Invalid submission --- At least one experience is required.",
     }),
+  education: z
+    .array(
+      z.object({
+        company: z.string().min(1, {
+          message: "Invalid field --- Must contain 3 or more characters long.",
+        }),
+        from: z
+          .string()
+          .min(1, { message: "Invalid date --- Must input a date." }),
+        to: z
+          .string()
+          .min(1, { message: "Invalid date --- Must input a date." }),
+        description: z
+          .string()
+          .min(3, {
+            message:
+              "Invalid field --- Must contain 3 or more characters long.",
+          })
+          .regex(
+            /^(?!.*\b\d{7,15}\b)(?!.*\b[A-Za-z0-9._%+-]+@gmail\.com\b)(?!.*\+\d{1,4}[\s-]?\d{4,}\b)[\s\S]+$/,
+            {
+              message:
+                "Privacy compromised --- Your input contains sensitive or private information. Please remove any personal details to ensure your privacy is protected.",
+            }
+          ),
+      })
+    )
+    .min(1, {
+      message: "Invalid submission --- At least one education is required.",
+    }),
 });

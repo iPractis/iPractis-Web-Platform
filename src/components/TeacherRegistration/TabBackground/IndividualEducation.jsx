@@ -23,12 +23,18 @@ import {
 } from "../../Icons";
 import { CalendarDate } from "@internationalized/date";
 
+import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+
 const IndividualEducation = ({
-  index,
-  education,
-  handleUpdateEducation,
   handleDeleteEducation,
+  handleUpdateEducation,
+  education,
+  errors,
+  index,
 }) => {
+  const certainEducationPosition = education?.index === index;
+
   const handleInputChange = (field, value) => {
     const updatedEducation = { ...education, [field]: value };
     handleUpdateEducation(index, updatedEducation);
@@ -50,6 +56,12 @@ const IndividualEducation = ({
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
+            classNames={{
+              inputWrapper:
+                certainEducationPosition &&
+                findInputMultipleErrorZod(errors, "company", 2)?.message &&
+                "form-input-error",
+            }}
           />
         </div>
 
@@ -81,6 +93,14 @@ const IndividualEducation = ({
         </div>
       </div>
 
+      {certainEducationPosition && (
+        <ErrorMultipleZodResponse
+          fieldName={"company"}
+          errors={errors}
+          pathIndex={2}
+        />
+      )}
+
       {/* Calendars FROM and TO */}
       <div className="flex items-center gap-2.5 my-2.5">
         <div className="flex-1">
@@ -90,7 +110,7 @@ const IndividualEducation = ({
                 isReadOnly
                 type="text"
                 value={education?.from}
-                name="fromProfessionalExperience"
+                name="fromProfessionalEducation"
                 placeholder="From"
                 className="pointer-events-none"
                 startContent={
@@ -98,6 +118,12 @@ const IndividualEducation = ({
                     <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 }
+                classNames={{
+                  inputWrapper:
+                    certainEducationPosition &&
+                    findInputMultipleErrorZod(errors, "from", 2)?.message &&
+                    "form-input-error",
+                }}
               />
             </div>
 
@@ -142,6 +168,14 @@ const IndividualEducation = ({
               </Dropdown>
             </div>
           </div>
+
+          {certainEducationPosition && (
+            <ErrorMultipleZodResponse
+              fieldName={"from"}
+              errors={errors}
+              pathIndex={2}
+            />
+          )}
         </div>
 
         <div className="flex-1">
@@ -150,7 +184,7 @@ const IndividualEducation = ({
               <CustomNextUiInput
                 isReadOnly
                 type="text"
-                name="toProfessionalExperience"
+                name="toProfessionalEducation"
                 placeholder="To"
                 value={education?.to}
                 className="pointer-events-none"
@@ -159,6 +193,12 @@ const IndividualEducation = ({
                     <CalendarCloseIcon fillColor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 }
+                classNames={{
+                  inputWrapper:
+                    certainEducationPosition &&
+                    findInputMultipleErrorZod(errors, "to", 2)?.message &&
+                    "form-input-error",
+                }}
               />
             </div>
 
@@ -203,6 +243,14 @@ const IndividualEducation = ({
               </Dropdown>
             </div>
           </div>
+
+          {certainEducationPosition && (
+            <ErrorMultipleZodResponse
+              fieldName={"to"}
+              errors={errors}
+              pathIndex={2}
+            />
+          )}
         </div>
       </div>
 
@@ -211,13 +259,25 @@ const IndividualEducation = ({
         value={education?.description}
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
+          inputWrapper:
+            certainEducationPosition &&
+            findInputMultipleErrorZod(errors, "description", 2)?.message &&
+            "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
         size="primaryiPractis"
-        name="descriptionExperience"
+        name="descriptionEducation"
         disableAutosize
       />
+
+      {certainEducationPosition && (
+        <ErrorMultipleZodResponse
+          fieldName={"description"}
+          pathIndex={2}
+          errors={errors}
+        />
+      )}
     </div>
   );
 };

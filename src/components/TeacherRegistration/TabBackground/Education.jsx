@@ -4,9 +4,13 @@ import SectionHeader from "../../Globals/SectionHeader";
 // Icons
 import { AddBoxIcon, GraduationCapIcon } from "../../Icons";
 
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import IndividualEducation from "./IndividualEducation";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 
-const Education = ({ setEducations, educations }) => {
+const Education = ({ setEducations, educations, errors }) => {
+  const educationError = findInputErrorZod(errors, "education")?.message;
+
   // ADD EDUCATION
   const handleAddEducation = () => {
     const newEducation = {
@@ -14,6 +18,7 @@ const Education = ({ setEducations, educations }) => {
       from: "",
       to: "",
       description: "",
+      index: educations?.length,
     };
     setEducations([...educations, newEducation]);
   };
@@ -46,24 +51,35 @@ const Education = ({ setEducations, educations }) => {
 
       <WhiteSpaceWrapper className={"bg-primary-color-P12 pb-0 pt-[50px]"}>
         {/* To create a new Professional Experience */}
-        <button
-          className="btn btn-septenary flex items-center justify-between w-full rounded-2xl px-4 py-2.5 mb-8"
-          onClick={handleAddEducation}
-          type="button"
-        >
-          <span className="MT-1 text-primary-color-P4">
-            Add professional experience
-          </span>{" "}
-          <AddBoxIcon fillColor={"fill-primary-color-P4"} />
-        </button>
+        <div className="mb-8">
+          <button
+            className={`${
+              educationError ? "form-input-error" : "btn-septenary"
+            } btn flex items-center justify-between w-full rounded-2xl px-4 py-2.5`}
+            onClick={handleAddEducation}
+            type="button"
+          >
+            <span className="MT-1 text-primary-color-P4">
+              Add professional experience
+            </span>{" "}
+            <AddBoxIcon fillColor={"fill-primary-color-P4"} />
+          </button>
+
+          {/* We do this because we want error to change of position (if it's a different error) */}
+          {educationError ===
+            "Invalid submission --- At least one education is required." && (
+            <ErrorZodResponse errors={errors} fieldName={"education"} />
+          )}
+        </div>
 
         {educations?.map((education, index) => (
           <IndividualEducation
-            key={index}
-            index={index}
-            education={education}
             handleUpdateEducation={handleUpdateEducation}
             handleDeleteEducation={handleDeleteEducation}
+            education={education}
+            errors={errors}
+            index={index}
+            key={index}
           />
         ))}
       </WhiteSpaceWrapper>
