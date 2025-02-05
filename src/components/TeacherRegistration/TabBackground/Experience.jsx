@@ -21,7 +21,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       from: "",
       to: "",
       description: "",
-      index: experiences?.length + 1,
+      index: experiences?.length,
     };
 
     setExperiences([...experiences, newExperience]);
@@ -30,7 +30,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
   // UPDATE EXPERIENCE
   const handleUpdateExperience = (index, updatedExperience) => {
     const updatedExperiences = experiences.map((exp, i) =>
-      (i + 1) === index ? updatedExperience : exp
+      i === index ? updatedExperience : exp
     );
     setExperiences(updatedExperiences);
   };
@@ -82,7 +82,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
             handleDeleteExperience={handleDeleteExperience}
             experience={experience}
             errors={errors}
-            index={++index}
+            index={index}
             key={index}
           />
         ))}
