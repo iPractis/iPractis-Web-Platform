@@ -21,7 +21,7 @@ const TabProfile = ({
   return (
     <div className={`${activeTab !== 0 && "hidden"}`}>
       {/* Profile Picture */}
-      <ProfilePicture />
+      <ProfilePicture errors={errors} draft={draft} />
 
       {/* Personal Informations */}
       <PersonalInfo

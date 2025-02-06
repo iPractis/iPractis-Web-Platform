@@ -86,6 +86,10 @@ const TabsDisplayedInfo = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("uploadImages", e?.target?.uploadImages?.files[0]);
+    const uploadedImage = formData.get("uploadImages");
+
     const actualDraftInfo = draft;
 
     try {
@@ -96,6 +100,8 @@ const TabsDisplayedInfo = ({
 
       // TAB PROFILE
       if (activeTab === 0) {
+        actualDraftInfo.uploadImages =
+          uploadedImage === "undefined" ? {} : uploadedImage;
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
         actualDraftInfo.lastName = e?.target?.lastName?.value;
@@ -104,6 +110,8 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.languages = masteredLanguages;
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
+
+        console.log(actualDraftInfo);
 
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
 
