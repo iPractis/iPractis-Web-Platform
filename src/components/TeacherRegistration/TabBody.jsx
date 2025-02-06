@@ -44,6 +44,7 @@ export const TabBody = ({ draftData }) => {
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         setSaved={setSaved}
+        draft={draft}
         saved={saved}
       />
 

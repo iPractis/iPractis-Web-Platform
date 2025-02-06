@@ -1,29 +1,25 @@
-import { tabsButtons } from "@/src/data/dataTeacherRegistration";
+import {
+  tabAvailabilityFields,
+  sectionHeaderContent,
+  tabBackgroundFields,
+  tabProfileFields,
+  tabSubjectFields,
+  tabsButtons,
+} from "@/src/data/dataTeacherRegistration";
+
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import SectionHeader from "../Globals/SectionHeader";
 
-const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
-  // We do this because texts changes at the beggining and at the end of form submission
-  const sectionHeaderContent = [
-    {
-      titleText: "Complete the application form",
-      descriptionText:
-        "Fill the form with all the necessary information, we will review them as soon as possible.",
-    },
-
-    {
-      titleText: "Form completed and send seccesfully",
-      descriptionText:
-        "Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we’ll update you as soon as possible. Thank you for your patience!",
-    },
-
-    {
-      titleText: "Last step, review your profile before appling",
-      descriptionText:
-        "Double-check your info, then click Send application to finalize. Good luck!",
-    },
-  ];
+const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
+  const unCompletedTab = Object.values(tabProfileFields(draft)).includes("");
+  const unCompletedTab2 = Object.values(tabSubjectFields(draft)).includes("");
+  const unCompletedTab3 = Object.values(tabBackgroundFields(draft)).includes(
+    ""
+  );
+  const unCompletedTab4 = Object.values(tabAvailabilityFields(draft)).includes(
+    ""
+  );
 
   return (
     <section>
@@ -42,13 +38,27 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
             }}
           >
             <span
-              className={`${
+              className={`p-1 rounded-[10px] ${
                 activeTab === TabIndex
                   ? "bg-tertiary-color-SC5"
-                  : "bg-primary-color-P1"
-              } p-1 rounded-[10px]`}
+                  : unCompletedTab && TabIndex === 0
+                  ? "bg-quaternary-color-A6"
+                  : unCompletedTab2 && TabIndex === 1
+                  ? "bg-quaternary-color-A6"
+                  : unCompletedTab3 && TabIndex === 2
+                  ? "bg-quaternary-color-A6"
+                  : unCompletedTab4 && TabIndex === 3
+                  ? "bg-quaternary-color-A6"
+                  : "bg-quinary-color-VS6"
+              }`}
             >
-              <TabButton.Icon fillColor={"fill-primary-color-P12"} />
+              <TabButton.Icon
+                fillColor={
+                  activeTab === TabIndex
+                    ? "fill-primary-color-P12"
+                    : "fill-primary-color-P1"
+                }
+              />
             </span>
 
             <span className="md:block hidden font-bold">

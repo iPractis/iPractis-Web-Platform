@@ -82,7 +82,6 @@ const TabsDisplayedInfo = ({
     useState(false);
 
   const [errors, setErrors] = useState([]);
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -39,6 +39,27 @@ export const tabsButtons = [
   },
 ];
 
+// We do this because texts changes at the beggining and at the end of form submission
+export const sectionHeaderContent = [
+  {
+    titleText: "Complete the application form",
+    descriptionText:
+      "Fill the form with all the necessary information, we will review them as soon as possible.",
+  },
+
+  {
+    titleText: "Form completed and send seccesfully",
+    descriptionText:
+      "Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we’ll update you as soon as possible. Thank you for your patience!",
+  },
+
+  {
+    titleText: "Last step, review your profile before appling",
+    descriptionText:
+      "Double-check your info, then click Send application to finalize. Good luck!",
+  },
+];
+
 export const countriesSelection = [
   {
     image: unitedKingdom,
@@ -169,7 +190,6 @@ export const columnsHeaderWorkSchedule = [
     label: "Su",
     slot: "",
   },
-
 ];
 
 export const rowsWorkSchedule = [
@@ -214,4 +234,56 @@ export const months = [
   "December",
 ];
 
-export const abbreviatedDaysOfWeek = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+export const abbreviatedDaysOfWeek = [
+  "Sat",
+  "Sun",
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+];
+
+export const tabProfileFields = ({ object }) => {
+  return {
+    birthDate: object?.birthDate,
+    middleName: object?.middleName,
+    firstName: object?.firstName,
+    lastName: object?.lastName,
+    country: object?.country,
+    languages: object?.languages,
+    uploadImages: object?.uploadImages,
+    introduction: object?.introduction,
+    gender: object?.gender,
+  };
+};
+
+export const tabSubjectFields = ({ object }) => {
+  return {
+    subjectIntroduction: object?.subjectIntroduction,
+    emailWithdrawal: object?.emailWithdrawal,
+    profileTitle: object?.profileTitle,
+    teachToAmateurPersons: object?.teachToAmateurPersons,
+    hourlyPrice: object?.hourlyPrice,
+    teachToYoungPersons: object?.teachToYoungPersons,
+    subSubject: object?.subSubject,
+    videoLink: object?.videoLink,
+    studentLevel: object?.studentLevel,
+    subject: object?.subject,
+    withdrawal: object?.withdrawal,
+  };
+};
+
+export const tabBackgroundFields = ({ object }) => {
+  return {
+    careerExperience: object?.careerExperience,
+    education: object?.education,
+  };
+};
+
+export const tabAvailabilityFields = ({ object }) => {
+  return {
+    dailyWorkTime: object?.dailyWorkTime,
+    timeZone: object?.timeZone,
+  };
+};
