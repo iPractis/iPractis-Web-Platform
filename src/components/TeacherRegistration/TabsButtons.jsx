@@ -25,6 +25,9 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
     tabAvailabilityFields(draft)
   ).includes("");
 
+  console.log(unCompletedTabProfile)
+  console.log(tabProfileFields(draft))
+
   return (
     <section>
       <div

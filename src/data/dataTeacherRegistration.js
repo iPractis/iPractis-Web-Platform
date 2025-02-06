@@ -244,7 +244,7 @@ export const abbreviatedDaysOfWeek = [
   "Fri",
 ];
 
-export const tabProfileFields = ({ object }) => {
+export const tabProfileFields = (object) => {
   return {
     birthDate: object?.birthDate,
     middleName: object?.middleName,
@@ -258,7 +258,7 @@ export const tabProfileFields = ({ object }) => {
   };
 };
 
-export const tabSubjectFields = ({ object }) => {
+export const tabSubjectFields = (object) => {
   return {
     subjectIntroduction: object?.subjectIntroduction,
     emailWithdrawal: object?.emailWithdrawal,
@@ -274,14 +274,14 @@ export const tabSubjectFields = ({ object }) => {
   };
 };
 
-export const tabBackgroundFields = ({ object }) => {
+export const tabBackgroundFields = (object) => {
   return {
     careerExperience: object?.careerExperience,
     education: object?.education,
   };
 };
 
-export const tabAvailabilityFields = ({ object }) => {
+export const tabAvailabilityFields = (object) => {
   return {
     dailyWorkTime: object?.dailyWorkTime,
     timeZone: object?.timeZone,
