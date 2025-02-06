@@ -12,14 +12,18 @@ import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import SectionHeader from "../Globals/SectionHeader";
 
 const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
-  const unCompletedTab = Object.values(tabProfileFields(draft)).includes("");
-  const unCompletedTab2 = Object.values(tabSubjectFields(draft)).includes("");
-  const unCompletedTab3 = Object.values(tabBackgroundFields(draft)).includes(
+  const unCompletedTabProfile = Object.values(tabProfileFields(draft)).includes(
     ""
   );
-  const unCompletedTab4 = Object.values(tabAvailabilityFields(draft)).includes(
+  const unCompletedTabSubject = Object.values(tabSubjectFields(draft)).includes(
     ""
   );
+  const unCompletedTabBackground = Object.values(
+    tabBackgroundFields(draft)
+  ).includes("");
+  const unCompletedTabAvailability = Object.values(
+    tabAvailabilityFields(draft)
+  ).includes("");
 
   return (
     <section>
@@ -41,13 +45,13 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
               className={`p-1 rounded-[10px] ${
                 activeTab === TabIndex
                   ? "bg-tertiary-color-SC5"
-                  : unCompletedTab && TabIndex === 0
+                  : unCompletedTabProfile && TabIndex === 0
                   ? "bg-quaternary-color-A6"
-                  : unCompletedTab2 && TabIndex === 1
+                  : unCompletedTabSubject && TabIndex === 1
                   ? "bg-quaternary-color-A6"
-                  : unCompletedTab3 && TabIndex === 2
+                  : unCompletedTabBackground && TabIndex === 2
                   ? "bg-quaternary-color-A6"
-                  : unCompletedTab4 && TabIndex === 3
+                  : unCompletedTabAvailability && TabIndex === 3
                   ? "bg-quaternary-color-A6"
                   : "bg-quinary-color-VS6"
               }`}
