@@ -105,9 +105,16 @@ const AboutYourselfMasteredLanguages = ({
             listbox: ["text-primary-color-P4"],
           }}
         >
-          {languages?.map((language) => (
-            <SelectItem key={language}>{language}</SelectItem>
-          ))}
+          {languages
+            ?.filter(
+              (language) =>
+                !masteredLanguages.some(
+                  (masteredLanguage) => masteredLanguage.name === language
+                )
+            )
+            .map((language) => (
+              <SelectItem key={language}>{language}</SelectItem>
+            ))}
         </Select>
       </div>
 
