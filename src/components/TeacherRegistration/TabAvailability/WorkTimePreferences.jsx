@@ -2,7 +2,7 @@ import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Globals/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Icons
 import {
@@ -18,6 +18,9 @@ import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
+  // console.log(selectedSlots?.length) // --> gives 0
+  // console.log(draft?.dailyWorkTime) // --> gives 8
+
   const [dailyWorkTime, setDailyWorkTime] = useState(draft?.dailyWorkTime);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,10 +29,6 @@ const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
     errors,
     "dailyWorkTime"
   )?.message;
-
-  useEffect(() => {
-    setDailyWorkTime(selectedSlots?.length);
-  }, [selectedSlots?.length]);
 
   return (
     <>
