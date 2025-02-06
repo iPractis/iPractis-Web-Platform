@@ -41,7 +41,13 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
               setSaved(false);
             }}
           >
-            <span className="bg-primary-color-P1 p-1 rounded-[10px]">
+            <span
+              className={`${
+                activeTab === TabIndex
+                  ? "bg-tertiary-color-SC5"
+                  : "bg-primary-color-P1"
+              } p-1 rounded-[10px]`}
+            >
               <TabButton.Icon fillColor={"fill-primary-color-P12"} />
             </span>
 
@@ -71,9 +77,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved }) => {
                 }}
                 type="button"
               >
-                <span className="px-1.5">
-                  Apply now!
-                </span>{" "}
+                <span className="px-1.5">Apply now!</span>{" "}
                 <InputBGWrapperIcon>
                   <ChevronRightBiggerIcon
                     fillColor={"fill-tertiary-color-SC5"}
