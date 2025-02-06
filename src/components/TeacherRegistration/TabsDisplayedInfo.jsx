@@ -100,12 +100,11 @@ const TabsDisplayedInfo = ({
 
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.uploadImages =
-          uploadedImage === "undefined" ? {} : uploadedImage;
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
-        actualDraftInfo.lastName = e?.target?.lastName?.value;
         actualDraftInfo.birthDate = validBirthDate?.toString();
+        actualDraftInfo.lastName = e?.target?.lastName?.value;
+        actualDraftInfo.uploadImages = uploadedImage;
         actualDraftInfo.country = selectedCountry?.key;
         actualDraftInfo.languages = masteredLanguages;
         actualDraftInfo.introduction = introText;
