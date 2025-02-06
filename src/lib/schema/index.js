@@ -213,15 +213,8 @@ export const tabAvailabilitySchema = z.object({
   timeZone: z.string().trim().min(1, {
     message: "Invalid timezone --- Please provide a timezone from select.",
   }),
-  dailyWorkTime: z
-    .array(
-      z.object({
-        day: z.string(),
-        hour: z.string(),
-      })
-    )
-    .min(8, {
-      message:
-        "Working time don't meet requirement --- Minimum working time is set to 8 hours per week.",
-    }),
+  dailyWorkTime: z.string().trim().min(8, {
+    message:
+      "Working time don't meet requirement --- Minimum working time is set to 8 hours per week.",
+  }),
 });

@@ -2,7 +2,7 @@ import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Globals/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Icons
 import {
@@ -18,10 +18,18 @@ import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
-  console.log(selectedSlots)
-  const timeZoneError = findInputErrorZod(errors, "timeZone")?.message;
-  const dailyWorkTime = findInputErrorZod(errors, "dailyWorkTime")?.message;
+  const [dailyWorkTime, setDailyWorkTime] = useState();
   const [isOpen, setIsOpen] = useState(false);
+
+  const timeZoneError = findInputErrorZod(errors, "timeZone")?.message;
+  const dailyWorkTimeError = findInputErrorZod(
+    errors,
+    "dailyWorkTime"
+  )?.message;
+
+  useEffect(() => {
+    setDailyWorkTime(selectedSlots?.length);
+  }, [selectedSlots?.length]);
 
   return (
     <>
@@ -99,14 +107,18 @@ const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
             readOnly
             type="text"
             name="dailyWorkTime"
-            defaultValue={draft?.dailyWorkTime}
+            value={dailyWorkTime}
+            onChange={(e) => setDailyWorkTime(e?.target?.value)}
+            defaultValue={selectedSlots?.length}
             placeholder="Define your daily work time"
             startContent={
               <InputBGWrapperIcon>
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
-            classNames={{ inputWrapper: dailyWorkTime && "form-input-error" }}
+            classNames={{
+              inputWrapper: dailyWorkTimeError && "form-input-error",
+            }}
           />
 
           <ErrorZodResponse errors={errors} fieldName={"dailyWorkTime"} />

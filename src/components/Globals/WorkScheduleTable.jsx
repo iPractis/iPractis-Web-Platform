@@ -99,7 +99,7 @@ const WorkScheduleTable = ({
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
-    const adjustedWeekDates = weekDates.map((date) => {
+    const adjustedWeekDates = weekDates?.map((date) => {
       // Convertimos la fecha a la zona horaria elegida
       const options = {
         timeZone: selectedTimeZone,
@@ -165,8 +165,8 @@ const WorkScheduleTable = ({
 
     setSelectedSlots((prevSlots) => {
       // If hour and day already exist in the array, remove it
-      if (prevSlots.some((slot) => slot.hour === hour && slot.day === day)) {
-        return prevSlots.filter(
+      if (prevSlots?.some((slot) => slot.hour === hour && slot.day === day)) {
+        return prevSlots?.filter(
           (slot) => !(slot.hour === hour && slot.day === day)
         );
       }
@@ -178,13 +178,13 @@ const WorkScheduleTable = ({
 
   // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
-    return selectedSlots.some((slot) => slot.hour === hour && slot.day === day);
+    return selectedSlots?.some((slot) => slot.hour === hour && slot.day === day);
   };
 
   // This is for decrementing days of a month (- 7)
   const handleDecrementWeek = () => {
     setWeekDates((prevDates) =>
-      prevDates.map((date) => {
+      prevDates?.map((date) => {
         const newDate = new Date(date);
         newDate.setDate(newDate.getDate() - 7);
         return newDate;
@@ -221,7 +221,7 @@ const WorkScheduleTable = ({
   // This is for incrementing days of a month (+ 7)
   const handleIncrementWeek = () => {
     setWeekDates((prevDates) =>
-      prevDates.map((date) => {
+      prevDates?.map((date) => {
         const newDate = new Date(date);
         newDate.setDate(newDate.getDate() + 7);
         return newDate;
