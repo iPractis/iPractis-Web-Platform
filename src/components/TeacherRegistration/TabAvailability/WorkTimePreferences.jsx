@@ -14,8 +14,13 @@ import {
   LuggageClockIcon,
 } from "../../Icons";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
-const WorkTimePreferences = ({ draft }) => {
+const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
+  console.log(selectedSlots)
+  const timeZoneError = findInputErrorZod(errors, "timeZone")?.message;
+  const dailyWorkTime = findInputErrorZod(errors, "dailyWorkTime")?.message;
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -59,7 +64,10 @@ const WorkTimePreferences = ({ draft }) => {
             }
             defaultSelectedKeys={[draft?.timeZone]}
             classNames={{
-              trigger: ["select-wrapper-ipractis"],
+              trigger: [
+                "select-wrapper-ipractis",
+                timeZoneError && "form-input-error",
+              ],
               innerWrapper: ["select-ipractis", "w-full"],
               value: [
                 "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
@@ -67,10 +75,14 @@ const WorkTimePreferences = ({ draft }) => {
               listbox: ["text-primary-color-P4"],
             }}
           >
-            {timeZones?.map((timeZone) => (
-              <SelectItem key={timeZone}>{timeZone}</SelectItem>
+            {timeZones?.map((tz) => (
+              <SelectItem key={tz.value} value={tz.value}>
+                {tz.label}
+              </SelectItem>
             ))}
           </Select>
+
+          <ErrorZodResponse errors={errors} fieldName={"timeZone"} />
         </div>
 
         {/* Set your daily work time limit */}
@@ -84,6 +96,7 @@ const WorkTimePreferences = ({ draft }) => {
           />
 
           <CustomNextUiInput
+            readOnly
             type="text"
             name="dailyWorkTime"
             defaultValue={draft?.dailyWorkTime}
@@ -93,7 +106,10 @@ const WorkTimePreferences = ({ draft }) => {
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
+            classNames={{ inputWrapper: dailyWorkTime && "form-input-error" }}
           />
+
+          <ErrorZodResponse errors={errors} fieldName={"dailyWorkTime"} />
         </div>
       </div>
     </>

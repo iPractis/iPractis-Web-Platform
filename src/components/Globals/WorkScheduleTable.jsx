@@ -28,9 +28,11 @@ import {
 import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
+  setSelectedSlots,
   bookedLessonSpot,
-  timeZoneFilter,
   showCurrentDate,
+  timeZoneFilter,
+  selectedSlots,
   fromToFilter,
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
@@ -39,7 +41,6 @@ const WorkScheduleTable = ({
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
 
-  const [selectedSlots, setSelectedSlots] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
   // All that happen in this useEffect are the DEFAULT VALUES for the calendar

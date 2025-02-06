@@ -9,9 +9,9 @@ import TeacherInfo from "./TeacherInfo";
 // Icons
 import { Clock1215Icon } from "../../Icons";
 
-const AvailabilityRevision = () => {
+const AvailabilityRevision = ({ selectedSlots, setSelectedSlots }) => {
   return (
-    <section >
+    <section>
       <TeacherInfo />
 
       <SectionHeader
@@ -22,9 +22,11 @@ const AvailabilityRevision = () => {
       />
 
       <WorkScheduleTable
+        setSelectedSlots={setSelectedSlots}
+        selectedSlots={selectedSlots}
         bookedLessonSpot
-        timeZoneFilter
         showCurrentDate
+        timeZoneFilter
         fromToFilter
       />
 

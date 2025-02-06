@@ -12,6 +12,7 @@ import axios from "axios";
 
 // Zod schemas
 import {
+  tabAvailabilitySchema,
   tabBackgroundSchema,
   tabProfileSchema,
   tabSubjectSchema,
@@ -81,7 +82,6 @@ const TabsDisplayedInfo = ({
     useState(false);
 
   const [errors, setErrors] = useState([]);
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -172,15 +172,24 @@ const TabsDisplayedInfo = ({
 
       // TAB AVAILABILITY
       if (activeTab === 3) {
-        setSaved(true);
-
         actualDraftInfo.dailyWorkTime = e?.target?.dailyWorkTime?.value;
         actualDraftInfo.timeZone = e?.target?.timeZone?.value;
+
+        const validationResult =
+          tabAvailabilitySchema.safeParse(actualDraftInfo);
+
+        if (!validationResult.success) {
+          return setErrors(validationResult.error.issues);
+        }
 
         const response = await axios.put(
           `/teacher/set/availability`,
           actualDraftInfo
         );
+
+        setErrors([]);
+        setSaved(true);
+
         console.log(response, "AVAILABILITY");
       } else {
         setActiveTab((prev) => prev + 1);
@@ -249,7 +258,12 @@ const TabsDisplayedInfo = ({
       />
 
       {/* 3 */}
-      <TabAvailability activeTab={activeTab} saved={saved} draft={draft} />
+      <TabAvailability
+        activeTab={activeTab}
+        errors={errors}
+        saved={saved}
+        draft={draft}
+      />
 
       {/* 4 */}
       <TabStatus activeTab={activeTab} />
