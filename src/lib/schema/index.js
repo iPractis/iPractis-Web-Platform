@@ -1,3 +1,4 @@
+import { calculateAge } from "../utils/calculateAge";
 import { z } from "zod";
 
 export const tabProfileSchema = z.object({
@@ -63,7 +64,27 @@ export const tabProfileSchema = z.object({
     }),
   birthDate: z
     .string()
-    .min(1, { message: "Invalid date --- Must provide a birth date." }),
+    .min(1, { message: "Invalid date --- Must provide a birth date." })
+    .refine(
+      (date) => {
+        const age = calculateAge(date);
+        return age >= 18;
+      },
+      {
+        message:
+          "Age Requirement Not Met --- You must meet the minimum age requirement to proceed. Please ensure your birth date is accurate.",
+      }
+    )
+    .refine(
+      (date) => {
+        const age = calculateAge(date);
+        return age <= 80;
+      },
+      {
+        message:
+          "Age Exceeds Limit --- The entered birth date exceeds the allowed age limit. Please verify and enter a valid date.",
+      }
+    ),
 });
 
 export const tabSubjectSchema = z.object({
