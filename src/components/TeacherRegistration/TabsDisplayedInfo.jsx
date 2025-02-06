@@ -36,7 +36,7 @@ const TabsDisplayedInfo = ({
   const [birthDate, setBirthDate] = useState(
     draft?.birthDate && !isNaN(Date.parse(draft?.birthDate))
       ? parseDate(draft?.birthDate)
-      : null
+      : undefined
   );
   const [masteredLanguages, setMasteredLanguages] = useState(draft?.languages);
   const [isTabProfilePending, setIsTabProfilePending] = useState(false);
@@ -100,15 +100,18 @@ const TabsDisplayedInfo = ({
 
       // TAB PROFILE
       if (activeTab === 0) {
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN") ? "" : validBirthDate?.toString();
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
-        actualDraftInfo.birthDate = validBirthDate?.toString();
         actualDraftInfo.lastName = e?.target?.lastName?.value;
-        actualDraftInfo.uploadImages = uploadedImage;
         actualDraftInfo.country = selectedCountry?.key;
         actualDraftInfo.languages = masteredLanguages;
+        actualDraftInfo.uploadImages = uploadedImage;
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
+
+        console.log(actualDraftInfo);
+        return;
 
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
 

@@ -61,6 +61,9 @@ export const tabProfileSchema = z.object({
       message:
         "Language Limit Reached --- You can only select up to 6 mastered languages.",
     }),
+  birthDate: z
+    .string()
+    .min(1, { message: "Invalid date --- Must provide a birth date." }),
 });
 
 export const tabSubjectSchema = z.object({

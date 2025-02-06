@@ -40,27 +40,27 @@ const BirthDateInput = ({
           </InputBGWrapperIcon>
 
           <input
-            type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
-            readOnly
-            name="birthDateNumber"
             defaultValue={birthDate?.day}
+            name="birthDateNumber"
+            type="text"
+            readOnly
           />
 
           <input
-            type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
-            readOnly
             defaultValue={getMonthNumberAsText(birthDate?.month)}
             name="birthDateMonth"
+            type="text"
+            readOnly
           />
 
           <input
-            type="text"
             className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[60px] h-9"
-            readOnly
             defaultValue={birthDate?.year}
             name="birthDateYear"
+            type="text"
+            readOnly
           />
         </div>
 
