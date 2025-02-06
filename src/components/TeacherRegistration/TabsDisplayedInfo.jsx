@@ -111,8 +111,6 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
 
-        console.log(actualDraftInfo);
-
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
 
         if (!validationResult.success) {
