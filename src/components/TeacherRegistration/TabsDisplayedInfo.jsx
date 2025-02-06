@@ -49,7 +49,7 @@ const TabsDisplayedInfo = ({
     Italy: italyFlag,
   };
   const [selectedCountry, setSelectedCountry] = useState({
-    key: draft?.country,
+    key: draft?.country || "United Kingdom",
     image: countryFlags[draft?.country] || ukFlag,
     alt: `Flag of ${draft?.country}`,
   });
