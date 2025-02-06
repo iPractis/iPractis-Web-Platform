@@ -4,7 +4,7 @@ import WorkSchedule from "./WorkSchedule";
 import { useState } from "react";
 
 const TabAvailability = ({ activeTab, saved, draft, errors }) => {
-  const [selectedSlots, setSelectedSlots] = useState(draft?.dailyWorkTime || []);
+  const [selectedSlots, setSelectedSlots] = useState([]);
 
   return (
     <div className={`${activeTab !== 3 && "hidden"}`}>

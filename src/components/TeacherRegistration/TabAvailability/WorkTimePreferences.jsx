@@ -18,7 +18,7 @@ import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
-  const [dailyWorkTime, setDailyWorkTime] = useState();
+  const [dailyWorkTime, setDailyWorkTime] = useState(draft?.dailyWorkTime);
   const [isOpen, setIsOpen] = useState(false);
 
   const timeZoneError = findInputErrorZod(errors, "timeZone")?.message;
@@ -109,7 +109,7 @@ const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
             name="dailyWorkTime"
             value={dailyWorkTime}
             onChange={(e) => setDailyWorkTime(e?.target?.value)}
-            defaultValue={selectedSlots?.length}
+            defaultValue={draft?.dailyWorkTime}
             placeholder="Define your daily work time"
             startContent={
               <InputBGWrapperIcon>
