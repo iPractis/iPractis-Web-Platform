@@ -25,6 +25,7 @@ import { CalendarDate } from "@internationalized/date";
 
 import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+import { useState } from "react";
 
 const IndividualEducation = ({
   handleDeleteEducation,
@@ -33,6 +34,7 @@ const IndividualEducation = ({
   errors,
   index,
 }) => {
+  const [image, setImage] = useState({});
   const certainEducationPosition = education?.index === index;
 
   const handleInputChange = (field, value) => {
@@ -66,13 +68,29 @@ const IndividualEducation = ({
         </div>
 
         <div className="flex-1">
-          <button type="button">
+          <button type="button" className="relative">
+            <input
+              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+              onChange={(e) => setImage(e.target.files[0])}
+              accept=".pdf, image/png, image/jpeg"
+              name="uploadEducationFile"
+              type="file"
+            />
+
             <InputBGWrapperIcon
-              className={
-                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
-              }
+              className={`${
+                certainExperiencePosition &&
+                findInputMultipleErrorZod(errors, "uploadEducationFile", 2)
+                  ?.message
+                  ? "form-input-error"
+                  : "bg-primary-color-P11"
+              } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
             >
-              <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              {image?.name ? (
+                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+              ) : (
+                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              )}
             </InputBGWrapperIcon>
           </button>
         </div>
@@ -93,12 +111,20 @@ const IndividualEducation = ({
         </div>
       </div>
 
-      {certainEducationPosition && (
-        <ErrorMultipleZodResponse
-          fieldName={"company"}
-          errors={errors}
-          pathIndex={2}
-        />
+      {certainExperiencePosition && (
+        <>
+          <ErrorMultipleZodResponse
+            fieldName={"company"}
+            errors={errors}
+            pathIndex={2}
+          />
+
+          <ErrorMultipleZodResponse
+            fieldName={"uploadEducationFile"}
+            errors={errors}
+            pathIndex={2}
+          />
+        </>
       )}
 
       {/* Calendars FROM and TO */}
