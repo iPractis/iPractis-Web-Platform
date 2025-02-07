@@ -80,7 +80,7 @@ const IndividualExperience = ({
 
             <InputBGWrapperIcon
               className={
-                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
+                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px] cursor-pointer"
               }
             >
               {image?.name ? (
