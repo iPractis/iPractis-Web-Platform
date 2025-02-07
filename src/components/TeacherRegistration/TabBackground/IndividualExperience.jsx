@@ -25,6 +25,7 @@ import { CalendarDate } from "@internationalized/date";
 
 import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+import { useState } from "react";
 
 const IndividualExperience = ({
   handleDeleteExperience,
@@ -33,6 +34,8 @@ const IndividualExperience = ({
   errors,
   index,
 }) => {
+  const [image, setImage] = useState({});
+  console.log(image)
   const certainExperiencePosition = experience?.index === index;
 
   const handleInputChange = (field, value) => {
@@ -66,7 +69,15 @@ const IndividualExperience = ({
         </div>
 
         <div className="flex-1">
-          <button type="button">
+          <button type="button" className="relative">
+            <input
+              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+              onChange={(e) => setImage(e.target.files[0])}
+              accept=".pdf, image/png, image/jpeg"
+              name="uploadImages"
+              type="file"
+            />
+
             <InputBGWrapperIcon
               className={
                 "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
