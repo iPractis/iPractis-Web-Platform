@@ -35,6 +35,7 @@ const IndividualExperience = ({
   errors,
   index,
 }) => {
+  console.log(errors)
   const [image, setImage] = useState({});
   const certainExperiencePosition = experience?.index === index;
 
@@ -79,9 +80,13 @@ const IndividualExperience = ({
             />
 
             <InputBGWrapperIcon
-              className={
-                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px] cursor-pointer"
-              }
+              className={`${
+                certainExperiencePosition &&
+                findInputMultipleErrorZod(errors, "uploadExperienceFile", 2)
+                  ?.message
+                  ? "form-input-error"
+                  : "bg-primary-color-P11"
+              } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
             >
               {image?.name ? (
                 <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
@@ -109,11 +114,19 @@ const IndividualExperience = ({
       </div>
 
       {certainExperiencePosition && (
-        <ErrorMultipleZodResponse
-          fieldName={"company"}
-          errors={errors}
-          pathIndex={2}
-        />
+        <>
+          <ErrorMultipleZodResponse
+            fieldName={"company"}
+            errors={errors}
+            pathIndex={2}
+          />
+
+          <ErrorMultipleZodResponse
+            fieldName={"uploadExperienceFile"}
+            errors={errors}
+            pathIndex={2}
+          />
+        </>
       )}
 
       {/* Calendars FROM and TO */}
