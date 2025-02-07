@@ -113,8 +113,8 @@ const RelatedSubTopics = ({
                 listbox: ["text-primary-color-P4"],
               }}
             >
-              {subSubjects?.map((subSuject) => (
-                <SelectItem key={subSuject}>{subSuject}</SelectItem>
+              {subSubjects?.filter((subSuject) => !selectedSubSubjects.some((s) => s.selected === subSuject)).map((subSuject) => (
+                  <SelectItem key={subSuject}>{subSuject}</SelectItem>
               ))}
             </Select>
           </div>
