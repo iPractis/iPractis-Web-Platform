@@ -62,7 +62,7 @@ const SubSubject = ({
         nameTextarea={"description"}
         inputClassName={"h-[150px]"}
         value={descriptionSubSubject}
-        onChange={(e) => handleInputChange("description", e?.target?.value)}
+        onChange={(e) => handleInputChange("description", e?.target?.value.trim())}
         placeholder={"Enter a text"}
         maxCharactersLength={20}
         typeError={"Max Length Exceeded"}
@@ -70,16 +70,19 @@ const SubSubject = ({
         labelDisabled={true}
         maxCharactersLengthText={2}
         backgroundError={
+          !descriptionSubSubject.trim().length &&
           findInputMultipleErrorZod(errors, "description", 2)?.message &&
           "form-input-error"
         }
       />
 
-      <ErrorMultipleZodResponse
-        fieldName={"description"}
-        errors={errors}
-        pathIndex={2}
-      />
+      {!descriptionSubSubject.trim().length && (
+        <ErrorMultipleZodResponse
+          fieldName={"description"}
+          pathIndex={2}
+          errors={errors}
+        />
+      )}
     </div>
   );
 };

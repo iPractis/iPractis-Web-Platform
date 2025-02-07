@@ -16,6 +16,7 @@ import {
   tabBackgroundSchema,
   tabProfileSchema,
   tabSubjectSchema,
+  validateSubSubjects,
 } from "@/src/lib/schema";
 
 // Images && icons
@@ -87,7 +88,10 @@ const TabsDisplayedInfo = ({
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("uploadProfileImage", e?.target?.uploadProfileImage?.files[0]);
+    formData.append(
+      "uploadProfileImage",
+      e?.target?.uploadProfileImage?.files[0]
+    );
     const uploadedImage = formData.get("uploadProfileImage");
 
     const actualDraftInfo = draft;
