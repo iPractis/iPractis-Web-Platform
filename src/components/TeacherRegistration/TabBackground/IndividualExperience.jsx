@@ -110,7 +110,7 @@ const IndividualExperience = ({
                 isReadOnly
                 type="text"
                 value={experience?.from}
-                name="fromProfessionalExperience"
+                name="from"
                 placeholder="From"
                 className="pointer-events-none"
                 startContent={
@@ -184,7 +184,7 @@ const IndividualExperience = ({
               <CustomNextUiInput
                 isReadOnly
                 type="text"
-                name="toProfessionalExperience"
+                name="to"
                 placeholder="To"
                 value={experience?.to}
                 className="pointer-events-none"
@@ -267,7 +267,7 @@ const IndividualExperience = ({
         }}
         placeholder="Enter a text"
         size="primaryiPractis"
-        name="descriptionExperience"
+        name="description"
         disableAutosize
       />
 

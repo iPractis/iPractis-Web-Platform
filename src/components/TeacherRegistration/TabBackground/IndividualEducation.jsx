@@ -110,7 +110,7 @@ const IndividualEducation = ({
                 isReadOnly
                 type="text"
                 value={education?.from}
-                name="fromProfessionalEducation"
+                name="from"
                 placeholder="From"
                 className="pointer-events-none"
                 startContent={
@@ -184,7 +184,7 @@ const IndividualEducation = ({
               <CustomNextUiInput
                 isReadOnly
                 type="text"
-                name="toProfessionalEducation"
+                name="to"
                 placeholder="To"
                 value={education?.to}
                 className="pointer-events-none"
@@ -267,7 +267,7 @@ const IndividualEducation = ({
         }}
         placeholder="Enter a text"
         size="primaryiPractis"
-        name="descriptionEducation"
+        name="description"
         disableAutosize
       />
 
