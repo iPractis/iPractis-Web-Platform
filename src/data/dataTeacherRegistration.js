@@ -252,7 +252,7 @@ export const tabProfileFields = (object) => {
     lastName: object?.lastName,
     country: object?.country,
     languages: object?.languages,
-    uploadImages: object?.uploadImages,
+    uploadProfileImage: object?.uploadProfileImage,
     introduction: object?.introduction,
     gender: object?.gender,
   };

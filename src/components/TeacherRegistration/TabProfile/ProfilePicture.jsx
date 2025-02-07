@@ -34,7 +34,7 @@ const ProfilePicture = ({ errors, draft }) => {
               type="file"
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
               onChange={onImageChange}
-              name="uploadImages"
+              name="uploadProfileImage"
             />
 
             {image ? (
@@ -49,7 +49,7 @@ const ProfilePicture = ({ errors, draft }) => {
               <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
                 <UserBigIcon
                   fillColor={
-                    findInputErrorZod(errors, "uploadImages")?.message
+                    findInputErrorZod(errors, "uploadProfileImage")?.message
                       ? "fill-senary-color-W10"
                       : "fill-primary-color-P6"
                   }
@@ -70,7 +70,7 @@ const ProfilePicture = ({ errors, draft }) => {
           </ul>
         </div>
 
-        <ErrorZodResponse errors={errors} fieldName={"uploadImages"} />
+        <ErrorZodResponse errors={errors} fieldName={"uploadProfileImage"} />
       </div>
     </WhiteSpaceWrapper>
   );

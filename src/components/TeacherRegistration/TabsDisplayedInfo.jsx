@@ -87,8 +87,8 @@ const TabsDisplayedInfo = ({
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("uploadImages", e?.target?.uploadImages?.files[0]);
-    const uploadedImage = formData.get("uploadImages");
+    formData.append("uploadProfileImage", e?.target?.uploadProfileImage?.files[0]);
+    const uploadedImage = formData.get("uploadProfileImage");
 
     const actualDraftInfo = draft;
 
@@ -106,9 +106,9 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
         actualDraftInfo.lastName = e?.target?.lastName?.value;
+        actualDraftInfo.uploadProfileImage = uploadedImage;
         actualDraftInfo.country = selectedCountry?.key;
         actualDraftInfo.languages = masteredLanguages;
-        actualDraftInfo.uploadImages = uploadedImage;
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
 

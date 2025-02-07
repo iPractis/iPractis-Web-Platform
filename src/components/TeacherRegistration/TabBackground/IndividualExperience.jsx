@@ -74,7 +74,7 @@ const IndividualExperience = ({
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
               onChange={(e) => setImage(e.target.files[0])}
               accept=".pdf, image/png, image/jpeg"
-              name="uploadImages"
+              name="uploadExperienceFile"
               type="file"
             />
 
