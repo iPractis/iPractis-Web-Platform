@@ -15,6 +15,7 @@ const RelatedSubTopics = ({
   setSelectedSubSubjects,
   errors,
 }) => {
+  const relatedSubTopicError = findInputErrorZod(errors, "subSubject")?.message;
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -113,9 +114,14 @@ const RelatedSubTopics = ({
                 listbox: ["text-primary-color-P4"],
               }}
             >
-              {subSubjects?.filter((subSuject) => !selectedSubSubjects.some((s) => s.selected === subSuject)).map((subSuject) => (
+              {subSubjects
+                ?.filter(
+                  (subSuject) =>
+                    !selectedSubSubjects.some((s) => s.selected === subSuject)
+                )
+                .map((subSuject) => (
                   <SelectItem key={subSuject}>{subSuject}</SelectItem>
-              ))}
+                ))}
             </Select>
           </div>
 
@@ -132,7 +138,11 @@ const RelatedSubTopics = ({
           ))}
         </div>
 
-        <ErrorZodResponse errors={errors} fieldName={"subSubject"} />
+        {/* We do this because we want error to change of position (if it's a different error) */}
+        {relatedSubTopicError ===
+          "Invalid field --- At least one sub-subject is required." && (
+          <ErrorZodResponse errors={errors} fieldName={"subSubject"} />
+        )}
       </div>
     </div>
   );

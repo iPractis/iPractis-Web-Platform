@@ -4,7 +4,9 @@ import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import { useState } from "react";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+
+import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
@@ -57,7 +59,7 @@ const SubSubject = ({
 
       {/* Enter a text - textarea */}
       <CustomNextUiTextareaWithMaxLength
-        nameTextarea={"descriptionSubjectToTeach"}
+        nameTextarea={"description"}
         inputClassName={"h-[150px]"}
         value={descriptionSubSubject}
         onChange={(e) => handleInputChange("description", e?.target?.value)}
@@ -68,8 +70,15 @@ const SubSubject = ({
         labelDisabled={true}
         maxCharactersLengthText={2}
         backgroundError={
-          findInputErrorZod(errors, "subSubject")?.message && "form-input-error"
+          findInputMultipleErrorZod(errors, "description", 2)?.message &&
+          "form-input-error"
         }
+      />
+
+      <ErrorMultipleZodResponse
+        fieldName={"description"}
+        errors={errors}
+        pathIndex={2}
       />
     </div>
   );
