@@ -17,6 +17,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
   const incompleteTabSubject = hasIncompleteFields(tabSubjectFields, draft);
   const incompleteTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
   const incompleteTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
+  const allTabsNotCompleted = incompleteTabProfile && incompleteTabSubject && incompleteTabBackground && incompleteTabAvailability;
 
   return (
     <section>
@@ -45,6 +46,8 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
                   : incompleteTabBackground && TabIndex === 2
                   ? "bg-quaternary-color-A6"
                   : incompleteTabAvailability && TabIndex === 3
+                  ? "bg-quaternary-color-A6"
+                  : !allTabsNotCompleted && TabIndex === 4
                   ? "bg-quaternary-color-A6"
                   : "bg-quinary-color-VS6"
               }`}
