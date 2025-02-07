@@ -16,6 +16,7 @@ import {
 import {
   CalendarAddIcon,
   CalendarCloseIcon,
+  CheckedDocumentIcon,
   ChevronDownIcon,
   LuggageBiggerIcon,
   TopArrowCloudIcon,
@@ -35,7 +36,6 @@ const IndividualEducation = ({
   index,
 }) => {
   const [image, setImage] = useState({});
-  console.log(image);
   const certainEducationPosition = education?.index === index;
 
   const handleInputChange = (field, value) => {
