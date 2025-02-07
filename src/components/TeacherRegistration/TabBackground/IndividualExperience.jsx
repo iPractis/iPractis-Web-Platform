@@ -35,7 +35,6 @@ const IndividualExperience = ({
   errors,
   index,
 }) => {
-  console.log(errors)
   const [image, setImage] = useState({});
   const certainExperiencePosition = experience?.index === index;
 
