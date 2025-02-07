@@ -16,6 +16,7 @@ import {
 import {
   CalendarAddIcon,
   CalendarCloseIcon,
+  CheckedDocumentIcon,
   ChevronDownIcon,
   LuggageBiggerIcon,
   TopArrowCloudIcon,
@@ -35,7 +36,6 @@ const IndividualExperience = ({
   index,
 }) => {
   const [image, setImage] = useState({});
-  console.log(image)
   const certainExperiencePosition = experience?.index === index;
 
   const handleInputChange = (field, value) => {
@@ -83,7 +83,11 @@ const IndividualExperience = ({
                 "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
               }
             >
-              <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              {image?.name ? (
+                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+              ) : (
+                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              )}
             </InputBGWrapperIcon>
           </button>
         </div>

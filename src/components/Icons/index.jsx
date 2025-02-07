@@ -2330,3 +2330,25 @@ export const HeartSmallIcon = ({ fillColor }) => (
     />
   </svg>
 );
+
+export const CheckedDocumentIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M19.41 7.41L14.58 2.58C14.21 2.21 13.7 2 13.17 2H6C4.9 2 4.01 2.9 4.01 4L4 20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8.83C20 8.3 19.79 7.79 19.41 7.41ZM14 9C13.45 9 13 8.55 13 8V3.5L18.5 9H14Z"
+      className={fillColor}
+    />
+    <circle cx="18" cy="18" r="5" fill="white" />
+    <circle cx="18" cy="18" r="4" className={fillColor} />
+    <path
+      d="M16.5 18.5L17.3586 19.3586C17.4367 19.4367 17.5633 19.4367 17.6414 19.3586L20 17"
+      stroke="white"
+      strokeLinecap="round"
+    />
+  </svg>
+);
