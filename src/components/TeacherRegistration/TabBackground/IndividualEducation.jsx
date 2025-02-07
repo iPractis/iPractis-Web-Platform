@@ -35,6 +35,7 @@ const IndividualEducation = ({
   index,
 }) => {
   const [image, setImage] = useState({});
+  console.log(image);
   const certainEducationPosition = education?.index === index;
 
   const handleInputChange = (field, value) => {
@@ -79,7 +80,7 @@ const IndividualEducation = ({
 
             <InputBGWrapperIcon
               className={`${
-                certainExperiencePosition &&
+                certainEducationPosition &&
                 findInputMultipleErrorZod(errors, "uploadEducationFile", 2)
                   ?.message
                   ? "form-input-error"
@@ -111,7 +112,7 @@ const IndividualEducation = ({
         </div>
       </div>
 
-      {certainExperiencePosition && (
+      {certainEducationPosition && (
         <>
           <ErrorMultipleZodResponse
             fieldName={"company"}
