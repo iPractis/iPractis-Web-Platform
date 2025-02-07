@@ -3,7 +3,7 @@ import { z } from "zod";
 
 export const tabProfileSchema = z.object({
   uploadProfileImage: z.instanceof(File, {
-    message: "Invalid submission --- Must provide an image profile.",
+    message: "Invalid submission --- Must provide an image (PNG or JPEG).",
   }),
   firstName: z
     .string()
