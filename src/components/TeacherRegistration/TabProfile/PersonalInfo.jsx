@@ -42,8 +42,8 @@ const PersonalInfo = ({
         titleClassName="MT-SB-1"
       />
       <div className="md:px-8 mt-8">
-        <div className="grid grid-cols-2 gap-[50px]">
-          <div className="flex-1 space-y-12">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
+          <div className="space-y-12">
             <div>
               <CustomNextUiInput
                 name="firstName"
@@ -134,7 +134,7 @@ const PersonalInfo = ({
             />
           </div>
 
-          <div className="flex-1 space-y-12">
+          <div className="space-y-12">
             <div>
               <CustomNextUiInput
                 type="text"
