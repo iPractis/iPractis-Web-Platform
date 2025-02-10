@@ -32,7 +32,7 @@ const NavDesktop = () => {
         <div className="flex items-center gap-1.5 ms-8">
           <Link
             href="/login"
-            className="btn group text-primary-color-P12 hover:text-primary-color-P1 hover:bg-primary-color-P11 active:bg-primary-color-P10 flex items-center ST-SB-4 p-1.5 rounded-2xl gap-4 w-[124px]"
+            className="btn btn-octonary group flex items-center ST-SB-4 p-1.5 rounded-2xl gap-4 w-[124px]"
           >
             <div className="bg-primary-color-P1 rounded-[10px] p-1">
               <ChevronRightDoorSmallIcon
