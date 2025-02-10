@@ -2352,3 +2352,22 @@ export const CheckedDocumentIcon = ({ fillColor }) => (
     />
   </svg>
 );
+
+export const PersonIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13.746 7H10.246C9.036 7 8.106 8.07 8.266 9.26L9.81599 20.7C9.91599 21.44 10.556 22 11.306 22H12.686C13.436 22 14.076 21.45 14.176 20.7L15.736 9.26C15.886 8.07 14.956 7 13.746 7Z"
+      className={fillColor}
+    />
+    <path
+      d="M11.996 6C13.1006 6 13.996 5.10457 13.996 4C13.996 2.89543 13.1006 2 11.996 2C10.8914 2 9.996 2.89543 9.996 4C9.996 5.10457 10.8914 6 11.996 6Z"
+      className={fillColor}
+    />
+  </svg>
+);

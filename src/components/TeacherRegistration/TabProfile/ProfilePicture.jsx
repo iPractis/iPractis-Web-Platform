@@ -26,7 +26,7 @@ const ProfilePicture = ({ errors, draft }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="mt-[50px] mb-16 md:px-8">
+      <div className="mt-8 mb-16 md:px-8">
         <div className="flex items-start sm:gap-8 gap-4">
           {/* Profile Image Input */}
           <div className="relative">
@@ -52,7 +52,7 @@ const ProfilePicture = ({ errors, draft }) => {
                   fillColor={
                     findInputErrorZod(errors, "uploadProfileImage")?.message
                       ? "fill-senary-color-W10"
-                      : "fill-primary-color-P6"
+                      : "fill-primary-color-P1"
                   }
                 />
               </div>

@@ -48,7 +48,7 @@ const BirthDateInput = ({
           />
 
           <input
-            className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[188px] h-9"
+            className="input-ipractis text-center outline-none rounded-xl !p-0 pointer-events-none w-[195px] h-9"
             defaultValue={getMonthNumberAsText(birthDate?.month)}
             name="birthDateMonth"
             type="text"
@@ -72,7 +72,7 @@ const BirthDateInput = ({
         >
           <DropdownTrigger>
             <Button
-              className="border-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
+              className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
               variant="flat"
               type="button"
             >

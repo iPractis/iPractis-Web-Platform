@@ -41,153 +41,162 @@ const PersonalInfo = ({
         titleText="Personal Informations"
         titleClassName="MT-SB-1"
       />
+      <div className="md:px-8 mt-8">
+        <div className="grid grid-cols-2 gap-[50px]">
+          <div className="flex-1 space-y-12">
+            <div>
+              <CustomNextUiInput
+                name="firstName"
+                defaultValue={draft?.firstName}
+                type="text"
+                placeholder="Enter your first name"
+                label={
+                  <span className="flex gap-1.5 items-center">
+                    First name{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </span>
+                }
+                labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
+                classNames={{
+                  inputWrapper:
+                    findInputErrorZod(errors, "firstName")?.message &&
+                    "form-input-error",
+                }}
+              />
 
-      <div className="mt-20 md:px-8 space-y-12">
-        <div>
-          <CustomNextUiInput
-            name="firstName"
-            defaultValue={draft?.firstName}
-            type="text"
-            placeholder="Enter your first name"
-            label={
-              <span className="flex gap-1.5 items-center">
-                First name <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-            }
-            labelPlacement="outside"
-            startContent={
-              <InputBGWrapperIcon>
-                <UserBigIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            classNames={{
-              inputWrapper:
-                findInputErrorZod(errors, "firstName")?.message &&
-                "form-input-error",
-            }}
-          />
+              <ErrorZodResponse errors={errors} fieldName={"firstName"} />
+            </div>
 
-          <ErrorZodResponse errors={errors} fieldName={"firstName"} />
+            <div>
+              <CustomNextUiInput
+                name="middleName"
+                defaultValue={draft?.middleName}
+                type="text"
+                placeholder="Enter your middle name (Optional)"
+                label={
+                  <span className="flex gap-1.5 items-center">
+                    Middle name{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </span>
+                }
+                labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
+                classNames={{
+                  inputWrapper:
+                    findInputErrorZod(errors, "middleName")?.message &&
+                    "form-input-error",
+                }}
+              />
+            </div>
+
+            <div>
+              <CustomNextUiInput
+                name="lastName"
+                defaultValue={draft?.lastName}
+                type="text"
+                placeholder="Enter your last name"
+                label={
+                  <span className="flex gap-1.5 items-center">
+                    Last name{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </span>
+                }
+                labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
+                  </InputBGWrapperIcon>
+                }
+                classNames={{
+                  inputWrapper:
+                    findInputErrorZod(errors, "lastName")?.message &&
+                    "form-input-error",
+                }}
+              />
+
+              <ErrorZodResponse errors={errors} fieldName={"lastName"} />
+            </div>
+
+            <BirthDateInput
+              findInputErrorZod={findInputErrorZod}
+              setBirthDate={setBirthDate}
+              birthDate={birthDate}
+              errors={errors}
+            />
+          </div>
+
+          <div className="flex-1 space-y-12">
+            <div>
+              <CustomNextUiInput
+                type="text"
+                isReadOnly
+                placeholder="Select your country"
+                label={
+                  <span className="flex gap-1.5 items-center">
+                    Country of residence{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </span>
+                }
+                labelPlacement="outside"
+                startContent={
+                  <span className="flex items-center gap-1.5">
+                    <InputBGWrapperIcon>
+                      <FlagIcon />
+                    </InputBGWrapperIcon>
+
+                    <PersonalInfoCountrySelect
+                      selectedCountry={selectedCountry}
+                      setSelectedCountry={setSelectedCountry}
+                    />
+                  </span>
+                }
+              />
+            </div>
+
+            <div>
+              <CustomNextUiInput
+                type="text"
+                isReadOnly
+                placeholder="Select your country"
+                label={
+                  <span className="flex gap-1.5 items-center">
+                    Nationality{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </span>
+                }
+                labelPlacement="outside"
+                startContent={
+                  <span className="flex items-center gap-1.5">
+                    <InputBGWrapperIcon>
+                      <FlagIcon />
+                    </InputBGWrapperIcon>
+
+                    <PersonalInfoNationalitySelect
+                      setSelectedNationality={setSelectedNationality}
+                      selectedNationality={selectedNationality}
+                    />
+                  </span>
+                }
+              />
+            </div>
+
+            <PersonalInfoGenderCheck
+              findInputErrorZod={findInputErrorZod}
+              setSelectedGender={setSelectedGender}
+              selectedGender={selectedGender}
+              errors={errors}
+            />
+          </div>
         </div>
-
-        <div>
-          <CustomNextUiInput
-            name="middleName"
-            defaultValue={draft?.middleName}
-            type="text"
-            placeholder="Enter your middle name (Optional)"
-            label={
-              <span className="flex gap-1.5 items-center">
-                Middle name <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-            }
-            labelPlacement="outside"
-            startContent={
-              <InputBGWrapperIcon>
-                <UserBigIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            classNames={{
-              inputWrapper:
-                findInputErrorZod(errors, "middleName")?.message &&
-                "form-input-error",
-            }}
-          />
-        </div>
-
-        <div>
-          <CustomNextUiInput
-            name="lastName"
-            defaultValue={draft?.lastName}
-            type="text"
-            placeholder="Enter your last name"
-            label={
-              <span className="flex gap-1.5 items-center">
-                Last name <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-            }
-            labelPlacement="outside"
-            startContent={
-              <InputBGWrapperIcon>
-                <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
-              </InputBGWrapperIcon>
-            }
-            classNames={{
-              inputWrapper:
-                findInputErrorZod(errors, "lastName")?.message &&
-                "form-input-error",
-            }}
-          />
-
-          <ErrorZodResponse errors={errors} fieldName={"lastName"} />
-        </div>
-
-        <div>
-          <CustomNextUiInput
-            type="text"
-            isReadOnly
-            placeholder="Select your country"
-            label={
-              <span className="flex gap-1.5 items-center">
-                Country of residence{" "}
-                <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-            }
-            labelPlacement="outside"
-            startContent={
-              <span className="flex items-center gap-1.5">
-                <InputBGWrapperIcon>
-                  <FlagIcon />
-                </InputBGWrapperIcon>
-
-                <PersonalInfoCountrySelect
-                  selectedCountry={selectedCountry}
-                  setSelectedCountry={setSelectedCountry}
-                />
-              </span>
-            }
-          />
-        </div>
-
-        <div>
-          <CustomNextUiInput
-            type="text"
-            isReadOnly
-            placeholder="Select your country"
-            label={
-              <span className="flex gap-1.5 items-center">
-                Nationality <QuestionMark fillColor={"fill-primary-color-P4"} />
-              </span>
-            }
-            labelPlacement="outside"
-            startContent={
-              <span className="flex items-center gap-1.5">
-                <InputBGWrapperIcon>
-                  <FlagIcon />
-                </InputBGWrapperIcon>
-
-                <PersonalInfoNationalitySelect
-                  setSelectedNationality={setSelectedNationality}
-                  selectedNationality={selectedNationality}
-                />
-              </span>
-            }
-          />
-        </div>
-
-        <PersonalInfoGenderCheck
-          findInputErrorZod={findInputErrorZod}
-          setSelectedGender={setSelectedGender}
-          selectedGender={selectedGender}
-          errors={errors}
-        />
-
-        <BirthDateInput
-          findInputErrorZod={findInputErrorZod}
-          setBirthDate={setBirthDate}
-          birthDate={birthDate}
-          errors={errors}
-        />
 
         <AboutYourSelfIntro
           errors={errors}

@@ -2,7 +2,7 @@ import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import { FemaleIcon, MaleIcon } from "../../Icons";
+import { FemaleIcon, PersonIcon } from "../../Icons";
 
 const PersonalInfoGenderCheck = ({
   findInputErrorZod,
@@ -26,7 +26,7 @@ const PersonalInfoGenderCheck = ({
           labelPlacement="outside"
           startContent={
             <InputBGWrapperIcon>
-              <MaleIcon />
+              <PersonIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
           endContent={
