@@ -6,6 +6,7 @@ import {
   UserIcon,
 } from "../../Icons";
 
+import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
@@ -16,7 +17,6 @@ import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
-import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
 
 const PersonalInfo = ({
   setSelectedNationality,
@@ -93,8 +93,6 @@ const PersonalInfo = ({
                 "form-input-error",
             }}
           />
-
-          <ErrorZodResponse errors={errors} fieldName={"middleName"} />
         </div>
 
         <div>

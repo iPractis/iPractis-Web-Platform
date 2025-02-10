@@ -16,13 +16,10 @@ export const tabProfileSchema = z.object({
     }),
   middleName: z
     .string()
-    .trim()
-    .min(3, {
-      message: "Invalid field --- Must contain 3 or more characters long.",
-    })
     .regex(/^[^*^%$£]*$/, {
       message: "Invalid character --- Your name contains invalid characters.",
-    }),
+    })
+    .optional(),
   lastName: z
     .string()
     .trim()

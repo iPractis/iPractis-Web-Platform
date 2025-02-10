@@ -247,7 +247,7 @@ export const abbreviatedDaysOfWeek = [
 export const tabProfileFields = (object) => {
   return {
     birthDate: object?.birthDate,
-    middleName: object?.middleName,
+    // middleName: object?.middleName, --> Optional
     firstName: object?.firstName,
     lastName: object?.lastName,
     countryOfResidence: object?.countryOfResidence,
