@@ -139,7 +139,7 @@ const PersonalInfo = ({
               <CustomNextUiInput
                 type="text"
                 isReadOnly
-                placeholder="Select your country"
+                placeholder="Select a country"
                 label={
                   <span className="flex gap-1.5 items-center">
                     Country of residence{" "}
@@ -166,7 +166,7 @@ const PersonalInfo = ({
               <CustomNextUiInput
                 type="text"
                 isReadOnly
-                placeholder="Select your country"
+                placeholder="Select a country"
                 label={
                   <span className="flex gap-1.5 items-center">
                     Nationality{" "}
