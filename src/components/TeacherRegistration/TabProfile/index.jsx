@@ -4,7 +4,9 @@ import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
 
 const TabProfile = ({
+  setSelectedNationality,
   setMasteredLanguages,
+  selectedNationality,
   setSelectedCountry,
   setSelectedGender,
   masteredLanguages,
@@ -25,6 +27,8 @@ const TabProfile = ({
 
       {/* Personal Informations */}
       <PersonalInfo
+        setSelectedNationality={setSelectedNationality}
+        selectedNationality={selectedNationality}
         setSelectedCountry={setSelectedCountry}
         setSelectedGender={setSelectedGender}
         selectedCountry={selectedCountry}

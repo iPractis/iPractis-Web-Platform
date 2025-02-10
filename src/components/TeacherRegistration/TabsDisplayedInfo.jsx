@@ -50,9 +50,14 @@ const TabsDisplayedInfo = ({
     Italy: italyFlag,
   };
   const [selectedCountry, setSelectedCountry] = useState({
-    key: draft?.country || "United Kingdom",
-    image: countryFlags[draft?.country] || ukFlag,
-    alt: `Flag of ${draft?.country}`,
+    key: draft?.countryOfResidence || "United Kingdom",
+    image: countryFlags[draft?.countryOfResidence] || ukFlag,
+    alt: `Flag of ${draft?.countryOfResidence}`,
+  });
+  const [selectedNationality, setSelectedNationality] = useState({
+    key: draft?.nationality || "United Kingdom",
+    image: countryFlags[draft?.nationality] || ukFlag,
+    alt: `Flag of ${draft?.nationality}`,
   });
   let validBirthDate = new CalendarDate(
     birthDate?.year,
@@ -111,7 +116,8 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.firstName = e?.target?.firstName?.value;
         actualDraftInfo.lastName = e?.target?.lastName?.value;
         actualDraftInfo.uploadProfileImage = uploadedImage;
-        actualDraftInfo.country = selectedCountry?.key;
+        actualDraftInfo.countryOfResidence = selectedCountry?.key;
+        actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.languages = masteredLanguages;
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
@@ -224,7 +230,9 @@ const TabsDisplayedInfo = ({
     >
       {/* 0 */}
       <TabProfile
+        setSelectedNationality={setSelectedNationality}
         setMasteredLanguages={setMasteredLanguages}
+        selectedNationality={selectedNationality}
         setSelectedCountry={setSelectedCountry}
         setSelectedGender={setSelectedGender}
         masteredLanguages={masteredLanguages}

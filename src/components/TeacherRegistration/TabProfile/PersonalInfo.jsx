@@ -16,8 +16,11 @@ import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
+import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
 
 const PersonalInfo = ({
+  setSelectedNationality,
+  selectedNationality,
   setSelectedCountry,
   setSelectedGender,
   selectedCountry,
@@ -128,7 +131,8 @@ const PersonalInfo = ({
             placeholder="Select your country"
             label={
               <span className="flex gap-1.5 items-center">
-                Country <QuestionMark fillColor={"fill-primary-color-P4"} />
+                Country of residence{" "}
+                <QuestionMark fillColor={"fill-primary-color-P4"} />
               </span>
             }
             labelPlacement="outside"
@@ -141,6 +145,32 @@ const PersonalInfo = ({
                 <PersonalInfoCountrySelect
                   selectedCountry={selectedCountry}
                   setSelectedCountry={setSelectedCountry}
+                />
+              </span>
+            }
+          />
+        </div>
+
+        <div>
+          <CustomNextUiInput
+            type="text"
+            isReadOnly
+            placeholder="Select your country"
+            label={
+              <span className="flex gap-1.5 items-center">
+                Nationality <QuestionMark fillColor={"fill-primary-color-P4"} />
+              </span>
+            }
+            labelPlacement="outside"
+            startContent={
+              <span className="flex items-center gap-1.5">
+                <InputBGWrapperIcon>
+                  <FlagIcon />
+                </InputBGWrapperIcon>
+
+                <PersonalInfoNationalitySelect
+                  setSelectedNationality={setSelectedNationality}
+                  selectedNationality={selectedNationality}
                 />
               </span>
             }
