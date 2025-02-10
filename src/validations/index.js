@@ -1,4 +1,4 @@
-import { calculateAge } from "../utils/calculateAge";
+import { calculateAge } from "../lib/utils/calculateAge";
 import { z } from "zod";
 
 export const tabProfileSchema = z.object({

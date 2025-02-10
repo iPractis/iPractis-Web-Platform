@@ -17,7 +17,7 @@ import {
   tabProfileSchema,
   tabSubjectSchema,
   validateSubSubjects,
-} from "@/src/lib/schema";
+} from "@/src/validations";
 
 // Images && icons
 import ukFlag from "@/public/flags/united-kingdom.png";
