@@ -16,7 +16,6 @@ import {
   tabBackgroundSchema,
   tabProfileSchema,
   tabSubjectSchema,
-  validateSubSubjects,
 } from "@/src/validations";
 
 // Images && icons

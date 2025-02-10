@@ -2,7 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images && icons
-import { ChevronRightDoorSmallIcon, UserAddCircleSmallerIcon } from "../../Icons";
+import {
+  ChevronRightDoorSmallIcon,
+  UserAddCircleSmallerIcon,
+} from "../../Icons";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
@@ -26,10 +29,10 @@ const NavDesktop = () => {
       <div className="flex items-center gap-4">
         <NavSearchBar />
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 ms-8">
           <Link
             href="/login"
-            className="btn btn-tertiary flex justify-center items-center ST-4 pe-4 p-1.5 rounded-2xl gap-4 w-[124px]"
+            className="btn group text-primary-color-P12 hover:text-primary-color-P1 hover:bg-primary-color-P11 active:bg-primary-color-P10 flex items-center ST-SB-4 p-1.5 rounded-2xl gap-4 w-[124px]"
           >
             <div className="bg-primary-color-P1 rounded-[10px] p-1">
               <ChevronRightDoorSmallIcon
@@ -39,7 +42,7 @@ const NavDesktop = () => {
               />
             </div>
 
-            <span className="flex-1">Log in</span>{" "}
+            <span>Log in</span>{" "}
           </Link>
 
           <Link
