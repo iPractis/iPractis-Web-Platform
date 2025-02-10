@@ -16,7 +16,7 @@ const PersonalInfoGenderCheck = ({
   };
 
   return (
-    <div className="!mt-6">
+    <div className="!mt-4">
       <span className="flex gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
         Gender <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
