@@ -14,7 +14,7 @@ const AboutYourSelfIntro = ({
   };
 
   return (
-    <div className="!mt-6">
+    <div className="!mt-9">
       <CustomNextUiTextareaWithMaxLength
         value={introText}
         nameTextarea="introduction"
