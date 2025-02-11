@@ -42,7 +42,7 @@ const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="space-y-[50px] md:px-8">
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:px-8">
         {/* Set your time zone */}
         <div>
           <SectionHeader
