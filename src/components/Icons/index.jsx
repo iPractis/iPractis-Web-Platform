@@ -468,6 +468,30 @@ export const AddBoxIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const AddBoxBiggerIcon = ({ fillColor }) => (
+  <svg
+    width="36"
+    height="36"
+    viewBox="0 0 36 36"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="36" height="36" rx="10" className={fillColor} />
+    <path
+      d="M18 13.2002L18 22.8002"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M22.7988 18L13.1988 18"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const NotificationIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

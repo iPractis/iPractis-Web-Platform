@@ -6,7 +6,7 @@ import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 // Icons
-import { AddBoxIcon, UserTieIcon } from "../../Icons";
+import { AddBGIcon, AddBoxBiggerIcon, AddBoxIcon, UserTieIcon } from "../../Icons";
 
 const Experience = ({ setExperiences, experiences, errors }) => {
   const careerExperienceError = findInputErrorZod(
@@ -47,35 +47,27 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         descriptionText="Tell us about your career and experience"
         titleIcon={<UserTieIcon fillColor={"fill-primary-color-P1"} />}
         wrapperSectionHeaderClassName={
-          "bg-primary-color-P11 rounded-[32px] p-8"
+          "flex justify-between bg-primary-color-P11 rounded-[32px] p-8"
         }
         titleText="Experience"
         titleClassName="MT-SB-1"
-      />
+      >
+        <button
+          className={`${
+            careerExperienceError ? "form-input-error" : "btn-tertiary"
+          } btn flex gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
+          onClick={handleAddExperience}
+          type="button"
+        >
+          <span className="MT-1 px-1.5">
+            Add professional experience
+          </span>{" "}
+          
+          <AddBoxBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+        </button>
+      </SectionHeader>
 
-      <WhiteSpaceWrapper className={"bg-primary-color-P12 pb-0 pt-[50px]"}>
-        {/* To create a new Professional Experience */}
-        <div className="mb-8">
-          <button
-            className={`${
-              careerExperienceError ? "form-input-error" : "btn-septenary"
-            } btn flex items-center justify-between w-full rounded-2xl px-4 py-2.5`}
-            onClick={handleAddExperience}
-            type="button"
-          >
-            <span className="MT-1 text-primary-color-P4">
-              Add professional experience
-            </span>{" "}
-            <AddBoxIcon fillColor={"fill-primary-color-P4"} />
-          </button>
-
-          {/* We do this because we want error to change of position (if it's a different error) */}
-          {careerExperienceError ===
-            "Invalid submission --- At least one experience is required." && (
-            <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
-          )}
-        </div>
-
+      <WhiteSpaceWrapper className={"px-8"}>
         {experiences?.map((experience, index) => (
           <IndividualExperience
             handleUpdateExperience={handleUpdateExperience}
