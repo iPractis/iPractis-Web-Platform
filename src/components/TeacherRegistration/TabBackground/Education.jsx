@@ -1,4 +1,5 @@
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import IndividualEducation from "./IndividualEducation";
 import SectionHeader from "../../Globals/SectionHeader";
@@ -57,6 +58,12 @@ const Education = ({ setEducations, educations, errors }) => {
           <AddBoxBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
         </button>
       </SectionHeader>
+
+      {/* We do this because we want error to change of position (if it's a different error) */}
+      {educationError ===
+        "Invalid submission --- At least one education is required." && (
+        <ErrorZodResponse errors={errors} fieldName={"education"} />
+      )}
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {educations?.map((education, index) => (

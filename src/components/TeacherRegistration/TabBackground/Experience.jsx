@@ -1,8 +1,8 @@
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import IndividualExperience from "./IndividualExperience";
 import SectionHeader from "../../Globals/SectionHeader";
-
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 // Icons
 import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
@@ -63,6 +63,11 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         </button>
       </SectionHeader>
 
+      {careerExperienceError ===
+        "Invalid submission --- At least one experience is required." && (
+        <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
+      )}
+      
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {experiences?.map((experience, index) => (
           <IndividualExperience

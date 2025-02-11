@@ -15,9 +15,8 @@ import {
 // Icons
 import {
   CalendarAddIcon,
-  CalendarCloseIcon,
   CheckedDocumentIcon,
-  ChevronDownIcon,
+  ChevronDownBigIcon,
   LuggageBiggerIcon,
   TopArrowCloudIcon,
   TrashBinIcon,
@@ -45,9 +44,9 @@ const IndividualEducation = ({
 
   return (
     <div className="mb-8">
-      {/* Input of company, download, and recycle bin */}
-      <div className="flex gap-2.5">
-        <div className="flex-[70%]">
+      <div className="flex items-center gap-2.5">
+        {/* Company */}
+        <div className="flex-[40%]">
           <CustomNextUiInput
             value={education?.company}
             onChange={(e) => handleInputChange("company", e.target.value)}
@@ -68,6 +67,131 @@ const IndividualEducation = ({
           />
         </div>
 
+        {/* Calendar FROM */}
+        <div className="flex-[15%]">
+          <CustomNextUiInput
+            type="text"
+            isReadOnly
+            value={education?.from}
+            name="from"
+            placeholder="From"
+            startContent={
+              <InputBGWrapperIcon>
+                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <Dropdown
+                classNames={{
+                  content: "p-0",
+                }}
+                closeOnSelect={false}
+              >
+                <DropdownTrigger>
+                  <Button
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    variant="flat"
+                    type="button"
+                  >
+                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                  </Button>
+                </DropdownTrigger>
+
+                <DropdownMenu
+                  className="p-0 h-0"
+                  itemClasses={{
+                    base: "data-[hover=true]:bg-transparent",
+                  }}
+                >
+                  <DropdownItem className="p-0">
+                    <Calendar
+                      onChange={(date) => {
+                        let validDate = new CalendarDate(
+                          date?.year,
+                          date?.month,
+                          date?.day
+                        );
+
+                        handleInputChange("from", validDate?.toString());
+                      }}
+                      disableAnimation
+                    />
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            }
+            classNames={{
+              inputWrapper:
+                certainEducationPosition &&
+                findInputMultipleErrorZod(errors, "from", 2)?.message &&
+                "form-input-error",
+            }}
+          />
+        </div>
+
+        {/* Calendar TO */}
+        <div className="flex-[15%]">
+          <CustomNextUiInput
+            type="text"
+            isReadOnly
+            value={education?.to}
+            name="to"
+            placeholder="To"
+            startContent={
+              <InputBGWrapperIcon>
+                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <Dropdown
+                classNames={{
+                  content: "p-0",
+                }}
+                closeOnSelect={false}
+              >
+                <DropdownTrigger>
+                  <Button
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    variant="flat"
+                    type="button"
+                  >
+                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                  </Button>
+                </DropdownTrigger>
+
+                <DropdownMenu
+                  className="p-0 h-0"
+                  itemClasses={{
+                    base: "data-[hover=true]:bg-transparent",
+                  }}
+                >
+                  <DropdownItem className="p-0">
+                    <Calendar
+                      onChange={(date) => {
+                        let validDate = new CalendarDate(
+                          date?.year,
+                          date?.month,
+                          date?.day
+                        );
+
+                        handleInputChange("to", validDate?.toString());
+                      }}
+                      disableAnimation
+                    />
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            }
+            classNames={{
+              inputWrapper:
+                certainEducationPosition &&
+                findInputMultipleErrorZod(errors, "to", 2)?.message &&
+                "form-input-error",
+            }}
+          />
+        </div>
+
+        {/* Download */}
         <div className="flex-1">
           <button type="button" className="relative">
             <input
@@ -96,6 +220,7 @@ const IndividualEducation = ({
           </button>
         </div>
 
+        {/* Recycle bin */}
         <div className="flex-1">
           <button type="button" onClick={() => handleDeleteEducation(index)}>
             <InputBGWrapperIcon
@@ -121,6 +246,18 @@ const IndividualEducation = ({
           />
 
           <ErrorMultipleZodResponse
+            fieldName={"from"}
+            errors={errors}
+            pathIndex={2}
+          />
+
+          <ErrorMultipleZodResponse
+            fieldName={"to"}
+            errors={errors}
+            pathIndex={2}
+          />
+
+          <ErrorMultipleZodResponse
             fieldName={"uploadEducationFile"}
             errors={errors}
             pathIndex={2}
@@ -128,164 +265,12 @@ const IndividualEducation = ({
         </>
       )}
 
-      {/* Calendars FROM and TO */}
-      <div className="flex items-center gap-2.5 my-2.5">
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <div className="flex-[50%]">
-              <CustomNextUiInput
-                isReadOnly
-                type="text"
-                value={education?.from}
-                name="from"
-                placeholder="From"
-                className="pointer-events-none"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-                classNames={{
-                  inputWrapper:
-                    certainEducationPosition &&
-                    findInputMultipleErrorZod(errors, "from", 2)?.message &&
-                    "form-input-error",
-                }}
-              />
-            </div>
-
-            <div className="flex-1">
-              <Dropdown
-                classNames={{
-                  content: "p-0",
-                }}
-                closeOnSelect={false}
-              >
-                <DropdownTrigger>
-                  <Button
-                    className="border-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
-                    variant="flat"
-                    type="button"
-                  >
-                    <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
-                  </Button>
-                </DropdownTrigger>
-
-                <DropdownMenu
-                  className="p-0 h-0"
-                  itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
-                  }}
-                >
-                  <DropdownItem className="p-0">
-                    <Calendar
-                      onChange={(date) => {
-                        let validDate = new CalendarDate(
-                          date?.year,
-                          date?.month,
-                          date?.day
-                        );
-
-                        handleInputChange("from", validDate?.toString());
-                      }}
-                      disableAnimation
-                    />
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
-          </div>
-
-          {certainEducationPosition && (
-            <ErrorMultipleZodResponse
-              fieldName={"from"}
-              errors={errors}
-              pathIndex={2}
-            />
-          )}
-        </div>
-
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            <div className="flex-[50%]">
-              <CustomNextUiInput
-                isReadOnly
-                type="text"
-                name="to"
-                placeholder="To"
-                value={education?.to}
-                className="pointer-events-none"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <CalendarCloseIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-                classNames={{
-                  inputWrapper:
-                    certainEducationPosition &&
-                    findInputMultipleErrorZod(errors, "to", 2)?.message &&
-                    "form-input-error",
-                }}
-              />
-            </div>
-
-            <div className="flex-1">
-              <Dropdown
-                classNames={{
-                  content: "p-0",
-                }}
-                closeOnSelect={false}
-              >
-                <DropdownTrigger>
-                  <Button
-                    className="border-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
-                    variant="flat"
-                    type="button"
-                  >
-                    <ChevronDownIcon fillColor={"fill-primary-color-P4"} />
-                  </Button>
-                </DropdownTrigger>
-
-                <DropdownMenu
-                  className="p-0 h-0"
-                  itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
-                  }}
-                >
-                  <DropdownItem className="p-0">
-                    <Calendar
-                      onChange={(date) => {
-                        let validDate = new CalendarDate(
-                          date?.year,
-                          date?.month,
-                          date?.day
-                        );
-
-                        handleInputChange("to", validDate?.toString());
-                      }}
-                      disableAnimation
-                    />
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </div>
-          </div>
-
-          {certainEducationPosition && (
-            <ErrorMultipleZodResponse
-              fieldName={"to"}
-              errors={errors}
-              pathIndex={2}
-            />
-          )}
-        </div>
-      </div>
-
-      {/* Enter a text */}
+      {/* Description */}
       <CustomNextUiTextarea
         value={education?.description}
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
+          base: "mt-2.5",
           inputWrapper:
             certainEducationPosition &&
             findInputMultipleErrorZod(errors, "description", 2)?.message &&
