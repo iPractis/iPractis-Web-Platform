@@ -197,7 +197,7 @@ const IndividualEducation = ({
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
               onChange={(e) => setImage(e.target.files[0])}
-              accept=".pdf, image/png, image/jpeg"
+              accept=".pdf, .png, .jpeg"
               name="uploadEducationFile"
               type="file"
             />

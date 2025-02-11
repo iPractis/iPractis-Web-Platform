@@ -32,7 +32,7 @@ const ProfilePicture = ({ errors, draft }) => {
           <div className="relative">
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              accept="image/png, image/jpeg"
+              accept=".png, .jpeg"
               name="uploadProfileImage"
               onChange={onImageChange}
               type="file"

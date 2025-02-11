@@ -38,7 +38,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
             key={TabIndex}
-            className={`w-full flex gap-3 items-center md:justify-start justify-center p-1.5 rounded-2xl ST-SB-4 ${
+            className={`w-full flex gap-3 items-center md:justify-start justify-center p-1.5 rounded-2xl ST-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
             onClick={() => setActiveTab(TabIndex)}
@@ -71,7 +71,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               />
             </span>
 
-            <span className="md:block hidden font-bold">
+            <span className="md:block hidden">
               {TabButton?.textButton}
             </span>
           </button>
