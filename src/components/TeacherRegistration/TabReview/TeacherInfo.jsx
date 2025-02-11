@@ -9,7 +9,7 @@ const TeacherInfo = () => {
 
       <TeacherInfoAbout />
 
-      <TeacherInfoVideo />
+      {/* <TeacherInfoVideo /> */}
     </>
   );
 };

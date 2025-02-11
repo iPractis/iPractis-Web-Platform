@@ -29,6 +29,7 @@ import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
   setSelectedSlots,
+  wrapperClassName,
   bookedLessonSpot,
   showCurrentDate,
   timeZoneFilter,
@@ -256,7 +257,7 @@ const WorkScheduleTable = ({
   };
 
   return (
-    <>
+    <section className={wrapperClassName}>
       {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
       {fromToFilter && (
         <div className="flex items-center justify-center gap-8 mb-4">
@@ -595,7 +596,7 @@ const WorkScheduleTable = ({
           )}
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
