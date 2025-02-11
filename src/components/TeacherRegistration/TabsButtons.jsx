@@ -54,7 +54,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
                   ? "bg-quaternary-color-A6"
                   : incompleteTabAvailability && TabIndex === 3
                   ? "bg-quaternary-color-A6"
-                  : TabIndex === 4
+                  : !allTabsNotCompleted && TabIndex === 4
                   ? "bg-quaternary-color-A6"
                   : !allTabsNotCompleted && TabIndex === 5
                   ? "bg-quaternary-color-A6"
@@ -78,35 +78,31 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
       </div>
 
       {activeTab === 4 ? (
-        <>
-          <SectionHeader
-            wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1`}
-            descriptionText={sectionHeaderContent[2]?.descriptionText}
-            titleText={sectionHeaderContent[2]?.titleText}
-            descriptionClassName={"mt-[4px]"}
-            titleIcon={<DocumentIcon />}
-            titleClassName="MT-SB-1"
-          >
-            <div className="flex-1 w-full">
-              <button
-                className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full MT-SB-1"
-                onClick={() => setActiveTab(5)}
-                type="button"
-              >
-                <span className="px-1.5">Apply now!</span>{" "}
-                <InputBGWrapperIcon>
-                  <ChevronRightBiggerIcon
-                    fillColor={"fill-tertiary-color-SC5"}
-                  />
-                </InputBGWrapperIcon>
-              </button>
-            </div>
-          </SectionHeader>
-        </>
+        <SectionHeader
+          wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1`}
+          descriptionText={sectionHeaderContent[2]?.descriptionText}
+          titleText={sectionHeaderContent[2]?.titleText}
+          descriptionClassName={"mt-[4px]"}
+          titleIcon={<DocumentIcon />}
+          titleClassName="MT-SB-1"
+        >
+          <div className="flex-1 w-full">
+            <button
+              className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full MT-SB-1"
+              onClick={() => setActiveTab(5)}
+              type="button"
+            >
+              <span className="px-1.5">Apply now!</span>{" "}
+              <InputBGWrapperIcon>
+                <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+              </InputBGWrapperIcon>
+            </button>
+          </div>
+        </SectionHeader>
       ) : (
         <SectionHeader
           wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${
-            activeTab === 4
+            activeTab === 5
               ? "bg-quinary-color-VS10"
               : "bg-quaternary-color-A10"
           }`}
