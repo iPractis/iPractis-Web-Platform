@@ -183,10 +183,10 @@ export const tabBackgroundSchema = z.object({
         }),
         from: z
           .string()
-          .min(1, { message: "Invalid date --- Must input a date." }),
+          .min(1, { message: "Invalid date --- Must input a date (from)." }),
         to: z
           .string()
-          .min(1, { message: "Invalid date --- Must input a date." }),
+          .min(1, { message: "Invalid date --- Must input a date (to)." }),
         description: z
           .string()
           .min(3, {
@@ -217,10 +217,10 @@ export const tabBackgroundSchema = z.object({
         }),
         from: z
           .string()
-          .min(1, { message: "Invalid date --- Must input a date." }),
+          .min(1, { message: "Invalid date --- Must input a date (from)." }),
         to: z
           .string()
-          .min(1, { message: "Invalid date --- Must input a date." }),
+          .min(1, { message: "Invalid date --- Must input a date (to)." }),
         description: z
           .string()
           .min(3, {
