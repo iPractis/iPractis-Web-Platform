@@ -46,7 +46,7 @@ const IndividualExperience = ({
     <div className="mb-8">
       <div className="flex items-center gap-2.5">
         {/* Company */}
-        <div className="flex-[50%]">
+        <div className="flex-[40%]">
           <CustomNextUiInput
             value={experience?.company}
             onChange={(e) => handleInputChange("company", e.target.value)}
@@ -68,7 +68,7 @@ const IndividualExperience = ({
         </div>
 
         {/* Calendar FROM */}
-        <div className="flex-1">
+        <div className="flex-[15%]">
           <CustomNextUiInput
             type="text"
             value={experience?.from}
@@ -129,7 +129,7 @@ const IndividualExperience = ({
         </div>
 
         {/* Calendar TO */}
-        <div className="flex-1">
+        <div className="flex-[15%]">
           <CustomNextUiInput
             type="text"
             value={experience?.to}
