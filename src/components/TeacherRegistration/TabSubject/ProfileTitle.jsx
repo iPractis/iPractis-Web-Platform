@@ -19,7 +19,7 @@ const ProfileTitle = ({ draft, errors }) => {
 
   return (
     <>
-      <div className="border border-transparent">
+      <div className="-mb-5">
         <CustomNextUiInputWithMaxLength
           defaultValue={draft?.profileTitle}
           nameInput={"profileTitle"}

@@ -43,10 +43,10 @@ const SubjectsToTeach = ({
       />
 
       <div className="space-y-[50px] md:px-8">
-        <div className="grid grid-cols-2 gap-[50px] items-end">
+        <div className="grid grid-cols-2 gap-[50px] items-start mt-16">
           {/* Select subject to teach */}
           <div>
-            <div className="flex items-end gap-2 mt-16">
+            <div className="flex items-end gap-2">
               <Select
                 name="subject"
                 label={
