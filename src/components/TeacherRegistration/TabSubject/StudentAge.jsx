@@ -31,61 +31,63 @@ const StudentAge = ({
         titleClassName="MT-SB-1"
       />
 
-      <Switch
-        name="teachToYoungPersons"
-        checked={teachToYoungPersons}
-        onChange={(e) => setTeachToYoungPersons(e.target.checked)}
-        size="sm"
-        classNames={{
-          base: "mb-2.5 block",
-          wrapper: `${
-            teachToYoungPersonsError && !teachToYoungPersons
-              ? "form-input-error"
-              : "bg-primary-color-P6"
-          } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
-          thumb: "bg-primary-color-P12",
-          label: "text-primary-color-P1 ST-4 ml-1",
-        }}
-        thumbIcon={({ isSelected }) =>
-          isSelected ? (
-            <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
-          ) : (
-            <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
-          )
-        }
-      >
-        I accept to teach to young student
-      </Switch>
+      <div className="mb-2.5">
+        <Switch
+          name="teachToYoungPersons"
+          checked={teachToYoungPersons}
+          onChange={(e) => setTeachToYoungPersons(e.target.checked)}
+          size="sm"
+          classNames={{
+            wrapper: `${
+              teachToYoungPersonsError && !teachToYoungPersons
+                ? "form-input-error"
+                : "bg-primary-color-P6"
+            } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+            thumb: "bg-primary-color-P12",
+            label: "text-primary-color-P1 ST-4 ml-1",
+          }}
+          thumbIcon={({ isSelected }) =>
+            isSelected ? (
+              <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+            ) : (
+              <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+            )
+          }
+        >
+          I accept to teach to young student
+        </Switch>
 
-      <ErrorZodResponse errors={errors} fieldName={"teachToYoungPersons"} />
+        <ErrorZodResponse errors={errors} fieldName={"teachToYoungPersons"} />
+      </div>
 
-      <Switch
-        name="teachToAmateurPersons"
-        checked={teachToAmateurPersons}
-        onChange={(e) => setTeachToAmateurPersons(e.target.checked)}
-        size="sm"
-        classNames={{
-          base: "mt-2.5",
-          wrapper: `${
-            teachToAmateurPersonsError && !teachToAmateurPersons
-              ? "form-input-error"
-              : "bg-primary-color-P6"
-          } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
-          thumb: "bg-primary-color-P12",
-          label: "text-primary-color-P1 ST-4 ml-1",
-        }}
-        thumbIcon={({ isSelected }) =>
-          isSelected ? (
-            <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
-          ) : (
-            <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
-          )
-        }
-      >
-        I accept to teach to mature student
-      </Switch>
+      <div>
+        <Switch
+          name="teachToAmateurPersons"
+          checked={teachToAmateurPersons}
+          onChange={(e) => setTeachToAmateurPersons(e.target.checked)}
+          size="sm"
+          classNames={{
+            wrapper: `${
+              teachToAmateurPersonsError && !teachToAmateurPersons
+                ? "form-input-error"
+                : "bg-primary-color-P6"
+            } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+            thumb: "bg-primary-color-P12",
+            label: "text-primary-color-P1 ST-4 ml-1",
+          }}
+          thumbIcon={({ isSelected }) =>
+            isSelected ? (
+              <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+            ) : (
+              <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+            )
+          }
+        >
+          I accept to teach to mature student
+        </Switch>
 
-      <ErrorZodResponse errors={errors} fieldName={"teachToAmateurPersons"} />
+        <ErrorZodResponse errors={errors} fieldName={"teachToAmateurPersons"} />
+      </div>
     </div>
   );
 };
