@@ -31,21 +31,16 @@ const defaultValue = {
 export const TabBody = ({ draftData }) => {
   const [draft, setDraft] = useState({ ...defaultValue, ...draftData });
   const [activeTab, setActiveTab] = useState(0);
-  const [saved, setSaved] = useState(false);
 
   return (
     <main
-      className={`max-w-[1000px] mb-[100px] mx-auto ${
-        saved ? "sm:space-y-16 space-y-0" : "space-y-16"
-      } px-2`}
+      className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}
     >
       {/* Tabs buttons (top) */}
       <TabsButtons
         setActiveTab={setActiveTab}
         activeTab={activeTab}
-        setSaved={setSaved}
         draft={draft}
-        saved={saved}
       />
 
       {/* Tabs displayed info (bottom) */}
@@ -54,8 +49,6 @@ export const TabBody = ({ draftData }) => {
         setDraft={setDraft}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
-        setSaved={setSaved}
-        saved={saved}
       />
     </main>
   );

@@ -4,6 +4,7 @@ import TabBackground from "./TabBackground/index";
 import TabProfile from "./TabProfile/index";
 import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
+import TabReview from "./TabReview";
 
 // React imports
 import { CalendarDate, parseDate } from "@internationalized/date";
@@ -27,8 +28,6 @@ import spainFlag from "@/public/flags/spain.png";
 const TabsDisplayedInfo = ({
   setActiveTab,
   activeTab,
-  saved,
-  setSaved,
   draft,
   // setDraft,
 }) => {
@@ -85,6 +84,7 @@ const TabsDisplayedInfo = ({
   // TAB AVAILAIBILITY STATES
   const [isTabAvailabilityPending, setIsTabAvailabilityPending] =
     useState(false);
+  const [selectedSlots, setSelectedSlots] = useState([]);
 
   const [errors, setErrors] = useState([]);
 
@@ -204,7 +204,6 @@ const TabsDisplayedInfo = ({
         );
 
         setErrors([]);
-        setSaved(true);
 
         console.log(response, "AVAILABILITY");
       } else {
@@ -277,13 +276,21 @@ const TabsDisplayedInfo = ({
 
       {/* 3 */}
       <TabAvailability
+        setSelectedSlots={setSelectedSlots}
+        selectedSlots={selectedSlots}
         activeTab={activeTab}
         errors={errors}
-        saved={saved}
         draft={draft}
       />
 
       {/* 4 */}
+      <TabReview
+        setSelectedSlots={setSelectedSlots}
+        selectedSlots={selectedSlots}
+        activeTab={activeTab}
+      />
+
+      {/* 5 */}
       <TabStatus activeTab={activeTab} />
 
       {/* Back && Save buttons */}
@@ -294,8 +301,6 @@ const TabsDisplayedInfo = ({
         isTabProfilePending={isTabProfilePending}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
-        setSaved={setSaved}
-        saved={saved}
       />
     </form>
   );

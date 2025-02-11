@@ -12,12 +12,22 @@ import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
 import SectionHeader from "../Globals/SectionHeader";
 
-const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
+const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const incompleteTabProfile = hasIncompleteFields(tabProfileFields, draft);
   const incompleteTabSubject = hasIncompleteFields(tabSubjectFields, draft);
-  const incompleteTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
-  const incompleteTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
-  const allTabsNotCompleted = incompleteTabProfile && incompleteTabSubject && incompleteTabBackground && incompleteTabAvailability;
+  const incompleteTabBackground = hasIncompleteFields(
+    tabBackgroundFields,
+    draft
+  );
+  const incompleteTabAvailability = hasIncompleteFields(
+    tabAvailabilityFields,
+    draft
+  );
+  const allTabsNotCompleted =
+    incompleteTabProfile &&
+    incompleteTabSubject &&
+    incompleteTabBackground &&
+    incompleteTabAvailability;
 
   return (
     <section>
@@ -30,10 +40,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
             className={`w-full flex gap-3 items-center md:justify-start justify-center p-1.5 rounded-2xl ST-SB-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
-            onClick={() => {
-              setActiveTab(TabIndex);
-              setSaved(false);
-            }}
+            onClick={() => setActiveTab(TabIndex)}
           >
             <span
               className={`p-1 rounded-[10px] ${
@@ -47,7 +54,9 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
                   ? "bg-quaternary-color-A6"
                   : incompleteTabAvailability && TabIndex === 3
                   ? "bg-quaternary-color-A6"
-                  : !allTabsNotCompleted && TabIndex === 4
+                  : TabIndex === 4
+                  ? "bg-quaternary-color-A6"
+                  : !allTabsNotCompleted && TabIndex === 5
                   ? "bg-quaternary-color-A6"
                   : "bg-quinary-color-VS6"
               }`}
@@ -68,7 +77,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
         ))}
       </div>
 
-      {saved ? (
+      {activeTab === 4 ? (
         <>
           <SectionHeader
             wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1`}
@@ -81,10 +90,7 @@ const TabsButtons = ({ activeTab, setActiveTab, setSaved, saved, draft }) => {
             <div className="flex-1 w-full">
               <button
                 className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full MT-SB-1"
-                onClick={() => {
-                  setActiveTab(4);
-                  setSaved(false);
-                }}
+                onClick={() => setActiveTab(5)}
                 type="button"
               >
                 <span className="px-1.5">Apply now!</span>{" "}

@@ -4,7 +4,7 @@ import { AnalyticIcon } from "../../Icons";
 
 const TabStatus = ({ activeTab }) => {
   return (
-    <div className={`${activeTab !== 4 && "hidden"}`}>
+    <div className={`${activeTab !== 5 && "hidden"}`}>
       <SectionHeader
         descriptionText={"Your application is currently pending approval. We appreciate your patience and will notify you as soon as your application has been reviewed. Feel free to edit your profile to improve it."}
         titleIcon={<AnalyticIcon fillColor={"fill-primary-color-P1"} />}

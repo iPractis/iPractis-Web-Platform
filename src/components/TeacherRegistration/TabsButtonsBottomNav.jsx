@@ -9,7 +9,6 @@ const TabsButtonsBottomNav = ({
   isTabProfilePending,
   setActiveTab,
   activeTab,
-  saved,
 }) => {
   const pendingConditions =
     isTabBackgroundPending ||
@@ -18,7 +17,6 @@ const TabsButtonsBottomNav = ({
     isTabProfilePending;
 
   return (
-    !saved &&
     activeTab !== 4 && (
       <DualButton
         dualButtonWrapper={"gap-4 mt-16 md:px-8"}

@@ -35,6 +35,11 @@ export const tabsButtons = [
   },
 
   {
+    textButton: "Review",
+    Icon: CalendarIcon,
+  },
+
+  {
     textButton: "Status",
     Icon: AnalyticIcon,
   },
