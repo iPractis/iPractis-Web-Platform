@@ -2,11 +2,10 @@ import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
 import IndividualExperience from "./IndividualExperience";
 import SectionHeader from "../../Globals/SectionHeader";
 
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 // Icons
-import { AddBGIcon, AddBoxBiggerIcon, AddBoxIcon, UserTieIcon } from "../../Icons";
+import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
 
 const Experience = ({ setExperiences, experiences, errors }) => {
   const careerExperienceError = findInputErrorZod(
@@ -59,10 +58,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
           onClick={handleAddExperience}
           type="button"
         >
-          <span className="MT-1 px-1.5">
-            Add professional experience
-          </span>{" "}
-          
+          <span className="MT-1 px-1.5">Add professional experience</span>{" "}
           <AddBoxBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
         </button>
       </SectionHeader>
