@@ -17,7 +17,7 @@ const TabsButtonsBottomNav = ({
     isTabProfilePending;
 
   return (
-    activeTab !== 4 && (
+    activeTab < 4 && (
       <DualButton
         dualButtonWrapper={"gap-4 mt-16 md:px-8"}
         rightButtonClassName={

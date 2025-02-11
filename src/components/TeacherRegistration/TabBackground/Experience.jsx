@@ -63,7 +63,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         </button>
       </SectionHeader>
 
-      <div className={experiences?.length !== 0 && "mb-8"}>
+      <div className={experiences?.length !== 0 ? "mb-8" : ""}>
         {/* We do this because we want error to change of position (if it's a different error) */}
         {careerExperienceError ===
           "Invalid submission --- At least one experience is required." && (

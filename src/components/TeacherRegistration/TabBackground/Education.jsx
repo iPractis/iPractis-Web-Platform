@@ -59,7 +59,7 @@ const Education = ({ setEducations, educations, errors }) => {
         </button>
       </SectionHeader>
 
-      <div className={educations?.length !== 0 && "mb-8"}>
+      <div className={educations?.length !== 0 ? "mb-8" : ""}>
         {/* We do this because we want error to change of position (if it's a different error) */}
         {educationError ===
           "Invalid submission --- At least one education is required." && (
