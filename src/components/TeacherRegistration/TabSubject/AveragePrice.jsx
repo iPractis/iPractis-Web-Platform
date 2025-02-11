@@ -11,7 +11,6 @@ import { DollarSignIcon, QuestionMark } from "../../Icons";
 
 const AveragePrice = ({ subjectToTeach, errors, draft }) => {
   const subjectToTeachImage = subjectImages[subjectToTeach];
-  console.log(subjectToTeach)
 
   return (
     <>
@@ -32,63 +31,65 @@ const AveragePrice = ({ subjectToTeach, errors, draft }) => {
           wrapperSectionHeaderClassName="mb-16"
         />
 
-        <div>
-          <div className="flex items-end gap-2 mt-7">
-            <CustomNextUiInput
-              defaultValue={draft?.hourlyPrice}
-              type="text"
-              name="hourlyPrice"
-              placeholder="Set your hourly base rate"
-              classNames={{
-                label: "!-top-11",
-                inputWrapper:
-                  findInputErrorZod(errors, "hourlyPrice")?.message &&
-                  "form-input-error",
-              }}
-              label={
-                <div className="flex flex-col">
-                  <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Private lesson rate
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-
-                  <div className="self-start">
-                    <span className=" text-primary-color-P4 ST-3">
-                      Define your rate for 1:1 private lesson.
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-8 items-end">
+          <div>
+            <div className="flex items-end gap-2 mt-7">
+              <CustomNextUiInput
+                defaultValue={draft?.hourlyPrice}
+                type="text"
+                name="hourlyPrice"
+                placeholder="Set your hourly base rate"
+                classNames={{
+                  label: "!-top-11",
+                  inputWrapper:
+                    findInputErrorZod(errors, "hourlyPrice")?.message &&
+                    "form-input-error",
+                }}
+                label={
+                  <div className="flex flex-col">
+                    <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                      Private lesson rate
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
                     </span>
+
+                    <div className="self-start">
+                      <span className=" text-primary-color-P4 ST-3">
+                        Define your rate for 1:1 private lesson.
+                      </span>
+                    </div>
                   </div>
-                </div>
-              }
-              labelPlacement="outside"
-              startContent={
-                <InputBGWrapperIcon>
-                  <DollarSignIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-            />
-          </div>
-
-          <ErrorZodResponse errors={errors} fieldName={"hourlyPrice"} />
-        </div>
-
-        {subjectToTeachImage && (
-          <div className="flex w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center mt-8 mb-14">
-            <div className="me-3">
-              <Image
-                src={subjectToTeachImage}
-                alt={"Country Image"}
-                className="w-[51px]"
+                }
+                labelPlacement="outside"
+                startContent={
+                  <InputBGWrapperIcon>
+                    <DollarSignIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
               />
             </div>
 
-            <div>
-              <h3 className="ST-SB-1">Average price</h3>
-              <p className="text-primary-color-P6 group-active:text-primary-color-P12 ST-1">
-                13 USD/30 mins
-              </p>
-            </div>
+            <ErrorZodResponse errors={errors} fieldName={"hourlyPrice"} />
           </div>
-        )}
+
+          {subjectToTeachImage && (
+            <div className="flex w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center">
+              <div className="me-3">
+                <Image
+                  src={subjectToTeachImage}
+                  alt={"Country Image"}
+                  className="w-[51px]"
+                />
+              </div>
+
+              <div>
+                <h3 className="ST-SB-1">Average price</h3>
+                <p className="text-primary-color-P6 group-active:text-primary-color-P12 ST-1">
+                  13 USD/30 mins
+                </p>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
