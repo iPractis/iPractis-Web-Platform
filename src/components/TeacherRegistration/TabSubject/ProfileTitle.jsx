@@ -27,6 +27,7 @@ const ProfileTitle = ({ draft, errors }) => {
           labelSubtitle={
             "Find a catchy title"
           }
+          labelClassName={"!-top-[52px]"}
           labelDisabled={false}
           nameTextarea={"profileTitle"}
           value={profileTitleText}
