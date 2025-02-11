@@ -1,30 +1,17 @@
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { subjectImages } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Globals/CustomNextUiInput";
 import SectionHeader from "../../Globals/SectionHeader";
+
 import Image from "next/image";
 
-// Icons && images
-import unitedKingdom from "@/public/flags/united-kingdom.png";
-import spanish from "@/public/flags/spain.png";
-import france from "@/public/flags/france.png";
-import italy from "@/public/flags/italy.png";
-
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
 const AveragePrice = ({ subjectToTeach, errors, draft }) => {
-  const subjectImages = {
-    English: unitedKingdom,
-    French: france,
-    Spanish: spanish,
-    Italian: italy,
-    Mandarin: null,
-    German: null,
-    Arabic: null,
-  };
-
   const subjectToTeachImage = subjectImages[subjectToTeach];
+  console.log(subjectToTeach)
 
   return (
     <>

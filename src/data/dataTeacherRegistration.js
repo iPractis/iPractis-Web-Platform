@@ -288,3 +288,23 @@ export const tabAvailabilityFields = (object) => {
     timeZone: object?.timeZone,
   };
 };
+
+export const subjectImages = {
+  English: unitedKingdom,
+  French: france,
+  Spanish: spain,
+  Italian: italy,
+  Mandarin: null,
+  German: null,
+  Arabic: null,
+};
+
+export const masteredLanguagesImages = {
+  English: unitedKingdom,
+  French: france,
+  Spanish: spain,
+  Italian: italy,
+  Mandarin: null,
+  German: null,
+  Arabic: null,
+};
