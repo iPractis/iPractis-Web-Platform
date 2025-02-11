@@ -66,7 +66,7 @@ const RelatedSubTopics = ({
       <div className="md:px-8">
         <div className="space-y-[50px]">
           {/* Select Sub-subject */}
-          <div className="grid grid-cols-2">
+          <div className="grid md:grid-cols-2 grid-cols-1">
             <div className="flex items-end gap-2">
               <Select
                 name="subSubject"
