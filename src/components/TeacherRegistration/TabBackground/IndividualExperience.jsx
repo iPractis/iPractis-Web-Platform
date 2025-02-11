@@ -71,6 +71,7 @@ const IndividualExperience = ({
         <div className="flex-[15%]">
           <CustomNextUiInput
             type="text"
+            isReadOnly
             value={experience?.from}
             name="from"
             placeholder="From"
@@ -132,6 +133,7 @@ const IndividualExperience = ({
         <div className="flex-[15%]">
           <CustomNextUiInput
             type="text"
+            isReadOnly
             value={experience?.to}
             name="to"
             placeholder="To"
