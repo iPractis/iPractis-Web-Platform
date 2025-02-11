@@ -47,7 +47,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         descriptionText="Tell us about your career and experience"
         titleIcon={<UserTieIcon fillColor={"fill-primary-color-P1"} />}
         wrapperSectionHeaderClassName={
-          "flex justify-between bg-primary-color-P11 rounded-[32px] p-8"
+          "flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
         }
         titleText="Experience"
         titleClassName="MT-SB-1"
@@ -67,7 +67,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         </button>
       </SectionHeader>
 
-      <WhiteSpaceWrapper className={"px-8"}>
+      <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {experiences?.map((experience, index) => (
           <IndividualExperience
             handleUpdateExperience={handleUpdateExperience}
