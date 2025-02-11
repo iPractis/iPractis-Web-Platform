@@ -38,14 +38,14 @@ const TeacherInfoAbout = () => {
         <div className="flex gap-4">
           <button
             type="button"
-            className="btn btn-primary MT-SB-1 p-1.5 rounded-2xl h-12"
+            className="btn btn-primary MT-SB-1 px-4 py-1.5 rounded-2xl h-12"
           >
             Teaches all levels
           </button>
 
           <button
             type="button"
-            className="btn btn-primary MT-SB-1 p-1.5 rounded-2xl h-12"
+            className="btn btn-primary MT-SB-1 px-4 py-1.5 rounded-2xl h-12"
           >
             Teaches all ages
           </button>
