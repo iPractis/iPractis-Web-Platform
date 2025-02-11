@@ -29,7 +29,6 @@ const TabsDisplayedInfo = ({
   setActiveTab,
   activeTab,
   draft,
-  // setDraft,
 }) => {
   // TAB PROFILE STATES
   const [birthDate, setBirthDate] = useState(
@@ -217,8 +216,6 @@ const TabsDisplayedInfo = ({
       setIsTabBackgroundPending(false);
       setIsTabAvailabilityPending(false);
     }
-
-    // setDraft(actualDraftInfo);
   };
 
   return (
