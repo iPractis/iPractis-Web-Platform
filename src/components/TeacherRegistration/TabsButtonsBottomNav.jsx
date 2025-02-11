@@ -23,7 +23,7 @@ const TabsButtonsBottomNav = ({
       <DualButton
         dualButtonWrapper={"gap-4 mt-16 md:px-8"}
         rightButtonClassName={
-          "md:flex-[40%] flex-1 disabled:opacity-20 disabled:pointer-events-none"
+          "flex-1 disabled:opacity-20 disabled:pointer-events-none"
         }
         leftButtonClassName={
           "flex-1 disabled:opacity-20 disabled:pointer-events-none"
