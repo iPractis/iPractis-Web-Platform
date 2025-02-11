@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HowWorksAndSkills = () => {
   return (
-    <WhiteSpaceWrapper className="space-y-[50px] sm:p-8 p-0">
+    <WhiteSpaceWrapper className="grid md:grid-cols-2 grid-cols-1 gap-[50px] p-0 md:px-8">
       <div>
         <SectionHeader
           descriptionText={
@@ -29,7 +29,7 @@ const HowWorksAndSkills = () => {
         </Link>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-[50px]">
         <SectionHeader
           descriptionText={
             "Explore interactive lessons, proven strategies, and quick tips to help you make every class session more dynamic."
@@ -39,16 +39,18 @@ const HowWorksAndSkills = () => {
           titleClassName="MT-SB-1"
         />
 
-        <Link
-          className="btn btn-secondary w-full MT-SB-1 rounded-2xl ps-4 p-1.5 mt-[50px] flex items-center justify-between"
-          href={"#"}
-        >
-          <span>Start learning</span>
+        <div className="flex-1 place-content-end">
+          <Link
+            className="btn btn-secondary w-full MT-SB-1 rounded-2xl ps-4 p-1.5 flex items-center justify-between"
+            href={"#"}
+          >
+            <span>Start learning</span>
 
-          <InputBGWrapperIcon>
-            <ChevronRightIcon fillColor={"fill-tertiary-color-SC5"} />
-          </InputBGWrapperIcon>
-        </Link>
+            <InputBGWrapperIcon>
+              <ChevronRightIcon fillColor={"fill-tertiary-color-SC5"} />
+            </InputBGWrapperIcon>
+          </Link>
+        </div>
       </div>
     </WhiteSpaceWrapper>
   );
