@@ -25,11 +25,7 @@ import italyFlag from "@/public/flags/italy.png";
 import franceFlag from "@/public/flags/france.png";
 import spainFlag from "@/public/flags/spain.png";
 
-const TabsDisplayedInfo = ({
-  setActiveTab,
-  activeTab,
-  draft,
-}) => {
+const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
   // TAB PROFILE STATES
   const [birthDate, setBirthDate] = useState(
     draft?.birthDate && !isNaN(Date.parse(draft?.birthDate))
@@ -171,6 +167,8 @@ const TabsDisplayedInfo = ({
         actualDraftInfo.education = educations;
 
         const validationResult = tabBackgroundSchema.safeParse(actualDraftInfo);
+
+        console.log(validationResult.error.issues, 'normal')
 
         if (!validationResult.success) {
           return setErrors(validationResult.error.issues);

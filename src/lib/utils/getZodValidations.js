@@ -8,12 +8,12 @@ export const findInputErrorZod = (errors = [], inputName) => {
   return errors?.find((error) => (error?.path[0] === inputName ? error : null));
 };
 
-export const findInputMultipleErrorZod = (
-  errors = [],
-  inputName,
-  pathIndex
-) => {
+export const findInputErrorArrayZod = (errors = {}, inputName) => {
+  return errors[inputName]._errors ?? [];
+};
+
+export const findInputMultipleErrorZod = (errors = [], path = []) => {
   return errors?.find((error) =>
-    error?.path[pathIndex] === inputName ? error : null
+    JSON.stringify(error?.path) === JSON.stringify(path) ? error : null
   );
 };

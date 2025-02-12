@@ -22,8 +22,8 @@ const TabBackground = ({
       <Education
         setEducations={setEducations}
         educations={educations}
-        errors={errors}
-      />
+        errors={errors} 
+       />
     </div>
   );
 };

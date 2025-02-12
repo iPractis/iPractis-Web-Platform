@@ -38,17 +38,17 @@ export const ErrorZodResponse = ({ errors, fieldName }) =>
     />
   );
 
-export const ErrorMultipleZodResponse = ({ errors, fieldName, pathIndex }) =>
-  findInputMultipleErrorZod(errors, fieldName, pathIndex) && (
+export const ErrorMultipleZodResponse = ({ errors, fieldName }) =>
+  findInputMultipleErrorZod(errors, fieldName) && (
     <ErrorMessageiPractis
       descError={
         getTitleAndDescZod(
-          findInputMultipleErrorZod(errors, fieldName, pathIndex)?.message
+          findInputMultipleErrorZod(errors, fieldName)?.message
         )?.desc
       }
       typeError={
         getTitleAndDescZod(
-          findInputMultipleErrorZod(errors, fieldName, pathIndex)?.message
+          findInputMultipleErrorZod(errors, fieldName)?.message
         )?.title
       }
     />

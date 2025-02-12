@@ -23,9 +23,13 @@ import {
   TrashBinIcon,
 } from "../../Icons";
 
-import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { useState } from "react";
+
+const getFieldName = (fieldName, index) => {
+  return ["careerExperience", index, fieldName];
+};
 
 const IndividualExperience = ({
   handleDeleteExperience,
@@ -35,7 +39,6 @@ const IndividualExperience = ({
   index,
 }) => {
   const [image, setImage] = useState({});
-  const certainExperiencePosition = experience?.index === index;
 
   const handleInputChange = (field, value) => {
     const updatedExperience = { ...experience, [field]: value };
@@ -60,9 +63,10 @@ const IndividualExperience = ({
             }
             classNames={{
               inputWrapper:
-                certainExperiencePosition &&
-                findInputMultipleErrorZod(errors, "company", 2)?.message &&
-                "form-input-error",
+                findInputMultipleErrorZod(
+                  errors,
+                  getFieldName("company", index)
+                )?.message && "form-input-error",
             }}
           />
         </div>
@@ -122,9 +126,8 @@ const IndividualExperience = ({
             }
             classNames={{
               inputWrapper:
-                certainExperiencePosition &&
-                findInputMultipleErrorZod(errors, "from", 2)?.message &&
-                "form-input-error",
+                findInputMultipleErrorZod(errors, getFieldName("from", index))
+                  ?.message && "form-input-error",
             }}
           />
         </div>
@@ -184,9 +187,8 @@ const IndividualExperience = ({
             }
             classNames={{
               inputWrapper:
-                certainExperiencePosition &&
-                findInputMultipleErrorZod(errors, "to", 2)?.message &&
-                "form-input-error",
+                findInputMultipleErrorZod(errors, getFieldName("to", index))
+                  ?.message && "form-input-error",
             }}
           />
         </div>
@@ -204,9 +206,10 @@ const IndividualExperience = ({
 
             <InputBGWrapperIcon
               className={`${
-                certainExperiencePosition &&
-                findInputMultipleErrorZod(errors, "uploadExperienceFile", 2)
-                  ?.message
+                findInputMultipleErrorZod(
+                  errors,
+                  getFieldName("uploadExperienceFile", index)
+                )?.message
                   ? "form-input-error"
                   : "bg-primary-color-P11"
               } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
@@ -237,33 +240,16 @@ const IndividualExperience = ({
         </div>
       </div>
 
-      {certainExperiencePosition && (
-        <>
-          <ErrorMultipleZodResponse
-            fieldName={"company"}
-            errors={errors}
-            pathIndex={2}
-          />
+      <ErrorMultipleZodResponse fieldName={"company"} errors={errors} />
 
-          <ErrorMultipleZodResponse
-            fieldName={"from"}
-            errors={errors}
-            pathIndex={2}
-          />
+      <ErrorMultipleZodResponse fieldName={"from"} errors={errors} />
 
-          <ErrorMultipleZodResponse
-            fieldName={"to"}
-            errors={errors}
-            pathIndex={2}
-          />
+      <ErrorMultipleZodResponse fieldName={"to"} errors={errors} />
 
-          <ErrorMultipleZodResponse
-            fieldName={"uploadExperienceFile"}
-            errors={errors}
-            pathIndex={2}
-          />
-        </>
-      )}
+      <ErrorMultipleZodResponse
+        fieldName={"uploadExperienceFile"}
+        errors={errors}
+      />
 
       {/* Description */}
       <CustomNextUiTextarea
@@ -272,9 +258,10 @@ const IndividualExperience = ({
         classNames={{
           base: "mt-2.5",
           inputWrapper:
-            certainExperiencePosition &&
-            findInputMultipleErrorZod(errors, "description", 2)?.message &&
-            "form-input-error",
+            findInputMultipleErrorZod(
+              errors,
+              getFieldName("description", index)
+            )?.message && "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
@@ -283,13 +270,7 @@ const IndividualExperience = ({
         disableAutosize
       />
 
-      {certainExperiencePosition && (
-        <ErrorMultipleZodResponse
-          fieldName={"description"}
-          pathIndex={2}
-          errors={errors}
-        />
-      )}
+      <ErrorMultipleZodResponse fieldName={"description"} errors={errors} />
     </div>
   );
 };
