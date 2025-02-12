@@ -44,7 +44,7 @@ const BirthDateInput = ({
 
             <div>
               <input
-                className="input-ipractis w-[60px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
+                className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
                 defaultValue={birthDate?.day}
                 name="birthDateNumber"
                 type="text"
@@ -54,7 +54,7 @@ const BirthDateInput = ({
 
             <div>
               <input
-                className="input-ipractis md:w-[195px] w-[118px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
+                className="input-ipractis sm:w-[195px] w-[118px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
                 defaultValue={getMonthNumberAsText(birthDate?.month)}
                 name="birthDateMonth"
                 type="text"
@@ -64,7 +64,7 @@ const BirthDateInput = ({
 
             <div>
               <input
-                className="input-ipractis w-[60px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
+                className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
                 defaultValue={birthDate?.year}
                 name="birthDateYear"
                 type="text"
@@ -84,7 +84,7 @@ const BirthDateInput = ({
           >
             <DropdownTrigger>
               <Button
-                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-full h-full rounded-2xl"
+                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center rounded-2xl sm:h-full h-12 sm:w-full w-12"
                 variant="flat"
                 type="button"
               >
