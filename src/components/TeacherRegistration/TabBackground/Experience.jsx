@@ -64,11 +64,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       </SectionHeader>
 
       <div className={experiences?.length !== 0 ? "mb-8" : ""}>
-        {/* We do this because we want error to change of position (if it's a different error) */}
-        {careerExperienceError ===
-          "Invalid submission --- At least one experience is required." && (
-          <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
-        )}
+        <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
       </div>
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
