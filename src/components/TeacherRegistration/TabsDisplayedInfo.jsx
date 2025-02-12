@@ -169,8 +169,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
         const validationResult = tabBackgroundSchema.safeParse(actualDraftInfo);
 
-        console.log(actualDraftInfo)
-
         if (!validationResult.success) {
           return setErrors(validationResult.error.issues);
         }
