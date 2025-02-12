@@ -20,7 +20,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       from: "",
       to: "",
       description: "",
-      index: experiences?.length,
+      uploadExperienceFile: "",
     };
 
     setExperiences([...experiences, newExperience]);

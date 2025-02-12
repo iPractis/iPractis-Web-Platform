@@ -45,6 +45,14 @@ const IndividualExperience = ({
     handleUpdateExperience(index, updatedExperience);
   };
 
+  const onImageChange = (e) => {
+    const file = e.target.files[0];
+
+    setImage(file);
+
+    handleInputChange("uploadExperienceFile", file);
+  };
+
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2.5">
@@ -193,12 +201,12 @@ const IndividualExperience = ({
           />
         </div>
 
-        {/* Download */}
+        {/* File (PDF, PNG, JPEG) */}
         <div className="flex-1">
-          <button type="button" className="relative">
+          <label className="relative cursor-pointer">
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              onChange={(e) => setImage(e.target.files[0])}
+              onChange={onImageChange}
               accept=".pdf, .png, .jpeg"
               name="uploadExperienceFile"
               type="file"
@@ -220,7 +228,7 @@ const IndividualExperience = ({
                 <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
               )}
             </InputBGWrapperIcon>
-          </button>
+          </label>
         </div>
 
         {/* Recycle bin */}

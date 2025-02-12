@@ -82,6 +82,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
 
   const [errors, setErrors] = useState([]);
+  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -168,7 +169,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
         const validationResult = tabBackgroundSchema.safeParse(actualDraftInfo);
 
-        console.log(validationResult.error.issues, 'normal')
+        console.log(actualDraftInfo)
 
         if (!validationResult.success) {
           return setErrors(validationResult.error.issues);
