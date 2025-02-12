@@ -240,14 +240,23 @@ const IndividualExperience = ({
         </div>
       </div>
 
-      <ErrorMultipleZodResponse fieldName={"company"} errors={errors} />
-
-      <ErrorMultipleZodResponse fieldName={"from"} errors={errors} />
-
-      <ErrorMultipleZodResponse fieldName={"to"} errors={errors} />
+      <ErrorMultipleZodResponse
+        fieldName={getFieldName("company", index)}
+        errors={errors}
+      />
 
       <ErrorMultipleZodResponse
-        fieldName={"uploadExperienceFile"}
+        fieldName={getFieldName("from", index)}
+        errors={errors}
+      />
+
+      <ErrorMultipleZodResponse
+        fieldName={getFieldName("to", index)}
+        errors={errors}
+      />
+
+      <ErrorMultipleZodResponse
+        fieldName={getFieldName("uploadExperienceFile", index)}
         errors={errors}
       />
 
@@ -270,7 +279,10 @@ const IndividualExperience = ({
         disableAutosize
       />
 
-      <ErrorMultipleZodResponse fieldName={"description"} errors={errors} />
+      <ErrorMultipleZodResponse
+        fieldName={getFieldName("description", index)}
+        errors={errors}
+      />
     </div>
   );
 };
