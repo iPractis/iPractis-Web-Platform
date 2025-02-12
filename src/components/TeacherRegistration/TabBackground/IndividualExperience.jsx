@@ -207,6 +207,7 @@ const IndividualExperience = ({
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
               onChange={onImageChange}
+              value={experience?.uploadExperienceFile}
               accept=".pdf, .png, .jpeg"
               name="uploadExperienceFile"
               type="file"
