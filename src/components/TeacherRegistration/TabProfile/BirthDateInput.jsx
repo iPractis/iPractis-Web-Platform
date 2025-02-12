@@ -27,8 +27,8 @@ const BirthDateInput = ({
         Birth date <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
 
-      <div className="flex items-center gap-2">
-        <div className="flex-1">
+      <div className="grid grid-cols-8 gap-2">
+        <div className="col-span-7">
           <div
             className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 ${
               findInputErrorZod(errors, "birthDate")?.message
@@ -36,9 +36,11 @@ const BirthDateInput = ({
                 : "bg-primary-color-P11 group-hover:bg-secondary-color-S9"
             }`}
           >
-            <InputBGWrapperIcon>
-              <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
-            </InputBGWrapperIcon>
+            <div>
+              <InputBGWrapperIcon>
+                <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            </div>
 
             <div>
               <input
@@ -52,7 +54,7 @@ const BirthDateInput = ({
 
             <div>
               <input
-                className="input-ipractis w-[195px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
+                className="input-ipractis md:w-[195px] w-[118px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
                 defaultValue={getMonthNumberAsText(birthDate?.month)}
                 name="birthDateMonth"
                 type="text"
@@ -73,7 +75,7 @@ const BirthDateInput = ({
         </div>
 
         {/* Dropdown */}
-        <div className="flex-1">
+        <div>
           <Dropdown
             classNames={{
               content: "p-0",
@@ -82,7 +84,7 @@ const BirthDateInput = ({
           >
             <DropdownTrigger>
               <Button
-                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 rounded-2xl"
+                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-full h-full rounded-2xl"
                 variant="flat"
                 type="button"
               >

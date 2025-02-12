@@ -82,7 +82,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
   const [selectedSlots, setSelectedSlots] = useState([]);
 
   const [errors, setErrors] = useState([]);
-  console.log(errors);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
