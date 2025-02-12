@@ -1,8 +1,8 @@
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import IndividualEducation from "./IndividualEducation";
 import SectionHeader from "../../Globals/SectionHeader";
+import FormInputsBox from "./FormInputsBox";
 
 // Icons
 import { AddBoxBiggerIcon, GraduationCapIcon } from "../../Icons";
@@ -17,8 +17,9 @@ const Education = ({ setEducations, educations, errors }) => {
       from: "",
       to: "",
       description: "",
-      index: educations?.length,
+      uploadFile: "",
     };
+
     setEducations([...educations, newEducation]);
   };
 
@@ -60,7 +61,6 @@ const Education = ({ setEducations, educations, errors }) => {
       </SectionHeader>
 
       <div className={educations?.length !== 0 ? "mb-8" : ""}>
-        {/* We do this because we want error to change of position (if it's a different error) */}
         {educationError ===
           "Invalid submission --- At least one education is required." && (
           <ErrorZodResponse errors={errors} fieldName={"education"} />
@@ -69,10 +69,11 @@ const Education = ({ setEducations, educations, errors }) => {
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {educations?.map((education, index) => (
-          <IndividualEducation
-            handleUpdateEducation={handleUpdateEducation}
-            handleDeleteEducation={handleDeleteEducation}
-            education={education}
+          <FormInputsBox
+            handleUpdate={handleUpdateEducation}
+            handleDelete={handleDeleteEducation}
+            arrayOfField={"education"}
+            item={education}
             errors={errors}
             index={index}
             key={index}

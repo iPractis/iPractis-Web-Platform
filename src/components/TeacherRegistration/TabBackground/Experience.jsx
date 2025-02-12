@@ -1,8 +1,8 @@
 import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import IndividualExperience from "./IndividualExperience";
 import SectionHeader from "../../Globals/SectionHeader";
+import FormInputsBox from "./FormInputsBox";
 
 // Icons
 import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
@@ -20,7 +20,7 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       from: "",
       to: "",
       description: "",
-      uploadExperienceFile: "",
+      uploadFile: "",
     };
 
     setExperiences([...experiences, newExperience]);
@@ -64,15 +64,19 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       </SectionHeader>
 
       <div className={experiences?.length !== 0 ? "mb-8" : ""}>
-        <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
+        {careerExperienceError ===
+          "Invalid submission --- At least one experience is required." && (
+          <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
+        )}
       </div>
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {experiences?.map((experience, index) => (
-          <IndividualExperience
-            handleUpdateExperience={handleUpdateExperience}
-            handleDeleteExperience={handleDeleteExperience}
-            experience={experience}
+          <FormInputsBox
+            handleUpdate={handleUpdateExperience}
+            handleDelete={handleDeleteExperience}
+            arrayOfField={"careerExperience"}
+            item={experience}
             errors={errors}
             index={index}
             key={index}

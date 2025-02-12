@@ -177,7 +177,7 @@ export const tabBackgroundSchema = z.object({
         company: z.string().min(1, {
           message: "Invalid field --- Must contain 3 or more characters long.",
         }),
-        uploadExperienceFile: z.instanceof(File, {
+        uploadFile: z.instanceof(File, {
           message:
             "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
         }),
@@ -211,7 +211,7 @@ export const tabBackgroundSchema = z.object({
         company: z.string().min(1, {
           message: "Invalid field --- Must contain 3 or more characters long.",
         }),
-        uploadEducationFile: z.instanceof(File, {
+        uploadFile: z.instanceof(File, {
           message:
             "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
         }),
