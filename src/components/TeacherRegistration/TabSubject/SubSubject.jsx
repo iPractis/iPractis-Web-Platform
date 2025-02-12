@@ -8,6 +8,10 @@ import { useState } from "react";
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
 import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
 
+const getFieldName = (fieldName, index) => {
+  return ["subSubject", index, fieldName];
+};
+
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
   handleUpdateSubSubject,
@@ -62,7 +66,9 @@ const SubSubject = ({
         nameTextarea={"description"}
         inputClassName={"h-[150px]"}
         value={descriptionSubSubject}
-        onChange={(e) => handleInputChange("description", e?.target?.value.trim())}
+        onChange={(e) =>
+          handleInputChange("description", e?.target?.value.trim())
+        }
         placeholder={"Enter a text"}
         maxCharactersLength={20}
         typeError={"Max Length Exceeded"}
@@ -70,19 +76,15 @@ const SubSubject = ({
         labelDisabled={true}
         maxCharactersLengthText={2}
         backgroundError={
-          !descriptionSubSubject.trim().length &&
-          findInputMultipleErrorZod(errors, "description", 2)?.message &&
-          "form-input-error"
+          findInputMultipleErrorZod(errors, getFieldName("description", index))
+            ?.message && "form-input-error"
         }
       />
 
-      {!descriptionSubSubject.trim().length && (
-        <ErrorMultipleZodResponse
-          fieldName={"description"}
-          pathIndex={2}
-          errors={errors}
-        />
-      )}
+      <ErrorMultipleZodResponse
+        fieldName={getFieldName("description", index)}
+        errors={errors}
+      />
     </div>
   );
 };
