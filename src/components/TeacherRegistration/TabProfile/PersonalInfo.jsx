@@ -17,6 +17,7 @@ import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 
 const PersonalInfo = ({
   setSelectedNationality,
@@ -45,31 +46,31 @@ const PersonalInfo = ({
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
             <div>
-              {/* <div className="w-1 h-4 rounded-sm bg-senary-color-W8"></div> */}
-
-              <CustomNextUiInput
-                name="firstName"
-                defaultValue={draft?.firstName}
-                type="text"
-                placeholder="Enter your first name"
-                label={
-                  <span className="flex gap-1.5 items-center">
-                    First name{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-                classNames={{
-                  inputWrapper:
-                    findInputErrorZod(errors, "firstName")?.message &&
-                    "form-input-error",
-                }}
-              />
+              <InputLeftStickStatus inputColorStatus={''}>
+                <CustomNextUiInput
+                  name="firstName"
+                  defaultValue={draft?.firstName}
+                  type="text"
+                  placeholder="Enter your first name"
+                  label={
+                    <span className="flex gap-1.5 items-center">
+                      First name{" "}
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    </span>
+                  }
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                  classNames={{
+                    inputWrapper:
+                      findInputErrorZod(errors, "firstName")?.message &&
+                      "form-input-error",
+                  }}
+                />
+              </InputLeftStickStatus>
 
               <ErrorZodResponse errors={errors} fieldName={"firstName"} />
             </div>
