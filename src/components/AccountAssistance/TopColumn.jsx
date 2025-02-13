@@ -1,4 +1,4 @@
-import SectionHeader from "../Globals/SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 import { HelpIcon } from "../Icons";
 
 const TopColumn = () => {

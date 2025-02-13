@@ -1,4 +1,4 @@
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { ChevronRightBiggerIcon } from "../Icons";
 import Link from "next/link";
 

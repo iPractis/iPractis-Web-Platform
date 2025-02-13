@@ -1,6 +1,6 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { subSubjects } from "@/src/data/dataTeacherRegistration";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
 import SubSubject from "./SubSubject";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import { useState } from "react";
 // Images && icons
 import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const RelatedSubTopics = ({
   selectedSubSubjects,

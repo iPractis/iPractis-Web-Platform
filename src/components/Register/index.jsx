@@ -1,6 +1,6 @@
 import { ChevronRightDoorIcon, PadLockUserIcon } from "../Icons";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
-import AccountPrompt from "../Globals/AccountPrompt";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
+import AccountPrompt from "../Shared/AccountPrompt";
 import TopColumn from "./TopColumn";
 
 export const Register = () => {

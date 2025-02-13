@@ -1,4 +1,4 @@
-import SectionHeader from "@/src/components/Globals/SectionHeader";
+import SectionHeader from "@/src/components/Shared/SectionHeader";
 import { PadLockOpenedIcon } from "../Icons";
 
 const TopColumn = () => {

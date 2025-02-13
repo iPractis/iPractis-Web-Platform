@@ -1,6 +1,6 @@
 import { teachingSubjects } from "@/src/data/dataTeacherRegistration";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import SectionHeader from "../../Globals/SectionHeader";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import SectionHeader from "../../Shared/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
 import ProfileTitle from "./ProfileTitle";
 import { useState } from "react";
@@ -13,9 +13,9 @@ import {
   UserBoxIcon,
 } from "../../Icons";
 
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
+import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
 
 const SubjectsToTeach = ({
   setSubjectToTeach,

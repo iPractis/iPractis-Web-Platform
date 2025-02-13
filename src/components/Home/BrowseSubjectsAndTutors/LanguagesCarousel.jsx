@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 // import required modules
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CarouselArrow from "../../Globals/CarouselArrow";
+import CarouselArrow from "../../Shared/CarouselArrow";
 
 // Images && Icons
 import chevronRight from "@/public/icons/chevron-right.png";

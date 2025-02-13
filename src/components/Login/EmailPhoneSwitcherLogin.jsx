@@ -1,7 +1,7 @@
-import SelectCountryAreaCode from "../Globals/SelectCountryAreaCode";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
+import SelectCountryAreaCode from "../Shared/SelectCountryAreaCode";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import { MailIcon, PhoneIcon } from "../Icons";
 
 // React imports

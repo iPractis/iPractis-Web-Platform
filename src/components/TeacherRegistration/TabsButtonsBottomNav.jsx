@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
-import DualButton from "../Globals/DualButton";
+import DualButton from "../Shared/DualButton";
 import { redirect } from "next/navigation";
 
 const TabsButtonsBottomNav = ({

@@ -1,6 +1,6 @@
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
 import { signIn } from "next-auth/react";
 

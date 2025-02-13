@@ -1,4 +1,4 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 import { searchBarSubjects } from "@/src/data/dataHome";
 

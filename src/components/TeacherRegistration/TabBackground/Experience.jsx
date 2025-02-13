@@ -1,7 +1,7 @@
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import SectionHeader from "../../Globals/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import SectionHeader from "../../Shared/SectionHeader";
 import FormInputsBox from "./FormInputsBox";
 
 // Icons

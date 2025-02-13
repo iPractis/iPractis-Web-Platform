@@ -1,4 +1,4 @@
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import StudentPreference from "./StudentPreferences";
 import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";

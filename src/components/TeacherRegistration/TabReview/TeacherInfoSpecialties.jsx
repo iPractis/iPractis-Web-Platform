@@ -1,5 +1,5 @@
-import SectionHeader from "../../Globals/SectionHeader";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
+import SectionHeader from "../../Shared/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import { TagIcon } from "../../Icons";
 
 const TeacherInfoSpecialties = () => {

@@ -1,4 +1,4 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import LanguagesCarousel from "./LanguagesCarousel";
 import { BookOpenedIcon } from "../../Icons";
 import TutorCards from "./TutorCards";

@@ -1,11 +1,11 @@
 "use client";
 
 import { startTransition, useActionState, useEffect, useState } from "react";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
 import { CheckedShieldIcon, ChevronRightDoorIcon, HelpIcon } from "../Icons";
-import SectionHeader from "../Globals/SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 import { useSearchParams } from "next/navigation";
 import OTPInput from "react-otp-input";
 import Link from "next/link";

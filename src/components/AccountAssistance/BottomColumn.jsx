@@ -1,4 +1,4 @@
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import Link from "next/link";
 
 // Images && icons

@@ -1,7 +1,7 @@
-import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
+import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
-import SectionHeader from "../../Globals/SectionHeader";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import SectionHeader from "../../Shared/SectionHeader";
 
 // Icons
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";

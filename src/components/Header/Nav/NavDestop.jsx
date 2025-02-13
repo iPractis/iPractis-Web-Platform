@@ -6,7 +6,7 @@ import {
   ChevronRightDoorSmallIcon,
   UserAddCircleSmallerIcon,
 } from "../../Icons";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import themeLight from "@/public/icons/theme-light.png";
 import logo from "@/public/logos/ipractis-logo-1.png";
 import world from "@/public/icons/world.png";

@@ -1,7 +1,7 @@
-import { CustomNextUiCheckbox } from "../../Globals/CustomNextUiCheckbox";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
 import { PersonIcon, QuestionMark } from "../../Icons";
 

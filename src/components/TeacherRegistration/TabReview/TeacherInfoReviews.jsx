@@ -1,6 +1,6 @@
 import Image from "next/image";
-import SectionHeader from "../../Globals/SectionHeader";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
+import SectionHeader from "../../Shared/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 
 // Icons && images
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";

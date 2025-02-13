@@ -1,4 +1,4 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import { CheckedShieldIcon } from "../../Icons";
 
 // Images && icons

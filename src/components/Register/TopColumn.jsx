@@ -1,4 +1,4 @@
-import SectionHeader from "../Globals/SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 import { SparkleIcon } from "../Icons";
 import Form from "./Form";
 

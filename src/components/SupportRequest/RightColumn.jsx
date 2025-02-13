@@ -1,6 +1,6 @@
-import CustomNextUiTextarea from "../Globals/CustomNextUiTextarea";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import SectionHeader from "../Globals/SectionHeader";
+import CustomNextUiTextarea from "../Shared/CustomNextUiTextarea";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import SectionHeader from "../Shared/SectionHeader";
 import { WrenchIcon } from "../Icons";
 
 const RightColumn = ({ isValidSituationError, error }) => {

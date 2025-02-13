@@ -1,8 +1,8 @@
 "use client";
 
 import LeftColumnReasonsSelect from "./LeftColumnReasonsSelect";
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import SectionHeader from "../Globals/SectionHeader";
+import CustomNextUiInput from "../Shared/CustomNextUiInput";
+import SectionHeader from "../Shared/SectionHeader";
 import { CircleImportantIcon } from "../Icons";
 import { useState } from "react";
 import Image from "next/image";
@@ -10,7 +10,7 @@ import Image from "next/image";
 // Images && icons
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 
 const Form = ({
   isValidReasonErrors,

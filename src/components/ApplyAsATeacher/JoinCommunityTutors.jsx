@@ -1,7 +1,7 @@
 import header from "@/public/images/apply-as-teacher-hero.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { ChevronRightBiggerIcon } from "../Icons";
 
 const JoinCommunityTutors = () => {

@@ -7,14 +7,14 @@ import {
 } from "../../Icons";
 
 import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import SectionHeader from "../../Globals/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import SectionHeader from "../../Shared/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
 
@@ -45,6 +45,8 @@ const PersonalInfo = ({
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
             <div>
+              {/* <div className="w-1 h-4 rounded-sm bg-senary-color-W8"></div> */}
+
               <CustomNextUiInput
                 name="firstName"
                 defaultValue={draft?.firstName}

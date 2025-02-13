@@ -2,7 +2,7 @@
 
 import { PadLockUserIcon, SparkleIcon } from "../Icons";
 import { logInUser } from "@/src/lib/actions/authAction";
-import SectionHeader from "../Globals/SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 import LeftForm from "./LeftForm";
 
 // React imports

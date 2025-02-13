@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { languages } from "@/src/data/dataTeacherRegistration";
 import { Select, SelectItem } from "@nextui-org/react";
 
@@ -13,7 +13,7 @@ import {
 } from "../../Icons";
 
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const AboutYourselfMasteredLanguages = ({
   setMasteredLanguages,

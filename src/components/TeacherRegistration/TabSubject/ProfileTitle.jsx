@@ -1,8 +1,8 @@
 // Images && icons
-import { CustomNextUiInputWithMaxLength } from "../../Globals/MaxFormLengthFields";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { CustomNextUiInputWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { useState } from "react";
 
 // Images && icons

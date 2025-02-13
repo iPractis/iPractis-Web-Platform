@@ -1,7 +1,7 @@
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { tabsButtons } from "@/src/data/dataAccountSettings";
-import CustomNextUiInput from "../Globals/CustomNextUiInput";
-import SectionHeader from "../Globals/SectionHeader";
+import CustomNextUiInput from "../Shared/CustomNextUiInput";
+import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
 
 // Images && icons

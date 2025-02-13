@@ -1,5 +1,5 @@
-import SectionHeader from "../../Globals/SectionHeader";
-import PlatformButton from "../../Globals/PlatformButton";
+import SectionHeader from "../../Shared/SectionHeader";
+import PlatformButton from "../../Shared/PlatformButton";
 import { CheckedShieldIcon } from "../../Icons";
 
 // Images && icons

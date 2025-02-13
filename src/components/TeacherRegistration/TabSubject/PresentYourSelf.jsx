@@ -1,8 +1,8 @@
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import SectionHeader from "../../Globals/SectionHeader";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import SectionHeader from "../../Shared/SectionHeader";
 import React from "react";
 
 // Images && icons

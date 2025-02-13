@@ -1,6 +1,6 @@
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import SectionHeader from "../../Globals/SectionHeader";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import SectionHeader from "../../Shared/SectionHeader";
 import Image from "next/image";
 
 // Icons && images
@@ -8,7 +8,7 @@ import { QuestionMark, TownhallIcon, WalletIcon } from "../../Icons";
 import paypalLogo from "@/public/logos/paypal-logo-1.png";
 import wiseLogo from "@/public/logos/wise-logo-1.png";
 
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const Withdrawal = ({ setWithdrawal, withdrawal, errors, draft }) => {

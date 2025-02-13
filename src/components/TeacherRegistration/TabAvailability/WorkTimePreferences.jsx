@@ -1,6 +1,6 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
@@ -13,8 +13,8 @@ import {
   LuggageBiggerIcon,
   LuggageClockIcon,
 } from "../../Icons";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {

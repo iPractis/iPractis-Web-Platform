@@ -1,5 +1,5 @@
 import { variousInterestingSubjects } from "@/src/data/dataHome";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import { BadgeStarIcon } from "../../Icons";
 import Image from "next/image";
 

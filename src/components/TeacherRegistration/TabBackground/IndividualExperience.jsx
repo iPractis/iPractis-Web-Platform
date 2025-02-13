@@ -1,6 +1,6 @@
-import CustomNextUiTextarea from "../../Globals/CustomNextUiTextarea";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import CustomNextUiTextarea from "../../Shared/CustomNextUiTextarea";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
 // Next ui imports
 import {
@@ -24,7 +24,7 @@ import {
 } from "../../Icons";
 
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { useState } from "react";
 
 const getFieldName = (fieldName, index) => {

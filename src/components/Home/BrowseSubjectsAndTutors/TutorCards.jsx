@@ -1,4 +1,4 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { subjectsAndTutors } from "@/src/data/dataHome";
 import { ChevronRightBiggerIcon } from "../../Icons";
 import TutorCard from "./TutorCard";

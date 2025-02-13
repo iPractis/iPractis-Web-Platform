@@ -1,7 +1,7 @@
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import { AnalyticIcon, ChevronRightIcon } from "../../Icons";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import Link from "next/link";
 
 const HowWorksAndSkills = () => {

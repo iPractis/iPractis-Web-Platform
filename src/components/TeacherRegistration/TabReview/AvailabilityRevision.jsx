@@ -1,4 +1,4 @@
-import WorkScheduleTable from "../../Globals/WorkScheduleTable";
+import WorkScheduleTable from "../../Shared/WorkScheduleTable";
 import TeacherInfoSpecialties from "./TeacherInfoSpecialties";
 import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";

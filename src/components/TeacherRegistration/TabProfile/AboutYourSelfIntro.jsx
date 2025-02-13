@@ -1,5 +1,5 @@
-import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const AboutYourSelfIntro = ({
   errors,

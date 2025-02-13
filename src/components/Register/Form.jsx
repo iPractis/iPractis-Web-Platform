@@ -1,13 +1,13 @@
 "use client";
 
-import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
+import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import { useActionState, useState, startTransition } from "react";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { registerUser } from "@/src/lib/actions/authAction";
-import SectionHeader from "../Globals/SectionHeader";
+import SectionHeader from "../Shared/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
 import Image from "next/image";
 

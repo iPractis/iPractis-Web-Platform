@@ -1,4 +1,4 @@
-import AccountPrompt from "../Globals/AccountPrompt";
+import AccountPrompt from "../Shared/AccountPrompt";
 import ContainerForm from "./ContainerForm";
 import { UserAddIcon } from "../Icons";
 

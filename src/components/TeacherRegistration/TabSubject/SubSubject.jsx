@@ -1,12 +1,12 @@
 // Images && icons
-import { CustomNextUiTextareaWithMaxLength } from "../../Globals/MaxFormLengthFields";
+import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
 import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Globals/CustomNextUiInput";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { useState } from "react";
 
 import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorMultipleZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const getFieldName = (fieldName, index) => {
   return ["subSubject", index, fieldName];

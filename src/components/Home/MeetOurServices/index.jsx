@@ -1,4 +1,4 @@
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 
 // Images && icons
 import womanWorking from "@/public/images/working-woman.jpg";

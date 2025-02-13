@@ -1,5 +1,5 @@
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import SectionHeader from "../../Globals/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import SectionHeader from "../../Shared/SectionHeader";
 import { UserIcon } from "../../Icons";
 
 const AboutYourself = ({ children }) => {

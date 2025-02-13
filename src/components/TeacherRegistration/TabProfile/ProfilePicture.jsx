@@ -1,10 +1,10 @@
-import WhiteSpaceWrapper from "../../Globals/WhiteSpaceWrapper";
-import SectionHeader from "../../Globals/SectionHeader";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import SectionHeader from "../../Shared/SectionHeader";
 import { UserBigIcon, UserIcon } from "../../Icons";
 import { useState } from "react";
 import Image from "next/image";
 
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const ProfilePicture = ({ errors, draft }) => {

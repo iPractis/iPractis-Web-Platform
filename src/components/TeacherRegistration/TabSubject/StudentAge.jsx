@@ -1,8 +1,8 @@
 import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
-import SectionHeader from "../../Globals/SectionHeader";
+import SectionHeader from "../../Shared/SectionHeader";
 import { Switch } from "@nextui-org/react";
 
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
 const StudentAge = ({

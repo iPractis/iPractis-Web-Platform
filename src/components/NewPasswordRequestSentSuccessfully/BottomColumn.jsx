@@ -1,6 +1,6 @@
 import { ChevronRightBiggerIcon, PadLockClosedIcon } from "../Icons";
-import SectionHeader from "@/src/components/Globals/SectionHeader";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import SectionHeader from "@/src/components/Shared/SectionHeader";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import Link from "next/link";
 
 const BottomColumn = () => {

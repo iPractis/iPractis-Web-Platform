@@ -8,8 +8,8 @@ import Image from "next/image";
 
 // Images && icons
 import circleHelpInput from "@/public/icons/circle-help-input.png";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 
 const LeftColumnReasonsSelect = ({ isValidReasonErrors, error }) => {
   const [isOpen, setIsOpen] = useState(false);

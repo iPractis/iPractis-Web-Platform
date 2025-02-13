@@ -1,12 +1,12 @@
 "use client";
 
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
-import CustomNextUiInput from "@/src/components/Globals/CustomNextUiInput";
-import ErrorMessageiPractis from "../Globals/ErrorMessageiPractis";
+import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
+import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import { newPasswordInputs } from "@/src/lib/actions/authAction";
 import passwordStars from "@/public/icons/password-stars.png";
 import PasswordLevels from "../Register/PasswordLevels";
-import DualButton from "../Globals/DualButton";
+import DualButton from "../Shared/DualButton";
 
 // React imports
 import { useRouter, useSearchParams } from "next/navigation";

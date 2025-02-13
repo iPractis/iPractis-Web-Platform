@@ -1,7 +1,7 @@
 "use client";
 
 import { supportRequestIssue } from "@/src/lib/actions/authAction";
-import DualButton from "../Globals/DualButton";
+import DualButton from "../Shared/DualButton";
 import RightColumn from "./RightColumn";
 import LeftColumn from "./LeftColumn";
 

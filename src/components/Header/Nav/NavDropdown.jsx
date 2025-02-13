@@ -16,7 +16,7 @@ import {
   UserToolsIcon,
 } from "../../Icons";
 
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 

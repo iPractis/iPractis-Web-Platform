@@ -1,5 +1,5 @@
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
-import InputBGWrapperIcon from "../../Globals/InputBGWrapperIcon";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
 // Nextui imports
 import {
@@ -13,7 +13,7 @@ import {
 
 // Icons
 import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
-import { ErrorZodResponse } from "../../Globals/ErrorMessageiPractis";
+import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const BirthDateInput = ({
   findInputErrorZod,

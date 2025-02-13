@@ -9,8 +9,8 @@ import {
 } from "@/src/data/dataTeacherRegistration";
 
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
-import InputBGWrapperIcon from "../Globals/InputBGWrapperIcon";
-import SectionHeader from "../Globals/SectionHeader";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
+import SectionHeader from "../Shared/SectionHeader";
 
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const incompleteTabProfile = hasIncompleteFields(tabProfileFields, draft);
