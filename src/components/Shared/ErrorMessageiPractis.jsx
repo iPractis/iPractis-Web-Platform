@@ -4,21 +4,19 @@ import {
   getTitleAndDescZod,
 } from "@/src/lib/utils/getZodValidations";
 
-import warningTriangle from "@/public/icons/warning-triangle.png";
-import Image from "next/image";
+import InputBGWrapperIcon from "./InputBGWrapperIcon";
+import { WarningTriangleIcon } from "../Icons";
 
 const ErrorMessageiPractis = ({ typeError, descError }) => {
   return (
-    <div className="flex items-start gap-2.5 p-1.5 rounded-2xl mt-2 bg-quaternary-color-A8">
-      <Image
-        className="w-9 h-9"
-        src={warningTriangle}
-        alt="Warning Icon Triangle"
-      />
+    <div className="flex items-start gap-4 p-4 rounded-2xl mt-2 bg-quaternary-color-A8">
+      <InputBGWrapperIcon className={"bg-quaternary-color-A12"}>
+        <WarningTriangleIcon fillColor={"fill-quaternary-color-A1"} />
+      </InputBGWrapperIcon>
 
       <div>
         <h4 className="text-primary-color-P1 ST-SB-3">{typeError}</h4>
-        <h5 className="text-primary-color-P4 ST-3">{descError}</h5>
+        <h5 className="text-quaternary-color-A1 ST-1">{descError}</h5>
       </div>
     </div>
   );

@@ -46,7 +46,7 @@ const PersonalInfo = ({
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
             <div>
-              <InputLeftStickStatus inputColorStatus={''}>
+              <InputLeftStickStatus>
                 <CustomNextUiInput
                   name="firstName"
                   defaultValue={draft?.firstName}
