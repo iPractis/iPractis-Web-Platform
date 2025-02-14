@@ -69,8 +69,8 @@ export default {
           A8: "#FFEA7A",
           A9: "#FFED8F",
           A10: "#FFF0A3",
-          A11: "#F0F3FF",
-          A12: "#F8F9FD",
+          A11: "#FFF4B8",
+          A12: "#FFF7CC",
         },
 
         // VS1 to SU15 (Valid && Success)
