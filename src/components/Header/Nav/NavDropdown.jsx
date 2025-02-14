@@ -28,6 +28,7 @@ import {
   Radio,
   RadioGroup,
 } from "@nextui-org/react";
+import Link from "next/link";
 
 const NavDropdown = ({ isDropdownHidden, userName }) => {
   return (
@@ -131,25 +132,29 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
           {/* Dashboard */}
           <DropdownItem className="p-0 mb-1.5" key="dashboard">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <DashboardMediumIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Dashboard</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Classroom */}
           <DropdownItem className="p-0 mb-1.5" key="classroom">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <CameraBoxMediumIcon
                   fillColor={"fill-primary-color-P1"}
                   strokeColor={"stroke-primary-color-P1"}
@@ -157,77 +162,87 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Classroom</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Find tutor */}
           <DropdownItem className="p-0 mb-1.5" key="findATutor">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <SearchSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Find a Tutor</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Profile */}
           <DropdownItem className="p-0 mb-1.5" key="profile">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <UserSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Profile</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Profile Settings */}
           <DropdownItem className="p-0 mb-1.5" key="profileSettings">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <UserToolsIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Profile&#39;s settings</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Account Settings */}
           <DropdownItem className="p-0 mb-1.5" key="accountSettings">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"/account-settings"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <GearSmallIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Account&#39;s settings</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Favorite teachers */}
           <DropdownItem className="p-0 mb-1.5" key="favoriteTeachers">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <HeartSmallIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Favorite teachers</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Become a teacher */}
@@ -235,30 +250,34 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             className="p-0 py-4 my-4 border-y border-primary-color-P3 rounded-none"
             key="becomeATeacher"
           >
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"/apply-as-teacher"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <UserTieSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Become a teacher</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Assistance */}
           <DropdownItem className="p-0 mb-1.5" key="assistance">
-            <button
-              type="button"
+            <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
+              href={"#"}
             >
-              <InputBGWrapperIcon className={"size-6 p-0 rounded-lg bg-primary-color-P10"}>
+              <InputBGWrapperIcon
+                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
+              >
                 <HelpSmallerIcon fillColor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Assistance</h3>
-            </button>
+            </Link>
           </DropdownItem>
 
           {/* Logout */}
