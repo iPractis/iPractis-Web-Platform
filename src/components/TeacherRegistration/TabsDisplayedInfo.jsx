@@ -79,7 +79,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
   // TAB AVAILAIBILITY STATES
   const [isTabAvailabilityPending, setIsTabAvailabilityPending] =
     useState(false);
-  const [selectedSlots, setSelectedSlots] = useState([]);
+  const [selectedSlots, setSelectedSlots] = useState(draft?.workSchedule);
 
   const [errors, setErrors] = useState([]);
 
@@ -185,8 +185,9 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
       // TAB AVAILABILITY
       if (activeTab === 3) {
-        actualDraftInfo.dailyWorkTime = e?.target?.dailyWorkTime?.value;
         actualDraftInfo.timeZone = e?.target?.timeZone?.value;
+        actualDraftInfo.dailyWorkTime = selectedSlots?.length;
+        actualDraftInfo.workSchedule = selectedSlots;
 
         const validationResult =
           tabAvailabilitySchema.safeParse(actualDraftInfo);

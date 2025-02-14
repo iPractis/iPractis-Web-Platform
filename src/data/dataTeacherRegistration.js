@@ -291,6 +291,7 @@ export const tabBackgroundFields = (object) => {
 export const tabAvailabilityFields = (object) => {
   return {
     dailyWorkTime: object?.dailyWorkTime,
+    workSchedule: object?.workSchedule,
     timeZone: object?.timeZone,
   };
 };

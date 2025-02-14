@@ -249,4 +249,15 @@ export const tabAvailabilitySchema = z.object({
     message:
       "Working time don't meet requirement --- Minimum working time is set to 8 hours per week.",
   }),
+  workSchedule: z
+    .array(
+      z.object({
+        day: z.string(),
+        hour: z.number(),
+      })
+    )
+    .min(8, {
+      message:
+        "Invalid submission --- At least 8 hours of work schedule are required.",
+    }),
 });

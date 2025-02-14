@@ -17,10 +17,7 @@ import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
-const WorkTimePreferences = ({ draft, errors, selectedSlots }) => {
-  // console.log(selectedSlots?.length) // --> gives 0
-  // console.log(draft?.dailyWorkTime) // --> gives 8
-
+const WorkTimePreferences = ({ draft, errors }) => {
   const [dailyWorkTime, setDailyWorkTime] = useState(draft?.dailyWorkTime);
   const [isOpen, setIsOpen] = useState(false);
 
