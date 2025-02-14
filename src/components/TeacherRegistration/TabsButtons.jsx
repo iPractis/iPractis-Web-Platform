@@ -13,16 +13,12 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
 
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
-  const incompleteTabProfile = hasIncompleteFields(tabProfileFields, draft);
-  const incompleteTabSubject = hasIncompleteFields(tabSubjectFields, draft);
-  const incompleteTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
-  const incompleteTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
+  const completedTabProfile = hasIncompleteFields(tabProfileFields, draft);
+  const completedTabSubject = hasIncompleteFields(tabSubjectFields, draft);
+  const completedTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
+  const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
 
-  const allTabsNotCompleted =
-    incompleteTabProfile &&
-    incompleteTabSubject &&
-    incompleteTabBackground &&
-    incompleteTabAvailability;
+  const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
 
   return (
     <section>
@@ -41,17 +37,17 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               className={`p-1 rounded-[10px] ${
                 activeTab === TabIndex
                   ? "bg-tertiary-color-SC5"
-                  : incompleteTabProfile && TabIndex === 0
+                  : completedTabProfile && TabIndex === 0
                   ? "bg-quaternary-color-A6"
-                  : incompleteTabSubject && TabIndex === 1
+                  : completedTabSubject && TabIndex === 1
                   ? "bg-quaternary-color-A6"
-                  : incompleteTabBackground && TabIndex === 2
+                  : completedTabBackground && TabIndex === 2
                   ? "bg-quaternary-color-A6"
-                  : incompleteTabAvailability && TabIndex === 3
+                  : completedTabAvailability && TabIndex === 3
                   ? "bg-quaternary-color-A6"
-                  : !allTabsNotCompleted && TabIndex === 4
+                  : !allTabsCompleted && TabIndex === 4
                   ? "bg-quaternary-color-A6"
-                  : !allTabsNotCompleted && TabIndex === 5
+                  : !allTabsCompleted && TabIndex === 5
                   ? "bg-quaternary-color-A6"
                   : "bg-quinary-color-VS6"
               }`}

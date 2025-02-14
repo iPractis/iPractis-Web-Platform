@@ -5,7 +5,8 @@ export const hasIncompleteFields = (
     field === "" ||
     field === false ||
     field?.length === 0 ||
-    field === undefined
+    field === undefined ||
+    field === "undefined"
 ) => {
   return Object.values(fieldsFn(object)).some(predicate);
 };
