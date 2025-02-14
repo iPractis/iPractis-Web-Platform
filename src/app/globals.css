@@ -151,6 +151,18 @@ tr:last-of-type td.isSelected {
     }
   }
 
+  .btn-nonary {
+    @apply bg-transparent text-primary-color-P10;
+
+    &:hover {
+      @apply text-primary-color-P12 bg-primary-color-P2;
+    }
+
+    &:active {
+      @apply text-primary-color-P12 bg-primary-color-P3;
+    }
+  }
+
   .input-wrapper-ipractis {
     @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 !important;
   }
