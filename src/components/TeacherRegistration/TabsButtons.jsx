@@ -71,9 +71,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               />
             </span>
 
-            <span className="md:block hidden">
-              {TabButton?.textButton}
-            </span>
+            <span className="md:block hidden">{TabButton?.textButton}</span>
           </button>
         ))}
       </div>

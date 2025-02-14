@@ -256,7 +256,7 @@ export const tabProfileFields = (object) => {
     // middleName: object?.middleName, --> Optional
     firstName: object?.firstName,
     lastName: object?.lastName,
-    countryOfResidence: object?.countryOfResidence,
+    country: object?.country,
     nationality: object?.nationality,
     languages: object?.languages,
     uploadProfileImage: object?.uploadProfileImage,

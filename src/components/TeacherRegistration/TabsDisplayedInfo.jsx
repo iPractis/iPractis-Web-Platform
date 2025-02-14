@@ -43,9 +43,9 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
     Italy: italyFlag,
   };
   const [selectedCountry, setSelectedCountry] = useState({
-    key: draft?.countryOfResidence || "United Kingdom",
-    image: countryFlags[draft?.countryOfResidence] || ukFlag,
-    alt: `Flag of ${draft?.countryOfResidence}`,
+    key: draft?.country || "United Kingdom",
+    image: countryFlags[draft?.country] || ukFlag,
+    alt: `Flag of ${draft?.country}`,
   });
   const [selectedNationality, setSelectedNationality] = useState({
     key: draft?.nationality || "United Kingdom",
