@@ -15,16 +15,10 @@ import SectionHeader from "../Shared/SectionHeader";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const incompleteTabProfile = hasIncompleteFields(tabProfileFields, draft);
   const incompleteTabSubject = hasIncompleteFields(tabSubjectFields, draft);
-  const incompleteTabBackground = hasIncompleteFields(
-    tabBackgroundFields,
-    draft
-  );
-  const incompleteTabAvailability = hasIncompleteFields(
-    tabAvailabilityFields,
-    draft
-  );
+  const incompleteTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
+  const incompleteTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
 
-  console.log(tabBackgroundFields(draft))
+  console.log(tabAvailabilityFields(draft))
 
   const allTabsNotCompleted =
     incompleteTabProfile &&

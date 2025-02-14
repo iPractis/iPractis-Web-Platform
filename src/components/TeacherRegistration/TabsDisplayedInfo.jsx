@@ -128,6 +128,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         );
 
         setErrors([]);
+        setActiveTab((prev) => prev + 1);
         console.log(response, "PROFILE");
       }
 
@@ -144,7 +145,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.studentLevel = selectedLevel;
         actualDraftInfo.subject = subjectToTeach;
         actualDraftInfo.withdrawal = withdrawal;
-        
+
         const validationResult = tabSubjectSchema.safeParse(actualDraftInfo);
 
         if (!validationResult.success) {
@@ -157,6 +158,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         );
 
         setErrors([]);
+        setActiveTab((prev) => prev + 1);
         console.log(response, "SUBJECT");
       }
 
@@ -177,6 +179,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         );
 
         setErrors([]);
+        setActiveTab((prev) => prev + 1);
         console.log(response, "BACKGROUND");
       }
 
@@ -198,11 +201,9 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         );
 
         setErrors([]);
-
-        console.log(response, "AVAILABILITY");
-      } else {
         setActiveTab((prev) => prev + 1);
-      }
+        console.log(response, "AVAILABILITY");
+      } 
     } catch (err) {
       setErrors(err?.response?.data?.message);
       console.log(err);
