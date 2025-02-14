@@ -133,19 +133,18 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subjectIntroduction =
-          e?.target?.subjectIntroduction?.value;
+        actualDraftInfo.subjectIntroduction = e?.target?.subjectIntroduction?.value;
         actualDraftInfo.emailWithdrawal = e?.target?.emailWithdrawal?.value;
         actualDraftInfo.profileTitle = e?.target?.profileTitle?.value;
         actualDraftInfo.teachToAmateurPersons = teachToAmateurPersons;
         actualDraftInfo.hourlyPrice = e?.target?.hourlyPrice?.value;
         actualDraftInfo.teachToYoungPersons = teachToYoungPersons;
-        actualDraftInfo.subSubject = selectedSubSubjects;
         actualDraftInfo.videoLink = e?.target?.videoLink?.value;
+        actualDraftInfo.subSubject = selectedSubSubjects;
         actualDraftInfo.studentLevel = selectedLevel;
         actualDraftInfo.subject = subjectToTeach;
         actualDraftInfo.withdrawal = withdrawal;
-
+        
         const validationResult = tabSubjectSchema.safeParse(actualDraftInfo);
 
         if (!validationResult.success) {

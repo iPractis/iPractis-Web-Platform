@@ -132,7 +132,7 @@ export const tabSubjectSchema = z.object({
           "Invalid link --- Please ensure the link provided is a valid Youtube URL.",
       }
     ),
-  studentLevel: z.enum(["Beginner", "Intermediate", "Advanced"], {
+  studentLevel: z.enum(["beginner", "intermediate", "advanced"], {
     message: "Invalid submission --- Must choose a level you can teach.",
   }),
   teachToYoungPersons: z.literal(true, {

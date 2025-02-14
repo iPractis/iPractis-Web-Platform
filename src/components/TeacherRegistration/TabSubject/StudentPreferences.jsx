@@ -42,8 +42,8 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
                 studentLevelError && "form-input-error"
               } w-[19px] h-[19px]`,
             }}
-            isSelected={selectedLevel === "Beginner"}
-            onChange={() => setSelectedLevel("Beginner")}
+            isSelected={selectedLevel === "beginner"}
+            onChange={() => setSelectedLevel("beginner")}
           >
             Beginner
           </CustomNextUiCheckbox>
@@ -58,8 +58,8 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
                 studentLevelError && "form-input-error"
               } w-[19px] h-[19px]`,
             }}
-            isSelected={selectedLevel === "Intermediate"}
-            onChange={() => setSelectedLevel("Intermediate")}
+            isSelected={selectedLevel === "intermediate"}
+            onChange={() => setSelectedLevel("intermediate")}
           >
             Intermediate
           </CustomNextUiCheckbox>
@@ -74,8 +74,8 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
                 studentLevelError && "form-input-error"
               } w-[19px] h-[19px]`,
             }}
-            isSelected={selectedLevel === "Advanced"}
-            onChange={() => setSelectedLevel("Advanced")}
+            isSelected={selectedLevel === "advanced"}
+            onChange={() => setSelectedLevel("advanced")}
           >
             Advanced
           </CustomNextUiCheckbox>

@@ -24,6 +24,8 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
     draft
   );
 
+  console.log(tabBackgroundFields(draft))
+
   const allTabsNotCompleted =
     incompleteTabProfile &&
     incompleteTabSubject &&
