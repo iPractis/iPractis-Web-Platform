@@ -108,10 +108,10 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
           : validBirthDate?.toString();
         actualDraftInfo.middleName = e?.target?.middleName?.value;
         actualDraftInfo.firstName = e?.target?.firstName?.value;
+        actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.lastName = e?.target?.lastName?.value;
         actualDraftInfo.uploadProfileImage = uploadedImage;
-        actualDraftInfo.countryOfResidence = selectedCountry?.key;
-        actualDraftInfo.nationality = selectedNationality?.key;
+        actualDraftInfo.country = selectedCountry?.key;
         actualDraftInfo.languages = masteredLanguages;
         actualDraftInfo.introduction = introText;
         actualDraftInfo.gender = selectedGender;
@@ -205,6 +205,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         setActiveTab((prev) => prev + 1);
       }
     } catch (err) {
+      setErrors(err?.response?.data?.message);
       console.log(err);
     } finally {
       setIsTabProfilePending(false);
