@@ -252,7 +252,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           >
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
-              href={"/apply-as-teacher"}
+              href={"/teacher-registration"}
             >
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
