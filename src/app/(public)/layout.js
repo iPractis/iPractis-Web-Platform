@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (session?.user?.token) {
+    if (session?.user?.token && status !== "loading") {
       redirect("/");
     }
   }, [status]);
