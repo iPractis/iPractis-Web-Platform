@@ -11,7 +11,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
   const [featureSearch, setFeatureSearch] = useState("");
 
   return (
-    <section className={"bg-primary-color-P11 rounded-[32px] p-4"}>
+    <section>
       <div
         className={`flex items-center gap-2.5 rounded-[22px] p-1.5 mb-4 bg-primary-color-P1`}
       >
@@ -35,11 +35,11 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
+        wrapperSectionHeaderClassName="bg-primary-color-P11 rounded-[32px] p-4 space-y-4"
         titleIcon={<SearchBigIcon fillColor={"fill-primary-color-P1"} />}
         descriptionText={"Find any feature or settings quickly."}
         titleText={"Search for a feature or an option"}
-        wrapperSectionHeaderClassName="space-y-4"
-        headerContainerClassName="px-3"
+        headerContainerClassName="p-3"
         descriptionClassName={"mt-[4px]"}
         titleClassName="MT-SB-1"
       >
@@ -51,7 +51,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
           placeholder={"Search for a feature"}
           startContent={
             <InputBGWrapperIcon className="bg-primary-color-P11">
-              <SearchBigIcon fillColor={"fill-primary-color-P4"} />
+              <SearchBigIcon fillColor={"fill-primary-color-P1"} />
             </InputBGWrapperIcon>
           }
           endContent={
