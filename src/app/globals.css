@@ -176,7 +176,7 @@ tr:last-of-type td.isSelected {
   }
 
   .textarea-wrapper {
-    @apply bg-primary-color-P11 rounded-2xl data-[hover=true]:bg-secondary-color-S9 p-0 !important;
+    @apply bg-primary-color-P11 rounded-2xl data-[hover=true]:bg-secondary-color-S9 p-0 shadow-none !important;
   }
 
   .textarea-ipractis {
