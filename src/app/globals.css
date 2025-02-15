@@ -184,7 +184,7 @@ tr:last-of-type td.isSelected {
   }
 
   .select-wrapper-ipractis {
-    @apply bg-primary-color-P11 rounded-2xl animation-fade h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 !important;
+    @apply bg-primary-color-P11 rounded-2xl animation-fade h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 shadow-none !important;
   }
 
   .select-ipractis {
