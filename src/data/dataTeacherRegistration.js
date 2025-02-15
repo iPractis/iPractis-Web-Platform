@@ -54,7 +54,7 @@ export const sectionHeaderContent = [
   },
 
   {
-    titleText: "Form completed and send seccesfully",
+    titleText: "Form completed and send successfully",
     descriptionText:
       "Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we’ll update you as soon as possible. Thank you for your patience!",
   },
