@@ -96,13 +96,13 @@ const FormInputsBox = ({
             endContent={
               <Dropdown
                 classNames={{
-                  content: "p-0",
+                  content: "p-0 shadow-none",
                 }}
                 closeOnSelect={false}
               >
                 <DropdownTrigger>
                   <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
                     variant="flat"
                     type="button"
                   >
@@ -113,7 +113,7 @@ const FormInputsBox = ({
                 <DropdownMenu
                   className="p-0 h-0"
                   itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
+                    base: "data-[hover=true]:bg-transparent shadow-none",
                   }}
                 >
                   <DropdownItem className="p-0">
@@ -159,13 +159,13 @@ const FormInputsBox = ({
             endContent={
               <Dropdown
                 classNames={{
-                  content: "p-0",
+                  content: "p-0 shadow-none",
                 }}
                 closeOnSelect={false}
               >
                 <DropdownTrigger>
                   <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
                     variant="flat"
                     type="button"
                   >
@@ -176,7 +176,7 @@ const FormInputsBox = ({
                 <DropdownMenu
                   className="p-0 h-0"
                   itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
+                    base: "data-[hover=true]:bg-transparent shadow-none",
                   }}
                 >
                   <DropdownItem className="p-0">

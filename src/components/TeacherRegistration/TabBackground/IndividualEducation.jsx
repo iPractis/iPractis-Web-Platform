@@ -89,7 +89,7 @@ const IndividualEducation = ({
               >
                 <DropdownTrigger>
                   <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
                     variant="flat"
                     type="button"
                   >
@@ -151,7 +151,7 @@ const IndividualEducation = ({
               >
                 <DropdownTrigger>
                   <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]"
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
                     variant="flat"
                     type="button"
                   >

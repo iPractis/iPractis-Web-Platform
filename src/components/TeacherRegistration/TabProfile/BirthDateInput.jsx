@@ -84,7 +84,7 @@ const BirthDateInput = ({
           >
             <DropdownTrigger>
               <Button
-                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center rounded-2xl sm:h-full h-12 sm:w-full w-12"
+                className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center rounded-2xl sm:h-full h-12 sm:w-full w-12 shadow-none"
                 variant="flat"
                 type="button"
               >

@@ -28,7 +28,7 @@ const NavResponsive = () => {
 
       <Dropdown
         classNames={{
-          content: "min-w-[300px] p-4",
+          content: "min-w-[300px] p-4 shadow-none",
         }}
         backdrop="opaque"
       >

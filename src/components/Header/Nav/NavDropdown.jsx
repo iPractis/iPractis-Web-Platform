@@ -34,7 +34,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
   return (
     <Dropdown
       classNames={{
-        content: "bg-primary-color-P1 min-w-[300px] p-3",
+        content: "bg-primary-color-P1 min-w-[300px] p-3 shadow-none",
       }}
       backdrop="opaque"
     >

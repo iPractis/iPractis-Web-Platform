@@ -31,7 +31,7 @@ const SelectCountryAreaCode = () => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button className="country-ipractis-dropdown-areacode">
+        <Button className="country-ipractis-dropdown-areacode shadow-none">
           <Image
             className="w-[26px] h-[24px] rounded-[5px] object-cover"
             alt={selectedCountry.alt}

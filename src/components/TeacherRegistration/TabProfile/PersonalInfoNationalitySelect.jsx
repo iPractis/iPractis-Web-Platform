@@ -24,7 +24,7 @@ const PersonalInfoNationalitySelect = ({
   return (
     <Dropdown>
       <DropdownTrigger>
-        <Button className="country-ipractis-dropdown">
+        <Button className="country-ipractis-dropdown shadow-none">
           <Image
             className="w-[26px] h-[24px] rounded-[5px] object-cover"
             alt={selectedNationality.alt}
