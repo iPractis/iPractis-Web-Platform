@@ -67,7 +67,7 @@ const SubSubject = ({
         inputClassName={"h-[150px]"}
         value={descriptionSubSubject}
         onChange={(e) =>
-          handleInputChange("description", e?.target?.value.trim())
+          handleInputChange("description", e?.target?.value)
         }
         placeholder={"Enter a text"}
         maxCharactersLength={20}
