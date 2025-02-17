@@ -10,7 +10,6 @@ import {
 const SecurityCheckUp = () => {
   return (
     <>
-      {" "}
       <SectionHeader
         descriptionText={
           "Review and monitor your account's security status to stay protected and informed of any recent activity."
@@ -21,7 +20,8 @@ const SecurityCheckUp = () => {
         titleClassName="MT-SB-1"
         titleText={"Security Check-Up"}
       />
-      <div className="grid grid-cols-3">
+
+      <div className="grid grid-cols-3 gap-8">
         <div className="bg-primary-color-P11 p-8 rounded-[32px] flex flex-col justify-center items-center text-center">
           <CheckedShieldBigIcon fillColor={"fill-primary-color-P1"} />
 
