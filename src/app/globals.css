@@ -244,6 +244,10 @@ tr:last-of-type td.isSelected {
 
   .form-input-error {
     @apply bg-senary-color-W10 data-[hover=true]:bg-senary-color-W10 !important;
+
+    &:hover {
+      @apply bg-senary-color-W8 data-[hover=true]:bg-senary-color-W8 !important;
+    }
   }
 
   /* All sizes have !important because we don't want other libraries to inherit our created ones */
