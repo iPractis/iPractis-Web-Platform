@@ -27,10 +27,16 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
               className={`${
                 activeTab === TabIndex
                   ? "bg-tertiary-color-SC5"
-                  : "bg-primary-color-P1"
+                  : "bg-primary-color-P12"
               } p-1 rounded-[10px]`}
             >
-              <TabButton.Icon fillColor={"fill-primary-color-P12"} />
+              <TabButton.Icon
+                fillColor={
+                  activeTab === TabIndex
+                    ? "fill-primary-color-P12"
+                    : "fill-primary-color-P1"
+                }
+              />
             </span>
 
             <span className="md:block hidden font-bold">
