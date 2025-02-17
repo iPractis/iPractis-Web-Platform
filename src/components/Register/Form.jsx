@@ -11,7 +11,13 @@ import SectionHeader from "../Shared/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
 import Image from "next/image";
 
-import { UserAddCircleIcon, UserAddCircleMediumIcon } from "../Icons";
+import {
+  CloseIcon,
+  EyeWithDashIcon,
+  EyeWithoutDashIcon,
+  UserAddCircleIcon,
+  UserAddCircleMediumIcon,
+} from "../Icons";
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
@@ -21,6 +27,7 @@ import apple from "@/public/icons/apple.png";
 
 const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
+  const [showPassword, setShowPassword] = useState(false);
   const [toggleInput, setToggleInput] = useState("email");
   const [securityLevel, setSecurityLevel] = useState("");
   const [password, setPassword] = useState("");
@@ -200,11 +207,39 @@ const Form = () => {
           {/* Password Input */}
           <div>
             <CustomNextUiInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your password"
               startContent={
                 <Image className="w-9" src={passwordInput} alt="User Input" />
+              }
+              endContent={
+                password?.length > 0 && (
+                  <>
+                    <InputBGWrapperIcon
+                      className={"cursor-pointer me-1.5"}
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      {showPassword ? (
+                        <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                      ) : (
+                        <EyeWithoutDashIcon
+                          fillColor={"fill-primary-color-P4"}
+                        />
+                      )}
+                    </InputBGWrapperIcon>
+
+                    <InputBGWrapperIcon
+                      className={"cursor-pointer"}
+                      onClick={() => {
+                        setPassword("");
+                        setSecurityLevel("");
+                      }}
+                    >
+                      <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  </>
+                )
               }
               classNames={{
                 inputWrapper: isValidPasswordError && "form-input-error",
