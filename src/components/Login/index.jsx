@@ -11,8 +11,9 @@ export const Login = () => {
 
         {/* Register if user doesn't have an account */}
         <AccountPrompt
-          titleText={`You don't have an account yet?`}
           descText={'Press on "Register" to create your account.'}
+          titleText={`You don't have an account yet?`}
+          headerContainerClassName={"px-4"}
           titleIcon={<UserAddIcon />}
           btnColor={"btn-primary"}
           hrefLink={"/register"}

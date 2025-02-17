@@ -2,6 +2,7 @@ import SectionHeader from "./SectionHeader";
 import Link from "next/link";
 
 const AccountPrompt = ({
+  headerContainerClassName,
   linkButtonStyles,
   descText,
   hrefLink,
@@ -15,6 +16,7 @@ const AccountPrompt = ({
       <div className={"flex flex-col items-stretch gap-8"}>
         <div className="flex-1">
           <SectionHeader
+            headerContainerClassName={headerContainerClassName}
             descriptionClassName="mt-1"
             descriptionText={descText}
             titleClassName="MT-SB-1"
