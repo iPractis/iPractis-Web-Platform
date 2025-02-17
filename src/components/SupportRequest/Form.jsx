@@ -8,6 +8,12 @@ import LeftColumn from "./LeftColumn";
 // React imports
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+  validEmailRelatedErrors,
+  validReasonErrors,
+  validSituationErrors,
+  validEmailErrors,
+} from "@/src/data/dataSupportRequest";
 
 const Form = () => {
   const [isPending, setIsPending] = useState(false);
@@ -99,11 +105,6 @@ const Form = () => {
     }
   };
 
-  const validSituationErrors = ["Invalid Situation"];
-  const validEmailErrors = ["Invalid Email"];
-  const validEmailRelatedErrors = ["Invalid Email Related"];
-  const validReasonErrors = ["Invalid Reason"];
-
   const isValidSituationError =
     error?.message && validSituationErrors.includes(error?.title);
   const isValidReasonErrors =
@@ -132,7 +133,9 @@ const Form = () => {
         leftButtonHref={"/account-assistance"}
         leftButtonDisabled={isPending}
         leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
-        rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
+        rightButtonClassName={
+          "disabled:opacity-20 disabled:pointer-events-none"
+        }
         rightButtonDisabled={isPending}
         rightButtonText={isPending ? "Loading..." : "Send"}
         rightButtonType={"submit"}

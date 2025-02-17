@@ -22,6 +22,12 @@ import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
 import { useState } from "react";
 
+import {
+  validEmailErrors,
+  validPasswordErrors,
+  validPhoneNumberErrors,
+} from "@/src/data/dataRegister";
+
 const LeftForm = ({
   handlePasswordChange,
   setToggleInput,
@@ -32,24 +38,6 @@ const LeftForm = ({
   error,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-
-  const validPhoneNumberErrors = ["Invalid Phone Number"];
-
-  const validEmailErrors = [
-    "Invalid Email Submission",
-    "Invalid Email Length",
-    "Invalid Email",
-    "No account exists for this email address.",
-    "Email recently changed",
-  ];
-
-  const validPasswordErrors = [
-    "Password too short",
-    "Account Locked: Too many login attempts",
-    "Invalid Password",
-    "Wrong password",
-    "Character limit",
-  ];
 
   const isValidEmailError =
     error?.message && validEmailErrors.includes(error?.title);

@@ -5,6 +5,7 @@ import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import { newPasswordInputs } from "@/src/lib/actions/authAction";
 import passwordStars from "@/public/icons/password-stars.png";
+import { validPasswordErrors } from "@/src/data/dataRegister";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Shared/DualButton";
 
@@ -105,15 +106,6 @@ const Form = () => {
     }
   };
 
-  const validPasswordErrors = [
-    "Password too short",
-    "Password too long",
-    "Passwords are not the same",
-    "Invalid Password",
-    "Wrong password",
-    "Character limit",
-  ];
-
   const isValidPasswordError =
     error?.message && validPasswordErrors.includes(error?.title);
 
@@ -173,7 +165,9 @@ const Form = () => {
 
       <DualButton
         leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
-        rightButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
+        rightButtonClassName={
+          "disabled:opacity-20 disabled:pointer-events-none"
+        }
         leftButtonText={"Cancel"}
         leftButtonHref="/login"
         leftButtonDisabled={isPending}

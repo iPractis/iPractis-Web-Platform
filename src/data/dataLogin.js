@@ -14,3 +14,21 @@ export const flagAndAreaCodeCountries = [
     areaCode: "+34",
   },
 ];
+
+export const validPhoneNumberErrors = ["Invalid Phone Number"];
+
+export const validEmailErrors = [
+  "Invalid Email Submission",
+  "Invalid Email Length",
+  "Invalid Email",
+  "No account exists for this email address.",
+  "Email recently changed",
+];
+
+export const validPasswordErrors = [
+  "Password too short",
+  "Account Locked: Too many login attempts",
+  "Invalid Password",
+  "Wrong password",
+  "Character limit",
+];

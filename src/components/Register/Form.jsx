@@ -18,12 +18,21 @@ import {
   UserAddCircleIcon,
   UserAddCircleMediumIcon,
 } from "../Icons";
+
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import userInput from "@/public/icons/user-input.png";
 import usersBox from "@/public/icons/users-box.png";
 import apple from "@/public/icons/apple.png";
+
+import {
+  validEmailErrors,
+  validFirstNameErrors,
+  validLastNameErrors,
+  validPasswordErrors,
+  validPhoneNumberErrors,
+} from "@/src/data/dataRegister";
 
 const Form = () => {
   const [state, formAction, isPending] = useActionState(registerUser, {});
@@ -62,33 +71,6 @@ const Form = () => {
       formAction(formData);
     });
   };
-
-  const validEmailErrors = [
-    "Invalid Email Submission",
-    "Invalid Email Length",
-    "Invalid Email",
-    "You already have an account",
-  ];
-
-  const validPhoneNumberErrors = ["Invalid Phone Number"];
-
-  const validPasswordErrors = [
-    "Invalid Password",
-    "Password too short",
-    "Password too long",
-  ];
-
-  const validFirstNameErrors = [
-    "Invalid First Name",
-    "First name too short",
-    "First name too long",
-  ];
-
-  const validLastNameErrors = [
-    "Invalid Last Name",
-    "Last name too short",
-    "Last name too long",
-  ];
 
   const isValidEmailError =
     state?.message && validEmailErrors.includes(state?.title);

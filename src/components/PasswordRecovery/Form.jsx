@@ -4,6 +4,7 @@ import { requestPasswordInput } from "@/src/lib/actions/authAction";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
+import { validEmailErrors } from "@/src/data/dataRegister";
 
 // React imports
 import { useRouter } from "next/navigation";
@@ -65,11 +66,6 @@ const Form = () => {
     }
   };
 
-  const validEmailErrors = [
-    "Invalid Email",
-    "No account exists for this email address.",
-  ];
-
   const isValidEmailError =
     error?.message && validEmailErrors.includes(error?.title);
 
@@ -104,7 +100,7 @@ const Form = () => {
             <span className="flex-1">Send a request</span>
 
             <InputBGWrapperIcon>
-              <ChevronRightBiggerIcon fillColor={'fill-tertiary-color-SC5'} />
+              <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
             </InputBGWrapperIcon>
           </>
         )}
