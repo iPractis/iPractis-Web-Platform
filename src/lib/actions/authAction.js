@@ -8,8 +8,8 @@ export async function registerUser(prevState, formData) {
   // This is the request if user chooses between EMAIL or PHONE NUMBER
   const toggleInput = formData.get("toggleInput");
 
-  // Regex to check for accents and hyphen (-)
-  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ-]/;
+  // Regex to check for accents and hyphen (-) also for numbers
+  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ0-9*^%$£]/;
 
   const rawFormData = {
     email: formData.get("email") ? formData.get("email") : "",
@@ -43,7 +43,7 @@ export async function registerUser(prevState, formData) {
   if (rawFormData.firstName.length > 30) {
     const invalidFirstNameError = {
       title: "First name too long",
-      message: "Your first name should not exceed 30 characters.",
+      message: "Your first name shouldn't exceed 30 characters.",
     };
 
     return invalidFirstNameError;
@@ -58,7 +58,7 @@ export async function registerUser(prevState, formData) {
     const invalidFirstNameError = {
       title: "Invalid First Name",
       message:
-        "First name should not contain hyphen (-) or accents (á, é, í, ó, ú).",
+        "First name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters or numbers.",
     };
 
     return invalidFirstNameError;
@@ -88,7 +88,7 @@ export async function registerUser(prevState, formData) {
   if (rawFormData.lastName.length > 30) {
     const invalidLastNameError = {
       title: "Last name too long",
-      message: "Your last name should not exceed 30 characters.",
+      message: "Your last name shouldn't exceed 30 characters.",
     };
 
     return invalidLastNameError;
@@ -103,7 +103,7 @@ export async function registerUser(prevState, formData) {
     const invalidLastNameError = {
       title: "Invalid Last Name",
       message:
-        "Last name should not contain hyphen (-) or accents (á, é, í, ó, ú).",
+        "Last name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters or numbers.",
     };
 
     return invalidLastNameError;
@@ -171,7 +171,7 @@ export async function registerUser(prevState, formData) {
   if (rawFormData.password.length > 30) {
     const invalidPasswordError = {
       title: "Password too long",
-      message: "Your password should not exceed 30 characters.",
+      message: "Your password shouldn't exceed 30 characters.",
     };
 
     return invalidPasswordError;
