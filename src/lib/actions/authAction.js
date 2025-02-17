@@ -8,8 +8,8 @@ export async function registerUser(prevState, formData) {
   // This is the request if user chooses between EMAIL or PHONE NUMBER
   const toggleInput = formData.get("toggleInput");
 
-  // Regex to check for accents and hyphen (-) also for numbers
-  const invalidCharsRegex = /[áéíóúÁÉÍÓÚ0-9*^%$£]/;
+  // Regex for let user to type only letters and - (hyphen) 
+  const invalidCharsRegex = /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/;
 
   const rawFormData = {
     email: formData.get("email") ? formData.get("email") : "",
