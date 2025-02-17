@@ -15,6 +15,7 @@ export const Register = () => {
           titleText={`You already have an account?`}
           linkButtonStyles={"!p-1.5 flex justify-center items-center"}
           descText={'Press on "Log in" to access to your account.'}
+          headerContainerClassName={"px-4"}
           accountPromptPosition="vertical"
           titleIcon={<PadLockUserIcon />}
           btnColor={"btn-primary"}
