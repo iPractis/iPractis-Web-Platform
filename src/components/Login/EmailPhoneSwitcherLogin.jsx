@@ -2,13 +2,14 @@ import SelectCountryAreaCode from "../Shared/SelectCountryAreaCode";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
-import { MailIcon, PhoneIcon } from "../Icons";
+import { CloseIcon, MailIcon, PhoneIcon } from "../Icons";
 
 // React imports
 import Image from "next/image";
 
 // Images && icons
 import userInput from "@/public/icons/user-input.png";
+import { useState } from "react";
 
 const EmailPhoneSwitcherLogin = ({
   isValidPhoneNumberError,
@@ -18,6 +19,8 @@ const EmailPhoneSwitcherLogin = ({
   toggleInput,
   titleError,
 }) => {
+  const [email, setEmail] = useState("");
+
   return toggleInput === "email" ? (
     // This is if the user switches to EMAIL (Default ONE)
     <div className="flex justify-between gap-2">
@@ -25,9 +28,21 @@ const EmailPhoneSwitcherLogin = ({
         <CustomNextUiInput
           type="text"
           name="email"
+          value={email}
+          onChange={(e) => setEmail(e?.target?.value)}
           placeholder="Enter your email address"
           startContent={
             <Image className="w-9" src={userInput} alt="User Input" />
+          }
+          endContent={
+            email?.length > 0 && (
+              <InputBGWrapperIcon
+                className={"cursor-pointer"}
+                onClick={() => setEmail("")}
+              >
+                <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            )
           }
           classNames={{
             inputWrapper: isValidEmailError && "form-input-error",
