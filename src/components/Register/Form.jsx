@@ -56,7 +56,12 @@ const Form = () => {
     });
   };
 
-  const validEmailErrors = ["Invalid Email", "You already have an account"];
+  const validEmailErrors = [
+    "Invalid Email Submission",
+    "Invalid Email Length",
+    "Invalid Email",
+    "You already have an account",
+  ];
 
   const validPhoneNumberErrors = ["Invalid Phone Number"];
 

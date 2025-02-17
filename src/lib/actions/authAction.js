@@ -8,7 +8,7 @@ export async function registerUser(prevState, formData) {
   // This is the request if user chooses between EMAIL or PHONE NUMBER
   const toggleInput = formData.get("toggleInput");
 
-  // Regex for let user to type only letters and - (hyphen) 
+  // Regex for let user to type only letters and - (hyphen)
   const invalidCharsRegex = /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/;
 
   const rawFormData = {
@@ -120,6 +120,16 @@ export async function registerUser(prevState, formData) {
       return invalidEmailError;
     }
 
+    // Validation of spaces in email field
+    if (rawFormData.email.includes(" ")) {
+      const invalidEmailError = {
+        title: "Invalid Email Submission",
+        message: "Email can't have spaces.",
+      };
+
+      return invalidEmailError;
+    }
+
     // Validation of gmail format
     const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
 
@@ -128,6 +138,16 @@ export async function registerUser(prevState, formData) {
       const invalidEmailError = {
         title: "Invalid Email",
         message: "Check your spelling email",
+      };
+
+      return invalidEmailError;
+    }
+
+    // Validation of characters (cannot exceed 254 characters)
+    if (rawFormData.email?.length > 254) {
+      const invalidEmailError = {
+        title: "Invalid Email Length",
+        message: "Email can't exceed 254 of characters.",
       };
 
       return invalidEmailError;
@@ -278,7 +298,10 @@ export async function supportRequestIssue(formData) {
     email: formData.get("email"),
     emailRelated: formData.get("emailRelated"),
     reason: formData.get("reason"),
-    uploadedImage: formData.get("uploaded_image") !== 'undefined' ? formData.get("uploaded_image") : "",
+    uploadedImage:
+      formData.get("uploaded_image") !== "undefined"
+        ? formData.get("uploaded_image")
+        : "",
     situation: formData.get("situation"),
   };
 
