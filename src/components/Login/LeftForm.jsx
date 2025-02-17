@@ -36,6 +36,8 @@ const LeftForm = ({
   const validPhoneNumberErrors = ["Invalid Phone Number"];
 
   const validEmailErrors = [
+    "Invalid Email Submission",
+    "Invalid Email Length",
     "Invalid Email",
     "No account exists for this email address.",
     "Email recently changed",

@@ -21,13 +21,23 @@ const ContainerForm = () => {
 
     // If user chooses email we're gonna get the EMAIL INPUT (ignore phone number)
     if (toggleInput === "email") {
-      const email = e?.target?.email?.value.trim();
+      const email = e?.target?.email?.value;
 
       // Validation of empty field (email)
       if (!email) {
         const invalidEmailError = {
           title: "Invalid Email",
           message: "Email can't be empty.",
+        };
+
+        return setError(invalidEmailError);
+      }
+
+      // Validation of spaces in email field
+      if (email.includes(" ")) {
+        const invalidEmailError = {
+          title: "Invalid Email Submission",
+          message: "Email can't have spaces.",
         };
 
         return setError(invalidEmailError);
@@ -40,6 +50,16 @@ const ContainerForm = () => {
         const invalidEmailError = {
           title: "Invalid Email",
           message: "Check your spelling email",
+        };
+
+        return setError(invalidEmailError);
+      }
+
+      // Validation of characters (cannot exceed 254 characters)
+      if (email?.length > 254) {
+        const invalidEmailError = {
+          title: "Invalid Email Length",
+          message: "Email can't exceed 254 of characters.",
         };
 
         return setError(invalidEmailError);
