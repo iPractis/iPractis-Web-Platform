@@ -42,6 +42,7 @@ const LeftForm = ({
   ];
 
   const validPasswordErrors = [
+    "Password too short",
     "Account Locked: Too many login attempts",
     "Invalid Password",
     "Wrong password",

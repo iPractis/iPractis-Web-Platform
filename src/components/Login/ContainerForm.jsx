@@ -69,6 +69,16 @@ const ContainerForm = () => {
       return setError(invalidEmailError);
     }
 
+    // Check if password input is too short (can't be less than 8)
+    if (password?.length < 8) {
+      const invalidPasswordError = {
+        title: "Password too short",
+        message: "You need at least 8 characters for password.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
     // Validation of exceed the character limit (password)
     if (password?.length > 30) {
       const invalidPasswordError = {
