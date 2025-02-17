@@ -9,20 +9,30 @@ import Image from "next/image";
 import Link from "next/link";
 
 // Images && icons
+import {
+  ChevronRightDoorIcon,
+  CloseIcon,
+  EyeWithDashIcon,
+  EyeWithoutDashIcon,
+} from "../Icons";
+
 import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
-import { ChevronRightDoorIcon } from "../Icons";
+import { useState } from "react";
 
 const LeftForm = ({
   handlePasswordChange,
-  password,
-  error,
-  isPending,
   setToggleInput,
   toggleInput,
+  setPassword,
+  isPending,
+  password,
+  error,
 }) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const validPhoneNumberErrors = ["Invalid Phone Number"];
 
   const validEmailErrors = [
@@ -97,13 +107,34 @@ const LeftForm = ({
         {/* Password Input */}
         <div className="mt-3">
           <CustomNextUiInput
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={password}
             onChange={handlePasswordChange}
             placeholder="Enter your password"
             startContent={
               <Image className="w-9" src={passwordInput} alt="User Input" />
+            }
+            endContent={
+              <>
+                <InputBGWrapperIcon
+                  className={"cursor-pointer me-1.5"}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                  ) : (
+                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                  )}
+                </InputBGWrapperIcon>
+
+                <InputBGWrapperIcon
+                  className={"cursor-pointer"}
+                  onClick={() => setPassword("")}
+                >
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              </>
             }
             classNames={{
               inputWrapper: isValidPasswordError && "form-input-error",

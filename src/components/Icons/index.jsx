@@ -2412,3 +2412,47 @@ export const WarningTriangleIcon = ({ fillColor }) => (
     />
   </svg>
 );
+
+export const EyeWithDashIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M3 12C4.41545 8.488 7.90909 6 12 6C16.0909 6 19.5845 8.488 21 12C19.5845 15.512 16.0909 18 12 18C7.90909 18 4.41545 15.512 3 12ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+      className={fillColor}
+    />
+    <path
+      d="M4.52378 4.70153C3.84112 4.2322 2.90725 4.40514 2.43792 5.0878C1.9686 5.77045 2.14154 6.70432 2.82419 7.17365L18.8242 18.1737C19.5069 18.643 20.4407 18.47 20.9101 17.7874C21.3794 17.1047 21.2064 16.1709 20.5238 15.7015L4.52378 4.70153Z"
+      className={fillColor}
+      stroke="white"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
+export const EyeWithoutDashIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M3 12C4.41545 8.488 7.90909 6 12 6C16.0909 6 19.5845 8.488 21 12C19.5845 15.512 16.0909 18 12 18C7.90909 18 4.41545 15.512 3 12ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
+      className={fillColor}
+    />
+    <path
+      d="M14 12C14 13.1046 13.1046 14 12 14C10.8954 14 10 13.1046 10 12C10 10.8954 10.8954 10 12 10C13.1046 10 14 10.8954 14 12Z"
+      className={fillColor}
+    />
+  </svg>
+);

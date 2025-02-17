@@ -130,12 +130,13 @@ const ContainerForm = () => {
         />
 
         <LeftForm
+          handlePasswordChange={handlePasswordChange}
           setToggleInput={setToggleInput}
           toggleInput={toggleInput}
-          handlePasswordChange={handlePasswordChange}
+          setPassword={setPassword}
+          isPending={isPending}
           password={password}
           error={error}
-          isPending={isPending}
         />
       </div>
     </form>
