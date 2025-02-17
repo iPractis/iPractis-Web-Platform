@@ -116,25 +116,27 @@ const LeftForm = ({
               <Image className="w-9" src={passwordInput} alt="User Input" />
             }
             endContent={
-              <>
-                <InputBGWrapperIcon
-                  className={"cursor-pointer me-1.5"}
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                  ) : (
-                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
-                  )}
-                </InputBGWrapperIcon>
+              password?.length > 0 && (
+                <>
+                  <InputBGWrapperIcon
+                    className={"cursor-pointer me-1.5"}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
 
-                <InputBGWrapperIcon
-                  className={"cursor-pointer"}
-                  onClick={() => setPassword("")}
-                >
-                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              </>
+                  <InputBGWrapperIcon
+                    className={"cursor-pointer"}
+                    onClick={() => setPassword("")}
+                  >
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                </>
+              )
             }
             classNames={{
               inputWrapper: isValidPasswordError && "form-input-error",
