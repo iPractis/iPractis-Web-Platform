@@ -1,11 +1,20 @@
-import { useFormStatus } from "react-dom";
+import { useImperativeHandle, useState } from "react";
 
-const ButtonSubmitForm = ({ buttonClassName, children }) => {
-  const { pending } = useFormStatus();
+const ButtonSubmitForm = ({ buttonClassName, children, ref}) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useImperativeHandle(ref, () => ({
+    loading() {
+      setIsLoading(true);
+    },
+    notIsLoading() {
+      setIsLoading(false);
+    },
+  }));
 
   return (
-    <button className={buttonClassName} disabled={pending} type="submit">
-      {pending ? "Loading..." : children}
+    <button className={buttonClassName} disabled={isLoading} type="submit">
+      {isLoading ? "Loading..." : children}
     </button>
   );
 };

@@ -9,7 +9,7 @@ import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 // React imports
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 // Icons && images
 import { ChevronRightBiggerIcon, MailIcon } from "../Icons";
@@ -21,9 +21,12 @@ const Form = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
   const [error, setError] = useState("");
+  const buttonRef = useRef(null);
   const router = useRouter();
 
   const onSubmit = async (data) => {
+    buttonRef.current.loading();
+
     try {
       const response = await requestPasswordInput(data);
 
@@ -35,6 +38,8 @@ const Form = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      buttonRef.current.notIsLoading();
     }
   };
 
@@ -48,7 +53,8 @@ const Form = () => {
         }
         placeholder="Enter your email address"
         classNames={{
-          inputWrapper: errors?.email?.type && "form-input-error",
+          inputWrapper:
+            (errors?.email?.type || error?.message) && "form-input-error",
         }}
         {...register("email", {
           required: "Email address is required",
@@ -69,12 +75,19 @@ const Form = () => {
             typeError={"Invalid Email"}
             descError={"Check your spelling email"}
           />
+        )) ||
+        (error?.title && (
+          <ErrorMessageiPractis
+            typeError={error?.title}
+            descError={error?.message}
+          />
         ))}
 
       <ButtonSubmitForm
         buttonClassName={
           "btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
         }
+        ref={buttonRef}
       >
         <span className="flex-1">Send a request</span>
 
