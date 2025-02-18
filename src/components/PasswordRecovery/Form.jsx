@@ -1,8 +1,9 @@
 "use client";
 
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import { requestPasswordInput } from "@/src/lib/actions/authAction";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import { errorFormMessages } from "@/src/data/dataPasswordRecovery";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
@@ -75,24 +76,12 @@ const Form = () => {
         />
       </InputLeftStickStatus>
 
-      {(errors.email?.type === "required" && (
-        <ErrorMessageiPractis
-          typeError={"Invalid Email"}
-          descError={"Email can't be empty."}
-        />
-      )) ||
-        (errors.email?.type === "pattern" && (
-          <ErrorMessageiPractis
-            typeError={"Invalid Email"}
-            descError={"Check your spelling email"}
-          />
-        )) ||
-        (error?.title && (
-          <ErrorMessageiPractis
-            typeError={error?.title}
-            descError={error?.message}
-          />
-        ))}
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        fieldName="email"
+        errors={errors}
+        error={error}
+      />
 
       <ButtonSubmitForm
         buttonClassName={
