@@ -91,7 +91,7 @@ const Form = () => {
     const newPassword = e.target.value;
 
     // Regex - to prevent user to not SPACE in the input!
-    setPassword(newPassword.replace(/\s/g, ""));
+    setPassword(newPassword);
 
     if (!newPassword.trim(" ")) return setSecurityLevel("");
 
@@ -136,7 +136,7 @@ const Form = () => {
             name="repeatPassword"
             placeholder="Retape your new password"
             onChange={(e) =>
-              setRepeatPassword(e?.target?.value?.replace(/\s/g, ""))
+              setRepeatPassword(e?.target?.value)
             }
             value={repeatPassword}
             startContent={

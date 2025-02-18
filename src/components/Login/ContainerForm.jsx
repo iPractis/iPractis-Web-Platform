@@ -130,7 +130,7 @@ const ContainerForm = () => {
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
-    setPassword(newPassword.replace(/\s/g, ""));
+    setPassword(newPassword);
   };
 
   return (
