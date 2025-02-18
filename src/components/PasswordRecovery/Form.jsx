@@ -1,7 +1,9 @@
 "use client";
 
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { requestPasswordInput } from "@/src/lib/actions/authAction";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
@@ -19,6 +21,7 @@ const Form = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm({ mode: "onChange" });
   const [error, setError] = useState("");
   const buttonRef = useRef(null);
@@ -45,24 +48,32 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <CustomNextUiInput
-        startContent={
-          <InputBGWrapperIcon>
-            <MailIcon fillColor={"fill-primary-color-P4"} />
-          </InputBGWrapperIcon>
-        }
-        placeholder="Enter your email address"
-        classNames={{
-          inputWrapper:
-            (errors?.email?.type || error?.message) && "form-input-error",
-        }}
-        {...register("email", {
-          required: "Email address is required",
-          pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-        })}
-        name="email"
-        type="text"
-      />
+      <InputLeftStickStatus
+        inputColorStatus={getLeftStickInputColorStatus(
+          errors,
+          error,
+          watch("email")
+        )}
+      >
+        <CustomNextUiInput
+          startContent={
+            <InputBGWrapperIcon>
+              <MailIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
+          placeholder="Enter your email address"
+          classNames={{
+            inputWrapper:
+              (errors?.email?.type || error?.message) && "form-input-error",
+          }}
+          {...register("email", {
+            required: "Invalid Email --- Check your spelling email",
+            pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+          })}
+          name="email"
+          type="text"
+        />
+      </InputLeftStickStatus>
 
       {(errors.email?.type === "required" && (
         <ErrorMessageiPractis
