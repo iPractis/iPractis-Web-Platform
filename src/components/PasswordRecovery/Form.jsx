@@ -4,54 +4,28 @@ import { requestPasswordInput } from "@/src/lib/actions/authAction";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
-import { validEmailErrors } from "@/src/data/dataRegister";
+import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 
 // React imports
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import Image from "next/image";
 
 // Icons && images
-import { ChevronRightBiggerIcon } from "../Icons";
-import email from "@/public/icons/email.png";
+import { ChevronRightBiggerIcon, MailIcon } from "../Icons";
 
 const Form = () => {
-  const [isPending, setIsPending] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e?.preventDefault();
-
-    const email = e?.target?.email?.value.trim();
-
-    // Validation of empty field (email)
-    if (!email) {
-      const invalidEmailError = {
-        title: "Invalid Email",
-        message: "Email can't be empty.",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Validation of gmail format
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-    if (!gmailRegex.test(email)) {
-      const invalidEmailError = {
-        title: "Invalid Email",
-        message: "Check your spelling email",
-      };
-
-      return setError(invalidEmailError);
-    }
-
+  const onSubmit = async (data) => {
     try {
-      setIsPending(true);
-
-      const formData = new FormData(e.currentTarget);
-      const response = await requestPasswordInput(formData);
+      const response = await requestPasswordInput(data);
 
       // If there's error we display the error
       if (response?.message && response?.title) {
@@ -61,50 +35,53 @@ const Form = () => {
       }
     } catch (error) {
       console.log(error);
-    } finally {
-      setIsPending(false);
     }
   };
 
-  const isValidEmailError =
-    error?.message && validEmailErrors.includes(error?.title);
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <CustomNextUiInput
-        type="text"
-        name="email"
+        startContent={
+          <InputBGWrapperIcon>
+            <MailIcon fillColor={"fill-primary-color-P4"} />
+          </InputBGWrapperIcon>
+        }
         placeholder="Enter your email address"
-        startContent={<Image className="w-9" src={email} alt="Email Icon" />}
         classNames={{
-          inputWrapper: isValidEmailError && "form-input-error",
+          inputWrapper: errors?.email?.type && "form-input-error",
         }}
+        {...register("email", {
+          required: "Email address is required",
+          pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+        })}
+        name="email"
+        type="text"
       />
 
-      {isValidEmailError && (
+      {(errors.email?.type === "required" && (
         <ErrorMessageiPractis
-          typeError={error?.title}
-          descError={error?.message}
+          typeError={"Invalid Email"}
+          descError={"Email can't be empty."}
         />
-      )}
+      )) ||
+        (errors.email?.type === "pattern" && (
+          <ErrorMessageiPractis
+            typeError={"Invalid Email"}
+            descError={"Check your spelling email"}
+          />
+        ))}
 
-      <button
-        className="btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
-        disabled={isPending}
-        type="submit"
+      <ButtonSubmitForm
+        buttonClassName={
+          "btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
+        }
       >
-        {isPending ? (
-          "Loading..."
-        ) : (
-          <>
-            <span className="flex-1">Send a request</span>
+        <span className="flex-1">Send a request</span>
 
-            <InputBGWrapperIcon>
-              <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
-            </InputBGWrapperIcon>
-          </>
-        )}
-      </button>
+        <InputBGWrapperIcon>
+          <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+        </InputBGWrapperIcon>
+      </ButtonSubmitForm>
     </form>
   );
 };

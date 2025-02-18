@@ -242,15 +242,11 @@ export async function logInUser(formData) {
 }
 
 // WITHOUT AUTHJS
-export async function requestPasswordInput(formData) {
-  const rawFormData = {
-    email: formData.get("email"),
-  };
-
+export async function requestPasswordInput(data) {
   try {
     const res = await fetch(`${process.env.BASE_URL}/auth/recover-password`, {
       method: "POST",
-      body: JSON.stringify(rawFormData),
+      body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
