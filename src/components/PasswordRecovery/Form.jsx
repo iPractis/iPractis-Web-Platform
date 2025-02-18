@@ -49,7 +49,7 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputLeftStickStatus
-        inputColorStatus={getLeftStickInputColorStatus(
+        inputBarStatusClassName={getLeftStickInputColorStatus(
           errors,
           error,
           watch("email")
