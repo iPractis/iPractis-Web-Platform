@@ -1,8 +1,8 @@
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { errorFormMessages, reasons } from "@/src/data/dataSupportRequest";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { reasons } from "@/src/data/dataSupportRequest";
 
 // Nextjs imports
 import { Select, SelectItem } from "@nextui-org/react";
@@ -23,20 +23,19 @@ const LeftColumnReasonsSelect = ({
 
   return (
     <>
-      <div className="flex items-center gap-2">
-        <InputLeftStickStatus
-          inputBarStatusClassName={getLeftStickInputColorStatus(
-            frontEndErrors,
-            backEndErrors,
-            watch("reason")
-          )}
-        >
+      <InputLeftStickStatus
+        inputBarStatusClassName={getLeftStickInputColorStatus(
+          frontEndErrors,
+          backEndErrors,
+          watch("reason")
+        )}
+      >
+        <div className="flex items-center gap-2">
           <Select
             name="reason"
             onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
             placeholder="Select a reason"
             selectorIcon={<span></span>}
-            aria-label="reason"
             isOpen={isOpen}
             startContent={
               <Image className="w-9" src={circleHelpInput} alt="User Input" />
@@ -48,7 +47,7 @@ const LeftColumnReasonsSelect = ({
             }
             {...register("reason", {
               required:
-                "Invalid Situation --- Please, describe the situation of the problem.",
+                "Invalid Reason --- Please, include a reason of the problem.",
             })}
             classNames={{
               trigger: [
@@ -68,15 +67,15 @@ const LeftColumnReasonsSelect = ({
               <SelectItem key={reason}>{reason}</SelectItem>
             ))}
           </Select>
-        </InputLeftStickStatus>
-      </div>
+        </div>
+      </InputLeftStickStatus>
 
-      {isValidReasonErrors && (
-        <ErrorMessageiPractis
-          typeError={error?.title}
-          descError={error?.message}
-        />
-      )}
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
+        fieldName="reason"
+      />
     </>
   );
 };

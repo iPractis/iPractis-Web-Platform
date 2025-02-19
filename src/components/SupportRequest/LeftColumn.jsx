@@ -1,18 +1,22 @@
 "use client";
 
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { errorFormMessages } from "@/src/data/dataSupportRequest";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import LeftColumnReasonsSelect from "./LeftColumnReasonsSelect";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import SectionHeader from "../Shared/SectionHeader";
-import { CircleImportantIcon } from "../Icons";
 import { useState } from "react";
 import Image from "next/image";
 
 // Images && icons
+import { ChevronDownBigIcon, CircleImportantIcon } from "../Icons";
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 
-const Form = ({ frontEndErrors, backEndErrors, register, watch }) => {
+const LeftColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (e) => {
@@ -43,67 +47,105 @@ const Form = ({ frontEndErrors, backEndErrors, register, watch }) => {
 
         {/* Contact email */}
         <div className="mt-2.5">
-          <CustomNextUiInput
-            name="email"
-            type="text"
-            placeholder="Contact Email"
-            startContent={
-              <Image className="w-9" src={emailInput} alt="Email Input" />
-            }
-            classNames={{
-              inputWrapper: isValidEmailErrors && "form-input-error",
-            }}
-          />
-
-          {isValidEmailErrors && (
-            <ErrorMessageiPractis
-              typeError={error?.title}
-              descError={error?.message}
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("email")
+            )}
+          >
+            <CustomNextUiInput
+              name="email"
+              type="text"
+              placeholder="Contact Email"
+              startContent={
+                <Image className="w-9" src={emailInput} alt="Email Input" />
+              }
+              endContent={
+                <InputBGWrapperIcon>
+                  <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              isClearable
+              {...register("email", {
+                required: "Invalid Email --- Email can't be empty.",
+              })}
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.situation?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
             />
-          )}
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="email"
+          />
         </div>
 
         {/* Email related to your account */}
         <div className="mt-2.5">
-          <CustomNextUiInput
-            type="text"
-            name="emailRelated"
-            placeholder="Enter email related to your account"
-            startContent={
-              <Image className="w-9" src={emailInput} alt="Email Input" />
-            }
-            classNames={{
-              inputWrapper: isValidEmailRelatedErrors && "form-input-error",
-            }}
-          />
-
-          {isValidEmailRelatedErrors && (
-            <ErrorMessageiPractis
-              typeError={error?.title}
-              descError={error?.message}
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("emailRelated")
+            )}
+          >
+            <CustomNextUiInput
+              type="text"
+              name="emailRelated"
+              placeholder="Enter email related to your account"
+              isClearable
+              {...register("emailRelated", {
+                required:
+                  "Invalid Email Related --- Email related can't be empty.",
+              })}
+              startContent={
+                <Image className="w-9" src={emailInput} alt="Email Input" />
+              }
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.situation?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
             />
-          )}
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="emailRelated"
+          />
         </div>
 
         {/* File Input */}
         <div className="mt-2.5 relative">
-          <input
-            type="file"
-            name="upload_image"
-            onChange={handleFileChange}
-            className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-          />
+          <InputLeftStickStatus
+            inputBarStatusClassName={"bg-primary-color-P11 group-hover:bg-quaternary-color-A5"}
+          >
+            <input
+              type="file"
+              name="upload_image"
+              onChange={handleFileChange}
+              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+            />
 
-          <div className="flex items-center rounded-2xl p-1.5 ST-3 bg-primary-color-P11 hover:bg-secondary-color-S9">
-            <Image className="w-9" src={pinInput} alt="Pin Input" />
-            <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
-              {fileName || "Upload a screenshot (Optional)"}{" "}
-            </span>
-          </div>
+            <div className="flex items-center rounded-2xl p-1.5 ST-3 bg-primary-color-P11 hover:bg-secondary-color-S9">
+              <Image className="w-9" src={pinInput} alt="Pin Input" />
+              <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
+                {fileName || "Upload a screenshot (Optional)"}{" "}
+              </span>
+            </div>
+          </InputLeftStickStatus>
         </div>
       </div>
     </article>
   );
 };
 
-export default Form;
+export default LeftColumn;

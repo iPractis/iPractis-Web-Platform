@@ -14,9 +14,9 @@ const Form = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors: frontEndError },
+    formState: { errors: frontEndErrors },
     watch,
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "onBlur" });
   const [backEndErrors, setBackEndErrors] = useState("");
   const [isPending, setIsPending] = useState(false);
   const router = useRouter();
@@ -46,14 +46,14 @@ const Form = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="sm:px-8 mt-[50px]">
       <LeftColumn
-        frontEndError={frontEndError}
+        frontEndErrors={frontEndErrors}
         backEndErrors={backEndErrors}
         register={register}
         watch={watch}
       />
 
       <RightColumn
-        frontEndError={frontEndError}
+        frontEndErrors={frontEndErrors}
         backEndErrors={backEndErrors}
         register={register}
         watch={watch}

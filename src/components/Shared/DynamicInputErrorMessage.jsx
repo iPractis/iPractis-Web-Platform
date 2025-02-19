@@ -9,6 +9,8 @@ export const DynamicInputErrorMessage = ({ frontEndErrors, backEndErrors, fieldN
       />
     );
   }
+  
+  console.log(frontEndErrors, 'aquii')
 
   // Check for field-specific validation errors
   const fieldErrors = frontEndErrors[fieldName];
