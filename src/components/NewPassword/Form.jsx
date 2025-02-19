@@ -4,7 +4,7 @@ import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import { newPasswordInputs } from "@/src/lib/actions/authAction";
-import passwordStars from "@/public/icons/password-stars.png";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { validPasswordErrors } from "@/src/data/dataRegister";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Shared/DualButton";
@@ -12,7 +12,9 @@ import DualButton from "../Shared/DualButton";
 // React imports
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import Image from "next/image";
+
+// Icons
+import { ThreeAstheristiksBiggerIcon } from "../Icons";
 
 const Form = () => {
   const searchParams = useSearchParams();
@@ -119,7 +121,9 @@ const Form = () => {
             name="password"
             placeholder="Enter your new password"
             startContent={
-              <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
+              <InputBGWrapperIcon>
+                <ThreeAstheristiksBiggerIcon fillColor={'fill-primary-color-P4'} />
+              </InputBGWrapperIcon>
             }
             onChange={handlePasswordChange}
             value={password}
@@ -140,7 +144,9 @@ const Form = () => {
             }
             value={repeatPassword}
             startContent={
-              <Image className="w-9" src={passwordStars} alt="3 Stars Icon" />
+              <InputBGWrapperIcon>
+                <ThreeAstheristiksBiggerIcon fillColor={'fill-primary-color-P4'} />
+              </InputBGWrapperIcon>
             }
             classNames={{
               inputWrapper: isValidPasswordError && "form-input-error",
