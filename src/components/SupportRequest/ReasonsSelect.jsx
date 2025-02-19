@@ -13,7 +13,7 @@ import Image from "next/image";
 import circleHelpInput from "@/public/icons/circle-help-input.png";
 import { ChevronDownBigIcon } from "../Icons";
 
-const LeftColumnReasonsSelect = ({
+const ReasonsSelect = ({
   frontEndErrors,
   backEndErrors,
   register,
@@ -80,4 +80,4 @@ const LeftColumnReasonsSelect = ({
   );
 };
 
-export default LeftColumnReasonsSelect;
+export default ReasonsSelect;

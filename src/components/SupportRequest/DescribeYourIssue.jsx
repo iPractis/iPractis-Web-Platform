@@ -8,7 +8,7 @@ import SectionHeader from "../Shared/SectionHeader";
 // Icons
 import { WrenchIcon } from "../Icons";
 
-const RightColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
+const DescribeYourIssue = ({ frontEndErrors, backEndErrors, register, watch }) => {
   return (
     <article className="">
       <SectionHeader
@@ -57,4 +57,4 @@ const RightColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
   );
 };
 
-export default RightColumn;
+export default DescribeYourIssue;

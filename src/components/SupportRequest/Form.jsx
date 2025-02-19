@@ -1,9 +1,9 @@
 "use client";
 
 import { supportRequestIssue } from "@/src/lib/actions/authAction";
+import DescribeYourIssue from "./DescribeYourIssue";
 import DualButton from "../Shared/DualButton";
-import RightColumn from "./RightColumn";
-import LeftColumn from "./LeftColumn";
+import ContactID from "./ContactID";
 
 // React imports
 import { useRouter } from "next/navigation";
@@ -45,14 +45,14 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="sm:px-8 mt-[50px]">
-      <LeftColumn
+      <ContactID
         frontEndErrors={frontEndErrors}
         backEndErrors={backEndErrors}
         register={register}
         watch={watch}
       />
 
-      <RightColumn
+      <DescribeYourIssue
         frontEndErrors={frontEndErrors}
         backEndErrors={backEndErrors}
         register={register}

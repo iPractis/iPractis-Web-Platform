@@ -5,7 +5,7 @@ import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import { errorFormMessages } from "@/src/data/dataSupportRequest";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import LeftColumnReasonsSelect from "./LeftColumnReasonsSelect";
+import ReasonsSelect from "./ReasonsSelect";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
@@ -16,7 +16,7 @@ import { ChevronDownBigIcon, CircleImportantIcon } from "../Icons";
 import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
 
-const LeftColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
+const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (e) => {
@@ -38,7 +38,7 @@ const LeftColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
 
       <div className="my-[50px]">
         {/* Reason */}
-        <LeftColumnReasonsSelect
+        <ReasonsSelect
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           register={register}
@@ -148,4 +148,4 @@ const LeftColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
   );
 };
 
-export default LeftColumn;
+export default ContactID;
