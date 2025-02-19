@@ -8,9 +8,11 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import SectionHeader from "../Shared/SectionHeader";
 import ReasonsSelect from "./ReasonsSelect";
+
+// React imports
 import { useState } from "react";
 
-// Images && icons
+// Icons
 import {
   CircleImportantIcon,
   LinkVerticalIcon,
@@ -77,7 +79,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               })}
               classNames={{
                 inputWrapper:
-                  (frontEndErrors?.situation?.type || backEndErrors?.message) &&
+                (frontEndErrors?.email?.type || backEndErrors?.message) &&
                   "form-input-error",
               }}
             />
@@ -121,7 +123,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               }
               classNames={{
                 inputWrapper:
-                  (frontEndErrors?.situation?.type || backEndErrors?.message) &&
+                  (frontEndErrors?.emailRelated?.type || backEndErrors?.message) &&
                   "form-input-error",
               }}
               isClearable

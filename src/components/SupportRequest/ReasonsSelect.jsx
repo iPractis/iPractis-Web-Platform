@@ -8,7 +8,7 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
-// Images && icons
+// Icons
 import { ChevronDownBigIcon, HelpIcon } from "../Icons";
 
 const ReasonsSelect = ({

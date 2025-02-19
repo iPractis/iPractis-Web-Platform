@@ -1,6 +1,12 @@
 export const reasons = ["Remove Authentication"];
 
 export const errorFormMessages = {
+  reason: {
+    required: {
+      typeError: "Invalid Reason",
+      descError: "Please, include a reason of the problem.",
+    },
+  },
   email: {
     required: {
       typeError: "Invalid Email",
@@ -19,12 +25,6 @@ export const errorFormMessages = {
     pattern: {
       typeError: "Invalid Email Related",
       descError: "Check your spelling email.",
-    },
-  },
-  reason: {
-    required: {
-      typeError: "Invalid Reason",
-      descError: "Please, include a reason of the problem.",
     },
   },
   situation: {

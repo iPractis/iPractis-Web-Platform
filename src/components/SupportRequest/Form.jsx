@@ -23,8 +23,9 @@ const Form = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log(data, ' no llegoo')
     buttonRef.current.loading();
+
+    console.log("Entro al submit sin problemas", data);
 
     try {
       const response = await supportRequestIssue(data);

@@ -1,6 +1,8 @@
 import SectionHeader from "../Shared/SectionHeader";
-import { SparkleIcon } from "../Icons";
 import Form from "./Form";
+
+// Icons
+import { SparkleIcon } from "../Icons";
 
 export const SupportRequest = () => {
   return (
