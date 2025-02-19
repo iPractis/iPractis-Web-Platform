@@ -1,6 +1,7 @@
 "use client";
 
 import { supportRequestIssue } from "@/src/lib/actions/authAction";
+import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import DescribeYourIssue from "./DescribeYourIssue";
 import DualButton from "../Shared/DualButton";
 import ContactID from "./ContactID";
@@ -8,7 +9,10 @@ import ContactID from "./ContactID";
 // React imports
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+// Icons
+import { ChevronRightBiggerIcon } from "../Icons";
 
 const Form = () => {
   const {
@@ -18,13 +22,13 @@ const Form = () => {
     watch,
   } = useForm({ mode: "onBlur" });
   const [backEndErrors, setBackEndErrors] = useState("");
-  const [isPending, setIsPending] = useState(false);
+  const buttonRef = useRef(null);
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    try {
-      setIsPending(true);
+    buttonRef.current.loading();
 
+    try {
       const response = await supportRequestIssue(data);
 
       // If there's error we display the error
@@ -39,7 +43,7 @@ const Form = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      setIsPending(false);
+      buttonRef.current.notIsLoading();
     }
   };
 
@@ -62,14 +66,17 @@ const Form = () => {
       <DualButton
         leftButtonText={"Cancel"}
         leftButtonHref={"/account-assistance"}
-        leftButtonDisabled={isPending}
         leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
-        rightButtonClassName={
-          "disabled:opacity-20 disabled:pointer-events-none"
+        customSubmitButton={
+          <ButtonSubmitForm
+            buttonClassName={
+              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4 disabled:opacity-20 disabled:pointer-events-none"
+            }
+            ref={buttonRef}
+          >
+            Send
+          </ButtonSubmitForm>
         }
-        rightButtonDisabled={isPending}
-        rightButtonText={isPending ? "Loading..." : "Send"}
-        rightButtonType={"submit"}
       />
     </form>
   );
