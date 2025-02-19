@@ -11,7 +11,7 @@ import Image from "next/image";
 
 // Images && icons
 import circleHelpInput from "@/public/icons/circle-help-input.png";
-import { ChevronDownBigIcon } from "../Icons";
+import { ChevronDownBigIcon, HelpIcon } from "../Icons";
 
 const ReasonsSelect = ({
   frontEndErrors,
@@ -38,7 +38,9 @@ const ReasonsSelect = ({
             selectorIcon={<span></span>}
             isOpen={isOpen}
             startContent={
-              <Image className="w-9" src={circleHelpInput} alt="User Input" />
+              <InputBGWrapperIcon className={"cursor-pointer"}>
+                <HelpIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
             }
             endContent={
               <InputBGWrapperIcon>
