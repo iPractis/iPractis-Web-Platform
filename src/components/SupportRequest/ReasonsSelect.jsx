@@ -7,10 +7,8 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 // Nextjs imports
 import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
-import Image from "next/image";
 
 // Images && icons
-import circleHelpInput from "@/public/icons/circle-help-input.png";
 import { ChevronDownBigIcon, HelpIcon } from "../Icons";
 
 const ReasonsSelect = ({

@@ -1,14 +1,14 @@
-import BottomColumn from "./BottomColumn";
-import TopColumn from "./TopColumn";
+import HeadingTitle from "./HeadingTitle";
+import Form from "./Form";
 
 export const PasswordRecovery = () => {
   return (
     <section className="container-page-v8 my-8">
-      {/* Account support service */}
-      <TopColumn />
+      {/* Request password changes */}
+      <HeadingTitle />
 
-      {/* Account Assistance */}
-      <BottomColumn />
+      {/* Form email */}
+      <Form />
     </section>
   );
 };

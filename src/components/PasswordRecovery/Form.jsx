@@ -51,7 +51,7 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className="sm:px-8 px-0 mt-[50px]">
       <InputLeftStickStatus
         inputBarStatusClassName={getLeftStickInputColorStatus(
           frontEndErrors,

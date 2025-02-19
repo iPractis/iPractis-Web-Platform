@@ -1,7 +1,9 @@
 import SectionHeader from "../Shared/SectionHeader";
+
+// Icons
 import { PadLockUserIcon } from "../Icons";
 
-const TopColumn = () => {
+const HeadingTitle = () => {
   return (
     <article>
       {/* Heading Title */}
@@ -18,4 +20,4 @@ const TopColumn = () => {
   );
 };
 
-export default TopColumn;
+export default HeadingTitle;
