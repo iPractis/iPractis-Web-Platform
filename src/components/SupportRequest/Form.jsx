@@ -7,94 +7,32 @@ import LeftColumn from "./LeftColumn";
 
 // React imports
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import {
-  validEmailRelatedErrors,
-  validReasonErrors,
-  validSituationErrors,
-  validEmailErrors,
-} from "@/src/data/dataSupportRequest";
 
 const Form = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: frontEndError },
+    watch,
+  } = useForm({ mode: "onChange" });
+  const [backEndErrors, setBackEndErrors] = useState("");
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validation of gmail format
-    const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-    // Check if reason select is NOT empty
-    if (!e?.target?.reason?.value) {
-      const invalidReasonError = {
-        message: "Please, include a reason of the problem.",
-        title: "Invalid Reason",
-      };
-
-      return setError(invalidReasonError);
-    }
-
-    // Check if email isn't empty
-    if (!e?.target?.email?.value) {
-      const invalidEmailError = {
-        message: "Email can't be empty.",
-        title: "Invalid Email",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    if (!gmailRegex.test(e?.target?.email?.value)) {
-      const invalidEmailError = {
-        title: "Invalid Email",
-        message: "Check your spelling email",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Check if email_related isn't empty
-    if (!e?.target?.emailRelated?.value) {
-      const invalidEmailError = {
-        message: "Email can't be empty.",
-        title: "Invalid Email Related",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    if (!gmailRegex.test(e?.target?.emailRelated?.value)) {
-      const invalidEmailError = {
-        title: "Invalid Email Related",
-        message: "Check your spelling email",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Check if situation input is NOT empty
-    if (!e?.target?.situation?.value.trim(" ")) {
-      const invalidSituationError = {
-        message: "Please, describe the situation of the problem.",
-        title: "Invalid Situation",
-      };
-
-      return setError(invalidSituationError);
-    }
-
+  const onSubmit = async (data) => {
     try {
       setIsPending(true);
 
-      const formData = new FormData(e.currentTarget);
-      formData.append("uploaded_image", e?.target?.upload_image?.files[0]);
-
-      const response = await supportRequestIssue(formData);
+      const response = await supportRequestIssue(data);
 
       // If there's error we display the error
       if (response?.message && response?.title) {
-        return setError({ message: response.message, title: response.title });
+        return setBackEndErrors({
+          message: response.message,
+          title: response.title,
+        });
       } else {
         router.push(`/`);
       }
@@ -105,27 +43,20 @@ const Form = () => {
     }
   };
 
-  const isValidSituationError =
-    error?.message && validSituationErrors.includes(error?.title);
-  const isValidReasonErrors =
-    error?.message && validReasonErrors.includes(error?.title);
-  const isValidEmailErrors =
-    error?.message && validEmailErrors.includes(error?.title);
-  const isValidEmailRelatedErrors =
-    error?.message && validEmailRelatedErrors.includes(error?.title);
-
   return (
-    <form onSubmit={handleSubmit} className="sm:px-8 mt-[50px]">
+    <form onSubmit={handleSubmit(onSubmit)} className="sm:px-8 mt-[50px]">
       <LeftColumn
-        isValidEmailRelatedErrors={isValidEmailRelatedErrors}
-        isValidReasonErrors={isValidReasonErrors}
-        isValidEmailErrors={isValidEmailErrors}
-        error={error}
+        frontEndError={frontEndError}
+        backEndErrors={backEndErrors}
+        register={register}
+        watch={watch}
       />
 
       <RightColumn
-        isValidSituationError={isValidSituationError}
-        error={error}
+        frontEndError={frontEndError}
+        backEndErrors={backEndErrors}
+        register={register}
+        watch={watch}
       />
 
       <DualButton

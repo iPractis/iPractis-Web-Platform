@@ -1,9 +1,14 @@
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import CustomNextUiTextarea from "../Shared/CustomNextUiTextarea";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import { errorFormMessages } from "@/src/data/dataSupportRequest";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import SectionHeader from "../Shared/SectionHeader";
+
+// Icons
 import { WrenchIcon } from "../Icons";
 
-const RightColumn = ({ isValidSituationError, error }) => {
+const RightColumn = ({ frontEndErrors, backEndErrors, register, watch }) => {
   return (
     <article className="">
       <SectionHeader
@@ -16,23 +21,37 @@ const RightColumn = ({ isValidSituationError, error }) => {
       />
 
       <div className="my-[50px] w-full">
-        <CustomNextUiTextarea
-          classNames={{
-            inputWrapper: isValidSituationError && "form-input-error",
-            input: "h-[169px]",
-          }}
-          placeholder="Describe the situation"
-          size="primaryiPractis"
-          name="situation"
-          disableAutosize
-        />
-
-        {isValidSituationError && (
-          <ErrorMessageiPractis
-            typeError={error?.title}
-            descError={error?.message}
+        <InputLeftStickStatus
+          inputBarStatusClassName={getLeftStickInputColorStatus(
+            frontEndErrors,
+            backEndErrors,
+            watch("situation")
+          )}
+        >
+          <CustomNextUiTextarea
+            classNames={{
+              inputWrapper:
+                (frontEndErrors?.situation?.type || backEndErrors?.message) &&
+                "form-input-error",
+              input: "h-[169px]",
+            }}
+            {...register("situation", {
+              required:
+                "Invalid Situation --- Please, describe the situation of the problem.",
+            })}
+            placeholder="Describe the situation"
+            size="primaryiPractis"
+            name="situation"
+            disableAutosize
           />
-        )}
+        </InputLeftStickStatus>
+
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="situation"
+        />
       </div>
     </article>
   );

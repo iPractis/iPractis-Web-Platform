@@ -1,17 +1,17 @@
 import ErrorMessageiPractis from "./ErrorMessageiPractis";
 
-export const DynamicInputErrorMessage = ({ errors, error, fieldName, errorMessages }) => {
-  if (error?.title) {
+export const DynamicInputErrorMessage = ({ frontEndErrors, backEndErrors, fieldName, errorMessages }) => {
+  if (backEndErrors?.title) {
     return (
       <ErrorMessageiPractis
-        typeError={error?.title}
-        descError={error?.message}
+        typeError={backEndErrors?.title}
+        descError={backEndErrors?.message}
       />
     );
   }
 
   // Check for field-specific validation errors
-  const fieldErrors = errors[fieldName];
+  const fieldErrors = frontEndErrors[fieldName];
 
   if (fieldErrors?.type && errorMessages[fieldName]?.[fieldErrors?.type]) {
     const { typeError, descError } = errorMessages[fieldName][fieldErrors?.type];

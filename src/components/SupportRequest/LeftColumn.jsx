@@ -12,12 +12,7 @@ import pinInput from "@/public/icons/pin-input.png";
 import emailInput from "@/public/icons/email.png";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 
-const Form = ({
-  isValidReasonErrors,
-  isValidEmailErrors,
-  isValidEmailRelatedErrors,
-  error,
-}) => {
+const Form = ({ frontEndErrors, backEndErrors, register, watch }) => {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (e) => {
@@ -27,7 +22,7 @@ const Form = ({
   };
 
   return (
-    <article className="">
+    <article>
       <SectionHeader
         descriptionText="We need this information to assist you effectively"
         titleIcon={<CircleImportantIcon />}
@@ -40,8 +35,10 @@ const Form = ({
       <div className="my-[50px]">
         {/* Reason */}
         <LeftColumnReasonsSelect
-          isValidReasonErrors={isValidReasonErrors}
-          error={error}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          register={register}
+          watch={watch}
         />
 
         {/* Contact email */}

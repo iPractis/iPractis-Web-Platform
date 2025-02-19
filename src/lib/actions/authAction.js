@@ -289,22 +289,16 @@ export async function newPasswordInputs(formData) {
 }
 
 // WITHOUT AUTHJS
-export async function supportRequestIssue(formData) {
-  const rawFormData = {
-    email: formData.get("email"),
-    emailRelated: formData.get("emailRelated"),
-    reason: formData.get("reason"),
-    uploadedImage:
-      formData.get("uploaded_image") !== "undefined"
-        ? formData.get("uploaded_image")
-        : "",
-    situation: formData.get("situation"),
+export async function supportRequestIssue(data) {
+  const constructedData = {
+    ...data,
+    uploadedImage: data?.upload_image !== "undefined" ? data?.upload_image : "",
   };
 
   try {
     const res = await fetch(`${process.env.BASE_URL}/support/issue`, {
       method: "POST",
-      body: JSON.stringify(rawFormData),
+      body: JSON.stringify(constructedData),
       headers: {
         "Content-Type": "application/json",
       },

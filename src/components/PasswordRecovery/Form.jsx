@@ -18,13 +18,13 @@ import { useRef, useState } from "react";
 import { ChevronRightBiggerIcon, MailIcon } from "../Icons";
 
 const Form = () => {
+  const [backEndErrors, setBackEndErrors] = useState("");
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors: frontEndErrors },
     watch,
-  } = useForm({ mode: "onChange" });
-  const [error, setError] = useState("");
+  } = useForm({ mode: "onBlur" });
   const buttonRef = useRef(null);
   const router = useRouter();
 
@@ -36,7 +36,10 @@ const Form = () => {
 
       // If there's error we display the error
       if (response?.message && response?.title) {
-        return setError({ message: response.message, title: response.title });
+        return setBackEndErrors({
+          message: response.message,
+          title: response.title,
+        });
       } else {
         router.push(`/new-password-request-sent-sucessfully`);
       }
@@ -51,8 +54,8 @@ const Form = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <InputLeftStickStatus
         inputBarStatusClassName={getLeftStickInputColorStatus(
-          errors,
-          error,
+          frontEndErrors,
+          backEndErrors,
           watch("email")
         )}
       >
@@ -65,7 +68,8 @@ const Form = () => {
           placeholder="Enter your email address"
           classNames={{
             inputWrapper:
-              (errors?.email?.type || error?.message) && "form-input-error",
+              (frontEndErrors?.email?.type || backEndErrors?.message) &&
+              "form-input-error",
           }}
           {...register("email", {
             required: "Invalid Email --- Check your spelling email",
@@ -78,9 +82,9 @@ const Form = () => {
 
       <DynamicInputErrorMessage
         errorMessages={errorFormMessages}
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
         fieldName="email"
-        errors={errors}
-        error={error}
       />
 
       <ButtonSubmitForm
