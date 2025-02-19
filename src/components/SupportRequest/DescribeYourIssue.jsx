@@ -44,6 +44,7 @@ const DescribeYourIssue = ({
             {...register("situation", {
               required:
                 "Invalid Situation --- Please, describe the situation of the problem.",
+              setValueAs: (value) => value.trim(),
             })}
             placeholder="Describe the situation"
             size="primaryiPractis"
