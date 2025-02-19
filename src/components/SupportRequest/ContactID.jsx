@@ -69,6 +69,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               isClearable
               {...register("email", {
                 required: "Invalid Email --- Email can't be empty.",
+                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
               })}
               classNames={{
                 inputWrapper:
@@ -103,6 +104,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               {...register("emailRelated", {
                 required:
                   "Invalid Email Related --- Email related can't be empty.",
+                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
               })}
               startContent={
                 <Image className="w-9" src={emailInput} alt="Email Input" />
@@ -126,7 +128,9 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
         {/* File Input */}
         <div className="mt-2.5 relative">
           <InputLeftStickStatus
-            inputBarStatusClassName={"bg-primary-color-P11 group-hover:bg-quaternary-color-A5"}
+            inputBarStatusClassName={
+              "bg-primary-color-P11 group-hover:bg-quaternary-color-A5"
+            }
           >
             <input
               type="file"

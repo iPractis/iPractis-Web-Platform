@@ -11,9 +11,6 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 
-// Icons
-import { ChevronRightBiggerIcon } from "../Icons";
-
 const Form = () => {
   const {
     register,
@@ -26,6 +23,7 @@ const Form = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
+    console.log(data)
     buttonRef.current.loading();
 
     try {
@@ -66,11 +64,10 @@ const Form = () => {
       <DualButton
         leftButtonText={"Cancel"}
         leftButtonHref={"/account-assistance"}
-        leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
         customSubmitButton={
           <ButtonSubmitForm
             buttonClassName={
-              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4 disabled:opacity-20 disabled:pointer-events-none"
+              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
             }
             ref={buttonRef}
           >
