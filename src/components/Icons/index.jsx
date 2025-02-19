@@ -2062,7 +2062,7 @@ export const CameraIcon = ({ fillColor }) => (
   </svg>
 );
 
-export const LinkIcon = ({ fillColor }) => (
+export const LinkHorizontalIcon = ({ fillColor }) => (
   <svg
     width="24"
     height="24"
@@ -2087,6 +2087,22 @@ export const LinkIcon = ({ fillColor }) => (
       clipRule="evenodd"
       d="M7 12C7 11.4477 7.44772 11 8 11H16C16.5523 11 17 11.4477 17 12C17 12.5523 16.5523 13 16 13H8C7.44772 13 7 12.5523 7 12Z"
       className={fillColor}
+    />
+  </svg>
+);
+
+export const LinkVerticalIcon = ({ strokeColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11 8L11 15C11 15.5523 11.4477 16 12 16V16C12.5523 16 13 15.5523 13 15L13 8C13 6.89543 12.1046 6 11 6V6C9.89543 6 9 6.89543 9 8L9 15C9 16.6569 10.3431 18 12 18V18C13.6569 18 15 16.6569 15 15L15 7"
+      className={strokeColor}
+      strokeLinecap="round"
     />
   </svg>
 );

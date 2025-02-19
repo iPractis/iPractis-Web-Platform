@@ -5,16 +5,18 @@ import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import { errorFormMessages } from "@/src/data/dataSupportRequest";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import ReasonsSelect from "./ReasonsSelect";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import SectionHeader from "../Shared/SectionHeader";
+import ReasonsSelect from "./ReasonsSelect";
 import { useState } from "react";
-import Image from "next/image";
 
 // Images && icons
-import { ChevronDownBigIcon, CircleImportantIcon } from "../Icons";
-import pinInput from "@/public/icons/pin-input.png";
-import emailInput from "@/public/icons/email.png";
+import {
+  CircleImportantIcon,
+  LinkVerticalIcon,
+  CloseIcon,
+  MailIcon,
+} from "../Icons";
 
 const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
   const [fileName, setFileName] = useState("");
@@ -59,11 +61,13 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               type="text"
               placeholder="Contact Email"
               startContent={
-                <Image className="w-9" src={emailInput} alt="Email Input" />
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <MailIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
               endContent={
-                <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               isClearable
@@ -100,20 +104,27 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               type="text"
               name="emailRelated"
               placeholder="Enter email related to your account"
-              isClearable
               {...register("emailRelated", {
                 required:
                   "Invalid Email Related --- Email related can't be empty.",
                 pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
               })}
               startContent={
-                <Image className="w-9" src={emailInput} alt="Email Input" />
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <MailIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
               classNames={{
                 inputWrapper:
                   (frontEndErrors?.situation?.type || backEndErrors?.message) &&
                   "form-input-error",
               }}
+              isClearable
             />
           </InputLeftStickStatus>
 
@@ -140,7 +151,10 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
             />
 
             <div className="flex items-center rounded-2xl p-1.5 ST-3 bg-primary-color-P11 hover:bg-secondary-color-S9">
-              <Image className="w-9" src={pinInput} alt="Pin Input" />
+              <InputBGWrapperIcon className={"cursor-pointer"}>
+                <LinkVerticalIcon strokeColor={"stroke-primary-color-P4"} />
+              </InputBGWrapperIcon>
+              
               <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
                 {fileName || "Upload a screenshot (Optional)"}{" "}
               </span>

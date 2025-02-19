@@ -12,18 +12,18 @@ import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 
 const Form = () => {
+  const [backEndErrors, setBackEndErrors] = useState("");
   const {
     register,
     handleSubmit,
     formState: { errors: frontEndErrors },
     watch,
   } = useForm({ mode: "onBlur" });
-  const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log(data)
+    console.log(data, ' no llegoo')
     buttonRef.current.loading();
 
     try {

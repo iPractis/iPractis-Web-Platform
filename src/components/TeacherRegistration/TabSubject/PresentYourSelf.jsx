@@ -6,7 +6,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 import React from "react";
 
 // Images && icons
-import { AnalyticVerticalLinesIcon, CameraIcon, LinkIcon } from "../../Icons";
+import { AnalyticVerticalLinesIcon, CameraIcon, LinkHorizontalIcon } from "../../Icons";
 
 const PresentYourSelf = ({ draft, errors }) => {
   return (
@@ -47,7 +47,7 @@ const PresentYourSelf = ({ draft, errors }) => {
             placeholder="Enter your video link"
             startContent={
               <InputBGWrapperIcon>
-                <LinkIcon fillColor={"fill-primary-color-P4"} />
+                <LinkHorizontalIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
           />
