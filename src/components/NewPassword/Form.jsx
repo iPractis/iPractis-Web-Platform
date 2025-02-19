@@ -110,7 +110,7 @@ const Form = () => {
     error?.message && validPasswordErrors.includes(error?.title);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="sm:px-8 mt-[50px]">
       <div className="mb-8">
         {/* New Password */}
         <div>
