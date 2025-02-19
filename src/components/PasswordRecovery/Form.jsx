@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 
 // Icons && images
-import { ChevronRightBiggerIcon, MailIcon } from "../Icons";
+import { ChevronRightBiggerIcon, CloseIcon, MailIcon } from "../Icons";
 
 const Form = () => {
   const [backEndErrors, setBackEndErrors] = useState("");
@@ -65,6 +65,12 @@ const Form = () => {
               <MailIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
+          endContent={
+            <InputBGWrapperIcon className={"cursor-pointer"}>
+              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          }
+          isClearable
           placeholder="Enter your email address"
           classNames={{
             inputWrapper:
