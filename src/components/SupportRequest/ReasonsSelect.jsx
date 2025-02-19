@@ -25,7 +25,8 @@ const ReasonsSelect = ({
         inputBarStatusClassName={getLeftStickInputColorStatus(
           frontEndErrors,
           backEndErrors,
-          watch("reason")
+          watch("reason"),
+          "reason"
         )}
       >
         <div className="flex items-center gap-2">
