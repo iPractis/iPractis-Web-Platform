@@ -8,7 +8,12 @@ import SectionHeader from "../Shared/SectionHeader";
 // Icons
 import { WrenchIcon } from "../Icons";
 
-const DescribeYourIssue = ({ frontEndErrors, backEndErrors, register, watch }) => {
+const DescribeYourIssue = ({
+  frontEndErrors,
+  backEndErrors,
+  register,
+  watch,
+}) => {
   return (
     <article className="">
       <SectionHeader
@@ -25,7 +30,8 @@ const DescribeYourIssue = ({ frontEndErrors, backEndErrors, register, watch }) =
           inputBarStatusClassName={getLeftStickInputColorStatus(
             frontEndErrors,
             backEndErrors,
-            watch("situation")
+            watch("situation"),
+            "situation"
           )}
         >
           <CustomNextUiTextarea

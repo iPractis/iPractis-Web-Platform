@@ -25,8 +25,6 @@ const Form = () => {
   const onSubmit = async (data) => {
     buttonRef.current.loading();
 
-    console.log("Entro al submit sin problemas", data);
-
     try {
       const response = await supportRequestIssue(data);
 

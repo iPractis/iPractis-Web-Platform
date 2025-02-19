@@ -55,7 +55,8 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
             inputBarStatusClassName={getLeftStickInputColorStatus(
               frontEndErrors,
               backEndErrors,
-              watch("email")
+              watch("email"),
+              "email"
             )}
           >
             <CustomNextUiInput
@@ -79,7 +80,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               })}
               classNames={{
                 inputWrapper:
-                (frontEndErrors?.email?.type || backEndErrors?.message) &&
+                  (frontEndErrors?.email?.type || backEndErrors?.message) &&
                   "form-input-error",
               }}
             />
@@ -99,7 +100,8 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
             inputBarStatusClassName={getLeftStickInputColorStatus(
               frontEndErrors,
               backEndErrors,
-              watch("emailRelated")
+              watch("emailRelated"),
+              "emailRelated",
             )}
           >
             <CustomNextUiInput
@@ -123,7 +125,8 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               }
               classNames={{
                 inputWrapper:
-                  (frontEndErrors?.emailRelated?.type || backEndErrors?.message) &&
+                  (frontEndErrors?.emailRelated?.type ||
+                    backEndErrors?.message) &&
                   "form-input-error",
               }}
               isClearable
@@ -142,7 +145,9 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
         <div className="mt-2.5 relative">
           <InputLeftStickStatus
             inputBarStatusClassName={
-              "bg-primary-color-P11 group-hover:bg-quaternary-color-A5"
+              fileName
+                ? "bg-quinary-color-VS5"
+                : "bg-primary-color-P11 group-hover:bg-quaternary-color-A5"
             }
           >
             <input

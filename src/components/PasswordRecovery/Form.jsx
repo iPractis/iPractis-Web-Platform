@@ -56,7 +56,8 @@ const Form = () => {
         inputBarStatusClassName={getLeftStickInputColorStatus(
           frontEndErrors,
           backEndErrors,
-          watch("email")
+          watch("email"),
+          "email"
         )}
       >
         <CustomNextUiInput
