@@ -17,6 +17,7 @@ const Form = () => {
     register,
     handleSubmit,
     formState: { errors: frontEndErrors },
+    control,
     watch,
   } = useForm({ mode: "onBlur" });
   const buttonRef = useRef(null);
@@ -50,6 +51,7 @@ const Form = () => {
         frontEndErrors={frontEndErrors}
         backEndErrors={backEndErrors}
         register={register}
+        control={control}
         watch={watch}
       />
 

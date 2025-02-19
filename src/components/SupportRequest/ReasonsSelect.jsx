@@ -6,17 +6,13 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 
 // Nextjs imports
 import { Select, SelectItem } from "@nextui-org/react";
+import { Controller } from "react-hook-form";
 import { useState } from "react";
 
 // Icons
 import { ChevronDownBigIcon, HelpIcon } from "../Icons";
 
-const ReasonsSelect = ({
-  frontEndErrors,
-  backEndErrors,
-  register,
-  watch,
-}) => {
+const ReasonsSelect = ({ frontEndErrors, backEndErrors, control, watch }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,44 +26,58 @@ const ReasonsSelect = ({
         )}
       >
         <div className="flex items-center gap-2">
-          <Select
+          <Controller
             name="reason"
-            onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-            placeholder="Select a reason"
-            selectorIcon={<span></span>}
-            isOpen={isOpen}
-            startContent={
-              <InputBGWrapperIcon className={"cursor-pointer"}>
-                <HelpIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            endContent={
-              <InputBGWrapperIcon>
-                <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            {...register("reason", {
+            control={control}
+            rules={{
               required:
                 "Invalid Reason --- Please, include a reason of the problem.",
-            })}
-            classNames={{
-              trigger: [
-                "select-wrapper-ipractis",
-                (frontEndErrors?.reason?.type || backEndErrors?.message) &&
-                  "form-input-error",
-                ,
-              ],
-              innerWrapper: ["select-ipractis w-full"],
-              value: [
-                "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-              ],
-              listbox: ["text-primary-color-P4"],
             }}
-          >
-            {reasons?.map((reason) => (
-              <SelectItem key={reason}>{reason}</SelectItem>
-            ))}
-          </Select>
+            render={({ field, fieldState }) => (
+              <Select
+                onSelectionChange={(keys) => {
+                  const key = Array.from(keys)[0];
+                  field.onChange(key);
+                }}
+                onOpenChange={(open) => {
+                  setIsOpen(open);
+                  
+                  if (!open) {
+                    field.onBlur();
+                  }
+                }}
+                placeholder="Select a reason"
+                selectorIcon={<span></span>}
+                isOpen={isOpen}
+                startContent={
+                  <InputBGWrapperIcon className="cursor-pointer">
+                    <HelpIcon fillColor="fill-primary-color-P4" />
+                  </InputBGWrapperIcon>
+                }
+                endContent={
+                  <InputBGWrapperIcon>
+                    <ChevronDownBigIcon fillColor="fill-primary-color-P4" />
+                  </InputBGWrapperIcon>
+                }
+                classNames={{
+                  trigger: [
+                    "select-wrapper-ipractis",
+                    (fieldState?.invalid || backEndErrors?.message) &&
+                      "form-input-error",
+                  ],
+                  innerWrapper: ["select-ipractis w-full"],
+                  value: [
+                    "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                  ],
+                  listbox: ["text-primary-color-P4"],
+                }}
+              >
+                {reasons?.map((reason) => (
+                  <SelectItem key={reason}>{reason}</SelectItem>
+                ))}
+              </Select>
+            )}
+          />
         </div>
       </InputLeftStickStatus>
 

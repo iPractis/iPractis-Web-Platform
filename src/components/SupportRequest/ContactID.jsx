@@ -20,7 +20,13 @@ import {
   MailIcon,
 } from "../Icons";
 
-const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
+const ContactID = ({
+  frontEndErrors,
+  backEndErrors,
+  register,
+  control,
+  watch,
+}) => {
   const [fileName, setFileName] = useState("");
 
   const handleFileChange = (e) => {
@@ -45,7 +51,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
         <ReasonsSelect
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
-          register={register}
+          control={control}
           watch={watch}
         />
 
@@ -101,7 +107,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               frontEndErrors,
               backEndErrors,
               watch("emailRelated"),
-              "emailRelated",
+              "emailRelated"
             )}
           >
             <CustomNextUiInput
@@ -161,7 +167,7 @@ const ContactID = ({ frontEndErrors, backEndErrors, register, watch }) => {
               <InputBGWrapperIcon className={"cursor-pointer"}>
                 <LinkVerticalIcon strokeColor={"stroke-primary-color-P4"} />
               </InputBGWrapperIcon>
-              
+
               <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
                 {fileName || "Upload a screenshot (Optional)"}{" "}
               </span>
