@@ -1,23 +1,30 @@
 import ErrorMessageiPractis from "./ErrorMessageiPractis";
 
-export const DynamicInputErrorMessage = ({ frontEndErrors, backEndErrors, fieldName, errorMessages }) => {
-  if (backEndErrors?.title) {
-    return (
-      <ErrorMessageiPractis
-        typeError={backEndErrors?.title}
-        descError={backEndErrors?.message}
-      />
-    );
-  }
-  
-  // Check for field-specific validation errors
-  const fieldErrors = frontEndErrors[fieldName];
+export const DynamicInputErrorMessage = ({
+  errorMessages,
+  frontEndErrors,
+  backEndErrors,
+  fieldName,
+}) => {
+  const fieldFrontendErrors = frontEndErrors[fieldName];
+  const fieldBackendErrors = backEndErrors?.field === fieldName ? backEndErrors : null;
 
-  if (fieldErrors?.type && errorMessages[fieldName]?.[fieldErrors?.type]) {
-    const { typeError, descError } = errorMessages[fieldName][fieldErrors?.type];
+  // Frontend errors to display
+  if (fieldFrontendErrors?.type && errorMessages[fieldName]?.[fieldFrontendErrors.type]) {
+    const { typeError, descError } = errorMessages[fieldName][fieldFrontendErrors.type];
     return <ErrorMessageiPractis typeError={typeError} descError={descError} />;
   }
 
-  // No errors to display
+  // Backend errors to display
+  if (fieldBackendErrors) {
+    return (
+      <ErrorMessageiPractis
+        typeError={fieldBackendErrors.title} 
+        descError={fieldBackendErrors.message} 
+      />
+    );
+  }
+
+  // No errors
   return null;
 };
