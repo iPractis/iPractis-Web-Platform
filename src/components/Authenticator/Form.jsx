@@ -9,6 +9,10 @@ import { logInUserOtp } from "@/src/lib/actions/authAction";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 
 // React imports
+import { useSearchParams } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
+import OTPInput from "react-otp-input";
+import Link from "next/link";
 import {
   startTransition,
   useActionState,
@@ -16,10 +20,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useSearchParams } from "next/navigation";
-import { Controller, useForm } from "react-hook-form";
-import OTPInput from "react-otp-input";
-import Link from "next/link";
 
 // Icons
 import { ChevronRightDoorIcon } from "../Icons";
@@ -42,7 +42,6 @@ const Form = () => {
     watch,
     control,
   } = useForm({ mode: "onBlur" });
-  console.log(watch("authNumber"));
 
   // Waiting for sever action response and if everything is SUCCESS we redirect to homepage
   useEffect(() => {
@@ -96,21 +95,26 @@ const Form = () => {
                 minLength: 6,
               }}
               render={({ field, fieldState }) => (
-                <OTPInput
-                  {...field}
-                  skipDefaultStyles
-                  value={field.value || ""}
-                  onChange={(value) => field.onChange(value)}
-                  numInputs={6}
-                  inputType="tel"
-                  shouldAutoFocus
-                  containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
-                  inputStyle={`${
-                    (fieldState.invalid || backEndErrors?.message) &&
-                    "form-input-error"
-                  } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
-                  renderInput={(props) => <input {...props} />}
-                />
+                <div
+                  onBlur={field.onBlur}
+                  tabIndex={-1}
+                >
+                  <OTPInput
+                    {...field}
+                    skipDefaultStyles
+                    value={field.value || ""}
+                    onChange={(value) => field.onChange(value)}
+                    numInputs={6}
+                    inputType="tel"
+                    shouldAutoFocus
+                    containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
+                    inputStyle={`${
+                      (fieldState.invalid || backEndErrors?.message) &&
+                      "form-input-error"
+                    } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
+                    renderInput={(props) => <input {...props} />}
+                  />
+                </div>
               )}
             />
           </InputLeftStickStatus>
