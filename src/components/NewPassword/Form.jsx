@@ -38,7 +38,7 @@ const Form = () => {
     buttonRef.current.loading();
 
     try {
-      newPasswordDetails = { ...data, token };
+      const newPasswordDetails = { ...data, token };
 
       const response = await newPasswordInputs(newPasswordDetails);
 
