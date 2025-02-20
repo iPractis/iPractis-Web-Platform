@@ -21,7 +21,12 @@ import { useForm } from "react-hook-form";
 import { ThreeAstheristiksBiggerIcon } from "../Icons";
 
 const Form = () => {
-  const { register, handleSubmit, formState: { errors: frontEndErrors }, watch, } = useForm({ mode: "onBlur" });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: frontEndErrors },
+    watch,
+  } = useForm({ mode: "onBlur" });
   const [backEndErrors, setBackEndErrors] = useState("");
   const [securityLevel, setSecurityLevel] = useState("");
   const searchParams = useSearchParams();
@@ -95,6 +100,7 @@ const Form = () => {
               }
               {...register("password", {
                 required: "Invalid Password --- Password can't be empty.",
+                setValueAs: (value) => value.trim(),
                 maxLength: 30,
                 minLength: 8,
               })}
@@ -131,6 +137,7 @@ const Form = () => {
               {...register("repeatedPassword", {
                 required:
                   "Invalid Repeated Password --- Password repeated can't be empty.",
+                setValueAs: (value) => value.trim(),
                 maxLength: 30,
                 minLength: 8,
               })}
