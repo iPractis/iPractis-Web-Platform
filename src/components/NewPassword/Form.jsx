@@ -61,7 +61,7 @@ const Form = () => {
   const password = watch("password");
 
   useEffect(() => {
-   if (!password?.trim()) {
+    if (!password?.trim()) {
       setSecurityLevel("");
     } else if (password.length < 6) {
       setSecurityLevel(1);
@@ -137,6 +137,9 @@ const Form = () => {
               {...register("repeatedPassword", {
                 required:
                   "Invalid Repeated Password --- Password repeated can't be empty.",
+                validate: (value) => {
+                  return value === password;
+                },
                 setValueAs: (value) => value.trim(),
                 maxLength: 30,
                 minLength: 8,

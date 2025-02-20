@@ -30,5 +30,10 @@ export const errorFormMessages = {
       typeError: "Password repeated too long",
       descError: "Your password should not exceed 30 characters.",
     },
+
+    validate: {
+      typeError: "Passwords do not match",
+      descError: "The passwords you entered do not match.",
+    },
   },
 };
