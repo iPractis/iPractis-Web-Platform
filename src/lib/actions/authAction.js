@@ -215,17 +215,11 @@ export async function registerUser(prevState, formData) {
 }
 
 // WITHOUT AUTHJS
-export async function logInUser(formData) {
-  const rawFormData = {
-    password: formData.get("password"),
-    email: formData.get("email") ? formData.get("email") : "",
-    phone: formData.get("number") ? formData.get("number") : "",
-  };
-
+export async function logInUser(reactHookFormData) {
   try {
     const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
       method: "POST",
-      body: JSON.stringify(rawFormData),
+      body: JSON.stringify(reactHookFormData),
       headers: {
         "Content-Type": "application/json",
       },

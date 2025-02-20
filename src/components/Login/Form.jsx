@@ -5,6 +5,7 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import { errorFormMessages } from "@/src/data/dataLogin";
+import { logInUser } from "@/src/lib/actions/authAction";
 
 // React imports
 import { useRouter } from "next/navigation";
@@ -49,7 +50,7 @@ const Form = () => {
           title: response.title,
         });
       } else {
-        router.push(`/authenticator?email=${formData.get("email")}`);
+        router.push(`/authenticator?email=${data?.email}`);
       }
     } catch (error) {
       console.log(error);

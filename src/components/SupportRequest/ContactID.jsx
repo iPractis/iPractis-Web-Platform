@@ -168,7 +168,7 @@ const ContactID = ({
                 <LinkVerticalIcon strokeColor={"stroke-primary-color-P4"} />
               </InputBGWrapperIcon>
 
-              <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4">
+              <span className="placeholder:text-primary-color-P4 text-primary-color-P4 ps-4 truncate pe-1.5">
                 {fileName || "Upload a screenshot (Optional)"}{" "}
               </span>
             </div>
