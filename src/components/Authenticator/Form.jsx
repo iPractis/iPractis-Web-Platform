@@ -33,8 +33,6 @@ const Form = () => {
     title: state?.formError?.title,
   });
 
-  console.log(backEndErrors);
-
   const searchParams = useSearchParams();
   const buttonRef = useRef(null);
 
