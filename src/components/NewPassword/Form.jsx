@@ -18,7 +18,12 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
 // Icons
-import { ThreeAstheristiksBiggerIcon } from "../Icons";
+import {
+  CloseIcon,
+  EyeWithDashIcon,
+  EyeWithoutDashIcon,
+  ThreeAstheristiksBiggerIcon,
+} from "../Icons";
 
 const Form = () => {
   const {
@@ -27,6 +32,8 @@ const Form = () => {
     formState: { errors: frontEndErrors },
     watch,
   } = useForm({ mode: "onBlur" });
+  const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [backEndErrors, setBackEndErrors] = useState("");
   const [securityLevel, setSecurityLevel] = useState("");
   const searchParams = useSearchParams();
@@ -88,7 +95,7 @@ const Form = () => {
             )}
           >
             <CustomNextUiInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your new password"
               startContent={
@@ -104,6 +111,25 @@ const Form = () => {
                 maxLength: 30,
                 minLength: 8,
               })}
+              endContent={
+                <>
+                  <InputBGWrapperIcon
+                    className={"absolute right-9 cursor-pointer me-1.5"}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
+
+                  <InputBGWrapperIcon className={"cursor-pointer"}>
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                </>
+              }
+              isClearable
               classNames={{
                 inputWrapper:
                   (frontEndErrors?.password?.type || backEndErrors?.message) &&
@@ -131,7 +157,7 @@ const Form = () => {
             )}
           >
             <CustomNextUiInput
-              type="password"
+              type={showRepeatedPassword ? "text" : "password"}
               name="repeatedPassword"
               placeholder="Retape your new password"
               {...register("repeatedPassword", {
@@ -151,6 +177,27 @@ const Form = () => {
                   />
                 </InputBGWrapperIcon>
               }
+              endContent={
+                <>
+                  <InputBGWrapperIcon
+                    className={"absolute right-9 cursor-pointer me-1.5"}
+                    onClick={() =>
+                      setShowRepeatedPassword(!showRepeatedPassword)
+                    }
+                  >
+                    {showRepeatedPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
+
+                  <InputBGWrapperIcon className={"cursor-pointer"}>
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                </>
+              }
+              isClearable
               classNames={{
                 inputWrapper:
                   (frontEndErrors?.repeatedPassword?.type ||
