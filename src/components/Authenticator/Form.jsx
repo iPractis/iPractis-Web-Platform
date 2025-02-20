@@ -6,7 +6,6 @@ import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import { errorFormMessages } from "@/src/data/dataAuthenticator";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
-import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 
 // React imports
 import { useSearchParams } from "next/navigation";
@@ -25,7 +24,7 @@ import {
 import { ChevronRightDoorIcon } from "../Icons";
 
 const Form = () => {
-  const [state, formAction] = useActionState(logInUserOtp, {});
+  const [state, formAction, isPending] = useActionState(logInUserOtp, {});
   const [backEndErrors, setBackEndErrors] = useState({});
   const searchParams = useSearchParams();
   const buttonRef = useRef(null);
@@ -131,14 +130,14 @@ const Form = () => {
             {"Cancel"}
           </Link>
 
-          <ButtonSubmitForm
-            buttonClassName={
-              "btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 flex items-center justify-center"
-            }
-            ref={buttonRef}
+          <button
+            type="submit"
+            disabled={isPending}
+            className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
           >
-            <span className="flex-1">Log in</span>
-
+            <span className="flex-1">
+              {isPending ? "Loading..." : "Log in"}
+            </span>{" "}
             <InputBGWrapperIcon>
               <ChevronRightDoorIcon
                 fillColor={
@@ -146,7 +145,7 @@ const Form = () => {
                 }
               />
             </InputBGWrapperIcon>
-          </ButtonSubmitForm>
+          </button>
         </div>
       </div>
     </form>
