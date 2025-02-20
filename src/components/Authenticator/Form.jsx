@@ -8,17 +8,11 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
 
 // React imports
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import OTPInput from "react-otp-input";
 import Link from "next/link";
-import {
-  startTransition,
-  useActionState,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
 
 // Icons
 import { ChevronRightDoorIcon } from "../Icons";
@@ -27,7 +21,6 @@ const Form = () => {
   const [state, formAction, isPending] = useActionState(logInUserOtp, {});
   const [backEndErrors, setBackEndErrors] = useState({});
   const searchParams = useSearchParams();
-  const buttonRef = useRef(null);
 
   const {
     handleSubmit,
@@ -49,8 +42,6 @@ const Form = () => {
   }, [state?.formError]);
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
-
     try {
       const authenticatorDetails = {
         ...data,
@@ -62,8 +53,6 @@ const Form = () => {
       });
     } catch (error) {
       console.log(error);
-    } finally {
-      buttonRef.current.notIsLoading();
     }
   };
 
@@ -133,7 +122,7 @@ const Form = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
+            className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
           >
             <span className="flex-1">
               {isPending ? "Loading..." : "Log in"}
