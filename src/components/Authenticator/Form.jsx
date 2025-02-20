@@ -33,6 +33,8 @@ const Form = () => {
     title: state?.formError?.title,
   });
 
+  console.log(backEndErrors);
+
   const searchParams = useSearchParams();
   const buttonRef = useRef(null);
 
@@ -82,12 +84,12 @@ const Form = () => {
             inputBarStatusClassName={getLeftStickInputColorStatus(
               frontEndErrors,
               backEndErrors,
-              watch("authNumber"),
-              "authNumber"
+              watch("otp"),
+              "otp"
             )}
           >
             <Controller
-              name="authNumber"
+              name="otp"
               control={control}
               rules={{
                 required:
@@ -123,7 +125,7 @@ const Form = () => {
             errorMessages={errorFormMessages}
             frontEndErrors={frontEndErrors}
             backEndErrors={backEndErrors}
-            fieldName="authNumber"
+            fieldName="otp"
           />
         </div>
 

@@ -1,5 +1,5 @@
 export const errorFormMessages = {
-  authNumber: {
+  otp: {
     required: {
       typeError: "Invalid Authenticator Number",
       descError: "Authenticator number must be not empty.",
