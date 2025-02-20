@@ -1,14 +1,17 @@
 "use client";
 
-import { startTransition, useActionState, useEffect, useState } from "react";
 import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import { logInUserOtp } from "@/src/lib/actions/authAction";
-import { CheckedShieldIcon, ChevronRightDoorIcon, HelpIcon } from "../Icons";
-import SectionHeader from "../Shared/SectionHeader";
+
+// React imports
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import OTPInput from "react-otp-input";
 import Link from "next/link";
+
+// Icons
+import { ChevronRightDoorIcon } from "../Icons";
 
 const TopColumn = () => {
   const [state, formAction, isPending] = useActionState(logInUserOtp, {});
@@ -35,20 +38,7 @@ const TopColumn = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      // action={formAction}
-    >
-      <SectionHeader
-        descriptionText="Enter your account details to access to your account."
-        titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
-        titleText={"Authenticator"}
-        wrapperSectionHeaderClassName={
-          "bg-primary-color-P11 rounded-[32px] p-8"
-        }
-        titleClassName={"MT-SB-1"}
-      />
-
+    <form onSubmit={handleSubmit}>
       <div className="space-y-8 sm:px-8 sm:mt-[50px] mt-8">
         <p className={`ST-3 text-primary-color-P4 mt-[50px]`}>
           We just sent you an authentication number, please check your email and
@@ -101,28 +91,6 @@ const TopColumn = () => {
             descError={state?.formError?.message}
           />
         )}
-
-        <p className="text-primary-color-P4 ST-4">
-          Haven’t receive the code? 3:00 Minutes
-        </p>
-
-        {/* Contact Support Details */}
-        <p className={`ST-3 text-primary-color-P1`}>
-          Recover your account easily using your registered phone number.
-          Receive a secure SMS verification code to regain access and reset your
-          authentication settings.
-        </p>
-
-        <Link
-          className="btn btn-primary w-full p-1.5 rounded-2xl flex gap-5 items-center MT-SB-1"
-          href={"/support-request"}
-        >
-          <InputBGWrapperIcon>
-            <HelpIcon fillColor={"fill-primary-color-P1"} />
-          </InputBGWrapperIcon>
-
-          <span>Contact support</span>
-        </Link>
       </div>
     </form>
   );
