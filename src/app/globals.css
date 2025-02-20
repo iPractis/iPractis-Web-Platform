@@ -168,7 +168,7 @@ tr:last-of-type td.isSelected {
   }
 
   .input-ipractis {
-    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 !important;
+    @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 pe-10 !important;
   }
 
   .input-label-ipractis {

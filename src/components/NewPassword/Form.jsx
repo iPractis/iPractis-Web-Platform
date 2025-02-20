@@ -134,6 +134,7 @@ const Form = () => {
                 inputWrapper:
                   (frontEndErrors?.password?.type || backEndErrors?.message) &&
                   "form-input-error",
+                input: "!pe-20",
               }}
             />
           </InputLeftStickStatus>
@@ -203,6 +204,7 @@ const Form = () => {
                   (frontEndErrors?.repeatedPassword?.type ||
                     backEndErrors?.message) &&
                   "form-input-error",
+                input: "!pe-20",
               }}
             />
           </InputLeftStickStatus>

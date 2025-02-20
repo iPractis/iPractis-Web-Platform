@@ -146,6 +146,7 @@ const Form = () => {
                 inputWrapper:
                   (frontEndErrors?.password?.type || backEndErrors?.message) &&
                   "form-input-error",
+                input: "!pe-20",
               }}
               {...register("password", {
                 required: "Invalid Password --- Password can't be empty",
