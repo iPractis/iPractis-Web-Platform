@@ -1,5 +1,7 @@
 import AccountPrompt from "../Shared/AccountPrompt";
-import ContainerForm from "./ContainerForm";
+import WrapperForm from "./WrapperForm";
+
+// Icons
 import { UserAddIcon } from "../Icons";
 
 export const Login = () => {
@@ -7,7 +9,7 @@ export const Login = () => {
     <section className="container-page-v8 sm:px-0 px-8">
       <div className="sm:my-8 my-4">
         {/* Login if there's an account */}
-        <ContainerForm />
+        <WrapperForm />
 
         {/* Register if user doesn't have an account */}
         <AccountPrompt

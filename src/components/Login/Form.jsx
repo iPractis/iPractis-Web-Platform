@@ -5,6 +5,8 @@ import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
 import { signIn } from "next-auth/react";
 
 // React imports
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,7 +22,6 @@ import microsoft from "@/public/icons/microsoft-original.png";
 import passwordInput from "@/public/icons/password-input.png";
 import google from "@/public/icons/google-original.png";
 import apple from "@/public/icons/apple.png";
-import { useState } from "react";
 
 import {
   validEmailErrors,
@@ -28,16 +29,132 @@ import {
   validPhoneNumberErrors,
 } from "@/src/data/dataRegister";
 
-const LeftForm = ({
-  handlePasswordChange,
-  setToggleInput,
-  toggleInput,
-  setPassword,
-  isPending,
-  password,
-  error,
-}) => {
+const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const [toggleInput, setToggleInput] = useState("email");
+  const [isPending, setIsPending] = useState(false);
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // If user chooses email we're gonna get the EMAIL INPUT (ignore phone number)
+    if (toggleInput === "email") {
+      const email = e?.target?.email?.value;
+
+      // Validation of empty field (email)
+      if (!email) {
+        const invalidEmailError = {
+          title: "Invalid Email",
+          message: "Email can't be empty.",
+        };
+
+        return setError(invalidEmailError);
+      }
+
+      // Validation of spaces in email field
+      if (email.includes(" ")) {
+        const invalidEmailError = {
+          title: "Invalid Email Submission",
+          message: "Email can't have spaces.",
+        };
+
+        return setError(invalidEmailError);
+      }
+
+      // Validation of gmail format
+      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+
+      if (!gmailRegex.test(email)) {
+        const invalidEmailError = {
+          title: "Invalid Email",
+          message: "Check your spelling email",
+        };
+
+        return setError(invalidEmailError);
+      }
+
+      // Validation of characters (cannot exceed 254 characters)
+      if (email?.length > 254) {
+        const invalidEmailError = {
+          title: "Invalid Email Length",
+          message: "Email can't exceed 254 of characters.",
+        };
+
+        return setError(invalidEmailError);
+      }
+    } else {
+      // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
+      const number = e?.target?.number?.value?.trim();
+
+      // Validation of empty field (phone number)
+      if (!number.trim(" ")) {
+        const invalidPhoneNumberError = {
+          title: "Invalid Phone Number",
+          message: "Phone number can't be empty.",
+        };
+
+        return setError(invalidPhoneNumberError);
+      }
+    }
+
+    // Validation of empty field (password)
+    if (!password) {
+      const invalidEmailError = {
+        title: "Invalid Password",
+        message: "Password can't be empty.",
+      };
+
+      return setError(invalidEmailError);
+    }
+
+    // Check if password input is too short (can't be less than 8)
+    if (password?.length < 8) {
+      const invalidPasswordError = {
+        title: "Password too short",
+        message: "You need at least 8 characters for password.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    // Validation of exceed the character limit (password)
+    if (password?.length > 30) {
+      const invalidPasswordError = {
+        title: "Character limit",
+        message: "The input exceeds the allowed character limit.",
+      };
+
+      return setError(invalidPasswordError);
+    }
+
+    try {
+      setIsPending(true);
+
+      const formData = new FormData(e.currentTarget);
+      const response = await logInUser(formData);
+
+      // If there's error we display the error
+      if (response?.message && response?.title) {
+        console.log(response, "aqui reror");
+        return setError({ message: response.message, title: response.title });
+      } else {
+        router.push(`/authenticator?email=${formData.get("email")}`);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+  };
 
   const isValidEmailError =
     error?.message && validEmailErrors.includes(error?.title);
@@ -47,7 +164,8 @@ const LeftForm = ({
     error?.message && validPasswordErrors.includes(error?.title);
 
   return (
-    <div className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8">
+      {/* Social media buttons to login */}
       <div className="flex gap-3 mt-8">
         <button
           className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
@@ -84,6 +202,7 @@ const LeftForm = ({
         </button>
       </div>
 
+      {/* Form inputs */}
       <div>
         {/* Email || Phone Number Input */}
         <EmailPhoneSwitcher
@@ -143,6 +262,7 @@ const LeftForm = ({
         </div>
       </div>
 
+      {/* Presskey and submit button */}
       <div className="flex items-center gap-4">
         <button
           className="btn btn-primary w-full MT-1 rounded-2xl py-3 px-4"
@@ -167,14 +287,15 @@ const LeftForm = ({
         </button>
       </div>
 
+      {/* Link to account assistance  */}
       <Link
         className="text-center block text-primary-color-P4 ST-4"
         href={"/account-assistance"}
       >
         I can’t sing in, help!
       </Link>
-    </div>
+    </form>
   );
 };
 
-export default LeftForm;
+export default Form;
