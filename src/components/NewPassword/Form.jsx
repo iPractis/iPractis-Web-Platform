@@ -114,7 +114,7 @@ const Form = () => {
               endContent={
                 <>
                   <InputBGWrapperIcon
-                    className={"absolute right-9 cursor-pointer me-1.5"}
+                    className={"absolute right-10 cursor-pointer"}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -180,7 +180,7 @@ const Form = () => {
               endContent={
                 <>
                   <InputBGWrapperIcon
-                    className={"absolute right-9 cursor-pointer me-1.5"}
+                    className={"absolute right-10 cursor-pointer"}
                     onClick={() =>
                       setShowRepeatedPassword(!showRepeatedPassword)
                     }
