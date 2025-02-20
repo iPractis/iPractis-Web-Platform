@@ -82,6 +82,7 @@ const Form = () => {
           {...register("email", {
             required: "Invalid Email --- Check your spelling email",
             pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+            maxLength: 254,
           })}
           name="email"
           type="text"

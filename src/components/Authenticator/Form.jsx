@@ -78,49 +78,50 @@ const Form = () => {
           recopy the code below.
         </p>
 
-        <InputLeftStickStatus
-          inputBarStatusClassName={getLeftStickInputColorStatus(
-            frontEndErrors,
-            backEndErrors,
-            watch("authNumber"),
-            "authNumber"
-          )}
-        >
-          <Controller
-            name="authNumber"
-            control={control}
-            rules={{
-              required:
-                "Invalid Authenticator Number --- Authenticator must be 6 digits",
-              minLength: {
-                value: 6,
-                message: "Authenticator must be 6 digits",
-              },
-              maxLength: {
-                value: 6,
-                message: "Authenticator must be 6 digits",
-              },
-            }}
-            render={({ field, fieldState }) => (
-              <OTPInput
-                {...field}
-                skipDefaultStyles
-                value={field.value || ""}
-                onChange={(value) => field.onChange(value)}
-                numInputs={6}
-                inputType="tel"
-                shouldAutoFocus
-                containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
-                inputStyle={`${
-                  (frontEndErrors?.authNumber?.type ||
-                    backEndErrors?.message) &&
-                  "form-input-error"
-                } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
-                renderInput={(props) => <input {...props} />}
-              />
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("authNumber"),
+              "authNumber"
             )}
+          >
+            <Controller
+              name="authNumber"
+              control={control}
+              rules={{
+                required:
+                  "Invalid Authenticator Number --- Authenticator must be not empty.",
+                minLength: 6,
+              }}
+              render={({ field, fieldState }) => (
+                <OTPInput
+                  {...field}
+                  skipDefaultStyles
+                  value={field.value || ""}
+                  onChange={(value) => field.onChange(value)}
+                  numInputs={6}
+                  inputType="tel"
+                  shouldAutoFocus
+                  containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
+                  inputStyle={`${
+                    (fieldState.invalid || backEndErrors?.message) &&
+                    "form-input-error"
+                  } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
+                  renderInput={(props) => <input {...props} />}
+                />
+              )}
+            />
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="authNumber"
           />
-        </InputLeftStickStatus>
+        </div>
 
         <div className="flex items-center gap-4">
           <Link
@@ -147,13 +148,6 @@ const Form = () => {
             </InputBGWrapperIcon>
           </ButtonSubmitForm>
         </div>
-
-        <DynamicInputErrorMessage
-          errorMessages={errorFormMessages}
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="authNumber"
-        />
       </div>
     </form>
   );
