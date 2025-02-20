@@ -96,7 +96,7 @@ const Form = () => {
 
       <ButtonSubmitForm
         buttonClassName={
-          "btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
+          "btn btn-secondary w-full p-1.5 ps-4 rounded-2xl MT-SB-1 mt-8 flex items-center justify-center"
         }
         ref={buttonRef}
       >

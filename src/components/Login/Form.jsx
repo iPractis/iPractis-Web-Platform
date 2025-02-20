@@ -1,11 +1,15 @@
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
-import EmailPhoneSwitcher from "./EmailPhoneSwitcherLogin";
+import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
+import { errorFormMessages } from "@/src/data/dataLogin";
 
 // React imports
-import { useRouter } from 'next/navigation';
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,177 +22,111 @@ import {
 } from "../Icons";
 
 import passwordInput from "@/public/icons/password-input.png";
-
-import {
-  validEmailErrors,
-  validPasswordErrors,
-  validPhoneNumberErrors,
-} from "@/src/data/dataRegister";
+import userInput from "@/public/icons/user-input.png";
 
 const Form = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: frontEndErrors },
+    watch,
+  } = useForm({ mode: "onBlur" });
   const [showPassword, setShowPassword] = useState(false);
-
-  const [toggleInput, setToggleInput] = useState("email");
-  const [isPending, setIsPending] = useState(false);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [backEndErrors, setBackEndErrors] = useState("");
+  const buttonRef = useRef(null);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // If user chooses email we're gonna get the EMAIL INPUT (ignore phone number)
-    if (toggleInput === "email") {
-      const email = e?.target?.email?.value;
-
-      // Validation of empty field (email)
-      if (!email) {
-        const invalidEmailError = {
-          title: "Invalid Email",
-          message: "Email can't be empty.",
-        };
-
-        return setError(invalidEmailError);
-      }
-
-      // Validation of spaces in email field
-      if (email.includes(" ")) {
-        const invalidEmailError = {
-          title: "Invalid Email Submission",
-          message: "Email can't have spaces.",
-        };
-
-        return setError(invalidEmailError);
-      }
-
-      // Validation of gmail format
-      const gmailRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-
-      if (!gmailRegex.test(email)) {
-        const invalidEmailError = {
-          title: "Invalid Email",
-          message: "Check your spelling email",
-        };
-
-        return setError(invalidEmailError);
-      }
-
-      // Validation of characters (cannot exceed 254 characters)
-      if (email?.length > 254) {
-        const invalidEmailError = {
-          title: "Invalid Email Length",
-          message: "Email can't exceed 254 of characters.",
-        };
-
-        return setError(invalidEmailError);
-      }
-    } else {
-      // If user chooses number we're gonna get the PHONE NUMBER INPUT (ignore email)
-      const number = e?.target?.number?.value?.trim();
-
-      // Validation of empty field (phone number)
-      if (!number.trim(" ")) {
-        const invalidPhoneNumberError = {
-          title: "Invalid Phone Number",
-          message: "Phone number can't be empty.",
-        };
-
-        return setError(invalidPhoneNumberError);
-      }
-    }
-
-    // Validation of empty field (password)
-    if (!password) {
-      const invalidEmailError = {
-        title: "Invalid Password",
-        message: "Password can't be empty.",
-      };
-
-      return setError(invalidEmailError);
-    }
-
-    // Check if password input is too short (can't be less than 8)
-    if (password?.length < 8) {
-      const invalidPasswordError = {
-        title: "Password too short",
-        message: "You need at least 8 characters for password.",
-      };
-
-      return setError(invalidPasswordError);
-    }
-
-    // Validation of exceed the character limit (password)
-    if (password?.length > 30) {
-      const invalidPasswordError = {
-        title: "Character limit",
-        message: "The input exceeds the allowed character limit.",
-      };
-
-      return setError(invalidPasswordError);
-    }
+  const onSubmit = async (data) => {
+    buttonRef.current.loading();
 
     try {
-      setIsPending(true);
-
-      const formData = new FormData(e.currentTarget);
-      const response = await logInUser(formData);
+      const response = await logInUser(data);
 
       // If there's error we display the error
       if (response?.message && response?.title) {
-        console.log(response, "aqui reror");
-        return setError({ message: response.message, title: response.title });
+        return setBackEndErrors({
+          message: response.message,
+          title: response.title,
+        });
       } else {
         router.push(`/authenticator?email=${formData.get("email")}`);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsPending(false);
+      buttonRef.current.notIsLoading();
     }
   };
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
-    setPassword(newPassword);
-  };
-
-  const isValidEmailError =
-    error?.message && validEmailErrors.includes(error?.title);
-  const isValidPhoneNumberError =
-    error?.message && validPhoneNumberErrors.includes(error?.title);
-  const isValidPasswordError =
-    error?.message && validPasswordErrors.includes(error?.title);
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* Form inputs */}
       <div>
-        {/* Email || Phone Number Input */}
-        <EmailPhoneSwitcher
-          isValidPhoneNumberError={isValidPhoneNumberError}
-          isValidEmailError={isValidEmailError}
-          setToggleInput={setToggleInput}
-          messageError={error?.message}
-          toggleInput={toggleInput}
-          titleError={error?.title}
-        />
+        {/* Email Input */}
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("email"),
+              "email"
+            )}
+          >
+            <CustomNextUiInput
+              type="text"
+              name="email"
+              placeholder="Enter your email address"
+              startContent={
+                <Image className="w-9" src={userInput} alt="User Input" />
+              }
+              endContent={
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              isClearable
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.email?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+              {...register("email", {
+                required: "Invalid Email --- Check your spelling email",
+                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+                maxLength: 254,
+              })}
+            />
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="email"
+          />
+        </div>
 
         {/* Password Input */}
         <div className="mt-3">
-          <CustomNextUiInput
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Enter your password"
-            startContent={
-              <Image className="w-9" src={passwordInput} alt="User Input" />
-            }
-            endContent={
-              password?.length > 0 && (
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("password"),
+              "password"
+            )}
+          >
+            <CustomNextUiInput
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Enter your password"
+              startContent={
+                <Image className="w-9" src={passwordInput} alt="User Input" />
+              }
+              endContent={
                 <>
                   <InputBGWrapperIcon
-                    className={"cursor-pointer me-1.5"}
+                    className={"absolute right-10 cursor-pointer"}
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
@@ -198,26 +136,32 @@ const Form = () => {
                     )}
                   </InputBGWrapperIcon>
 
-                  <InputBGWrapperIcon
-                    className={"cursor-pointer"}
-                    onClick={() => setPassword("")}
-                  >
+                  <InputBGWrapperIcon className={"cursor-pointer"}>
                     <CloseIcon strokeColor={"stroke-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 </>
-              )
-            }
-            classNames={{
-              inputWrapper: isValidPasswordError && "form-input-error",
-            }}
-          />
-
-          {isValidPasswordError && (
-            <ErrorMessageiPractis
-              typeError={error?.title}
-              descError={error?.message}
+              }
+              isClearable
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.password?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+              {...register("password", {
+                required: "Invalid Password --- Password can't be empty",
+                setValueAs: (value) => value.trim(),
+                maxLength: 30,
+                minLength: 8,
+              })}
             />
-          )}
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="password"
+          />
         </div>
       </div>
 
@@ -230,12 +174,14 @@ const Form = () => {
           Presskey
         </button>
 
-        <button
-          type="submit"
-          disabled={isPending}
-          className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
+        <ButtonSubmitForm
+          buttonClassName={
+            "btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center"
+          }
+          ref={buttonRef}
         >
-          <span className="flex-1">{isPending ? "Loading..." : "Log in"}</span>{" "}
+          <span className="flex-1">Log in</span>
+
           <InputBGWrapperIcon>
             <ChevronRightDoorIcon
               fillColor={
@@ -243,7 +189,7 @@ const Form = () => {
               }
             />
           </InputBGWrapperIcon>
-        </button>
+        </ButtonSubmitForm>
       </div>
 
       {/* Link to account assistance  */}

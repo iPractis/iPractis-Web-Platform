@@ -17,18 +17,38 @@ export const flagAndAreaCodeCountries = [
 
 export const validPhoneNumberErrors = ["Invalid Phone Number"];
 
-export const validEmailErrors = [
-  "Invalid Email Submission",
-  "Invalid Email Length",
-  "Invalid Email",
-  "No account exists for this email address.",
-  "Email recently changed",
-];
+export const errorFormMessages = {
+  email: {
+    required: {
+      typeError: "Invalid Email",
+      descError: "Email can't be empty.",
+    },
 
-export const validPasswordErrors = [
-  "Password too short",
-  "Account Locked: Too many login attempts",
-  "Invalid Password",
-  "Wrong password",
-  "Character limit",
-];
+    pattern: {
+      typeError: "Invalid Email",
+      descError: "Check your spelling email.",
+    },
+
+    maxLength: {
+      typeError: "Invalid Email Length",
+      descError: "Email can't exceed 254 of characters.",
+    },
+  },
+
+  password: {
+    required: {
+      typeError: "Invalid Password",
+      descError: "Password can't be empty.",
+    },
+
+    maxLength: {
+      typeError: "Password too long",
+      descError: "The input exceeds the allowed character limit.",
+    },
+
+    minLength: {
+      typeError: "Password too short",
+      descError: "You need at least 8 characters for password.",
+    },
+  },
+};
