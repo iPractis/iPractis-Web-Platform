@@ -55,6 +55,10 @@ tr:last-of-type td.isSelected {
 }
 
 @layer components {
+  ::selection {
+    @apply bg-tertiary-color-SC5 text-primary-color-P12;
+  }
+
   .btn {
     @apply inline-block border-0 bg-transparent cursor-pointer animation-fade text-center;
   }
