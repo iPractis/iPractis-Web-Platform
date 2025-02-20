@@ -281,7 +281,10 @@ export async function newPasswordInputs(reactHookFormData) {
 export async function supportRequestIssue(reactHookFormData) {
   const constructedData = {
     ...reactHookFormData,
-    uploadedImage: reactHookFormData?.upload_image !== "undefined" ? reactHookFormData?.upload_image : "",
+    uploadedImage:
+      reactHookFormData?.upload_image !== "undefined"
+        ? reactHookFormData?.upload_image
+        : "",
   };
 
   try {
@@ -304,15 +307,14 @@ export async function supportRequestIssue(reactHookFormData) {
 }
 
 // WITH AUTHJS
-export async function logInUserOtp(prevState, formData) {
-  const rawFormData = {
+export async function logInUserOtp(prevState, reactHookFormData) {
+  const constructedData = {
+    ...reactHookFormData,
     redirect: false,
-    email: formData.get("email"),
-    otp: formData.get("otp"),
   };
 
   try {
-    await signIn("credentials", rawFormData);
+    await signIn("credentials", constructedData);
 
     return { success: "ok" };
   } catch (err) {
