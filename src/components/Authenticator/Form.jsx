@@ -26,13 +26,7 @@ import { ChevronRightDoorIcon } from "../Icons";
 
 const Form = () => {
   const [state, formAction] = useActionState(logInUserOtp, {});
-
-  const [backEndErrors, setBackEndErrors] = useState({
-    field: state?.formError?.field,
-    message: state?.formError?.message,
-    title: state?.formError?.title,
-  });
-
+  const [backEndErrors, setBackEndErrors] = useState({});
   const searchParams = useSearchParams();
   const buttonRef = useRef(null);
 
@@ -49,6 +43,11 @@ const Form = () => {
       window.location.href = "/";
     }
   }, [state?.success]);
+
+  // If there's errors in backend, we set them to the state
+  useEffect(() => {
+    setBackEndErrors(state?.formError);
+  }, [state?.formError]);
 
   const onSubmit = async (data) => {
     buttonRef.current.loading();
@@ -95,10 +94,7 @@ const Form = () => {
                 minLength: 6,
               }}
               render={({ field, fieldState }) => (
-                <div
-                  onBlur={field.onBlur}
-                  tabIndex={-1}
-                >
+                <div onBlur={field.onBlur} tabIndex={-1}>
                   <OTPInput
                     {...field}
                     skipDefaultStyles
