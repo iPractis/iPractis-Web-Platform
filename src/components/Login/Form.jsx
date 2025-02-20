@@ -11,19 +11,17 @@ import { logInUser } from "@/src/lib/actions/authAction";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 // Images && icons
 import {
   ChevronRightDoorIcon,
-  CloseIcon,
-  EyeWithDashIcon,
+  PadLockClosedBigIcon,
   EyeWithoutDashIcon,
+  EyeWithDashIcon,
+  UserBigIcon,
+  CloseIcon,
 } from "../Icons";
-
-import passwordInput from "@/public/icons/password-input.png";
-import userInput from "@/public/icons/user-input.png";
 
 const Form = () => {
   const {
@@ -78,7 +76,9 @@ const Form = () => {
               name="email"
               placeholder="Enter your email address"
               startContent={
-                <Image className="w-9" src={userInput} alt="User Input" />
+                <InputBGWrapperIcon>
+                  <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
               endContent={
                 <InputBGWrapperIcon className={"cursor-pointer"}>
@@ -122,7 +122,9 @@ const Form = () => {
               name="password"
               placeholder="Enter your password"
               startContent={
-                <Image className="w-9" src={passwordInput} alt="User Input" />
+                <InputBGWrapperIcon>
+                  <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
               endContent={
                 <>
