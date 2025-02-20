@@ -9,9 +9,15 @@ import { logInUserOtp } from "@/src/lib/actions/authAction";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 
 // React imports
-import { startTransition, useActionState, useEffect, useRef, useState } from "react";
+import {
+  startTransition,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import OTPInput from "react-otp-input";
 import Link from "next/link";
 
@@ -29,8 +35,14 @@ const Form = () => {
 
   const searchParams = useSearchParams();
   const buttonRef = useRef(null);
-  
-  const { register, handleSubmit, formState: { errors: frontEndErrors }, watch, } = useForm({ mode: "onBlur" });
+
+  const {
+    handleSubmit,
+    formState: { errors: frontEndErrors },
+    watch,
+    control,
+  } = useForm({ mode: "onBlur" });
+  console.log(watch("authNumber"));
 
   // Waiting for sever action response and if everything is SUCCESS we redirect to homepage
   useEffect(() => {
@@ -74,26 +86,39 @@ const Form = () => {
             "authNumber"
           )}
         >
-          <OTPInput
-            renderInput={(props) => (
-              <input
-                {...register("authNumber", {
-                  required:
-                    "Invalid Authenticator Number --- Authenticator must be 6 digits",
-                })}
-                {...props}
+          <Controller
+            name="authNumber"
+            control={control}
+            rules={{
+              required:
+                "Invalid Authenticator Number --- Authenticator must be 6 digits",
+              minLength: {
+                value: 6,
+                message: "Authenticator must be 6 digits",
+              },
+              maxLength: {
+                value: 6,
+                message: "Authenticator must be 6 digits",
+              },
+            }}
+            render={({ field, fieldState }) => (
+              <OTPInput
+                {...field}
+                skipDefaultStyles
+                value={field.value || ""}
+                onChange={(value) => field.onChange(value)}
+                numInputs={6}
+                inputType="tel"
+                shouldAutoFocus
+                containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
+                inputStyle={`${
+                  (frontEndErrors?.authNumber?.type ||
+                    backEndErrors?.message) &&
+                  "form-input-error"
+                } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
+                renderInput={(props) => <input {...props} />}
               />
             )}
-            containerStyle={
-              "otp-inputs-container justify-between gap-4 sm:px-4"
-            }
-            skipDefaultStyles
-            shouldAutoFocus
-            inputType="tel"
-            numInputs={6}
-            inputStyle={`${
-              (frontEndErrors?.authNumber?.type || backEndErrors?.message) && "form-input-error"
-            } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
           />
         </InputLeftStickStatus>
 
