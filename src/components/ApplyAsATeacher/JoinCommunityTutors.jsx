@@ -8,7 +8,7 @@ const JoinCommunityTutors = () => {
   return (
     <header className="flex flex-col lg:flex-row justify-between">
       <div className="flex-[20%]">
-        <div className="flex flex-col justify-between h-full">
+        <div className="flex flex-col justify-between lg:items-start items-center h-full">
           <h1 className="LT-SB-2 text-primary-color-P1">
             Join our top rated <span className="block">community tutors</span>
           </h1>
