@@ -1,5 +1,3 @@
-import SectionHeader from "../Shared/SectionHeader";
-import { SparkleIcon } from "../Icons";
 import { Suspense } from "react";
 import Form from "./Form";
 

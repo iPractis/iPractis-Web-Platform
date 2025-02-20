@@ -6,7 +6,7 @@ import { Suspense } from "react";
 
 export const NewPassword = () => {
   return (
-    <section className="container-page-v8 my-8">
+    <section className="container-page-v8 my-8 sm:px-0 px-8">
       {/* Make a new password */}
       <HeadingTitle />
 

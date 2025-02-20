@@ -6,7 +6,7 @@ import { SparkleIcon } from "../Icons";
 
 export const SupportRequest = () => {
   return (
-    <section className="container-page-v8 my-8 sm:px-0 px-1.5">
+    <section className="container-page-v8 my-8 sm:px-0 px-8">
       {/* Heading Title */}
       <SectionHeader
         descriptionText="We are sorry to see you here, we hope your problem will be resolved soon."
