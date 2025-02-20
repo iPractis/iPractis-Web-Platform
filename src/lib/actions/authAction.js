@@ -242,11 +242,11 @@ export async function logInUser(formData) {
 }
 
 // WITHOUT AUTHJS
-export async function requestPasswordInput(data) {
+export async function requestPasswordInput(reactHookFormData) {
   try {
     const res = await fetch(`${process.env.BASE_URL}/auth/recover-password`, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(reactHookFormData),
       headers: {
         "Content-Type": "application/json",
       },
@@ -263,16 +263,11 @@ export async function requestPasswordInput(data) {
 }
 
 // WITHOUT AUTHJS
-export async function newPasswordInputs(formData) {
-  const rawFormData = {
-    newPassword: formData.get("password"),
-    token: formData.get("token"),
-  };
-
+export async function newPasswordInputs(reactHookFormData) {
   try {
     const res = await fetch(`${process.env.BASE_URL}/auth/confirm-password`, {
       method: "POST",
-      body: JSON.stringify(rawFormData),
+      body: JSON.stringify(reactHookFormData),
       headers: {
         "Content-Type": "application/json",
       },
@@ -289,10 +284,10 @@ export async function newPasswordInputs(formData) {
 }
 
 // WITHOUT AUTHJS
-export async function supportRequestIssue(data) {
+export async function supportRequestIssue(reactHookFormData) {
   const constructedData = {
-    ...data,
-    uploadedImage: data?.upload_image !== "undefined" ? data?.upload_image : "",
+    ...reactHookFormData,
+    uploadedImage: reactHookFormData?.upload_image !== "undefined" ? reactHookFormData?.upload_image : "",
   };
 
   try {
