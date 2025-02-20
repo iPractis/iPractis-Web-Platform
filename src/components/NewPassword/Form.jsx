@@ -1,165 +1,162 @@
 "use client";
 
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import { newPasswordInputs } from "@/src/lib/actions/authAction";
+import { errorFormMessages } from "@/src/data/dataNewPassword";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { validPasswordErrors } from "@/src/data/dataRegister";
+import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import PasswordLevels from "../Register/PasswordLevels";
 import DualButton from "../Shared/DualButton";
 
 // React imports
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 
 // Icons
 import { ThreeAstheristiksBiggerIcon } from "../Icons";
 
 const Form = () => {
-  const searchParams = useSearchParams();
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+  const { register, handleSubmit, formState: { errors: frontEndErrors }, watch, } = useForm({ mode: "onBlur" });
+  const [backEndErrors, setBackEndErrors] = useState("");
   const [securityLevel, setSecurityLevel] = useState("");
-  const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState("");
+  const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const buttonRef = useRef(null);
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
-    e?.preventDefault();
-
-    // Check if password input is not empty
-    if (!password) {
-      const invalidPasswordError = {
-        title: "Invalid Password",
-        message: "Password can't be empty.",
-      };
-
-      return setError(invalidPasswordError);
-    }
-
-    // Check if password input is too short (can't be less than 8)
-    if (password.length < 8) {
-      const invalidPasswordError = {
-        title: "Password too short",
-        message: "You need at least 8 characters to make a password.",
-      };
-
-      return setError(invalidPasswordError);
-    }
-
-    // Check if password input is too long (can't excess 30)
-    if (password.length > 30) {
-      const invalidPasswordError = {
-        title: "Password too long",
-        message: "Your password should not exceed 30 characters.",
-      };
-
-      return setError(invalidPasswordError);
-    }
-
-    if (password !== repeatPassword) {
-      const invalidPasswordError = {
-        title: "Passwords are not the same",
-        message: "Make sure both passwords are the same before proceeding.",
-      };
-
-      return setError(invalidPasswordError);
-    }
+  const onSubmit = async (data) => {
+    buttonRef.current.loading();
 
     try {
-      setIsPending(true);
+      newPasswordDetails = { ...data, token };
 
-      const formData = new FormData(e.currentTarget);
-      formData.append("token", token);
-
-      const response = await newPasswordInputs(formData);
+      const response = await newPasswordInputs(newPasswordDetails);
 
       // If there's error we display the error
       if (response?.message && response?.title) {
-        return setError({ message: response.message, title: response.title });
+        return setBackEndErrors({
+          message: response.message,
+          title: response.title,
+        });
       } else {
         router.push(`/password-updated-successfully`);
       }
     } catch (error) {
       console.log(error);
     } finally {
-      setIsPending(false);
+      buttonRef.current.notIsLoading();
     }
   };
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
+  const password = watch("password");
 
-    // Regex - to prevent user to not SPACE in the input!
-    setPassword(newPassword);
-
-    if (!newPassword.trim(" ")) return setSecurityLevel("");
-
-    if (newPassword.length < 6) {
+  useEffect(() => {
+   if (!password?.trim()) {
+      setSecurityLevel("");
+    } else if (password.length < 6) {
       setSecurityLevel(1);
-    } else if (newPassword.length < 8) {
+    } else if (password.length < 8) {
       setSecurityLevel(2);
-    } else if (newPassword.length < 10) {
+    } else if (password.length < 10) {
       setSecurityLevel(3);
     } else {
       setSecurityLevel(4);
     }
-  };
-
-  const isValidPasswordError =
-    error?.message && validPasswordErrors.includes(error?.title);
+  }, [password]);
 
   return (
-    <form onSubmit={handleSubmit} className="sm:px-8 mt-[50px]">
+    <form onSubmit={handleSubmit(onSubmit)} className="sm:px-8 mt-[50px]">
       <div className="mb-8">
         {/* New Password */}
         <div>
-          <CustomNextUiInput
-            type="password"
-            name="password"
-            placeholder="Enter your new password"
-            startContent={
-              <InputBGWrapperIcon>
-                <ThreeAstheristiksBiggerIcon fillColor={'fill-primary-color-P4'} />
-              </InputBGWrapperIcon>
-            }
-            onChange={handlePasswordChange}
-            value={password}
-            classNames={{
-              inputWrapper: isValidPasswordError && "form-input-error",
-            }}
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("password"),
+              "password"
+            )}
+          >
+            <CustomNextUiInput
+              type="password"
+              name="password"
+              placeholder="Enter your new password"
+              startContent={
+                <InputBGWrapperIcon>
+                  <ThreeAstheristiksBiggerIcon
+                    fillColor={"fill-primary-color-P4"}
+                  />
+                </InputBGWrapperIcon>
+              }
+              {...register("password", {
+                required: "Invalid Password --- Password can't be empty.",
+                maxLength: 30,
+                minLength: 8,
+              })}
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.password?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+            />
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="password"
           />
         </div>
 
-        {/* Retape password */}
+        {/* Repeat password */}
         <div className="mt-2.5">
-          <CustomNextUiInput
-            type="password"
-            name="repeatPassword"
-            placeholder="Retape your new password"
-            onChange={(e) =>
-              setRepeatPassword(e?.target?.value)
-            }
-            value={repeatPassword}
-            startContent={
-              <InputBGWrapperIcon>
-                <ThreeAstheristiksBiggerIcon fillColor={'fill-primary-color-P4'} />
-              </InputBGWrapperIcon>
-            }
-            classNames={{
-              inputWrapper: isValidPasswordError && "form-input-error",
-            }}
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("repeatedPassword"),
+              "repeatedPassword"
+            )}
+          >
+            <CustomNextUiInput
+              type="password"
+              name="repeatedPassword"
+              placeholder="Retape your new password"
+              {...register("repeatedPassword", {
+                required:
+                  "Invalid Repeated Password --- Password repeated can't be empty.",
+                maxLength: 30,
+                minLength: 8,
+              })}
+              startContent={
+                <InputBGWrapperIcon>
+                  <ThreeAstheristiksBiggerIcon
+                    fillColor={"fill-primary-color-P4"}
+                  />
+                </InputBGWrapperIcon>
+              }
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.repeatedPassword?.type ||
+                    backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+            />
+          </InputLeftStickStatus>
+
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="repeatedPassword"
           />
         </div>
-
-        {isValidPasswordError && (
-          <ErrorMessageiPractis
-            typeError={error?.title}
-            descError={error?.message}
-          />
-        )}
 
         <PasswordLevels securityLevel={securityLevel} />
 
@@ -170,16 +167,18 @@ const Form = () => {
       </div>
 
       <DualButton
-        leftButtonClassName={"disabled:opacity-20 disabled:pointer-events-none"}
-        rightButtonClassName={
-          "disabled:opacity-20 disabled:pointer-events-none"
-        }
         leftButtonText={"Cancel"}
-        leftButtonHref="/login"
-        leftButtonDisabled={isPending}
-        rightButtonDisabled={isPending}
-        rightButtonText={isPending ? "Loading..." : "Change password"}
-        rightButtonType="submit"
+        leftButtonHref={"/login"}
+        customSubmitButton={
+          <ButtonSubmitForm
+            buttonClassName={
+              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+            }
+            ref={buttonRef}
+          >
+            Change password
+          </ButtonSubmitForm>
+        }
       />
     </form>
   );
