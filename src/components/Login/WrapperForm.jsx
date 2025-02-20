@@ -1,5 +1,6 @@
 "use client";
 
+import SocialMediaButtons from "./SocialMediaButtons";
 import SectionHeader from "../Shared/SectionHeader";
 import Form from "./Form";
 
@@ -30,6 +31,9 @@ const WrapperForm = () => {
           titleClassName="MT-SB-1"
           titleText="Log in"
         />
+
+        {/* Social media buttons to login */}
+        <SocialMediaButtons />
 
         {/* Login form inputs */}
         <Form />
