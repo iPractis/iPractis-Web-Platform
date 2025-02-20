@@ -28,7 +28,6 @@ const Form = () => {
   });
 
   const searchParams = useSearchParams();
-  const [otp, setOtp] = useState("");
   const buttonRef = useRef(null);
   
   const { register, handleSubmit, formState: { errors: frontEndErrors }, watch, } = useForm({ mode: "onBlur" });
@@ -89,13 +88,11 @@ const Form = () => {
               "otp-inputs-container justify-between gap-4 sm:px-4"
             }
             skipDefaultStyles
-            onChange={setOtp}
             shouldAutoFocus
             inputType="tel"
             numInputs={6}
-            value={otp}
             inputStyle={`${
-              frontEndErrors?.authNumber?.type || backEndErrors?.message && "form-input-error"
+              (frontEndErrors?.authNumber?.type || backEndErrors?.message) && "form-input-error"
             } text-center w-full h-[48px] bg-primary-color-P11 placeholder:text-primary-color-P4 text-primary-color-P4 hover:bg-secondary-color-S9 outline-none ST-3 rounded-2xl p-1.5`}
           />
         </InputLeftStickStatus>
