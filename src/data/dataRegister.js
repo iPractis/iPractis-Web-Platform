@@ -1,26 +1,90 @@
-export const validEmailErrors = [
-    "Invalid Email Submission",
-    "Invalid Email Length",
-    "Invalid Email",
-    "You already have an account",
-  ];
+export const validFirstNameErrors = [
+  "Invalid First Name",
+  "First name too short",
+  "First name too long",
+];
 
-  export const validPhoneNumberErrors = ["Invalid Phone Number"];
+export const validLastNameErrors = [
+  "Invalid Last Name",
+  "Last name too short",
+  "Last name too long",
+];
 
-  export const validPasswordErrors = [
-    "Invalid Password",
-    "Password too short",
-    "Password too long",
-  ];
+export const errorFormMessages = {
+  firstName: {
+    required: {
+      typeError: "Invalid First Name",
+      descError: "First name can't be empty.",
+    },
 
-  export const validFirstNameErrors = [
-    "Invalid First Name",
-    "First name too short",
-    "First name too long",
-  ];
+    minLength: {
+      typeError: "First Name too short",
+      descError: "You need at least 2 characters.",
+    },
 
-  export const validLastNameErrors = [
-    "Invalid Last Name",
-    "Last name too short",
-    "Last name too long",
-  ];
+    maxLength: {
+      typeError: "First Name too long",
+      descError: "Your last name should not exceed 30 characters.",
+    },
+
+    pattern: {
+      typeError: "Invalid First Name",
+      descError:
+        "First name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters, spaces, numbers.",
+    },
+  },
+  lastName: {
+    required: {
+      typeError: "Invalid Last Name",
+      descError: "Last name can't be empty.",
+    },
+
+    minLength: {
+      typeError: "Last Name too short",
+      descError: "You need at least 2 characters.",
+    },
+
+    maxLength: {
+      typeError: "Last Name too long",
+      descError: "Your last name should not exceed 30 characters.",
+    },
+
+    pattern: {
+      typeError: "Invalid Last Name",
+      descError:
+        "Last name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters, spaces, numbers.",
+    },
+  },
+  email: {
+    required: {
+      typeError: "Invalid Email",
+      descError: "Email can't be empty.",
+    },
+
+    pattern: {
+      typeError: "Invalid Email",
+      descError: "Check your spelling email.",
+    },
+
+    maxLength: {
+      typeError: "Invalid Email Length",
+      descError: "Email can't exceed 254 of characters.",
+    },
+  },
+  password: {
+    required: {
+      typeError: "Invalid Password",
+      descError: "Password can't be empty.",
+    },
+
+    minLength: {
+      typeError: "Password too short",
+      descError: "You need at least 8 characters to make a password.",
+    },
+
+    maxLength: {
+      typeError: "Password too long",
+      descError: "Your password should not exceed 30 characters.",
+    },
+  },
+};

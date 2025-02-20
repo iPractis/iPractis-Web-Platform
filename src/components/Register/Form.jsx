@@ -1,267 +1,301 @@
 "use client";
 
-import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
-import EmailPhoneSwitcherRegister from "./EmailPhoneSwitcherRegister";
-import ErrorMessageiPractis from "../Shared/ErrorMessageiPractis";
-import { useActionState, useState, startTransition } from "react";
+import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
+import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
+import { errorFormMessages } from "@/src/data/dataRegister";
 import { registerUser } from "@/src/lib/actions/authAction";
-import SectionHeader from "../Shared/SectionHeader";
 import PasswordLevels from "./PasswordLevels";
-import Image from "next/image";
 
+// React imports
+import { useActionState, useState, startTransition, useEffect } from "react";
+import { useForm } from "react-hook-form";
+
+// Icons
 import {
-  CloseIcon,
-  EyeWithDashIcon,
-  EyeWithoutDashIcon,
-  UserAddCircleIcon,
   UserAddCircleMediumIcon,
+  PadLockClosedBigIcon,
+  EyeWithoutDashIcon,
+  EyeWithDashIcon,
+  ThreeUsersIcon,
+  UserBigIcon,
+  CloseIcon,
+  MailIcon,
 } from "../Icons";
 
-import microsoft from "@/public/icons/microsoft-original.png";
-import passwordInput from "@/public/icons/password-input.png";
-import google from "@/public/icons/google-original.png";
-import userInput from "@/public/icons/user-input.png";
-import usersBox from "@/public/icons/users-box.png";
-import apple from "@/public/icons/apple.png";
-
-import {
-  validEmailErrors,
-  validFirstNameErrors,
-  validLastNameErrors,
-  validPasswordErrors,
-  validPhoneNumberErrors,
-} from "@/src/data/dataRegister";
-
 const Form = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: frontEndErrors },
+    watch,
+  } = useForm({ mode: "onBlur" });
+  const [backEndErrors, setBackEndErrors] = useState("");
   const [state, formAction, isPending] = useActionState(registerUser, {});
   const [showPassword, setShowPassword] = useState(false);
-  const [toggleInput, setToggleInput] = useState("email");
   const [securityLevel, setSecurityLevel] = useState("");
-  const [password, setPassword] = useState("");
 
-  const handlePasswordChange = (e) => {
-    const newPassword = e.target.value;
+  const onSubmit = (data) => {
+    // Send data to server action
+    startTransition(() => {
+      formAction(data);
+    });
+  };
 
-    // Regex - to prevent user to not SPACE in the input!
-    setPassword(newPassword);
+  const password = watch("password");
 
-    if (!newPassword.trim(" ")) return setSecurityLevel("");
+  // If there's errors in backend, we set them to the state
+  useEffect(() => {
+    setBackEndErrors(state?.formError);
+  }, [state?.formError]);
 
-    if (newPassword.length < 6) {
+  useEffect(() => {
+    if (!password?.trim()) {
+      setSecurityLevel("");
+    } else if (password.length < 6) {
       setSecurityLevel(1);
-    } else if (newPassword.length < 8) {
+    } else if (password.length < 8) {
       setSecurityLevel(2);
-    } else if (newPassword.length < 10) {
+    } else if (password.length < 10) {
       setSecurityLevel(3);
     } else {
       setSecurityLevel(4);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    formData.append("toggleInput", toggleInput);
-
-    // Send data to server action
-    startTransition(() => {
-      formAction(formData);
-    });
-  };
-
-  const isValidEmailError =
-    state?.message && validEmailErrors.includes(state?.title);
-  const isValidPhoneNumberError =
-    state?.message && validPhoneNumberErrors.includes(state?.title);
-  const isValidPasswordError =
-    state?.message && validPasswordErrors.includes(state?.title);
-  const isValidFirstNameError =
-    state?.message && validFirstNameErrors.includes(state?.title);
-  const isValidLastNameError =
-    state?.message && validLastNameErrors.includes(state?.title);
+  }, [password]);
 
   return (
     <form
-      className="sm:px-8 rounded-2xl sm:mt-[50px] mt-8"
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
       action={formAction}
+      className="mt-8"
     >
-      <SectionHeader
-        descriptionText="Manually enter your details to create a secure account."
-        wrapperSectionHeaderClassName={"sm:px-4"}
-        titleText="Create an account using ID"
-        titleIcon={<UserAddCircleIcon />}
-        descriptionClassName="mt-1"
-        titleClassName="MT-SB-1"
-      />
-
-      <div className="space-y-8">
-        <div className="flex gap-3 mt-8">
-          <button
-            className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
-            type="button"
+      <div className="space-y-3">
+        {/* Firtname && Lastname input */}
+        <div className="flex gap-3 items-center">
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("firstName"),
+              "firstName"
+            )}
           >
-            <Image
-              alt="Google Original Icon"
-              className="mx-auto w-[22px] h-[22px] object-contain"
-              src={google}
-            />
-          </button>
-
-          <button
-            className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
-            type="button"
-          >
-            <Image
-              alt="Microsoft Original Icon"
-              className="mx-auto w-[22px] h-[22px] object-contain"
-              src={microsoft}
-            />
-          </button>
-
-          <button
-            className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
-            type="button"
-          >
-            <Image
-              alt="Apple Original Icon"
-              className="mx-auto w-[22px] h-[22px] object-contain"
-              src={apple}
-            />
-          </button>
-        </div>
-
-        <div className="space-y-3">
-          {/* Firtname && Lastname input */}
-          <div className="flex gap-3 items-center">
             <CustomNextUiInput
               type="text"
               placeholder="First name"
               name="firstName"
               startContent={
-                <Image className="w-9" src={userInput} alt="User Input" />
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
+              endContent={
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              isClearable
               classNames={{
-                inputWrapper: isValidFirstNameError && "form-input-error",
+                inputWrapper:
+                  (frontEndErrors?.firstName?.type || backEndErrors?.message) &&
+                  "form-input-error",
               }}
+              {...register("firstName", {
+                required: "Invalid First Name --- First name can't be empty.",
+                pattern: /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/,
+                setValueAs: (value) => value.trim(),
+                maxLength: 254,
+                minLength: 2,
+              })}
             />
+          </InputLeftStickStatus>
 
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("lastName"),
+              "lastName"
+            )}
+          >
             <CustomNextUiInput
               type="text"
               name="lastName"
               placeholder="Last name"
               startContent={
-                <Image className="w-9" src={usersBox} alt="Users Input" />
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <ThreeUsersIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
+              endContent={
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              isClearable
               classNames={{
-                inputWrapper: isValidLastNameError && "form-input-error",
+                inputWrapper:
+                  (frontEndErrors?.lastName?.type || backEndErrors?.message) &&
+                  "form-input-error",
               }}
+              {...register("lastName", {
+                required: "Invalid Last Name --- Last name can't be empty.",
+                pattern: /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/,
+                setValueAs: (value) => value.trim(),
+                maxLength: 254,
+                minLength: 2,
+              })}
             />
-          </div>
+          </InputLeftStickStatus>
+        </div>
 
-          {isValidFirstNameError && (
-            <ErrorMessageiPractis
-              typeError={state.title}
-              descError={state.message}
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="firstName"
+        />
+
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="lastName"
+        />
+
+        {/* Email Input */}
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("email"),
+              "email"
+            )}
+          >
+            <CustomNextUiInput
+              type="text"
+              name="email"
+              placeholder="Enter your email address"
+              startContent={
+                <InputBGWrapperIcon>
+                  <MailIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon className={"cursor-pointer"}>
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              isClearable
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.email?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+              {...register("email", {
+                required: "Invalid Email --- Check your spelling email",
+                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+                maxLength: 254,
+              })}
             />
-          )}
+          </InputLeftStickStatus>
 
-          {isValidLastNameError && (
-            <ErrorMessageiPractis
-              typeError={state.title}
-              descError={state.message}
-            />
-          )}
-
-          {/* Email || Phone Number Input */}
-          <EmailPhoneSwitcherRegister
-            isValidPhoneNumberError={isValidPhoneNumberError}
-            isValidEmailError={isValidEmailError}
-            setToggleInput={setToggleInput}
-            messageError={state?.message}
-            toggleInput={toggleInput}
-            titleError={state?.title}
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="email"
           />
+        </div>
 
-          {/* Password Input */}
-          <div>
+        {/* Password Input */}
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("password"),
+              "password"
+            )}
+          >
             <CustomNextUiInput
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Enter your password"
               startContent={
-                <Image className="w-9" src={passwordInput} alt="User Input" />
+                <InputBGWrapperIcon>
+                  <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
               }
+              {...register("password", {
+                required: "Invalid Password --- Password can't be empty.",
+                setValueAs: (value) => value.trim(),
+                maxLength: 30,
+                minLength: 8,
+              })}
               endContent={
-                password?.length > 0 && (
-                  <>
-                    <InputBGWrapperIcon
-                      className={"cursor-pointer me-1.5"}
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                      ) : (
-                        <EyeWithoutDashIcon
-                          fillColor={"fill-primary-color-P4"}
-                        />
-                      )}
-                    </InputBGWrapperIcon>
+                <>
+                  <InputBGWrapperIcon
+                    className={"absolute right-10 cursor-pointer"}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
 
-                    <InputBGWrapperIcon
-                      className={"cursor-pointer"}
-                      onClick={() => {
-                        setPassword("");
-                        setSecurityLevel("");
-                      }}
-                    >
-                      <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  </>
-                )
+                  <InputBGWrapperIcon className={"cursor-pointer"}>
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                </>
               }
+              isClearable
               classNames={{
-                inputWrapper: isValidPasswordError && "form-input-error",
+                inputWrapper:
+                  (frontEndErrors?.password?.type || backEndErrors?.message) &&
+                  "form-input-error",
+                input: "!pe-20",
               }}
-              onChange={handlePasswordChange}
-              value={password}
             />
+          </InputLeftStickStatus>
 
-            {isValidPasswordError && (
-              <ErrorMessageiPractis
-                typeError={state.title}
-                descError={state.message}
-              />
-            )}
+          <DynamicInputErrorMessage
+            errorMessages={errorFormMessages}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="password"
+          />
 
-            <PasswordLevels securityLevel={securityLevel} />
+          <PasswordLevels securityLevel={securityLevel} />
 
-            <h3 className="px-2.5 mt-2 ST-4 text-primary-color-P1">
-              Password Security Level{securityLevel && ":"}
-              <span className="ps-1">
-                {getSecurityLevelMessage(securityLevel)}
-              </span>
-            </h3>
-          </div>
+          <h3 className="px-2.5 mt-2 ST-4 text-primary-color-P1">
+            Password Security Level{securityLevel && ":"}
+            <span className="ps-1">
+              {getSecurityLevelMessage(securityLevel)}
+            </span>
+          </h3>
         </div>
-
-        <button
-          className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center"
-          disabled={isPending}
-          type="submit"
-        >
-          <span className="flex-1">
-            {isPending ? "Loading..." : "Create an account"}
-          </span>
-
-          <InputBGWrapperIcon>
-            <UserAddCircleMediumIcon fillColor={"fill-tertiary-color-SC5"} />
-          </InputBGWrapperIcon>
-        </button>
       </div>
+
+      <button
+        className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center mt-8"
+        disabled={isPending}
+        type="submit"
+      >
+        <span className="flex-1">
+          {isPending ? "Loading..." : "Create an account"}
+        </span>
+
+        <InputBGWrapperIcon>
+          <UserAddCircleMediumIcon fillColor={"fill-tertiary-color-SC5"} />
+        </InputBGWrapperIcon>
+      </button>
     </form>
   );
 };

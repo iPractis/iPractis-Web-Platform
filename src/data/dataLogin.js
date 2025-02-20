@@ -15,8 +15,6 @@ export const flagAndAreaCodeCountries = [
   },
 ];
 
-export const validPhoneNumberErrors = ["Invalid Phone Number"];
-
 export const errorFormMessages = {
   email: {
     required: {

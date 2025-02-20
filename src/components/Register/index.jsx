@@ -1,14 +1,16 @@
-import { ChevronRightDoorIcon, PadLockUserIcon } from "../Icons";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import AccountPrompt from "../Shared/AccountPrompt";
-import TopColumn from "./TopColumn";
+import WrapperForm from "./WrapperForm";
+
+// Icons
+import { ChevronRightDoorIcon, PadLockUserIcon } from "../Icons";
 
 export const Register = () => {
   return (
     <section className="container-page-v8 sm:px-0 px-8">
       <div className="sm:my-8 my-4 rounded-[32px]">
         {/* Create an account if the user doesn't have one */}
-        <TopColumn />
+        <WrapperForm />
 
         {/* Login if user have an account */}
         <AccountPrompt
