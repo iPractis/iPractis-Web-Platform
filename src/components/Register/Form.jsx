@@ -105,7 +105,7 @@ const Form = () => {
               }}
               {...register("firstName", {
                 required: "Invalid First Name --- First name can't be empty.",
-                pattern: /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/,
+                pattern: /^[A-Za-z\s-]+$/,
                 setValueAs: (value) => value.trim(),
                 maxLength: 254,
                 minLength: 2,
@@ -143,7 +143,7 @@ const Form = () => {
               }}
               {...register("lastName", {
                 required: "Invalid Last Name --- Last name can't be empty.",
-                pattern: /[0-9!@#%^&*()_+={}[\]:;"'<>?,./£$€¥]/,
+                pattern: /^[A-Za-z\s-]+$/,
                 setValueAs: (value) => value.trim(),
                 maxLength: 254,
                 minLength: 2,

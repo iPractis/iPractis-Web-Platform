@@ -1,15 +1,3 @@
-export const validFirstNameErrors = [
-  "Invalid First Name",
-  "First name too short",
-  "First name too long",
-];
-
-export const validLastNameErrors = [
-  "Invalid Last Name",
-  "Last name too short",
-  "Last name too long",
-];
-
 export const errorFormMessages = {
   firstName: {
     required: {
@@ -30,7 +18,7 @@ export const errorFormMessages = {
     pattern: {
       typeError: "Invalid First Name",
       descError:
-        "First name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters, spaces, numbers.",
+        "First name shouldn't contain accents, special characters, numbers.",
     },
   },
   lastName: {
@@ -52,7 +40,7 @@ export const errorFormMessages = {
     pattern: {
       typeError: "Invalid Last Name",
       descError:
-        "Last name shouldn't contain hyphen (-), accents (á, é, í, ó, ú), special characters, spaces, numbers.",
+        "Last name shouldn't contain accents, special characters, numbers.",
     },
   },
   email: {
