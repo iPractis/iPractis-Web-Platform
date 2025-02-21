@@ -168,7 +168,7 @@ tr:last-of-type td.isSelected {
   }
 
   .input-wrapper-ipractis {
-    @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 has-[input:focus]:bg-secondary-color-S9 shadow-none !important;
+    @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 data-[focus=true]:bg-secondary-color-S9 shadow-none !important;
   }
 
   .input-ipractis {
@@ -247,7 +247,7 @@ tr:last-of-type td.isSelected {
   }
 
   .form-input-error {
-    @apply bg-senary-color-W10 data-[hover=true]:bg-senary-color-W10 !important;
+    @apply bg-senary-color-W10 data-[hover=true]:bg-senary-color-W10 data-[focus=true]:bg-senary-color-W10 !important;
 
     &:hover {
       @apply bg-senary-color-W8 data-[hover=true]:bg-senary-color-W8 !important;
