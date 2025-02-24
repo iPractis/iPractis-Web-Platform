@@ -202,7 +202,7 @@ const Form = () => {
         className="text-center block text-primary-color-P4 ST-4"
         href={"/account-assistance"}
       >
-        I can’t sing in, help!
+        I need help!
       </Link>
     </form>
   );
