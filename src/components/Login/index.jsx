@@ -20,6 +20,9 @@ export const Login = () => {
           btnColor={"btn-primary"}
           hrefLink={"/register"}
           textLink={"Register"}
+          additionalText={
+            "By logging in or creating an account, you agree to iPractis's Terms of Service and Privacy Policy."
+          }
         />
       </div>
     </section>

@@ -4,6 +4,7 @@ import Link from "next/link";
 const AccountPrompt = ({
   headerContainerClassName,
   linkButtonStyles,
+  additionalText,
   descText,
   hrefLink,
   textLink,
@@ -32,6 +33,8 @@ const AccountPrompt = ({
           >
             {textLink}
           </Link>
+
+          {additionalText}
         </div>
       </div>
     </div>
