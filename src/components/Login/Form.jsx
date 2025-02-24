@@ -130,6 +130,17 @@ const Form = () => {
               endContent={
                 <>
                   <InputBGWrapperIcon
+                    className={"absolute right-20 cursor-pointer w-[69px]"}
+                  >
+                    <Link
+                      className="ST-2 text-primary-color-P1"
+                      href={"/password-recovery"}
+                    >
+                      Forget ?
+                    </Link>
+                  </InputBGWrapperIcon>
+
+                  <InputBGWrapperIcon
                     className={"absolute right-10 cursor-pointer"}
                     onClick={() => setShowPassword(!showPassword)}
                   >
