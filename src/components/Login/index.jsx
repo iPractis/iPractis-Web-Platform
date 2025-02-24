@@ -21,7 +21,10 @@ export const Login = () => {
           hrefLink={"/register"}
           textLink={"Register"}
           additionalText={
-            "By logging in or creating an account, you agree to iPractis's Terms of Service and Privacy Policy."
+            <p className="ST-1 text-primary-color-P4 mt-8 px-4">
+              By logging in or creating an account, you agree to iPractis's
+              Terms of Service and Privacy Policy.
+            </p>
           }
         />
       </div>
