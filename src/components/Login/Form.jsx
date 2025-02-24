@@ -133,7 +133,7 @@ const Form = () => {
                     className={"absolute right-20 cursor-pointer w-[69px]"}
                   >
                     <Link
-                      className="ST-2 text-primary-color-P1"
+                      className="ST-2 text-black"
                       href={"/password-recovery"}
                     >
                       Forget ?
