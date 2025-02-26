@@ -62,17 +62,17 @@ const BirthDateInput = ({
               />
             </div>
 
-            <div>
-              <input
-                className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
-                defaultValue={birthDate?.year}
-                name="birthDateYear"
-                type="text"
-                readOnly
-              />
+              <div>
+                <input
+                  className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
+                  defaultValue={birthDate?.year}
+                  name="birthDateYear"
+                  type="text"
+                  readOnly
+                />
+              </div>
             </div>
           </div>
-        </div>
 
         {/* Dropdown */}
         <div>
