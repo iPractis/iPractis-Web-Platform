@@ -1,26 +1,19 @@
-import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
 import SectionHeader from "../../Shared/SectionHeader";
+
+// External imports
+import { Controller } from "react-hook-form";
 import { Switch } from "@nextui-org/react";
 
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+// Icons
+import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
 
 const StudentAge = ({
-  setTeachToAmateurPersons,
-  setTeachToYoungPersons,
-  teachToAmateurPersons,
-  teachToYoungPersons,
-  errors,
+  control,
+  frontEndErrors,
+  backEndErrors,
+  isSubmitted,
 }) => {
-  const teachToYoungPersonsError = findInputErrorZod(
-    errors,
-    "teachToYoungPersons"
-  )?.message;
-  const teachToAmateurPersonsError = findInputErrorZod(
-    errors,
-    "teachToAmateurPersons"
-  )?.message;
-
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -32,61 +25,83 @@ const StudentAge = ({
       />
 
       <div className="mb-2.5">
-        <Switch
+        <Controller
           name="teachToYoungPersons"
-          checked={teachToYoungPersons}
-          onChange={(e) => setTeachToYoungPersons(e.target.checked)}
-          size="sm"
-          classNames={{
-            wrapper: `${
-              teachToYoungPersonsError && !teachToYoungPersons
-                ? "form-input-error"
-                : "bg-primary-color-P6"
-            } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
-            thumb: "bg-primary-color-P12",
-            label: "text-primary-color-P1 ST-4 ml-1",
-          }}
-          thumbIcon={({ isSelected }) =>
-            isSelected ? (
-              <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
-            ) : (
-              <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
-            )
-          }
-        >
-          I accept to teach to young student
-        </Switch>
+          control={control}
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <Switch
+              name="teachToYoungPersons"
+              checked={value}
+              onChange={onChange}
+              size="sm"
+              classNames={{
+                wrapper: `${
+                  !value && isSubmitted
+                    ? "form-input-error"
+                    : "bg-primary-color-P6"
+                } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+                thumb: "bg-primary-color-P12",
+                label: "text-primary-color-P1 ST-4 ml-1",
+              }}
+              thumbIcon={({ isSelected }) =>
+                isSelected ? (
+                  <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+                ) : (
+                  <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+                )
+              }
+            >
+              I accept to teach to young student
+            </Switch>
+          )}
+        />
 
-        <ErrorZodResponse errors={errors} fieldName={"teachToYoungPersons"} />
+        <DynamicInputErrorMessageWithZod
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="teachToYoungPersons"
+        />
       </div>
 
       <div>
-        <Switch
+        <Controller
           name="teachToAmateurPersons"
-          checked={teachToAmateurPersons}
-          onChange={(e) => setTeachToAmateurPersons(e.target.checked)}
-          size="sm"
-          classNames={{
-            wrapper: `${
-              teachToAmateurPersonsError && !teachToAmateurPersons
-                ? "form-input-error"
-                : "bg-primary-color-P6"
-            } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
-            thumb: "bg-primary-color-P12",
-            label: "text-primary-color-P1 ST-4 ml-1",
-          }}
-          thumbIcon={({ isSelected }) =>
-            isSelected ? (
-              <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
-            ) : (
-              <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
-            )
-          }
-        >
-          I accept to teach to mature student
-        </Switch>
+          control={control}
+          defaultValue={false}
+          render={({ field: { onChange, value } }) => (
+            <Switch
+              name="teachToAmateurPersons"
+              checked={value}
+              onChange={onChange}
+              size="sm"
+              classNames={{
+                wrapper: `${
+                  !value && isSubmitted
+                    ? "form-input-error"
+                    : "bg-primary-color-P6"
+                } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+                thumb: "bg-primary-color-P12",
+                label: "text-primary-color-P1 ST-4 ml-1",
+              }}
+              thumbIcon={({ isSelected }) =>
+                isSelected ? (
+                  <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+                ) : (
+                  <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+                )
+              }
+            >
+              I accept to teach to mature student
+            </Switch>
+          )}
+        />
 
-        <ErrorZodResponse errors={errors} fieldName={"teachToAmateurPersons"} />
+        <DynamicInputErrorMessageWithZod
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="teachToAmateurPersons"
+        />
       </div>
     </div>
   );

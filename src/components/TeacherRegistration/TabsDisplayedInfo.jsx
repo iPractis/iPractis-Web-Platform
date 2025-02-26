@@ -38,14 +38,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
   // TAB SUBJECT STATES
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
-  const [teachToAmateurPersons, setTeachToAmateurPersons] = useState(
-    draft?.teachToYoungPersons
-  );
-  const [teachToYoungPersons, setTeachToYoungPersons] = useState(
-    draft?.teachToAmateurPersons
-  );
   const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
-  const [withdrawal, setWithdrawal] = useState(draft?.withdrawal);
 
   // TAB BACKGROUND STATES
   const [experiences, setExperiences] = useState(draft?.careerExperience);
@@ -204,17 +197,11 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
       {/* 1 */}
       <TabSubject
-        setTeachToAmateurPersons={setTeachToAmateurPersons}
-        setTeachToYoungPersons={setTeachToYoungPersons}
         setSelectedSubSubjects={setSelectedSubSubjects}
-        teachToAmateurPersons={teachToAmateurPersons}
         selectedSubSubjects={selectedSubSubjects}
-        teachToYoungPersons={teachToYoungPersons}
         setSelectedLevel={setSelectedLevel}
-        setWithdrawal={setWithdrawal}
         selectedLevel={selectedLevel}
         setActiveTab={setActiveTab}
-        withdrawal={withdrawal}
         activeTab={activeTab}
         errors={errors}
         draft={draft}

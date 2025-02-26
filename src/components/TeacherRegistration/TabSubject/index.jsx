@@ -18,24 +18,18 @@ import axios from "axios";
 import { useRef, useState } from "react";
 
 const TabSubject = ({
-  setTeachToAmateurPersons,
-  setTeachToYoungPersons,
   setSelectedSubSubjects,
-  teachToAmateurPersons,
   selectedSubSubjects,
-  teachToYoungPersons,
   setSelectedLevel,
   selectedLevel,
-  setWithdrawal,
   setActiveTab,
-  withdrawal,
   activeTab,
   draft,
 }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors: frontEndErrors },
+    formState: { errors: frontEndErrors, isSubmitted },
     control,
     watch,
     setValue,
@@ -132,10 +126,10 @@ const TabSubject = ({
         />
 
         <StudentAge
-          setTeachToAmateurPersons={setTeachToAmateurPersons}
-          setTeachToYoungPersons={setTeachToYoungPersons}
-          teachToAmateurPersons={teachToAmateurPersons}
-          teachToYoungPersons={teachToYoungPersons}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          isSubmitted={isSubmitted}
+          control={control}
         />
 
         <AveragePrice
