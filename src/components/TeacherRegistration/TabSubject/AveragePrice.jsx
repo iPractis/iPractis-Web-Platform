@@ -1,74 +1,91 @@
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import { subjectImages } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
 
+// React imports
 import Image from "next/image";
 
+// Icons
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
-const AveragePrice = ({ subjectToTeach, errors, draft }) => {
-  const subjectToTeachImage = subjectImages[subjectToTeach];
+const AveragePrice = ({ frontEndErrors, backEndErrors, watch, register }) => {
+  const subjectToTeachImage = subjectImages[watch("subject")];
 
   return (
     <>
       <SectionHeader
         descriptionText="View key details and manage your transactions."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-[50px] mt-16"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-8 mt-16"
         titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Financial Summary"
         titleClassName="MT-SB-1"
       />
 
       <div className="md:px-8">
-        <SectionHeader
+        {/* <SectionHeader
           descriptionText="Price is crucial for students when choosing a tutor as it determines affordability and value for money."
           titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
           titleText="Average price"
           titleClassName="MT-SB-1"
           wrapperSectionHeaderClassName="mb-16"
-        />
+        /> */}
 
         <div className="grid md:grid-cols-2 grid-cols-1 gap-8 items-end">
           <div>
-            <div className="flex items-end gap-2 mt-7">
-              <CustomNextUiInput
-                defaultValue={draft?.hourlyPrice}
-                type="text"
-                name="hourlyPrice"
-                placeholder="Set your hourly base rate"
-                classNames={{
-                  label: "!-top-11",
-                  inputWrapper:
-                    findInputErrorZod(errors, "hourlyPrice")?.message &&
-                    "form-input-error",
-                }}
-                label={
-                  <div className="flex flex-col">
-                    <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                      Private lesson rate
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
-                    </span>
-
-                    <div className="self-start">
-                      <span className=" text-primary-color-P4 ST-3">
-                        Define your rate for 1:1 private lesson.
+            <InputLeftStickStatus
+              inputBarStatusClassName={`${getLeftStickInputColorStatus(
+                frontEndErrors,
+                backEndErrors,
+                watch("hourlyPrice"),
+                "hourlyPrice"
+              )} -translate-y-0 top-[54%]`}
+            >
+              <div className="flex items-end gap-2 mt-7">
+                <CustomNextUiInput
+                  type="text"
+                  name="hourlyPrice"
+                  placeholder="Set your hourly base rate"
+                  classNames={{
+                    label: "!-top-11",
+                    inputWrapper:
+                      (frontEndErrors?.hourlyPrice?.type ||
+                        backEndErrors?.message) &&
+                      "form-input-error",
+                  }}
+                  label={
+                    <div className="flex flex-col">
+                      <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                        Private lesson rate
+                        <QuestionMark fillColor={"fill-primary-color-P4"} />
                       </span>
-                    </div>
-                  </div>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <DollarSignIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-              />
-            </div>
 
-            <ErrorZodResponse errors={errors} fieldName={"hourlyPrice"} />
+                      <div className="self-start">
+                        <span className=" text-primary-color-P4 ST-3">
+                          Define your rate for 1:1 private lesson.
+                        </span>
+                      </div>
+                    </div>
+                  }
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <DollarSignIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                  {...register("hourlyPrice")}
+                />
+              </div>
+            </InputLeftStickStatus>
+
+            <DynamicInputErrorMessageWithZod
+              frontEndErrors={frontEndErrors}
+              backEndErrors={backEndErrors}
+              fieldName="hourlyPrice"
+            />
           </div>
 
           {subjectToTeachImage && (

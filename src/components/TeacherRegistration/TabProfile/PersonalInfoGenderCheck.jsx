@@ -1,18 +1,23 @@
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
+// Icons
 import { PersonIcon, QuestionMark } from "../../Icons";
 
 const PersonalInfoGenderCheck = ({
-  findInputErrorZod,
-  setSelectedGender,
-  selectedGender,
-  errors,
+  frontEndErrors,
+  backEndErrors,
+  setValue,
+  watch,
 }) => {
+  const selectedGender = watch("gender");
+
   const handleCheckboxChange = (gender) => {
-    setSelectedGender(gender);
+    setValue("gender", gender);
   };
 
   return (
@@ -21,62 +26,77 @@ const PersonalInfoGenderCheck = ({
         Gender <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
 
-      <div className="flex items-center gap-2">
-        <div
-          className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9"
+      <InputLeftStickStatus
+        inputBarStatusClassName={getLeftStickInputColorStatus(
+          frontEndErrors,
+          backEndErrors,
+          watch("gender"),
+          "gender"
+        )}
+      >
+        <div className="flex items-center gap-2">
+          <div
+            className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9"
           }`}
-        >
-          <InputBGWrapperIcon>
-            <PersonIcon fillColor={"fill-primary-color-P4"} />
-          </InputBGWrapperIcon>
+          >
+            <InputBGWrapperIcon>
+              <PersonIcon fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
 
-          <CustomNextUiInput
-            isReadOnly
-            type="text"
-            name="gender"
-            placeholder="Male"
-            labelPlacement="outside"
-            endContent={
-              <CustomNextUiCheckbox
-                className="checkbox-label-ipractis"
-                isSelected={selectedGender === "male"}
-                onChange={() => handleCheckboxChange("male")}
-                size="sm"
-              />
-            }
-            classNames={{
-              input: "!px-1.5", 
-              inputWrapper: findInputErrorZod(errors, "gender")?.message
-                ? "form-input-error"
-                : "!bg-primary-color-P12",
-            }}
-          />
+            <CustomNextUiInput
+              isReadOnly
+              type="text"
+              name="gender"
+              placeholder="Male"
+              labelPlacement="outside"
+              endContent={
+                <CustomNextUiCheckbox
+                  className="checkbox-label-ipractis"
+                  isSelected={selectedGender === "male"}
+                  onChange={() => handleCheckboxChange("male")}
+                  size="sm"
+                />
+              }
+              classNames={{
+                input: "!px-1.5",
+                inputWrapper:
+                  frontEndErrors?.gender?.type || backEndErrors?.message
+                    ? "form-input-error"
+                    : "!bg-primary-color-P12",
+              }}
+            />
 
-          <CustomNextUiInput
-            isReadOnly
-            name="gender"
-            type="text"
-            placeholder="Female"
-            labelPlacement="outside"
-            endContent={
-              <CustomNextUiCheckbox
-                className="checkbox-label-ipractis"
-                isSelected={selectedGender === "female"}
-                onChange={() => handleCheckboxChange("female")}
-                size="sm"
-              />
-            }
-            classNames={{
-              input: "!px-1.5", 
-              inputWrapper: findInputErrorZod(errors, "gender")?.message
-                ? "form-input-error"
-                : "!bg-primary-color-P12",
-            }}
-          />
+            <CustomNextUiInput
+              isReadOnly
+              name="gender"
+              type="text"
+              placeholder="Female"
+              labelPlacement="outside"
+              endContent={
+                <CustomNextUiCheckbox
+                  className="checkbox-label-ipractis"
+                  isSelected={selectedGender === "female"}
+                  onChange={() => handleCheckboxChange("female")}
+                  size="sm"
+                />
+              }
+              classNames={{
+                input: "!px-1.5",
+                inputWrapper:
+                  frontEndErrors?.gender?.type || backEndErrors?.message
+                    ? "form-input-error"
+                    : "!bg-primary-color-P12",
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </InputLeftStickStatus>
 
-      <ErrorZodResponse errors={errors} fieldName={"gender"} />
+      <DynamicInputErrorMessageWithZod
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
+        fieldName="gender"
+      />
     </div>
   );
 };

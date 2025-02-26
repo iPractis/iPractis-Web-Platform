@@ -6,9 +6,10 @@ import {
   UserIcon,
 } from "../../Icons";
 
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
@@ -17,21 +18,17 @@ import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 
 const PersonalInfo = ({
   setSelectedNationality,
   selectedNationality,
   setSelectedCountry,
-  setSelectedGender,
   selectedCountry,
-  selectedGender,
-  setBirthDate,
-  setIntroText,
-  introText,
-  birthDate,
-  errors,
-  draft,
+  frontEndErrors,
+  backEndErrors,
+  setValue,
+  register,
+  watch,
 }) => {
   return (
     <WhiteSpaceWrapper className={"p-0"}>
@@ -45,12 +42,20 @@ const PersonalInfo = ({
       <div className="md:px-8 mt-8">
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
+            {/* Firstname */}
             <div>
-              <InputLeftStickStatus>
+              <InputLeftStickStatus
+                inputBarStatusClassName={getLeftStickInputColorStatus(
+                  frontEndErrors,
+                  backEndErrors,
+                  watch("firstName"),
+                  "firstName"
+                )}
+              >
                 <CustomNextUiInput
                   name="firstName"
-                  defaultValue={draft?.firstName}
                   type="text"
+                  {...register("firstName")}
                   placeholder="Enter your first name"
                   label={
                     <span className="flex gap-1.5 items-center">
@@ -66,78 +71,107 @@ const PersonalInfo = ({
                   }
                   classNames={{
                     inputWrapper:
-                      findInputErrorZod(errors, "firstName")?.message &&
+                      (frontEndErrors?.firstName?.type ||
+                        backEndErrors?.message) &&
                       "form-input-error",
                   }}
                 />
               </InputLeftStickStatus>
 
-              <ErrorZodResponse errors={errors} fieldName={"firstName"} />
-            </div>
-
-            <div>
-              <CustomNextUiInput
-                name="middleName"
-                defaultValue={draft?.middleName}
-                type="text"
-                placeholder="Enter your middle name (Optional)"
-                label={
-                  <span className="flex gap-1.5 items-center">
-                    Middle name{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <UserBigIcon fillColor={"fill-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                }
-                classNames={{
-                  inputWrapper:
-                    findInputErrorZod(errors, "middleName")?.message &&
-                    "form-input-error",
-                }}
+              <DynamicInputErrorMessageWithZod
+                frontEndErrors={frontEndErrors}
+                backEndErrors={backEndErrors}
+                fieldName="firstName"
               />
             </div>
 
+            {/* Middlename */}
             <div>
-              <CustomNextUiInput
-                name="lastName"
-                defaultValue={draft?.lastName}
-                type="text"
-                placeholder="Enter your last name"
-                label={
-                  <span className="flex gap-1.5 items-center">
-                    Last name{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <InputBGWrapperIcon>
-                    <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
-                  </InputBGWrapperIcon>
-                }
-                classNames={{
-                  inputWrapper:
-                    findInputErrorZod(errors, "lastName")?.message &&
-                    "form-input-error",
-                }}
-              />
-
-              <ErrorZodResponse errors={errors} fieldName={"lastName"} />
+              <InputLeftStickStatus
+                inputBarStatusClassName={getLeftStickInputColorStatus(
+                  frontEndErrors,
+                  backEndErrors,
+                  watch("middleName"),
+                  "middleName",
+                  false
+                )}
+              >
+                <CustomNextUiInput
+                  name="middleName"
+                  {...register("middleName")}
+                  type="text"
+                  placeholder="Enter your middle name (Optional)"
+                  label={
+                    <span className="flex gap-1.5 items-center">
+                      Middle name{" "}
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    </span>
+                  }
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                  classNames={{
+                    inputWrapper:
+                      (frontEndErrors?.middleName?.type ||
+                        backEndErrors?.message) &&
+                      "form-input-error",
+                  }}
+                />
+              </InputLeftStickStatus>
             </div>
 
-            <BirthDateInput
-              findInputErrorZod={findInputErrorZod}
-              setBirthDate={setBirthDate}
-              birthDate={birthDate}
-              errors={errors}
-            />
+            {/* Lastname */}
+            <div>
+              <InputLeftStickStatus
+                inputBarStatusClassName={getLeftStickInputColorStatus(
+                  frontEndErrors,
+                  backEndErrors,
+                  watch("lastName"),
+                  "lastName"
+                )}
+              >
+                <CustomNextUiInput
+                  name="lastName"
+                  type="text"
+                  {...register("lastName")}
+                  placeholder="Enter your last name"
+                  label={
+                    <span className="flex gap-1.5 items-center">
+                      Last name{" "}
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    </span>
+                  }
+                  labelPlacement="outside"
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
+                    </InputBGWrapperIcon>
+                  }
+                  classNames={{
+                    inputWrapper:
+                      (frontEndErrors?.lastName?.type ||
+                        backEndErrors?.message) &&
+                      "form-input-error",
+                  }}
+                />
+              </InputLeftStickStatus>
+
+              <DynamicInputErrorMessageWithZod
+                frontEndErrors={frontEndErrors}
+                backEndErrors={backEndErrors}
+                fieldName="lastName"
+              />
+            </div>
+
+            {/* Birthdate inputs (3) */}
+            <BirthDateInput />
           </div>
 
           <div className="space-y-12">
+            {/* Country of residence */}
             <div>
               <CustomNextUiInput
                 type="text"
@@ -165,6 +199,7 @@ const PersonalInfo = ({
               />
             </div>
 
+            {/* Country of nationality */}
             <div>
               <CustomNextUiInput
                 type="text"
@@ -192,20 +227,23 @@ const PersonalInfo = ({
               />
             </div>
 
+            {/* Gender checkboxes */}
             <PersonalInfoGenderCheck
-              findInputErrorZod={findInputErrorZod}
-              setSelectedGender={setSelectedGender}
-              selectedGender={selectedGender}
-              errors={errors}
+              frontEndErrors={frontEndErrors}
+              backEndErrors={backEndErrors}
+              setValue={setValue}
+              watch={watch}
             />
           </div>
         </div>
 
+        {/* Introduction about yourself */}
         <AboutYourSelfIntro
-          errors={errors}
-          introText={introText}
-          setIntroText={setIntroText}
-          findInputErrorZod={findInputErrorZod}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          register={register}
+          setValue={setValue}
+          watch={watch}
         />
       </div>
     </WhiteSpaceWrapper>

@@ -27,12 +27,12 @@ const DescribeYourIssue = ({
 
       <div className="my-[50px] w-full">
         <InputLeftStickStatus
-          inputBarStatusClassName={getLeftStickInputColorStatus(
+          inputBarStatusClassName={`${getLeftStickInputColorStatus(
             frontEndErrors,
             backEndErrors,
             watch("situation"),
             "situation"
-          )}
+          )} h-[129px]`}
         >
           <CustomNextUiTextarea
             classNames={{

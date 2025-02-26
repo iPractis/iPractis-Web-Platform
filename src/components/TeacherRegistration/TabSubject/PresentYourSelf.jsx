@@ -1,14 +1,23 @@
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
-import React from "react";
 
 // Images && icons
-import { AnalyticVerticalLinesIcon, CameraIcon, LinkHorizontalIcon } from "../../Icons";
+import {
+  AnalyticVerticalLinesIcon,
+  LinkHorizontalIcon,
+  CameraIcon,
+} from "../../Icons";
 
-const PresentYourSelf = ({ draft, errors }) => {
+const PresentYourSelf = ({
+  frontEndErrors,
+  backEndErrors,
+  register,
+  watch,
+}) => {
   return (
     <>
       <SectionHeader
@@ -21,38 +30,51 @@ const PresentYourSelf = ({ draft, errors }) => {
 
       <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
         <div>
-          <CustomNextUiInput
-            defaultValue={draft?.videoLink}
-            type="text"
-            name="videoLink"
-            label={
-              <SectionHeader
-                descriptionText="Upload your video on YouTube and paste the link in the field below."
-                titleIcon={
-                  <AnalyticVerticalLinesIcon
-                    strokeColor={"stroke-primary-color-P1"}
-                  />
-                }
-                titleText="Video Link"
-                titleClassName="MT-SB-1"
-              />
-            }
-            classNames={{
-              label: "!-top-20",
-              inputWrapper:
-                findInputErrorZod(errors, "videoLink")?.message &&
-                "form-input-error",
-            }}
-            labelPlacement="outside"
-            placeholder="Enter your video link"
-            startContent={
-              <InputBGWrapperIcon>
-                <LinkHorizontalIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-          />
+          <InputLeftStickStatus
+            inputBarStatusClassName={`${getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("videoLink"),
+              "videoLink"
+            )}`}
+          >
+            <CustomNextUiInput
+              type="text"
+              name="videoLink"
+              label={
+                <SectionHeader
+                  descriptionText="Upload your video on YouTube and paste the link in the field below."
+                  titleIcon={
+                    <AnalyticVerticalLinesIcon
+                      strokeColor={"stroke-primary-color-P1"}
+                    />
+                  }
+                  titleText="Video Link"
+                  titleClassName="MT-SB-1"
+                />
+              }
+              classNames={{
+                label: "!-top-20",
+                inputWrapper:
+                  (frontEndErrors?.videoLink?.type || backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+              {...register("videoLink")}
+              labelPlacement="outside"
+              placeholder="Enter your video link"
+              startContent={
+                <InputBGWrapperIcon>
+                  <LinkHorizontalIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+            />
+          </InputLeftStickStatus>
 
-          <ErrorZodResponse errors={errors} fieldName={"videoLink"} />
+          <DynamicInputErrorMessageWithZod
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="videoLink"
+          />
 
           <ul className="ps-4 ST-1 list-disc text-primary-color-P4 mt-8">
             <li>You must appear in the video.</li>

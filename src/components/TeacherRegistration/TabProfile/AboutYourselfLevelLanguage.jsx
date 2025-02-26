@@ -10,11 +10,12 @@ import { ChevronDownBigIcon, TrashBinIcon } from "../../Icons";
 import Image from "next/image";
 
 const AboutYourselfLevelLanguage = ({
-  masteredIndividualLanguage,
+  field,
+  index,
   handleDeleteMasteredLanguage,
   handleLanguageLevel,
 }) => {
-  const { name, level } = masteredIndividualLanguage;
+  const { name, level } = field;
   const [isOpen, setIsOpen] = useState(false);
 
   const selectedLanguageImage = masteredLanguagesImages[name];
@@ -47,7 +48,7 @@ const AboutYourselfLevelLanguage = ({
             selectedKeys={[level]}
             onSelectionChange={(selected) => {
               const selectedValue = Array.from(selected).join("");
-              handleLanguageLevel(selectedValue, name);
+              handleLanguageLevel(selectedValue, index);
             }}
             endContent={
               <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
@@ -76,7 +77,7 @@ const AboutYourselfLevelLanguage = ({
 
       <button
         className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-        onClick={() => handleDeleteMasteredLanguage(name)}
+        onClick={() => handleDeleteMasteredLanguage(index)}
         type="button"
       >
         <TrashBinIcon

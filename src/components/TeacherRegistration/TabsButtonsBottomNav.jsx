@@ -1,68 +1,51 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
-import DualButton from "../Shared/DualButton";
+import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
+
+// React imports
 import { redirect } from "next/navigation";
 
-const TabsButtonsBottomNav = ({
-  isTabAvailabilityPending,
-  isTabBackgroundPending,
-  isTabSubjectPending,
-  isTabProfilePending,
-  setActiveTab,
-  activeTab,
-}) => {
-  const pendingConditions =
-    isTabBackgroundPending ||
-    isTabSubjectPending ||
-    isTabAvailabilityPending ||
-    isTabProfilePending;
+// Icons
+import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 
+const TabsButtonsBottomNav = ({ buttonRef, setActiveTab, activeTab }) => {
   return (
     activeTab < 4 && (
-      <DualButton
-        dualButtonWrapper={"gap-4 mt-16 md:px-8"}
-        rightButtonClassName={
-          "flex-1 disabled:opacity-20 disabled:pointer-events-none"
-        }
-        leftButtonClassName={
-          "flex-1 disabled:opacity-20 disabled:pointer-events-none"
-        }
-        onClickLeftButton={() =>
-          setActiveTab((prev) =>
-            prev < 1 ? redirect("/apply-as-teacher") : prev - 1
-          )
-        }
-        leftButtonText={
-          <div className="flex justify-center items-center">
-            <div className="flex-1">
+      <div className={"flex items-center gap-4 mt-16 md:px-8"}>
+        <div className="flex-1">
+          <button
+            className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4 flex justify-center items-center"
+            onClick={() =>
+              setActiveTab((prev) =>
+                prev < 1 ? redirect("/apply-as-teacher") : prev - 1
+              )
+            }
+          >
+            <span className="flex-0">
               <ChevronLeftIcon fillColor={"fill-primary-color-P12"} />
+            </span>
+
+            <span className="flex-1">Back</span>
+          </button>
+        </div>
+
+        <div className="flex-1">
+          <ButtonSubmitForm
+            buttonClassName={
+              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4 flex items-center justify-center"
+            }
+            ref={buttonRef}
+          >
+            <div className="flex-1">
+              <span className="md:hidden block">Continue</span>
+
+              <span className="md:block hidden">Save, and continue</span>
             </div>
 
-            <span className="flex-[100%]">Back</span>
-          </div>
-        }
-        leftButtonDisabled={pendingConditions}
-        rightButtonDisabled={pendingConditions}
-        rightButtonText={
-          <div className="flex justify-center items-center">
-            {pendingConditions ? (
-              "Loading..."
-            ) : (
-              <>
-                <span className="md:hidden block flex-[100%]">Continue</span>
-
-                <span className="md:block hidden flex-[100%]">
-                  Save, and continue
-                </span>
-
-                <div className="flex-1">
-                  <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
-                </div>
-              </>
-            )}
-          </div>
-        }
-        rightButtonType={"submit"}
-      />
+            <div className="flex-0">
+              <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
+            </div>
+          </ButtonSubmitForm>
+        </div>
+      </div>
     )
   );
 };

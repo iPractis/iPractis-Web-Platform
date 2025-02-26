@@ -315,3 +315,56 @@ export const masteredLanguagesImages = {
   German: null,
   Arabic: null,
 };
+
+export const errorFormMessagesTabProfile = {
+  firstName: {
+    required: {
+      typeError: "Invalid First Name",
+      descError: "First name can't be empty.",
+    },
+
+    minLength: {
+      typeError: "First Name too short",
+      descError: "You need at least 2 characters.",
+    },
+
+    maxLength: {
+      typeError: "First Name too long",
+      descError: "Your last name should not exceed 30 characters.",
+    },
+
+    pattern: {
+      typeError: "Invalid First Name",
+      descError:
+        "First name shouldn't contain accents, special characters, numbers.",
+    },
+  },
+  lastName: {
+    required: {
+      typeError: "Invalid Last Name",
+      descError: "Last name can't be empty.",
+    },
+
+    minLength: {
+      typeError: "Last Name too short",
+      descError: "You need at least 2 characters.",
+    },
+
+    maxLength: {
+      typeError: "Last Name too long",
+      descError: "Your last name should not exceed 30 characters.",
+    },
+
+    pattern: {
+      typeError: "Invalid Last Name",
+      descError:
+        "Last name shouldn't contain accents, special characters, numbers.",
+    },
+  },
+  uploadProfileImage: {
+    required: {
+      typeError: "Invalid submission",
+      descError: "Must provide an image (PNG or JPEG).",
+    },
+  },
+};

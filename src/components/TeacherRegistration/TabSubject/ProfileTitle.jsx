@@ -1,38 +1,51 @@
-// Images && icons
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { CustomNextUiInputWithMaxLength } from "../../Shared/MaxFormLengthFields";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import { useState } from "react";
 
 // Images && icons
 import { CloseIcon, ThreeXBlocks } from "../../Icons";
 
-const ProfileTitle = ({ draft, errors }) => {
-  const [profileTitleText, setProfileTitleText] = useState(draft?.profileTitle);
+const ProfileTitle = ({
+  frontEndErrors,
+  backEndErrors,
+  setValue,
+  register,
+  watch,
+}) => {
+  const profileTitleText = watch("profileTitle", "");
 
   const profileTitleTextOnChange = (e) => {
     const textValue = e?.target?.value;
 
-    if (textValue?.length <= 120) return setProfileTitleText(textValue);
+    if (textValue?.length <= 120) setValue("profileTitle", textValue);
   };
 
   return (
-    <>
-      <div className="-mb-5">
+    <div>
+      <InputLeftStickStatus
+        inputBarStatusClassName={`${getLeftStickInputColorStatus(
+          frontEndErrors,
+          backEndErrors,
+          watch("profileTitle"),
+          "profileTitle"
+        )} -translate-y-0 ${
+          profileTitleText?.length === 120 ? "top-[12%]" : "top-[25%]"
+        }`}
+      >
         <CustomNextUiInputWithMaxLength
-          defaultValue={draft?.profileTitle}
+          base={"!mt-0"}
           nameInput={"profileTitle"}
           labelTitle={"Write a catchy headline"}
-          labelSubtitle={
-            "Find a catchy title"
-          }
+          labelSubtitle={"Find a catchy title"}
           labelClassName={"!-top-[52px]"}
           labelDisabled={false}
           nameTextarea={"profileTitle"}
           value={profileTitleText}
           onChange={profileTitleTextOnChange}
           placeholder={"Enter a profile title"}
+          inputClassName={"!pe-3"}
           maxCharactersLength={120}
           typeError={"Max Length Exceeded"}
           descError={"The text cannot exceed 120 characters."}
@@ -44,17 +57,24 @@ const ProfileTitle = ({ draft, errors }) => {
           endContent={
             <InputBGWrapperIcon
               className={"cursor-pointer"}
-              onClick={() => setProfileTitleText("")}
+              onClick={() => setValue("profileTitle", "")}
             >
               <CloseIcon strokeColor={"stroke-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
-          backgroundError={findInputErrorZod(errors, "profileTitle")?.message}
+          backgroundError={
+            frontEndErrors?.profileTitle?.type || backEndErrors?.message
+          }
+          inputProps={{ ...register("profileTitle") }}
         />
+      </InputLeftStickStatus>
 
-        <ErrorZodResponse errors={errors} fieldName={"profileTitle"} />
-      </div>
-    </>
+      <DynamicInputErrorMessageWithZod
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
+        fieldName="profileTitle"
+      />
+    </div>
   );
 };
 

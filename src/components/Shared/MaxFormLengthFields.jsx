@@ -1,6 +1,8 @@
 import ErrorMessageiPractis from "./ErrorMessageiPractis";
 import CustomNextUiTextarea from "./CustomNextUiTextarea";
 import CustomNextUiInput from "./CustomNextUiInput";
+
+// Icons
 import { QuestionMark } from "../Icons";
 
 export const CustomNextUiTextareaWithMaxLength = ({
@@ -19,8 +21,10 @@ export const CustomNextUiTextareaWithMaxLength = ({
   nameTextarea,
   defaultValue,
   backgroundError,
+  inputProps,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
+
   return (
     <>
       <CustomNextUiTextarea
@@ -41,6 +45,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
             </div>
           )
         }
+        {...inputProps}
         onChange={onChange}
         value={value}
         labelPlacement="outside"
@@ -94,6 +99,8 @@ export const CustomNextUiInputWithMaxLength = ({
   nameInput,
   inputType,
   backgroundError,
+  base,
+  inputProps,
 }) => {
   const exceedValueMaxLength = value?.length === maxCharactersLength;
 
@@ -101,6 +108,7 @@ export const CustomNextUiInputWithMaxLength = ({
     <>
       <CustomNextUiInput
         defaultValue={defaultValue}
+        {...inputProps}
         onChange={onChange}
         value={value}
         type={inputType}
@@ -130,6 +138,7 @@ export const CustomNextUiInputWithMaxLength = ({
             (exceedValueMaxLength && "form-input-error") ||
             (backgroundError && "form-input-error"),
           label: [labelClassName],
+          base: [base]
         }}
       />
 

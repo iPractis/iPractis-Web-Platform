@@ -1,13 +1,22 @@
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
-import { UserBigIcon, UserIcon } from "../../Icons";
+
+// React imports
 import { useState } from "react";
 import Image from "next/image";
 
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+// Icons
+import { UserBigIcon, UserIcon } from "../../Icons";
 
-const ProfilePicture = ({ errors, draft }) => {
+const ProfilePicture = ({
+  frontEndErrors,
+  backEndErrors,
+  register,
+  watch,
+}) => {
   const [image, setImage] = useState(null);
 
   const onImageChange = (e) => {
@@ -29,35 +38,45 @@ const ProfilePicture = ({ errors, draft }) => {
       <div className="mt-8 mb-16 md:px-8">
         <div className="flex items-start sm:gap-8 gap-4">
           {/* Profile Image Input */}
-          <div className="relative">
-            <input
-              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              accept=".png, .jpeg"
-              name="uploadProfileImage"
-              onChange={onImageChange}
-              type="file"
-            />
-
-            {image ? (
-              <Image
-                className="w-[100px] h-[100px] rounded-2xl object-cover"
-                alt={"User Profile Picture"}
-                width={100}
-                height={100}
-                src={image}
-              />
-            ) : (
-              <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
-                <UserBigIcon
-                  fillColor={
-                    findInputErrorZod(errors, "uploadProfileImage")?.message
-                      ? "fill-senary-color-W10"
-                      : "fill-primary-color-P1"
-                  }
-                />
-              </div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("uploadProfileImage"),
+              "uploadProfileImage"
             )}
-          </div>
+          >
+            <div className="relative">
+              <input
+                className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+                {...register("uploadProfileImage")}
+                name="uploadProfileImage"
+                onChange={onImageChange}
+                accept=".png, .jpeg"
+                type="file"
+              />
+
+              {image ? (
+                <Image
+                  className="w-[100px] h-[100px] rounded-2xl object-cover"
+                  alt={"User Profile Picture"}
+                  width={100}
+                  height={100}
+                  src={image}
+                />
+              ) : (
+                <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
+                  <UserBigIcon
+                    fillColor={
+                      frontEndErrors?.uploadProfileImage?.type || backEndErrors?.message
+                        ? "fill-senary-color-W10"
+                        : "fill-primary-color-P1"
+                    }
+                  />
+                </div>
+              )}
+            </div>
+          </InputLeftStickStatus>
 
           {/* Instructions Image Input */}
           <ul className="ps-4 ST-1 list-disc text-primary-color-P4">
@@ -71,7 +90,11 @@ const ProfilePicture = ({ errors, draft }) => {
           </ul>
         </div>
 
-        <ErrorZodResponse errors={errors} fieldName={"uploadProfileImage"} />
+        <DynamicInputErrorMessageWithZod
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="uploadProfileImage"
+        />
       </div>
     </WhiteSpaceWrapper>
   );

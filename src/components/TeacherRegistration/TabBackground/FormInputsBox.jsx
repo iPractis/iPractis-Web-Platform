@@ -134,6 +134,7 @@ const FormInputsBox = ({
               </Dropdown>
             }
             classNames={{
+              input: "!pe-1",
               inputWrapper:
                 findInputMultipleErrorZod(
                   errors,
@@ -197,6 +198,7 @@ const FormInputsBox = ({
               </Dropdown>
             }
             classNames={{
+              input: "!pe-1",
               inputWrapper:
                 findInputMultipleErrorZod(
                   errors,

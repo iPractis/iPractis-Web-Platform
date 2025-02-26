@@ -1,55 +1,129 @@
 import AboutYourselfMasteredLanguages from "./AboutYourselfMasteredLanguages";
+import { tabProfileSchema } from "@/src/validations/index";
+import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import ProfilePicture from "./ProfilePicture";
 import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
 
+// External imports
+import { CalendarDate, parseDate } from "@internationalized/date";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+
+// React imports
+import { useRef, useState } from "react";
+
 const TabProfile = ({
   setSelectedNationality,
-  setMasteredLanguages,
   selectedNationality,
   setSelectedCountry,
-  setSelectedGender,
-  masteredLanguages,
   selectedCountry,
-  selectedGender,
-  setBirthDate,
-  setIntroText,
-  introText,
-  birthDate,
+  setActiveTab,
   activeTab,
-  errors,
   draft,
 }) => {
+  const { register, handleSubmit, formState: { errors: frontEndErrors }, control, watch, setValue, } = useForm({ mode: "onBlur", resolver: zodResolver(tabProfileSchema),
+    defaultValues: {
+      firstName: draft?.firstName,
+      middleName: draft?.middleName,
+      lastName: draft?.lastName,
+      introduction: draft?.introduction,
+      uploadProfileImage: draft?.uploadProfileImage,
+      birthDateDay: draft?.birthDate ? parseDate(draft?.birthDate)?.day : "",
+      birthDateMonth: draft?.birthDate ? parseDate(draft?.birthDate)?.month : "",
+      birthDateYear: draft?.birthDate ? parseDate(draft?.birthDate)?.year : "",
+      languages: draft?.languages || [],
+      gender: draft?.gender,
+    },
+  });
+  const [backEndErrors, setBackEndErrors] = useState("");
+  const buttonRef = useRef(null);
+
+  const onSubmit = async (data) => {
+    buttonRef.current.loading();
+
+    const actualDraftInfo = draft;
+
+    try {
+      // TAB PROFILE
+      if (activeTab === 0) {
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
+          ? ""
+          : validBirthDate?.toString();
+        actualDraftInfo.uploadProfileImage = watch("uploadProfileImage");
+        actualDraftInfo.introduction = watch("introduction");
+        actualDraftInfo.middleName = watch("middleName");
+        actualDraftInfo.firstName = watch("firstName");
+        actualDraftInfo.lastName = watch("lastName");
+        actualDraftInfo.nationality = selectedNationality?.key;
+        actualDraftInfo.country = selectedCountry?.key;
+        actualDraftInfo.languages = masteredLanguages;
+        actualDraftInfo.gender = watch("gender");
+
+        const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
+
+        if (!validationResult.success) return;
+
+        const response = await axios.post(
+          `/teacher/set/profile`,
+          actualDraftInfo
+        );
+
+        setActiveTab((prev) => prev + 1);
+        console.log(response, "PROFILE");
+      }
+    } catch (err) {
+      setBackEndErrors(err?.response?.data?.message);
+      console.log(err);
+    } finally {
+      buttonRef.current.notIsLoading();
+    }
+  };
+
   return (
-    <div className={`${activeTab !== 0 && "hidden"}`}>
+    <form
+      className={`${activeTab !== 0 && "hidden"}`}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       {/* Profile Picture */}
-      <ProfilePicture errors={errors} draft={draft} />
+      <ProfilePicture
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
+        register={register}
+        watch={watch}
+      />
 
       {/* Personal Informations */}
       <PersonalInfo
         setSelectedNationality={setSelectedNationality}
         selectedNationality={selectedNationality}
         setSelectedCountry={setSelectedCountry}
-        setSelectedGender={setSelectedGender}
         selectedCountry={selectedCountry}
-        selectedGender={selectedGender}
-        setBirthDate={setBirthDate}
-        setIntroText={setIntroText}
-        introText={introText}
-        birthDate={birthDate}
-        errors={errors}
-        draft={draft}
+        frontEndErrors={frontEndErrors}
+        backEndErrors={backEndErrors}
+        setValue={setValue}
+        register={register}
+        watch={watch}
       />
 
       {/* Tell students about yourself */}
       <AboutYourself>
         <AboutYourselfMasteredLanguages
-          setMasteredLanguages={setMasteredLanguages}
-          masteredLanguages={masteredLanguages}
-          errors={errors}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          control={control}
+          watch={watch}
         />
       </AboutYourself>
-    </div>
+
+      {/* Back && Save buttons */}
+      <TabsButtonsBottomNav
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+        buttonRef={buttonRef}
+      />
+    </form>
   );
 };
 
