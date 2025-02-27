@@ -81,7 +81,7 @@ const TabSubject = ({
         );
 
         setActiveTab((prev) => prev + 1);
-        console.log(response, "PROFILE");
+        console.log(response, "SUBJECT");
       }
     } catch (err) {
       setBackEndErrors(err?.response?.data?.message);

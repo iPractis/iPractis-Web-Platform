@@ -1,7 +1,16 @@
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";
+
+// External imports
 import { Select, SelectItem } from "@nextui-org/react";
+import { Controller } from "react-hook-form";
+
+// React imports
 import { useState } from "react";
 
 // Icons
@@ -13,19 +22,16 @@ import {
   LuggageBiggerIcon,
   LuggageClockIcon,
 } from "../../Icons";
-import CustomNextUiInput from "../../Shared/CustomNextUiInput";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 
-const WorkTimePreferences = ({ draft, errors }) => {
-  const [dailyWorkTime, setDailyWorkTime] = useState(draft?.dailyWorkTime);
+const WorkTimePreferences = ({
+  frontEndErrors,
+  backEndErrors,
+  register,
+  control,
+  watch,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const timeZoneError = findInputErrorZod(errors, "timeZone")?.message;
-  const dailyWorkTimeError = findInputErrorZod(
-    errors,
-    "dailyWorkTime"
-  )?.message;
+  console.log(frontEndErrors, 'hay')
 
   return (
     <>
@@ -50,43 +56,69 @@ const WorkTimePreferences = ({ draft, errors }) => {
             titleClassName="MT-SB-1"
           />
 
-          <Select
-            name="timeZone"
-            onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-            placeholder="Select a time zone"
-            selectorIcon={<span></span>}
-            isOpen={isOpen}
-            startContent={
-              <InputBGWrapperIcon>
-                <EarthIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            endContent={
-              <InputBGWrapperIcon>
-                <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-              </InputBGWrapperIcon>
-            }
-            defaultSelectedKeys={[draft?.timeZone]}
-            classNames={{
-              trigger: [
-                "select-wrapper-ipractis",
-                timeZoneError && "form-input-error",
-              ],
-              innerWrapper: ["select-ipractis", "w-full"],
-              value: [
-                "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-              ],
-              listbox: ["text-primary-color-P4"],
-            }}
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("timeZone"),
+              "timeZone"
+            )}
           >
-            {timeZones?.map((tz) => (
-              <SelectItem key={tz.value} value={tz.value}>
-                {tz.label}
-              </SelectItem>
-            ))}
-          </Select>
+            <Controller
+              name="timeZone"
+              control={control}
+              rules={{
+                required:
+                  "Invalid timezone --- Please provide a timezone from select.",
+              }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  name="timeZone"
+                  onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+                  placeholder="Select a time zone"
+                  selectorIcon={<span></span>}
+                  isOpen={isOpen}
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <EarthIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                  endContent={
+                    <InputBGWrapperIcon>
+                      <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                    </InputBGWrapperIcon>
+                  }
+                  defaultSelectedKeys={[field.value]}
+                  classNames={{
+                    trigger: [
+                      "select-wrapper-ipractis",
+                      (frontEndErrors?.timeZone?.type ||
+                        backEndErrors?.message) &&
+                        "form-input-error",
+                    ],
+                    innerWrapper: ["select-ipractis", "w-full"],
+                    value: [
+                      "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                    ],
+                    listbox: ["text-primary-color-P4"],
+                  }}
+                >
+                  {timeZones?.map((tz) => (
+                    <SelectItem key={tz.value} value={tz.value}>
+                      {tz.label}
+                    </SelectItem>
+                  ))}
+                </Select>
+              )}
+            />
+          </InputLeftStickStatus>
 
-          <ErrorZodResponse errors={errors} fieldName={"timeZone"} />
+          <DynamicInputErrorMessageWithZod
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="timeZone"
+          />
         </div>
 
         {/* Set your daily work time limit */}
@@ -99,25 +131,39 @@ const WorkTimePreferences = ({ draft, errors }) => {
             titleClassName="MT-SB-1"
           />
 
-          <CustomNextUiInput
-            readOnly
-            type="text"
-            name="dailyWorkTime"
-            value={dailyWorkTime}
-            onChange={(e) => setDailyWorkTime(e?.target?.value)}
-            defaultValue={draft?.dailyWorkTime}
-            placeholder="Define your daily work time"
-            startContent={
-              <InputBGWrapperIcon>
-                <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            classNames={{
-              inputWrapper: dailyWorkTimeError && "form-input-error",
-            }}
-          />
+          <InputLeftStickStatus
+            inputBarStatusClassName={getLeftStickInputColorStatus(
+              frontEndErrors,
+              backEndErrors,
+              watch("dailyWorkTime"),
+              "dailyWorkTime"
+            )}
+          >
+            <CustomNextUiInput
+              readOnly
+              type="text"
+              name="dailyWorkTime"
+              placeholder="Define your daily work time"
+              startContent={
+                <InputBGWrapperIcon>
+                  <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              classNames={{
+                inputWrapper:
+                  (frontEndErrors?.dailyWorkTime?.type ||
+                    backEndErrors?.message) &&
+                  "form-input-error",
+              }}
+              {...register("dailyWorkTime")}
+            />
+          </InputLeftStickStatus>
 
-          <ErrorZodResponse errors={errors} fieldName={"dailyWorkTime"} />
+          <DynamicInputErrorMessageWithZod
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            fieldName="dailyWorkTime"
+          />
         </div>
       </div>
     </>

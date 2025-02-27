@@ -219,7 +219,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         setSelectedSlots={setSelectedSlots}
         selectedSlots={selectedSlots}
         activeTab={activeTab}
-        errors={errors}
         draft={draft}
       />
 
