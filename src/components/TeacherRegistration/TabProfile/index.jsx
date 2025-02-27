@@ -48,18 +48,16 @@ const TabProfile = ({
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
-          ? ""
-          : validBirthDate?.toString();
-        actualDraftInfo.uploadProfileImage = watch("uploadProfileImage");
-        actualDraftInfo.introduction = watch("introduction");
-        actualDraftInfo.middleName = watch("middleName");
-        actualDraftInfo.firstName = watch("firstName");
-        actualDraftInfo.lastName = watch("lastName");
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN") ? "" : validBirthDate?.toString();
+        actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
         actualDraftInfo.nationality = selectedNationality?.key;
+        actualDraftInfo.introduction = data?.introduction;
         actualDraftInfo.country = selectedCountry?.key;
+        actualDraftInfo.middleName = data?.middleName;
         actualDraftInfo.languages = masteredLanguages;
-        actualDraftInfo.gender = watch("gender");
+        actualDraftInfo.firstName = data?.firstName;
+        actualDraftInfo.lastName = data?.lastName;
+        actualDraftInfo.gender = data?.gender;
 
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
 

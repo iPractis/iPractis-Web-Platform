@@ -61,17 +61,17 @@ const TabSubject = ({
     try {
       // TAB SUBJECT
       if (activeTab === 1) {
-        actualDraftInfo.subjectIntroduction = watch("subjectIntroduction");
-        actualDraftInfo.emailWithdrawal = watch("emailWithdrawal");
-        actualDraftInfo.profileTitle = watch("profileTitle");
-        actualDraftInfo.teachToAmateurPersons = watch("teachToAmateurPersons");
-        actualDraftInfo.hourlyPrice = watch("hourlyPrice");
-        actualDraftInfo.teachToYoungPersons = watch("teachToYoungPersons");
-        actualDraftInfo.videoLink = watch("videoLink");
-        actualDraftInfo.subSubject = watch("subSubject");
-        actualDraftInfo.studentLevel = watch("studentLevel");
-        actualDraftInfo.subject = watch("subject");
-        actualDraftInfo.withdrawal = watch("withdrawal");
+        actualDraftInfo.teachToAmateurPersons = data?.teachToAmateurPersons;
+        actualDraftInfo.subjectIntroduction = data?.subjectIntroduction;
+        actualDraftInfo.teachToYoungPersons = data?.teachToYoungPersons;
+        actualDraftInfo.emailWithdrawal = data?.emailWithdrawal;
+        actualDraftInfo.profileTitle = data?.profileTitle;
+        actualDraftInfo.studentLevel = data?.studentLevel;
+        actualDraftInfo.hourlyPrice = data?.hourlyPrice;
+        actualDraftInfo.subSubject = data?.subSubject;
+        actualDraftInfo.withdrawal = data?.withdrawal;
+        actualDraftInfo.videoLink = data?.videoLink;
+        actualDraftInfo.subject = data?.subject;
 
         const validationResult = tabSubjectSchema.safeParse(actualDraftInfo);
 
