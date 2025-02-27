@@ -368,3 +368,9 @@ export const errorFormMessagesTabProfile = {
     },
   },
 };
+
+export const studentLevels = [
+  { value: "beginner", label: "Beginner" },
+  { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
+];

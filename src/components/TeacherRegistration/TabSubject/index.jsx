@@ -20,8 +20,6 @@ import { useRef, useState } from "react";
 const TabSubject = ({
   setSelectedSubSubjects,
   selectedSubSubjects,
-  setSelectedLevel,
-  selectedLevel,
   setActiveTab,
   activeTab,
   draft,
@@ -121,8 +119,9 @@ const TabSubject = ({
         />
 
         <StudentPreference
-          setSelectedLevel={setSelectedLevel}
-          selectedLevel={selectedLevel}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          control={control}
         />
 
         <StudentAge

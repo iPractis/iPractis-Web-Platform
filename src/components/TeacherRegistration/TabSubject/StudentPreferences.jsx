@@ -1,14 +1,15 @@
+import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+import { studentLevels } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";
+
+// External imports
+import { Controller } from "react-hook-form";
 
 // Icons
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
 
-const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
-  const studentLevelError = findInputErrorZod(errors, "studentLevel")?.message;
-
+const StudentPreference = ({ control, frontEndErrors, backEndErrors }) => {
   return (
     <div>
       <SectionHeader
@@ -33,55 +34,44 @@ const StudentPreference = ({ setSelectedLevel, selectedLevel, errors }) => {
         />
 
         {/* Radio Buttons */}
-        <div>
-          <CustomNextUiCheckbox
-            name="studentLevel"
-            classNames={{
-              label: "ST-4 border-0 ml-1",
-              wrapper: `${
-                studentLevelError && "form-input-error"
-              } w-[19px] h-[19px]`,
-            }}
-            isSelected={selectedLevel === "beginner"}
-            onChange={() => setSelectedLevel("beginner")}
-          >
-            Beginner
-          </CustomNextUiCheckbox>
-        </div>
+        <Controller
+          name="studentLevel"
+          control={control}
+          defaultValue=""
+          rules={{ required: "Invalid submission --- Must choose a level you can teach." }}
+          render={({ field }) => (
+            <>
+              {studentLevels?.map((level) => (
+                <div
+                  key={level.value}
+                  className={level.value === "intermediate" ? "my-2" : ""}
+                >
+                  <CustomNextUiCheckbox
+                    name="studentLevel"
+                    classNames={{
+                      label: "ST-4 border-0 ml-1",
+                      wrapper: `${
+                        (frontEndErrors?.studentLevel?.type ||
+                          backEndErrors?.message) &&
+                        "form-input-error"
+                      } w-[19px] h-[19px]`,
+                    }}
+                    isSelected={field.value === level.value}
+                    onChange={() => field.onChange(level.value)}
+                  >
+                    {level.label}
+                  </CustomNextUiCheckbox>
+                </div>
+              ))}
+            </>
+          )}
+        />
 
-        <div className="my-2">
-          <CustomNextUiCheckbox
-            name="studentLevel"
-            classNames={{
-              label: "ST-4 border-0 ml-1",
-              wrapper: `${
-                studentLevelError && "form-input-error"
-              } w-[19px] h-[19px]`,
-            }}
-            isSelected={selectedLevel === "intermediate"}
-            onChange={() => setSelectedLevel("intermediate")}
-          >
-            Intermediate
-          </CustomNextUiCheckbox>
-        </div>
-
-        <div>
-          <CustomNextUiCheckbox
-            name="studentLevel"
-            classNames={{
-              label: "ST-4 border-0 ml-1",
-              wrapper: `${
-                studentLevelError && "form-input-error"
-              } w-[19px] h-[19px]`,
-            }}
-            isSelected={selectedLevel === "advanced"}
-            onChange={() => setSelectedLevel("advanced")}
-          >
-            Advanced
-          </CustomNextUiCheckbox>
-        </div>
-
-        <ErrorZodResponse errors={errors} fieldName={"studentLevel"} />
+        <DynamicInputErrorMessageWithZod
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="studentLevel"
+        />
       </div>
     </div>
   );

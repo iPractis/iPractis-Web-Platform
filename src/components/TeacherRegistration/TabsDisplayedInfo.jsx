@@ -38,7 +38,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
   // TAB SUBJECT STATES
   const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState(draft?.studentLevel);
 
   // TAB BACKGROUND STATES
   const [experiences, setExperiences] = useState(draft?.careerExperience);
@@ -199,8 +198,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
       <TabSubject
         setSelectedSubSubjects={setSelectedSubSubjects}
         selectedSubSubjects={selectedSubSubjects}
-        setSelectedLevel={setSelectedLevel}
-        selectedLevel={selectedLevel}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         errors={errors}
