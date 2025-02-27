@@ -7,15 +7,15 @@ import { useState } from "react";
 
 // Images && icons
 import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 
 const RelatedSubTopics = ({
   selectedSubSubjects,
   setSelectedSubSubjects,
   errors,
 }) => {
-  const relatedSubTopicError = findInputErrorZod(errors, "subSubject")?.message;
+  // const relatedSubTopicError = findInputErrorZod(errors, "subSubject")?.message;
   const [selectedSubSubject, setSelectedSubSubject] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
@@ -103,11 +103,11 @@ const RelatedSubTopics = ({
                   </InputBGWrapperIcon>
                 }
                 classNames={{
-                  trigger: [
-                    "select-wrapper-ipractis",
-                    findInputErrorZod(errors, "subSubject")?.message &&
-                      "form-input-error",
-                  ],
+                  // trigger: [
+                  //   "select-wrapper-ipractis",
+                  //   findInputErrorZod(errors, "subSubject")?.message &&
+                  //     "form-input-error",
+                  // ],
                   innerWrapper: ["select-ipractis", "w-full"],
                   value: [
                     "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
@@ -141,10 +141,10 @@ const RelatedSubTopics = ({
         </div>
 
         {/* We do this because we want error to change of position (if it's a different error) */}
-        {relatedSubTopicError ===
+        {/* {relatedSubTopicError ===
           "Invalid field --- At least one sub-subject is required." && (
           <ErrorZodResponse errors={errors} fieldName={"subSubject"} />
-        )}
+        )} */}
       </div>
     </div>
   );

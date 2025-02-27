@@ -23,8 +23,8 @@ import {
   TrashBinIcon,
 } from "../../Icons";
 
-import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { useState } from "react";
 
 const getFieldName = (fieldName, index) => {
@@ -132,11 +132,11 @@ const IndividualExperience = ({
                 </DropdownMenu>
               </Dropdown>
             }
-            classNames={{
-              inputWrapper:
-                findInputMultipleErrorZod(errors, getFieldName("from", index))
-                  ?.message && "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     findInputMultipleErrorZod(errors, getFieldName("from", index))
+            //       ?.message && "form-input-error",
+            // }}
           />
         </div>
 
@@ -193,11 +193,11 @@ const IndividualExperience = ({
                 </DropdownMenu>
               </Dropdown>
             }
-            classNames={{
-              inputWrapper:
-                findInputMultipleErrorZod(errors, getFieldName("to", index))
-                  ?.message && "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     findInputMultipleErrorZod(errors, getFieldName("to", index))
+            //       ?.message && "form-input-error",
+            // }}
           />
         </div>
 
@@ -213,14 +213,14 @@ const IndividualExperience = ({
             />
 
             <InputBGWrapperIcon
-              className={`${
-                findInputMultipleErrorZod(
-                  errors,
-                  getFieldName("uploadExperienceFile", index)
-                )?.message
-                  ? "form-input-error"
-                  : "bg-primary-color-P11"
-              } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
+              // className={`${
+              //   findInputMultipleErrorZod(
+              //     errors,
+              //     getFieldName("uploadExperienceFile", index)
+              //   )?.message
+              //     ? "form-input-error"
+              //     : "bg-primary-color-P11"
+              // } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
             >
               {image?.name ? (
                 <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
@@ -248,7 +248,7 @@ const IndividualExperience = ({
         </div>
       </div>
 
-      <ErrorMultipleZodResponse
+      {/* <ErrorMultipleZodResponse
         fieldName={getFieldName("company", index)}
         errors={errors}
       />
@@ -266,7 +266,7 @@ const IndividualExperience = ({
       <ErrorMultipleZodResponse
         fieldName={getFieldName("uploadExperienceFile", index)}
         errors={errors}
-      />
+      /> */}
 
       {/* Description */}
       <CustomNextUiTextarea
@@ -274,11 +274,11 @@ const IndividualExperience = ({
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
           base: "mt-2.5",
-          inputWrapper:
-            findInputMultipleErrorZod(
-              errors,
-              getFieldName("description", index)
-            )?.message && "form-input-error",
+          // inputWrapper:
+          //   findInputMultipleErrorZod(
+          //     errors,
+          //     getFieldName("description", index)
+          //   )?.message && "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
@@ -287,10 +287,10 @@ const IndividualExperience = ({
         disableAutosize
       />
 
-      <ErrorMultipleZodResponse
+      {/* <ErrorMultipleZodResponse
         fieldName={getFieldName("description", index)}
         errors={errors}
-      />
+      /> */}
     </div>
   );
 };

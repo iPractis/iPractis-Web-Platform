@@ -1,7 +1,7 @@
 "use client";
 
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import { requestPasswordInput } from "@/src/lib/actions/authAction";
 import { errorFormMessages } from "@/src/data/dataPasswordRecovery";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";

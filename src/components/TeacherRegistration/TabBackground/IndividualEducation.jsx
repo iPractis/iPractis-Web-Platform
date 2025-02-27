@@ -23,8 +23,8 @@ import {
 } from "../../Icons";
 import { CalendarDate } from "@internationalized/date";
 
-import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
 import { useState } from "react";
 
 const IndividualEducation = ({
@@ -58,12 +58,12 @@ const IndividualEducation = ({
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
-            classNames={{
-              inputWrapper:
-                certainEducationPosition &&
-                findInputMultipleErrorZod(errors, "company", 2)?.message &&
-                "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     certainEducationPosition &&
+            //     findInputMultipleErrorZod(errors, "company", 2)?.message &&
+            //     "form-input-error",
+            // }}
           />
         </div>
 
@@ -120,12 +120,12 @@ const IndividualEducation = ({
                 </DropdownMenu>
               </Dropdown>
             }
-            classNames={{
-              inputWrapper:
-                certainEducationPosition &&
-                findInputMultipleErrorZod(errors, "from", 2)?.message &&
-                "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     certainEducationPosition &&
+            //     findInputMultipleErrorZod(errors, "from", 2)?.message &&
+            //     "form-input-error",
+            // }}
           />
         </div>
 
@@ -182,12 +182,12 @@ const IndividualEducation = ({
                 </DropdownMenu>
               </Dropdown>
             }
-            classNames={{
-              inputWrapper:
-                certainEducationPosition &&
-                findInputMultipleErrorZod(errors, "to", 2)?.message &&
-                "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     certainEducationPosition &&
+            //     findInputMultipleErrorZod(errors, "to", 2)?.message &&
+            //     "form-input-error",
+            // }}
           />
         </div>
 
@@ -203,13 +203,15 @@ const IndividualEducation = ({
             />
 
             <InputBGWrapperIcon
-              className={`${
-                certainEducationPosition &&
-                findInputMultipleErrorZod(errors, "uploadEducationFile", 2)
-                  ?.message
-                  ? "form-input-error"
-                  : "bg-primary-color-P11"
-              } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
+              // className={`
+              //   ${
+              //   certainEducationPosition &&
+              //   findInputMultipleErrorZod(errors, "uploadEducationFile", 2)
+              //     ?.message
+              //     ? "form-input-error"
+              //     : "bg-primary-color-P11"
+              // } 
+              // btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
             >
               {image?.name ? (
                 <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
@@ -237,7 +239,7 @@ const IndividualEducation = ({
         </div>
       </div>
 
-      {certainEducationPosition && (
+      {/* {certainEducationPosition && (
         <>
           <ErrorMultipleZodResponse
             fieldName={"company"}
@@ -263,7 +265,7 @@ const IndividualEducation = ({
             pathIndex={2}
           />
         </>
-      )}
+      )} */}
 
       {/* Description */}
       <CustomNextUiTextarea
@@ -271,10 +273,10 @@ const IndividualEducation = ({
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
           base: "mt-2.5",
-          inputWrapper:
-            certainEducationPosition &&
-            findInputMultipleErrorZod(errors, "description", 2)?.message &&
-            "form-input-error",
+          // inputWrapper:
+          //   certainEducationPosition &&
+          //   findInputMultipleErrorZod(errors, "description", 2)?.message &&
+          //   "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
@@ -283,13 +285,13 @@ const IndividualEducation = ({
         disableAutosize
       />
 
-      {certainEducationPosition && (
+      {/* {certainEducationPosition && (
         <ErrorMultipleZodResponse
           fieldName={"description"}
           pathIndex={2}
           errors={errors}
         />
-      )}
+      )} */}
     </div>
   );
 };

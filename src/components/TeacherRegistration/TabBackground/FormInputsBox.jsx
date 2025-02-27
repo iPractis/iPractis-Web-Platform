@@ -23,8 +23,8 @@ import {
   TrashBinIcon,
 } from "../../Icons";
 
-import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
 import { useState } from "react";
 
 const getFieldName = (arrayOfField, fieldName, index) => {
@@ -70,13 +70,13 @@ const FormInputsBox = ({
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
-            classNames={{
-              inputWrapper:
-                findInputMultipleErrorZod(
-                  errors,
-                  getFieldName(arrayOfField, "company", index)
-                )?.message && "form-input-error",
-            }}
+            // classNames={{
+            //   inputWrapper:
+            //     findInputMultipleErrorZod(
+            //       errors,
+            //       getFieldName(arrayOfField, "company", index)
+            //     )?.message && "form-input-error",
+            // }}
           />
         </div>
 
@@ -135,11 +135,11 @@ const FormInputsBox = ({
             }
             classNames={{
               input: "!pe-1",
-              inputWrapper:
-                findInputMultipleErrorZod(
-                  errors,
-                  getFieldName(arrayOfField, "from", index)
-                )?.message && "form-input-error",
+              // inputWrapper:
+              //   findInputMultipleErrorZod(
+              //     errors,
+              //     getFieldName(arrayOfField, "from", index)
+              //   )?.message && "form-input-error",
             }}
           />
         </div>
@@ -199,11 +199,11 @@ const FormInputsBox = ({
             }
             classNames={{
               input: "!pe-1",
-              inputWrapper:
-                findInputMultipleErrorZod(
-                  errors,
-                  getFieldName(arrayOfField, "to", index)
-                )?.message && "form-input-error",
+              // inputWrapper:
+              //   findInputMultipleErrorZod(
+              //     errors,
+              //     getFieldName(arrayOfField, "to", index)
+              //   )?.message && "form-input-error",
             }}
           />
         </div>
@@ -219,7 +219,7 @@ const FormInputsBox = ({
               type="file"
             />
 
-            <InputBGWrapperIcon
+            {/* <InputBGWrapperIcon
               className={`${
                 findInputMultipleErrorZod(
                   errors,
@@ -234,7 +234,7 @@ const FormInputsBox = ({
               ) : (
                 <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
               )}
-            </InputBGWrapperIcon>
+            </InputBGWrapperIcon> */}
           </label>
         </div>
 
@@ -255,7 +255,7 @@ const FormInputsBox = ({
         </div>
       </div>
 
-      <ErrorMultipleZodResponse
+      {/* <ErrorMultipleZodResponse
         fieldName={getFieldName(arrayOfField, "company", index)}
         errors={errors}
       />
@@ -273,7 +273,7 @@ const FormInputsBox = ({
       <ErrorMultipleZodResponse
         fieldName={getFieldName(arrayOfField, "uploadFile", index)}
         errors={errors}
-      />
+      /> */}
 
       {/* Description */}
       <CustomNextUiTextarea
@@ -281,11 +281,11 @@ const FormInputsBox = ({
         onChange={(e) => handleInputChange("description", e.target.value)}
         classNames={{
           base: "mt-2.5",
-          inputWrapper:
-            findInputMultipleErrorZod(
-              errors,
-              getFieldName(arrayOfField, "description", index)
-            )?.message && "form-input-error",
+          // inputWrapper:
+          //   findInputMultipleErrorZod(
+          //     errors,
+          //     getFieldName(arrayOfField, "description", index)
+          //   )?.message && "form-input-error",
           input: "h-[150px]",
         }}
         placeholder="Enter a text"
@@ -294,10 +294,10 @@ const FormInputsBox = ({
         disableAutosize
       />
 
-      <ErrorMultipleZodResponse
+      {/* <ErrorMultipleZodResponse
         fieldName={getFieldName(arrayOfField, "description", index)}
         errors={errors}
-      />
+      /> */}
     </div>
   );
 };

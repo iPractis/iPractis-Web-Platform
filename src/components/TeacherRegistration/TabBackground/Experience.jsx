@@ -1,5 +1,5 @@
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
 import FormInputsBox from "./FormInputsBox";
@@ -8,10 +8,10 @@ import FormInputsBox from "./FormInputsBox";
 import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
 
 const Experience = ({ setExperiences, experiences, errors }) => {
-  const careerExperienceError = findInputErrorZod(
-    errors,
-    "careerExperience"
-  )?.message;
+  // const careerExperienceError = findInputErrorZod(
+  //   errors,
+  //   "careerExperience"
+  // )?.message;
 
   // ADD EXPERIENCE
   const handleAddExperience = () => {
@@ -52,9 +52,9 @@ const Experience = ({ setExperiences, experiences, errors }) => {
         titleClassName="MT-SB-1"
       >
         <button
-          className={`${
-            careerExperienceError ? "form-input-error" : "btn-tertiary"
-          } btn flex gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
+          // className={`${
+          //   careerExperienceError ? "form-input-error" : "btn-tertiary"
+          // } btn flex gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
           onClick={handleAddExperience}
           type="button"
         >
@@ -64,10 +64,10 @@ const Experience = ({ setExperiences, experiences, errors }) => {
       </SectionHeader>
 
       <div className={experiences?.length !== 0 ? "mb-8" : ""}>
-        {careerExperienceError ===
+        {/* {careerExperienceError ===
           "Invalid submission --- At least one experience is required." && (
           <ErrorZodResponse errors={errors} fieldName={"careerExperience"} />
-        )}
+        )} */}
       </div>
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>

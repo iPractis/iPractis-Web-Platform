@@ -1,5 +1,5 @@
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import { errorFormMessages, reasons } from "@/src/data/dataSupportRequest";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";

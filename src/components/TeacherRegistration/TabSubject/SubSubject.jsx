@@ -5,13 +5,6 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { useState } from "react";
 
-import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
-
-const getFieldName = (fieldName, index) => {
-  return ["subSubject", index, fieldName];
-};
-
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
   handleUpdateSubSubject,
@@ -75,15 +68,10 @@ const SubSubject = ({
         descError={"The text cannot exceed 20 characters."}
         labelDisabled={true}
         maxCharactersLengthText={2}
-        backgroundError={
-          findInputMultipleErrorZod(errors, getFieldName("description", index))
-            ?.message && "form-input-error"
-        }
-      />
-
-      <ErrorMultipleZodResponse
-        fieldName={getFieldName("description", index)}
-        errors={errors}
+        // backgroundError={
+        //   findInputMultipleErrorZod(errors, getFieldName("description", index))
+        //     ?.message && "form-input-error"
+        // }
       />
     </div>
   );

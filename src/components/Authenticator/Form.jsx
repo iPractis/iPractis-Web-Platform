@@ -1,7 +1,7 @@
 "use client";
 
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import { errorFormMessages } from "@/src/data/dataAuthenticator";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";

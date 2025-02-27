@@ -1,4 +1,4 @@
-import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { languages as allLanguages } from "@/src/data/dataTeacherRegistration";
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";

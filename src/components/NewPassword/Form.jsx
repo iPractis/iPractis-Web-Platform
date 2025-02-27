@@ -2,7 +2,7 @@
 
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
-import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import { newPasswordInputs } from "@/src/lib/actions/authAction";

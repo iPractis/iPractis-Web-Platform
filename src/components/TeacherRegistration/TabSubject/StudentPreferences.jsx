@@ -1,4 +1,4 @@
-import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import { studentLevels } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";

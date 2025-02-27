@@ -1,5 +1,5 @@
-import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
-import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
+// import { findInputErrorZod } from "@/src/lib/utils/getZodValidations";
+// import { ErrorZodResponse } from "../../Shared/ErrorMessageiPractis";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
 import FormInputsBox from "./FormInputsBox";
@@ -8,7 +8,7 @@ import FormInputsBox from "./FormInputsBox";
 import { AddBoxBiggerIcon, GraduationCapIcon } from "../../Icons";
 
 const Education = ({ setEducations, educations, errors }) => {
-  const educationError = findInputErrorZod(errors, "education")?.message;
+  // const educationError = findInputErrorZod(errors, "education")?.message;
 
   // ADD EDUCATION
   const handleAddEducation = () => {
@@ -49,9 +49,9 @@ const Education = ({ setEducations, educations, errors }) => {
         titleClassName="MT-SB-1"
       >
         <button
-          className={`${
-            educationError ? "form-input-error" : "btn-tertiary"
-          } btn flex gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
+          // className={`${
+          //   educationError ? "form-input-error" : "btn-tertiary"
+          // } btn flex gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
           onClick={handleAddEducation}
           type="button"
         >
@@ -60,12 +60,12 @@ const Education = ({ setEducations, educations, errors }) => {
         </button>
       </SectionHeader>
 
-      <div className={educations?.length !== 0 ? "mb-8" : ""}>
+      {/* <div className={educations?.length !== 0 ? "mb-8" : ""}>
         {educationError ===
           "Invalid submission --- At least one education is required." && (
           <ErrorZodResponse errors={errors} fieldName={"education"} />
         )}
-      </div>
+      </div> */}
 
       <WhiteSpaceWrapper className={"md:px-8 p-0"}>
         {educations?.map((education, index) => (

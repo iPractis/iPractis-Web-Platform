@@ -1,4 +1,4 @@
-import { DynamicInputErrorMessageWithZod } from "../../Shared/DynamicInputErrorMessageWithZod";
+import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports

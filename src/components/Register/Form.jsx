@@ -1,7 +1,7 @@
 "use client";
 
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import { DynamicInputErrorMessage } from "../Shared/DynamicInputErrorMessage";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import getSecurityLevelMessage from "@/src/lib/utils/getSecurityLevelMessage";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
