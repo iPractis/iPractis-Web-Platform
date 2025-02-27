@@ -23,7 +23,12 @@ const AboutYourselfMasteredLanguages = ({
   control,
   watch,
 }) => {
-  const { fields: languages, append, remove, update } = useFieldArray({ control, name: "languages" });
+  const {
+    fields: languages,
+    append,
+    remove,
+    update,
+  } = useFieldArray({ control, name: "languages" });
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
 
@@ -60,7 +65,7 @@ const AboutYourselfMasteredLanguages = ({
             frontEndErrors,
             backEndErrors,
             watch("languages"),
-            "languages",
+            "languages"
           )} top-[54%] -translate-y-0`}
         >
           <div className="flex items-end gap-2 mt-[75px]">
@@ -133,6 +138,9 @@ const AboutYourselfMasteredLanguages = ({
           <AboutYourselfLevelLanguage
             handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
             handleLanguageLevel={handleLanguageLevel}
+            frontEndErrors={frontEndErrors}
+            backEndErrors={backEndErrors}
+            control={control}
             key={field.id}
             index={index}
             field={field}

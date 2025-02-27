@@ -1,6 +1,7 @@
 import ErrorMessageiPractis from "@/src/components/Shared/ErrorMessageiPractis";
 
 export const DynamicInputErrorMessageWithZod = ({
+  nestedFieldName,
   frontEndErrors,
   backEndErrors,
   fieldName,
@@ -9,13 +10,37 @@ export const DynamicInputErrorMessageWithZod = ({
   const fieldBackendErrors = backEndErrors?.field === fieldName ? backEndErrors : null;
 
   if (fieldFrontendErrors) {
+    // If it's an array of object (errors)
+    if (Array.isArray(fieldFrontendErrors)) {
+      return fieldFrontendErrors?.map((error, index) => {
+        const { message } = error[nestedFieldName];
+
+        if (!message) return;
+
+        const splittedDetails = message?.split("---");
+
+        return (
+          <ErrorMessageiPractis
+            typeError={splittedDetails[0]}
+            descError={splittedDetails[1]}
+            key={index}
+          />
+        );
+      });
+    }
+
+    // If it's a normal error
     const { message } = fieldFrontendErrors;
-    const splittedDetails = message?.split("---");
-    
+
     if (!message) return;
 
+    const splittedDetails = message?.split("---");
+
     return (
-      <ErrorMessageiPractis typeError={splittedDetails[0]} descError={splittedDetails[1]} />
+      <ErrorMessageiPractis
+        typeError={splittedDetails[0]}
+        descError={splittedDetails[1]}
+      />
     );
   }
 
