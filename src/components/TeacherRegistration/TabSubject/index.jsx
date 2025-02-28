@@ -17,13 +17,7 @@ import axios from "axios";
 // React imports
 import { useRef, useState } from "react";
 
-const TabSubject = ({
-  setSelectedSubSubjects,
-  selectedSubSubjects,
-  setActiveTab,
-  activeTab,
-  draft,
-}) => {
+const TabSubject = ({ setActiveTab, activeTab, draft }) => {
   const {
     register,
     handleSubmit,
@@ -107,8 +101,10 @@ const TabSubject = ({
         />
 
         <RelatedSubTopics
-          setSelectedSubSubjects={setSelectedSubSubjects}
-          selectedSubSubjects={selectedSubSubjects}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          control={control}
+          watch={watch}
         />
 
         <PresentYourSelf

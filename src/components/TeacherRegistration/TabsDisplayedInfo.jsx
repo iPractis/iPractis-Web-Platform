@@ -36,9 +36,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
     alt: `Flag of ${draft?.nationality}`,
   });
 
-  // TAB SUBJECT STATES
-  const [selectedSubSubjects, setSelectedSubSubjects] = useState([]);
-
   // TAB BACKGROUND STATES
   const [experiences, setExperiences] = useState(draft?.careerExperience);
   const [educations, setEducations] = useState(draft?.education);
@@ -196,11 +193,8 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
       {/* 1 */}
       <TabSubject
-        setSelectedSubSubjects={setSelectedSubSubjects}
-        selectedSubSubjects={selectedSubSubjects}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
-        errors={errors}
         draft={draft}
       />
 
