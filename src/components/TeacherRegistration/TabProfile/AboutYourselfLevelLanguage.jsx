@@ -1,5 +1,4 @@
-import { DynamicInputErrorMessageWithZod } from "@/src/lib/utils/getZodValidations";
-import { getArrayFieldInfo } from "@/src/lib/utils/getArrayFieldInfo";
+import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import {
   languagesLevels,
   masteredLanguagesImages,
@@ -31,32 +30,41 @@ const AboutYourselfLevelLanguage = ({
   const selectedLanguageImage = masteredLanguagesImages[name];
 
   return (
-    <>
-      <div className="flex items-end mt-10 gap-2">
-        <div className="flex justify-between items-center gap-2.5 h-12 w-full rounded-2xl p-1.5 bg-primary-color-P11">
-          <div className="flex-1 flex items-center gap-2.5">
-            {selectedLanguageImage?.src && (
-              <Image
-                src={selectedLanguageImage?.src}
-                alt={"Country Image"}
-                className="h-9 w-[39px]"
-                width={39}
-                height={36}
-              />
-            )}
+    <Controller
+      name={`languages.${index}.level`}
+      control={control}
+      defaultValue={level}
+      render={({
+        field: { onChange, value, onBlur },
+        fieldState: { error },
+      }) => (
+        <>
+          <div className="flex items-end mt-10 gap-2">
+            <div className="flex justify-between items-center gap-2.5 h-12 w-full rounded-2xl p-1.5 bg-primary-color-P11">
+              <div className="flex-1 flex items-center gap-2.5">
+                {selectedLanguageImage?.src && (
+                  <Image
+                    src={selectedLanguageImage?.src}
+                    alt={"Country Image"}
+                    className="h-9 w-[39px]"
+                    width={39}
+                    height={36}
+                  />
+                )}
 
-            <h3 className="text-primary-color-P4 ST-3">{name}</h3>
-          </div>
+                <h3 className="text-primary-color-P4 ST-3">{name}</h3>
+              </div>
 
-          <div className="flex-1">
-            <Controller
-              name={`languages.${index}.level`}
-              control={control}
-              defaultValue={level}
-              render={({ field: { onChange, value } }) => (
+              <div className="flex-1">
                 <Select
                   name="masteredLanguageLevel"
-                  onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
+                  onOpenChange={(open) => {
+                    setIsOpen(open);
+                    
+                    if (!open) {
+                      onBlur(); 
+                    }
+                  }}
                   labelPlacement="outside"
                   placeholder="Select your level"
                   selectorIcon={<span></span>}
@@ -89,30 +97,25 @@ const AboutYourselfLevelLanguage = ({
                     <SelectItem key={languageLevel}>{languageLevel}</SelectItem>
                   ))}
                 </Select>
-              )}
-            />
+              </div>
+            </div>
+
+            <button
+              className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+              onClick={() => handleDeleteMasteredLanguage(index)}
+              type="button"
+            >
+              <TrashBinIcon
+                fillColor={"fill-primary-color-P4"}
+                strokeColor={"stroke-primary-color-P4"}
+              />
+            </button>
           </div>
-        </div>
 
-        <button
-          className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-          onClick={() => handleDeleteMasteredLanguage(index)}
-          type="button"
-        >
-          <TrashBinIcon
-            fillColor={"fill-primary-color-P4"}
-            strokeColor={"stroke-primary-color-P4"}
-          />
-        </button>
-      </div>
-
-      <DynamicInputErrorMessageWithZod
-        fieldName={"masteredLanguageLevel"}
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        nestedFieldName={"level"}
-      />
-    </>
+          <SplitDynamicErrorZod message={error?.message} />
+        </>
+      )}
+    />
   );
 };
 

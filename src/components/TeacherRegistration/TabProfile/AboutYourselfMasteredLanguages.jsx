@@ -1,13 +1,15 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { languages as allLanguages } from "@/src/data/dataTeacherRegistration";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
 // External imports
+import { Controller, useFieldArray } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
-import { useFieldArray } from "react-hook-form";
+
+// React imports
 import { useRef, useState } from "react";
 
 // Images && icons
@@ -57,103 +59,116 @@ const AboutYourselfMasteredLanguages = ({
   };
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
-      <div>
-        {/* Select Language */}
-        <InputLeftStickStatus
-          inputBarStatusClassName={`${getLeftStickInputColorStatus(
-            frontEndErrors,
-            backEndErrors,
-            watch("languages"),
-            "languages"
-          )} top-[54%] -translate-y-0`}
-        >
-          <div className="flex items-end gap-2 mt-[75px]">
-            <Select
-              name="languages"
-              label={
-                <div className="mb-2">
-                  <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Select the languages your masters{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
+    <Controller
+      name={`languages`}
+      control={control}
+      defaultValue={languages}
+      render={({
+        field: { value, onBlur },
+        fieldState: { error },
+      }) => (
+        <>
+          <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
+            <div>
+              {/* Select Language */}
+              <InputLeftStickStatus
+                inputBarStatusClassName={`${getLeftStickInputColorStatus(
+                  frontEndErrors,
+                  backEndErrors,
+                  watch("languages"),
+                  "languages"
+                )} top-[54%] -translate-y-0`}
+              >
+                <div className="flex items-end gap-2 mt-[75px]">
+                  <Select
+                    name="languages"
+                    label={
+                      <div className="mb-2">
+                        <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                          Select the languages your masters{" "}
+                          <QuestionMark fillColor={"fill-primary-color-P4"} />
+                        </span>
 
-                  <span className="text-primary-color-P4 ST-3">
-                    Select only the languages you can use to teach.
-                  </span>
+                        <span className="text-primary-color-P4 ST-3">
+                          Select only the languages you can use to teach.
+                        </span>
+                      </div>
+                    }
+                    ref={masteredLanguageRef}
+                    selectedKeys={value}
+                    onChange={handleAddMasteredLanguage}
+                    onOpenChange={(open) => {
+                      setIsOpen(open);
+
+                      if (!open) {
+                        onBlur();
+                      }
+                    }}
+                    labelPlacement="outside"
+                    placeholder="Add language"
+                    selectorIcon={<span></span>}
+                    isOpen={isOpen}
+                    startContent={
+                      <InputBGWrapperIcon>
+                        <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
+                      </InputBGWrapperIcon>
+                    }
+                    endContent={
+                      <InputBGWrapperIcon>
+                        <ChevronDownBigIcon
+                          fillColor={"fill-primary-color-P1"}
+                        />
+                      </InputBGWrapperIcon>
+                    }
+                    classNames={{
+                      trigger: [
+                        "select-wrapper-ipractis",
+                        (frontEndErrors?.languages?.message ||
+                          backEndErrors?.message) &&
+                          "form-input-error",
+                      ],
+                      innerWrapper: ["select-ipractis", "w-full"],
+                      value: [
+                        "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                      ],
+                      listbox: ["text-primary-color-P4"],
+                    }}
+                  >
+                    {allLanguages
+                      ?.filter(
+                        (language) =>
+                          !languages.some(
+                            (masteredLanguage) =>
+                              masteredLanguage.name === language
+                          )
+                      )
+                      .map((language) => (
+                        <SelectItem key={language}>{language}</SelectItem>
+                      ))}
+                  </Select>
                 </div>
-              }
-              ref={masteredLanguageRef}
-              selectedKeys={
-                masteredLanguageRef?.current?.value
-                  ? [masteredLanguageRef?.current?.value]
-                  : []
-              }
-              onChange={handleAddMasteredLanguage}
-              onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-              labelPlacement="outside"
-              placeholder="Add language"
-              selectorIcon={<span></span>}
-              isOpen={isOpen}
-              startContent={
-                <InputBGWrapperIcon>
-                  <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-                </InputBGWrapperIcon>
-              }
-              classNames={{
-                trigger: [
-                  "select-wrapper-ipractis",
-                  (frontEndErrors?.languages?.message ||
-                    backEndErrors?.message) &&
-                    "form-input-error",
-                ],
-                innerWrapper: ["select-ipractis", "w-full"],
-                value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                ],
-                listbox: ["text-primary-color-P4"],
-              }}
-            >
-              {allLanguages
-                ?.filter(
-                  (language) =>
-                    !languages.some(
-                      (masteredLanguage) => masteredLanguage.name === language
-                    )
-                )
-                .map((language) => (
-                  <SelectItem key={language}>{language}</SelectItem>
-                ))}
-            </Select>
+              </InputLeftStickStatus>
+
+              {/* Select Level Language */}
+              {languages.map((field, index) => (
+                <AboutYourselfLevelLanguage
+                  handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
+                  handleLanguageLevel={handleLanguageLevel}
+                  frontEndErrors={frontEndErrors}
+                  backEndErrors={backEndErrors}
+                  control={control}
+                  key={field.id}
+                  index={index}
+                  field={field}
+                />
+              ))}
+
+              <SplitDynamicErrorZod message={error?.message} />
+            </div>
           </div>
-        </InputLeftStickStatus>
-
-        {/* Select Level Language */}
-        {languages.map((field, index) => (
-          <AboutYourselfLevelLanguage
-            handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
-            handleLanguageLevel={handleLanguageLevel}
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            control={control}
-            key={field.id}
-            index={index}
-            field={field}
-          />
-        ))}
-
-        <DynamicInputErrorMessageWithZod
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="languages"
-        />
-      </div>
-    </div>
+        </>
+      )}
+    />
   );
 };
 
