@@ -25,12 +25,7 @@ const AboutYourselfMasteredLanguages = ({
   control,
   watch,
 }) => {
-  const {
-    fields: languages,
-    append,
-    remove,
-    update,
-  } = useFieldArray({ control, name: "languages" });
+  const { fields: languages, append, remove } = useFieldArray({ control, name: "languages" });
   const [isOpen, setIsOpen] = useState(false);
   const masteredLanguageRef = useRef("");
 
@@ -53,16 +48,10 @@ const AboutYourselfMasteredLanguages = ({
     remove(index);
   };
 
-  // Update language level
-  const handleLanguageLevel = (levelSelected, index) => {
-    update(index, { ...languages[index], level: levelSelected });
-  };
-
   return (
     <Controller
-      name={`languages`}
+      name={"languages"}
       control={control}
-      defaultValue={languages}
       render={({
         field: { value, onBlur },
         fieldState: { error },
@@ -153,9 +142,6 @@ const AboutYourselfMasteredLanguages = ({
               {languages.map((field, index) => (
                 <AboutYourselfLevelLanguage
                   handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
-                  handleLanguageLevel={handleLanguageLevel}
-                  frontEndErrors={frontEndErrors}
-                  backEndErrors={backEndErrors}
                   control={control}
                   key={field.id}
                   index={index}

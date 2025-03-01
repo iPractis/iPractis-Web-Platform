@@ -17,9 +17,6 @@ import Image from "next/image";
 
 const AboutYourselfLevelLanguage = ({
   handleDeleteMasteredLanguage,
-  handleLanguageLevel,
-  frontEndErrors,
-  backEndErrors,
   control,
   field,
   index,
@@ -62,7 +59,7 @@ const AboutYourselfLevelLanguage = ({
                     setIsOpen(open);
                     
                     if (!open) {
-                      onBlur(); 
+                      onBlur();
                     }
                   }}
                   labelPlacement="outside"
@@ -73,7 +70,6 @@ const AboutYourselfLevelLanguage = ({
                   onSelectionChange={(selected) => {
                     const selectedValue = Array.from(selected).join("");
                     onChange(selectedValue);
-                    handleLanguageLevel(selectedValue, index);
                   }}
                   endContent={
                     <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
