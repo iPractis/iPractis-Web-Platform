@@ -1,4 +1,5 @@
 import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
@@ -10,7 +11,6 @@ import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
 
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
-  handleUpdateSubSubject,
   subSubject,
   control,
   index,
@@ -59,29 +59,23 @@ const SubSubject = ({
         name={`${name}.${index}.description`}
         defaultValue={subSubject?.description}
         control={control}
-        render={({ field }) => (
-          <CustomNextUiTextareaWithMaxLength
-            onChange={(e) => {
-              field.onChange(e);
-              
-              handleUpdateSubSubject(index, {
-                ...subSubject,
-                description: e.target.value,
-              });
-            }}
-            descError={"The text cannot exceed 20 characters."}
-            typeError={"Max Length Exceeded"}
-            nameTextarea={"description"}
-            inputClassName={"h-[150px]"}
-            placeholder={"Enter a text"}
-            maxCharactersLengthText={2}
-            maxCharactersLength={20}
-            labelDisabled={true}
-            {...field}
-            // backgroundError={
-            //   errors?.[name]?.[index]?.description?.message && "form-input-error"
-            // }
-          />
+        render={({ field, fieldState: { error } }) => (
+          <>
+            <CustomNextUiTextareaWithMaxLength
+              backgroundError={error?.message && "form-input-error"}
+              descError={"The text cannot exceed 20 characters."}
+              typeError={"Max Length Exceeded"}
+              nameTextarea={"description"}
+              inputClassName={"h-[150px]"}
+              placeholder={"Enter a text"}
+              maxCharactersLengthText={2}
+              maxCharactersLength={20}
+              labelDisabled={true}
+              {...field}
+            />
+
+            <SplitDynamicErrorZod message={error?.message} />
+          </>
         )}
       />
     </div>

@@ -22,12 +22,7 @@ const RelatedSubTopics = ({
   control,
   watch,
 }) => {
-  const {
-    fields: subSubjectsFields,
-    append,
-    remove,
-    update,
-  } = useFieldArray({ control, name: "subSubject" });
+  const { fields: subSubjectsFields, append, remove, } = useFieldArray({ control, name: "subSubject" });
   const [isOpen, setIsOpen] = useState(false);
 
   // Add sub-subject
@@ -43,11 +38,6 @@ const RelatedSubTopics = ({
   // Delete sub-subject
   const handleDeleteSelectedSubSuject = (index) => {
     remove(index);
-  };
-
-  // Update description text
-  const handleUpdateSubSubject = (index, updatedSubSubject) => {
-    update(index, updatedSubSubject);
   };
 
   return (
@@ -118,7 +108,9 @@ const RelatedSubTopics = ({
                         </InputBGWrapperIcon>
                       }
                       classNames={{
-                        trigger: "px-1 py-1.5 h-auto",
+                        trigger: `px-1 py-1.5 h-auto ${
+                          error?.message && "form-input-error"
+                        }`,
                         innerWrapper: ["select-ipractis", "w-full"],
                         value: [
                           "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
@@ -145,8 +137,6 @@ const RelatedSubTopics = ({
               {subSubjectsFields.map((field, index) => (
                 <SubSubject
                   handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
-                  handleUpdateSubSubject={handleUpdateSubSubject}
-                  frontEndErrors={frontEndErrors}
                   name={"subSubject"}
                   subSubject={field}
                   control={control}

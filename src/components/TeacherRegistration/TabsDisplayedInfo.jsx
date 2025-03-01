@@ -36,14 +36,8 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
     alt: `Flag of ${draft?.nationality}`,
   });
 
-  // TAB BACKGROUND STATES
-  const [experiences, setExperiences] = useState(draft?.careerExperience);
-  const [educations, setEducations] = useState(draft?.education);
-
   // TAB AVAILAIBILITY STATES
   const [selectedSlots, setSelectedSlots] = useState(draft?.workSchedule);
-
-  const [errors, setErrors] = useState([]);
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -200,12 +194,9 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
 
       {/* 2 */}
       <TabBackground
-        setExperiences={setExperiences}
-        setEducations={setEducations}
-        experiences={experiences}
-        educations={educations}
+        setActiveTab={setActiveTab}
         activeTab={activeTab}
-        errors={errors}
+        draft={draft}
       />
 
       {/* 3 */}
