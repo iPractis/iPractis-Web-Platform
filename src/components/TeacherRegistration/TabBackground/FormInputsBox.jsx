@@ -55,7 +55,7 @@ const FormInputsBox = ({
 
   const {
     field: calendarToField,
-    fieldState: { error: calendarToFieldError },
+    fieldState: { error: calendarToError },
   } = useController({
     name: `careerExperience[${index}].to`,
     control: control,
@@ -134,7 +134,7 @@ const FormInputsBox = ({
                           date?.month,
                           date?.day
                         );
-                        field.onChange(validDate?.toString());
+                        calendarFromField.onChange(validDate?.toString());
                       }}
                       disableAnimation
                     />
@@ -192,7 +192,7 @@ const FormInputsBox = ({
                           date?.month,
                           date?.day
                         );
-                        field.onChange(validDate?.toString());
+                        calendarToField.onChange(validDate?.toString());
                       }}
                       disableAnimation
                     />
@@ -201,7 +201,7 @@ const FormInputsBox = ({
               </Dropdown>
             }
             classNames={{
-              inputWrapper: calendarToFieldError?.message && "form-input-error",
+              inputWrapper: calendarToError?.message && "form-input-error",
               input: "!pe-1",
             }}
           />
@@ -212,9 +212,14 @@ const FormInputsBox = ({
           <label className="relative cursor-pointer">
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              onChange={(e) => uploadFile.onChange(e.target.files?.[0])}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+
+                if (file) {
+                  uploadFile.onChange(file);
+                }
+              }}
               accept=".pdf, .png, .jpeg"
-              {...uploadFile}
               type="file"
             />
 
@@ -225,7 +230,7 @@ const FormInputsBox = ({
                   : "bg-primary-color-P11"
               } w-[48px] h-[48px] cursor-pointer`}
             >
-              {uploadFile.value ? (
+              {uploadFile?.value ? (
                 <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
               ) : (
                 <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
@@ -255,7 +260,7 @@ const FormInputsBox = ({
 
       <SplitDynamicErrorZod message={calendarFromError?.message} />
 
-      <SplitDynamicErrorZod message={calendarToFieldError?.message} />
+      <SplitDynamicErrorZod message={calendarToError?.message} />
 
       <SplitDynamicErrorZod message={uploadFileError?.message} />
 

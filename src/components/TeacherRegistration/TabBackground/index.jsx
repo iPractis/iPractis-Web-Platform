@@ -23,6 +23,8 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
   const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
 
+  console.log(watch("careerExperience"))
+
   const onSubmit = async (data) => {
     buttonRef.current.loading();
 
