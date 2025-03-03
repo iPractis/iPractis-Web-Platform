@@ -15,7 +15,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { CalendarDate } from "@internationalized/date";
-import { Controller } from "react-hook-form";
+import { Controller, useController } from "react-hook-form";
 
 // Icons
 import {
@@ -35,210 +35,203 @@ const FormInputsBox = ({
   index,
   item,
 }) => {
+  const {
+    field: companyField,
+    fieldState: { error: companyError },
+  } = useController({
+    name: `careerExperience[${index}].company`,
+    control: control,
+    defaultValue: item?.company,
+  });
+
+  const {
+    field: calendarFromField,
+    fieldState: { error: calendarFromError },
+  } = useController({
+    name: `careerExperience[${index}].from`,
+    control: control,
+    defaultValue: item?.from,
+  });
+
+  const {
+    field: calendarToField,
+    fieldState: { error: calendarToFieldError },
+  } = useController({
+    name: `careerExperience[${index}].to`,
+    control: control,
+    defaultValue: item?.to,
+  });
+
+  const {
+    field: uploadFile,
+    fieldState: { error: uploadFileError },
+  } = useController({
+    name: `careerExperience[${index}].uploadFile`,
+    control: control,
+    defaultValue: item?.uploadFile,
+  });
+
   return (
     <div className="mb-8">
       <div className="flex items-center gap-2.5">
         {/* Company */}
         <div className="flex-[40%]">
-          <Controller
-            name={`careerExperience[${index}].company`}
-            defaultValue={item?.company}
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <CustomNextUiInput
-                  classNames={{
-                    inputWrapper: error?.message && "form-input-error",
-                  }}
-                  placeholder="Example: Google"
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  {...field}
-                  type="text"
-                />
-
-                <SplitDynamicErrorZod message={error?.message} />
-              </>
-            )}
+          <CustomNextUiInput
+            classNames={{
+              inputWrapper: companyError?.message && "form-input-error",
+            }}
+            placeholder="Example: Google"
+            startContent={
+              <InputBGWrapperIcon>
+                <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            {...companyField}
+            type="text"
           />
         </div>
 
         {/* Calendar FROM */}
         <div className="flex-[15%]">
-          <Controller
-            name={`careerExperience[${index}].from`}
-            control={control}
-            defaultValue={item?.from}
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <CustomNextUiInput
-                  {...field}
-                  type="text"
-                  isReadOnly
-                  placeholder="From"
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  endContent={
-                    <Dropdown
-                      classNames={{
-                        content: "p-0 shadow-none",
-                      }}
-                      closeOnSelect={false}
-                    >
-                      <DropdownTrigger>
-                        <Button
-                          className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                          variant="flat"
-                          type="button"
-                        >
-                          <ChevronDownBigIcon
-                            fillColor={"fill-primary-color-P4"}
-                          />
-                        </Button>
-                      </DropdownTrigger>
+          <CustomNextUiInput
+            {...calendarFromField}
+            type="text"
+            isReadOnly
+            placeholder="From"
+            startContent={
+              <InputBGWrapperIcon>
+                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <Dropdown
+                classNames={{
+                  content: "p-0 shadow-none",
+                }}
+                closeOnSelect={false}
+              >
+                <DropdownTrigger>
+                  <Button
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
+                    variant="flat"
+                    type="button"
+                  >
+                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                  </Button>
+                </DropdownTrigger>
 
-                      <DropdownMenu
-                        className="p-0 h-0"
-                        itemClasses={{
-                          base: "data-[hover=true]:bg-transparent shadow-none",
-                        }}
-                      >
-                        <DropdownItem className="p-0">
-                          <Calendar
-                            onChange={(date) => {
-                              let validDate = new CalendarDate(
-                                date?.year,
-                                date?.month,
-                                date?.day
-                              );
-                              field.onChange(validDate?.toString());
-                            }}
-                            disableAnimation
-                          />
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  }
-                  classNames={{
-                    inputWrapper: error?.message && "form-input-error",
-                    input: "!pe-1",
+                <DropdownMenu
+                  className="p-0 h-0"
+                  itemClasses={{
+                    base: "data-[hover=true]:bg-transparent shadow-none",
                   }}
-                />
-
-                <SplitDynamicErrorZod message={error?.message} />
-              </>
-            )}
+                >
+                  <DropdownItem className="p-0">
+                    <Calendar
+                      onChange={(date) => {
+                        let validDate = new CalendarDate(
+                          date?.year,
+                          date?.month,
+                          date?.day
+                        );
+                        field.onChange(validDate?.toString());
+                      }}
+                      disableAnimation
+                    />
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            }
+            classNames={{
+              inputWrapper: calendarFromError?.message && "form-input-error",
+              input: "!pe-1",
+            }}
           />
         </div>
 
         {/* Calendar TO */}
         <div className="flex-[15%]">
-          <Controller
-            name={`careerExperience[${index}].to`}
-            defaultValue={item?.to}
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <>
-                <CustomNextUiInput
-                  {...field}
-                  type="text"
-                  isReadOnly
-                  placeholder="To"
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  endContent={
-                    <Dropdown
-                      classNames={{
-                        content: "p-0 shadow-none",
-                      }}
-                      closeOnSelect={false}
-                    >
-                      <DropdownTrigger>
-                        <Button
-                          className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                          variant="flat"
-                          type="button"
-                        >
-                          <ChevronDownBigIcon
-                            fillColor={"fill-primary-color-P4"}
-                          />
-                        </Button>
-                      </DropdownTrigger>
+          <CustomNextUiInput
+            {...calendarToField}
+            type="text"
+            isReadOnly
+            placeholder="To"
+            startContent={
+              <InputBGWrapperIcon>
+                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <Dropdown
+                classNames={{
+                  content: "p-0 shadow-none",
+                }}
+                closeOnSelect={false}
+              >
+                <DropdownTrigger>
+                  <Button
+                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
+                    variant="flat"
+                    type="button"
+                  >
+                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                  </Button>
+                </DropdownTrigger>
 
-                      <DropdownMenu
-                        className="p-0 h-0"
-                        itemClasses={{
-                          base: "data-[hover=true]:bg-transparent shadow-none",
-                        }}
-                      >
-                        <DropdownItem className="p-0">
-                          <Calendar
-                            onChange={(date) => {
-                              let validDate = new CalendarDate(
-                                date?.year,
-                                date?.month,
-                                date?.day
-                              );
-                              field.onChange(validDate?.toString());
-                            }}
-                            disableAnimation
-                          />
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
-                  }
-                  classNames={{
-                    inputWrapper: error?.message && "form-input-error",
-                    input: "!pe-1",
+                <DropdownMenu
+                  className="p-0 h-0"
+                  itemClasses={{
+                    base: "data-[hover=true]:bg-transparent shadow-none",
                   }}
-                />
-
-                <SplitDynamicErrorZod message={error?.message} />
-              </>
-            )}
+                >
+                  <DropdownItem className="p-0">
+                    <Calendar
+                      onChange={(date) => {
+                        let validDate = new CalendarDate(
+                          date?.year,
+                          date?.month,
+                          date?.day
+                        );
+                        field.onChange(validDate?.toString());
+                      }}
+                      disableAnimation
+                    />
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            }
+            classNames={{
+              inputWrapper: calendarToFieldError?.message && "form-input-error",
+              input: "!pe-1",
+            }}
           />
         </div>
 
         {/* File (PDF, PNG, JPEG) */}
         <div className="flex-1">
-          <Controller
-            name={`careerExperience[${index}].uploadFile`}
-            defaultValue={item?.uploadFile}
-            control={control}
-            render={({ field, fieldState: { error } }) => (
-              <label className="relative cursor-pointer">
-                <input
-                  className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-                  onChange={(e) => field.onChange(e.target.files?.[0])}
-                  accept=".pdf, .png, .jpeg"
-                  type="file"
-                />
+          <label className="relative cursor-pointer">
+            <input
+              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+              onChange={(e) => uploadFile.onChange(e.target.files?.[0])}
+              accept=".pdf, .png, .jpeg"
+              {...uploadFile}
+              type="file"
+            />
 
-                <InputBGWrapperIcon
-                  className={`btn-septenary rounded-2xl ${
-                    error?.message ? "form-input-error" : "bg-primary-color-P11"
-                  } w-[48px] h-[48px] cursor-pointer`}
-                >
-                  {field.value ? (
-                    <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
-                  ) : (
-                    <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
-                  )}
-                </InputBGWrapperIcon>
-
-                <SplitDynamicErrorZod message={error?.message} />
-              </label>
-            )}
-          />
+            <InputBGWrapperIcon
+              className={`btn-septenary rounded-2xl ${
+                uploadFileError?.message
+                  ? "form-input-error"
+                  : "bg-primary-color-P11"
+              } w-[48px] h-[48px] cursor-pointer`}
+            >
+              {uploadFile.value ? (
+                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+              ) : (
+                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              )}
+            </InputBGWrapperIcon>
+          </label>
         </div>
 
         {/* Recycle bin */}
@@ -257,6 +250,14 @@ const FormInputsBox = ({
           </button>
         </div>
       </div>
+
+      <SplitDynamicErrorZod message={companyError?.message} />
+
+      <SplitDynamicErrorZod message={calendarFromError?.message} />
+
+      <SplitDynamicErrorZod message={calendarToFieldError?.message} />
+
+      <SplitDynamicErrorZod message={uploadFileError?.message} />
 
       {/* Description */}
       <Controller

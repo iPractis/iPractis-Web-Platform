@@ -7,7 +7,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 import SubSubject from "./SubSubject";
 
 // External imports
-import { useFieldArray, Controller } from "react-hook-form";
+import { useFieldArray, Controller, useController } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
 
 // React imports

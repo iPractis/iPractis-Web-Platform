@@ -12,12 +12,7 @@ import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
 
 const TabBackground = ({ setActiveTab, activeTab, draft }) => {
-  const {
-    handleSubmit,
-    formState: { errors: frontEndErrors },
-    control,
-    watch,
-  } = useForm({
+  const { handleSubmit, formState: { errors: frontEndErrors }, control, watch, } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabBackgroundSchema),
     defaultValues: {
@@ -27,8 +22,6 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
   });
   const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
-
-  console.log(watch("careerExperience"))
 
   const onSubmit = async (data) => {
     buttonRef.current.loading();
