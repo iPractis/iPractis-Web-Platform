@@ -4,11 +4,13 @@ export const getInputStatusBorder = (
   propertyName,
   requiredFieldColor = true
 ) => {
+  const hasValue = inputValue instanceof File || inputValue?.length > 0;
+
   switch (true) {
     case Boolean(errors[propertyName]):
       return "bg-septenary-color-MA5";
 
-    case Boolean(inputValue?.length > 0):
+    case hasValue:
       return "bg-quinary-color-VS5";
 
     default:

@@ -6,9 +6,13 @@ import {
   UserIcon,
 } from "../../Icons";
 
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
+import {
+  DynamicInputErrorMessageWithZod,
+  SplitDynamicErrorZod,
+} from "../../../lib/utils/getZodValidations";
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
+import { getInputStatusBorder } from "@/src/lib/utils/InputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
@@ -24,8 +28,6 @@ const PersonalInfo = ({
   selectedNationality,
   setSelectedCountry,
   selectedCountry,
-  frontEndErrors,
-  backEndErrors,
   setValue,
   register,
   watch,
@@ -45,17 +47,15 @@ const PersonalInfo = ({
             {/* Firstname */}
             <div>
               <InputLeftStickStatus
-                inputBarStatusClassName={getLeftStickInputColorStatus(
-                  frontEndErrors,
-                  backEndErrors,
-                  watch("firstName"),
+                inputBarStatusClassName={getInputStatusBorder(
+                  errors,
+                  firstName?.value,
                   "firstName"
                 )}
               >
                 <CustomNextUiInput
                   name="firstName"
                   type="text"
-                  {...register("firstName")}
                   placeholder="Enter your first name"
                   label={
                     <span className="flex gap-1.5 items-center">
@@ -70,35 +70,26 @@ const PersonalInfo = ({
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper:
-                      (frontEndErrors?.firstName?.type ||
-                        backEndErrors?.message) &&
-                      "form-input-error",
+                    inputWrapper: errors?.firstName && "form-input-error",
                   }}
                 />
               </InputLeftStickStatus>
 
-              <DynamicInputErrorMessageWithZod
-                frontEndErrors={frontEndErrors}
-                backEndErrors={backEndErrors}
-                fieldName="firstName"
-              />
+              <SplitDynamicErrorZod message={firstNameError?.message} />
             </div>
 
             {/* Middlename */}
             <div>
               <InputLeftStickStatus
-                inputBarStatusClassName={getLeftStickInputColorStatus(
-                  frontEndErrors,
-                  backEndErrors,
-                  watch("middleName"),
+                inputBarStatusClassName={getInputStatusBorder(
+                  errors,
+                  middleName?.value,
                   "middleName",
-                  false
+                  false,
                 )}
               >
                 <CustomNextUiInput
                   name="middleName"
-                  {...register("middleName")}
                   type="text"
                   placeholder="Enter your middle name (Optional)"
                   label={
@@ -113,12 +104,6 @@ const PersonalInfo = ({
                       <UserBigIcon fillColor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
-                  classNames={{
-                    inputWrapper:
-                      (frontEndErrors?.middleName?.type ||
-                        backEndErrors?.message) &&
-                      "form-input-error",
-                  }}
                 />
               </InputLeftStickStatus>
             </div>

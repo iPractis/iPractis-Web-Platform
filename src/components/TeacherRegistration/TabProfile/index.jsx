@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 // React imports
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const TabProfile = ({
   setSelectedNationality,
@@ -24,12 +24,10 @@ const TabProfile = ({
   draft,
 }) => {
   const {
-    register,
     handleSubmit,
     setError,
     formState: { errors },
     control,
-    watch,
     setValue,
   } = useForm({
     mode: "onBlur",
@@ -101,7 +99,7 @@ const TabProfile = ({
       <ProfilePicture errors={errors} control={control} />
 
       {/* Personal Informations */}
-      <PersonalInfo
+      {/* <PersonalInfo
         setSelectedNationality={setSelectedNationality}
         selectedNationality={selectedNationality}
         setSelectedCountry={setSelectedCountry}
@@ -111,16 +109,11 @@ const TabProfile = ({
         setValue={setValue}
         register={register}
         watch={watch}
-      />
+      /> */}
 
       {/* Tell students about yourself */}
       <AboutYourself>
-        <AboutYourselfMasteredLanguages
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          control={control}
-          watch={watch}
-        />
+        <AboutYourselfMasteredLanguages errors={errors} control={control} />
       </AboutYourself>
 
       {/* Back && Save buttons */}

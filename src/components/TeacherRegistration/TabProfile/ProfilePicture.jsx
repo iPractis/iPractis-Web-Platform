@@ -1,5 +1,5 @@
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
-import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { getInputStatusBorder } from "@/src/lib/utils/InputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
@@ -67,7 +67,7 @@ const ProfilePicture = ({ errors, control }) => {
                 <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
                   <UserBigIcon
                     fillColor={
-                      errors?.uploadProfileImage
+                      uploadProfileImageError?.message
                         ? "fill-senary-color-W10"
                         : "fill-primary-color-P1"
                     }
