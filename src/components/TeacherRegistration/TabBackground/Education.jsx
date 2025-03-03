@@ -40,7 +40,9 @@ const Education = ({ frontEndErrors, backEndErrors, control }) => {
         <div>
           <SectionHeader
             descriptionText="Tell us about your education path."
-            titleIcon={<GraduationCapIcon fillColor={"fill-primary-color-P1"} />}
+            titleIcon={
+              <GraduationCapIcon fillColor={"fill-primary-color-P1"} />
+            }
             wrapperSectionHeaderClassName={
               "flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
             }
@@ -67,6 +69,7 @@ const Education = ({ frontEndErrors, backEndErrors, control }) => {
                 handleDelete={handleDeleteEducation}
                 frontEndErrors={frontEndErrors}
                 backEndErrors={backEndErrors}
+                array={"education"}
                 key={education.id}
                 control={control}
                 item={education}

@@ -32,6 +32,7 @@ const FormInputsBox = ({
   backEndErrors,
   handleDelete,
   control,
+  array,
   index,
   item,
 }) => {
@@ -39,7 +40,7 @@ const FormInputsBox = ({
     field: companyField,
     fieldState: { error: companyError },
   } = useController({
-    name: `careerExperience[${index}].company`,
+    name: `${array}[${index}].company`,
     control: control,
     defaultValue: item?.company,
   });
@@ -48,7 +49,7 @@ const FormInputsBox = ({
     field: calendarFromField,
     fieldState: { error: calendarFromError },
   } = useController({
-    name: `careerExperience[${index}].from`,
+    name: `${array}[${index}].from`,
     control: control,
     defaultValue: item?.from,
   });
@@ -57,7 +58,7 @@ const FormInputsBox = ({
     field: calendarToField,
     fieldState: { error: calendarToError },
   } = useController({
-    name: `careerExperience[${index}].to`,
+    name: `${array}[${index}].to`,
     control: control,
     defaultValue: item?.to,
   });
@@ -66,7 +67,7 @@ const FormInputsBox = ({
     field: uploadFile,
     fieldState: { error: uploadFileError },
   } = useController({
-    name: `careerExperience[${index}].uploadFile`,
+    name: `${array}[${index}].uploadFile`,
     control: control,
     defaultValue: item?.uploadFile,
   });
@@ -266,7 +267,7 @@ const FormInputsBox = ({
 
       {/* Description */}
       <Controller
-        name={`careerExperience[${index}].description`}
+        name={`${array}[${index}].description`}
         defaultValue={item?.description}
         control={control}
         render={({ field, fieldState: { error } }) => (

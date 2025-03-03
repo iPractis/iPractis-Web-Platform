@@ -63,6 +63,7 @@ const Experience = ({ frontEndErrors, backEndErrors, control }) => {
                 handleDelete={handleDeleteExperience}
                 frontEndErrors={frontEndErrors}
                 backEndErrors={backEndErrors}
+                array={"careerExperience"}
                 key={experience.id}
                 control={control}
                 item={experience}
