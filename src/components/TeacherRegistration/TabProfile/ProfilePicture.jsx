@@ -1,29 +1,24 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // React imports
-import { useState } from "react";
 import Image from "next/image";
 
 // Icons
 import { UserBigIcon, UserIcon } from "../../Icons";
+import { useController } from "react-hook-form";
 
-const ProfilePicture = ({
-  frontEndErrors,
-  backEndErrors,
-  register,
-  watch,
-}) => {
-  const [image, setImage] = useState(null);
-
-  const onImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
+const ProfilePicture = ({ errors, control }) => {
+  const {
+    field: uploadProfileImage,
+    fieldState: { error: uploadProfileImageError },
+  } = useController({
+    name: "uploadProfileImage",
+    control: control,
+  });
 
   return (
     <WhiteSpaceWrapper className={"p-0"}>
@@ -39,36 +34,40 @@ const ProfilePicture = ({
         <div className="flex items-start sm:gap-8 gap-4">
           {/* Profile Image Input */}
           <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("uploadProfileImage"),
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              uploadProfileImage?.value,
               "uploadProfileImage"
             )}
           >
             <div className="relative">
               <input
                 className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-                {...register("uploadProfileImage")}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+
+                  if (file) {
+                    uploadProfileImage.onChange(file);
+                  }
+                }}
                 name="uploadProfileImage"
-                onChange={onImageChange}
                 accept=".png, .jpeg"
                 type="file"
               />
 
-              {image ? (
+              {uploadProfileImage?.value ? (
                 <Image
                   className="w-[100px] h-[100px] rounded-2xl object-cover"
+                  src={URL.createObjectURL(uploadProfileImage?.value)}
                   alt={"User Profile Picture"}
                   width={100}
                   height={100}
-                  src={image}
                 />
               ) : (
                 <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
                   <UserBigIcon
                     fillColor={
-                      frontEndErrors?.uploadProfileImage?.type || backEndErrors?.message
+                      errors?.uploadProfileImage
                         ? "fill-senary-color-W10"
                         : "fill-primary-color-P1"
                     }
@@ -90,11 +89,7 @@ const ProfilePicture = ({
           </ul>
         </div>
 
-        <DynamicInputErrorMessageWithZod
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="uploadProfileImage"
-        />
+        <SplitDynamicErrorZod message={uploadProfileImageError?.message} />
       </div>
     </WhiteSpaceWrapper>
   );

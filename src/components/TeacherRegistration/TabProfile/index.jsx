@@ -23,7 +23,17 @@ const TabProfile = ({
   activeTab,
   draft,
 }) => {
-  const { register, handleSubmit, formState: { errors: frontEndErrors }, control, watch, setValue, } = useForm({ mode: "onBlur", resolver: zodResolver(tabProfileSchema),
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+    control,
+    watch,
+    setValue,
+  } = useForm({
+    mode: "onBlur",
+    resolver: zodResolver(tabProfileSchema),
     defaultValues: {
       firstName: draft?.firstName,
       middleName: draft?.middleName,
@@ -31,15 +41,16 @@ const TabProfile = ({
       introduction: draft?.introduction,
       uploadProfileImage: draft?.uploadProfileImage,
       birthDateDay: draft?.birthDate ? parseDate(draft?.birthDate)?.day : "",
-      birthDateMonth: draft?.birthDate ? parseDate(draft?.birthDate)?.month : "",
+      birthDateMonth: draft?.birthDate
+        ? parseDate(draft?.birthDate)?.month
+        : "",
       birthDateYear: draft?.birthDate ? parseDate(draft?.birthDate)?.year : "",
       languages: draft?.languages || [],
       gender: draft?.gender,
     },
   });
-  const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
-  
+
   const onSubmit = async (data) => {
     buttonRef.current.loading();
 
@@ -48,7 +59,9 @@ const TabProfile = ({
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN") ? "" : validBirthDate?.toString();
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
+          ? ""
+          : validBirthDate?.toString();
         actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
         actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.introduction = data?.introduction;
@@ -72,7 +85,7 @@ const TabProfile = ({
         console.log(response, "PROFILE");
       }
     } catch (err) {
-      setBackEndErrors(err?.response?.data?.message);
+      setError(err?.response?.data?.message);
       console.log(err);
     } finally {
       buttonRef.current.notIsLoading();
@@ -85,12 +98,7 @@ const TabProfile = ({
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Profile Picture */}
-      <ProfilePicture
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        register={register}
-        watch={watch}
-      />
+      <ProfilePicture errors={errors} control={control} />
 
       {/* Personal Informations */}
       <PersonalInfo
