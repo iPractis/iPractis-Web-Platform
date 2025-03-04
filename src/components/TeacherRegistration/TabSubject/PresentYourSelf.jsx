@@ -1,9 +1,12 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
+
+// External imports
+import { useController } from "react-hook-form";
 
 // Images && icons
 import {
@@ -12,12 +15,15 @@ import {
   CameraIcon,
 } from "../../Icons";
 
-const PresentYourSelf = ({
-  frontEndErrors,
-  backEndErrors,
-  register,
-  watch,
-}) => {
+const PresentYourSelf = ({ control, errors }) => {
+  const {
+    field: videoLink,
+    fieldState: { error: videoLinkError },
+  } = useController({
+    name: "videoLink",
+    control,
+  });
+
   return (
     <>
       <SectionHeader
@@ -31,10 +37,9 @@ const PresentYourSelf = ({
       <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
         <div>
           <InputLeftStickStatus
-            inputBarStatusClassName={`${getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("videoLink"),
+            inputBarStatusClassName={`${getInputStatusBorder(
+              errors,
+              videoLink.value,
               "videoLink"
             )}`}
           >
@@ -55,11 +60,11 @@ const PresentYourSelf = ({
               }
               classNames={{
                 label: "!-top-20",
-                inputWrapper:
-                  (frontEndErrors?.videoLink?.type || backEndErrors?.message) &&
-                  "form-input-error",
+                inputWrapper: videoLinkError?.message && "form-input-error",
               }}
-              {...register("videoLink")}
+              value={videoLink.value}
+              onChange={videoLink.onChange}
+              onBlur={videoLink.onBlur}
               labelPlacement="outside"
               placeholder="Enter your video link"
               startContent={
@@ -70,11 +75,7 @@ const PresentYourSelf = ({
             />
           </InputLeftStickStatus>
 
-          <DynamicInputErrorMessageWithZod
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            fieldName="videoLink"
-          />
+          <SplitDynamicErrorZod message={videoLinkError?.message} />
 
           <ul className="ps-4 ST-1 list-disc text-primary-color-P4 mt-8">
             <li>You must appear in the video.</li>

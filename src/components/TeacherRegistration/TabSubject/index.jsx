@@ -90,12 +90,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
 
         <RelatedSubTopics control={control} errors={errors} />
 
-        {/* <PresentYourSelf
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          register={register}
-          watch={watch}
-        /> */}
+        <PresentYourSelf control={control} errors={errors} />
 
         {/* <StudentPreference
           frontEndErrors={frontEndErrors}
