@@ -108,6 +108,8 @@ const TabProfile = ({
         backEndErrors={backEndErrors}
         setValue={setValue}
         register={register}
+        control={control}
+        errors={errors}
         watch={watch}
       /> */}
 
