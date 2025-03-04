@@ -374,3 +374,10 @@ export const studentLevels = [
   { value: "intermediate", label: "Intermediate" },
   { value: "advanced", label: "Advanced" },
 ];
+
+export const countryFlags = {
+  UnitedKingdom: unitedKingdom,
+  France: france,
+  Spain: spain,
+  Italy: italy,
+};

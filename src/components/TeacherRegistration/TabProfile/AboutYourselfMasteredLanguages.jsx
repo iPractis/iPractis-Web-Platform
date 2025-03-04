@@ -1,6 +1,6 @@
 import { languages as allLanguages } from "@/src/data/dataTeacherRegistration";
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
-import { getInputStatusBorder } from "@/src/lib/utils/InputStatusBorder";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";

@@ -1,37 +1,39 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 
-const AboutYourSelfIntro = ({
-  frontEndErrors,
-  backEndErrors,
-  register,
-  setValue,
-  watch,
-}) => {
-  const introText = watch("introduction", "");
+// External imports
+import { useController } from "react-hook-form";
+
+const AboutYourSelfIntro = ({ control, errors }) => {
+  const {
+    field: introduction,
+    fieldState: { error: introductionError },
+  } = useController({
+    name: "introduction",
+    control,
+  });
 
   const introTextOnChange = (e) => {
     const textValue = e?.target?.value;
 
     if (textValue?.length <= 1000) {
-      setValue("introduction", textValue);
+      introduction.onChange(textValue);
     }
   };
 
   return (
     <div className="!mt-9">
       <InputLeftStickStatus
-        inputBarStatusClassName={`${getLeftStickInputColorStatus(
-          frontEndErrors,
-          backEndErrors,
-          watch("introduction"),
+        inputBarStatusClassName={`${getInputStatusBorder(
+          errors,
+          introduction.value,
           "introduction"
         )} -translate-y-0 top-[30%] h-[129px]`}
       >
         <CustomNextUiTextareaWithMaxLength
-          value={introText}
+          value={introduction.value}
           nameTextarea="introduction"
           inputClassName={"h-[150px]"}
           onChange={introTextOnChange}
@@ -43,18 +45,12 @@ const AboutYourSelfIntro = ({
           labelSubtitle={
             "Introduce yourself and highlight your unique interests."
           }
-          backgroundError={
-            frontEndErrors?.introduction?.type || backEndErrors?.message
-          }
-          inputProps={{ ...register("introduction") }}
+          backgroundError={introductionError?.message}
+          inputProps={{ onBlur: introduction.onBlur }}
         />
       </InputLeftStickStatus>
 
-      <DynamicInputErrorMessageWithZod
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        fieldName="introduction"
-      />
+      <SplitDynamicErrorZod message={introductionError?.message} />
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
-import { getInputStatusBorder } from "@/src/lib/utils/InputStatusBorder";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
+
+// External imports
+import { useController } from "react-hook-form";
 
 // React imports
 import Image from "next/image";
 
 // Icons
 import { UserBigIcon, UserIcon } from "../../Icons";
-import { useController } from "react-hook-form";
 
 const ProfilePicture = ({ errors, control }) => {
   const {

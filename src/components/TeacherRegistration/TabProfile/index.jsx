@@ -14,21 +14,13 @@ import axios from "axios";
 // React imports
 import { useRef } from "react";
 
-const TabProfile = ({
-  setSelectedNationality,
-  selectedNationality,
-  setSelectedCountry,
-  selectedCountry,
-  setActiveTab,
-  activeTab,
-  draft,
-}) => {
+const TabProfile = ({ setActiveTab, activeTab, draft }) => {
   const {
     handleSubmit,
     setError,
     formState: { errors },
     control,
-    setValue,
+    watch,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabProfileSchema),
@@ -44,13 +36,22 @@ const TabProfile = ({
         : "",
       birthDateYear: draft?.birthDate ? parseDate(draft?.birthDate)?.year : "",
       languages: draft?.languages || [],
+      nationality: draft?.nationality,
+      country: draft?.country,
       gender: draft?.gender,
     },
   });
+
+  console.log(errors)
+
   const buttonRef = useRef(null);
 
   const onSubmit = async (data) => {
     buttonRef.current.loading();
+
+    console.log(data, 'estoy saquii')
+
+    console.log("entroooo")
 
     const actualDraftInfo = draft;
 
@@ -71,6 +72,8 @@ const TabProfile = ({
         actualDraftInfo.gender = data?.gender;
 
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
+
+        console.log(validationResult);
 
         if (!validationResult.success) return;
 
@@ -99,19 +102,7 @@ const TabProfile = ({
       <ProfilePicture errors={errors} control={control} />
 
       {/* Personal Informations */}
-      {/* <PersonalInfo
-        setSelectedNationality={setSelectedNationality}
-        selectedNationality={selectedNationality}
-        setSelectedCountry={setSelectedCountry}
-        selectedCountry={selectedCountry}
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        setValue={setValue}
-        register={register}
-        control={control}
-        errors={errors}
-        watch={watch}
-      /> */}
+      <PersonalInfo control={control} errors={errors} watch={watch} />
 
       {/* Tell students about yourself */}
       <AboutYourself>

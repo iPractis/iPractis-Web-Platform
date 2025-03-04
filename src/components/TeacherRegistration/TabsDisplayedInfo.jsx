@@ -1,4 +1,3 @@
-import TabsButtonsBottomNav from "./TabsButtonsBottomNav";
 import TabAvailability from "./TabAvailability/index";
 import TabBackground from "./TabBackground/index";
 import TabProfile from "./TabProfile/index";
@@ -7,35 +6,9 @@ import TabStatus from "./TabStatus/index";
 import TabReview from "./TabReview";
 
 // React imports
-import { CalendarDate, parseDate } from "@internationalized/date";
 import { useState } from "react";
-import axios from "axios";
-
-// Images && icons
-import ukFlag from "@/public/flags/united-kingdom.png";
-import italyFlag from "@/public/flags/italy.png";
-import franceFlag from "@/public/flags/france.png";
-import spainFlag from "@/public/flags/spain.png";
 
 const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
-  // TAB PROFILE STATES
-  const countryFlags = {
-    UnitedKingdom: ukFlag,
-    France: franceFlag,
-    Spain: spainFlag,
-    Italy: italyFlag,
-  };
-  const [selectedCountry, setSelectedCountry] = useState({
-    key: draft?.country || "United Kingdom",
-    image: countryFlags[draft?.country] || ukFlag,
-    alt: `Flag of ${draft?.country}`,
-  });
-  const [selectedNationality, setSelectedNationality] = useState({
-    key: draft?.nationality || "United Kingdom",
-    image: countryFlags[draft?.nationality] || ukFlag,
-    alt: `Flag of ${draft?.nationality}`,
-  });
-
   // TAB AVAILAIBILITY STATES
   const [selectedSlots, setSelectedSlots] = useState(draft?.workSchedule);
 
@@ -176,10 +149,6 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
     <main className={`max-w-[1000px] md:px-0 px-8 sm:py-0 py-8 mx-auto`}>
       {/* 0 */}
       <TabProfile
-        setSelectedNationality={setSelectedNationality}
-        selectedNationality={selectedNationality}
-        setSelectedCountry={setSelectedCountry}
-        selectedCountry={selectedCountry}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         draft={draft}

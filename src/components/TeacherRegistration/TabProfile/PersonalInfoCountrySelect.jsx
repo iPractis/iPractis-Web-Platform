@@ -1,3 +1,6 @@
+import { countriesSelection } from "@/src/data/dataTeacherRegistration";
+
+// External imports
 import {
   Dropdown,
   DropdownTrigger,
@@ -5,28 +8,34 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { countriesSelection } from "@/src/data/dataTeacherRegistration";
-import { ChevronDownSmallIcon } from "../../Icons";
+
+// React imports
 import Image from "next/image";
 
-const PersonalInfoCountrySelect = ({ selectedCountry, setSelectedCountry }) => {
+// Icons
+import { ChevronDownSmallIcon } from "../../Icons";
+
+const PersonalInfoCountrySelect = ({ country }) => {
+  const selectedCountry = countriesSelection.find(
+    (countryItem) => countryItem.key === country.value
+  );
+
   const handleSelectionChange = (keys) => {
     const selectedKey = Array.from(keys)[0];
-    const country = countriesSelection.find(
-      (country) => country.key === selectedKey
-    );
-    setSelectedCountry(country);
+    country.onChange(selectedKey);
   };
 
   return (
     <Dropdown>
       <DropdownTrigger>
         <Button className="country-ipractis-dropdown shadow-none">
-          <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt={selectedCountry.alt}
-            src={selectedCountry.image}
-          />
+          {selectedCountry && (
+            <Image
+              className="w-[26px] h-[24px] rounded-[5px] object-cover"
+              alt={selectedCountry.alt}
+              src={selectedCountry.image}
+            />
+          )}
 
           <div className="mx-auto">
             <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
@@ -35,25 +44,26 @@ const PersonalInfoCountrySelect = ({ selectedCountry, setSelectedCountry }) => {
       </DropdownTrigger>
 
       <DropdownMenu
-        selectedKeys={new Set([selectedCountry.key])}
+        selectedKeys={new Set([country.value])}
         onSelectionChange={handleSelectionChange}
         aria-label="Single Country Selection"
         disallowEmptySelection
         selectionMode="single"
         variant="flat"
       >
-        {countriesSelection?.map((country) => (
+        {countriesSelection?.map((countryItem) => (
           <DropdownItem
             className="flex items-center"
-            textValue={country?.alt}
-            key={country?.key}
+            textValue={countryItem?.alt}
+            key={countryItem?.key}
           >
             <Image
               className="w-[26px] h-[24px] rounded-[5px] object-cover inline"
-              src={country?.image}
-              alt={country?.alt}
+              src={countryItem?.image}
+              alt={countryItem?.alt}
             />
-            <span className="ml-2 inline">{country?.key}</span>
+
+            <span className="ml-2 inline">{countryItem?.key}</span>
           </DropdownItem>
         ))}
       </DropdownMenu>

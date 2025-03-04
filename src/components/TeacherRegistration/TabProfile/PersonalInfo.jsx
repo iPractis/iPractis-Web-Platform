@@ -1,3 +1,21 @@
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import SectionHeader from "../../Shared/SectionHeader";
+
+import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
+import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
+import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
+import AboutYourSelfIntro from "./AboutYourSelfIntro";
+import BirthDateInput from "./BirthDateInput";
+
+// External imports
+import { useController } from "react-hook-form";
+
+// Icons
 import {
   FlagIcon,
   QuestionMark,
@@ -6,32 +24,46 @@ import {
   UserIcon,
 } from "../../Icons";
 
-import {
-  DynamicInputErrorMessageWithZod,
-  SplitDynamicErrorZod,
-} from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
-import { getInputStatusBorder } from "@/src/lib/utils/InputStatusBorder";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
-import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
-import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
-import CustomNextUiInput from "../../Shared/CustomNextUiInput";
-import SectionHeader from "../../Shared/SectionHeader";
-import AboutYourSelfIntro from "./AboutYourSelfIntro";
-import BirthDateInput from "./BirthDateInput";
+const PersonalInfo = ({ control, errors, watch }) => {
+  const {
+    field: firstName,
+    fieldState: { error: firstNameError },
+  } = useController({
+    name: "firstName",
+    control: control,
+  });
 
-const PersonalInfo = ({
-  setSelectedNationality,
-  selectedNationality,
-  setSelectedCountry,
-  selectedCountry,
-  setValue,
-  register,
-  watch,
-}) => {
+  const { field: middleName } = useController({
+    name: "middleName",
+    control: control,
+  });
+
+  const {
+    field: lastName,
+    fieldState: { error: lastNameError },
+  } = useController({
+    name: "lastName",
+    control: control,
+  });
+
+  const {
+    field: country,
+    fieldState: { error: countryError },
+  } = useController({
+    control,
+    name: "countryField",
+    defaultValue: "United Kingdom",
+  });
+
+  const {
+    field: nationality,
+    fieldState: { error: nationalityError },
+  } = useController({
+    control,
+    name: "nationality",
+    defaultValue: "United Kingdom",
+  });
+
   return (
     <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader
@@ -41,6 +73,7 @@ const PersonalInfo = ({
         titleText="Personal Informations"
         titleClassName="MT-SB-1"
       />
+
       <div className="md:px-8 mt-8">
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
@@ -70,8 +103,11 @@ const PersonalInfo = ({
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper: errors?.firstName && "form-input-error",
+                    inputWrapper: firstNameError?.message && "form-input-error",
                   }}
+                  onBlur={firstName.onBlur}
+                  onChange={firstName.onChange}
+                  value={firstName.value}
                 />
               </InputLeftStickStatus>
 
@@ -85,7 +121,7 @@ const PersonalInfo = ({
                   errors,
                   middleName?.value,
                   "middleName",
-                  false,
+                  false
                 )}
               >
                 <CustomNextUiInput
@@ -104,6 +140,8 @@ const PersonalInfo = ({
                       <UserBigIcon fillColor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
+                  onChange={middleName.onChange}
+                  value={middleName.value}
                 />
               </InputLeftStickStatus>
             </div>
@@ -111,17 +149,15 @@ const PersonalInfo = ({
             {/* Lastname */}
             <div>
               <InputLeftStickStatus
-                inputBarStatusClassName={getLeftStickInputColorStatus(
-                  frontEndErrors,
-                  backEndErrors,
-                  watch("lastName"),
+                inputBarStatusClassName={getInputStatusBorder(
+                  errors,
+                  lastName?.value,
                   "lastName"
                 )}
               >
                 <CustomNextUiInput
                   name="lastName"
                   type="text"
-                  {...register("lastName")}
                   placeholder="Enter your last name"
                   label={
                     <span className="flex gap-1.5 items-center">
@@ -136,19 +172,15 @@ const PersonalInfo = ({
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper:
-                      (frontEndErrors?.lastName?.type ||
-                        backEndErrors?.message) &&
-                      "form-input-error",
+                    inputWrapper: lastNameError?.message && "form-input-error",
                   }}
+                  onBlur={lastName.onBlur}
+                  onChange={lastName.onChange}
+                  value={lastName.value}
                 />
               </InputLeftStickStatus>
 
-              <DynamicInputErrorMessageWithZod
-                frontEndErrors={frontEndErrors}
-                backEndErrors={backEndErrors}
-                fieldName="lastName"
-              />
+              <SplitDynamicErrorZod message={lastNameError?.message} />
             </div>
 
             {/* Birthdate inputs (3) */}
@@ -158,78 +190,96 @@ const PersonalInfo = ({
           <div className="space-y-12">
             {/* Country of residence */}
             <div>
-              <CustomNextUiInput
-                type="text"
-                isReadOnly
-                placeholder="Select a country"
-                label={
-                  <span className="flex gap-1.5 items-center">
-                    Country of residence{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <span className="flex items-center gap-1.5">
-                    <InputBGWrapperIcon>
-                      <FlagIcon />
-                    </InputBGWrapperIcon>
+              <InputLeftStickStatus
+                inputBarStatusClassName={getInputStatusBorder(
+                  errors,
+                  country?.value,
+                  "countryField"
+                )}
+              >
+                <CustomNextUiInput
+                  type="text"
+                  isReadOnly
+                  placeholder="Select a country"
+                  label={
+                    <span className="flex gap-1.5 items-center">
+                      Country{" "}
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    </span>
+                  }
+                  classNames={{
+                    inputWrapper: countryError?.message && "form-input-error",
+                  }}
+                  name="countryField"
+                  labelPlacement="outside"
+                  startContent={
+                    <span className="flex items-center gap-1.5">
+                      <InputBGWrapperIcon>
+                        <FlagIcon />
+                      </InputBGWrapperIcon>
 
-                    <PersonalInfoCountrySelect
-                      selectedCountry={selectedCountry}
-                      setSelectedCountry={setSelectedCountry}
-                    />
-                  </span>
-                }
-              />
+                      <PersonalInfoCountrySelect country={country} />
+                    </span>
+                  }
+                />
+              </InputLeftStickStatus>
+
+              <SplitDynamicErrorZod message={countryError?.message} />
             </div>
 
             {/* Country of nationality */}
             <div>
-              <CustomNextUiInput
-                type="text"
-                isReadOnly
-                placeholder="Select a country"
-                label={
-                  <span className="flex gap-1.5 items-center">
-                    Nationality{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-                }
-                labelPlacement="outside"
-                startContent={
-                  <span className="flex items-center gap-1.5">
-                    <InputBGWrapperIcon>
-                      <FlagIcon />
-                    </InputBGWrapperIcon>
+              <InputLeftStickStatus
+                inputBarStatusClassName={getInputStatusBorder(
+                  errors,
+                  nationality?.value,
+                  "nationality"
+                )}
+              >
+                <CustomNextUiInput
+                  type="text"
+                  isReadOnly
+                  placeholder="Select a country"
+                  label={
+                    <span className="flex gap-1.5 items-center">
+                      Nationality{" "}
+                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    </span>
+                  }
+                  classNames={{
+                    inputWrapper:
+                      nationalityError?.message && "form-input-error",
+                  }}
+                  labelPlacement="outside"
+                  name="nationality"
+                  startContent={
+                    <span className="flex items-center gap-1.5">
+                      <InputBGWrapperIcon>
+                        <FlagIcon />
+                      </InputBGWrapperIcon>
 
-                    <PersonalInfoNationalitySelect
-                      setSelectedNationality={setSelectedNationality}
-                      selectedNationality={selectedNationality}
-                    />
-                  </span>
-                }
-              />
+                      <PersonalInfoNationalitySelect
+                        nationality={nationality}
+                      />
+                    </span>
+                  }
+                />
+              </InputLeftStickStatus>
+
+              <SplitDynamicErrorZod message={nationalityError?.message} />
             </div>
 
             {/* Gender checkboxes */}
             <PersonalInfoGenderCheck
-              frontEndErrors={frontEndErrors}
-              backEndErrors={backEndErrors}
-              setValue={setValue}
+              control={control}
+              errors={errors}
               watch={watch}
             />
           </div>
         </div>
 
         {/* Introduction about yourself */}
-        <AboutYourSelfIntro
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          register={register}
-          setValue={setValue}
-          watch={watch}
-        />
+        <AboutYourSelfIntro control={control} errors={errors} />
       </div>
     </WhiteSpaceWrapper>
   );

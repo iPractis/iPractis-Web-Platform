@@ -1,3 +1,6 @@
+import { countriesSelection } from "@/src/data/dataTeacherRegistration";
+
+// External imports
 import {
   Dropdown,
   DropdownTrigger,
@@ -5,32 +8,35 @@ import {
   DropdownItem,
   Button,
 } from "@nextui-org/react";
-import { countriesSelection } from "@/src/data/dataTeacherRegistration";
-import { ChevronDownSmallIcon } from "../../Icons";
+
+// React import
 import Image from "next/image";
 
-const PersonalInfoNationalitySelect = ({
-  selectedNationality,
-  setSelectedNationality,
-}) => {
+// Icons
+import { ChevronDownSmallIcon } from "../../Icons";
+
+const PersonalInfoNationalitySelect = ({ nationality }) => {
+  const selectedCountry = countriesSelection.find(
+    (country) => country.key === nationality.value
+  );
+
   const handleSelectionChange = (keys) => {
     const selectedKey = Array.from(keys)[0];
-    const country = countriesSelection.find(
-      (country) => country.key === selectedKey
-    );
-    setSelectedNationality(country);
+    nationality.onChange(selectedKey);
   };
 
   return (
     <Dropdown>
       <DropdownTrigger>
         <Button className="country-ipractis-dropdown shadow-none">
-          <Image
-            className="w-[26px] h-[24px] rounded-[5px] object-cover"
-            alt={selectedNationality.alt}
-            src={selectedNationality.image}
-          />
-
+          {selectedCountry && (
+            <Image
+              className="w-[26px] h-[24px] rounded-[5px] object-cover"
+              alt={selectedCountry.alt}
+              src={selectedCountry.image}
+            />
+          )}
+          
           <div className="mx-auto">
             <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
           </div>
@@ -38,7 +44,7 @@ const PersonalInfoNationalitySelect = ({
       </DropdownTrigger>
 
       <DropdownMenu
-        selectedKeys={new Set([selectedNationality.key])}
+        selectedKeys={new Set([nationality.value])}
         onSelectionChange={handleSelectionChange}
         aria-label="Single Country Selection"
         disallowEmptySelection
