@@ -142,12 +142,7 @@ const SubjectsToTeach = ({ errors, control }) => {
           </div>
 
           {/* Profile title and description */}
-          {/* <ProfileTitle
-            setValue={setValue}
-            register={register}
-            errors={errors}
-            watch={watch}
-          /> */}
+          <ProfileTitle errors={errors} control={control} />
         </div>
 
         <div>

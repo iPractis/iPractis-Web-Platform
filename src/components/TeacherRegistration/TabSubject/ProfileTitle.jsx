@@ -1,35 +1,45 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { CustomNextUiInputWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
-// Images && icons
+// External imports
+import { useController } from "react-hook-form";
+
+// Icons
 import { CloseIcon, ThreeXBlocks } from "../../Icons";
 
-const ProfileTitle = ({
-  setValue,
-  register,
-  watch,
-}) => {
-  const profileTitleText = watch("profileTitle", "");
+const ProfileTitle = ({ control, errors }) => {
+  const {
+    field: profileTitle,
+    fieldState: { error: profileTitleError },
+  } = useController({
+    name: "profileTitle",
+    control,
+  });
 
   const profileTitleTextOnChange = (e) => {
     const textValue = e?.target?.value;
 
-    if (textValue?.length <= 120) setValue("profileTitle", textValue);
+    if (textValue?.length <= 120) {
+      profileTitle.onChange(textValue);
+    }
+  };
+
+  const handleClearInput = () => {
+    profileTitle.onChange("");
   };
 
   return (
     <div>
       <InputLeftStickStatus
-        inputBarStatusClassName={`${getLeftStickInputColorStatus(
-          frontEndErrors,
-          backEndErrors,
-          watch("profileTitle"),
+        inputBarStatusClassName={`${getInputStatusBorder(
+          errors,
+          profileTitle?.value,
           "profileTitle"
         )} -translate-y-0 ${
-          profileTitleText?.length === 120 ? "top-[12%]" : "top-[25%]"
+          profileTitle?.value?.length === 120 ? "top-[12%]" : "top-[25%]"
         }`}
       >
         <CustomNextUiInputWithMaxLength
@@ -40,7 +50,7 @@ const ProfileTitle = ({
           labelClassName={"!-top-[52px]"}
           labelDisabled={false}
           nameTextarea={"profileTitle"}
-          value={profileTitleText}
+          value={profileTitle?.value}
           onChange={profileTitleTextOnChange}
           placeholder={"Enter a profile title"}
           inputClassName={"!pe-3"}
@@ -55,23 +65,17 @@ const ProfileTitle = ({
           endContent={
             <InputBGWrapperIcon
               className={"cursor-pointer"}
-              onClick={() => setValue("profileTitle", "")}
+              onClick={handleClearInput}
             >
               <CloseIcon strokeColor={"stroke-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
-          backgroundError={
-            frontEndErrors?.profileTitle?.type || backEndErrors?.message
-          }
-          inputProps={{ ...register("profileTitle") }}
+          backgroundError={profileTitleError?.message}
+          inputProps={{ onBlur: profileTitle.onBlur }}
         />
       </InputLeftStickStatus>
 
-      <DynamicInputErrorMessageWithZod
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        fieldName="profileTitle"
-      />
+      <SplitDynamicErrorZod message={profileTitleError?.message} />
     </div>
   );
 };
