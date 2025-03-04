@@ -1,4 +1,4 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
+import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import { studentLevels } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";
@@ -9,7 +9,7 @@ import { Controller } from "react-hook-form";
 // Icons
 import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
 
-const StudentPreference = ({ control, frontEndErrors, backEndErrors }) => {
+const StudentPreference = ({ control, errors }) => {
   return (
     <div>
       <SectionHeader
@@ -37,9 +37,7 @@ const StudentPreference = ({ control, frontEndErrors, backEndErrors }) => {
         <Controller
           name="studentLevel"
           control={control}
-          defaultValue=""
-          rules={{ required: "Invalid submission --- Must choose a level you can teach." }}
-          render={({ field }) => (
+          render={({ field, fieldState: { error: studentLevelError } }) => (
             <>
               {studentLevels?.map((level) => (
                 <div
@@ -51,9 +49,7 @@ const StudentPreference = ({ control, frontEndErrors, backEndErrors }) => {
                     classNames={{
                       label: "ST-4 border-0 ml-1",
                       wrapper: `${
-                        (frontEndErrors?.studentLevel?.type ||
-                          backEndErrors?.message) &&
-                        "form-input-error"
+                        studentLevelError?.message && "form-input-error"
                       } w-[19px] h-[19px]`,
                     }}
                     isSelected={field.value === level.value}
@@ -63,14 +59,10 @@ const StudentPreference = ({ control, frontEndErrors, backEndErrors }) => {
                   </CustomNextUiCheckbox>
                 </div>
               ))}
+
+              <SplitDynamicErrorZod message={studentLevelError?.message} />
             </>
           )}
-        />
-
-        <DynamicInputErrorMessageWithZod
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="studentLevel"
         />
       </div>
     </div>

@@ -92,11 +92,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
 
         <PresentYourSelf control={control} errors={errors} />
 
-        {/* <StudentPreference
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          control={control}
-        /> */}
+        <StudentPreference control={control} errors={errors} />
 
         {/* <StudentAge
           frontEndErrors={frontEndErrors}
