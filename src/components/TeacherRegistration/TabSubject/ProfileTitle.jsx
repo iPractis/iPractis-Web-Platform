@@ -8,8 +8,6 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { CloseIcon, ThreeXBlocks } from "../../Icons";
 
 const ProfileTitle = ({
-  frontEndErrors,
-  backEndErrors,
   setValue,
   register,
   watch,

@@ -30,19 +30,12 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       lastName: draft?.lastName,
       introduction: draft?.introduction,
       uploadProfileImage: draft?.uploadProfileImage,
-      birthDateDay: draft?.birthDate ? parseDate(draft?.birthDate)?.day : "",
-      birthDateMonth: draft?.birthDate
-        ? parseDate(draft?.birthDate)?.month
-        : "",
-      birthDateYear: draft?.birthDate ? parseDate(draft?.birthDate)?.year : "",
       languages: draft?.languages || [],
       nationality: draft?.nationality,
       country: draft?.country,
       gender: draft?.gender,
     },
   });
-
-  console.log(errors)
 
   const buttonRef = useRef(null);
 

@@ -6,7 +6,6 @@ import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
 import AveragePrice from "./AveragePrice";
-import Withdrawal from "./Withdrawal";
 import StudentAge from "./StudentAge";
 
 // External imports
@@ -15,22 +14,18 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 // React imports
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const TabSubject = ({ setActiveTab, activeTab, draft }) => {
   const {
-    register,
     handleSubmit,
-    formState: { errors: frontEndErrors, isSubmitted },
+    formState: { errors, isSubmitted },
     control,
-    watch,
-    setValue,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabSubjectSchema),
     defaultValues: {
       subjectIntroduction: draft?.subjectIntroduction,
-      emailWithdrawal: draft?.emailWithdrawal,
       profileTitle: draft?.profileTitle,
       teachToAmateurPersons: draft?.teachToAmateurPersons,
       teachToYoungPersons: draft?.teachToYoungPersons,
@@ -38,12 +33,12 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
       studentLevel: draft?.studentLevel,
       subject: draft?.subject,
       videoLink: draft?.videoLink,
-      withdrawal: draft?.withdrawal,
       subSubject: draft?.subSubject,
     },
   });
-  const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
+
+  console.log(errors);
 
   const onSubmit = async (data) => {
     buttonRef.current.loading();
@@ -91,53 +86,40 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
       className={`${activeTab !== 1 && "hidden"}`}
     >
       <WhiteSpaceWrapper className={"p-0"}>
-        <SubjectsToTeach
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          setValue={setValue}
-          register={register}
-          control={control}
-          watch={watch}
-        />
+        <SubjectsToTeach control={control} errors={errors} />
 
-        <RelatedSubTopics
+        {/* <RelatedSubTopics
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           control={control}
           watch={watch}
-        />
+        /> */}
 
-        <PresentYourSelf
+        {/* <PresentYourSelf
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           register={register}
           watch={watch}
-        />
+        /> */}
 
-        <StudentPreference
+        {/* <StudentPreference
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           control={control}
-        />
+        /> */}
 
-        <StudentAge
+        {/* <StudentAge
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           isSubmitted={isSubmitted}
           control={control}
-        />
+        /> */}
 
-        <AveragePrice
+        {/* <AveragePrice
           frontEndErrors={frontEndErrors}
           backEndErrors={backEndErrors}
           register={register}
           watch={watch}
-        />
-
-        {/* <Withdrawal
-          setWithdrawal={setWithdrawal}
-          withdrawal={withdrawal}
-          draft={draft}
         /> */}
       </WhiteSpaceWrapper>
 

@@ -159,15 +159,6 @@ export const tabSubjectSchema = z.object({
       message:
         "Lesson rate too high --- Lesson rate must be between 8 and 60 USD.",
     }),
-  withdrawal: z
-    .string()
-    .min(1, { message: "Invalid submission --- Must choose a withdrawal." }),
-  emailWithdrawal: z
-    .string()
-    .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
-      message:
-        "Invalid email --- Please ensure the email provided is a valid one.",
-    }),
 });
 
 export const tabBackgroundSchema = z.object({
