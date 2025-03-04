@@ -88,12 +88,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
       <WhiteSpaceWrapper className={"p-0"}>
         <SubjectsToTeach control={control} errors={errors} />
 
-        {/* <RelatedSubTopics
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          control={control}
-          watch={watch}
-        /> */}
+        <RelatedSubTopics control={control} errors={errors} />
 
         {/* <PresentYourSelf
           frontEndErrors={frontEndErrors}

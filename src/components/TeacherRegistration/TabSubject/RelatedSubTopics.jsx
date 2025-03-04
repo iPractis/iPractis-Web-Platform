@@ -1,4 +1,4 @@
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
@@ -7,7 +7,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 import SubSubject from "./SubSubject";
 
 // External imports
-import { useFieldArray, Controller, useController } from "react-hook-form";
+import { useFieldArray, Controller } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
 
 // React imports
@@ -16,13 +16,12 @@ import { useState } from "react";
 // Images && icons
 import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
-const RelatedSubTopics = ({
-  frontEndErrors,
-  backEndErrors,
-  control,
-  watch,
-}) => {
-  const { fields: subSubjectsFields, append, remove, } = useFieldArray({ control, name: "subSubject" });
+const RelatedSubTopics = ({ control, errors }) => {
+  const {
+    fields: subSubjectsFields,
+    append,
+    remove,
+  } = useFieldArray({ control, name: "subSubject" });
   const [isOpen, setIsOpen] = useState(false);
 
   // Add sub-subject
@@ -59,10 +58,9 @@ const RelatedSubTopics = ({
               {/* Select Sub-subject */}
               <div className="grid md:grid-cols-2 grid-cols-1">
                 <InputLeftStickStatus
-                  inputBarStatusClassName={`${getLeftStickInputColorStatus(
-                    frontEndErrors,
-                    backEndErrors,
-                    watch("subSubject"),
+                  inputBarStatusClassName={`${getInputStatusBorder(
+                    errors,
+                    value,
                     "subSubject"
                   )} top-[54%] -translate-y-0`}
                 >
@@ -109,7 +107,8 @@ const RelatedSubTopics = ({
                       }
                       classNames={{
                         trigger: `px-1 py-1.5 h-auto ${
-                          error?.message && "form-input-error"
+                          (error?.message || error !== undefined) &&
+                          "form-input-error"
                         }`,
                         innerWrapper: ["select-ipractis", "w-full"],
                         value: [

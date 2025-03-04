@@ -64,14 +64,16 @@ const SubSubject = ({
             <CustomNextUiTextareaWithMaxLength
               backgroundError={error?.message && "form-input-error"}
               descError={"The text cannot exceed 20 characters."}
+              inputProps={{ onBlur: field.onBlur }}
               typeError={"Max Length Exceeded"}
               nameTextarea={"description"}
               inputClassName={"h-[150px]"}
               placeholder={"Enter a text"}
               maxCharactersLengthText={2}
               maxCharactersLength={20}
+              onChange={field.onChange}
               labelDisabled={true}
-              {...field}
+              value={field.value}
             />
 
             <SplitDynamicErrorZod message={error?.message} />
