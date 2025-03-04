@@ -21,6 +21,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
     handleSubmit,
     formState: { errors, isSubmitted },
     control,
+    watch,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabSubjectSchema),
@@ -100,12 +101,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
           errors={errors}
         />
 
-        {/* <AveragePrice
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          register={register}
-          watch={watch}
-        /> */}
+        <AveragePrice control={control} errors={errors} watch={watch} />
       </WhiteSpaceWrapper>
 
       {/* Back && Save buttons */}

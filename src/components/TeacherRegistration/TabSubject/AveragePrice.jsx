@@ -1,5 +1,5 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import { subjectImages } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
@@ -7,13 +7,22 @@ import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // React imports
+import { useController } from "react-hook-form";
 import Image from "next/image";
 
 // Icons
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
-const AveragePrice = ({ frontEndErrors, backEndErrors, watch, register }) => {
+const AveragePrice = ({ control, errors, watch }) => {
   const subjectToTeachImage = subjectImages[watch("subject")];
+
+  const {
+    field: hourlyPrice,
+    fieldState: { error: hourlyPriceError },
+  } = useController({
+    name: "hourlyPrice",
+    control,
+  });
 
   return (
     <>
@@ -26,21 +35,12 @@ const AveragePrice = ({ frontEndErrors, backEndErrors, watch, register }) => {
       />
 
       <div className="md:px-8">
-        {/* <SectionHeader
-          descriptionText="Price is crucial for students when choosing a tutor as it determines affordability and value for money."
-          titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
-          titleText="Average price"
-          titleClassName="MT-SB-1"
-          wrapperSectionHeaderClassName="mb-16"
-        /> */}
-
         <div className="grid md:grid-cols-2 grid-cols-1 gap-8 items-end">
           <div>
             <InputLeftStickStatus
-              inputBarStatusClassName={`${getLeftStickInputColorStatus(
-                frontEndErrors,
-                backEndErrors,
-                watch("hourlyPrice"),
+              inputBarStatusClassName={`${getInputStatusBorder(
+                errors,
+                hourlyPrice.value,
                 "hourlyPrice"
               )} -translate-y-0 top-[54%]`}
             >
@@ -52,9 +52,7 @@ const AveragePrice = ({ frontEndErrors, backEndErrors, watch, register }) => {
                   classNames={{
                     label: "!-top-11",
                     inputWrapper:
-                      (frontEndErrors?.hourlyPrice?.type ||
-                        backEndErrors?.message) &&
-                      "form-input-error",
+                      hourlyPriceError?.message && "form-input-error",
                   }}
                   label={
                     <div className="flex flex-col">
@@ -76,16 +74,14 @@ const AveragePrice = ({ frontEndErrors, backEndErrors, watch, register }) => {
                       <DollarSignIcon fillColor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
-                  {...register("hourlyPrice")}
+                  value={hourlyPrice.value}
+                  onChange={hourlyPrice.onChange}
+                  onBlur={hourlyPrice.onBlur}
                 />
               </div>
             </InputLeftStickStatus>
 
-            <DynamicInputErrorMessageWithZod
-              frontEndErrors={frontEndErrors}
-              backEndErrors={backEndErrors}
-              fieldName="hourlyPrice"
-            />
+            <SplitDynamicErrorZod message={hourlyPriceError?.message} />
           </div>
 
           {subjectToTeachImage && (
