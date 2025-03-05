@@ -47,6 +47,19 @@ tr:last-of-type td.isSelected {
   margin-right: 2rem;
 }
 
+/* Calendar of react-dates (birthdate) */
+.SingleDatePicker_picker {
+  z-index: 100 !important;
+}
+
+.DateInput {
+  display: none !important;
+}
+
+.SingleDatePicker_picker {
+  top: 0 !important;
+}
+
 /* sm(640px) */
 @media (max-width: 40em) {
   .otp-inputs-container input:nth-child(3) {

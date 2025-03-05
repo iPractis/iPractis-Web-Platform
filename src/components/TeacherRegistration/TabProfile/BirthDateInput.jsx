@@ -1,93 +1,92 @@
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
-// Nextui imports
-import {
-  Calendar,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  Button,
-  DropdownItem,
-} from "@nextui-org/react";
+// External imports
+import { SingleDatePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
+import "react-dates/initialize";
+
+// React imports
+import { useState } from "react";
 
 // Icons
 import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
 
 const BirthDateInput = ({}) => {
+  const [focused, setFocused] = useState(false);
+  const [date, setDate] = useState(null);
+
   return (
     <div className="!mt-4 group">
+      {/* label */}
       <span className="flex gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
         Birth date <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
 
-      <div className="grid grid-cols-8 gap-2">
-        <div className="col-span-7">
-          <div
-            className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
-          >
-            <div>
-              <InputBGWrapperIcon>
-                <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            </div>
-
-            <div>
-              <input
-                className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
-                name="birthDateNumber"
-                type="text"
-                readOnly
-              />
-            </div>
-
-            <div>
-              <input
-                className="input-ipractis sm:w-[195px] w-[118px] text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
-                name="birthDateMonth"
-                type="text"
-                readOnly
-              />
-            </div>
-
-            <div>
-              <input
-                className="input-ipractis md:w-[60px] w-full text-center outline-none rounded-xl !p-0 pointer-events-none h-9"
-                name="birthDateYear"
-                type="text"
-                readOnly
-              />
-            </div>
-          </div>
+      {/* Inputs */}
+      <div
+        className={`flex justify-between gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
+      >
+        {/* Icon */}
+        <div>
+          <InputBGWrapperIcon>
+            <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
+          </InputBGWrapperIcon>
         </div>
 
-        {/* Dropdown */}
-        <Dropdown
-          classNames={{
-            content: "p-0",
-          }}
-          closeOnSelect={false}
-        >
-          <DropdownTrigger>
-            <Button
-              className="border-0 px-0 min-w-fit bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center rounded-2xl sm:h-full h-12 sm:w-full w-12 shadow-none"
-              variant="flat"
-              type="button"
-            >
-              <CalendarBiggerIcon fillColor={"fill-primary-color-P4"} />
-            </Button>
-          </DropdownTrigger>
+        {/* Date */}
+        <div>
+          <input
+            className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
+            name="birthDateNumber"
+            type="text"
+            readOnly
+          />
+        </div>
 
-          <DropdownMenu
-            className="p-0 h-0"
-            itemClasses={{
-              base: "data-[hover=true]:bg-transparent",
-            }}
+        {/* Month */}
+        <div>
+          <input
+            className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
+            name="birthDateMonth"
+            type="text"
+            readOnly
+          />
+        </div>
+
+        {/* Year */}
+        <div>
+          <input
+            className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
+            name="birthDateYear"
+            type="text"
+            readOnly
+          />
+        </div>
+
+        {/* Calendar Trigger Icon */}
+        <div className="relative">
+          <button
+            className="p-1.5 rounded-[10px] bg-primary-color-P12"
+            onClick={() => setFocused(true)}
+            type="button"
           >
-            <DropdownItem className="p-0">
-              <Calendar disableAnimation />
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
+            <CalendarBiggerIcon fillColor={"fill-primary-color-P4"} />
+          </button>
+
+          <div className="absolute">
+            <SingleDatePicker
+              onFocusChange={({ focused }) => setFocused(focused)}
+              onDateChange={(date) => setDate(date)}
+              isOutsideRange={() => false}
+              hideKeyboardShortcutsPanel
+              displayFormat="DD/MM/YYYY"
+              focused={focused}
+              numberOfMonths={1}
+              id="birthDate"
+              date={date}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
