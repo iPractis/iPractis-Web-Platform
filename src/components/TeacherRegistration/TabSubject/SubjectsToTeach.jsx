@@ -71,6 +71,7 @@ const SubjectsToTeach = ({ errors, control }) => {
               )} ${errorSubject?.message && "top-[20%]"}`}
             >
               <Select
+                selectedKeys={new Set([subject.value])}
                 onSelectionChange={(keys) => {
                   const key = Array.from(keys)[0];
                   subject.onChange(key);

@@ -38,6 +38,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
       subSubject: draft?.subSubject,
     },
   });
+
   const buttonRef = useRef(null);
 
   const onSubmit = async (data) => {
@@ -59,10 +60,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.withdrawal = data?.withdrawal;
         actualDraftInfo.videoLink = data?.videoLink;
         actualDraftInfo.subject = data?.subject;
-
-        const validationResult = tabSubjectSchema.safeParse(actualDraftInfo);
-
-        if (!validationResult.success) return;
 
         const response = await axios.put(
           `/teacher/set/subject`,
@@ -94,11 +91,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
 
         <StudentPreference control={control} errors={errors} />
 
-        <StudentAge
-          isSubmitted={isSubmitted}
-          control={control}
-          errors={errors}
-        />
+        <StudentAge isSubmitted={isSubmitted} control={control} />
 
         <AveragePrice control={control} errors={errors} watch={watch} />
       </WhiteSpaceWrapper>

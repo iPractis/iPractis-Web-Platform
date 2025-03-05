@@ -16,9 +16,9 @@ import { useRef } from "react";
 
 const TabProfile = ({ setActiveTab, activeTab, draft }) => {
   const {
+    formState: { errors },
     handleSubmit,
     setError,
-    formState: { errors },
     control,
     watch,
   } = useForm({
@@ -47,7 +47,9 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN") ? "" : validBirthDate?.toString();
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
+          ? ""
+          : validBirthDate?.toString();
         actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
         actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.introduction = data?.introduction;
@@ -57,10 +59,6 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.firstName = data?.firstName;
         actualDraftInfo.lastName = data?.lastName;
         actualDraftInfo.gender = data?.gender;
-
-        const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
-
-        if (!validationResult.success) return;
 
         const response = await axios.put(
           `/teacher/set/profile`,

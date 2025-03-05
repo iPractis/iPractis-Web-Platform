@@ -8,7 +8,7 @@ import { Switch } from "@nextui-org/react";
 // Icons
 import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
 
-const StudentAge = ({ isSubmitted, control, errors }) => {
+const StudentAge = ({ isSubmitted, control }) => {
   return (
     <div className="md:px-8 mt-[50px]">
       <SectionHeader
@@ -23,13 +23,12 @@ const StudentAge = ({ isSubmitted, control, errors }) => {
         <Controller
           name="teachToYoungPersons"
           control={control}
-          defaultValue={false}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <>
               <Switch
                 name="teachToYoungPersons"
-                checked={value}
-                onChange={onChange}
+                isSelected={value}
+                onValueChange={onChange}
                 size="sm"
                 classNames={{
                   wrapper: `${
@@ -61,13 +60,12 @@ const StudentAge = ({ isSubmitted, control, errors }) => {
         <Controller
           name="teachToAmateurPersons"
           control={control}
-          defaultValue={false}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <>
               <Switch
                 name="teachToAmateurPersons"
-                checked={value}
-                onChange={onChange}
+                isSelected={value}
+                onValueChange={onChange}
                 size="sm"
                 classNames={{
                   wrapper: `${
