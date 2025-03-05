@@ -11,14 +11,11 @@ import moment from "moment";
 
 // React imports
 import { useController } from "react-hook-form";
-import { useState } from "react";
 
 // Icons
 import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
 
 const BirthDateInput = ({ errors, control }) => {
-  const [focused, setFocused] = useState(false);
-
   const {
     field: birthDate,
     fieldState: { error: birthDateError },
@@ -28,15 +25,14 @@ const BirthDateInput = ({ errors, control }) => {
   });
 
   const handleDateChange = (date) => {
-    const dateString = date ? moment(date).format("DD/MM/YYYY") : null;
+    const dateString = date ? moment(date).format("D/MM/YYYY") : null;
     birthDate.onChange(dateString);
   };
 
   const dateValue = birthDate.value
-    ? moment(birthDate.value, "DD/MM/YYYY").toDate()
+    ? moment(birthDate.value, "D/MM/YYYY").toDate()
     : null;
 
-  // Renderizar un header personalizado
   const renderCustomHeader = ({
     date,
     decreaseMonth,
@@ -151,21 +147,16 @@ const BirthDateInput = ({ errors, control }) => {
           {/* Calendar Trigger Icon */}
           <div>
             <DatePicker
-              onFocusChange={({ focused }) => setFocused(focused)}
-              onCalendarClose={() => setFocused(false)}
               renderCustomHeader={renderCustomHeader}
-              onCalendarOpen={() => setFocused(true)}
               onChange={handleDateChange}
-              dateFormat="d/MM/yyyy"
+              dateFormat="D/MM/YYYY"
               dropdownMode="select"
               selected={dateValue}
               showMonthDropdown
               showYearDropdown
-              open={focused}
               customInput={
                 <button
                   className="p-1.5 rounded-[10px] bg-primary-color-P12"
-                  onClick={() => setFocused(true)}
                   type="button"
                 >
                   <CalendarBiggerIcon fillColor={"fill-primary-color-P4"} />
