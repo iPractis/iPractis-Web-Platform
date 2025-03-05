@@ -9,7 +9,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 // Icons
 import { AddBoxBiggerIcon, GraduationCapIcon } from "../../Icons";
 
-const Education = ({ frontEndErrors, backEndErrors, control }) => {
+const Education = ({ control }) => {
   const {
     fields: education,
     append,
@@ -67,8 +67,6 @@ const Education = ({ frontEndErrors, backEndErrors, control }) => {
             {education?.map((education, index) => (
               <FormInputsBox
                 handleDelete={handleDeleteEducation}
-                frontEndErrors={frontEndErrors}
-                backEndErrors={backEndErrors}
                 array={"education"}
                 key={education.id}
                 control={control}

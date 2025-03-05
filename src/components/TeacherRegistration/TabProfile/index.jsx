@@ -42,18 +42,12 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
   const onSubmit = async (data) => {
     buttonRef.current.loading();
 
-    console.log(data, 'estoy saquii')
-
-    console.log("entroooo")
-
     const actualDraftInfo = draft;
 
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
-          ? ""
-          : validBirthDate?.toString();
+        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN") ? "" : validBirthDate?.toString();
         actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
         actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.introduction = data?.introduction;
@@ -66,11 +60,9 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
 
         const validationResult = tabProfileSchema.safeParse(actualDraftInfo);
 
-        console.log(validationResult);
-
         if (!validationResult.success) return;
 
-        const response = await axios.post(
+        const response = await axios.put(
           `/teacher/set/profile`,
           actualDraftInfo
         );

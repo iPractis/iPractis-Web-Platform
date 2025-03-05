@@ -1,6 +1,4 @@
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import CustomNextUiTextarea from "../../Shared/CustomNextUiTextarea";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
@@ -28,8 +26,6 @@ import {
 } from "../../Icons";
 
 const FormInputsBox = ({
-  frontEndErrors,
-  backEndErrors,
   handleDelete,
   control,
   array,
@@ -272,26 +268,17 @@ const FormInputsBox = ({
         control={control}
         render={({ field, fieldState: { error } }) => (
           <>
-            <InputLeftStickStatus
-              inputBarStatusClassName={`${getLeftStickInputColorStatus(
-                frontEndErrors,
-                backEndErrors,
-                field?.value,
-                "description"
-              )} h-[129px]`}
-            >
-              <CustomNextUiTextarea
-                classNames={{
-                  inputWrapper: error?.message && "form-input-error",
-                  input: "h-[150px]",
-                  base: "mt-2.5",
-                }}
-                placeholder="Enter a text"
-                size="primaryiPractis"
-                disableAutosize
-                {...field}
-              />
-            </InputLeftStickStatus>
+            <CustomNextUiTextarea
+              classNames={{
+                inputWrapper: error?.message && "form-input-error",
+                input: "h-[150px]",
+                base: "mt-2.5",
+              }}
+              placeholder="Enter a text"
+              size="primaryiPractis"
+              disableAutosize
+              {...field}
+            />
 
             <SplitDynamicErrorZod message={error?.message} />
           </>

@@ -18,6 +18,7 @@ const TabsButtonsBottomNav = ({ buttonRef, setActiveTab, activeTab }) => {
                 prev < 1 ? redirect("/apply-as-teacher") : prev - 1
               )
             }
+            type="button"
           >
             <span className="flex-0">
               <ChevronLeftIcon fillColor={"fill-primary-color-P12"} />

@@ -9,8 +9,12 @@ import { Controller, useFieldArray } from "react-hook-form";
 // Icons
 import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
 
-const Experience = ({ frontEndErrors, backEndErrors, control }) => {
-  const { fields: careerExperience, append, remove } = useFieldArray({ control, name: "careerExperience" });
+const Experience = ({ control }) => {
+  const {
+    fields: careerExperience,
+    append,
+    remove,
+  } = useFieldArray({ control, name: "careerExperience" });
 
   // ADD EXPERIENCE
   const handleAddExperience = () => {
@@ -61,8 +65,6 @@ const Experience = ({ frontEndErrors, backEndErrors, control }) => {
             {careerExperience?.map((experience, index) => (
               <FormInputsBox
                 handleDelete={handleDeleteExperience}
-                frontEndErrors={frontEndErrors}
-                backEndErrors={backEndErrors}
                 array={"careerExperience"}
                 key={experience.id}
                 control={control}

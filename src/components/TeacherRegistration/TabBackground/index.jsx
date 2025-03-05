@@ -5,27 +5,21 @@ import Education from "./Education";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 // React imports
-import { useForm } from "react-hook-form";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const TabBackground = ({ setActiveTab, activeTab, draft }) => {
-  const {
-    handleSubmit,
-    formState: { errors: frontEndErrors },
-    control,
-    watch,
-  } = useForm({
+  const { handleSubmit, setError, control } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabBackgroundSchema),
     defaultValues: {
-      careerExperience: draft?.experiences,
+      careerExperience: draft?.careerExperience,
       education: draft?.education,
     },
   });
-  const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
 
   const onSubmit = async (data) => {
@@ -36,14 +30,10 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB BACKGROUND
       if (activeTab === 2) {
-        actualDraftInfo.careerExperience = data?.experiences;
+        actualDraftInfo.careerExperience = data?.careerExperience;
         actualDraftInfo.education = data?.education;
 
-        const validationResult = tabBackgroundSchema.safeParse(actualDraftInfo);
-
-        if (!validationResult.success) return;
-
-        const response = await axios.post(
+        const response = await axios.put(
           `/teacher/set/background`,
           actualDraftInfo
         );
@@ -52,8 +42,7 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "BACKGROUND");
       }
     } catch (err) {
-      setBackEndErrors(err?.response?.data?.message);
-      console.log(err);
+      setError(err?.response?.data?.message);
     } finally {
       buttonRef.current.notIsLoading();
     }
@@ -65,18 +54,10 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Experience Section */}
-      <Experience
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        control={control}
-      />
+      <Experience control={control} />
 
       {/* Education Section */}
-      <Education
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        control={control}
-      />
+      <Education control={control} />
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav

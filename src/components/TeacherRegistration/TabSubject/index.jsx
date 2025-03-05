@@ -18,8 +18,9 @@ import { useRef } from "react";
 
 const TabSubject = ({ setActiveTab, activeTab, draft }) => {
   const {
-    handleSubmit,
     formState: { errors, isSubmitted },
+    handleSubmit,
+    setError,
     control,
     watch,
   } = useForm({
@@ -38,8 +39,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
     },
   });
   const buttonRef = useRef(null);
-
-  console.log(errors);
 
   const onSubmit = async (data) => {
     buttonRef.current.loading();
@@ -65,7 +64,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
 
         if (!validationResult.success) return;
 
-        const response = await axios.post(
+        const response = await axios.put(
           `/teacher/set/subject`,
           actualDraftInfo
         );
@@ -74,7 +73,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "SUBJECT");
       }
     } catch (err) {
-      setBackEndErrors(err?.response?.data?.message);
+      setError(err?.response?.data?.message);
       console.log(err);
     } finally {
       buttonRef.current.notIsLoading();
