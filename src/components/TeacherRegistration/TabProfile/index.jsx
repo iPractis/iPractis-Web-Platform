@@ -6,7 +6,6 @@ import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
 
 // External imports
-import { CalendarDate, parseDate } from "@internationalized/date";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -32,6 +31,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       uploadProfileImage: draft?.uploadProfileImage,
       languages: draft?.languages || [],
       nationality: draft?.nationality,
+      birthDate: draft?.birthDate,
       country: draft?.country,
       gender: draft?.gender,
     },

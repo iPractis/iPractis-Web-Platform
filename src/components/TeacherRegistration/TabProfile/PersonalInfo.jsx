@@ -184,7 +184,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
             </div>
 
             {/* Birthdate inputs (3) */}
-            <BirthDateInput />
+            <BirthDateInput control={control} errors={errors} />
           </div>
 
           <div className="space-y-12">

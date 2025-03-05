@@ -47,17 +47,9 @@ tr:last-of-type td.isSelected {
   margin-right: 2rem;
 }
 
-/* Calendar of react-dates (birthdate) */
-.SingleDatePicker_picker {
-  z-index: 100 !important;
-}
-
-.DateInput {
-  display: none !important;
-}
-
-.SingleDatePicker_picker {
-  top: 0 !important;
+/* Calendar of react-datepicker (birthdate) */
+.react-datepicker-popper {
+  z-index: 100!important;
 }
 
 /* sm(640px) */

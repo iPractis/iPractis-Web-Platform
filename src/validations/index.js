@@ -1,4 +1,7 @@
 import { calculateAge } from "../lib/utils/calculateAge";
+
+// External imports
+import moment from "moment";
 import { z } from "zod";
 
 export const tabProfileSchema = z.object({
@@ -62,6 +65,9 @@ export const tabProfileSchema = z.object({
   birthDate: z
     .string()
     .min(1, { message: "Invalid date --- Must provide a birth date." })
+    .refine((date) => {
+      return moment(date, "D/MM/YYYY", true).isValid();
+    })
     .refine(
       (date) => {
         const age = calculateAge(date);
