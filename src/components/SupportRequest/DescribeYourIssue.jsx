@@ -15,7 +15,7 @@ const DescribeYourIssue = ({
   watch,
 }) => {
   return (
-    <article className="">
+    <article>
       <SectionHeader
         descriptionText="Briefly explain the problem to help us assist you."
         wrapperSectionHeaderClassName="sm:px-4"

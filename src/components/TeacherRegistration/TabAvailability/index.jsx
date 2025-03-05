@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 // React imports
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const TabAvailability = ({
   setSelectedSlots,
@@ -19,11 +19,10 @@ const TabAvailability = ({
   draft,
 }) => {
   const {
+    formState: { errors },
     handleSubmit,
-    formState: { errors: frontEndErrors },
+    setError,
     control,
-    watch,
-    register,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabAvailabilitySchema),
@@ -33,7 +32,6 @@ const TabAvailability = ({
       workSchedule: draft?.workSchedule,
     },
   });
-  const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
 
   const onSubmit = async (data) => {
@@ -48,12 +46,7 @@ const TabAvailability = ({
         actualDraftInfo.dailyWorkTime = selectedSlots?.length;
         actualDraftInfo.workSchedule = selectedSlots;
 
-        const validationResult =
-          tabAvailabilitySchema.safeParse(actualDraftInfo);
-
-        if (!validationResult.success) return;
-
-        const response = await axios.post(
+        const response = await axios.put(
           `/teacher/set/availability`,
           actualDraftInfo
         );
@@ -62,7 +55,7 @@ const TabAvailability = ({
         console.log(response, "AVAILABILITY");
       }
     } catch (err) {
-      setBackEndErrors(err?.response?.data?.message);
+      setError(err?.response?.data?.message);
       console.log(err);
     } finally {
       buttonRef.current.notIsLoading();
@@ -74,13 +67,7 @@ const TabAvailability = ({
       onSubmit={handleSubmit(onSubmit)}
       className={`${activeTab !== 3 && "hidden"}`}
     >
-      <WorkTimePreferences
-        frontEndErrors={frontEndErrors}
-        backEndErrors={backEndErrors}
-        register={register}
-        control={control}
-        watch={watch}
-      />
+      <WorkTimePreferences control={control} errors={errors} />
 
       <WorkSchedule
         setSelectedSlots={setSelectedSlots}

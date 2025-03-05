@@ -1,5 +1,5 @@
-import { DynamicInputErrorMessageWithZod } from "../../../lib/utils/getZodValidations";
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
@@ -8,7 +8,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
 import { Select, SelectItem } from "@nextui-org/react";
-import { Controller } from "react-hook-form";
+import { useController } from "react-hook-form";
 
 // React imports
 import { useState } from "react";
@@ -16,21 +16,31 @@ import { useState } from "react";
 // Icons
 import {
   ChevronDownBigIcon,
+  LuggageBiggerIcon,
+  LuggageClockIcon,
   Clock1220Icon,
   Clock12Icon,
   EarthIcon,
-  LuggageBiggerIcon,
-  LuggageClockIcon,
 } from "../../Icons";
 
-const WorkTimePreferences = ({
-  frontEndErrors,
-  backEndErrors,
-  register,
-  control,
-  watch,
-}) => {
+const WorkTimePreferences = ({ errors, control }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    field: timeZone,
+    fieldState: { error: timeZoneError },
+  } = useController({
+    name: "timeZone",
+    control,
+  });
+
+  const {
+    field: dailyWorkTime,
+    fieldState: { error: dailyWorkTimeError },
+  } = useController({
+    name: "dailyWorkTime",
+    control,
+  });
 
   return (
     <>
@@ -56,67 +66,64 @@ const WorkTimePreferences = ({
           />
 
           <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("timeZone"),
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              timeZone.value,
               "timeZone"
             )}
           >
-            <Controller
+            <Select
               name="timeZone"
-              control={control}
-              rules={{
-                required:
-                  "Invalid timezone --- Please provide a timezone from select.",
+              placeholder="Select a time zone"
+              selectorIcon={<span></span>}
+              isOpen={isOpen}
+              startContent={
+                <InputBGWrapperIcon>
+                  <EarthIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon>
+                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                </InputBGWrapperIcon>
+              }
+              defaultSelectedKeys={new Set([timeZone.value])}
+              onSelectionChange={(keys) => {
+                const key = Array.from(keys)[0];
+                timeZone.onChange(key);
               }}
-              render={({ field }) => (
-                <Select
-                  {...field}
-                  name="timeZone"
-                  onOpenChange={(open) => open !== isOpen && setIsOpen(open)}
-                  placeholder="Select a time zone"
-                  selectorIcon={<span></span>}
-                  isOpen={isOpen}
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <EarthIcon fillColor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  endContent={
-                    <InputBGWrapperIcon>
-                      <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-                    </InputBGWrapperIcon>
-                  }
-                  defaultSelectedKeys={[field.value]}
-                  classNames={{
-                    trigger: [
-                      "select-wrapper-ipractis",
-                      (frontEndErrors?.timeZone?.type ||
-                        backEndErrors?.message) &&
-                        "form-input-error",
-                    ],
-                    innerWrapper: ["select-ipractis", "w-full"],
-                    value: [
-                      "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                    ],
-                    listbox: ["text-primary-color-P4"],
-                  }}
-                >
-                  {timeZones?.map((tz) => (
-                    <SelectItem key={tz.value} value={tz.value}>
-                      {tz.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-              )}
-            />
+              onOpenChange={(open) => {
+                setIsOpen(open);
+
+                if (!open) {
+                  timeZone.onBlur();
+                }
+              }}
+              classNames={{
+                trigger: [
+                  "select-wrapper-ipractis",
+                  timeZoneError?.message && "form-input-error",
+                ],
+                innerWrapper: ["select-ipractis", "w-full"],
+                value: [
+                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                ],
+                listbox: ["text-primary-color-P4"],
+              }}
+            >
+              {timeZones?.map((tz) => (
+                <SelectItem key={tz.value} value={tz.value}>
+                  {tz.label}
+                </SelectItem>
+              ))}
+            </Select>
           </InputLeftStickStatus>
 
-          <DynamicInputErrorMessageWithZod
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            fieldName="timeZone"
+          <SplitDynamicErrorZod
+            message={
+              timeZoneError?.message &&
+              "Invalid timezone --- Please provide a timezone from select."
+            }
           />
         </div>
 
@@ -131,10 +138,9 @@ const WorkTimePreferences = ({
           />
 
           <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("dailyWorkTime"),
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              dailyWorkTime.value,
               "dailyWorkTime"
             )}
           >
@@ -149,20 +155,15 @@ const WorkTimePreferences = ({
                 </InputBGWrapperIcon>
               }
               classNames={{
-                inputWrapper:
-                  (frontEndErrors?.dailyWorkTime?.type ||
-                    backEndErrors?.message) &&
-                  "form-input-error",
+                inputWrapper: dailyWorkTimeError?.message && "form-input-error",
               }}
-              {...register("dailyWorkTime")}
+              value={dailyWorkTime.value}
+              onChange={dailyWorkTime.onChange}
+              onBlur={dailyWorkTime.onBlur}
             />
           </InputLeftStickStatus>
 
-          <DynamicInputErrorMessageWithZod
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            fieldName="dailyWorkTime"
-          />
+          <SplitDynamicErrorZod message={dailyWorkTimeError?.message} />
         </div>
       </div>
     </>
