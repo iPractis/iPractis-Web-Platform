@@ -163,7 +163,12 @@ const WorkTimePreferences = ({ errors, control }) => {
             />
           </InputLeftStickStatus>
 
-          <SplitDynamicErrorZod message={dailyWorkTimeError?.message} />
+          <SplitDynamicErrorZod
+            message={
+              dailyWorkTimeError?.message &&
+              "Working time don't meet requirement --- Minimum working time is set to 8 hours per week."
+            }
+          />
         </div>
       </div>
     </>
