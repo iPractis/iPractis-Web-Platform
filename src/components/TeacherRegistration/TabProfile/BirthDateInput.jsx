@@ -153,6 +153,7 @@ const BirthDateInput = ({ errors, control }) => {
               dateFormat="D/MM/YYYY"
               dropdownMode="select"
               selected={dateValue}
+              calendarStartDay={1}
               showMonthDropdown
               showYearDropdown
               customInput={
