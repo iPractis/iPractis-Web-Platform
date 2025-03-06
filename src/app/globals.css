@@ -4,6 +4,11 @@
 
 :root {
   --primary-color-P1: #1c1c1e;
+  --primary-color-P4: #48484a;
+  --primary-color-P8: #c7c7cc;
+  --primary-color-P12: #ffffff;
+  --secondary-color-S8: #dfddd9;
+  --secondary-color-S10: #f1f0ed;
   --quinary-color-VS5: #00ff47;
   --septenary-color-MA5: #ff0011;
   --quaternary-color-A5: #ffd600;
@@ -47,9 +52,59 @@ tr:last-of-type td.isSelected {
   margin-right: 2rem;
 }
 
-/* Calendar of react-datepicker (birthdate) */
+/* ------- Styles from calendar of react-datepicker (birthdate) --------- */
+/* Ensure the date picker popper appears above other elements */
 .react-datepicker-popper {
-  z-index: 100!important;
+  z-index: 100 !important;
+}
+
+/* Base styles for the date picker container */
+.react-datepicker {
+  font-family: "Poppins", "Poppins Fallback" !important;
+  border-radius: 16px !important;
+  font-size: 13px !important;
+  border: 0 !important;
+}
+
+/* Styles for dates that are outside the current month */
+.react-datepicker__day--outside-month {
+  color: var(--primary-color-P8) !important;
+}
+
+/* Prevent days from other months from inheriting the styles of the current day */
+.react-datepicker__day--keyboard-selected:not(.react-datepicker__day--today) {
+  background-color: transparent;
+}
+
+/* For all dates numbers in calendar */
+.react-datepicker__day:not(.react-datepicker__day--outside-month) {
+  color: var(--primary-color-P4);
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 13px;
+
+  &:focus {
+    background: var(--secondary-color-S8);
+  }
+
+  &:hover {
+    background: var(--secondary-color-S10);
+  }
+}
+
+/* Styles for the selected date in the date picker */
+.react-datepicker__day--selected {
+  color: var(--primary-color-P12) !important;
+  background: var(--primary-color-P1) !important;
+
+  &:focus {
+    background: var(--primary-color-P1);
+  }
+
+  &:hover {
+    background: var(--primary-color-P1);
+    border-radius: 6px !important;
+  }
 }
 
 /* sm(640px) */

@@ -149,6 +149,7 @@ const BirthDateInput = ({ errors, control }) => {
             <DatePicker
               renderCustomHeader={renderCustomHeader}
               onChange={handleDateChange}
+              showPopperArrow={false}
               dateFormat="D/MM/YYYY"
               dropdownMode="select"
               selected={dateValue}
