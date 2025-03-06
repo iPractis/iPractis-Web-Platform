@@ -160,6 +160,8 @@ const BirthDateInput = ({ errors, control }) => {
               renderCustomHeader={renderCustomHeader}
               onChange={handleDateChange}
               showPopperArrow={false}
+              value={birthDate.value}
+              onBlur={birthDate.onBlur}
               dateFormat="D/MM/YYYY"
               dropdownMode="select"
               selected={
