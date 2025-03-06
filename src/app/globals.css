@@ -122,19 +122,38 @@ tr:last-of-type td.isSelected {
   background: var(--primary-color-P11);
   margin-bottom: 3px !important;
   border-radius: 10px;
+  position: relative;
+  z-index: 2;
 
   .react-datepicker__day-name:nth-last-child(-n + 2) {
     color: var(--septenary-color-MA5) !important;
   }
 }
 
+/* Agrega un pseudo-elemento antes de .react-datepicker__day-names */
+.react-datepicker__day-names:before {
+  content: "";
+  background-color: var(--primary-color-P12);
+  border-radius: 12px 12px 0 0;
+  position: absolute;
+  display: block;
+  height: 35px;
+  width: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
 /* Styles for individual day names (e.g., Mon, Tue, Wed) */
 .react-datepicker__day-name {
   color: var(--primary-color-P1) !important;
   line-height: 1.7 !important;
-  margin-block: 3px !important;
+  margin-block: 0 !important;
+  position: relative;
+  padding-top: 10px;
   font-weight: 600;
   font-size: 13px;
+  z-index: 2;
 
   &:first-of-type {
     margin-left: 6px !important;
@@ -147,6 +166,8 @@ tr:last-of-type td.isSelected {
 
 /* Styles for the month container */
 .react-datepicker__month {
+  background-color: var(--primary-color-P12);
+  border-radius: 0 0 12px 12px;
   margin: 0 !important;
 }
 
