@@ -1,4 +1,4 @@
-const getSecurityLevelMessage = (level) => {
+export const getSecurityLevelMessage = (level) => {
   switch (level) {
     case 1:
       return "Very weak";
@@ -12,5 +12,3 @@ const getSecurityLevelMessage = (level) => {
       return "";
   }
 };
-
-export default getSecurityLevelMessage;

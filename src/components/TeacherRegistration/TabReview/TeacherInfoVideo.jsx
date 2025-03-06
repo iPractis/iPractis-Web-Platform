@@ -1,4 +1,4 @@
-import getYoutubeVideoIdUrl from "@/src/lib/utils/getYoutubeVideoIdUrl";
+import { getYoutubeVideoIdUrl } from "@/src/lib/utils/getYoutubeVideoIdUrl";
 
 // React imports
 import { useState } from "react";

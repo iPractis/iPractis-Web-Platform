@@ -1,5 +1,5 @@
 "use client";
-import getYoutubeVideoIdUrl from "@/src/lib/utils/getYoutubeVideoIdUrl";
+import { getYoutubeVideoIdUrl } from "@/src/lib/utils/getYoutubeVideoIdUrl";
 import { useState } from "react";
 import Image from "next/image";
 
@@ -115,7 +115,9 @@ const TutorCard = ({ subjectAndTutor }) => {
           <div className="flex justify-between py-1">
             {/* Lesson Rate which disappears on hover */}
             <div>
-              <h4 className="text-primary-color-P6 ST-1 pb-[2px]">Lesson rate</h4>
+              <h4 className="text-primary-color-P6 ST-1 pb-[2px]">
+                Lesson rate
+              </h4>
               <h3 className="sm:text-primary-color-P1 text-primary-color-P4">
                 <span className="MT-SB-1">8 USD/</span>
                 <span className="ST-3">30 mins</span>
