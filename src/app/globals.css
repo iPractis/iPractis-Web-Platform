@@ -122,12 +122,17 @@ tr:last-of-type td.isSelected {
   background: var(--primary-color-P11);
   margin-bottom: 3px !important;
   border-radius: 10px;
+
+  .react-datepicker__day-name:nth-last-child(-n+2) {
+    color: var(--septenary-color-MA5)!important;
+  }
 }
 
 /* Styles for individual day names (e.g., Mon, Tue, Wed) */
 .react-datepicker__day-name {
   color: var(--primary-color-P1) !important;
   line-height: 1.7 !important;
+  margin-block: 3px!important;
   font-weight: 600;
   font-size: 13px;
 
