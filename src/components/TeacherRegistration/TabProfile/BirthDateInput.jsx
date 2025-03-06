@@ -2,6 +2,7 @@ import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import { getDateYearsAgo } from "@/src/lib/utils/getDateYearsAgo";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
 // External imports
@@ -37,7 +38,7 @@ const BirthDateInput = ({ errors, control }) => {
 
   const dateValue = birthDate.value
     ? moment(birthDate.value, "D/MM/YYYY").toDate()
-    : null;
+    : getDateYearsAgo(18);
 
   const renderCustomHeader = ({
     decreaseMonth,
@@ -54,7 +55,9 @@ const BirthDateInput = ({ errors, control }) => {
             <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
           </button>
 
-          <span className="fill-primary-color-P4 mx-1.5 ST-3">{date.toLocaleString("en-US", { month: "long" })}</span>
+          <span className="fill-primary-color-P4 mx-1.5 ST-3">
+            {date.toLocaleString("en-US", { month: "long" })}
+          </span>
 
           <button type="button" onClick={increaseMonth}>
             <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
@@ -67,7 +70,9 @@ const BirthDateInput = ({ errors, control }) => {
             <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
           </button>
 
-          <span className="fill-primary-color-P4 mx-1.5 ST-3">{date.getFullYear()}</span>
+          <span className="fill-primary-color-P4 mx-1.5 ST-3">
+            {date.getFullYear()}
+          </span>
 
           <button type="button" onClick={increaseYear}>
             <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
