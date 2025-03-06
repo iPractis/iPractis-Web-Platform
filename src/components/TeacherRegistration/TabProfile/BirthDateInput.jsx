@@ -159,19 +159,17 @@ const BirthDateInput = ({ errors, control }) => {
             <DatePicker
               renderCustomHeader={renderCustomHeader}
               onChange={handleDateChange}
+              onBlur={birthDate.onBlur}
               showPopperArrow={false}
               value={birthDate.value}
-              onBlur={birthDate.onBlur}
               dateFormat="D/MM/YYYY"
               dropdownMode="select"
+              calendarStartDay={1}
               selected={
                 birthDate.value
                   ? moment(birthDate.value, "D/MM/YYYY").toDate()
                   : getDateYearsAgo(18)
               }
-              calendarStartDay={1}
-              showMonthDropdown
-              showYearDropdown
               customInput={
                 <button
                   className="p-1.5 rounded-[10px] bg-primary-color-P12"
