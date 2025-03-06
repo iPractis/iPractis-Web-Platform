@@ -6,6 +6,7 @@
   --primary-color-P1: #1c1c1e;
   --primary-color-P4: #48484a;
   --primary-color-P8: #c7c7cc;
+  --primary-color-P11: #f2f2f7;
   --primary-color-P12: #ffffff;
   --secondary-color-S8: #dfddd9;
   --secondary-color-S10: #f1f0ed;
@@ -64,6 +65,7 @@ tr:last-of-type td.isSelected {
   border-radius: 16px !important;
   font-size: 13px !important;
   border: 0 !important;
+  padding: 6px;
 }
 
 /* Styles for dates that are outside the current month */
@@ -92,8 +94,8 @@ tr:last-of-type td.isSelected {
   }
 }
 
-/* Styles for the selected date in the date picker */
-.react-datepicker__day--selected {
+/* Styles for the selected date and today day in the date picker */
+:is(.react-datepicker__day--selected, .react-datepicker__day--today) {
   color: var(--primary-color-P12) !important;
   background: var(--primary-color-P1) !important;
 
@@ -105,6 +107,34 @@ tr:last-of-type td.isSelected {
     background: var(--primary-color-P1);
     border-radius: 6px !important;
   }
+}
+
+/* Custom header styles for the date picker */
+.react-datepicker__header--custom {
+  background: var(--primary-color-P12) !important;
+  border-radius: 0 !important;
+  border-bottom: none !important;
+  padding: 0 !important;
+}
+
+/* Styles for the row containing day names (e.g., Mon, Tue, Wed) */
+.react-datepicker__day-names {
+  background: var(--primary-color-P11);
+  margin-bottom: 3px !important;
+  border-radius: 10px;
+}
+
+/* Styles for individual day names (e.g., Mon, Tue, Wed) */
+.react-datepicker__day-name {
+  color: var(--primary-color-P1) !important;
+  line-height: 1.7 !important;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+/* Styles for the month container */
+.react-datepicker__month {
+  margin: 0 !important;
 }
 
 /* sm(640px) */
