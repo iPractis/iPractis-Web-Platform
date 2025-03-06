@@ -1281,6 +1281,36 @@ export const TopArrowCloudIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const RightArrowMediumIcon = ({ fillColor }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M13.2058 9.22237C13.701 9.62261 13.701 10.3775 13.2058 10.7778L9.54659 13.7355C8.89265 14.2641 7.91797 13.7986 7.91797 12.9578L7.91797 7.04238C7.91797 6.20153 8.89265 5.73609 9.54659 6.26466L13.2058 9.22237Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
+export const LeftArrowMediumIcon = ({ fillColor }) => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M6.7942 10.7776C6.29903 10.3774 6.29903 9.62245 6.7942 9.22221L10.4534 6.2645C11.1074 5.73593 12.082 6.20136 12.082 7.04221L12.082 12.9576C12.082 13.7985 11.1074 14.2639 10.4534 13.7353L6.7942 10.7776Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const ThreeUsersIcon = ({ fillColor }) => (
   <svg
     width="24"

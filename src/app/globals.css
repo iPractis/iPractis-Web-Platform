@@ -62,6 +62,7 @@ tr:last-of-type td.isSelected {
 /* Base styles for the date picker container */
 .react-datepicker {
   font-family: "Poppins", "Poppins Fallback" !important;
+  background: var(--primary-color-P11) !important;
   border-radius: 16px !important;
   font-size: 13px !important;
   border: 0 !important;
@@ -111,9 +112,8 @@ tr:last-of-type td.isSelected {
 
 /* Custom header styles for the date picker */
 .react-datepicker__header--custom {
-  background: var(--primary-color-P12) !important;
-  border-radius: 0 !important;
   border-bottom: none !important;
+  border-radius: 0 !important;
   padding: 0 !important;
 }
 
@@ -123,8 +123,8 @@ tr:last-of-type td.isSelected {
   margin-bottom: 3px !important;
   border-radius: 10px;
 
-  .react-datepicker__day-name:nth-last-child(-n+2) {
-    color: var(--septenary-color-MA5)!important;
+  .react-datepicker__day-name:nth-last-child(-n + 2) {
+    color: var(--septenary-color-MA5) !important;
   }
 }
 
@@ -132,7 +132,7 @@ tr:last-of-type td.isSelected {
 .react-datepicker__day-name {
   color: var(--primary-color-P1) !important;
   line-height: 1.7 !important;
-  margin-block: 3px!important;
+  margin-block: 3px !important;
   font-weight: 600;
   font-size: 13px;
 

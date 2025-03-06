@@ -13,7 +13,13 @@ import moment from "moment";
 import { useController } from "react-hook-form";
 
 // Icons
-import { BabyWalkerIcon, CalendarBiggerIcon, QuestionMark } from "../../Icons";
+import {
+  RightArrowMediumIcon,
+  LeftArrowMediumIcon,
+  CalendarBiggerIcon,
+  BabyWalkerIcon,
+  QuestionMark,
+} from "../../Icons";
 
 const BirthDateInput = ({ errors, control }) => {
   const {
@@ -34,46 +40,39 @@ const BirthDateInput = ({ errors, control }) => {
     : null;
 
   const renderCustomHeader = ({
-    date,
     decreaseMonth,
     increaseMonth,
-    prevMonthButtonDisabled,
-    nextMonthButtonDisabled,
+    decreaseYear,
+    increaseYear,
+    date,
   }) => {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "10px",
-        }}
-      >
-        {/* Botón para retroceder al mes anterior */}
-        <button
-          onClick={decreaseMonth}
-          disabled={prevMonthButtonDisabled}
-          style={{ background: "none", border: "none", cursor: "pointer" }}
-        >
-          ◄
-        </button>
+      <div className="flex justify-between items-center gap-1.5 mb-1.5">
+        {/* Group of arrows (Months) */}
+        <div className="flex-[60%] flex justify-between items-center rounded-xl p-1.5 bg-primary-color-P12">
+          <button type="button" onClick={decreaseMonth}>
+            <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          </button>
 
-        {/* Mostrar el mes actual */}
-        <span style={{ fontWeight: "bold", margin: "0 10px" }}>
-          {date.toLocaleString("default", { month: "long" })}
-        </span>
+          <span className="fill-primary-color-P4 mx-1.5 ST-3">{date.toLocaleString("en-US", { month: "long" })}</span>
 
-        {/* Mostrar el año actual */}
-        <span style={{ fontWeight: "bold" }}>{date.getFullYear()}</span>
+          <button type="button" onClick={increaseMonth}>
+            <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          </button>
+        </div>
 
-        {/* Botón para avanzar al siguiente mes */}
-        <button
-          onClick={increaseMonth}
-          disabled={nextMonthButtonDisabled}
-          style={{ background: "none", border: "none", cursor: "pointer" }}
-        >
-          ►
-        </button>
+        {/* Group of arrows (Years) */}
+        <div className="flex-1 flex justify-between items-center rounded-xl p-1.5 bg-primary-color-P12">
+          <button type="button" onClick={decreaseYear}>
+            <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          </button>
+
+          <span className="fill-primary-color-P4 mx-1.5 ST-3">{date.getFullYear()}</span>
+
+          <button type="button" onClick={increaseYear}>
+            <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          </button>
+        </div>
       </div>
     );
   };
