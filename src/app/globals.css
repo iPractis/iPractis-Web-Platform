@@ -119,9 +119,7 @@ tr:last-of-type td.isSelected {
 
 /* Styles for the row containing day names (e.g., Mon, Tue, Wed) */
 .react-datepicker__day-names {
-  background: var(--primary-color-P11);
   margin-bottom: 3px !important;
-  border-radius: 10px;
   position: relative;
   z-index: 2;
 
@@ -130,7 +128,7 @@ tr:last-of-type td.isSelected {
   }
 }
 
-/* Agrega un pseudo-elemento antes de .react-datepicker__day-names */
+/* Agrega un pseudo-elemento before .react-datepicker__day-names */
 .react-datepicker__day-names:before {
   content: "";
   background-color: var(--primary-color-P12);
@@ -144,9 +142,25 @@ tr:last-of-type td.isSelected {
   left: 0;
 }
 
+/* Agrega un pseudo-elemento after .react-datepicker__day-names */
+.react-datepicker__day-names:after {
+  content: "";
+  background-color: var(--primary-color-P11);
+  transform: translate(50%, -35%);
+  border-radius: 12px;
+  position: absolute;
+  display: block;
+  height: 26px;
+  width: 97%;
+  z-index: 1;
+  right: 50%;
+  top: 50%;
+}
+
 /* Styles for individual day names (e.g., Mon, Tue, Wed) */
 .react-datepicker__day-name {
   color: var(--primary-color-P1) !important;
+  margin-inline: 0.1rem !important;
   line-height: 1.7 !important;
   margin-block: 0 !important;
   position: relative;
@@ -156,11 +170,11 @@ tr:last-of-type td.isSelected {
   z-index: 2;
 
   &:first-of-type {
-    margin-left: 6px !important;
+    margin-left: 8px !important;
   }
 
   &:last-of-type {
-    margin-right: 6px !important;
+    margin-right: 8px !important;
   }
 }
 
@@ -168,7 +182,13 @@ tr:last-of-type td.isSelected {
 .react-datepicker__month {
   background-color: var(--primary-color-P12);
   border-radius: 0 0 12px 12px;
+  padding-top: 4px !important;
   margin: 0 !important;
+}
+
+/* Styles for all of the dates of month */
+.react-datepicker__day {
+  margin: 0.1rem !important;
 }
 
 /* sm(640px) */
