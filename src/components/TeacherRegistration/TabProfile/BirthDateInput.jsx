@@ -36,10 +36,6 @@ const BirthDateInput = ({ errors, control }) => {
     birthDate.onChange(dateString);
   };
 
-  const dateValue = birthDate.value
-    ? moment(birthDate.value, "D/MM/YYYY").toDate()
-    : getDateYearsAgo(18);
-
   const renderCustomHeader = ({
     decreaseMonth,
     increaseMonth,
@@ -115,7 +111,11 @@ const BirthDateInput = ({ errors, control }) => {
           <div>
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={dateValue ? moment(dateValue).format("D") : ""}
+              value={
+                birthDate.value
+                  ? moment(birthDate.value, "D/MM/YYYY").format("D")
+                  : ""
+              }
               name="birthDateNumber"
               type="text"
               readOnly
@@ -127,8 +127,10 @@ const BirthDateInput = ({ errors, control }) => {
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
-                dateValue
-                  ? getMonthNumberAsText(moment(dateValue).format("MM"))
+                birthDate.value
+                  ? getMonthNumberAsText(
+                      moment(birthDate.value, "D/MM/YYYY").format("MM")
+                    )
                   : ""
               }
               name="birthDateMonth"
@@ -141,7 +143,11 @@ const BirthDateInput = ({ errors, control }) => {
           <div>
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={dateValue ? moment(dateValue).format("YYYY") : ""}
+              value={
+                birthDate.value
+                  ? moment(birthDate.value, "D/MM/YYYY").format("YYYY")
+                  : ""
+              }
               name="birthDateYear"
               type="text"
               readOnly
@@ -156,7 +162,11 @@ const BirthDateInput = ({ errors, control }) => {
               showPopperArrow={false}
               dateFormat="D/MM/YYYY"
               dropdownMode="select"
-              selected={dateValue}
+              selected={
+                birthDate.value
+                  ? moment(birthDate.value, "D/MM/YYYY").toDate()
+                  : getDateYearsAgo(18)
+              }
               calendarStartDay={1}
               showMonthDropdown
               showYearDropdown
