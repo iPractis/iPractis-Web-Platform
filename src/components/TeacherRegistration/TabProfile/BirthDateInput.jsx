@@ -29,11 +29,48 @@ const BirthDateInput = ({ errors, control }) => {
   } = useController({
     name: "birthDate",
     control: control,
+    defaultValue: moment(getDateYearsAgo(18)).format("D/MM/YYYY"),
   });
 
   const handleDateChange = (date) => {
     const dateString = date ? moment(date).format("D/MM/YYYY") : null;
     birthDate.onChange(dateString);
+  };
+
+  const incrementDay = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.add(1, "day").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
+  };
+
+  const decrementDay = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.subtract(1, "day").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
+  };
+
+  const incrementMonth = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.add(1, "month").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
+  };
+
+  const decrementMonth = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.subtract(1, "month").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
+  };
+
+  const incrementYear = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.add(1, "year").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
+  };
+
+  const decrementYear = () => {
+    const currentDate = moment(birthDate.value, "D/MM/YYYY");
+    const newDate = currentDate.subtract(1, "year").format("D/MM/YYYY");
+    birthDate.onChange(newDate);
   };
 
   const renderCustomHeader = ({
@@ -121,19 +158,25 @@ const BirthDateInput = ({ errors, control }) => {
               readOnly
             />
 
-            <button
-              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+            {birthDate.value && (
+              <>
+                <button
+                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+                  onClick={decrementDay}
+                  type="button"
+                >
+                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
 
-            <button
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+                <button
+                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+                  onClick={incrementDay}
+                  type="button"
+                >
+                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Month */}
@@ -152,19 +195,25 @@ const BirthDateInput = ({ errors, control }) => {
               readOnly
             />
 
-            <button
-              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+            {birthDate.value && (
+              <>
+                <button
+                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+                  onClick={decrementMonth}
+                  type="button"
+                >
+                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
 
-            <button
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+                <button
+                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+                  onClick={incrementMonth}
+                  type="button"
+                >
+                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Year */}
@@ -181,19 +230,25 @@ const BirthDateInput = ({ errors, control }) => {
               readOnly
             />
 
-            <button
-              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+            {birthDate.value && (
+              <>
+                <button
+                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+                  onClick={decrementYear}
+                  type="button"
+                >
+                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
 
-            <button
-              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-              type="button"
-            >
-              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-            </button>
+                <button
+                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+                  onClick={incrementYear}
+                  type="button"
+                >
+                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Calendar Trigger Icon */}
