@@ -66,7 +66,7 @@ export const tabProfileSchema = z.object({
     .string()
     .min(1, { message: "Invalid date --- Must provide a birth date." })
     .refine((date) => {
-      return moment(date, "D/MM/YYYY", true).isValid();
+      return moment(date, "YYYY/MM/D", true).isValid();
     })
     .refine(
       (date) => {

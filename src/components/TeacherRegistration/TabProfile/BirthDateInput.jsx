@@ -29,47 +29,47 @@ const BirthDateInput = ({ errors, control }) => {
   } = useController({
     name: "birthDate",
     control: control,
-    defaultValue: moment(getDateYearsAgo(18)).format("D/MM/YYYY"),
+    defaultValue: moment(getDateYearsAgo(18)).format("YYYY/MM/D"),
   });
 
   const handleDateChange = (date) => {
-    const dateString = date ? moment(date).format("D/MM/YYYY") : null;
+    const dateString = date ? moment(date).format("YYYY/MM/D") : null;
     birthDate.onChange(dateString);
   };
 
   const incrementDay = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.add(1, "day").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.add(1, "day").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
   const decrementDay = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.subtract(1, "day").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.subtract(1, "day").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
   const incrementMonth = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.add(1, "month").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.add(1, "month").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
   const decrementMonth = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.subtract(1, "month").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.subtract(1, "month").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
   const incrementYear = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.add(1, "year").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.add(1, "year").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
   const decrementYear = () => {
-    const currentDate = moment(birthDate.value, "D/MM/YYYY");
-    const newDate = currentDate.subtract(1, "year").format("D/MM/YYYY");
+    const currentDate = moment(birthDate.value, "YYYY/MM/D");
+    const newDate = currentDate.subtract(1, "year").format("YYYY/MM/D");
     birthDate.onChange(newDate);
   };
 
@@ -150,7 +150,7 @@ const BirthDateInput = ({ errors, control }) => {
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
                 birthDate.value
-                  ? moment(birthDate.value, "D/MM/YYYY").format("D")
+                  ? moment(birthDate.value, "YYYY/MM/D").format("D")
                   : ""
               }
               name="birthDateNumber"
@@ -186,7 +186,7 @@ const BirthDateInput = ({ errors, control }) => {
               value={
                 birthDate.value
                   ? getMonthNumberAsText(
-                      moment(birthDate.value, "D/MM/YYYY").format("MM")
+                      moment(birthDate.value, "YYYY/MM/D").format("MM")
                     )
                   : ""
               }
@@ -222,7 +222,7 @@ const BirthDateInput = ({ errors, control }) => {
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
                 birthDate.value
-                  ? moment(birthDate.value, "D/MM/YYYY").format("YYYY")
+                  ? moment(birthDate.value, "YYYY/MM/D").format("YYYY")
                   : ""
               }
               name="birthDateYear"
@@ -259,12 +259,12 @@ const BirthDateInput = ({ errors, control }) => {
               onBlur={birthDate.onBlur}
               showPopperArrow={false}
               value={birthDate.value}
-              dateFormat="D/MM/YYYY"
+              dateFormat="YYYY/MM/D"
               dropdownMode="select"
               calendarStartDay={1}
               selected={
                 birthDate.value
-                  ? moment(birthDate.value, "D/MM/YYYY").toDate()
+                  ? moment(birthDate.value, "YYYY/MM/D").toDate()
                   : getDateYearsAgo(18)
               }
               customInput={
