@@ -181,8 +181,8 @@ tr:last-of-type td.isSelected {
 /* Styles for the month container */
 .react-datepicker__month {
   background-color: var(--primary-color-P12);
+  padding: 4px 0 4px 0 !important;
   border-radius: 0 0 12px 12px;
-  padding-top: 4px !important;
   margin: 0 !important;
 }
 

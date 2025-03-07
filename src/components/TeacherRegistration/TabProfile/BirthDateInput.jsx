@@ -108,7 +108,7 @@ const BirthDateInput = ({ errors, control }) => {
           </div>
 
           {/* Date */}
-          <div>
+          <div className="relative flex-[30%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
@@ -120,10 +120,24 @@ const BirthDateInput = ({ errors, control }) => {
               type="text"
               readOnly
             />
+
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
+
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Month */}
-          <div>
+          <div className="relative flex-[65%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
@@ -137,10 +151,24 @@ const BirthDateInput = ({ errors, control }) => {
               type="text"
               readOnly
             />
+
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
+
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Year */}
-          <div>
+          <div className="relative flex-[45%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
               value={
@@ -152,6 +180,20 @@ const BirthDateInput = ({ errors, control }) => {
               type="text"
               readOnly
             />
+
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
+
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Calendar Trigger Icon */}
