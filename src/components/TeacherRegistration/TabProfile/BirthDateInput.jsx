@@ -23,54 +23,106 @@ import {
 } from "../../Icons";
 
 const BirthDateInput = ({ errors, control }) => {
+  const currentDate = moment(getDateYearsAgo(18));
+  const defaultDate = currentDate.format("D");
+  const defaultMonth = currentDate.format("MM");
+  const defaultYear = currentDate.format("YYYY");
+
   const {
     field: birthDate,
     fieldState: { error: birthDateError },
   } = useController({
     name: "birthDate",
     control: control,
-    defaultValue: moment(getDateYearsAgo(18)).format("YYYY/MM/D"),
+    defaultValue: currentDate.format("YYYY/MM/D"),
+  });
+
+  const { field: birthDateNumber } = useController({
+    name: "birthDateNumber",
+    control: control,
+    defaultValue: defaultDate,
+  });
+
+  const { field: birthDateMonth } = useController({
+    name: "birthDateMonth",
+    control: control,
+    defaultValue: defaultMonth,
+  });
+
+  const { field: birthDateYear } = useController({
+    name: "birthDateYear",
+    control: control,
+    defaultValue: defaultYear,
   });
 
   const handleDateChange = (date) => {
-    const dateString = date ? moment(date).format("YYYY/MM/D") : null;
+    const dateString = date
+      ? moment(date).format("YYYY/MM/D")
+      : currentDate.format("YYYY/MM/D");
     birthDate.onChange(dateString);
+    birthDateNumber.onChange(moment(dateString, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(dateString, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(dateString, "YYYY/MM/D").format("YYYY"));
   };
 
   const incrementDay = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.add(1, "day").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .add(1, "day")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const decrementDay = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.subtract(1, "day").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .subtract(1, "day")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const incrementMonth = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.add(1, "month").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .add(1, "month")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const decrementMonth = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.subtract(1, "month").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .subtract(1, "month")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const incrementYear = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.add(1, "year").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .add(1, "year")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const decrementYear = () => {
-    const currentDate = moment(birthDate.value, "YYYY/MM/D");
-    const newDate = currentDate.subtract(1, "year").format("YYYY/MM/D");
+    const newDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+      .subtract(1, "year")
+      .format("YYYY/MM/D");
     birthDate.onChange(newDate);
+    birthDateNumber.onChange(moment(newDate, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(moment(newDate, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(moment(newDate, "YYYY/MM/D").format("YYYY"));
   };
 
   const renderCustomHeader = ({
@@ -148,107 +200,81 @@ const BirthDateInput = ({ errors, control }) => {
           <div className="relative flex-[30%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={
-                birthDate.value
-                  ? moment(birthDate.value, "YYYY/MM/D").format("D")
-                  : ""
-              }
+              value={birthDateNumber.value}
               name="birthDateNumber"
               type="text"
               readOnly
             />
 
-            {birthDate.value && (
-              <>
-                <button
-                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-                  onClick={decrementDay}
-                  type="button"
-                >
-                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              onClick={decrementDay}
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
 
-                <button
-                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-                  onClick={incrementDay}
-                  type="button"
-                >
-                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
-              </>
-            )}
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              onClick={incrementDay}
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Month */}
           <div className="relative flex-[65%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={
-                birthDate.value
-                  ? getMonthNumberAsText(
-                      moment(birthDate.value, "YYYY/MM/D").format("MM")
-                    )
-                  : ""
-              }
+              value={getMonthNumberAsText(birthDateMonth.value)}
               name="birthDateMonth"
               type="text"
               readOnly
             />
 
-            {birthDate.value && (
-              <>
-                <button
-                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-                  onClick={decrementMonth}
-                  type="button"
-                >
-                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              onClick={decrementMonth}
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
 
-                <button
-                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-                  onClick={incrementMonth}
-                  type="button"
-                >
-                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
-              </>
-            )}
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              onClick={incrementMonth}
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Year */}
           <div className="relative flex-[45%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={
-                birthDate.value
-                  ? moment(birthDate.value, "YYYY/MM/D").format("YYYY")
-                  : ""
-              }
+              value={birthDateYear.value}
               name="birthDateYear"
               type="text"
               readOnly
             />
 
-            {birthDate.value && (
-              <>
-                <button
-                  className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
-                  onClick={decrementYear}
-                  type="button"
-                >
-                  <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
+            <button
+              className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
+              onClick={decrementYear}
+              type="button"
+            >
+              <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
 
-                <button
-                  className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
-                  onClick={incrementYear}
-                  type="button"
-                >
-                  <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
-                </button>
-              </>
-            )}
+            <button
+              className="absolute top-1/2 right-2 transform -translate-y-1/2 z-10"
+              onClick={incrementYear}
+              type="button"
+            >
+              <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+            </button>
           </div>
 
           {/* Calendar Trigger Icon */}
