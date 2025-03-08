@@ -1,4 +1,6 @@
+import { getMonthNumberFromText } from "@/src/lib/helpers/getMonthNumberFromText";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { getMonthSuggestions } from "@/src/lib/helpers/getMonthSuggestions";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
@@ -12,6 +14,7 @@ import moment from "moment";
 
 // React imports
 import { useController } from "react-hook-form";
+import { useState } from "react";
 
 // Icons
 import {
@@ -27,6 +30,9 @@ const BirthDateInput = ({ errors, control }) => {
   const defaultDate = currentDate.format("D");
   const defaultMonth = currentDate.format("MM");
   const defaultYear = currentDate.format("YYYY");
+
+  const [inputValue, setInputValue] = useState(getMonthNumberAsText(defaultMonth));
+  const [suggestions, setSuggestions] = useState([]);
 
   const {
     field: birthDate,
@@ -225,13 +231,41 @@ const BirthDateInput = ({ errors, control }) => {
 
           {/* Month */}
           <div className="relative flex-[65%]">
-            <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
-              value={getMonthNumberAsText(birthDateMonth.value)}
-              name="birthDateMonth"
-              type="text"
-              readOnly
-            />
+            <div className="relative">
+              <input
+                className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
+                value={inputValue}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setInputValue(value);
+                  const monthNumber = getMonthNumberFromText(value);
+                  if (monthNumber !== null) {
+                    const updatedDate = moment(
+                      birthDate.value || currentDate,
+                      "YYYY/MM/D"
+                    )
+                      .month(monthNumber - 1)
+                      .format("YYYY/MM/D");
+                    birthDate.onChange(updatedDate);
+                    birthDateMonth.onChange(
+                      monthNumber.toString().padStart(2, "0")
+                    );
+                  }
+                  setSuggestions(getMonthSuggestions(value)); // Actualiza las sugerencias
+                }}
+                name="birthDateMonth"
+                type="text"
+              />
+              {/* Mostrar sugerencia inline dentro del input */}
+              {suggestions.length > 0 && (
+                <span
+                  className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none text-gray-400"
+                  style={{ left: `${inputValue.length}ch` }} // Ajustar posición de la sugerencia
+                >
+                  {suggestions[0].slice(inputValue.length)}
+                </span>
+              )}
+            </div>
 
             <button
               className="absolute top-1/2 left-2 transform -translate-y-1/2 z-10"
