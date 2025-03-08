@@ -14,7 +14,7 @@ import moment from "moment";
 
 // React imports
 import { useController } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Icons
 import {
@@ -31,7 +31,7 @@ const BirthDateInput = ({ errors, control }) => {
   const defaultMonth = currentDate.format("MM");
   const defaultYear = currentDate.format("YYYY");
 
-  const [inputValue, setInputValue] = useState(getMonthNumberAsText(defaultMonth));
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const {
@@ -60,6 +60,31 @@ const BirthDateInput = ({ errors, control }) => {
     control: control,
     defaultValue: defaultYear,
   });
+
+  useEffect(() => {
+    if (birthDateMonth.value) {
+      setInputValue(getMonthNumberAsText(birthDateMonth.value));
+    }
+  }, [birthDateMonth.value]);
+
+  const handleInputChange = (value) => {
+    // Regex para validar que todos los caracteres formen parte de los nombres de los meses
+    const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
+
+    // Permitir cadena vacía (para que el usuario pueda borrar el input)
+    if (value === "" || validCharacters.test(value)) {
+      setInputValue(value);
+      const monthNumber = getMonthNumberFromText(value);
+      if (monthNumber !== null) {
+        const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+          .month(monthNumber - 1)
+          .format("YYYY/MM/D");
+        birthDate.onChange(updatedDate);
+        birthDateMonth.onChange(monthNumber.toString().padStart(2, "0"));
+      }
+      setSuggestions(getMonthSuggestions(value)); // Actualiza las sugerencias
+    }
+  };
 
   const handleDateChange = (date) => {
     const dateString = date
@@ -234,29 +259,12 @@ const BirthDateInput = ({ errors, control }) => {
             <div className="relative">
               <input
                 className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
-                value={inputValue}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  setInputValue(value);
-                  const monthNumber = getMonthNumberFromText(value);
-                  if (monthNumber !== null) {
-                    const updatedDate = moment(
-                      birthDate.value || currentDate,
-                      "YYYY/MM/D"
-                    )
-                      .month(monthNumber - 1)
-                      .format("YYYY/MM/D");
-                    birthDate.onChange(updatedDate);
-                    birthDateMonth.onChange(
-                      monthNumber.toString().padStart(2, "0")
-                    );
-                  }
-                  setSuggestions(getMonthSuggestions(value)); // Actualiza las sugerencias
-                }}
+                onChange={(e) => handleInputChange(e.target.value)}
                 name="birthDateMonth"
+                value={inputValue}
                 type="text"
               />
-              {/* Mostrar sugerencia inline dentro del input */}
+
               {suggestions.length > 0 && (
                 <span
                   className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none text-gray-400"
