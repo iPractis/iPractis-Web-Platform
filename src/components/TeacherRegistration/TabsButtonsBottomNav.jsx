@@ -9,7 +9,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "../Icons";
 const TabsButtonsBottomNav = ({ buttonRef, setActiveTab, activeTab }) => {
   return (
     activeTab < 4 && (
-      <div className={"flex items-center gap-4 mt-16 md:px-8"}>
+      <div className={"flex items-center md:gap-[50px] gap-4 mt-16 md:px-8"}>
         <div className="flex-1">
           <button
             className="btn btn-primary w-full MT-SB-1 rounded-2xl py-3 px-4 flex justify-center items-center"
