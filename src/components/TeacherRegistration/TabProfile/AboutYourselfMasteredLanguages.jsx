@@ -57,17 +57,17 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
   };
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
+    <div className="grid md:grid-cols-2 grid-cols-1 md:px-8 items-start gap-[50px] mt-24">
+      {/* Select Language */}
       <div>
-        {/* Select Language */}
         <InputLeftStickStatus
           inputBarStatusClassName={`${getInputStatusBorder(
             errors,
             languages,
             "languages"
-          )} top-[54%] -translate-y-0`}
+          )}`}
         >
-          <div className="flex items-end gap-2 mt-[75px]">
+          <div className="flex items-end gap-2">
             <Select
               name="languages"
               label={
@@ -117,6 +117,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
+                base: "!mt-0",
               }}
             >
               {allLanguages
@@ -133,18 +134,21 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           </div>
         </InputLeftStickStatus>
 
-        {/* Select Level Language */}
+        <SplitDynamicErrorZod message={languagesError?.message} />
+      </div>
+
+      {/* Select Level Language */}
+      <div>
         {languages.map((field, index) => (
           <AboutYourselfLevelLanguage
             handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
             control={control}
+            errors={errors}
             key={field.id}
             index={index}
             field={field}
           />
         ))}
-
-        <SplitDynamicErrorZod message={languagesError?.message} />
       </div>
     </div>
   );

@@ -307,7 +307,7 @@ export const subjectImages = {
 };
 
 export const masteredLanguagesImages = {
-  English: unitedKingdom2,
+  English: unitedKingdom,
   French: france,
   Spanish: spain,
   Italian: italy,

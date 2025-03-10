@@ -1,4 +1,7 @@
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+
 import {
   languagesLevels,
   masteredLanguagesImages,
@@ -6,7 +9,7 @@ import {
 
 // External imports
 import { Select, SelectItem } from "@nextui-org/react";
-import { Controller } from "react-hook-form";
+import { useController } from "react-hook-form";
 
 // React imports
 import { useState } from "react";
@@ -20,30 +23,44 @@ const AboutYourselfLevelLanguage = ({
   control,
   field,
   index,
+  errors,
 }) => {
-  const { name, level } = field;
   const [isOpen, setIsOpen] = useState(false);
+  const { name, level } = field;
 
   const selectedLanguageImage = masteredLanguagesImages[name];
 
+  const {
+    field: { onChange, value, onBlur },
+    fieldState: { error },
+  } = useController({
+    name: `languages.${index}.level`,
+    control,
+    defaultValue: level,
+  });
+
   return (
-    <Controller
-      name={`languages.${index}.level`}
-      control={control}
-      defaultValue={level}
-      render={({
-        field: { onChange, value, onBlur },
-        fieldState: { error },
-      }) => (
-        <>
-          <div className="flex items-end mt-10 gap-2">
-            <div className="flex justify-between items-center gap-2.5 h-12 w-full rounded-2xl p-1.5 bg-primary-color-P11">
-              <div className="flex-1 flex items-center gap-2.5">
+    <>
+      <InputLeftStickStatus
+        inputBarStatusClassName={`${getInputStatusBorder(
+          errors,
+          value,
+          `languages.${index}.level`
+        )}`}
+      >
+        <div className="mb-4">
+          <div className="flex items-end gap-2">
+            <div
+              className={`flex justify-between items-center gap-2.5 h-12 w-full rounded-2xl p-1.5 ${
+                error ? "form-input-error" : "bg-primary-color-P11"
+              }`}
+            >
+              <div className="flex-1 flex items-center gap-2.5 p-1.5">
                 {selectedLanguageImage?.src && (
                   <Image
+                    className="h-6 w-[39px] rounded-[4px]"
                     src={selectedLanguageImage?.src}
                     alt={"Country Image"}
-                    className="h-9 w-[39px]"
                     width={39}
                     height={36}
                   />
@@ -57,7 +74,7 @@ const AboutYourselfLevelLanguage = ({
                   name="masteredLanguageLevel"
                   onOpenChange={(open) => {
                     setIsOpen(open);
-                    
+
                     if (!open) {
                       onBlur();
                     }
@@ -81,6 +98,7 @@ const AboutYourselfLevelLanguage = ({
                       "!bg-primary-color-P12",
                       "w-[178px] ms-auto",
                       "min-h-fit",
+                      "!rounded-xl",
                     ],
                     innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
                     value: [
@@ -107,11 +125,13 @@ const AboutYourselfLevelLanguage = ({
               />
             </button>
           </div>
+        </div>
+      </InputLeftStickStatus>
 
-          <SplitDynamicErrorZod message={error?.message} />
-        </>
-      )}
-    />
+      <div className="mb-4">
+        <SplitDynamicErrorZod message={error?.message} />
+      </div>
+    </>
   );
 };
 

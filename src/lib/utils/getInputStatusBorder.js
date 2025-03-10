@@ -6,9 +6,27 @@ export const getInputStatusBorder = (
 ) => {
   const hasValue = inputValue instanceof File || inputValue?.length > 0;
 
+  // Check if the propertyName is a nested path (e.g., "languages.0.level")
+  const errorPath = propertyName.split(".");
+  let errorExists = false;
+
+  // Traverse the errors object to check for nested errors
+  let currentErrorLevel = errors;
+  
+  for (const key of errorPath) {
+    if (currentErrorLevel && currentErrorLevel[key]) {
+      currentErrorLevel = currentErrorLevel[key];
+    } else {
+      currentErrorLevel = undefined;
+      break;
+    }
+  }
+
+  errorExists = Boolean(currentErrorLevel);
+
   switch (true) {
-    case Boolean(errors[propertyName]):
-      return "bg-septenary-color-MA5";
+    case errorExists:
+      return "bg-septenary-color-MA5"; 
 
     case hasValue:
       return "bg-quinary-color-VS5";
