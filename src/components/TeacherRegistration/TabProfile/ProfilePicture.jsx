@@ -80,7 +80,7 @@ const ProfilePicture = ({ errors, control }) => {
           </InputLeftStickStatus>
 
           {/* Instructions Image Input */}
-          <ul className="ps-4 ST-1 list-disc text-primary-color-P4">
+          <ul className="ps-4 py-3 ST-1 list-disc text-primary-color-P4">
             <li>You must be clearly visible and centered in the picture.</li>
             <li>Use a plain background to avoid distractions.</li>
             <li>The picture should be a recent, high-quality image.</li>
