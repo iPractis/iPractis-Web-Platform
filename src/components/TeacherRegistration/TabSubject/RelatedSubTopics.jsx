@@ -54,7 +54,7 @@ const RelatedSubTopics = ({ control, errors }) => {
         control={control}
         render={({ field: { value, onBlur }, fieldState: { error } }) => (
           <div className="md:px-8">
-            <div className="space-y-[50px]">
+            <div className="space-y-[40px]">
               {/* Select Sub-subject */}
               <div className="grid md:grid-cols-2 grid-cols-1">
                 <InputLeftStickStatus

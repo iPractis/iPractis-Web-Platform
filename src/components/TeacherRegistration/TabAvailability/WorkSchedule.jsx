@@ -10,7 +10,7 @@ const WorkSchedule = ({ selectedSlots, setSelectedSlots }) => {
       <SectionHeader
         descriptionText="Minimum working time is set to 8 hours par week, please consider your weekly tasks and commitment to define your work time."
         wrapperSectionHeaderClassName={
-          "bg-primary-color-P11 rounded-[32px] p-8 mb-[50px] mt-[60px]"
+          "bg-primary-color-P11 rounded-[32px] p-8 mb-8 mt-[60px]"
         }
         titleIcon={<LuggageClockIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Set your work schedule"

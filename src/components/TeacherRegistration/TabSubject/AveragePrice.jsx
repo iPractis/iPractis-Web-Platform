@@ -27,15 +27,15 @@ const AveragePrice = ({ control, errors, watch }) => {
   return (
     <>
       <SectionHeader
-        descriptionText="View key details and manage your transactions."
+        descriptionText="Price is crucial for students when choosing a tutor as it determines affordability and value for money."
         wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mb-8 mt-16"
         titleIcon={<DollarSignIcon fillColor={"fill-primary-color-P1"} />}
-        titleText="Financial Summary"
+        titleText="Lesson rate"
         titleClassName="MT-SB-1"
       />
 
       <div className="md:px-8">
-        <div className="grid md:grid-cols-2 grid-cols-1 gap-8 items-end">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px] items-end">
           <div>
             <InputLeftStickStatus
               inputBarStatusClassName={`${getInputStatusBorder(

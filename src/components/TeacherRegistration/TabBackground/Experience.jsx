@@ -64,6 +64,7 @@ const Experience = ({ control }) => {
           <WhiteSpaceWrapper className={"md:px-8 p-0"}>
             {careerExperience?.map((experience, index) => (
               <FormInputsBox
+                firstInputPlaceholder={"Example: Google"}
                 handleDelete={handleDeleteExperience}
                 array={"careerExperience"}
                 key={experience.id}

@@ -66,6 +66,7 @@ const Education = ({ control }) => {
           <WhiteSpaceWrapper className={"md:px-8 p-0"}>
             {education?.map((education, index) => (
               <FormInputsBox
+                firstInputPlaceholder={"Example: University Of Somewhere"}
                 handleDelete={handleDeleteEducation}
                 array={"education"}
                 key={education.id}

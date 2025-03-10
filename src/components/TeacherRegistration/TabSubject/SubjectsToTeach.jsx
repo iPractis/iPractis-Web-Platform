@@ -59,8 +59,8 @@ const SubjectsToTeach = ({ errors, control }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="space-y-[50px] md:px-8">
-        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-[50px] gap-20 md:mt-24 mt-20">
+      <div className="space-y-[40px] md:px-8">
+        <div className="grid md:grid-cols-2 grid-cols-1 md:gap-[50px] gap-20 mt-[90px]">
           {/* Select subject to teach */}
           <div>
             <InputLeftStickStatus

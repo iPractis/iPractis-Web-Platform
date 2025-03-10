@@ -31,7 +31,7 @@ const PresentYourSelf = ({ control, errors }) => {
         titleText="Present yourself"
         titleIcon={<CameraIcon fillColor={"fill-primary-color-P1"} />}
         titleClassName="MT-SB-1"
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] my-20"
+        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mt-20 mb-[90px]"
       />
 
       <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">

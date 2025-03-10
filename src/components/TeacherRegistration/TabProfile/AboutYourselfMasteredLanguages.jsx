@@ -57,7 +57,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
   };
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 md:px-8 items-start gap-[50px] mt-24">
+    <div className="grid md:grid-cols-2 grid-cols-1 md:px-8 items-start gap-[50px] mt-[90px]">
       {/* Select Language */}
       <div>
         <InputLeftStickStatus

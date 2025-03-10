@@ -26,6 +26,7 @@ import {
 } from "../../Icons";
 
 const FormInputsBox = ({
+  firstInputPlaceholder,
   handleDelete,
   control,
   array,
@@ -77,7 +78,7 @@ const FormInputsBox = ({
             classNames={{
               inputWrapper: companyError?.message && "form-input-error",
             }}
-            placeholder="Example: Google"
+            placeholder={firstInputPlaceholder}
             startContent={
               <InputBGWrapperIcon>
                 <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
