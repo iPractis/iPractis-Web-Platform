@@ -340,7 +340,7 @@ tr:last-of-type td.isSelected {
   }
 
   .country-ipractis-dropdown {
-    @apply bg-primary-color-P12 flex p-1.5 justify-between gap-1 min-w-fit cursor-pointer w-[60px] h-[36px] !important;
+    @apply bg-primary-color-P12 flex p-1.5 justify-between gap-1 min-w-[74px] cursor-pointer w-[60px] h-[36px] !important;
   }
 
   .country-ipractis-dropdown-areacode {

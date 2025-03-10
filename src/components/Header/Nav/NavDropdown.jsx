@@ -83,7 +83,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 </div>
 
                 <div>
-                  <h2 className="text-primary-color-P12 ST-3">
+                  <h2 className="text-primary-color-P12 capitalize ST-3">
                     Hi, {firstName}
                   </h2>
                 </div>
