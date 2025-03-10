@@ -31,6 +31,8 @@ import {
 import Link from "next/link";
 
 const NavDropdown = ({ isDropdownHidden, userName }) => {
+  const firstName = userName.split(" ")[0];
+
   return (
     <Dropdown
       classNames={{
@@ -82,7 +84,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
                 <div>
                   <h2 className="text-primary-color-P12 ST-3">
-                    Hi, {userName}
+                    Hi, {firstName}
                   </h2>
                 </div>
               </div>
