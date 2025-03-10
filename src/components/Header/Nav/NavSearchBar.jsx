@@ -10,7 +10,7 @@ const NavSearchBar = () => {
     <div className="relative">
       <input
         type="text"
-        className="w-[362px] ps-4 py-1.5 pe-28 rounded-2xl h-10 ST-1 outline-none text-primary-color-P1 placeholder:text-primary-color-P1 hover:bg-secondary-color-S9"
+        className="w-[362px] h-[38px] ps-4 py-1.5 pe-28 rounded-2xl ST-1 outline-none text-primary-color-P1 placeholder:text-primary-color-P1 hover:bg-secondary-color-S9"
         placeholder="What are you looking for?"
       />
 
