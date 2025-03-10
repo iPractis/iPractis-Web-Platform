@@ -74,7 +74,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="md:px-8 mt-8">
+      <div className="md:px-8 mt-10">
         <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px]">
           <div className="space-y-12">
             {/* Firstname */}

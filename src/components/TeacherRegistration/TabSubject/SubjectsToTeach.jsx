@@ -85,7 +85,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }}
                 labelPlacement="outside"
                 label={
-                  <div className="flex flex-col mb-2">
+                  <div className="flex flex-col mb-2 ps-1.5">
                     <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                       Select the subject you wish to teach{" "}
                       <QuestionMark fillColor={"fill-primary-color-P4"} />

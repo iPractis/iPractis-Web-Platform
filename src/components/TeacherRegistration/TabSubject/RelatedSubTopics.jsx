@@ -68,7 +68,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                     <Select
                       name="subSubject"
                       label={
-                        <div className="flex flex-col mb-2">
+                        <div className="flex flex-col mb-2 ps-1">
                           <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                             Related sub topics{" "}
                             <QuestionMark fillColor={"fill-primary-color-P4"} />

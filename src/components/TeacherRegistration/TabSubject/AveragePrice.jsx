@@ -50,7 +50,7 @@ const AveragePrice = ({ control, errors, watch }) => {
                   name="hourlyPrice"
                   placeholder="Set your hourly base rate"
                   classNames={{
-                    label: "!-top-11",
+                    label: "!-top-12 ms-0.5",
                     inputWrapper:
                       hourlyPriceError?.message && "form-input-error",
                   }}

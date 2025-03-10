@@ -71,7 +71,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
             <Select
               name="languages"
               label={
-                <div className="mb-2">
+                <div className="ps-[5px] mb-2">
                   <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                     Select the languages your masters{" "}
                     <QuestionMark fillColor={"fill-primary-color-P4"} />

@@ -56,6 +56,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
             (exceedValueMaxLength && "form-input-error") ||
             (backgroundError && "form-input-error"),
           label: [labelClassName],
+          label: "ps-[5px]"
         }}
         size="primaryiPractis"
         disableAutosize

@@ -313,6 +313,10 @@ tr:last-of-type td.isSelected {
 
   .input-wrapper-ipractis {
     @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 data-[focus=true]:bg-secondary-color-S9 shadow-none !important;
+
+    & > label {
+      padding-left: 5px !important;
+    }
   }
 
   .input-ipractis {
