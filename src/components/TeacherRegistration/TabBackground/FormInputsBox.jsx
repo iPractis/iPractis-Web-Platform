@@ -26,6 +26,10 @@ import {
   TopArrowCloudIcon,
   TrashBinIcon,
 } from "../../Icons";
+import {
+  CustomNextUiInputWithMaxLength,
+  CustomNextUiTextareaWithMaxLength,
+} from "../../Shared/MaxFormLengthFields";
 
 const FormInputsBox = ({
   firstInputPlaceholder,
@@ -71,6 +75,23 @@ const FormInputsBox = ({
     control: control,
     defaultValue: item?.uploadFile,
   });
+
+  const {
+    field: descriptionField,
+    fieldState: { error: descriptionError },
+  } = useController({
+    name: `${array}.${index}.description`,
+    control: control,
+    defaultValue: item?.description,
+  });
+
+  const descriptionTextOnChange = (e) => {
+    const textValue = e?.target?.value;
+
+    if (textValue?.length <= 1000) {
+      descriptionField.onChange(textValue);
+    }
+  };
 
   return (
     <div className="mb-8">
@@ -290,37 +311,33 @@ const FormInputsBox = ({
       <SplitDynamicErrorZod message={uploadFileError?.message} />
 
       {/* Description */}
-      <Controller
-        name={`${array}.${index}.description`}
-        defaultValue={item?.description}
-        control={control}
-        render={({ field, fieldState: { error } }) => (
-          <>
-            <InputLeftStickStatus
-              inputBarStatusClassName={`${getInputStatusBorder(
-                errors,
-                field.value,
-                `${array}.${index}.description`
-              )} h-[129px]`}
-            >
-              <CustomNextUiTextarea
-                classNames={{
-                  inputWrapper: error?.message && "form-input-error",
-                  input: "h-[150px] resize-y min-h-[40px]",
-                  base: "mt-2.5",
-                }}
-                disableAnimation
-                placeholder="Enter a text"
-                size="primaryiPractis"
-                disableAutosize
-                {...field}
-              />
-            </InputLeftStickStatus>
+      <div className="mt-2.5">
+        <InputLeftStickStatus
+          inputBarStatusClassName={`${getInputStatusBorder(
+            errors,
+            descriptionField.value,
+            `${array}.${index}.description`
+          )} h-[129px] ${
+            descriptionField?.value?.length === 1000 ? "top-[32%]" : "top-[46%]"
+          }`}
+        >
+          <CustomNextUiTextareaWithMaxLength
+            backgroundError={descriptionError?.message && "form-input-error"}
+            descError={"The text cannot exceed 1000 characters."}
+            inputProps={{ onBlur: descriptionField.onBlur }}
+            inputClassName={"h-[150px] resize-y"}
+            typeError={"Max Length Exceeded"}
+            onChange={descriptionTextOnChange}
+            value={descriptionField.value}
+            nameTextarea={"description"}
+            placeholder={"Enter a text"}
+            maxCharactersLength={1000}
+            labelDisabled={true}
+          />
+        </InputLeftStickStatus>
 
-            <SplitDynamicErrorZod message={error?.message} />
-          </>
-        )}
-      />
+        <SplitDynamicErrorZod message={descriptionError?.message} />
+      </div>
     </div>
   );
 };
