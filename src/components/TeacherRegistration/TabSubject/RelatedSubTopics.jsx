@@ -139,6 +139,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                   name={"subSubject"}
                   subSubject={field}
                   control={control}
+                  errors={errors}
                   key={field.id}
                   index={index}
                 />

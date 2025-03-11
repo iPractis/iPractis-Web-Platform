@@ -9,7 +9,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 // Icons
 import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
 
-const Experience = ({ control }) => {
+const Experience = ({ errors, control }) => {
   const {
     fields: careerExperience,
     append,
@@ -68,8 +68,9 @@ const Experience = ({ control }) => {
                 handleDelete={handleDeleteExperience}
                 array={"careerExperience"}
                 key={experience.id}
-                control={control}
                 item={experience}
+                control={control}
+                errors={errors}
                 index={index}
               />
             ))}

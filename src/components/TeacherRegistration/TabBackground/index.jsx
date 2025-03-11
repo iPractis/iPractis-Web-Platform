@@ -12,7 +12,12 @@ import axios from "axios";
 import { useRef } from "react";
 
 const TabBackground = ({ setActiveTab, activeTab, draft }) => {
-  const { handleSubmit, setError, control } = useForm({
+  const {
+    formState: { errors },
+    handleSubmit,
+    setError,
+    control,
+  } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabBackgroundSchema),
     defaultValues: {
@@ -54,10 +59,10 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Experience Section */}
-      <Experience control={control} />
+      <Experience errors={errors} control={control} />
 
       {/* Education Section */}
-      <Education control={control} />
+      <Education errors={errors} control={control} />
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav

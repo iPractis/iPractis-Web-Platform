@@ -9,7 +9,7 @@ import { Controller, useFieldArray } from "react-hook-form";
 // Icons
 import { AddBoxBiggerIcon, GraduationCapIcon } from "../../Icons";
 
-const Education = ({ control }) => {
+const Education = ({ errors, control }) => {
   const {
     fields: education,
     append,
@@ -72,6 +72,7 @@ const Education = ({ control }) => {
                 key={education.id}
                 control={control}
                 item={education}
+                errors={errors}
                 index={index}
               />
             ))}
