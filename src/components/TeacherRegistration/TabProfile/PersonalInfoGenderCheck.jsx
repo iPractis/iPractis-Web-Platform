@@ -55,6 +55,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               labelPlacement="outside"
               endContent={
                 <CustomNextUiCheckbox
+                  disableAnimation
                   className="checkbox-label-ipractis"
                   isSelected={selectedGender === "male"}
                   onChange={() => handleCheckboxChange("male")}
@@ -77,6 +78,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               labelPlacement="outside"
               endContent={
                 <CustomNextUiCheckbox
+                  disableAnimation
                   className="checkbox-label-ipractis"
                   isSelected={selectedGender === "female"}
                   onChange={() => handleCheckboxChange("female")}

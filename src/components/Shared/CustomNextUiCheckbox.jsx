@@ -9,7 +9,7 @@ export const CustomNextUiCheckbox = extendVariants(Checkbox, {
       },
     },
     size: {
-      md: "min-w-12 h-[10px] w-[10px] rounded-[4px]",
+      md: "min-w-12 h-[10px] w-[10px]",
     },
   },
   defaultVariants: {
