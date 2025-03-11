@@ -1,6 +1,6 @@
+import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import CustomNextUiTextarea from "../../Shared/CustomNextUiTextarea";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
@@ -15,7 +15,8 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { CalendarDate } from "@internationalized/date";
-import { Controller, useController } from "react-hook-form";
+import { useController } from "react-hook-form";
+import DatePicker from "react-datepicker";
 
 // Icons
 import {
@@ -26,10 +27,6 @@ import {
   TopArrowCloudIcon,
   TrashBinIcon,
 } from "../../Icons";
-import {
-  CustomNextUiInputWithMaxLength,
-  CustomNextUiTextareaWithMaxLength,
-} from "../../Shared/MaxFormLengthFields";
 
 const FormInputsBox = ({
   firstInputPlaceholder,
@@ -64,7 +61,7 @@ const FormInputsBox = ({
   } = useController({
     name: `${array}.${index}.to`,
     control: control,
-    defaultValue: item?.to,
+    defaultValue: item?.to ? new Date(item?.to, 0, 1) : null,
   });
 
   const {
@@ -141,43 +138,26 @@ const FormInputsBox = ({
                 </InputBGWrapperIcon>
               }
               endContent={
-                <Dropdown
-                  classNames={{
-                    content: "p-0 shadow-none",
+                <DatePicker
+                  selected={
+                    calendarFromField.value
+                      ? new Date(calendarFromField.value, 0, 1)
+                      : null
+                  }
+                  onChange={(date) => {
+                    const year = date.getFullYear();
+                    calendarFromField.onChange(year.toString());
                   }}
-                  closeOnSelect={false}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                      variant="flat"
-                      type="button"
-                    >
+                  showPopperArrow={false}
+                  yearItemNumber={9}
+                  dateFormat="yyyy"
+                  showYearPicker
+                  customInput={
+                    <div className="bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]">
                       <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                    </Button>
-                  </DropdownTrigger>
-
-                  <DropdownMenu
-                    className="p-0 h-0"
-                    itemClasses={{
-                      base: "data-[hover=true]:bg-transparent shadow-none",
-                    }}
-                  >
-                    <DropdownItem className="p-0">
-                      <Calendar
-                        onChange={(date) => {
-                          let validDate = new CalendarDate(
-                            date?.year,
-                            date?.month,
-                            date?.day
-                          );
-                          calendarFromField.onChange(validDate?.toString());
-                        }}
-                        disableAnimation
-                      />
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                    </div>
+                  }
+                />
               }
               classNames={{
                 inputWrapper: calendarFromError?.message && "form-input-error",
@@ -207,43 +187,26 @@ const FormInputsBox = ({
                 </InputBGWrapperIcon>
               }
               endContent={
-                <Dropdown
-                  classNames={{
-                    content: "p-0 shadow-none",
+                <DatePicker
+                  selected={
+                    calendarToField.value
+                      ? new Date(calendarToField.value, 0, 1)
+                      : null
+                  }
+                  onChange={(date) => {
+                    const year = date.getFullYear();
+                    calendarToField.onChange(year.toString());
                   }}
-                  closeOnSelect={false}
-                >
-                  <DropdownTrigger>
-                    <Button
-                      className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                      variant="flat"
-                      type="button"
-                    >
+                  showPopperArrow={false}
+                  yearItemNumber={9}
+                  dateFormat="yyyy"
+                  showYearPicker
+                  customInput={
+                    <button className="border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none">
                       <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                    </Button>
-                  </DropdownTrigger>
-
-                  <DropdownMenu
-                    className="p-0 h-0"
-                    itemClasses={{
-                      base: "data-[hover=true]:bg-transparent shadow-none",
-                    }}
-                  >
-                    <DropdownItem className="p-0">
-                      <Calendar
-                        onChange={(date) => {
-                          let validDate = new CalendarDate(
-                            date?.year,
-                            date?.month,
-                            date?.day
-                          );
-                          calendarToField.onChange(validDate?.toString());
-                        }}
-                        disableAnimation
-                      />
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
+                    </button>
+                  }
+                />
               }
               classNames={{
                 inputWrapper: calendarToError?.message && "form-input-error",
