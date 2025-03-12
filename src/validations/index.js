@@ -178,12 +178,26 @@ export const tabBackgroundSchema = z.object({
           message:
             "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
         }),
-        from: z
-          .string()
-          .min(1, { message: "Invalid date --- Must input a date (from)." }),
-        to: z
-          .string()
-          .min(1, { message: "Invalid date --- Must input a date (to)." }),
+        from: z.coerce
+          .number({
+            invalid_type_error:
+              "Invalid characters --- Only numbers are allowed in this field.",
+          })
+          .int()
+          .min(1, {
+            message:
+              "Invalid field --- Must input a number.",
+          }),
+        to: z.coerce
+          .number({
+            invalid_type_error:
+              "Invalid characters --- Only numbers are allowed in this field.",
+          })
+          .int()
+          .min(1, {
+            message:
+              "Invalid field --- Must input a number.",
+          }),
         description: z
           .string()
           .min(3, {
@@ -212,12 +226,26 @@ export const tabBackgroundSchema = z.object({
           message:
             "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
         }),
-        from: z
-          .string()
-          .min(1, { message: "Invalid date --- Must input a date (from)." }),
-        to: z
-          .string()
-          .min(1, { message: "Invalid date --- Must input a date (to)." }),
+        from: z.coerce
+          .number({
+            invalid_type_error:
+              "Invalid characters --- Only numbers are allowed in this field.",
+          })
+          .int()
+          .min(1, {
+            message:
+              "Invalid field --- Must input a number.",
+          }),
+        to: z.coerce
+          .number({
+            invalid_type_error:
+              "Invalid characters --- Only numbers are allowed in this field.",
+          })
+          .int()
+          .min(1, {
+            message:
+              "Invalid field --- Must input a number.",
+          }),
         description: z
           .string()
           .min(3, {

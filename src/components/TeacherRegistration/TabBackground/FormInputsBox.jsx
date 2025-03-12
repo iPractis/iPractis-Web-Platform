@@ -130,34 +130,11 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarFromField}
               type="text"
-              isReadOnly
               placeholder="From"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
-              }
-              endContent={
-                <DatePicker
-                  selected={
-                    calendarFromField.value
-                      ? new Date(calendarFromField.value, 0, 1)
-                      : null
-                  }
-                  onChange={(date) => {
-                    const year = date.getFullYear();
-                    calendarFromField.onChange(year.toString());
-                  }}
-                  showPopperArrow={false}
-                  yearItemNumber={9}
-                  dateFormat="yyyy"
-                  showYearPicker
-                  customInput={
-                    <div className="bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px]">
-                      <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                    </div>
-                  }
-                />
               }
               classNames={{
                 inputWrapper: calendarFromError?.message && "form-input-error",
@@ -179,34 +156,11 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarToField}
               type="text"
-              isReadOnly
               placeholder="To"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
-              }
-              endContent={
-                <DatePicker
-                  selected={
-                    calendarToField.value
-                      ? new Date(calendarToField.value, 0, 1)
-                      : null
-                  }
-                  onChange={(date) => {
-                    const year = date.getFullYear();
-                    calendarToField.onChange(year.toString());
-                  }}
-                  showPopperArrow={false}
-                  yearItemNumber={9}
-                  dateFormat="yyyy"
-                  showYearPicker
-                  customInput={
-                    <button className="border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none">
-                      <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                    </button>
-                  }
-                />
               }
               classNames={{
                 inputWrapper: calendarToError?.message && "form-input-error",
