@@ -41,7 +41,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
       >
         <div className="flex items-center gap-2">
           <div
-            className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11`}
+            className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
           >
             <InputBGWrapperIcon>
               <PersonIcon fillColor={"fill-primary-color-P4"} />
@@ -55,7 +55,6 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               labelPlacement="outside"
               endContent={
                 <CustomNextUiCheckbox
-                  disableAnimation
                   className="checkbox-label-ipractis"
                   isSelected={selectedGender === "male"}
                   onChange={() => handleCheckboxChange("male")}
@@ -63,10 +62,10 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
                 />
               }
               classNames={{
-                input: "!px-1.5",
+                input: "!px-1.5 group",
                 inputWrapper: genderError?.message
                   ? "form-input-error"
-                  : "!bg-primary-color-P12",
+                  : "!bg-primary-color-P12 input-wrapper-ipractis-custom",
               }}
             />
 
@@ -78,7 +77,6 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               labelPlacement="outside"
               endContent={
                 <CustomNextUiCheckbox
-                  disableAnimation
                   className="checkbox-label-ipractis"
                   isSelected={selectedGender === "female"}
                   onChange={() => handleCheckboxChange("female")}
@@ -86,10 +84,10 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
                 />
               }
               classNames={{
-                input: "!px-1.5",
+                input: "!px-1.5 group",
                 inputWrapper: genderError?.message
                   ? "form-input-error"
-                  : "!bg-primary-color-P12",
+                  : "!bg-primary-color-P12 input-wrapper-ipractis-custom",
               }}
             />
           </div>

@@ -332,6 +332,14 @@ tr:last-of-type td.isSelected {
     }
   }
 
+  .input-wrapper-ipractis-custom {
+    @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-primary-color-P12 has-[input:invalid]:bg-senary-color-W10 data-[focus=true]:bg-white shadow-none !important;
+
+    & > label {
+      padding-left: 5px !important;
+    }
+  }
+
   .input-ipractis {
     @apply placeholder:text-primary-color-P4 text-primary-color-P4 ST-3 ps-4 pe-10 !important;
   }
