@@ -168,44 +168,44 @@ const WorkScheduleTable = ({
 
   // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
   const handleGetDayAndHour = (hour, day) => {
-    // Formateamos la hora para que sea "H:00"
+    // Format the hour to be "H:00"
     const formattedHour = `${hour}:00`;
 
-    // Buscamos si ya existe un registro para el día seleccionado
+    // We check if there is already a record for the selected day
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
     if (existingIndex !== -1) {
-      // Si ya existe, verificamos si la hora ya está en el array
+      // If it already exists, we check if the hour is already in the array
       const existingHours = fields[existingIndex].hour;
       const hourIndex = existingHours.indexOf(formattedHour);
 
       if (hourIndex !== -1) {
-        // Si la hora ya existe, la eliminamos
+        // If hour exists, we delete it
         const updatedHours = existingHours.filter((h) => h !== formattedHour);
 
-        // Si no quedan horas, eliminamos el día completo
+        // If no hours remain, remove the entire day
         if (updatedHours.length === 0) {
           remove(existingIndex);
         } else {
-          // Actualizamos el array de horas
+            // Update the array of hours
           update(existingIndex, { day, hour: updatedHours });
         }
       } else {
-        // Si la hora no existe, la agregamos
+        // If the hour does not exist, we add it
         update(existingIndex, { day, hour: [...existingHours, formattedHour] });
       }
     } else {
-      // Si no existe un registro para el día, lo creamos con la hora seleccionada
+      // If there is no record for the day, we create it with the selected hour
       append({ day: day, hour: [formattedHour] });
     }
   };
 
   // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
-    // Formateamos la hora para que sea "H:00"
+    // Format the hour to be "H:00"
     const formattedHour = `${hour}:00`;
 
-    // Verificamos si el slot está seleccionado
+    // Check if the slot is selected
     return fields.some(
       (slot) => slot.day === day && slot.hour.includes(formattedHour)
     );
