@@ -49,8 +49,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "AVAILABILITY");
       }
     } catch (err) {
-      console.log(err?.response?.data?.message);
-      // setError(err?.response?.data?.message || "");
+      setError(err?.response?.data?.message);
       console.log(err);
     } finally {
       buttonRef.current.notIsLoading();
