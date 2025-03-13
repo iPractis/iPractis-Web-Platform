@@ -4,7 +4,7 @@ export const getInputStatusBorder = (
   propertyName,
   requiredFieldColor = true
 ) => {
-  const hasValue = inputValue instanceof File || inputValue?.length > 0;
+  const hasValue = inputValue instanceof File || inputValue?.length > 0 || inputValue > 0;
 
   // Check if the propertyName is a nested path (e.g., "languages.0.level")
   const errorPath = propertyName.split(".");

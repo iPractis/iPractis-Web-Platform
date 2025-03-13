@@ -7,11 +7,11 @@ import { timeZones } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
+import { useController, useWatch } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
-import { useController } from "react-hook-form";
 
 // React imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Icons
 import {
@@ -41,6 +41,24 @@ const WorkTimePreferences = ({ errors, control }) => {
     name: "dailyWorkTime",
     control,
   });
+
+  const workSchedule = useWatch({
+    control,
+    name: "workSchedule",
+  });
+
+  // Grab all the selected hours (what day selected not matter, we just grab the hour!)
+  const slotsArray = workSchedule.reduce((acc, daySlot) => {
+    const { day, hour } = daySlot;
+
+    const dayHours = hour.map((h) => `${day}-${h}`);
+
+    return [...acc, ...dayHours];
+  }, []);
+
+  useEffect(() => {
+    dailyWorkTime.onChange(slotsArray.length);
+  }, [slotsArray.length]);
 
   return (
     <>
@@ -157,9 +175,9 @@ const WorkTimePreferences = ({ errors, control }) => {
               classNames={{
                 inputWrapper: dailyWorkTimeError?.message && "form-input-error",
               }}
-              value={dailyWorkTime.value}
               onChange={dailyWorkTime.onChange}
               onBlur={dailyWorkTime.onBlur}
+              value={slotsArray?.length}
             />
           </InputLeftStickStatus>
 

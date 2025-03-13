@@ -21,9 +21,9 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabAvailabilitySchema),
     defaultValues: {
-      timeZone: draft?.timeZone,
-      dailyWorkTime: draft?.dailyWorkTime,
+      dailyWorkTime: draft?.workSchedule?.length,
       workSchedule: draft?.workSchedule,
+      timeZone: draft?.timeZone,
     },
   });
   const buttonRef = useRef(null);
@@ -36,9 +36,9 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB AVAILABILITY
       if (activeTab === 3) {
+        actualDraftInfo.dailyWorkTime = data?.workSchedule?.length;
+        actualDraftInfo.workSchedule = data?.workSchedule;
         actualDraftInfo.timeZone = data?.timeZone;
-        actualDraftInfo.dailyWorkTime = selectedSlots?.length;
-        actualDraftInfo.workSchedule = selectedSlots;
 
         const response = await axios.post(
           `/teacher/set/availability`,
