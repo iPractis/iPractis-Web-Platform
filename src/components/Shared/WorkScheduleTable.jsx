@@ -170,45 +170,33 @@ const WorkScheduleTable = ({
   const handleGetDayAndHour = (hour, day) => {
     // Formateamos la hora para que sea "H:00"
     const formattedHour = `${hour}:00`;
-  
+
     // Buscamos si ya existe un registro para el día seleccionado
     const existingIndex = fields.findIndex((slot) => slot.day === day);
-  
+
     if (existingIndex !== -1) {
       // Si ya existe, verificamos si la hora ya está en el array
       const existingHours = fields[existingIndex].hour;
       const hourIndex = existingHours.indexOf(formattedHour);
-  
+
       if (hourIndex !== -1) {
         // Si la hora ya existe, la eliminamos
         const updatedHours = existingHours.filter((h) => h !== formattedHour);
-  
+
         // Si no quedan horas, eliminamos el día completo
         if (updatedHours.length === 0) {
           remove(existingIndex);
         } else {
-          // Ordenamos las horas antes de actualizar
-          const sortedHours = updatedHours.sort((a, b) => {
-            const timeA = parseInt(a.split(":")[0], timeB = parseInt(b.split(":")[0]));
-            return timeA - timeB;
-          });
-  
           // Actualizamos el array de horas
-          update(existingIndex, { day, hour: sortedHours });
+          update(existingIndex, { day, hour: updatedHours });
         }
       } else {
-        // Si la hora no existe, la agregamos y ordenamos el array
-        const updatedHours = [...existingHours, formattedHour];
-        const sortedHours = updatedHours.sort((a, b) => {
-          const timeA = parseInt(a.split(":")[0]), timeB = parseInt(b.split(":")[0]);
-          return timeA - timeB;
-        });
-  
-        update(existingIndex, { day, hour: sortedHours });
+        // Si la hora no existe, la agregamos
+        update(existingIndex, { day, hour: [...existingHours, formattedHour] });
       }
     } else {
       // Si no existe un registro para el día, lo creamos con la hora seleccionada
-      append({ day: day || "", hour: [formattedHour] });
+      append({ day: day, hour: [formattedHour] });
     }
   };
 
