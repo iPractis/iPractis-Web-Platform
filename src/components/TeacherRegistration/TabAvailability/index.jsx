@@ -40,7 +40,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.dailyWorkTime = selectedSlots?.length;
         actualDraftInfo.workSchedule = selectedSlots;
 
-        const response = await axios.put(
+        const response = await axios.post(
           `/teacher/set/availability`,
           actualDraftInfo
         );

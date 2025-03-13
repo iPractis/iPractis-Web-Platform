@@ -61,7 +61,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.videoLink = data?.videoLink;
         actualDraftInfo.subject = data?.subject;
 
-        const response = await axios.put(
+        const response = await axios.post(
           `/teacher/set/subject`,
           actualDraftInfo
         );
