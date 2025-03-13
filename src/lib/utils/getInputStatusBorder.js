@@ -4,7 +4,13 @@ export const getInputStatusBorder = (
   propertyName,
   requiredFieldColor = true
 ) => {
-  const hasValue = inputValue instanceof File || inputValue?.length > 0 || inputValue > 0;
+  const hasValue =
+    inputValue instanceof File ||
+    (Array.isArray(inputValue) &&
+      inputValue.length > 0 &&
+      inputValue.some((item) => item !== "")) ||
+    (typeof inputValue === "string" && inputValue.length > 0) ||
+    (typeof inputValue === "number" && inputValue > 0);
 
   // Check if the propertyName is a nested path (e.g., "languages.0.level")
   const errorPath = propertyName.split(".");
@@ -12,7 +18,7 @@ export const getInputStatusBorder = (
 
   // Traverse the errors object to check for nested errors
   let currentErrorLevel = errors;
-  
+
   for (const key of errorPath) {
     if (currentErrorLevel && currentErrorLevel[key]) {
       currentErrorLevel = currentErrorLevel[key];
@@ -26,7 +32,7 @@ export const getInputStatusBorder = (
 
   switch (true) {
     case errorExists:
-      return "bg-septenary-color-MA5"; 
+      return "bg-septenary-color-MA5";
 
     case hasValue:
       return "bg-quinary-color-VS5";
