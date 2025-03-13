@@ -45,6 +45,7 @@ const WorkTimePreferences = ({ errors, control }) => {
   const workSchedule = useWatch({
     control,
     name: "workSchedule",
+    defaultValue: [],
   });
 
   // Grab all the selected hours (what day selected not matter, we just grab the hour!)

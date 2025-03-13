@@ -30,7 +30,11 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
       />
 
       {/* 3 */}
-      <TabAvailability activeTab={activeTab} draft={draft} />
+      <TabAvailability
+        setActiveTab={setActiveTab}
+        activeTab={activeTab}
+        draft={draft}
+      />
 
       {/* 4 */}
       <TabReview activeTab={activeTab} />

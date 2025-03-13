@@ -36,7 +36,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB AVAILABILITY
       if (activeTab === 3) {
-        actualDraftInfo.dailyWorkTime = data?.workSchedule?.length;
+        actualDraftInfo.dailyWorkTime = data?.dailyWorkTime;
         actualDraftInfo.workSchedule = data?.workSchedule;
         actualDraftInfo.timeZone = data?.timeZone;
 
@@ -49,7 +49,8 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "AVAILABILITY");
       }
     } catch (err) {
-      setError(err?.response?.data?.message);
+      console.log(err?.response?.data?.message);
+      // setError(err?.response?.data?.message || "");
       console.log(err);
     } finally {
       buttonRef.current.notIsLoading();

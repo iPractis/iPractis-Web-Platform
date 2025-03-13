@@ -51,8 +51,6 @@ const WorkScheduleTable = ({
     name: "workSchedule",
   });
 
-  console.log(fields);
-
   // All that happen in this useEffect are the DEFAULT VALUES for the calendar
   useEffect(() => {
     // Get actual date
