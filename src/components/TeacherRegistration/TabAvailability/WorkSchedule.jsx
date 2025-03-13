@@ -4,7 +4,7 @@ import WorkScheduleTable from "../../Shared/WorkScheduleTable";
 // Icons
 import { LuggageClockIcon } from "../../Icons";
 
-const WorkSchedule = ({ selectedSlots, setSelectedSlots }) => {
+const WorkSchedule = ({ control }) => {
   return (
     <>
       <SectionHeader
@@ -18,10 +18,7 @@ const WorkSchedule = ({ selectedSlots, setSelectedSlots }) => {
       />
 
       <div className="md:px-8">
-        <WorkScheduleTable
-          selectedSlots={selectedSlots}
-          setSelectedSlots={setSelectedSlots}
-        />
+        <WorkScheduleTable control={control} />
       </div>
     </>
   );

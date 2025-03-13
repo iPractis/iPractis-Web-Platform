@@ -11,13 +11,7 @@ import axios from "axios";
 // React imports
 import { useRef } from "react";
 
-const TabAvailability = ({
-  setSelectedSlots,
-  selectedSlots,
-  setActiveTab,
-  activeTab,
-  draft,
-}) => {
+const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
   const {
     formState: { errors },
     handleSubmit,
@@ -69,10 +63,7 @@ const TabAvailability = ({
     >
       <WorkTimePreferences control={control} errors={errors} />
 
-      <WorkSchedule
-        setSelectedSlots={setSelectedSlots}
-        selectedSlots={selectedSlots}
-      />
+      <WorkSchedule control={control} />
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav

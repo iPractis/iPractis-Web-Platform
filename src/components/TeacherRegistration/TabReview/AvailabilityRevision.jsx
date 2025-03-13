@@ -4,7 +4,7 @@ import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";
 import TeacherInfo from "./TeacherInfo";
 
-const AvailabilityRevision = ({ selectedSlots, setSelectedSlots }) => {
+const AvailabilityRevision = () => {
   return (
     <section>
       <TeacherInfo />
@@ -16,15 +16,13 @@ const AvailabilityRevision = ({ selectedSlots, setSelectedSlots }) => {
         titleText={"Availability"}
       /> */}
 
-      <WorkScheduleTable
-        setSelectedSlots={setSelectedSlots}
-        selectedSlots={selectedSlots}
+      {/* <WorkScheduleTable
         wrapperClassName={"mt-5"}
         bookedLessonSpot
         showCurrentDate
         timeZoneFilter
         fromToFilter
-      />
+      /> */}
 
       <TeacherInfoSpecialties />
 

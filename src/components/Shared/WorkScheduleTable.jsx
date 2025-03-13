@@ -1,12 +1,13 @@
+import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
+import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import {
   columnsHeaderWorkSchedule,
   rowsWorkSchedule,
   timeZones,
 } from "@/src/data/dataTeacherRegistration";
 
-import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
-import InputBGWrapperIcon from "./InputBGWrapperIcon";
-
+// External imports
+import { useFieldArray } from "react-hook-form";
 import {
   Table,
   TableHeader,
@@ -18,6 +19,7 @@ import {
   SelectItem,
 } from "@nextui-org/react";
 
+// Icons
 import {
   ChevronDownBigIcon,
   ChevronLeftBigIcon,
@@ -25,24 +27,31 @@ import {
   EarthIcon,
 } from "../Icons";
 
+// React imports
 import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
-  setSelectedSlots,
   wrapperClassName,
   bookedLessonSpot,
   showCurrentDate,
   timeZoneFilter,
-  selectedSlots,
   fromToFilter,
+  control,
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
-
   const [isOpen, setIsOpen] = useState(false);
+
+  // We use "useFieldArray" to manage the selected slots
+  const { fields, append, remove, update } = useFieldArray({
+    control,
+    name: "workSchedule",
+  });
+
+  console.log(fields);
 
   // All that happen in this useEffect are the DEFAULT VALUES for the calendar
   useEffect(() => {
@@ -101,7 +110,7 @@ const WorkScheduleTable = ({
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
     const adjustedWeekDates = weekDates?.map((date) => {
-      // Convertimos la fecha a la zona horaria elegida
+      // Convert the date to the selected time zone
       const options = {
         timeZone: selectedTimeZone,
         year: "numeric",
@@ -113,7 +122,7 @@ const WorkScheduleTable = ({
         date
       );
 
-      // Desglosamos correctamente la fecha para reconstruirla en la zona correcta
+      // Correctly break down the date to reconstruct it in the correct time zone
       const [month, day, year] = formattedDate.split("/");
       return new Date(`${year}-${month}-${day}T00:00:00`);
     });
@@ -132,7 +141,7 @@ const WorkScheduleTable = ({
       actualMonth: adjustedWeekDates[6].getMonth(),
     });
 
-    // 🟢 Aquí ajustamos también la fecha actual según la zona horaria
+    // 🟢 Here we also adjust the current date according to the time zone
     const today = new Date();
     const options = {
       timeZone: selectedTimeZone,
@@ -159,27 +168,59 @@ const WorkScheduleTable = ({
 
   // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
   const handleGetDayAndHour = (hour, day) => {
-    const slotDetails = {
-      hour: hour,
-      day: day,
-    };
-
-    setSelectedSlots((prevSlots) => {
-      // If hour and day already exist in the array, remove it
-      if (prevSlots?.some((slot) => slot.hour === hour && slot.day === day)) {
-        return prevSlots?.filter(
-          (slot) => !(slot.hour === hour && slot.day === day)
-        );
+    // Formateamos la hora para que sea "H:00"
+    const formattedHour = `${hour}:00`;
+  
+    // Buscamos si ya existe un registro para el día seleccionado
+    const existingIndex = fields.findIndex((slot) => slot.day === day);
+  
+    if (existingIndex !== -1) {
+      // Si ya existe, verificamos si la hora ya está en el array
+      const existingHours = fields[existingIndex].hour;
+      const hourIndex = existingHours.indexOf(formattedHour);
+  
+      if (hourIndex !== -1) {
+        // Si la hora ya existe, la eliminamos
+        const updatedHours = existingHours.filter((h) => h !== formattedHour);
+  
+        // Si no quedan horas, eliminamos el día completo
+        if (updatedHours.length === 0) {
+          remove(existingIndex);
+        } else {
+          // Ordenamos las horas antes de actualizar
+          const sortedHours = updatedHours.sort((a, b) => {
+            const timeA = parseInt(a.split(":")[0], timeB = parseInt(b.split(":")[0]));
+            return timeA - timeB;
+          });
+  
+          // Actualizamos el array de horas
+          update(existingIndex, { day, hour: sortedHours });
+        }
+      } else {
+        // Si la hora no existe, la agregamos y ordenamos el array
+        const updatedHours = [...existingHours, formattedHour];
+        const sortedHours = updatedHours.sort((a, b) => {
+          const timeA = parseInt(a.split(":")[0]), timeB = parseInt(b.split(":")[0]);
+          return timeA - timeB;
+        });
+  
+        update(existingIndex, { day, hour: sortedHours });
       }
-
-      // If hour and day doesn't exist in the array, add it
-      return [...prevSlots, slotDetails];
-    });
+    } else {
+      // Si no existe un registro para el día, lo creamos con la hora seleccionada
+      append({ day: day || "", hour: [formattedHour] });
+    }
   };
 
   // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
-    return selectedSlots?.some((slot) => slot.hour === hour && slot.day === day);
+    // Formateamos la hora para que sea "H:00"
+    const formattedHour = `${hour}:00`;
+
+    // Verificamos si el slot está seleccionado
+    return fields.some(
+      (slot) => slot.day === day && slot.hour.includes(formattedHour)
+    );
   };
 
   // This is for decrementing days of a month (- 7)

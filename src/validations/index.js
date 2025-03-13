@@ -185,8 +185,7 @@ export const tabBackgroundSchema = z.object({
           })
           .int()
           .min(1, {
-            message:
-              "Invalid field --- Must input a number.",
+            message: "Invalid field --- Must input a number.",
           }),
         to: z.coerce
           .number({
@@ -195,8 +194,7 @@ export const tabBackgroundSchema = z.object({
           })
           .int()
           .min(1, {
-            message:
-              "Invalid field --- Must input a number.",
+            message: "Invalid field --- Must input a number.",
           }),
         description: z
           .string()
@@ -233,8 +231,7 @@ export const tabBackgroundSchema = z.object({
           })
           .int()
           .min(1, {
-            message:
-              "Invalid field --- Must input a number.",
+            message: "Invalid field --- Must input a number.",
           }),
         to: z.coerce
           .number({
@@ -243,8 +240,7 @@ export const tabBackgroundSchema = z.object({
           })
           .int()
           .min(1, {
-            message:
-              "Invalid field --- Must input a number.",
+            message: "Invalid field --- Must input a number.",
           }),
         description: z
           .string()
@@ -278,7 +274,7 @@ export const tabAvailabilitySchema = z.object({
     .array(
       z.object({
         day: z.string(),
-        hour: z.number(),
+        hour: z.array(z.string()),
       })
     )
     .min(8, {
