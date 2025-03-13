@@ -15,14 +15,14 @@ import Image from "next/image";
 // Icons
 import { ChevronDownSmallIcon } from "../../Icons";
 
-const PersonalInfoNationalitySelect = ({ nationality }) => {
+const PersonalInfoNationalitySelect = ({ nationalityField }) => {
   const selectedCountry = countriesSelection.find(
-    (country) => country.key === nationality.value
+    (country) => country.key === nationalityField.value
   );
 
   const handleSelectionChange = (keys) => {
     const selectedKey = Array.from(keys)[0];
-    nationality.onChange(selectedKey);
+    nationalityField.onChange(selectedKey);
   };
 
   return (
@@ -44,7 +44,7 @@ const PersonalInfoNationalitySelect = ({ nationality }) => {
       </DropdownTrigger>
 
       <DropdownMenu
-        selectedKeys={new Set([nationality.value])}
+        selectedKeys={new Set([nationalityField.value])}
         onSelectionChange={handleSelectionChange}
         aria-label="Single Country Selection"
         disallowEmptySelection

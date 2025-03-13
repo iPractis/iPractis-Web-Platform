@@ -48,6 +48,14 @@ export const tabProfileSchema = z.object({
   gender: z.enum(["male", "female"], {
     message: "Invalid field --- Must choose a gender.",
   }),
+  country: z
+    .string()
+    .min(1, { message: "Invalid field --- Input a flag of a country please." }),
+  nationality: z
+    .string()
+    .min(1, {
+      message: "Invalid field --- Input a flag of nationality please.",
+    }),
   languages: z
     .array(
       z.object({

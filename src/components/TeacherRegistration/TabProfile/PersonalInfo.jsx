@@ -47,22 +47,25 @@ const PersonalInfo = ({ control, errors, watch }) => {
   });
 
   const {
-    field: country,
-    fieldState: { error: countryError },
+    field: countryField,
+    fieldState: { error: countryFieldError },
   } = useController({
     control,
-    name: "countryField",
+    name: "country",
     defaultValue: "United Kingdom",
   });
 
   const {
-    field: nationality,
-    fieldState: { error: nationalityError },
+    field: nationalityField,
+    fieldState: { error: nationalityFieldError },
   } = useController({
     control,
     name: "nationality",
     defaultValue: "United Kingdom",
   });
+
+  console.log(countryField, "campo de country");
+  console.log(nationalityField, "campo de nationality");
 
   return (
     <WhiteSpaceWrapper className={"p-0"}>
@@ -193,8 +196,8 @@ const PersonalInfo = ({ control, errors, watch }) => {
               <InputLeftStickStatus
                 inputBarStatusClassName={getInputStatusBorder(
                   errors,
-                  country?.value,
-                  "countryField"
+                  countryField?.value,
+                  "country"
                 )}
               >
                 <CustomNextUiInput
@@ -208,9 +211,13 @@ const PersonalInfo = ({ control, errors, watch }) => {
                     </span>
                   }
                   classNames={{
-                    inputWrapper: countryError?.message && "form-input-error",
+                    inputWrapper:
+                      countryFieldError?.message && "form-input-error",
                   }}
-                  name="countryField"
+                  onBlur={countryField?.onBlur}
+                  onChange={countryField?.onChange}
+                  value={countryField?.value}
+                  name="country"
                   labelPlacement="outside"
                   startContent={
                     <span className="flex items-center gap-1.5">
@@ -218,13 +225,13 @@ const PersonalInfo = ({ control, errors, watch }) => {
                         <FlagIcon />
                       </InputBGWrapperIcon>
 
-                      <PersonalInfoCountrySelect country={country} />
+                      <PersonalInfoCountrySelect countryField={countryField} />
                     </span>
                   }
                 />
               </InputLeftStickStatus>
 
-              <SplitDynamicErrorZod message={countryError?.message} />
+              <SplitDynamicErrorZod message={countryFieldError?.message} />
             </div>
 
             {/* Country of nationality */}
@@ -232,7 +239,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
               <InputLeftStickStatus
                 inputBarStatusClassName={getInputStatusBorder(
                   errors,
-                  nationality?.value,
+                  nationalityField?.value,
                   "nationality"
                 )}
               >
@@ -248,9 +255,12 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   }
                   classNames={{
                     inputWrapper:
-                      nationalityError?.message && "form-input-error",
+                      nationalityFieldError?.message && "form-input-error",
                   }}
                   labelPlacement="outside"
+                  onBlur={nationalityField?.onBlur}
+                  onChange={nationalityField?.onChange}
+                  value={nationalityField?.value}
                   name="nationality"
                   startContent={
                     <span className="flex items-center gap-1.5">
@@ -259,14 +269,14 @@ const PersonalInfo = ({ control, errors, watch }) => {
                       </InputBGWrapperIcon>
 
                       <PersonalInfoNationalitySelect
-                        nationality={nationality}
+                        nationalityField={nationalityField}
                       />
                     </span>
                   }
                 />
               </InputLeftStickStatus>
 
-              <SplitDynamicErrorZod message={nationalityError?.message} />
+              <SplitDynamicErrorZod message={nationalityFieldError?.message} />
             </div>
 
             {/* Gender checkboxes */}

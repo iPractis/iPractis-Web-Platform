@@ -29,13 +29,15 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       lastName: draft?.lastName,
       introduction: draft?.introduction,
       uploadProfileImage: draft?.uploadProfileImage,
-      languages: draft?.languages || [],
+      languages: draft?.languages,
       nationality: draft?.nationality,
       birthDate: draft?.birthDate,
       country: draft?.country,
       gender: draft?.gender,
     },
   });
+
+  console.log(watch("country"))
 
   const buttonRef = useRef(null);
 
@@ -47,17 +49,15 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.birthDate = validBirthDate?.toString().includes("NaN")
-          ? ""
-          : validBirthDate?.toString();
         actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
-        actualDraftInfo.nationality = selectedNationality?.key;
         actualDraftInfo.introduction = data?.introduction;
-        actualDraftInfo.country = selectedCountry?.key;
+        actualDraftInfo.nationality = data?.nationality;
         actualDraftInfo.middleName = data?.middleName;
-        actualDraftInfo.languages = masteredLanguages;
+        actualDraftInfo.languages = data?.languages;
+        actualDraftInfo.birthDate = data?.birthDate;
         actualDraftInfo.firstName = data?.firstName;
         actualDraftInfo.lastName = data?.lastName;
+        actualDraftInfo.country = data?.country;
         actualDraftInfo.gender = data?.gender;
 
         const response = await axios.post(

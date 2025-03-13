@@ -11,6 +11,7 @@ const defaultValue = {
   middleName: "",
   lastName: "",
   country: "",
+  nationality: "",
   gender: "",
   birthDate: "",
   introduction: "",
