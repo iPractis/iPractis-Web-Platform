@@ -33,6 +33,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
             }`}
             onClick={() => setActiveTab(TabIndex)}
           >
+            {completedTabSubject && TabIndex === 1}
             <span
               className={`p-1 rounded-[10px] ${
                 activeTab === TabIndex

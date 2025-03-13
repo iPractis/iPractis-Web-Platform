@@ -52,12 +52,10 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.teachToAmateurPersons = data?.teachToAmateurPersons;
         actualDraftInfo.subjectIntroduction = data?.subjectIntroduction;
         actualDraftInfo.teachToYoungPersons = data?.teachToYoungPersons;
-        actualDraftInfo.emailWithdrawal = data?.emailWithdrawal;
         actualDraftInfo.profileTitle = data?.profileTitle;
         actualDraftInfo.studentLevel = data?.studentLevel;
         actualDraftInfo.hourlyPrice = data?.hourlyPrice;
         actualDraftInfo.subSubject = data?.subSubject;
-        actualDraftInfo.withdrawal = data?.withdrawal;
         actualDraftInfo.videoLink = data?.videoLink;
         actualDraftInfo.subject = data?.subject;
 

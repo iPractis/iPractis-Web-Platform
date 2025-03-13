@@ -7,7 +7,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 import SubSubject from "./SubSubject";
 
 // External imports
-import { useFieldArray, Controller } from "react-hook-form";
+import { useFieldArray, useController } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
 
 // React imports
@@ -17,12 +17,21 @@ import { useState } from "react";
 import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
 const RelatedSubTopics = ({ control, errors }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const {
     fields: subSubjectsFields,
     append,
     remove,
   } = useFieldArray({ control, name: "subSubject" });
-  const [isOpen, setIsOpen] = useState(false);
+
+  const {
+    field: { value, onBlur },
+    fieldState: { error },
+  } = useController({
+    name: "subSubject",
+    control,
+  });
 
   // Add sub-subject
   const handleAddSubSubject = (e) => {
@@ -49,108 +58,99 @@ const RelatedSubTopics = ({ control, errors }) => {
         titleClassName="MT-SB-1"
       />
 
-      <Controller
-        name="subSubject"
-        control={control}
-        render={({ field: { value, onBlur }, fieldState: { error } }) => (
-          <div className="md:px-8">
-            {console.log(value)}
-            <div className="space-y-[40px]">
-              {/* Select Sub-subject */}
-              <div className="grid md:grid-cols-2 grid-cols-1">
-                <InputLeftStickStatus
-                  inputBarStatusClassName={`${getInputStatusBorder(
-                    errors,
-                    value,
-                    "subSubject"
-                  )} top-[54%] -translate-y-0`}
+      <div className="md:px-8">
+        <div className="space-y-[40px]">
+          {/* Select Sub-subject */}
+          <div className="grid md:grid-cols-2 grid-cols-1">
+            <InputLeftStickStatus
+              inputBarStatusClassName={`${getInputStatusBorder(
+                errors,
+                value,
+                "subSubject"
+              )} top-[54%] -translate-y-0`}
+            >
+              <div className="flex items-end gap-2">
+                <Select
+                  name="subSubject"
+                  label={
+                    <div className="flex flex-col mb-2 ps-1">
+                      <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                        Related sub topics{" "}
+                        <QuestionMark fillColor={"fill-primary-color-P4"} />
+                      </span>
+                      <div className="self-start">
+                        <span className="text-primary-color-P4 ST-3">
+                          Sub topics allow you to match with students needs.
+                        </span>
+                      </div>
+                    </div>
+                  }
+                  selectedKeys={value}
+                  onChange={(e) => handleAddSubSubject(e)}
+                  onOpenChange={(open) => {
+                    setIsOpen(open);
+
+                    if (!open) {
+                      onBlur();
+                    }
+                  }}
+                  labelPlacement="outside"
+                  placeholder="Select a sub-subject"
+                  selectorIcon={<span></span>}
+                  isOpen={isOpen}
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <TagIcon fillColor={"fill-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  }
+                  endContent={
+                    <InputBGWrapperIcon>
+                      <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                    </InputBGWrapperIcon>
+                  }
+                  classNames={{
+                    trigger: `px-1 py-1.5 h-auto ${
+                      (error?.message || error !== undefined) &&
+                      "form-input-error"
+                    }`,
+                    innerWrapper: ["select-ipractis", "w-full"],
+                    value: [
+                      "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                    ],
+                    listbox: ["text-primary-color-P4"],
+                  }}
                 >
-                  <div className="flex items-end gap-2">
-                    <Select
-                      name="subSubject"
-                      label={
-                        <div className="flex flex-col mb-2 ps-1">
-                          <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                            Related sub topics{" "}
-                            <QuestionMark fillColor={"fill-primary-color-P4"} />
-                          </span>
-                          <div className="self-start">
-                            <span className="text-primary-color-P4 ST-3">
-                              Sub topics allow you to match with students needs.
-                            </span>
-                          </div>
-                        </div>
-                      }
-                      selectedKeys={value}
-                      onChange={(e) => handleAddSubSubject(e)}
-                      onOpenChange={(open) => {
-                        setIsOpen(open);
-
-                        if (!open) {
-                          onBlur();
-                        }
-                      }}
-                      labelPlacement="outside"
-                      placeholder="Select a sub-subject"
-                      selectorIcon={<span></span>}
-                      isOpen={isOpen}
-                      startContent={
-                        <InputBGWrapperIcon>
-                          <TagIcon fillColor={"fill-primary-color-P4"} />
-                        </InputBGWrapperIcon>
-                      }
-                      endContent={
-                        <InputBGWrapperIcon>
-                          <ChevronDownBigIcon
-                            fillColor={"fill-primary-color-P1"}
-                          />
-                        </InputBGWrapperIcon>
-                      }
-                      classNames={{
-                        trigger: `px-1 py-1.5 h-auto ${
-                          (error?.message || error !== undefined) &&
-                          "form-input-error"
-                        }`,
-                        innerWrapper: ["select-ipractis", "w-full"],
-                        value: [
-                          "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                        ],
-                        listbox: ["text-primary-color-P4"],
-                      }}
-                    >
-                      {subSubjects
-                        ?.filter(
-                          (subSubject) =>
-                            !subSubjectsFields.some(
-                              (field) => field.selected === subSubject
-                            )
+                  {subSubjects
+                    ?.filter(
+                      (subSubject) =>
+                        !subSubjectsFields.some(
+                          (field) => field.selected === subSubject
                         )
-                        .map((subSubject) => (
-                          <SelectItem key={subSubject}>{subSubject}</SelectItem>
-                        ))}
-                    </Select>
-                  </div>
-                </InputLeftStickStatus>
+                    )
+                    .map((subSubject) => (
+                      <SelectItem key={subSubject}>{subSubject}</SelectItem>
+                    ))}
+                </Select>
               </div>
-
-              {/* Selected Sub-subjects */}
-              {subSubjectsFields.map((field, index) => (
-                <SubSubject
-                  handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
-                  name={"subSubject"}
-                  subSubject={field}
-                  control={control}
-                  errors={errors}
-                  key={field.id}
-                  index={index}
-                />
-              ))}
-            </div>
-
-            <SplitDynamicErrorZod message={error?.message} />
+            </InputLeftStickStatus>
           </div>
-        )}
-      />
+
+          {/* Selected Sub-subjects */}
+          {subSubjectsFields.map((field, index) => (
+            <SubSubject
+              handleDeleteSelectedSubSuject={handleDeleteSelectedSubSuject}
+              name={"subSubject"}
+              subSubject={field}
+              control={control}
+              errors={errors}
+              key={field.id}
+              index={index}
+            />
+          ))}
+        </div>
+
+        <SplitDynamicErrorZod message={error?.message} />
+      </div>
     </div>
   );
 };

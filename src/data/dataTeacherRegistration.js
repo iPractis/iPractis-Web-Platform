@@ -268,7 +268,6 @@ export const tabProfileFields = (object) => {
 export const tabSubjectFields = (object) => {
   return {
     subjectIntroduction: object?.subjectIntroduction,
-    emailWithdrawal: object?.emailWithdrawal,
     profileTitle: object?.profileTitle,
     teachToAmateurPersons: object?.teachToAmateurPersons,
     hourlyPrice: object?.hourlyPrice,
@@ -277,7 +276,6 @@ export const tabSubjectFields = (object) => {
     videoLink: object?.videoLink,
     studentLevel: object?.studentLevel,
     subject: object?.subject,
-    withdrawal: object?.withdrawal,
   };
 };
 

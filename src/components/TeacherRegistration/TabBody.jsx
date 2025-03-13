@@ -2,6 +2,8 @@
 
 import TabsDisplayedInfo from "./TabsDisplayedInfo";
 import TabsButtons from "./TabsButtons";
+
+// React imports
 import { useState } from "react";
 
 const defaultValue = {
@@ -14,16 +16,14 @@ const defaultValue = {
   introduction: "",
   languages: [],
   profileTitle: "",
-  subSubject: "",
+  subSubject: [],
   subject: "",
   subjectIntroduction: "",
   videoLink: "",
-  emailWithdrawal: "",
   hourlyPrice: "",
   studentLevel: "",
   teachToAmateurPersons: false,
   teachToYoungPersons: false,
-  withdrawal: "",
   careerExperience: [],
   education: [],
 };
@@ -33,9 +33,7 @@ export const TabBody = ({ draftData }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <main
-      className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}
-    >
+    <main className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
       {/* Tabs buttons (top) */}
       <TabsButtons
         setActiveTab={setActiveTab}
@@ -45,10 +43,10 @@ export const TabBody = ({ draftData }) => {
 
       {/* Tabs displayed info (bottom) */}
       <TabsDisplayedInfo
-        draft={draft}
-        setDraft={setDraft}
         setActiveTab={setActiveTab}
         activeTab={activeTab}
+        setDraft={setDraft}
+        draft={draft}
       />
     </main>
   );
