@@ -68,7 +68,7 @@ const BirthDateInput = ({ errors, control }) => {
       birthDateYear.onChange(date.format("YYYY"));
       setInputValue(getMonthNumberAsText(date.format("MM")));
     }
-  }, [birthDate.value]); 
+  }, [birthDate.value]);
 
   useEffect(() => {
     if (birthDateMonth.value) {
@@ -77,10 +77,8 @@ const BirthDateInput = ({ errors, control }) => {
   }, [birthDateMonth.value]);
 
   const handleInputChange = (value) => {
-    // Regex para validar que todos los caracteres formen parte de los nombres de los meses
     const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
 
-    // Permitir cadena vacía (para que el usuario pueda borrar el input)
     if (value === "" || validCharacters.test(value)) {
       setInputValue(value);
       const monthNumber = getMonthNumberFromText(value);
@@ -91,7 +89,7 @@ const BirthDateInput = ({ errors, control }) => {
         birthDate.onChange(updatedDate);
         birthDateMonth.onChange(monthNumber.toString().padStart(2, "0"));
       }
-      setSuggestions(getMonthSuggestions(value)); // Actualiza las sugerencias
+      setSuggestions(getMonthSuggestions(value));
     }
   };
 
@@ -103,7 +101,9 @@ const BirthDateInput = ({ errors, control }) => {
     birthDateNumber.onChange(moment(dateString, "YYYY/MM/D").format("D"));
     birthDateMonth.onChange(moment(dateString, "YYYY/MM/D").format("MM"));
     birthDateYear.onChange(moment(dateString, "YYYY/MM/D").format("YYYY"));
-    setInputValue(getMonthNumberAsText(moment(dateString, "YYYY/MM/D").format("MM")));
+    setInputValue(
+      getMonthNumberAsText(moment(dateString, "YYYY/MM/D").format("MM"))
+    );
   };
 
   const selectedDate = moment(
@@ -111,14 +111,17 @@ const BirthDateInput = ({ errors, control }) => {
     "YYYY/MM/D"
   ).toDate();
 
+  // Log the birthDate value whenever it changes
+  useEffect(() => {
+    console.log(birthDate.value);
+  }, [birthDate.value]);
+
   return (
     <div className="!mt-4 group">
-      {/* label */}
       <span className="flex gap-1.5 ps-[5px] items-center MT-SB-1 mb-1 text-primary-color-P4">
         Birth date <QuestionMark fillColor={"fill-primary-color-P4"} />
       </span>
 
-      {/* Inputs */}
       <InputLeftStickStatus
         inputBarStatusClassName={getInputStatusBorder(
           errors,
@@ -133,18 +136,23 @@ const BirthDateInput = ({ errors, control }) => {
               : "bg-primary-color-P11"
           } group-hover:bg-secondary-color-S9`}
         >
-          {/* Icon */}
           <div>
             <InputBGWrapperIcon>
               <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           </div>
 
-          {/* Date */}
           <div className="flex-[30%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
-              onChange={birthDateNumber.onChange}
+              onChange={(e) => {
+                birthDateNumber.onChange(e.target.value);
+                const newDate = moment(
+                  `${birthDateYear.value}/${birthDateMonth.value}/${e.target.value}`,
+                  "YYYY/MM/D"
+                ).format("YYYY/MM/D");
+                birthDate.onChange(newDate);
+              }}
               onBlur={birthDateNumber.onBlur}
               value={birthDateNumber.value}
               name="birthDateNumber"
@@ -152,7 +160,6 @@ const BirthDateInput = ({ errors, control }) => {
             />
           </div>
 
-          {/* Month */}
           <div className="relative flex-[65%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 !px-8 h-9"
@@ -172,11 +179,17 @@ const BirthDateInput = ({ errors, control }) => {
             )}
           </div>
 
-          {/* Year */}
           <div className="flex-[45%]">
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
-              onChange={birthDateYear.onChange}
+              onChange={(e) => {
+                birthDateYear.onChange(e.target.value);
+                const newDate = moment(
+                  `${e.target.value}/${birthDateMonth.value}/${birthDateNumber.value}`,
+                  "YYYY/MM/D"
+                ).format("YYYY/MM/D");
+                birthDate.onChange(newDate);
+              }}
               onBlur={birthDateYear.onBlur}
               value={birthDateYear.value}
               name="birthDateYear"
@@ -184,7 +197,6 @@ const BirthDateInput = ({ errors, control }) => {
             />
           </div>
 
-          {/* Calendar Trigger Icon */}
           <div>
             <DatePicker
               renderCustomHeader={BirthDateCustomHeader}
