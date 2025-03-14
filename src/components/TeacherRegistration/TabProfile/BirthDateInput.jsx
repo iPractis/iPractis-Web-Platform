@@ -111,11 +111,6 @@ const BirthDateInput = ({ errors, control }) => {
     "YYYY/MM/D"
   ).toDate();
 
-  // Log the birthDate value whenever it changes
-  useEffect(() => {
-    console.log(birthDate.value);
-  }, [birthDate.value]);
-
   return (
     <div className="!mt-4 group">
       <span className="flex gap-1.5 ps-[5px] items-center MT-SB-1 mb-1 text-primary-color-P4">
@@ -153,7 +148,10 @@ const BirthDateInput = ({ errors, control }) => {
                 ).format("YYYY/MM/D");
                 birthDate.onChange(newDate);
               }}
-              onBlur={birthDateNumber.onBlur}
+              onBlur={() => {
+                birthDateNumber.onBlur();
+                birthDate.onBlur();
+              }}
               value={birthDateNumber.value}
               name="birthDateNumber"
               type="text"
@@ -164,6 +162,9 @@ const BirthDateInput = ({ errors, control }) => {
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 !px-8 h-9"
               onChange={(e) => handleInputChange(e.target.value)}
+              onBlur={() => {
+                birthDate.onBlur();
+              }}
               name="birthDateMonth"
               value={inputValue}
               type="text"
@@ -190,7 +191,10 @@ const BirthDateInput = ({ errors, control }) => {
                 ).format("YYYY/MM/D");
                 birthDate.onChange(newDate);
               }}
-              onBlur={birthDateYear.onBlur}
+              onBlur={() => {
+                birthDateYear.onBlur();
+                birthDate.onBlur();
+              }}
               value={birthDateYear.value}
               name="birthDateYear"
               type="text"
