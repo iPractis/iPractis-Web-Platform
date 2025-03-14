@@ -30,14 +30,12 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       introduction: draft?.introduction,
       uploadProfileImage: draft?.uploadProfileImage,
       languages: draft?.languages,
-      nationality: draft?.nationality,
+      nationality: draft?.nationality || "United Kingdom",
+      country: draft?.country || "United Kingdom",
       birthDate: draft?.birthDate,
-      country: draft?.country,
       gender: draft?.gender,
     },
   });
-
-  console.log(watch("country"))
 
   const buttonRef = useRef(null);
 

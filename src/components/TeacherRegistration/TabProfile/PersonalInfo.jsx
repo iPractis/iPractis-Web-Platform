@@ -52,7 +52,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
   } = useController({
     control,
     name: "country",
-    defaultValue: "United Kingdom",
   });
 
   const {
@@ -61,7 +60,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
   } = useController({
     control,
     name: "nationality",
-    defaultValue: "United Kingdom",
   });
 
   console.log(countryField, "campo de country");
@@ -216,7 +214,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   }}
                   onBlur={countryField?.onBlur}
                   onChange={countryField?.onChange}
-                  value={countryField?.value}
                   name="country"
                   labelPlacement="outside"
                   startContent={
@@ -260,7 +257,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   labelPlacement="outside"
                   onBlur={nationalityField?.onBlur}
                   onChange={nationalityField?.onChange}
-                  value={nationalityField?.value}
                   name="nationality"
                   startContent={
                     <span className="flex items-center gap-1.5">
