@@ -67,8 +67,8 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "PROFILE");
       }
     } catch (err) {
-      setError(err?.response?.data?.message);
       console.log(err);
+      setError(err?.response?.data?.message);
     } finally {
       buttonRef.current.notIsLoading();
     }

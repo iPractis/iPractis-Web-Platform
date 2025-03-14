@@ -62,9 +62,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
     name: "nationality",
   });
 
-  console.log(countryField, "campo de country");
-  console.log(nationalityField, "campo de nationality");
-
   return (
     <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader

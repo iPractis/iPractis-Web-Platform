@@ -68,8 +68,8 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "SUBJECT");
       }
     } catch (err) {
-      setError(err?.response?.data?.message);
       console.log(err);
+      setError(err?.response?.data?.message);
     } finally {
       buttonRef.current.notIsLoading();
     }

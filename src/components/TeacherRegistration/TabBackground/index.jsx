@@ -47,6 +47,7 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
         console.log(response, "BACKGROUND");
       }
     } catch (err) {
+      console.log(err);
       setError(err?.response?.data?.message);
     } finally {
       buttonRef.current.notIsLoading();
