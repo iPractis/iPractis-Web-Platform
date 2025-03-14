@@ -35,7 +35,6 @@ const BirthDateInput = ({ errors, control }) => {
   } = useController({
     name: "birthDate",
     control: control,
-    defaultValue: currentDate.format("YYYY/MM/D"),
   });
 
   const { field: birthDateNumber } = useController({
@@ -55,6 +54,21 @@ const BirthDateInput = ({ errors, control }) => {
     control: control,
     defaultValue: defaultYear,
   });
+
+  useEffect(() => {
+    if (!birthDate.value) {
+      birthDateNumber.onChange(defaultDate);
+      birthDateMonth.onChange(defaultMonth);
+      birthDateYear.onChange(defaultYear);
+      setInputValue(getMonthNumberAsText(defaultMonth));
+    } else {
+      const date = moment(birthDate.value, "YYYY/MM/D");
+      birthDateNumber.onChange(date.format("D"));
+      birthDateMonth.onChange(date.format("MM"));
+      birthDateYear.onChange(date.format("YYYY"));
+      setInputValue(getMonthNumberAsText(date.format("MM")));
+    }
+  }, [birthDate.value]); 
 
   useEffect(() => {
     if (birthDateMonth.value) {
@@ -89,7 +103,13 @@ const BirthDateInput = ({ errors, control }) => {
     birthDateNumber.onChange(moment(dateString, "YYYY/MM/D").format("D"));
     birthDateMonth.onChange(moment(dateString, "YYYY/MM/D").format("MM"));
     birthDateYear.onChange(moment(dateString, "YYYY/MM/D").format("YYYY"));
+    setInputValue(getMonthNumberAsText(moment(dateString, "YYYY/MM/D").format("MM")));
   };
+
+  const selectedDate = moment(
+    `${birthDateYear.value}/${birthDateMonth.value}/${birthDateNumber.value}`,
+    "YYYY/MM/D"
+  ).toDate();
 
   return (
     <div className="!mt-4 group">
@@ -123,11 +143,12 @@ const BirthDateInput = ({ errors, control }) => {
           {/* Date */}
           <div className="flex-[30%]">
             <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
+              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
+              onChange={birthDateNumber.onChange}
+              onBlur={birthDateNumber.onBlur}
               value={birthDateNumber.value}
               name="birthDateNumber"
               type="text"
-              readOnly
             />
           </div>
 
@@ -144,7 +165,7 @@ const BirthDateInput = ({ errors, control }) => {
             {suggestions.length > 0 && (
               <span
                 className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none text-gray-400"
-                style={{ left: `${inputValue.length}ch` }} // Ajustar posición de la sugerencia
+                style={{ left: `${inputValue.length}ch` }}
               >
                 {suggestions[0].slice(inputValue.length)}
               </span>
@@ -154,11 +175,12 @@ const BirthDateInput = ({ errors, control }) => {
           {/* Year */}
           <div className="flex-[45%]">
             <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 pointer-events-none h-9"
+              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
+              onChange={birthDateYear.onChange}
+              onBlur={birthDateYear.onBlur}
               value={birthDateYear.value}
               name="birthDateYear"
               type="text"
-              readOnly
             />
           </div>
 
@@ -173,11 +195,7 @@ const BirthDateInput = ({ errors, control }) => {
               dateFormat="YYYY/MM/D"
               dropdownMode="select"
               calendarStartDay={1}
-              selected={
-                birthDate.value
-                  ? moment(birthDate.value, "YYYY/MM/D").toDate()
-                  : getDateYearsAgo(18)
-              }
+              selected={selectedDate}
               customInput={
                 <button
                   className="p-1.5 rounded-[10px] bg-primary-color-P12"
