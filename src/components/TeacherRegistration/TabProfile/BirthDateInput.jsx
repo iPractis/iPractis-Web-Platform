@@ -80,10 +80,12 @@ const BirthDateInput = ({ errors, control }) => {
     const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
 
     if (value === "" || validCharacters.test(value)) {
-      setInputValue(value);
+      const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+
+      setInputValue(capitalizedValue);
       setSuggestions(getMonthSuggestions(value));
 
-      // Solo actualiza el mes y la fecha si el valor es un mes completo y válido
+      // Only update the month and date if the value is a complete and valid month
       const monthNumber = getMonthNumberFromText(value);
       if (
         monthNumber !== null &&
