@@ -119,6 +119,24 @@ const BirthDateInput = ({ errors, control }) => {
     "YYYY/MM/D"
   ).toDate();
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab" && suggestions.length > 0) {
+      e.preventDefault();
+      const completedMonth = suggestions[0];
+      setInputValue(completedMonth);
+
+      // Actualizar el mes y la fecha
+      const monthNumber = getMonthNumberFromText(completedMonth);
+      if (monthNumber !== null) {
+        const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+          .month(monthNumber - 1)
+          .format("YYYY/MM/D");
+        birthDate.onChange(updatedDate);
+        birthDateMonth.onChange(monthNumber.toString().padStart(2, "0"));
+      }
+    }
+  };
+
   return (
     <div className="!mt-4 group">
       <span className="flex gap-1.5 ps-[5px] items-center MT-SB-1 mb-1 text-primary-color-P4">
@@ -177,6 +195,7 @@ const BirthDateInput = ({ errors, control }) => {
                   : "text-start"
               } w-full outline-none rounded-xl !p-0 !px-4 h-9`}
               onChange={(e) => handleInputChange(e.target.value)}
+              onKeyDown={handleKeyDown}
               onBlur={() => {
                 birthDateMonth.onBlur();
                 birthDate.onBlur();
