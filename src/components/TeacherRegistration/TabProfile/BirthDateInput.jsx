@@ -80,7 +80,8 @@ const BirthDateInput = ({ errors, control }) => {
     const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
 
     if (value === "" || validCharacters.test(value)) {
-      const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
+      const capitalizedValue =
+        value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
 
       setInputValue(capitalizedValue);
       setSuggestions(getMonthSuggestions(value));
@@ -187,7 +188,7 @@ const BirthDateInput = ({ errors, control }) => {
             {suggestions.length > 0 && (
               <span
                 className={`absolute top-0 ${
-                  !inputValue.length ? "left-[30%]" : "right-0 -translate-x-0"
+                  !inputValue.length ? "left-[30%]" : "right-12 -translate-x-0"
                 } h-full flex items-center pointer-events-none text-gray-400`}
               >
                 {suggestions[0].slice(inputValue.length)}
