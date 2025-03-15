@@ -81,15 +81,20 @@ const BirthDateInput = ({ errors, control }) => {
 
     if (value === "" || validCharacters.test(value)) {
       setInputValue(value);
+      setSuggestions(getMonthSuggestions(value));
+
+      // Solo actualiza el mes y la fecha si el valor es un mes completo y válido
       const monthNumber = getMonthNumberFromText(value);
-      if (monthNumber !== null) {
+      if (
+        monthNumber !== null &&
+        value.toLowerCase() === getMonthNumberAsText(monthNumber).toLowerCase()
+      ) {
         const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
           .month(monthNumber - 1)
           .format("YYYY/MM/D");
         birthDate.onChange(updatedDate);
         birthDateMonth.onChange(monthNumber.toString().padStart(2, "0"));
       }
-      setSuggestions(getMonthSuggestions(value));
     }
   };
 
@@ -160,7 +165,14 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="relative flex-[65%]">
             <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 !px-8 h-9"
+              className={`input-ipractis ${
+                inputValue.toLowerCase() ===
+                getMonthNumberAsText(
+                  getMonthNumberFromText(inputValue)
+                )?.toLowerCase()
+                  ? "text-center"
+                  : "text-start"
+              } w-full outline-none rounded-xl !p-0 !px-4 h-9`}
               onChange={(e) => handleInputChange(e.target.value)}
               onBlur={() => {
                 birthDate.onBlur();
@@ -172,8 +184,9 @@ const BirthDateInput = ({ errors, control }) => {
 
             {suggestions.length > 0 && (
               <span
-                className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none text-gray-400"
-                style={{ left: `${inputValue.length}ch` }}
+                className={`absolute top-0 ${
+                  !inputValue.length ? "left-[30%]" : "right-0 -translate-x-0"
+                } h-full flex items-center pointer-events-none text-gray-400`}
               >
                 {suggestions[0].slice(inputValue.length)}
               </span>
