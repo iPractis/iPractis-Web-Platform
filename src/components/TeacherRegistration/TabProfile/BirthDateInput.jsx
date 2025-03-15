@@ -178,6 +178,7 @@ const BirthDateInput = ({ errors, control }) => {
               } w-full outline-none rounded-xl !p-0 !px-4 h-9`}
               onChange={(e) => handleInputChange(e.target.value)}
               onBlur={() => {
+                birthDateMonth.onBlur();
                 birthDate.onBlur();
               }}
               name="birthDateMonth"
