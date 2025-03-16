@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 
 // Icons
 import { CalendarBiggerIcon, BabyWalkerIcon, QuestionMark } from "../../Icons";
+import { getSuggestionClassName } from "@/src/lib/helpers/getSuggestionClassName";
 
 const BirthDateInput = ({ errors, control }) => {
   const currentDate = moment(getDateYearsAgo(18));
@@ -125,7 +126,7 @@ const BirthDateInput = ({ errors, control }) => {
       const completedMonth = suggestions[0];
       setInputValue(completedMonth);
 
-      // Actualizar el mes y la fecha
+      // Update the month and date
       const monthNumber = getMonthNumberFromText(completedMonth);
       if (monthNumber !== null) {
         const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
@@ -208,7 +209,9 @@ const BirthDateInput = ({ errors, control }) => {
             {suggestions.length > 0 && (
               <span
                 className={`absolute top-0 ${
-                  !inputValue.length ? "left-[30%]" : "right-12 -translate-x-0"
+                  !inputValue.length
+                    ? "left-[30%]"
+                    : getSuggestionClassName(inputValue)
                 } h-full flex items-center pointer-events-none text-gray-400`}
               >
                 {suggestions[0].slice(inputValue.length)}
