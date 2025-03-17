@@ -1,40 +1,52 @@
 import SectionHeader from "../../Shared/SectionHeader";
+import InfoCard from "./InfoCard";
 
 // Images && icons
-import {
-  CheckedShieldBigIcon,
-  CheckedShieldIcon,
-  QuestionMark,
-} from "../../Icons";
+import { CheckedCloudIcon, CheckedShieldBigIcon, CheckedShieldIcon, MonitorBiggestIcon } from "../../Icons";
 
 const SecurityCheckUp = () => {
   return (
-    <>
+    <div>
       <SectionHeader
         descriptionText={
           "Review and monitor your account's security status to stay protected and informed of any recent activity."
         }
         wrapperSectionHeaderClassName="px-4"
         titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px]"}
-        titleClassName="MT-SB-1"
+        descriptionClassName={"mt-[4px] mb-4"}
         titleText={"Security Check-Up"}
+        titleClassName="MT-SB-1"
       />
 
       <div className="grid grid-cols-3 gap-8">
-        <div className="bg-primary-color-P11 p-8 rounded-[32px] flex flex-col justify-center items-center text-center">
-          <CheckedShieldBigIcon fillColor={"fill-primary-color-P1"} />
+        <InfoCard
+          description="Multi-step verification"
+          icon={CheckedShieldBigIcon}
+          title="Sign-in and recovery"
+          togglePosition="right"
+          isActive={true}
+          status="On"
+        />
 
-          <div className="mt-4">
-            <h3 className="text-primary-color-P1 MT-SB-1 flex gap-1.5 items-center">
-              Sign-in and recovery <QuestionMark fillColor={'fill-primary-color-P1'} />
-            </h3>
+        <InfoCard
+          icon={MonitorBiggestIcon}
+          description="Connected"
+          togglePosition="left"
+          title="Your devices"
+          status="6 Devices"
+          isActive={true}
+        />
 
-            <h5 className="text-primary-color-P4 ST-4 mt-0.5">Multi-Step verification <span className="bg-tertiary-color-SC5 text-primary-color-P12 px-2 py-0.5 rounded-lg">On</span></h5>
-          </div>
-        </div>
+        <InfoCard
+          description="Verified until"
+          title="Verification Badge"
+          icon={CheckedCloudIcon}
+          togglePosition="right"
+          isActive={true}
+          status="2028"
+        />
       </div>
-    </>
+    </div>
   );
 };
 
