@@ -251,7 +251,7 @@ const BirthDateInput = ({ errors, control }) => {
               <span
                 className={`absolute top-0 ${
                   !inputValue.length
-                    ? "left-[30%]"
+                    ? "-translate-x-1/2 left-1/2"
                     : getSuggestionClassName(inputValue)
                 } h-full flex items-center pointer-events-none text-primary-color-P7`}
               >
