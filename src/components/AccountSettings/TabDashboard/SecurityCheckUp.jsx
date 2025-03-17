@@ -2,7 +2,12 @@ import SectionHeader from "../../Shared/SectionHeader";
 import InfoCard from "./InfoCard";
 
 // Images && icons
-import { CheckedCloudIcon, CheckedShieldBigIcon, CheckedShieldIcon, MonitorBiggestIcon } from "../../Icons";
+import {
+  CheckedCloudIcon,
+  CheckedShieldBigIcon,
+  CheckedShieldIcon,
+  MonitorBiggestIcon,
+} from "../../Icons";
 
 const SecurityCheckUp = () => {
   return (
