@@ -135,6 +135,12 @@ const BirthDateInput = ({ errors, control }) => {
         birthDate.onChange(updatedDate);
         birthDateMonth.onChange(monthNumber.toString().padStart(2, "0"));
       }
+
+      // Move the focus to the next input (birthDateYear)
+      const yearInput = document.querySelector('input[name="birthDateYear"]');
+      if (yearInput) {
+        yearInput.focus();
+      }
     }
   };
 
