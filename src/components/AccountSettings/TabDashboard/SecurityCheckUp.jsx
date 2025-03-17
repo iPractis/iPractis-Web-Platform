@@ -23,7 +23,7 @@ const SecurityCheckUp = () => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-8">
         <InfoCard
           description="Multi-step verification"
           icon={CheckedShieldBigIcon}
