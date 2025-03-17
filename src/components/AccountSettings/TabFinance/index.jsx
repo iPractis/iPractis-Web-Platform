@@ -1,5 +1,5 @@
 const TabFinance = ({ activeTab }) => {
-  return <div className={`${activeTab !== 4 && "hidden"}`}>TabFinance</div>;
+  return <form className={`${activeTab !== 4 && "hidden"}`}>TabFinance</form>;
 };
 
 export default TabFinance;

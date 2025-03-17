@@ -1,5 +1,7 @@
 const TabNotification = ({ activeTab }) => {
-    return <div className={`${activeTab !== 3 && "hidden"}`}>TabNotification</div>;
-  };
-  
-  export default TabNotification;
+  return (
+    <form className={`${activeTab !== 3 && "hidden"}`}>TabNotification</form>
+  );
+};
+
+export default TabNotification;

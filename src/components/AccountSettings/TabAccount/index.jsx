@@ -1,5 +1,23 @@
+import Preferences from "./Preferences";
+
+// External imports
+import { useForm } from "react-hook-form";
+
 const TabAccount = ({ activeTab }) => {
-  return <div className={`${activeTab !== 1 && "hidden"}`}>TabAccount</div>;
+  const {
+    formState: { errors },
+    handleSubmit,
+    setError,
+    control,
+  } = useForm({
+    mode: "onBlur",
+  });
+
+  return (
+    <form className={`${activeTab !== 1 && "hidden"} space-y-16 mb-24`}>
+      <Preferences control={control} />
+    </form>
+  );
 };
 
 export default TabAccount;

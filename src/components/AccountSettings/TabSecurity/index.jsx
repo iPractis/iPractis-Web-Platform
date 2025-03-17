@@ -1,5 +1,5 @@
 const TabSecurity = ({ activeTab }) => {
-  return <div className={`${activeTab !== 2 && "hidden"}`}>TabSecurity</div>;
+  return <form className={`${activeTab !== 2 && "hidden"}`}>TabSecurity</form>;
 };
 
 export default TabSecurity;

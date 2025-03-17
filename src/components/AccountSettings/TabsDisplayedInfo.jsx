@@ -6,7 +6,7 @@ import TabFinance from "./TabFinance/index";
 
 const TabsDisplayedInfo = ({ activeTab }) => {
   return (
-    <form className={`max-w-[1000px] mx-auto`}>
+    <main className={`max-w-[1000px] mx-auto`}>
       {/* 0 */}
       <TabDashboard activeTab={activeTab} />
 
@@ -21,7 +21,7 @@ const TabsDisplayedInfo = ({ activeTab }) => {
 
       {/* 4 */}
       <TabFinance activeTab={activeTab} />
-    </form>
+    </main>
   );
 };
 
