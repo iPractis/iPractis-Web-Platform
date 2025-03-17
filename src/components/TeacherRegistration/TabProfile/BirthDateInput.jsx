@@ -168,9 +168,14 @@ const BirthDateInput = ({ errors, control }) => {
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
               onChange={(e) => {
-                birthDateNumber.onChange(e.target.value);
+                const numericValue = e.target.value.replace(/\D/g, "");
+
+                birthDateNumber.onChange(numericValue.slice(0, 2));
+
                 const newDate = moment(
-                  `${birthDateYear.value}/${birthDateMonth.value}/${e.target.value}`,
+                  `${birthDateYear.value}/${
+                    birthDateMonth.value
+                  }/${numericValue.slice(0, 2)}`,
                   "YYYY/MM/D"
                 ).format("YYYY/MM/D");
                 birthDate.onChange(newDate);
@@ -187,14 +192,7 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="relative flex-[65%]">
             <input
-              className={`input-ipractis ${
-                inputValue.toLowerCase() ===
-                getMonthNumberAsText(
-                  getMonthNumberFromText(inputValue)
-                )?.toLowerCase()
-                  ? "text-center"
-                  : "text-start"
-              } w-full outline-none rounded-xl !p-0 !px-4 h-9`}
+              className={`input-ipractis text-center w-full outline-none rounded-xl !p-0 !px-4 h-9`}
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -212,7 +210,7 @@ const BirthDateInput = ({ errors, control }) => {
                   !inputValue.length
                     ? "left-[30%]"
                     : getSuggestionClassName(inputValue)
-                } h-full flex items-center pointer-events-none text-gray-400`}
+                } h-full flex items-center pointer-events-none text-primary-color-P7`}
               >
                 {suggestions[0].slice(inputValue.length)}
               </span>
@@ -223,9 +221,12 @@ const BirthDateInput = ({ errors, control }) => {
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
               onChange={(e) => {
-                birthDateYear.onChange(e.target.value);
+                const numericValue = e.target.value.replace(/\D/g, "");
+                birthDateYear.onChange(numericValue.slice(0, 4));
                 const newDate = moment(
-                  `${e.target.value}/${birthDateMonth.value}/${birthDateNumber.value}`,
+                  `${numericValue.slice(0, 4)}/${birthDateMonth.value}/${
+                    birthDateNumber.value
+                  }`,
                   "YYYY/MM/D"
                 ).format("YYYY/MM/D");
                 birthDate.onChange(newDate);
