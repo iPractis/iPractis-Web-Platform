@@ -174,17 +174,54 @@ const BirthDateInput = ({ errors, control }) => {
             <input
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
               onChange={(e) => {
-                const numericValue = e.target.value.replace(/\D/g, "");
+                let numericValue = e.target.value.replace(/\D/g, "");
+
+                // Prevent the first character from being a 0
+                if (numericValue.length === 1 && numericValue === "0") {
+                  numericValue = "";
+                } else if (
+                  numericValue.length > 1 &&
+                  numericValue.startsWith("0")
+                ) {
+                  numericValue = numericValue.slice(1);
+                }
+
+                // Get the current month and year
+                const month = birthDateMonth.value;
+                const year = birthDateYear.value;
+
+                // Calculate the maximum number of days for the current month
+                let maxDays = 31; // Value by default
+                if (month && year) {
+                  const daysInMonth = moment(
+                    `${year}-${month}`,
+                    "YYYY-MM"
+                  ).daysInMonth();
+                  maxDays = daysInMonth;
+                }
+
+                // Limit the value to the maximum number of days in the month
+                if (numericValue.length > 0) {
+                  const day = parseInt(numericValue.slice(0, 2), 10);
+                  if (day > maxDays) {
+                    numericValue = maxDays.toString(); // Force the maximum value
+                  }
+                }
 
                 birthDateNumber.onChange(numericValue.slice(0, 2));
 
-                const newDate = moment(
-                  `${birthDateYear.value}/${
-                    birthDateMonth.value
-                  }/${numericValue.slice(0, 2)}`,
-                  "YYYY/MM/D"
-                ).format("YYYY/MM/D");
-                birthDate.onChange(newDate);
+                // Validate and format the date
+                const day = numericValue.slice(0, 2);
+                if (day.length > 0 && month && year) {
+                  const date = moment(
+                    `${year}/${month}/${day}`,
+                    "YYYY/MM/D",
+                    true
+                  );
+                  if (date.isValid()) {
+                    birthDate.onChange(date.format("YYYY/MM/D"));
+                  }
+                }
               }}
               onBlur={() => {
                 birthDateNumber.onBlur();
