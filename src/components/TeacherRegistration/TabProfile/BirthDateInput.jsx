@@ -1,3 +1,4 @@
+import { getSuggestionClassName } from "@/src/lib/helpers/getSuggestionClassName";
 import { getMonthNumberFromText } from "@/src/lib/helpers/getMonthNumberFromText";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { getMonthSuggestions } from "@/src/lib/helpers/getMonthSuggestions";
@@ -19,7 +20,6 @@ import { useEffect, useState } from "react";
 
 // Icons
 import { CalendarBiggerIcon, BabyWalkerIcon, QuestionMark } from "../../Icons";
-import { getSuggestionClassName } from "@/src/lib/helpers/getSuggestionClassName";
 
 const BirthDateInput = ({ errors, control }) => {
   const currentDate = moment(getDateYearsAgo(18));
