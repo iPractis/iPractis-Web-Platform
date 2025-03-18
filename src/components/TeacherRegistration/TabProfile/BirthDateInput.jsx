@@ -5,6 +5,7 @@ import { getMonthSuggestions } from "@/src/lib/helpers/getMonthSuggestions";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import { getPaddingClass } from "@/src/lib/helpers/getPaddingClass";
 import { getDateYearsAgo } from "@/src/lib/utils/getDateYearsAgo";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import BirthDateCustomHeader from "./BirthDateCustomHeader";
@@ -235,25 +236,9 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="relative flex-[65%]">
             <input
-              className={`input-ipractis w-full outline-none rounded-xl !p-0 h-9 ${
-                inputValue.startsWith("D") || inputValue.startsWith("S")
-                  ? "!ps-[2.5rem]"
-                  : inputValue.startsWith("Au")
-                  ? "!ps-[3.2rem]"
-                  : inputValue.startsWith("A")
-                  ? "!ps-[3.5rem]"
-                  : inputValue.startsWith("May")
-                  ? "!ps-[3.6rem]"
-                  : inputValue.startsWith("M")
-                  ? "!ps-[3.3rem]"
-                  : inputValue.startsWith("Jul")
-                  ? "!ps-[3.8rem]"
-                  : inputValue.startsWith("Ju")
-                  ? "!ps-[3.6rem]"
-                  : inputValue.startsWith("N")
-                  ? "!ps-[2.7rem]"
-                  : "!ps-[3rem]"
-              }`}
+              className={`input-ipractis w-full outline-none rounded-xl !p-0 h-9 ${getPaddingClass(
+                inputValue
+              )}`}
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
