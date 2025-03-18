@@ -235,7 +235,25 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="relative flex-[65%]">
             <input
-              className={`input-ipractis text-center w-full outline-none rounded-xl !p-0 !px-4 h-9`}
+              className={`input-ipractis w-full outline-none rounded-xl !p-0 h-9 ${
+                inputValue.startsWith("D") || inputValue.startsWith("S")
+                  ? "!ps-[2.5rem]"
+                  : inputValue.startsWith("Au")
+                  ? "!ps-[3.2rem]"
+                  : inputValue.startsWith("A")
+                  ? "!ps-[3.5rem]"
+                  : inputValue.startsWith("May")
+                  ? "!ps-[3.6rem]"
+                  : inputValue.startsWith("M")
+                  ? "!ps-[3.3rem]"
+                  : inputValue.startsWith("Jul")
+                  ? "!ps-[3.8rem]"
+                  : inputValue.startsWith("Ju")
+                  ? "!ps-[3.6rem]"
+                  : inputValue.startsWith("N")
+                  ? "!ps-[2.7rem]"
+                  : "!ps-[3rem]"
+              }`}
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
