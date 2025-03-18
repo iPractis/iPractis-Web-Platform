@@ -15,7 +15,7 @@ const TabAccount = ({ activeTab }) => {
 
   return (
     <form className={`${activeTab !== 1 && "hidden"} space-y-16 mb-24`}>
-      <Preferences control={control} />
+      <Preferences control={control} errors={errors} />
     </form>
   );
 };
