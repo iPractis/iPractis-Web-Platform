@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const HowWorksAndSkills = () => {
   return (
-    <WhiteSpaceWrapper className="grid md:grid-cols-2 grid-cols-1 gap-[50px] p-0 md:px-8">
+    <WhiteSpaceWrapper className="grid lg:grid-cols-2 grid-cols-1 gap-[50px] p-0 lg:px-8">
       <div>
         <SectionHeader
           descriptionText={

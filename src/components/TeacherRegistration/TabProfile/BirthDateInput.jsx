@@ -236,7 +236,7 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="relative flex-[65%]">
             <input
-              className={`input-ipractis w-full outline-none rounded-xl !p-0 h-9 ${getPaddingClass(
+              className={`input-ipractis w-full outline-none rounded-xl !p-0 lg:text-start text-center h-9 ${getPaddingClass(
                 inputValue
               )}`}
               onChange={(e) => handleInputChange(e.target.value)}

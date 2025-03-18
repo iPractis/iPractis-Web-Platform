@@ -20,7 +20,7 @@ const StudentPreference = ({ control, errors }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="md:px-8">
+      <div className="lg:px-8">
         <SectionHeader
           descriptionText="Select the level you can teach"
           titleIcon={

@@ -58,10 +58,10 @@ const RelatedSubTopics = ({ control, errors }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="md:px-8">
+      <div className="lg:px-8">
         <div className="space-y-[40px]">
           {/* Select Sub-subject */}
-          <div className="grid md:grid-cols-2 grid-cols-1">
+          <div className="grid lg:grid-cols-2 grid-cols-1">
             <InputLeftStickStatus
               inputBarStatusClassName={`${getInputStatusBorder(
                 errors,

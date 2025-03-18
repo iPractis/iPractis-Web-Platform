@@ -73,7 +73,7 @@ const WorkTimePreferences = ({ errors, control }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-[50px] md:px-8">
+      <div className="grid lg:grid-cols-2 grid-cols-1 gap-[50px] lg:px-8">
         {/* Set your time zone */}
         <div>
           <SectionHeader

@@ -34,7 +34,7 @@ const PresentYourSelf = ({ control, errors }) => {
         wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mt-20 mb-[90px]"
       />
 
-      <div className="grid md:grid-cols-2 grid-cols-1 md:px-8">
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8">
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(

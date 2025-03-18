@@ -63,7 +63,7 @@ const Education = ({ errors, control }) => {
 
           <SplitDynamicErrorZod message={error?.message} />
 
-          <WhiteSpaceWrapper className={"md:px-8 p-0"}>
+          <WhiteSpaceWrapper className={"lg:px-8 p-0"}>
             {education?.map((education, index) => (
               <FormInputsBox
                 firstInputPlaceholder={"Example: University Of Somewhere"}

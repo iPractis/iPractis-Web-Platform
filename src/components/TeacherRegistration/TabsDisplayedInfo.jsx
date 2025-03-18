@@ -7,7 +7,7 @@ import TabReview from "./TabReview";
 
 const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
   return (
-    <main className={`max-w-[1000px] md:px-0 px-8 sm:py-0 py-8 mx-auto`}>
+    <main className={`max-w-[1000px] lg:px-0 px-8 sm:py-0 py-8 mx-auto`}>
       {/* 0 */}
       <TabProfile
         setActiveTab={setActiveTab}

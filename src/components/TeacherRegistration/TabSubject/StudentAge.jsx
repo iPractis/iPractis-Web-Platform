@@ -10,7 +10,7 @@ import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
 
 const StudentAge = ({ isSubmitted, control }) => {
   return (
-    <div className="md:px-8 mt-[50px]">
+    <div className="lg:px-8 mt-[50px]">
       <SectionHeader
         wrapperSectionHeaderClassName={"pb-[30px]"}
         descriptionText="iPractis considers all students aged between 5 and 14 as young students. By activating this option, you agree to teach this age group."

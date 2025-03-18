@@ -61,7 +61,7 @@ const Experience = ({ errors, control }) => {
 
           <SplitDynamicErrorZod message={error?.message} />
 
-          <WhiteSpaceWrapper className={"md:px-8 p-0"}>
+          <WhiteSpaceWrapper className={"lg:px-8 p-0"}>
             {careerExperience?.map((experience, index) => (
               <FormInputsBox
                 firstInputPlaceholder={"Example: Google"}
