@@ -34,7 +34,7 @@ export const TabBody = ({ draftData }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <main className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
+    <section className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
       {/* Tabs buttons (top) */}
       <TabsButtons
         setActiveTab={setActiveTab}
@@ -49,6 +49,6 @@ export const TabBody = ({ draftData }) => {
         setDraft={setDraft}
         draft={draft}
       />
-    </main>
+    </section>
   );
 };

@@ -41,7 +41,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
       >
         <div className="flex items-center gap-2">
           <div
-            className={`flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
+            className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
           >
             <InputBGWrapperIcon>
               <PersonIcon fillColor={"fill-primary-color-P4"} />
