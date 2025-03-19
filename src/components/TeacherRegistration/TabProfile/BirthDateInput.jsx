@@ -122,7 +122,10 @@ const BirthDateInput = ({ errors, control }) => {
   ).toDate();
 
   const handleKeyDown = (e) => {
-    if (e.key === "Tab" && suggestions.length > 0) {
+    if (
+      (e.key === "Tab" || e.key === "ArrowRight" || e.key === "Enter") &&
+      suggestions.length > 0
+    ) {
       e.preventDefault();
       const completedMonth = suggestions[0];
       setInputValue(completedMonth);
