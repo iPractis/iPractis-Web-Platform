@@ -1,6 +1,6 @@
 export const getSuggestionClassName = (month) => {
   if (month.startsWith("Jul")) {
-    return "right-[44.5%]";
+    return "right-[42.5%]";
   }
 
   if (month.startsWith("Ju")) {
@@ -42,5 +42,6 @@ export const getSuggestionClassName = (month) => {
   if (month.startsWith("D")) {
     return "right-[28.5%]";
   }
+  
   return "";
 };
