@@ -14,7 +14,7 @@ export const fetchCountries = async () => {
 
     return json.map((country) => ({
       name: getWordsCapitalized(country.name.common),
-      flag: country.flags.png,
+      flag: country.flags.svg,
     }));
   } catch (error) {
     console.error(error);
