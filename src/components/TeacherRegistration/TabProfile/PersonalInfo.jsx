@@ -1,11 +1,12 @@
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
-import CountryResidenceInput from "./CountryResidenceInput";
 import SectionHeader from "../../Shared/SectionHeader";
+import BaseCountryInput from "./BaseCountryInput";
 
 import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
@@ -17,14 +18,11 @@ import { useController } from "react-hook-form";
 
 // Icons
 import {
-  FlagIcon,
   QuestionMark,
   ThreeUsersIcon,
   UserBigIcon,
   UserIcon,
 } from "../../Icons";
-import BaseCountryInput from "./BaseCountryInput";
-import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 
 const PersonalInfo = ({ control, errors, watch }) => {
   const {

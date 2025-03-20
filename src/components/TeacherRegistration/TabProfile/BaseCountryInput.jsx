@@ -1,4 +1,5 @@
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { getWordsCapitalized } from "@/src/lib/utils/getWordsCapitalized";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
@@ -12,14 +13,14 @@ import { useEffect, useState } from "react";
 import { FlagIcon } from "../../Icons";
 
 const BaseCountryInput = ({
-  errors,
-  field,
-  fieldError,
-  name,
-  label,
-  placeholder,
   SelectComponent,
   nextInputName,
+  placeholder,
+  fieldError,
+  errors,
+  field,
+  label,
+  name,
 }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [countries, setCountries] = useState([]);
@@ -34,11 +35,13 @@ const BaseCountryInput = ({
   }, []);
 
   const handleInputChange = (value) => {
-    field.onChange(value);
+    const capitalizedValue = getWordsCapitalized(value);
 
-    if (value) {
+    field.onChange(capitalizedValue);
+
+    if (capitalizedValue) {
       const filteredSuggestions = countries.filter((country) =>
-        country.name.toLowerCase().startsWith(value.toLowerCase())
+        country.name.toLowerCase().startsWith(capitalizedValue.toLowerCase())
       );
 
       setSuggestions(filteredSuggestions);
@@ -56,7 +59,9 @@ const BaseCountryInput = ({
       const completedCountry = suggestions[0].name;
       field.onChange(completedCountry);
 
-      const nextInput = document.querySelector(`input[name="${nextInputName}"]`);
+      const nextInput = document.querySelector(
+        `input[name="${nextInputName}"]`
+      );
       if (nextInput) {
         nextInput.focus();
       }
@@ -66,7 +71,11 @@ const BaseCountryInput = ({
   return (
     <div>
       <InputLeftStickStatus
-        inputBarStatusClassName={getInputStatusBorder(errors, field?.value, name)}
+        inputBarStatusClassName={getInputStatusBorder(
+          errors,
+          field?.value,
+          name
+        )}
       >
         <CustomNextUiInput
           type="text"

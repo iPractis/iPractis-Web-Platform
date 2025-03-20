@@ -1,3 +1,5 @@
+import { getWordsCapitalized } from "./getWordsCapitalized";
+
 export const fetchCountries = async () => {
   const url = "https://restcountries.com/v3.1/all";
 
@@ -11,7 +13,7 @@ export const fetchCountries = async () => {
     const json = await response.json();
 
     return json.map((country) => ({
-      name: country.name.common,
+      name: getWordsCapitalized(country.name.common),
       flag: country.flags.png,
     }));
   } catch (error) {
