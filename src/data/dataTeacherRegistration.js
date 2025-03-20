@@ -65,32 +65,6 @@ export const sectionHeaderContent = [
   },
 ];
 
-export const countriesSelection = [
-  {
-    image: unitedKingdom,
-    key: "United Kingdom",
-    alt: "Flag of United Kindgom",
-  },
-
-  {
-    image: france,
-    key: "France",
-    alt: "Flag of France",
-  },
-
-  {
-    image: italy,
-    key: "Italy",
-    alt: "Flag of Italy",
-  },
-
-  {
-    image: spain,
-    key: "Spain",
-    alt: "Flag of Spain",
-  },
-];
-
 export const languagesLevels = ["A1", "A2", "B1", "B2", "C1", "C2", "Native"];
 
 export const languages = [
