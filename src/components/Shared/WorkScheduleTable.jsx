@@ -185,7 +185,7 @@ const WorkScheduleTable = ({
         if (updatedHours.length === 0) {
           remove(existingIndex);
         } else {
-            // Update the array of hours
+          // Update the array of hours
           update(existingIndex, { day, hour: updatedHours });
         }
       } else {
@@ -364,7 +364,9 @@ const WorkScheduleTable = ({
       >
         <TableHeader>
           <TableColumn className="!h-0 w-[27.50px]" key="empty-column">
-            <div className="h-6 w-[80%]"></div>
+            <div className="bg-secondary-color-S4 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 p-2 w-[80%]">
+              {"Format"}
+            </div>{" "}
           </TableColumn>
 
           {Array.from({ length: 24 }, (_, index) => (
@@ -389,38 +391,14 @@ const WorkScheduleTable = ({
 
             return (
               <TableRow key={column.key}>
-                <TableCell className="!p-0 !pb-0.5 !pe-1">
+                <TableCell className="!p-0">
                   <div
-                    className={`flex gap-0.5 items-center ${
-                      isToday
-                        ? "w-[60px] bg-tertiary-color-SC5 ps-2 p-1 text-primary-color-P12 rounded-lg"
-                        : "ps-2 p-1"
+                    className={`text-primary-color-P12 rounded-md text-center w-[80%] my-1 ${
+                      isToday ? "bg-tertiary-color-SC5" : "bg-primary-color-P1"
                     }`}
                   >
-                    <div
-                      className={`${
-                        isToday
-                          ? "text-primary-color-P12"
-                          : "text-primary-color-P1"
-                      } ST-SB-3 w-[22px]`}
-                    >
+                    <div className={`text-primary-color-P12 ST-3`}>
                       {column.label}
-                    </div>
-
-                    <div
-                      className={`${
-                        isToday
-                          ? "bg-primary-color-P12 text-tertiary-color-SC5"
-                          : "bg-primary-color-P1 text-primary-color-P12"
-                      } h-5 w-[24px] rounded-md flex justify-center items-center`}
-                    >
-                      <p className="ST-4">
-                        {showCurrentDate
-                          ? columnDate instanceof Date && !isNaN(columnDate)
-                            ? columnDate.toLocaleDateString().split("/")[0]
-                            : "--"
-                          : "X"}
-                      </p>
                     </div>
                   </div>
                 </TableCell>
