@@ -7,7 +7,6 @@ import {
 } from "../components/Icons";
 
 // Images && icons
-import unitedKingdom2 from "@/public/flags/united-kingdom-2.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import france from "@/public/flags/france.png";
 import italy from "@/public/flags/italy.png";

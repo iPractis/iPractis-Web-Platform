@@ -1,5 +1,3 @@
-import { countriesSelection } from "@/src/data/dataTeacherRegistration";
-
 // External imports
 import {
   Dropdown,
@@ -10,14 +8,44 @@ import {
 } from "@nextui-org/react";
 
 // React imports
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Icons
 import { ChevronDownSmallIcon } from "../../Icons";
 
 const PersonalInfoCountrySelect = ({ countryField }) => {
-  const selectedCountry = countriesSelection.find(
-    (countryItem) => countryItem.key === countryField.value
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const url = "https://restcountries.com/v3.1/all";
+
+      try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+          throw new Error(`Response status: ${response.status}`);
+        }
+
+        const json = await response.json();
+
+        const countriesData = json.map((country) => ({
+          name: country.name.common,
+          flag: country.flags.png,
+        }));
+
+        setCountries(countriesData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCountries();
+  }, []);
+
+  const selectedCountry = countries?.find(
+    (countryItem) => countryItem.name === countryField.value
   );
 
   const handleSelectionChange = (keys) => {
@@ -26,14 +54,16 @@ const PersonalInfoCountrySelect = ({ countryField }) => {
   };
 
   return (
-    <Dropdown>
+    <Dropdown classNames={{ content: "overflow-y-auto max-h-[15rem]" }}>
       <DropdownTrigger>
-        <Button className="country-ipractis-dropdown shadow-none rounded-[10px]">
+        <Button className="rounded-[10px] shadow-none country-ipractis-dropdown">
           {selectedCountry && (
             <Image
-              className="w-[40px] h-[24px] rounded-[5px] object-cover"
-              alt={selectedCountry.alt}
-              src={selectedCountry.image}
+              className="h-[24px] rounded-[5px] w-[40px] object-cover"
+              alt={selectedCountry.name}
+              src={selectedCountry.flag}
+              height={24}
+              width={26}
             />
           )}
 
@@ -51,19 +81,21 @@ const PersonalInfoCountrySelect = ({ countryField }) => {
         selectionMode="single"
         variant="flat"
       >
-        {countriesSelection?.map((countryItem) => (
+        {countries?.map((countryItem) => (
           <DropdownItem
             className="flex items-center"
-            textValue={countryItem?.alt}
-            key={countryItem?.key}
+            textValue={countryItem?.name}
+            key={countryItem?.name}
           >
             <Image
-              className="w-[26px] h-[24px] rounded-[5px] object-cover inline"
-              src={countryItem?.image}
-              alt={countryItem?.alt}
+              className="h-[24px] rounded-[5px] w-[26px] inline object-cover"
+              src={countryItem?.flag}
+              alt={countryItem?.name}
+              height={24}
+              width={26}
             />
 
-            <span className="ml-2 inline">{countryItem?.key}</span>
+            <span className="inline ml-2">{countryItem?.name}</span>
           </DropdownItem>
         ))}
       </DropdownMenu>

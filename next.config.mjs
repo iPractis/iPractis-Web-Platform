@@ -7,12 +7,24 @@ const nextConfig = {
         hostname: "img.youtube.com",
         pathname: "**",
       },
+      
+      {
+        protocol: "https",
+        hostname: "flagcdn.com",
+        pathname: "**",
+      },
+
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',
+        pathname: '/**',
+      },
     ],
   },
-  
+
   env: {
     BASE_URL: process.env.BASE_URL,
-  }
+  },
 };
 
 export default nextConfig;

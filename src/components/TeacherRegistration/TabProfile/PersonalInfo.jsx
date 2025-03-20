@@ -197,7 +197,6 @@ const PersonalInfo = ({ control, errors, watch }) => {
               >
                 <CustomNextUiInput
                   type="text"
-                  isReadOnly
                   placeholder="Select a country"
                   label={
                     <span className="flex gap-1.5 items-center">
@@ -209,6 +208,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
                     inputWrapper:
                       countryFieldError?.message && "form-input-error",
                   }}
+                  value={countryField.value}
                   onBlur={countryField?.onBlur}
                   onChange={countryField?.onChange}
                   name="country"
