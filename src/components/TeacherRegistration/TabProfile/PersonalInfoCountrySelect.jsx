@@ -1,11 +1,7 @@
+import { FetchCountries } from "./FetchCountries";
+
 // External imports
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "@nextui-org/react";
+import { SelectItem, Select } from "@nextui-org/react";
 
 // React imports
 import { useEffect, useState } from "react";
@@ -17,89 +13,68 @@ import { ChevronDownSmallIcon } from "../../Icons";
 const PersonalInfoCountrySelect = ({ countryField }) => {
   const [countries, setCountries] = useState([]);
 
-  useEffect(() => {
-    const fetchCountries = async () => {
-      const url = "https://restcountries.com/v3.1/all";
-
-      try {
-        const response = await fetch(url);
-
-        if (!response.ok) {
-          throw new Error(`Response status: ${response.status}`);
-        }
-
-        const json = await response.json();
-
-        const countriesData = json.map((country) => ({
-          name: country.name.common,
-          flag: country.flags.png,
-        }));
-
-        setCountries(countriesData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchCountries();
-  }, []);
-
   const selectedCountry = countries?.find(
     (countryItem) => countryItem.name === countryField.value
   );
 
-  const handleSelectionChange = (keys) => {
-    const selectedKey = Array.from(keys)[0];
-    countryField.onChange(selectedKey);
-  };
+  useEffect(() => {
+    const getCountries = async () => {
+      const data = await FetchCountries();
+      setCountries(data);
+    };
+
+    getCountries();
+  }, []);
 
   return (
-    <Dropdown classNames={{ content: "overflow-y-auto max-h-[15rem]" }}>
-      <DropdownTrigger>
-        <Button className="rounded-[10px] shadow-none country-ipractis-dropdown">
-          {selectedCountry && (
-            <Image
-              className="h-[24px] rounded-[5px] w-[40px] object-cover"
-              alt={selectedCountry.name}
-              src={selectedCountry.flag}
-              height={24}
-              width={26}
-            />
-          )}
-
-          <div className="mx-auto">
-            <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
-          </div>
-        </Button>
-      </DropdownTrigger>
-
-      <DropdownMenu
-        selectedKeys={new Set([countryField.value])}
-        onSelectionChange={handleSelectionChange}
-        aria-label="Single Country Selection"
-        disallowEmptySelection
-        selectionMode="single"
-        variant="flat"
-      >
-        {countries?.map((countryItem) => (
-          <DropdownItem
-            className="flex items-center"
-            textValue={countryItem?.name}
-            key={countryItem?.name}
-          >
+    <Select
+      classNames={{
+        trigger:
+          "rounded-[10px] shadow-none country-ipractis-dropdown min-h-fit !justify-start !gap-2.5",
+        popoverContent: "overflow-y-auto max-h-[15rem] w-[15rem]",
+      }}
+      selectorIcon={
+        <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
+      }
+      startContent={
+        selectedCountry && (
+          <Image
+            className="h-[24px] rounded-[5px] w-[40px] object-cover"
+            alt={selectedCountry.name}
+            src={selectedCountry.flag}
+            height={24}
+            width={26}
+          />
+        )
+      }
+      selectedKeys={new Set([selectedCountry?.name])}
+      onSelectionChange={(keys) => {
+        const selectedKey = Array.from(keys)[0];
+        countryField.onChange(selectedKey);
+      }}
+      selectionMode="single"
+      variant="flat"
+    >
+      {countries?.map((countryItem) => (
+        <SelectItem
+          key={countryItem.name}
+          textValue={countryItem.name}
+          className="flex items-center"
+        >
+          <div className="flex items-center">
             <Image
               className="h-[24px] rounded-[5px] w-[26px] inline object-cover"
-              src={countryItem?.flag}
-              alt={countryItem?.name}
+              src={countryItem.flag}
+              alt={countryItem.name}
               height={24}
               width={26}
             />
 
-            <span className="inline ml-2">{countryItem?.name}</span>
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+            <span className="inline ml-2">{countryItem.name}</span>
+          </div>
+        </SelectItem>
+      ))}
+    </Select>
   );
 };
 
