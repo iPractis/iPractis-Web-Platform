@@ -1,30 +1,16 @@
-import { FetchCountries } from "./FetchCountries";
-
 // External imports
 import { SelectItem, Select } from "@nextui-org/react";
 
 // React imports
-import { useEffect, useState } from "react";
 import Image from "next/image";
 
 // Icons
 import { ChevronDownSmallIcon } from "../../Icons";
 
-const PersonalInfoCountrySelect = ({ countryField }) => {
-  const [countries, setCountries] = useState([]);
-
+const PersonalInfoCountrySelect = ({ field: countryField, countries }) => {
   const selectedCountry = countries?.find(
-    (countryItem) => countryItem.name === countryField.value
+    (countryItem) => countryItem?.name === countryField?.value
   );
-
-  useEffect(() => {
-    const getCountries = async () => {
-      const data = await FetchCountries();
-      setCountries(data);
-    };
-
-    getCountries();
-  }, []);
 
   return (
     <Select

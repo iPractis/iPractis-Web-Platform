@@ -1,72 +1,69 @@
-import { countriesSelection } from "@/src/data/dataTeacherRegistration";
-
 // External imports
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
-} from "@nextui-org/react";
+import { SelectItem, Select } from "@nextui-org/react";
 
-// React import
+// React imports
 import Image from "next/image";
 
 // Icons
 import { ChevronDownSmallIcon } from "../../Icons";
 
-const PersonalInfoNationalitySelect = ({ nationalityField }) => {
-  const selectedCountry = countriesSelection.find(
-    (country) => country.key === nationalityField.value
+const PersonalInfoNationalitySelect = ({
+  field: nationalityField,
+  countries,
+}) => {
+  const selectedCountry = countries?.find(
+    (countryItem) => countryItem?.name === nationalityField?.value
   );
 
-  const handleSelectionChange = (keys) => {
-    const selectedKey = Array.from(keys)[0];
-    nationalityField.onChange(selectedKey);
-  };
-
   return (
-    <Dropdown>
-      <DropdownTrigger>
-        <Button className="country-ipractis-dropdown shadow-none rounded-[10px]">
-          {selectedCountry && (
+    <Select
+      classNames={{
+        trigger:
+          "rounded-[10px] shadow-none country-ipractis-dropdown min-h-fit !justify-start !gap-2.5",
+        popoverContent: "overflow-y-auto max-h-[15rem] w-[15rem]",
+      }}
+      selectorIcon={
+        <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
+      }
+      startContent={
+        selectedCountry && (
+          <Image
+            className="h-[24px] rounded-[5px] w-[40px] object-cover"
+            alt={selectedCountry.name}
+            src={selectedCountry.flag}
+            height={24}
+            width={26}
+          />
+        )
+      }
+      selectedKeys={new Set([selectedCountry?.name])}
+      onSelectionChange={(keys) => {
+        const selectedKey = Array.from(keys)[0];
+        nationalityField.onChange(selectedKey);
+      }}
+      selectionMode="single"
+      variant="flat"
+    >
+      {countries?.map((countryItem) => (
+        <SelectItem
+          key={countryItem.name}
+          textValue={countryItem.name}
+          className="flex items-center"
+        >
+          <div className="flex items-center">
             <Image
-              className="w-[40px] h-[24px] rounded-[5px] object-cover"
-              alt={selectedCountry.alt}
-              src={selectedCountry.image}
+              className="h-[24px] rounded-[5px] w-[26px] inline object-cover"
+              src={countryItem.flag}
+              alt={countryItem.name}
+              height={24}
+              width={26}
             />
-          )}
-          
-          <div className="mx-auto">
-            <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
-          </div>
-        </Button>
-      </DropdownTrigger>
 
-      <DropdownMenu
-        selectedKeys={new Set([nationalityField.value])}
-        onSelectionChange={handleSelectionChange}
-        aria-label="Single Country Selection"
-        disallowEmptySelection
-        selectionMode="single"
-        variant="flat"
-      >
-        {countriesSelection?.map((country) => (
-          <DropdownItem
-            className="flex items-center"
-            textValue={country?.alt}
-            key={country?.key}
-          >
-            <Image
-              className="w-[26px] h-[24px] rounded-[5px] object-cover inline"
-              src={country?.image}
-              alt={country?.alt}
-            />
-            <span className="ml-2 inline">{country?.key}</span>
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+            <span className="inline ml-2">{countryItem.name}</span>
+          </div>
+        </SelectItem>
+      ))}
+    </Select>
   );
 };
 

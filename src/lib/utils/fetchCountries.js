@@ -1,4 +1,4 @@
-export const FetchCountries = async () => {
+export const fetchCountries = async () => {
   const url = "https://restcountries.com/v3.1/all";
 
   try {

@@ -4,10 +4,10 @@ import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import CountryResidenceInput from "./CountryResidenceInput";
 import SectionHeader from "../../Shared/SectionHeader";
 
 import PersonalInfoNationalitySelect from "./PersonalInfoNationalitySelect";
-import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 import PersonalInfoGenderCheck from "./PersonalInfoGenderCheck";
 import AboutYourSelfIntro from "./AboutYourSelfIntro";
 import BirthDateInput from "./BirthDateInput";
@@ -23,6 +23,8 @@ import {
   UserBigIcon,
   UserIcon,
 } from "../../Icons";
+import BaseCountryInput from "./BaseCountryInput";
+import PersonalInfoCountrySelect from "./PersonalInfoCountrySelect";
 
 const PersonalInfo = ({ control, errors, watch }) => {
   const {
@@ -187,90 +189,38 @@ const PersonalInfo = ({ control, errors, watch }) => {
 
           <div className="space-y-12">
             {/* Country of residence */}
-            <div>
-              <InputLeftStickStatus
-                inputBarStatusClassName={getInputStatusBorder(
-                  errors,
-                  countryField?.value,
-                  "country"
-                )}
-              >
-                <CustomNextUiInput
-                  type="text"
-                  placeholder="Select a country"
-                  label={
-                    <span className="flex gap-1.5 items-center">
-                      Country{" "}
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
-                    </span>
-                  }
-                  classNames={{
-                    inputWrapper:
-                      countryFieldError?.message && "form-input-error",
-                  }}
-                  value={countryField.value}
-                  onBlur={countryField?.onBlur}
-                  onChange={countryField?.onChange}
-                  name="country"
-                  labelPlacement="outside"
-                  startContent={
-                    <span className="flex items-center gap-1.5">
-                      <InputBGWrapperIcon>
-                        <FlagIcon />
-                      </InputBGWrapperIcon>
-
-                      <PersonalInfoCountrySelect countryField={countryField} />
-                    </span>
-                  }
-                />
-              </InputLeftStickStatus>
-
-              <SplitDynamicErrorZod message={countryFieldError?.message} />
-            </div>
+            <BaseCountryInput
+              SelectComponent={PersonalInfoCountrySelect}
+              placeholder={"Select a country"}
+              fieldError={countryFieldError}
+              nextInputName={"middleName"}
+              field={countryField}
+              label={
+                <span className="flex gap-1.5 items-center">
+                  Country
+                  <QuestionMark fillColor={"fill-primary-color-P4"} />
+                </span>
+              }
+              name={"country"}
+              errors={errors}
+            />
 
             {/* Country of nationality */}
-            <div>
-              <InputLeftStickStatus
-                inputBarStatusClassName={getInputStatusBorder(
-                  errors,
-                  nationalityField?.value,
-                  "nationality"
-                )}
-              >
-                <CustomNextUiInput
-                  type="text"
-                  isReadOnly
-                  placeholder="Select a country"
-                  label={
-                    <span className="flex gap-1.5 items-center">
-                      Nationality{" "}
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
-                    </span>
-                  }
-                  classNames={{
-                    inputWrapper:
-                      nationalityFieldError?.message && "form-input-error",
-                  }}
-                  labelPlacement="outside"
-                  onBlur={nationalityField?.onBlur}
-                  onChange={nationalityField?.onChange}
-                  name="nationality"
-                  startContent={
-                    <span className="flex items-center gap-1.5">
-                      <InputBGWrapperIcon>
-                        <FlagIcon />
-                      </InputBGWrapperIcon>
-
-                      <PersonalInfoNationalitySelect
-                        nationalityField={nationalityField}
-                      />
-                    </span>
-                  }
-                />
-              </InputLeftStickStatus>
-
-              <SplitDynamicErrorZod message={nationalityFieldError?.message} />
-            </div>
+            <BaseCountryInput
+              SelectComponent={PersonalInfoNationalitySelect}
+              fieldError={nationalityFieldError}
+              placeholder={"Select a nationality"}
+              nextInputName={"lastName"}
+              field={nationalityField}
+              label={
+                <span className="flex gap-1.5 items-center">
+                  Nationality
+                  <QuestionMark fillColor={"fill-primary-color-P4"} />
+                </span>
+              }
+              name={"nationality"}
+              errors={errors}
+            />
 
             {/* Gender checkboxes */}
             <PersonalInfoGenderCheck
