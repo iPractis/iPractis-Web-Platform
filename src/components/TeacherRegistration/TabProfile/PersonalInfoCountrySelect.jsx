@@ -17,7 +17,7 @@ const PersonalInfoCountrySelect = ({ field: countryField, countries }) => {
       classNames={{
         trigger:
           "rounded-[10px] shadow-none country-ipractis-dropdown min-h-fit !justify-start !gap-2.5",
-        popoverContent: "overflow-y-auto max-h-[15rem] w-[15rem]",
+        popoverContent: "overflow-y-auto max-h-[20rem] w-[15rem]",
       }}
       selectorIcon={
         <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
