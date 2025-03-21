@@ -1,3 +1,4 @@
+import { formatHourTo12WithPeriod } from "@/src/lib/helpers/formatHourTo12WithPeriod";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import {
@@ -50,6 +51,8 @@ const WorkScheduleTable = ({
     control,
     name: "workSchedule",
   });
+
+  console.log(fields);
 
   // All that happen in this useEffect are the DEFAULT VALUES for the calendar
   useEffect(() => {
@@ -164,21 +167,21 @@ const WorkScheduleTable = ({
     updateWeekDates(selectedTimezone);
   };
 
-  // We get DAY selected (Sa, Su, Mo, Tu, We, Th, Fr) and HOUR (0 to 23)
+  // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day) => {
-    // Format the hour to be "H:00"
-    const formattedHour = `${hour}:00`;
+    // Format the hour in 12-hour format with AM/PM
+    const formattedHour = formatHourTo12WithPeriod(hour);
 
-    // We check if there is already a record for the selected day
+    // Check if there is already a record for the selected day
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
     if (existingIndex !== -1) {
-      // If it already exists, we check if the hour is already in the array
+      // If it already exists, check if the hour is already in the array
       const existingHours = fields[existingIndex].hour;
       const hourIndex = existingHours.indexOf(formattedHour);
 
       if (hourIndex !== -1) {
-        // If hour exists, we delete it
+        // If the hour exists, remove it
         const updatedHours = existingHours.filter((h) => h !== formattedHour);
 
         // If no hours remain, remove the entire day
@@ -189,19 +192,19 @@ const WorkScheduleTable = ({
           update(existingIndex, { day, hour: updatedHours });
         }
       } else {
-        // If the hour does not exist, we add it
+        // If the hour does not exist, add it
         update(existingIndex, { day, hour: [...existingHours, formattedHour] });
       }
     } else {
-      // If there is no record for the day, we create it with the selected hour
+      // If there is no record for the day, create it with the selected hour
       append({ day: day, hour: [formattedHour] });
     }
   };
 
   // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
-    // Format the hour to be "H:00"
-    const formattedHour = `${hour}:00`;
+    // Format the hour in 12-hour format with AM/PM
+    const formattedHour = formatHourTo12WithPeriod(hour);
 
     // Check if the slot is selected
     return fields.some(
@@ -369,13 +372,22 @@ const WorkScheduleTable = ({
             </div>{" "}
           </TableColumn>
 
-          {Array.from({ length: 24 }, (_, index) => (
-            <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
-              <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
-                {index}
-              </div>
-            </TableColumn>
-          ))}
+          {Array.from({ length: 24 }, (_, index) => {
+            // Adjust the index to start from 1 instead of 0
+            const adjustedIndex = (index + 1) % 24; // This ensures that 23 + 1 = 0, and 0 + 1 = 1, etc.
+            const displayHour = adjustedIndex % 12 || 12; // Displays 1 to 12 instead of 0 to 11
+
+            return (
+              <TableColumn
+                className="!h-0 w-[27.50px]"
+                key={`hour-${adjustedIndex}`}
+              >
+                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
+                  {displayHour} {/* Shows only the number (1 or 12) */}
+                </div>
+              </TableColumn>
+            );
+          })}
         </TableHeader>
 
         <TableBody>
@@ -403,28 +415,32 @@ const WorkScheduleTable = ({
                   </div>
                 </TableCell>
 
-                {Array.from({ length: 24 }, (_, hourIndex) => (
-                  <TableCell
-                    className={`${
-                      isToday
-                        ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1"
-                        : "!p-0 !pb-0.5"
-                    } !px-0.5`}
-                    key={`${column.key}-${hourIndex}`}
-                  >
-                    <button
+                {Array.from({ length: 24 }, (_, hourIndex) => {
+                  const adjustedHourIndex = (hourIndex + 1) % 24; // Adjusts the index to start from 1
+
+                  return (
+                    <TableCell
                       className={`${
-                        isSelected(hourIndex, column.label)
-                          ? "bg-quinary-color-VS10"
-                          : "bg-primary-color-P11"
-                      } flex justify-center items-center rounded-md ST-4 h-5 w-full mx-auto`}
-                      onClick={() =>
-                        handleGetDayAndHour(hourIndex, column.label)
-                      }
-                      type="button"
-                    ></button>
-                  </TableCell>
-                ))}
+                        isToday
+                          ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1"
+                          : "!p-0 !pb-0.5"
+                      } !px-0.5`}
+                      key={`${column.key}-${adjustedHourIndex}`}
+                    >
+                      <button
+                        className={`${
+                          isSelected(adjustedHourIndex, column.label)
+                            ? "bg-quinary-color-VS10"
+                            : "bg-primary-color-P11"
+                        } flex justify-center items-center rounded-md ST-4 h-5 w-full mx-auto`}
+                        onClick={() =>
+                          handleGetDayAndHour(adjustedHourIndex, column.label)
+                        }
+                        type="button"
+                      ></button>
+                    </TableCell>
+                  );
+                })}
               </TableRow>
             );
           })}
