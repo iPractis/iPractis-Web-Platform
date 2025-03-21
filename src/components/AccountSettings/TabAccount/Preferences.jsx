@@ -1,9 +1,13 @@
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import { languages, timeZones } from "@/src/data/dataAccountSettings";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
+import {
+  currencies,
+  languages,
+  timeZones,
+} from "@/src/data/dataAccountSettings";
 
 // External imports
 import { Select, SelectItem } from "@nextui-org/react";
@@ -14,16 +18,18 @@ import { useState } from "react";
 
 // Icons
 import {
+  DollarSignCircleIcon,
   ChevronDownBigIcon,
-  Clock5Icon,
   EarthBorderedIcon,
   QuestionMark,
   SparkleIcon,
+  Clock5Icon,
 } from "../../Icons";
 
 const Preferences = ({ errors, control }) => {
   const [isOpenTimezone, setIsOpenTimezone] = useState(false);
   const [isOpenLanguage, setIsOpenLanguage] = useState(false);
+  const [isOpenCurrency, setIsOpenCurrency] = useState(false);
 
   const {
     field: timeZone,
@@ -38,6 +44,14 @@ const Preferences = ({ errors, control }) => {
     fieldState: { error: languageError },
   } = useController({
     name: "language",
+    control,
+  });
+
+  const {
+    field: currency,
+    fieldState: { error: currencyError },
+  } = useController({
+    name: "currency",
     control,
   });
 
@@ -122,6 +136,142 @@ const Preferences = ({ errors, control }) => {
         </div>
 
         {/* Timezone */}
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              timeZone.value,
+              "timeZone"
+            )}
+          >
+            <Select
+              name="timeZone"
+              placeholder="Select a time zone"
+              selectorIcon={<span></span>}
+              isOpen={isOpenTimezone}
+              label={
+                <div className="ps-0 mb-2">
+                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                    Timezone{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </p>
+                </div>
+              }
+              startContent={
+                <InputBGWrapperIcon>
+                  <Clock5Icon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon>
+                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                </InputBGWrapperIcon>
+              }
+              defaultSelectedKeys={new Set([timeZone.value])}
+              onSelectionChange={(keys) => {
+                const key = Array.from(keys)[0];
+                timeZone.onChange(key);
+              }}
+              onOpenChange={(open) => {
+                setIsOpenTimezone(open);
+
+                if (!open) {
+                  timeZone.onBlur();
+                }
+              }}
+              classNames={{
+                trigger: [
+                  "select-wrapper-ipractis min-h-fit",
+                  timeZoneError?.message && "form-input-error",
+                ],
+                innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
+                value: [
+                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                ],
+                listbox: ["text-primary-color-P4"],
+                label: "mb-8",
+              }}
+            >
+              {timeZones?.map((tz) => (
+                <SelectItem key={tz.value} value={tz.value}>
+                  {tz.label}
+                </SelectItem>
+              ))}
+            </Select>
+          </InputLeftStickStatus>
+
+          <SplitDynamicErrorZod message={timeZoneError?.message} />
+        </div>
+
+        {/* Currency */}
+        <div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              currency.value,
+              "currency"
+            )}
+          >
+            <Select
+              name="currency"
+              placeholder="Select a currency"
+              selectorIcon={<span></span>}
+              isOpen={isOpenCurrency}
+              label={
+                <div className="ps-0 mb-2">
+                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                    Currency{" "}
+                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  </p>
+                </div>
+              }
+              startContent={
+                <InputBGWrapperIcon>
+                  <DollarSignCircleIcon fillColor={"fill-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              }
+              endContent={
+                <InputBGWrapperIcon>
+                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                </InputBGWrapperIcon>
+              }
+              defaultSelectedKeys={new Set([currency.value])}
+              onSelectionChange={(keys) => {
+                const key = Array.from(keys)[0];
+                currency.onChange(key);
+              }}
+              onOpenChange={(open) => {
+                setIsOpenCurrency(open);
+
+                if (!open) {
+                  currency.onBlur();
+                }
+              }}
+              classNames={{
+                trigger: [
+                  "select-wrapper-ipractis min-h-fit",
+                  currencyError?.message && "form-input-error",
+                ],
+                innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
+                value: [
+                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                ],
+                listbox: ["text-primary-color-P4"],
+                label: "mb-8",
+              }}
+            >
+              {currencies?.map((tz, index) => (
+                <SelectItem key={index} value={tz}>
+                  {tz}
+                </SelectItem>
+              ))}
+            </Select>
+          </InputLeftStickStatus>
+
+          <SplitDynamicErrorZod message={currencyError?.message} />
+        </div>
+
+        {/* Time format */}
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(

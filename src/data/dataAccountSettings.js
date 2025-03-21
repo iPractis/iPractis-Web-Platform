@@ -72,3 +72,5 @@ export const timeZones = [
   { label: "GMT+13", value: "Pacific/Tongatapu" },
   { label: "GMT+14", value: "Pacific/Kiritimati" },
 ];
+
+export const currencies = ["USD", "EUR", "GBP"];
