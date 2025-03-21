@@ -9,13 +9,14 @@ const TabAccount = ({ activeTab }) => {
     handleSubmit,
     setError,
     control,
+    watch,
   } = useForm({
     mode: "onBlur",
   });
 
   return (
     <form className={`${activeTab !== 1 && "hidden"} space-y-16 mb-24`}>
-      <Preferences control={control} errors={errors} />
+      <Preferences watch={watch} control={control} errors={errors} />
     </form>
   );
 };

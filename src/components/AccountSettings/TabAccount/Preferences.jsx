@@ -1,5 +1,6 @@
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
+import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
@@ -21,12 +22,14 @@ import {
   DollarSignCircleIcon,
   ChevronDownBigIcon,
   EarthBorderedIcon,
+  SunAndMoonIcon,
   QuestionMark,
   SparkleIcon,
   Clock5Icon,
 } from "../../Icons";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
-const Preferences = ({ errors, control }) => {
+const Preferences = ({ errors, control, watch }) => {
   const [isOpenTimezone, setIsOpenTimezone] = useState(false);
   const [isOpenLanguage, setIsOpenLanguage] = useState(false);
   const [isOpenCurrency, setIsOpenCurrency] = useState(false);
@@ -54,6 +57,20 @@ const Preferences = ({ errors, control }) => {
     name: "currency",
     control,
   });
+
+  const {
+    field: timeFormat,
+    fieldState: { error: timeFormatError },
+  } = useController({
+    name: "timeFormat",
+    control,
+  });
+
+  const selectedTimeFormat = watch("timeFormat");
+
+  const handleCheckboxChange = (timeSelected) => {
+    timeFormat.onChange(timeSelected);
+  };
 
   return (
     <div>
@@ -121,7 +138,7 @@ const Preferences = ({ errors, control }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-8",
+                label: "mb-12 !scale-100",
               }}
             >
               {languages?.map((tz, index) => (
@@ -189,7 +206,7 @@ const Preferences = ({ errors, control }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-8",
+                label: "mb-12 !scale-100",
               }}
             >
               {timeZones?.map((tz) => (
@@ -257,7 +274,7 @@ const Preferences = ({ errors, control }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-8",
+                label: "mb-12 !scale-100",
               }}
             >
               {currencies?.map((tz, index) => (
@@ -272,71 +289,76 @@ const Preferences = ({ errors, control }) => {
         </div>
 
         {/* Time format */}
-        <div>
+        <div className="relative">
+          <div className="absolute -top-8">
+            <span className="flex ps-[5px] gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
+              Time format <QuestionMark fillColor={"fill-primary-color-P4"} />
+            </span>
+          </div>
+
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
-              timeZone.value,
-              "timeZone"
+              timeFormat?.value,
+              "timeFormat"
             )}
           >
-            <Select
-              name="timeZone"
-              placeholder="Select a time zone"
-              selectorIcon={<span></span>}
-              isOpen={isOpenTimezone}
-              label={
-                <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Timezone{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </p>
-                </div>
-              }
-              startContent={
+            <div className="flex items-center gap-2">
+              <div
+                className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
+              >
                 <InputBGWrapperIcon>
-                  <Clock5Icon fillColor={"fill-primary-color-P4"} />
+                  <SunAndMoonIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-                </InputBGWrapperIcon>
-              }
-              defaultSelectedKeys={new Set([timeZone.value])}
-              onSelectionChange={(keys) => {
-                const key = Array.from(keys)[0];
-                timeZone.onChange(key);
-              }}
-              onOpenChange={(open) => {
-                setIsOpenTimezone(open);
 
-                if (!open) {
-                  timeZone.onBlur();
-                }
-              }}
-              classNames={{
-                trigger: [
-                  "select-wrapper-ipractis min-h-fit",
-                  timeZoneError?.message && "form-input-error",
-                ],
-                innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
-                value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                ],
-                listbox: ["text-primary-color-P4"],
-                label: "mb-8",
-              }}
-            >
-              {timeZones?.map((tz) => (
-                <SelectItem key={tz.value} value={tz.value}>
-                  {tz.label}
-                </SelectItem>
-              ))}
-            </Select>
+                <CustomNextUiInput
+                  isReadOnly
+                  type="text"
+                  name="timeFormat"
+                  placeholder="12 H"
+                  labelPlacement="outside"
+                  endContent={
+                    <CustomNextUiCheckbox
+                      className="checkbox-label-ipractis"
+                      isSelected={selectedTimeFormat === "12h"}
+                      onChange={() => handleCheckboxChange("12h")}
+                      size="sm"
+                    />
+                  }
+                  classNames={{
+                    input: "!px-1.5 group",
+                    inputWrapper: timeFormatError?.message
+                      ? "form-input-error"
+                      : "!bg-primary-color-P12 input-wrapper-ipractis-custom",
+                  }}
+                />
+
+                <CustomNextUiInput
+                  isReadOnly
+                  name="timeFormat"
+                  type="text"
+                  placeholder="24 H"
+                  labelPlacement="outside"
+                  endContent={
+                    <CustomNextUiCheckbox
+                      className="checkbox-label-ipractis"
+                      isSelected={selectedTimeFormat === "24h"}
+                      onChange={() => handleCheckboxChange("24h")}
+                      size="sm"
+                    />
+                  }
+                  classNames={{
+                    input: "!px-1.5 group",
+                    inputWrapper: timeFormatError?.message
+                      ? "form-input-error"
+                      : "!bg-primary-color-P12 input-wrapper-ipractis-custom",
+                  }}
+                />
+              </div>
+            </div>
           </InputLeftStickStatus>
 
-          <SplitDynamicErrorZod message={timeZoneError?.message} />
+          <SplitDynamicErrorZod message={timeFormatError?.message} />
         </div>
       </div>
     </div>

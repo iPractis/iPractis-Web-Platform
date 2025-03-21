@@ -73,4 +73,4 @@ export const timeZones = [
   { label: "GMT+14", value: "Pacific/Kiritimati" },
 ];
 
-export const currencies = ["USD", "EUR", "GBP"];
+export const currencies = ["USD", "EUR", "CLP", "GBP", "BRL", "JPY", "CNY"];
