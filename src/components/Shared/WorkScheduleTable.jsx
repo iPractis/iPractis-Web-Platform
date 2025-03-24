@@ -368,17 +368,10 @@ const WorkScheduleTable = ({
           </TableColumn>
 
           {Array.from({ length: 24 }, (_, index) => {
-            // Adjust the index to start from 1 instead of 0
-            const adjustedIndex = (index + 1) % 24; // This ensures that 23 + 1 = 0, and 0 + 1 = 1, etc.
-            const displayHour = adjustedIndex % 12 || 12; // Displays 1 to 12 instead of 0 to 11
-
             return (
-              <TableColumn
-                className="!h-0 w-[27.50px]"
-                key={`hour-${adjustedIndex}`}
-              >
+              <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
                 <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
-                  {displayHour} {/* Shows only the number (1 or 12) */}
+                  {index}
                 </div>
               </TableColumn>
             );
@@ -411,8 +404,6 @@ const WorkScheduleTable = ({
                 </TableCell>
 
                 {Array.from({ length: 24 }, (_, hourIndex) => {
-                  const adjustedHourIndex = (hourIndex + 1) % 24; // Adjusts the index to start from 1
-
                   return (
                     <TableCell
                       className={`${
@@ -420,16 +411,16 @@ const WorkScheduleTable = ({
                           ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1"
                           : "!p-0 !pb-0.5"
                       } !px-0.5`}
-                      key={`${column.key}-${adjustedHourIndex}`}
+                      key={`${column.key}-${hourIndex}`}
                     >
                       <button
                         className={`${
-                          isSelected(adjustedHourIndex, column.label)
+                          isSelected(hourIndex, column.label)
                             ? "bg-quinary-color-VS10"
                             : "bg-primary-color-P11"
                         } flex justify-center items-center rounded-md ST-4 h-5 w-full mx-auto`}
                         onClick={() =>
-                          handleGetDayAndHour(adjustedHourIndex, column.label)
+                          handleGetDayAndHour(hourIndex, column.label)
                         }
                         type="button"
                       ></button>
