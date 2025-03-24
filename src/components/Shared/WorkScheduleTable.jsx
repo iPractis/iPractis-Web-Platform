@@ -367,13 +367,13 @@ const WorkScheduleTable = ({
         </div>
       )}
 
-      {/* CALENDAR */}
+      {/* Calendar */}
       <main className="flex md:flex-row flex-col gap-4">
         {/* Left column - days and format button */}
-        <div className="flex md:flex-col flex-row gap-1">
+        <div className="flex md:flex-col flex-row justify-between gap-1">
           <div>
             <button
-              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:h-12 h-full"
+              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:h-12 h-full md:w-auto w-[72px]"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -393,7 +393,7 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className={`text-primary-color-P12 rounded-md text-center md:p-0 p-1 w-full ${
+                  className={`text-primary-color-P12 rounded-md text-center md:p-0 p-1 w-full md:h-[22px] h-[28px] ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
                       : "bg-primary-color-P1"
@@ -408,12 +408,12 @@ const WorkScheduleTable = ({
         </div>
 
         {/* Right column - hours and slots */}
-        <div className="flex flex-col w-full">
-          <div className="px-1">
-            <div className="flex justify-between gap-1.5">
+        <div className="flex md:flex-col flex-row w-full">
+          <div className="flex md:gap-0 gap-1 md:flex-col flex-row md:px-1 md:py-0 py-1">
+            <div className="flex md:flex-row flex-col justify-between gap-1.5">
               {Array.from({ length: 24 }, (_, index) => (
                 <div
-                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 w-full"
+                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] h-7 px-1"
                   key={`hour-${index}`}
                 >
                   {formatHour(index)}
@@ -421,18 +421,18 @@ const WorkScheduleTable = ({
               ))}
             </div>
 
-            <div className="flex gap-1.5 mt-1.5">
-              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3">
-                <h3>AM</h3>
+            <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
+              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
+                <h3 className="flex justify-center items-center h-full px-1">AM</h3>
               </div>
 
-              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3">
-                <h3>PM</h3>
+              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
+                <h3 className="flex justify-center items-center h-full px-1">PM</h3>
               </div>
             </div>
           </div>
 
-          <div className="mt-1">
+          <div className="flex-1 md:mt-1 mt-0">
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
               const columnDate = weekDates[rowIndex];
               const isToday =
@@ -458,7 +458,7 @@ const WorkScheduleTable = ({
                           isSelected(hourIndex, column.label)
                             ? "bg-quinary-color-VS10"
                             : "bg-primary-color-P11"
-                        } flex justify-center items-center rounded-md ST-4 h-5 w-full mx-auto`}
+                        } flex justify-center items-center rounded-md ST-4 h-[22px] w-full mx-auto`}
                         onClick={() =>
                           handleGetDayAndHour(hourIndex, column.label)
                         }
