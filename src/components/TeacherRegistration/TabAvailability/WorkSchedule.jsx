@@ -18,7 +18,7 @@ const WorkSchedule = ({ control }) => {
       />
 
       <div className="md:px-8">
-        <WorkScheduleTable control={control} />
+        <WorkScheduleTable showCurrentActiveDay={false} control={control} />
       </div>
     </>
   );

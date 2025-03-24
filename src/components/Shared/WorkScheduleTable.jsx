@@ -31,6 +31,7 @@ import {
 import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
+  showCurrentActiveDay = true,
   wrapperClassName,
   bookedLessonSpot,
   showCurrentDate,
@@ -288,7 +289,7 @@ const WorkScheduleTable = ({
   };
 
   const formatHour = (hour) => {
-     // Keep 0-23 if it's 24h format
+    // Keep 0-23 if it's 24h format
     if (!is12HourFormat) return hour;
 
     // Convert 0-11 using modulo if it's 12h format
@@ -387,7 +388,10 @@ const WorkScheduleTable = ({
 
           {Array.from({ length: 24 }, (_, index) => {
             return (
-              <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
+              <TableColumn
+                className="!h-0 w-[27.50px] align-top relative"
+                key={`hour-${index}`}
+              >
                 <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
                   {formatHour(index)}
                 </div>
@@ -412,7 +416,9 @@ const WorkScheduleTable = ({
                 <TableCell className="!p-0">
                   <div
                     className={`text-primary-color-P12 rounded-md text-center w-[80%] my-1 ${
-                      isToday ? "bg-tertiary-color-SC5" : "bg-primary-color-P1"
+                      showCurrentActiveDay && isToday
+                        ? "bg-tertiary-color-SC5"
+                        : "bg-primary-color-P1"
                     }`}
                   >
                     <div className={`text-primary-color-P12 ST-3`}>
@@ -425,7 +431,7 @@ const WorkScheduleTable = ({
                   return (
                     <TableCell
                       className={`${
-                        isToday
+                        showCurrentActiveDay && isToday
                           ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1"
                           : "!p-0 !pb-0.5"
                       } !px-0.5`}
