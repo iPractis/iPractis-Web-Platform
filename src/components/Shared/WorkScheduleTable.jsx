@@ -367,13 +367,13 @@ const WorkScheduleTable = ({
         </div>
       )}
 
-      {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
-      <main className="md:flex hidden gap-4">
+      {/* CALENDAR */}
+      <main className="flex md:flex-row flex-col gap-4">
         {/* Left column - days and format button */}
-        <div className="flex flex-col gap-1">
+        <div className="flex md:flex-col flex-row gap-1">
           <div>
             <button
-              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 h-12"
+              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:h-12 h-full"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -381,7 +381,7 @@ const WorkScheduleTable = ({
             </button>
           </div>
 
-          <div className="py-1 space-y-2">
+          <div className="flex md:flex-col flex-row md:gap-0 md:items-stretch items-start gap-2.5 md:py-1 md:px-0 px-1 md:space-y-2 w-full">
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
               const columnDate = weekDates[rowIndex];
               const isToday =
@@ -393,7 +393,7 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className={`text-primary-color-P12 rounded-md text-center ${
+                  className={`text-primary-color-P12 rounded-md text-center md:p-0 p-1 w-full ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
                       : "bg-primary-color-P1"
@@ -472,116 +472,6 @@ const WorkScheduleTable = ({
           </div>
         </div>
       </main>
-
-      {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom */}
-      <Table
-        className="md:hidden block"
-        classNames={{
-          th: "bg-transparent !bg-none p-0",
-        }}
-        removeWrapper
-      >
-        <TableHeader>
-          <TableColumn className="w-[40.50px] mx-auto" key="custom-column">
-            <div className="bg-primary-color-P12 ST-SB-3 h-6 w-full">
-              <p></p>
-            </div>
-
-            <div className="bg-primary-color-P12 ST-SB-3 h-6 w-full mt-1.5">
-              <p></p>
-            </div>
-          </TableColumn>
-
-          {columnsHeaderWorkSchedule.map((column, rowIndex) => {
-            const columnDate = weekDates[rowIndex];
-
-            const isToday =
-              columnDate instanceof Date &&
-              !isNaN(columnDate) &&
-              columnDate.getDate() === currentDay &&
-              columnDate.getMonth() === new Date().getMonth() &&
-              columnDate.getFullYear() === new Date().getFullYear();
-
-            return (
-              <TableColumn className="h-auto w-[40.50px]" key={column.key}>
-                <div
-                  className={`${
-                    isToday
-                      ? "bg-tertiary-color-SC5 text-primary-color-P12"
-                      : "bg-primary-color-P12 text-primary-color-P1"
-                  } p-1 text-center rounded-lg h-full w-[40.50px] mx-auto`}
-                >
-                  <div className="ST-SB-3 !px-0">{column.label}</div>
-
-                  <div
-                    className={`${
-                      isToday
-                        ? "bg-primary-color-P12 text-tertiary-color-SC5"
-                        : "bg-primary-color-P1 text-primary-color-P12"
-                    } rounded-md flex justify-center items-center mt-0.5 h-5`}
-                  >
-                    <p className="ST-4">
-                      {showCurrentDate
-                        ? columnDate instanceof Date && !isNaN(columnDate)
-                          ? columnDate.toLocaleDateString().split("/")[0]
-                          : "--"
-                        : "X"}
-                    </p>
-                  </div>
-                </div>
-              </TableColumn>
-            );
-          })}
-        </TableHeader>
-
-        <TableBody>
-          {rowsWorkSchedule.map((row) => (
-            <TableRow className="" key={row.hour}>
-              <TableCell className="!p-0 w-[40.50px]">
-                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-5 w-[32.50px] mx-auto">
-                  {row?.hour}
-                </div>
-              </TableCell>
-
-              {columnsHeaderWorkSchedule.map((column, rowIndex) => {
-                const columnDate = weekDates[rowIndex];
-
-                const isToday =
-                  columnDate instanceof Date &&
-                  !isNaN(columnDate) &&
-                  columnDate.getDate() === currentDay &&
-                  columnDate.getMonth() === new Date().getMonth() &&
-                  columnDate.getFullYear() === new Date().getFullYear();
-
-                return (
-                  <TableCell
-                    className={`${
-                      isToday
-                        ? "bg-tertiary-color-SC5 isSelected h-5 !w-[32.50px] !p-1"
-                        : "!p-0"
-                    }`}
-                    key={column?.key}
-                  >
-                    <button
-                      className={`${
-                        isSelected(row?.hour, column?.label)
-                          ? "bg-quinary-color-VS10"
-                          : "bg-primary-color-P11"
-                      } text-primary-color-P12 flex justify-center items-center rounded-md ST-4 h-5 !w-[32.50px] mx-auto`}
-                      onClick={() =>
-                        handleGetDayAndHour(row?.hour, column?.label)
-                      }
-                      type="button"
-                    >
-                      {column?.slot}
-                    </button>
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
 
       {/* Spots - booked, available, unavailable and also timezone filter */}
       <div className="grid grid-cols-2 gap-4 mt-4">
