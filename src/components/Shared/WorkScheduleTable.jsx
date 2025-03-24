@@ -1,4 +1,3 @@
-import { formatHourTo12WithPeriod } from "@/src/lib/helpers/formatHourTo12WithPeriod";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import {
@@ -169,8 +168,8 @@ const WorkScheduleTable = ({
 
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day) => {
-    // Format the hour in 12-hour format with AM/PM
-    const formattedHour = formatHourTo12WithPeriod(hour);
+    // Convert hour to "0:00", "1:00" format
+    const formattedHour = `${hour}:00`;
 
     // Check if there is already a record for the selected day
     const existingIndex = fields.findIndex((slot) => slot.day === day);
@@ -203,12 +202,8 @@ const WorkScheduleTable = ({
 
   // This is if a slot of calendar is selected (returns true or false)
   const isSelected = (hour, day) => {
-    // Format the hour in 12-hour format with AM/PM
-    const formattedHour = formatHourTo12WithPeriod(hour);
-
-    // Check if the slot is selected
     return fields.some(
-      (slot) => slot.day === day && slot.hour.includes(formattedHour)
+      (slot) => slot.day === day && slot.hour.includes(`${hour}:00`)
     );
   };
 

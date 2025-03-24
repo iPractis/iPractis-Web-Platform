@@ -1,4 +1,3 @@
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // Icons
