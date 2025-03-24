@@ -28,7 +28,7 @@ import {
 } from "../Icons";
 
 // React imports
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
@@ -368,73 +368,89 @@ const WorkScheduleTable = ({
       )}
 
       {/* THIS IS FOR DESKTOP SCREENS - 768px to up */}
-      <Table
-        className="md:block hidden"
-        classNames={{
-          th: "bg-transparent !bg-none p-0",
-        }}
-        removeWrapper
-      >
-        <TableHeader>
-          <TableColumn className="!h-0 w-[27.50px]" key="empty-column">
+      <main className="md:flex hidden gap-4">
+        {/* Left column - days and format button */}
+        <div className="flex flex-col gap-1">
+          <div>
             <button
-              className="bg-secondary-color-S4 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 p-2 w-[80%]"
+              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 h-12"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
               Format
             </button>
-          </TableColumn>
+          </div>
 
-          {Array.from({ length: 24 }, (_, index) => {
-            return (
-              <TableColumn
-                className="!h-0 w-[27.50px] align-top relative"
-                key={`hour-${index}`}
-              >
-                <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
+          <div className="py-1 space-y-2">
+            {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+              const columnDate = weekDates[rowIndex];
+              const isToday =
+                columnDate instanceof Date &&
+                !isNaN(columnDate) &&
+                columnDate.getDate() === currentDay &&
+                columnDate.getMonth() === new Date().getMonth() &&
+                columnDate.getFullYear() === new Date().getFullYear();
+
+              return (
+                <div
+                  className={`text-primary-color-P12 rounded-md text-center ${
+                    showCurrentActiveDay && isToday
+                      ? "bg-tertiary-color-SC5"
+                      : "bg-primary-color-P1"
+                  }`}
+                  key={column.key}
+                >
+                  <h3 className="ST-3">{column.label}</h3>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Right column - hours and slots */}
+        <div className="flex flex-col w-full">
+          <div className="px-1">
+            <div className="flex justify-between gap-1.5">
+              {Array.from({ length: 24 }, (_, index) => (
+                <div
+                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 w-full"
+                  key={`hour-${index}`}
+                >
                   {formatHour(index)}
                 </div>
-              </TableColumn>
-            );
-          })}
-        </TableHeader>
+              ))}
+            </div>
 
-        <TableBody>
-          {columnsHeaderWorkSchedule.map((column, rowIndex) => {
-            const columnDate = weekDates[rowIndex];
+            <div className="flex gap-1.5 mt-1.5">
+              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3">
+                <h3>AM</h3>
+              </div>
 
-            const isToday =
-              columnDate instanceof Date &&
-              !isNaN(columnDate) &&
-              columnDate.getDate() === currentDay &&
-              columnDate.getMonth() === new Date().getMonth() &&
-              columnDate.getFullYear() === new Date().getFullYear();
+              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3">
+                <h3>PM</h3>
+              </div>
+            </div>
+          </div>
 
-            return (
-              <TableRow key={column.key}>
-                <TableCell className="!p-0">
-                  <div
-                    className={`text-primary-color-P12 rounded-md text-center w-[80%] my-1 ${
-                      showCurrentActiveDay && isToday
-                        ? "bg-tertiary-color-SC5"
-                        : "bg-primary-color-P1"
-                    }`}
-                  >
-                    <div className={`text-primary-color-P12 ST-3`}>
-                      {column.label}
-                    </div>
-                  </div>
-                </TableCell>
+          <div className="mt-1">
+            {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+              const columnDate = weekDates[rowIndex];
+              const isToday =
+                columnDate instanceof Date &&
+                !isNaN(columnDate) &&
+                columnDate.getDate() === currentDay &&
+                columnDate.getMonth() === new Date().getMonth() &&
+                columnDate.getFullYear() === new Date().getFullYear();
 
-                {Array.from({ length: 24 }, (_, hourIndex) => {
-                  return (
-                    <TableCell
+              return (
+                <div className="flex justify-between gap-1.5 p-1" key={column.key}>
+                  {Array.from({ length: 24 }, (_, hourIndex) => (
+                    <div
                       className={`${
-                        showCurrentActiveDay && isToday
-                          ? "bg-tertiary-color-SC5 [&:nth-child(2)]:rounded-s-lg last:rounded-r-lg h-7 !w-[27.50px] !p-1"
-                          : "!p-0 !pb-0.5"
-                      } !px-0.5`}
+                        showCurrentActiveDay &&
+                        isToday &&
+                        "bg-tertiary-color-SC5 [&:nth-child(1)]:rounded-l-lg [&:nth-child(24)]:rounded-r-lg h-7 w-[27.50px]"
+                      } w-full`}
                       key={`${column.key}-${hourIndex}`}
                     >
                       <button
@@ -448,14 +464,14 @@ const WorkScheduleTable = ({
                         }
                         type="button"
                       ></button>
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </main>
 
       {/* THIS IS FOR RESPONSIVE SCREENS - 768px to bottom */}
       <Table
