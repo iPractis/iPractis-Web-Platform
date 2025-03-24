@@ -39,6 +39,7 @@ const WorkScheduleTable = ({
   control,
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
+  const [is12HourFormat, setIs12HourFormat] = useState(false);
   const [currentDay, setCurrentDay] = useState("");
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
@@ -281,6 +282,19 @@ const WorkScheduleTable = ({
     });
   };
 
+  // Function to toggle between 12h and 24h
+  const handleChangeHoursDisplayed = () => {
+    setIs12HourFormat(!is12HourFormat);
+  };
+
+  const formatHour = (hour) => {
+     // Keep 0-23 if it's 24h format
+    if (!is12HourFormat) return hour;
+
+    // Convert 0-11 using modulo if it's 12h format
+    return hour % 12;
+  };
+
   return (
     <section className={wrapperClassName}>
       {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
@@ -362,16 +376,20 @@ const WorkScheduleTable = ({
       >
         <TableHeader>
           <TableColumn className="!h-0 w-[27.50px]" key="empty-column">
-            <div className="bg-secondary-color-S4 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 p-2 w-[80%]">
-              {"Format"}
-            </div>{" "}
+            <button
+              className="bg-secondary-color-S4 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 p-2 w-[80%]"
+              onClick={handleChangeHoursDisplayed}
+              type="button"
+            >
+              Format
+            </button>
           </TableColumn>
 
           {Array.from({ length: 24 }, (_, index) => {
             return (
               <TableColumn className="!h-0 w-[27.50px]" key={`hour-${index}`}>
                 <div className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 h-5 w-[90%] mx-auto">
-                  {index}
+                  {formatHour(index)}
                 </div>
               </TableColumn>
             );
