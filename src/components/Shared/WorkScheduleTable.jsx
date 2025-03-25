@@ -169,63 +169,49 @@ const WorkScheduleTable = ({
 
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
-    // Determine time strings based on which button was clicked
-    const halfHour = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
     const fullHour = `${hour + 1}:00`;
     const oppositeHalf = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
 
-    // Find existing time slot for this day
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
     if (existingIndex !== -1) {
       const existingHours = fields[existingIndex].hour;
-      // Check what time periods already exist
-      const hasFullHour = existingHours.includes(fullHour);
+      const hasSelected = existingHours.includes(selectedTime);
       const hasOpposite = existingHours.includes(oppositeHalf);
-      const hasCurrent = existingHours.includes(halfHour);
+      const hasFullHour = existingHours.includes(fullHour);
 
       if (hasFullHour) {
-        // Case 1: We have a full hour and clicking one of its buttons
+        // If complete hour exists (1:00)
         if (isSecondButton) {
-          // Clicked the second button: keep only the first half hour
+          // Click on the right button (1:00) - change to only 0:30
           update(existingIndex, { day, hour: [`${hour}:30`] });
         } else {
-          // Clicked the first button: keep only the second half hour
+          // Click on the left button (0:30) - change to only 1:00
           update(existingIndex, { day, hour: [`${hour + 1}:00`] });
         }
-      } else if (hasOpposite && hasCurrent) {
-        // Case 2: We have both half hours (convert to full hour)
-        const updatedHours = existingHours.filter(
-          (h) => h !== halfHour && h !== oppositeHalf
-        );
-        updatedHours.push(fullHour);
-        update(existingIndex, { day, hour: updatedHours });
-      } else if (hasCurrent) {
-        // Case 3: We only have this half hour (remove it)
-        const updatedHours = existingHours.filter((h) => h !== halfHour);
+      } else if (hasSelected) {
+        // Delete the actual selection
+        const updatedHours = existingHours.filter((h) => h !== selectedTime);
         if (updatedHours.length === 0) {
           remove(existingIndex);
         } else {
           update(existingIndex, { day, hour: updatedHours });
         }
       } else {
-        // Case 4: Add this half hour
-        const updatedHours = [...existingHours, halfHour];
-
-        // Check if we now have both half hours
-        if (updatedHours.includes(oppositeHalf)) {
-          // Convert to full hour representation
-          update(existingIndex, {
-            day,
-            hour: [fullHour],
-          });
+        // Add the new selection
+        const updatedHours = [...existingHours, selectedTime];
+        // Check if we now have both half-hour periods
+        if (hasOpposite) {
+          // Replace both with the full hour
+          update(existingIndex, { day, hour: [fullHour] });
         } else {
           update(existingIndex, { day, hour: updatedHours });
         }
       }
     } else {
-      // No existing slot for this day - create new one
-      append({ day: day, hour: [halfHour] });
+      // No slot exists for this day - create a new one
+      append({ day: day, hour: [selectedTime] });
     }
   };
 
@@ -238,10 +224,10 @@ const WorkScheduleTable = ({
     if (!daySlot) return false;
 
     // Show selected if:
-    // 1. It is the full hour covering both
-    // 2. It is the specific half-hour
+    // 1. It is the specific selected time
+    // 2. Or it is covered by the full hour
     return (
-      daySlot.hour.includes(fullHour) || daySlot.hour.includes(timeToCheck)
+      daySlot.hour.includes(timeToCheck) || daySlot.hour.includes(fullHour)
     );
   };
 
