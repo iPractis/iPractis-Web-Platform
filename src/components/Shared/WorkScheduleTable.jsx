@@ -34,7 +34,6 @@ const WorkScheduleTable = ({
   showCurrentActiveDay = true,
   wrapperClassName,
   bookedLessonSpot,
-  showCurrentDate,
   timeZoneFilter,
   fromToFilter,
   control,
@@ -169,43 +168,80 @@ const WorkScheduleTable = ({
   };
 
   // Function to handle the selection of day and hour
-  const handleGetDayAndHour = (hour, day) => {
-    // Convert hour to "0:00", "1:00" format
-    const formattedHour = `${hour}:00`;
+  const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
+    // Determine time strings based on which button was clicked
+    const halfHour = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    const fullHour = `${hour + 1}:00`;
+    const oppositeHalf = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
 
-    // Check if there is already a record for the selected day
+    // Find existing time slot for this day
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
     if (existingIndex !== -1) {
-      // If it already exists, check if the hour is already in the array
       const existingHours = fields[existingIndex].hour;
-      const hourIndex = existingHours.indexOf(formattedHour);
+      // Check what time periods already exist
+      const hasFullHour = existingHours.includes(fullHour);
+      const hasOpposite = existingHours.includes(oppositeHalf);
+      const hasCurrent = existingHours.includes(halfHour);
 
-      if (hourIndex !== -1) {
-        // If the hour exists, remove it
-        const updatedHours = existingHours.filter((h) => h !== formattedHour);
-
-        // If no hours remain, remove the entire day
+      if (hasFullHour) {
+        // Case 1: We have a full hour and clicking one of its buttons
+        if (isSecondButton) {
+          // Clicked the second button: keep only the first half hour
+          update(existingIndex, { day, hour: [`${hour}:30`] });
+        } else {
+          // Clicked the first button: keep only the second half hour
+          update(existingIndex, { day, hour: [`${hour + 1}:00`] });
+        }
+      } else if (hasOpposite && hasCurrent) {
+        // Case 2: We have both half hours (convert to full hour)
+        const updatedHours = existingHours.filter(
+          (h) => h !== halfHour && h !== oppositeHalf
+        );
+        updatedHours.push(fullHour);
+        update(existingIndex, { day, hour: updatedHours });
+      } else if (hasCurrent) {
+        // Case 3: We only have this half hour (remove it)
+        const updatedHours = existingHours.filter((h) => h !== halfHour);
         if (updatedHours.length === 0) {
           remove(existingIndex);
         } else {
-          // Update the array of hours
           update(existingIndex, { day, hour: updatedHours });
         }
       } else {
-        // If the hour does not exist, add it
-        update(existingIndex, { day, hour: [...existingHours, formattedHour] });
+        // Case 4: Add this half hour
+        const updatedHours = [...existingHours, halfHour];
+
+        // Check if we now have both half hours
+        if (updatedHours.includes(oppositeHalf)) {
+          // Convert to full hour representation
+          update(existingIndex, {
+            day,
+            hour: [fullHour],
+          });
+        } else {
+          update(existingIndex, { day, hour: updatedHours });
+        }
       }
     } else {
-      // If there is no record for the day, create it with the selected hour
-      append({ day: day, hour: [formattedHour] });
+      // No existing slot for this day - create new one
+      append({ day: day, hour: [halfHour] });
     }
   };
 
-  // This is if a slot of calendar is selected (returns true or false)
-  const isSelected = (hour, day) => {
-    return fields.some(
-      (slot) => slot.day === day && slot.hour.includes(`${hour}:00`)
+  // Modifies the isSelected function to verify each specific button
+  const isSelected = (hour, day, isSecondButton = false) => {
+    const timeToCheck = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    const fullHour = `${hour + 1}:00`;
+
+    const daySlot = fields.find((slot) => slot.day === day);
+    if (!daySlot) return false;
+
+    // Show selected if:
+    // 1. It is the full hour covering both
+    // 2. It is the specific half-hour
+    return (
+      daySlot.hour.includes(fullHour) || daySlot.hour.includes(timeToCheck)
     );
   };
 
@@ -458,17 +494,29 @@ const WorkScheduleTable = ({
                           showCurrentActiveDay &&
                           isToday &&
                           "bg-tertiary-color-SC5 [&:nth-child(1)]:rounded-l-lg [&:nth-child(24)]:rounded-r-lg h-7 w-[27.50px]"
-                        } md:w-full w-[38px] md:h-[22px] h-[28px] md:mb-0 mb-1.5 last:mb-0`}
+                        } flex md:w-full w-[38px] md:h-[22px] h-[28px] md:mb-0 mb-1.5 last:mb-0`}
                         key={`${column.key}-${hourIndex}`}
                       >
                         <button
                           className={`${
-                            isSelected(hourIndex, column.label)
+                            isSelected(hourIndex, column.label, false)
                               ? "bg-quinary-color-VS10"
                               : "bg-primary-color-P11"
-                          } rounded-md ST-4 h-full w-full mx-auto`}
+                          } flex-1 rounded-s-md ST-4 h-full w-full`}
                           onClick={() =>
-                            handleGetDayAndHour(hourIndex, column.label)
+                            handleGetDayAndHour(hourIndex, column.label, false)
+                          }
+                          type="button"
+                        ></button>
+
+                        <button
+                          className={`${
+                            isSelected(hourIndex, column.label, true)
+                              ? "bg-quinary-color-VS10"
+                              : "bg-primary-color-P11"
+                          } flex-1 rounded-e-md ST-4 h-full w-full`}
+                          onClick={() =>
+                            handleGetDayAndHour(hourIndex, column.label, true)
                           }
                           type="button"
                         ></button>
