@@ -368,9 +368,9 @@ const WorkScheduleTable = ({
       )}
 
       {/* Calendar */}
-      <main className="flex md:flex-row flex-col gap-4">
+      <main className="flex md:flex-row flex-col gap-3">
         {/* Left column - days and format button */}
-        <div className="flex md:flex-col flex-row justify-between gap-1">
+        <div className="flex md:flex-col flex-row gap-1">
           <div>
             <button
               className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:h-12 h-full md:w-auto w-[72px]"
@@ -408,12 +408,12 @@ const WorkScheduleTable = ({
         </div>
 
         {/* Right column - hours and slots */}
-        <div className="flex md:flex-col flex-row w-full">
+        <div className="flex md:flex-col flex-row w-full gap-0">
           <div className="flex md:gap-0 gap-1 md:flex-col flex-row md:px-1 md:py-0 py-1">
             <div className="flex md:flex-row flex-col justify-between gap-1.5">
               {Array.from({ length: 24 }, (_, index) => (
                 <div
-                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] h-7 px-1"
+                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] md:h-[22px] h-[28px] px-1"
                   key={`hour-${index}`}
                 >
                   {formatHour(index)}
@@ -423,52 +423,61 @@ const WorkScheduleTable = ({
 
             <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
               <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                <h3 className="flex justify-center items-center h-full px-1">AM</h3>
+                <h3 className="flex justify-center items-center h-full px-1">
+                  AM
+                </h3>
               </div>
 
               <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                <h3 className="flex justify-center items-center h-full px-1">PM</h3>
+                <h3 className="flex justify-center items-center h-full px-1">
+                  PM
+                </h3>
               </div>
             </div>
           </div>
 
           <div className="flex-1 md:mt-1 mt-0">
-            {columnsHeaderWorkSchedule.map((column, rowIndex) => {
-              const columnDate = weekDates[rowIndex];
-              const isToday =
-                columnDate instanceof Date &&
-                !isNaN(columnDate) &&
-                columnDate.getDate() === currentDay &&
-                columnDate.getMonth() === new Date().getMonth() &&
-                columnDate.getFullYear() === new Date().getFullYear();
+            <div className="md:block flex justify-around">
+              {columnsHeaderWorkSchedule.map((column, rowIndex) => {
+                const columnDate = weekDates[rowIndex];
+                const isToday =
+                  columnDate instanceof Date &&
+                  !isNaN(columnDate) &&
+                  columnDate.getDate() === currentDay &&
+                  columnDate.getMonth() === new Date().getMonth() &&
+                  columnDate.getFullYear() === new Date().getFullYear();
 
-              return (
-                <div className="grid grid-cols-8 gap-1.5 p-1 md:flex md:justify-between" key={column.key}>
-                  {Array.from({ length: 24 }, (_, hourIndex) => (
-                    <div
-                      className={`${
-                        showCurrentActiveDay &&
-                        isToday &&
-                        "bg-tertiary-color-SC5 [&:nth-child(1)]:rounded-l-lg [&:nth-child(24)]:rounded-r-lg h-7 w-[27.50px]"
-                      } w-full`}
-                      key={`${column.key}-${hourIndex}`}
-                    >
-                      <button
+                return (
+                  <div
+                    className="md:flex block justify-between gap-1.5 p-1"
+                    key={column.key}
+                  >
+                    {Array.from({ length: 24 }, (_, hourIndex) => (
+                      <div
                         className={`${
-                          isSelected(hourIndex, column.label)
-                            ? "bg-quinary-color-VS10"
-                            : "bg-primary-color-P11"
-                        } flex justify-center items-center rounded-md ST-4 h-[22px] w-full mx-auto`}
-                        onClick={() =>
-                          handleGetDayAndHour(hourIndex, column.label)
-                        }
-                        type="button"
-                      ></button>
-                    </div>
-                  ))}
-                </div>
-              );
-            })}
+                          showCurrentActiveDay &&
+                          isToday &&
+                          "bg-tertiary-color-SC5 [&:nth-child(1)]:rounded-l-lg [&:nth-child(24)]:rounded-r-lg h-7 w-[27.50px]"
+                        } md:w-full w-[38px] md:h-[22px] h-[28px] md:mb-0 mb-1.5 last:mb-0`}
+                        key={`${column.key}-${hourIndex}`}
+                      >
+                        <button
+                          className={`${
+                            isSelected(hourIndex, column.label)
+                              ? "bg-quinary-color-VS10"
+                              : "bg-primary-color-P11"
+                          } rounded-md ST-4 h-full w-full mx-auto`}
+                          onClick={() =>
+                            handleGetDayAndHour(hourIndex, column.label)
+                          }
+                          type="button"
+                        ></button>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </main>
