@@ -443,7 +443,7 @@ const WorkScheduleTable = ({
                 columnDate.getFullYear() === new Date().getFullYear();
 
               return (
-                <div className="flex justify-between gap-1.5 p-1" key={column.key}>
+                <div className="grid grid-cols-8 gap-1.5 p-1 md:flex md:justify-between" key={column.key}>
                   {Array.from({ length: 24 }, (_, hourIndex) => (
                     <div
                       className={`${
