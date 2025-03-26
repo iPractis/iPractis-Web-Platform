@@ -170,65 +170,47 @@ const WorkScheduleTable = ({
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
     const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
-    const fullHour = `${hour + 1}:00`;
-    const oppositeHalf = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
-
+    const oppositeTime = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
+  
     const existingIndex = fields.findIndex((slot) => slot.day === day);
-
+  
     if (existingIndex !== -1) {
-      const existingHours = fields[existingIndex].hour;
+      const existingHours = [...fields[existingIndex].hour];
       const hasSelected = existingHours.includes(selectedTime);
-      const hasOpposite = existingHours.includes(oppositeHalf);
-      const hasFullHour = existingHours.includes(fullHour);
-
-      if (hasFullHour) {
-        // If complete hour exists (1:00)
-        if (isSecondButton) {
-          // Click on the right button (1:00) - change to only 0:30
-          update(existingIndex, { day, hour: [`${hour}:30`] });
-        } else {
-          // Click on the left button (0:30) - change to only 1:00
-          update(existingIndex, { day, hour: [`${hour + 1}:00`] });
-        }
-      } else if (hasSelected) {
-        // Delete the actual selection
-        const updatedHours = existingHours.filter((h) => h !== selectedTime);
-        if (updatedHours.length === 0) {
-          remove(existingIndex);
-        } else {
-          update(existingIndex, { day, hour: updatedHours });
-        }
+  
+      let updatedHours = [...existingHours];
+  
+      if (hasSelected) {
+        // Si ya está seleccionado, lo quitamos
+        updatedHours = updatedHours.filter((h) => h !== selectedTime);
       } else {
-        // Add the new selection
-        const updatedHours = [...existingHours, selectedTime];
-        // Check if we now have both half-hour periods
-        if (hasOpposite) {
-          // Replace both with the full hour
-          update(existingIndex, { day, hour: [fullHour] });
-        } else {
-          update(existingIndex, { day, hour: updatedHours });
-        }
+        // Agregar la hora seleccionada sin afectar la otra mitad
+        updatedHours.push(selectedTime);
+      }
+  
+      // Ordenar las horas para consistencia
+      updatedHours.sort();
+  
+      // Actualizar solo si quedan horas
+      if (updatedHours.length > 0) {
+        update(existingIndex, { day, hour: updatedHours });
+      } else {
+        remove(existingIndex);
       }
     } else {
-      // No slot exists for this day - create a new one
-      append({ day: day, hour: [selectedTime] });
+      // Si no existe el día, lo agregamos con la hora seleccionada
+      append({ day, hour: [selectedTime] });
     }
   };
 
-  // Modifies the isSelected function to verify each specific button
+  // Verifica si una hora específica está seleccionada
   const isSelected = (hour, day, isSecondButton = false) => {
     const timeToCheck = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
-    const fullHour = `${hour + 1}:00`;
 
     const daySlot = fields.find((slot) => slot.day === day);
     if (!daySlot) return false;
 
-    // Show selected if:
-    // 1. It is the specific selected time
-    // 2. Or it is covered by the full hour
-    return (
-      daySlot.hour.includes(timeToCheck) || daySlot.hour.includes(fullHour)
-    );
+    return daySlot.hour.includes(timeToCheck);
   };
 
   // This is for decrementing days of a month (- 7)
