@@ -171,39 +171,39 @@ const WorkScheduleTable = ({
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
     const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
     const oppositeTime = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
-  
+
     const existingIndex = fields.findIndex((slot) => slot.day === day);
-  
+
     if (existingIndex !== -1) {
       const existingHours = [...fields[existingIndex].hour];
       const hasSelected = existingHours.includes(selectedTime);
-  
+
       let updatedHours = [...existingHours];
-  
+
       if (hasSelected) {
-        // Si ya está seleccionado, lo quitamos
+        // If it's already selected, we remove it
         updatedHours = updatedHours.filter((h) => h !== selectedTime);
       } else {
-        // Agregar la hora seleccionada sin afectar la otra mitad
+        // Add the selected time without affecting the other half
         updatedHours.push(selectedTime);
       }
-  
-      // Ordenar las horas para consistencia
+
+      // Sort hours for consistency
       updatedHours.sort();
-  
-      // Actualizar solo si quedan horas
+
+      // Update only if there are remaining hours
       if (updatedHours.length > 0) {
         update(existingIndex, { day, hour: updatedHours });
       } else {
         remove(existingIndex);
       }
     } else {
-      // Si no existe el día, lo agregamos con la hora seleccionada
+      // If the day doesn't exist, we add it with the selected time
       append({ day, hour: [selectedTime] });
     }
   };
 
-  // Verifica si una hora específica está seleccionada
+  // Checks if a specific time is selected
   const isSelected = (hour, day, isSecondButton = false) => {
     const timeToCheck = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
 
