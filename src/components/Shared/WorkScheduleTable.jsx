@@ -305,12 +305,13 @@ const WorkScheduleTable = ({
   const handleMouseDown = (hour, day, isSecondButton) => {
     setIsDragging(true);
     setStartCell({ hour, day, isSecondButton });
-    // Selecciona la celda inicial inmediatamente
+
+    // Selects the initial cell inmediately
     handleGetDayAndHour(hour, day, isSecondButton);
   };
   
   const handleMouseEnter = (hour, day, isSecondButton) => {
-    // Solo actúa si el clic está presionado Y es una celda diferente a la inicial
+    // Only acts if the click is pressed AND it is a different cell from the initial one
     if (isDragging && startCell) {
       handleGetDayAndHour(hour, day, isSecondButton);
     }
