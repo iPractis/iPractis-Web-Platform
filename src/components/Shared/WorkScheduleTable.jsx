@@ -40,7 +40,9 @@ const WorkScheduleTable = ({
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
   const [is12HourFormat, setIs12HourFormat] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [currentDay, setCurrentDay] = useState("");
+  const [startCell, setStartCell] = useState(null);
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
@@ -300,6 +302,25 @@ const WorkScheduleTable = ({
     return hour % 12;
   };
 
+  const handleMouseDown = (hour, day, isSecondButton) => {
+    setIsDragging(true);
+    setStartCell({ hour, day, isSecondButton });
+    // Selecciona la celda inicial inmediatamente
+    handleGetDayAndHour(hour, day, isSecondButton);
+  };
+  
+  const handleMouseEnter = (hour, day, isSecondButton) => {
+    // Solo actúa si el clic está presionado Y es una celda diferente a la inicial
+    if (isDragging && startCell) {
+      handleGetDayAndHour(hour, day, isSecondButton);
+    }
+  };
+  
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setStartCell(null);
+  };
+
   return (
     <section className={wrapperClassName}>
       {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
@@ -471,9 +492,9 @@ const WorkScheduleTable = ({
                               ? "bg-quinary-color-VS10"
                               : "bg-primary-color-P11"
                           } flex-1 rounded-s-md ST-4 h-full w-full`}
-                          onClick={() =>
-                            handleGetDayAndHour(hourIndex, column.label, false)
-                          }
+                          onMouseDown={() => handleMouseDown(hourIndex, column.label, false)}
+                          onMouseEnter={() => handleMouseEnter(hourIndex, column.label, false)}
+                          onMouseUp={handleMouseUp}
                           type="button"
                         ></button>
 
@@ -483,9 +504,9 @@ const WorkScheduleTable = ({
                               ? "bg-quinary-color-VS10"
                               : "bg-primary-color-P11"
                           } flex-1 rounded-e-md ST-4 h-full w-full`}
-                          onClick={() =>
-                            handleGetDayAndHour(hourIndex, column.label, true)
-                          }
+                          onMouseDown={() => handleMouseDown(hourIndex, column.label, true)}
+                          onMouseEnter={() => handleMouseEnter(hourIndex, column.label, true)}
+                          onMouseUp={handleMouseUp}
                           type="button"
                         ></button>
                       </div>
