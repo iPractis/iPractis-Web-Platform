@@ -175,7 +175,6 @@ const WorkScheduleTable = ({
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
     const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
-    const oppositeTime = isSecondButton ? `${hour}:30` : `${hour + 1}:00`;
 
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
@@ -186,24 +185,25 @@ const WorkScheduleTable = ({
       let updatedHours = [...existingHours];
 
       if (hasSelected) {
-        // If it's already selected, we remove it
         updatedHours = updatedHours.filter((h) => h !== selectedTime);
       } else {
-        // Add the selected time without affecting the other half
         updatedHours.push(selectedTime);
+        
+        // Sort the hours after adding a new one
+        updatedHours.sort((a, b) => {
+          const [aHour, aMin] = a.split(":").map(Number);
+          const [bHour, bMin] = b.split(":").map(Number);
+          return aHour - bHour || aMin - bMin;
+        });
       }
 
-      // Sort hours for consistency
-      updatedHours.sort();
-
-      // Update only if there are remaining hours
       if (updatedHours.length > 0) {
         update(existingIndex, { day, hour: updatedHours });
       } else {
         remove(existingIndex);
       }
     } else {
-      // If the day doesn't exist, we add it with the selected time
+      // If the day does not exist, we add it with the selected hour (already sorted)
       append({ day, hour: [selectedTime] });
     }
   };
