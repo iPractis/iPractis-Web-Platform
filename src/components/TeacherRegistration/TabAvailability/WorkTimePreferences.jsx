@@ -7,8 +7,8 @@ import { timeZones } from "@/src/data/dataTeacherRegistration";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
-import { useController, useWatch } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
+import { useController } from "react-hook-form";
 
 // React imports
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ import {
   EarthIcon,
 } from "../../Icons";
 
-const WorkTimePreferences = ({ errors, control }) => {
+const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -42,24 +42,18 @@ const WorkTimePreferences = ({ errors, control }) => {
     control,
   });
 
-  const workSchedule = useWatch({
-    control,
-    name: "workSchedule",
-    defaultValue: [],
-  });
+  // Calculate total hours from all selected time slots
+  const calculateTotalHours = () => {
+    return dailyWorkTimeLimit.reduce((totalHours, daySlot) => {
+      return totalHours + daySlot.hour.length * 0.5;
+    }, 0);
+  };
 
-  // Grab all the selected hours (what day selected not matter, we just grab the hour!)
-  const slotsArray = workSchedule.reduce((acc, daySlot) => {
-    const { day, hour } = daySlot;
-
-    const dayHours = hour.map((h) => `${day}-${h}`);
-
-    return [...acc, ...dayHours];
-  }, []);
+  const totalHours = calculateTotalHours();
 
   useEffect(() => {
-    dailyWorkTime.onChange(slotsArray.length);
-  }, [slotsArray.length]);
+    dailyWorkTime.onChange(totalHours);
+  }, [totalHours]);
 
   return (
     <>
@@ -178,7 +172,7 @@ const WorkTimePreferences = ({ errors, control }) => {
               }}
               onChange={dailyWorkTime.onChange}
               onBlur={dailyWorkTime.onBlur}
-              value={slotsArray?.length}
+              value={totalHours}
             />
           </InputLeftStickStatus>
 

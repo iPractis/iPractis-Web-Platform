@@ -9,9 +9,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 
 // React imports
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
+  const [dailyWorkTimeLimit, setDailyWorkTimeLimit] = useState([]);
+
   const {
     formState: { errors },
     handleSubmit,
@@ -61,9 +63,16 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
       className={`${activeTab !== 3 && "hidden"}`}
     >
-      <WorkTimePreferences control={control} errors={errors} />
+      <WorkTimePreferences
+        dailyWorkTimeLimit={dailyWorkTimeLimit}
+        control={control}
+        errors={errors}
+      />
 
-      <WorkSchedule control={control} />
+      <WorkSchedule
+        setDailyWorkTimeLimit={setDailyWorkTimeLimit}
+        control={control}
+      />
 
       {/* Back && Save buttons */}
       <TabsButtonsBottomNav

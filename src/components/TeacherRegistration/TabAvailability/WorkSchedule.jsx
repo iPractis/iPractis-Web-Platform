@@ -4,7 +4,7 @@ import WorkScheduleTable from "../../Shared/WorkScheduleTable";
 // Icons
 import { LuggageClockIcon } from "../../Icons";
 
-const WorkSchedule = ({ control }) => {
+const WorkSchedule = ({ control, setDailyWorkTimeLimit }) => {
   return (
     <>
       <SectionHeader
@@ -18,7 +18,11 @@ const WorkSchedule = ({ control }) => {
       />
 
       <div className="md:px-8">
-        <WorkScheduleTable showCurrentActiveDay={false} control={control} />
+        <WorkScheduleTable
+          setDailyWorkTimeLimit={setDailyWorkTimeLimit}
+          showCurrentActiveDay={false}
+          control={control}
+        />
       </div>
     </>
   );

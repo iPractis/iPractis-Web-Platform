@@ -32,6 +32,7 @@ import React, { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
+  setDailyWorkTimeLimit,
   wrapperClassName,
   bookedLessonSpot,
   timeZoneFilter,
@@ -53,8 +54,6 @@ const WorkScheduleTable = ({
     control,
     name: "workSchedule",
   });
-
-  console.log(fields);
 
   // All that happen in this useEffect are the DEFAULT VALUES for the calendar
   useEffect(() => {
@@ -109,6 +108,10 @@ const WorkScheduleTable = ({
     });
     setCurrentDay(new Date(now).getDate());
   }, []);
+
+  useEffect(() => {
+    setDailyWorkTimeLimit(fields);
+  }, [fields]);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
@@ -309,14 +312,14 @@ const WorkScheduleTable = ({
     // Selects the initial cell inmediately
     handleGetDayAndHour(hour, day, isSecondButton);
   };
-  
+
   const handleMouseEnter = (hour, day, isSecondButton) => {
     // Only acts if the click is pressed AND it is a different cell from the initial one
     if (isDragging && startCell) {
       handleGetDayAndHour(hour, day, isSecondButton);
     }
   };
-  
+
   const handleMouseUp = () => {
     setIsDragging(false);
     setStartCell(null);
@@ -493,8 +496,12 @@ const WorkScheduleTable = ({
                               ? "bg-quinary-color-VS10"
                               : "bg-primary-color-P11"
                           } flex-1 rounded-s-md ST-4 h-full w-full`}
-                          onMouseDown={() => handleMouseDown(hourIndex, column.label, false)}
-                          onMouseEnter={() => handleMouseEnter(hourIndex, column.label, false)}
+                          onMouseDown={() =>
+                            handleMouseDown(hourIndex, column.label, false)
+                          }
+                          onMouseEnter={() =>
+                            handleMouseEnter(hourIndex, column.label, false)
+                          }
                           onMouseUp={handleMouseUp}
                           type="button"
                         ></button>
@@ -505,8 +512,12 @@ const WorkScheduleTable = ({
                               ? "bg-quinary-color-VS10"
                               : "bg-primary-color-P11"
                           } flex-1 rounded-e-md ST-4 h-full w-full`}
-                          onMouseDown={() => handleMouseDown(hourIndex, column.label, true)}
-                          onMouseEnter={() => handleMouseEnter(hourIndex, column.label, true)}
+                          onMouseDown={() =>
+                            handleMouseDown(hourIndex, column.label, true)
+                          }
+                          onMouseEnter={() =>
+                            handleMouseEnter(hourIndex, column.label, true)
+                          }
                           onMouseUp={handleMouseUp}
                           type="button"
                         ></button>
