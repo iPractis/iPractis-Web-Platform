@@ -2,22 +2,12 @@ import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import InputBGWrapperIcon from "./InputBGWrapperIcon";
 import {
   columnsHeaderWorkSchedule,
-  rowsWorkSchedule,
   timeZones,
 } from "@/src/data/dataTeacherRegistration";
 
 // External imports
+import { Select, SelectItem } from "@nextui-org/react";
 import { useFieldArray } from "react-hook-form";
-import {
-  Table,
-  TableHeader,
-  TableColumn,
-  TableBody,
-  TableRow,
-  TableCell,
-  Select,
-  SelectItem,
-} from "@nextui-org/react";
 
 // Icons
 import {
@@ -28,7 +18,7 @@ import {
 } from "../Icons";
 
 // React imports
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
@@ -188,7 +178,7 @@ const WorkScheduleTable = ({
         updatedHours = updatedHours.filter((h) => h !== selectedTime);
       } else {
         updatedHours.push(selectedTime);
-        
+
         // Sort the hours after adding a new one
         updatedHours.sort((a, b) => {
           const [aHour, aMin] = a.split(":").map(Number);
