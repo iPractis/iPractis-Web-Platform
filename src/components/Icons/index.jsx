@@ -1360,6 +1360,25 @@ export const LeftArrowMediumIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const RightArrowBiggerIcon = ({ fillColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.5 12.7107C11.8954 12.3194 11.8954 11.6806 11.5 11.2892L8.67156 8.4898C8.04012 7.86484 6.96811 8.31212 6.96811 9.20054V11L3 11C2.44772 11 2 11.4477 2 12C2 12.5522 2.44772 13 3 13L6.96811 13V14.7994C6.96811 15.6878 8.04012 16.1351 8.67156 15.5101L11.5 12.7107Z"
+      className={fillColor}
+    />
+    <path
+      d="M14 4.56156C14 3.64383 14.6246 2.84387 15.5149 2.62128L19.5149 1.62125C20.7772 1.30567 22 2.26038 22 3.56153V20.4384C22 21.7396 20.7772 22.6943 19.5149 22.3787L15.5149 21.3787C14.6246 21.1561 14 20.3561 14 19.4384V4.56156Z"
+      className={fillColor}
+    />
+  </svg>
+);
+
 export const ThreeUsersIcon = ({ fillColor }) => (
   <svg
     width="24"
