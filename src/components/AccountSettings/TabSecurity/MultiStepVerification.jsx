@@ -27,7 +27,7 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
     field: { value, onBlur, onChange },
     fieldState: { error },
   } = useController({
-    name: "subSubject",
+    name: "inputValue",
     control,
   });
 
@@ -53,6 +53,7 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
               <Switch
                 name="multiStepVerification"
                 isSelected={value}
+                defaultSelected
                 onValueChange={onChange}
                 size="sm"
                 classNames={{
