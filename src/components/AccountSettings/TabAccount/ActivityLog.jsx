@@ -23,7 +23,7 @@ const ActivityLog = () => {
       >
         <div className="flex-1">
           <button
-            className={`btn bg-primary-color-P12 flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
+            className={`btn btn-tertiary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
             type="button"
           >
             <span className="MT-1 px-1.5">Download</span>{" "}
