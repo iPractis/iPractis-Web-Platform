@@ -1,6 +1,7 @@
 import SyncYourCalendar from "./SyncYourCalendar";
 import ActivityLog from "./ActivityLog";
 import Preferences from "./Preferences";
+import DeleteAccount from "./DeleteAccount";
 
 // External imports
 import { useForm } from "react-hook-form";
@@ -21,6 +22,8 @@ const TabAccount = ({ activeTab }) => {
       <SyncYourCalendar />
 
       <ActivityLog />
+
+      <DeleteAccount />
     </form>
   );
 };

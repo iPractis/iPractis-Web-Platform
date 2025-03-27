@@ -1,9 +1,9 @@
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
+import ActivityItem from "./ActivityItem";
 
 // Icons
 import { DownloadMediumIcon, CalendarIcon } from "../../Icons";
-import ActivityItem from "./ActivityItem";
 
 const ActivityLog = () => {
   return (

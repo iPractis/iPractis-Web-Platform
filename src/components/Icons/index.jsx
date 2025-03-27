@@ -2335,6 +2335,35 @@ export const TrashBinIcon = ({ fillColor, strokeColor }) => (
   </svg>
 );
 
+export const TrashBinSmallerIcon = ({ fillColor, strokeColor }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M18 7H6V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7ZM9.5 9C9.5 8.72386 9.27614 8.5 9 8.5C8.72386 8.5 8.5 8.72386 8.5 9V17C8.5 17.2761 8.72386 17.5 9 17.5C9.27614 17.5 9.5 17.2761 9.5 17V9ZM15 8.5C15.2761 8.5 15.5 8.72386 15.5 9V17C15.5 17.2761 15.2761 17.5 15 17.5C14.7239 17.5 14.5 17.2761 14.5 17V9C14.5 8.72386 14.7239 8.5 15 8.5ZM12.5 9C12.5 8.72386 12.2761 8.5 12 8.5C11.7239 8.5 11.5 8.72386 11.5 9V17C11.5 17.2761 11.7239 17.5 12 17.5C12.2761 17.5 12.5 17.2761 12.5 17V9Z"
+      className={fillColor}
+    />
+    <path
+      d="M5 6H19"
+      className={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <path
+      d="M10 3H14"
+      className={strokeColor}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 export const PhoneIcon = ({ fillColor }) => (
   <svg
     width="24"
