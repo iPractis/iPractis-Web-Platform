@@ -1,4 +1,5 @@
 import SyncYourCalendar from "./SyncYourCalendar";
+import ActivityLog from "./ActivityLog";
 import Preferences from "./Preferences";
 
 // External imports
@@ -18,6 +19,8 @@ const TabAccount = ({ activeTab }) => {
       <Preferences watch={watch} control={control} errors={errors} />
 
       <SyncYourCalendar />
+
+      <ActivityLog />
     </form>
   );
 };

@@ -1,3 +1,4 @@
+import SocialConnectButton from "./SocialConnectButton";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // Icons
@@ -7,7 +8,6 @@ import {
   GoogleMediumIcon,
   MicrosoftMediumIcon,
 } from "../../Icons";
-import SocialConnectButton from "./SocialConnectButton";
 
 const SyncYourCalendar = () => {
   return (
