@@ -1,6 +1,6 @@
-import ActivityLog from "./ActivityLog";
-import LogInID from "./LogInID";
+import ConnectYourAccount from "./ConnectYourAccount";
 import Password from "./Password";
+import LogInID from "./LogInID";
 
 // External imports
 import { useSession } from "next-auth/react";
@@ -25,7 +25,7 @@ const TabSecurity = ({ activeTab }) => {
 
       <Password />
 
-      <ActivityLog />
+      <ConnectYourAccount />
     </form>
   );
 };
