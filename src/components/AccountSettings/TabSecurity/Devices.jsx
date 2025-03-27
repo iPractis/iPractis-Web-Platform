@@ -3,7 +3,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 import DeviceItem from "./DeviceItem";
 
 // Icons
-import { DownloadMediumIcon, CalendarIcon } from "../../Icons";
+import { ChevronRightDoorBiggestIcon, MonitorMediumIcon } from "../../Icons";
 
 const Devices = () => {
   return (
@@ -12,29 +12,29 @@ const Devices = () => {
         wrapperSectionHeaderClassName={
           "flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
         }
-        descriptionText={
-          "View a detailed history of recent account activities."
-        }
-        titleIcon={<CalendarIcon fillColor={"fill-primary-color-P1"} />}
+        descriptionText={"Review and manage devices connected to your account"}
+        titleIcon={<MonitorMediumIcon fillColor={"fill-primary-color-P1"} />}
         headerContainerClassName="flex-[40%]"
         descriptionClassName={"mt-[4px]"}
-        titleText={"Activity Log"}
+        titleText={"Devices"}
         titleClassName="MT-SB-1"
       >
         <div className="flex-1">
           <button
-            className={`btn bg-primary-color-P12 flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
+            className={`btn btn-quinary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
             type="button"
           >
-            <span className="MT-1 px-1.5">Download</span>{" "}
-            <InputBGWrapperIcon className={"bg-primary-color-P1"}>
-              <DownloadMediumIcon fillColor={"fill-primary-color-P12"} />
+            <span className="MT-1 px-1.5">Log out from everywhere</span>{" "}
+            <InputBGWrapperIcon>
+              <ChevronRightDoorBiggestIcon
+                fillColor={"fill-primary-color-P1"}
+              />
             </InputBGWrapperIcon>
           </button>
         </div>
       </SectionHeader>
 
-      <section className="space-y-2.5">
+      <section className="space-y-2.5 lg:px-8">
         {/* Current device */}
         <div className="px-4">
           <h2 className="MT-SB-1 text-primary-color-P1">Current device</h2>
