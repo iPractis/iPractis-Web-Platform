@@ -1,3 +1,4 @@
+import MultiStepVerification from "./MultiStepVerification";
 import ConnectYourAccount from "./ConnectYourAccount";
 import Password from "./Password";
 import LogInID from "./LogInID";
@@ -12,6 +13,7 @@ const TabSecurity = ({ activeTab }) => {
   const {
     formState: { errors },
     control,
+    isSubmitted,
   } = useForm({
     mode: "onBlur",
     defaultValues: {
@@ -24,6 +26,12 @@ const TabSecurity = ({ activeTab }) => {
       <LogInID userEmail={session?.user?.email} errors={errors} />
 
       <Password />
+
+      <MultiStepVerification
+        isSubmitted={isSubmitted}
+        control={control}
+        errors={errors}
+      />
 
       <ConnectYourAccount />
     </form>
