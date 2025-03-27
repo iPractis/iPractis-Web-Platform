@@ -34,7 +34,7 @@ const ActivityLog = () => {
         </div>
       </SectionHeader>
 
-      <section className="space-y-2.5">
+      <section className="space-y-2.5 lg:px-8">
         <ActivityItem
           date="11 Oct, 2025"
           time="11 H 21 Am"

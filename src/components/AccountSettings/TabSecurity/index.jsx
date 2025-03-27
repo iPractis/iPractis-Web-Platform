@@ -2,6 +2,7 @@ import MultiStepVerification from "./MultiStepVerification";
 import ConnectYourAccount from "./ConnectYourAccount";
 import Password from "./Password";
 import LogInID from "./LogInID";
+import Devices from "./Devices";
 
 // External imports
 import { useSession } from "next-auth/react";
@@ -34,6 +35,8 @@ const TabSecurity = ({ activeTab }) => {
       />
 
       <ConnectYourAccount />
+
+      <Devices />
     </form>
   );
 };
