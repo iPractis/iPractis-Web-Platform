@@ -25,7 +25,7 @@ const LogInID = ({ errors, userEmail }) => {
   }, [showEmail, userEmail]);
 
   return (
-    <>
+    <div>
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
         descriptionText={
@@ -79,7 +79,7 @@ const LogInID = ({ errors, userEmail }) => {
           </InputLeftStickStatus>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

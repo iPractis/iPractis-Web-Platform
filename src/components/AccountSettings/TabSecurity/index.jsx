@@ -1,4 +1,6 @@
+import ActivityLog from "./ActivityLog";
 import LogInID from "./LogInID";
+import Password from "./Password";
 
 // External imports
 import { useSession } from "next-auth/react";
@@ -18,11 +20,12 @@ const TabSecurity = ({ activeTab }) => {
   });
 
   return (
-    <form className={`${activeTab !== 2 && "hidden"}`}>
-      <LogInID
-        userEmail={session?.user?.email}
-        errors={errors}
-      />
+    <form className={`${activeTab !== 2 && "hidden"} space-y-16 mb-24`}>
+      <LogInID userEmail={session?.user?.email} errors={errors} />
+
+      <Password />
+
+      <ActivityLog />
     </form>
   );
 };
