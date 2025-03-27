@@ -204,6 +204,17 @@ tr:last-of-type td.isSelected {
   margin: 0.1rem !important;
 }
 
+/* This is for the switch the styles for TAB NOTIFICATION in Account Settings */
+.receiveiPractisNotifications > .group[data-selected="true"] .group-data-\[selected\=true\]\:ml-4 {
+  margin-left: 6.8rem;
+  box-shadow: none;
+}
+
+.receiveiPractisNotifications > .group[data-selected="true"] .group-data-\[selected\=true\]\:ml-4 > svg {
+  width: 25px;
+  height: 25px;
+}
+
 /* sm(640px) */
 @media (max-width: 40em) {
   .otp-inputs-container input:nth-child(3) {

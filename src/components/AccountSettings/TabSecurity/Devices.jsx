@@ -24,7 +24,7 @@ const Devices = () => {
             className={`btn btn-quinary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl`}
             type="button"
           >
-            <span className="MT-1 px-1.5">Log out from everywhere</span>{" "}
+            <span className="ST-3 px-1.5">Log out from everywhere</span>{" "}
             <InputBGWrapperIcon>
               <ChevronRightDoorBiggestIcon
                 fillColor={"fill-primary-color-P1"}
