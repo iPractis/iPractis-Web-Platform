@@ -392,7 +392,9 @@ const WorkScheduleTable = ({
         <div className="flex md:flex-col flex-row gap-1">
           <div>
             <button
-              className="bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:h-12 h-full md:w-auto w-[72px]"
+              className={`bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:w-auto w-[72px] ${
+                is12HourFormat ? "md:h-12 h-full" : "h-full"
+              }`}
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -400,7 +402,11 @@ const WorkScheduleTable = ({
             </button>
           </div>
 
-          <div className="flex md:flex-col flex-row md:gap-0 md:items-stretch items-start gap-2.5 md:py-1 md:px-0 px-1 md:space-y-2 w-full">
+          <div
+            className={`flex md:flex-col flex-row md:gap-0 md:items-stretch items-start gap-2.5 md:px-0 px-1 md:space-y-2 w-full ${
+              is12HourFormat ? "md:py-1" : "md:py-0.5"
+            }`}
+          >
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
               const columnDate = weekDates[rowIndex];
               const isToday =
@@ -439,20 +445,22 @@ const WorkScheduleTable = ({
                 </div>
               ))}
             </div>
+              
+            {is12HourFormat && (
+              <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
+                <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
+                  <h3 className="flex justify-center items-center h-full px-1">
+                    AM
+                  </h3>
+                </div>
 
-            <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
-              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                <h3 className="flex justify-center items-center h-full px-1">
-                  AM
-                </h3>
+                <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
+                  <h3 className="flex justify-center items-center h-full px-1">
+                    PM
+                  </h3>
+                </div>
               </div>
-
-              <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                <h3 className="flex justify-center items-center h-full px-1">
-                  PM
-                </h3>
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="flex-1 md:mt-1 mt-0">
