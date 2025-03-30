@@ -315,6 +315,54 @@ const WorkScheduleTable = ({
     setStartCell(null);
   };
 
+  const handleHourClick = (hour) => {
+    const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+
+    // Primero, eliminamos cualquier slot existente en esa hora para todos los días
+    fields.forEach((slot, index) => {
+      if (days.includes(slot.day)) {
+        const updatedHours = slot.hour.filter(
+          (h) => !(h === `${hour}:30` || h === `${hour + 1}:00`)
+        );
+
+        if (updatedHours.length > 0) {
+          update(index, { day: slot.day, hour: updatedHours });
+        } else {
+          remove(index);
+        }
+      }
+    });
+
+    // Luego, agregamos los nuevos slots para todos los días
+    days.forEach((day) => {
+      const existingIndex = fields.findIndex((slot) => slot.day === day);
+      const time1 = `${hour}:30`;
+      const time2 = `${hour + 1}:00`;
+
+      if (existingIndex !== -1) {
+        const existingHours = [...fields[existingIndex].hour];
+        const hasTime1 = existingHours.includes(time1);
+        const hasTime2 = existingHours.includes(time2);
+
+        let updatedHours = [...existingHours];
+
+        if (!hasTime1) updatedHours.push(time1);
+        if (!hasTime2) updatedHours.push(time2);
+
+        // Ordenamos las horas
+        updatedHours.sort((a, b) => {
+          const [aHour, aMin] = a.split(":").map(Number);
+          const [bHour, bMin] = b.split(":").map(Number);
+          return aHour - bHour || aMin - bMin;
+        });
+
+        update(existingIndex, { day, hour: updatedHours });
+      } else {
+        append({ day, hour: [time1, time2] });
+      }
+    });
+  };
+
   return (
     <section className={wrapperClassName}>
       {/* FILTER TO AND FROM! E.G = January 1th to 7th and viceversa! */}
@@ -439,13 +487,14 @@ const WorkScheduleTable = ({
               {Array.from({ length: 24 }, (_, index) => (
                 <div
                   className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] md:h-[22px] h-[28px] px-1"
+                  onClick={() => handleHourClick(index)}
                   key={`hour-${index}`}
                 >
                   {formatHour(index)}
                 </div>
               ))}
             </div>
-              
+
             {is12HourFormat && (
               <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
                 <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
