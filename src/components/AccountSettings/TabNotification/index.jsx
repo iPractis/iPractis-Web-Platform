@@ -1,5 +1,6 @@
 import BrowserNotifications from "./BrowserNotifications";
 import AudioNotification from "./AudioNotification";
+import Notifications from "./Notifications";
 
 // External imports
 import { useForm } from "react-hook-form";
@@ -16,6 +17,8 @@ const TabNotification = ({ activeTab }) => {
   return (
     <form className={`${activeTab !== 3 && "hidden"} space-y-16 mb-24`}>
       <BrowserNotifications isSubmitted={isSubmitted} control={control} />
+
+      <Notifications control={control} />
 
       <AudioNotification isSubmitted={isSubmitted} control={control} />
     </form>

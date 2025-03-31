@@ -34,6 +34,16 @@
   border-radius: 0 !important;
 }
 
+/* Checkboxes of notifications (ACCOUNT SETTINGS) */
+.notifications-checkboxes > label {
+  padding: 0 !important;
+}
+
+.notifications-checkboxes > * span {
+  margin-right: 0 !important;
+}
+
+
 /* This is for styles the border of radio buttons of nextui */
 .connected.group[data-selected="true"]
   .group-data-\[selected\=true\]\:border-primary {
@@ -205,12 +215,17 @@ tr:last-of-type td.isSelected {
 }
 
 /* This is for the switch the styles for TAB NOTIFICATION in Account Settings */
-.receiveiPractisNotifications > .group[data-selected="true"] .group-data-\[selected\=true\]\:ml-4 {
+.receiveiPractisNotifications
+  > .group[data-selected="true"]
+  .group-data-\[selected\=true\]\:ml-4 {
   margin-left: 6.8rem;
   box-shadow: none;
 }
 
-.receiveiPractisNotifications > .group[data-selected="true"] .group-data-\[selected\=true\]\:ml-4 > svg {
+.receiveiPractisNotifications
+  > .group[data-selected="true"]
+  .group-data-\[selected\=true\]\:ml-4
+  > svg {
   width: 25px;
   height: 25px;
 }
