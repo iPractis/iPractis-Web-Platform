@@ -287,6 +287,7 @@ const WorkScheduleTable = ({
     setIs12HourFormat(!is12HourFormat);
   };
 
+  // Format hour (12H or 24H format)
   const formatHour = (hour) => {
     // Keep 0-23 if it's 24h format
     if (!is12HourFormat) return hour;
@@ -295,6 +296,20 @@ const WorkScheduleTable = ({
     return (hour % 12) + 1;
   };
 
+  // Only acts if the click is pressed AND it is a different cell from the initial one
+  const handleMouseEnter = (hour, day, isSecondButton) => {
+    if (isDragging && startCell) {
+      handleGetDayAndHour(hour, day, isSecondButton);
+    }
+  };
+
+  // Handles mouse-up events to stop the drag selection and resets dragging state and clears the starting cell
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setStartCell(null);
+  };
+
+  // Sets dragging state, stores the starting cell, and immediately selects the initial cell.
   const handleMouseDown = (hour, day, isSecondButton) => {
     setIsDragging(true);
     setStartCell({ hour, day, isSecondButton });
@@ -303,64 +318,88 @@ const WorkScheduleTable = ({
     handleGetDayAndHour(hour, day, isSecondButton);
   };
 
-  const handleMouseEnter = (hour, day, isSecondButton) => {
-    // Only acts if the click is pressed AND it is a different cell from the initial one
-    if (isDragging && startCell) {
-      handleGetDayAndHour(hour, day, isSecondButton);
-    }
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    setStartCell(null);
-  };
-
+  // If users clicks on HOURS of the day (0-23 or 1-12)
   const handleHourClick = (hour) => {
     const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+    const time1 = `${hour}:30`;
+    const time2 = `${hour + 1}:00`;
 
-    // Primero, eliminamos cualquier slot existente en esa hora para todos los días
-    fields.forEach((slot, index) => {
-      if (days.includes(slot.day)) {
-        const updatedHours = slot.hour.filter(
-          (h) => !(h === `${hour}:30` || h === `${hour + 1}:00`)
-        );
-
-        if (updatedHours.length > 0) {
-          update(index, { day: slot.day, hour: updatedHours });
-        } else {
-          remove(index);
-        }
-      }
+    // Check if ALL days already have the selected hours
+    const allSelected = days.every((day) => {
+      const daySlot = fields.find((slot) => slot.day === day);
+      return (
+        daySlot && daySlot.hour.includes(time1) && daySlot.hour.includes(time2)
+      );
     });
 
-    // Luego, agregamos los nuevos slots para todos los días
-    days.forEach((day) => {
-      const existingIndex = fields.findIndex((slot) => slot.day === day);
-      const time1 = `${hour}:30`;
-      const time2 = `${hour + 1}:00`;
+    // Check if SOME days already have the selected hours (but not all)
+    const someSelected = days.some((day) => {
+      const daySlot = fields.find((slot) => slot.day === day);
+      return (
+        daySlot &&
+        (daySlot.hour.includes(time1) || daySlot.hour.includes(time2))
+      );
+    });
 
-      if (existingIndex !== -1) {
-        const existingHours = [...fields[existingIndex].hour];
-        const hasTime1 = existingHours.includes(time1);
-        const hasTime2 = existingHours.includes(time2);
+    if (allSelected) {
+      // If all are selected, deselect all (original behavior)
+      const toRemove = [];
+      const toUpdate = [];
 
-        let updatedHours = [...existingHours];
+      fields.forEach((slot, index) => {
+        if (days.includes(slot.day)) {
+          const updatedHours = slot.hour.filter(
+            (h) => !(h === time1 || h === time2)
+          );
+          if (updatedHours.length > 0) {
+            toUpdate.push({
+              index,
+              updatedSlot: { day: slot.day, hour: updatedHours },
+            });
+          } else {
+            toRemove.push(index);
+          }
+        }
+      });
 
-        if (!hasTime1) updatedHours.push(time1);
-        if (!hasTime2) updatedHours.push(time2);
-
-        // Ordenamos las horas
-        updatedHours.sort((a, b) => {
-          const [aHour, aMin] = a.split(":").map(Number);
-          const [bHour, bMin] = b.split(":").map(Number);
-          return aHour - bHour || aMin - bMin;
+      toRemove
+        .sort((a, b) => b - a)
+        .forEach((index) => {
+          remove(index);
         });
 
-        update(existingIndex, { day, hour: updatedHours });
-      } else {
-        append({ day, hour: [time1, time2] });
-      }
-    });
+      toUpdate.forEach((item) => {
+        if (item.index < fields.length) {
+          update(item.index, item.updatedSlot);
+        }
+      });
+    } else {
+      // If some or none are selected, we select ALL the days
+      days.forEach((day) => {
+        const existingIndex = fields.findIndex((slot) => slot.day === day);
+
+        if (existingIndex !== -1) {
+          const existingHours = [...fields[existingIndex].hour];
+          const hasTime1 = existingHours.includes(time1);
+          const hasTime2 = existingHours.includes(time2);
+          let updatedHours = [...existingHours];
+
+          if (!hasTime1) updatedHours.push(time1);
+          if (!hasTime2) updatedHours.push(time2);
+
+          // We order the hours
+          updatedHours.sort((a, b) => {
+            const [aHour, aMin] = a.split(":").map(Number);
+            const [bHour, bMin] = b.split(":").map(Number);
+            return aHour - bHour || aMin - bMin;
+          });
+
+          update(existingIndex, { day, hour: updatedHours });
+        } else {
+          append({ day, hour: [time1, time2] });
+        }
+      });
+    }
   };
 
   return (
