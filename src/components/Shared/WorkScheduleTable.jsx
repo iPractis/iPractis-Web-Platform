@@ -291,8 +291,8 @@ const WorkScheduleTable = ({
     // Keep 0-23 if it's 24h format
     if (!is12HourFormat) return hour;
 
-    // Convert 0-11 using modulo if it's 12h format
-    return hour % 12;
+    // Convert 1-12 using modulo if it's 12h format
+    return (hour % 12) + 1;
   };
 
   const handleMouseDown = (hour, day, isSecondButton) => {
