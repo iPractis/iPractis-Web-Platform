@@ -524,13 +524,14 @@ const WorkScheduleTable = ({
           <div className="flex md:gap-0 gap-1 md:flex-col flex-row md:px-1 md:py-0 py-1">
             <div className="flex md:flex-row flex-col justify-between gap-1.5">
               {Array.from({ length: 24 }, (_, index) => (
-                <div
+                <button
                   className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] md:h-[22px] h-[28px] px-1"
                   onClick={() => handleHourClick(index)}
                   key={`hour-${index}`}
+                  type="button"
                 >
                   {formatHour(index)}
-                </div>
+                </button>
               ))}
             </div>
 
