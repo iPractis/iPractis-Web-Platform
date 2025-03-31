@@ -25,10 +25,10 @@ const NotificationItem = ({
           </InputBGWrapperIcon>
 
           <div className="notifications-checkboxes flex flex-col items-center justify-center gap-8">
-            {items.map((item, index) => (
+            {items.map((item) => (
               <CustomNextUiCheckbox
-                key={index}
                 className="checkbox-label-ipractis"
+                key={item}
                 size="sm"
               />
             ))}
