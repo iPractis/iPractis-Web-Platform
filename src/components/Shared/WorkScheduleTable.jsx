@@ -525,7 +525,9 @@ const WorkScheduleTable = ({
             <div className="flex md:flex-row flex-col justify-between gap-1.5">
               {Array.from({ length: 24 }, (_, index) => (
                 <button
-                  className="bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:w-full w-[38px] md:h-[22px] h-[28px] px-1"
+                  className={`bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:h-[22px] h-[28px] px-1 ${
+                    is12HourFormat ? "md:w-full w-[38px]" : "md:w-full w-[72px]"
+                  }`}
                   onClick={() => handleHourClick(index)}
                   key={`hour-${index}`}
                   type="button"
