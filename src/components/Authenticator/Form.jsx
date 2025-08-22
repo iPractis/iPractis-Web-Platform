@@ -5,11 +5,10 @@ import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import { errorFormMessages } from "@/src/data/dataAuthenticator";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { logInUserOtp } from "@/src/lib/actions/authAction";
 
 // React imports
-import { startTransition, useActionState, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import OTPInput from "react-otp-input";
 import Link from "next/link";
@@ -18,8 +17,11 @@ import Link from "next/link";
 import { ChevronRightDoorIcon } from "../Icons";
 
 const Form = () => {
-  const [state, formAction, isPending] = useActionState(logInUserOtp, {});
+    const router = useRouter();
+  
   const [backEndErrors, setBackEndErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [triesLeft, setTriesLeft] = useState(3); // 🔥 only 3 tries allowed
   const searchParams = useSearchParams();
 
   const {
@@ -29,30 +31,52 @@ const Form = () => {
     control,
   } = useForm({ mode: "onBlur" });
 
-  // Waiting for sever action response and if everything is SUCCESS we redirect to homepage
-  useEffect(() => {
-    if (state?.success === "ok") {
-      window.location.href = "/";
-    }
-  }, [state?.success]);
-
-  // If there's errors in backend, we set them to the state
-  useEffect(() => {
-    setBackEndErrors(state?.formError);
-  }, [state?.formError]);
-
+  // Submit OTP
   const onSubmit = async (data) => {
+    if (triesLeft <= 0) {
+      setBackEndErrors({
+        message:
+          "❌ You have exceeded the maximum attempts. Please request a new OTP.",
+      });
+      return;
+    }
+
+    setLoading(true);
+    setBackEndErrors({});
+
     try {
       const authenticatorDetails = {
-        ...data,
+        otp: data.otp,
         email: searchParams?.get("email"),
       };
 
-      startTransition(() => {
-        formAction(authenticatorDetails);
+      const res = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(authenticatorDetails),
       });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        // ✅ OTP verified -> redirect
+        router.push("/dashboard")
+      } else {
+        // ❌ Wrong OTP -> reduce tries
+        setTriesLeft((prev) => prev - 1);
+        setBackEndErrors({
+          message: `Invalid OTP. You have ${triesLeft - 1} attempt(s) left.`,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setBackEndErrors({
+        message: "Something went wrong, please try again.",
+      });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,8 +102,8 @@ const Form = () => {
               control={control}
               rules={{
                 required:
-                  "Invalid Authenticator Number --- Authenticator must be not empty.",
-                minLength: 6,
+                  "Invalid Authenticator Number --- Authenticator must not be empty.",
+                minLength: { value: 6, message: "OTP must be 6 digits" },
               }}
               render={({ field, fieldState }) => (
                 <div onBlur={field.onBlur} tabIndex={-1}>
@@ -91,6 +115,7 @@ const Form = () => {
                     numInputs={6}
                     inputType="tel"
                     shouldAutoFocus
+                    disabled={triesLeft <= 0} // disable after max attempts
                     containerStyle="otp-inputs-container justify-between gap-4 sm:px-4"
                     inputStyle={`${
                       (fieldState.invalid || backEndErrors?.message) &&
@@ -109,6 +134,12 @@ const Form = () => {
             backEndErrors={backEndErrors}
             fieldName="otp"
           />
+
+          {triesLeft <= 0 && (
+            <p className="text-red-500 text-sm mt-2">
+              🚫 Too many failed attempts. Please request a new OTP.
+            </p>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
@@ -121,12 +152,16 @@ const Form = () => {
 
           <button
             type="submit"
-            disabled={isPending}
+            disabled={loading || triesLeft <= 0}
             className="btn btn-secondary w-full MT-1 rounded-2xl p-1.5 flex items-center justify-center disabled:opacity-20 disabled:pointer-events-none"
           >
             <span className="flex-1">
-              {isPending ? "Loading..." : "Log in"}
-            </span>{" "}
+              {loading
+                ? "Loading..."
+                : triesLeft <= 0
+                ? "Locked"
+                : "Log in"}
+            </span>
             <InputBGWrapperIcon>
               <ChevronRightDoorIcon
                 fillColor={

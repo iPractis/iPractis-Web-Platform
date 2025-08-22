@@ -1,18 +1,21 @@
 "use client";
 
-import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
-import { getSecurityLevelMessage } from "@/src/lib/utils/getSecurityLevelMessage";
-import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
-import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
+import { useState, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+
+// Components
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { errorFormMessages } from "@/src/data/dataRegister";
-import { registerUser } from "@/src/lib/actions/authAction";
+import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
+import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import PasswordLevels from "./PasswordLevels";
 
-// React imports
-import { useActionState, useState, startTransition, useEffect } from "react";
-import { useForm } from "react-hook-form";
+// Utils
+import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { getSecurityLevelMessage } from "@/src/lib/utils/getSecurityLevelMessage";
+import { errorFormMessages } from "@/src/data/dataRegister";
 
 // Icons
 import {
@@ -26,263 +29,201 @@ import {
   MailIcon,
 } from "../Icons";
 
+// Validation Schema
+import { z } from "zod";
+
+const schema = z.object({
+  firstName: z
+    .string()
+    .min(2, "Invalid First Name --- First name can't be empty.")
+    .max(254)
+    .regex(/^[A-Za-z\s-]+$/),
+  lastName: z
+    .string()
+    .min(2, "Invalid Last Name --- Last name can't be empty.")
+    .max(254)
+    .regex(/^[A-Za-z\s-]+$/),
+  email: z
+    .string()
+    .email("Invalid Email --- Check your spelling email")
+    .regex(/^[a-zA-Z0-9._%+-]+@gmail\.com$/),
+  password: z
+    .string()
+    .min(8, "Invalid Password --- Password can't be empty.")
+    .max(30),
+});
+
 const Form = () => {
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [backEndErrors, setBackEndErrors] = useState({});
+  const [isPending, setIsPending] = useState(false);
+
   const {
     register,
     handleSubmit,
-    formState: { errors: frontEndErrors },
+    formState: { errors },
     watch,
-  } = useForm({ mode: "onBlur" });
-  const [backEndErrors, setBackEndErrors] = useState("");
-  const [state, formAction, isPending] = useActionState(registerUser, {});
-  const [showPassword, setShowPassword] = useState(false);
-  const [securityLevel, setSecurityLevel] = useState("");
-
-  const onSubmit = (data) => {
-    // Send data to server action
-    startTransition(() => {
-      formAction(data);
-    });
-  };
+    setError,
+  } = useForm({
+    mode: "onBlur",
+    resolver: zodResolver(schema),
+  });
 
   const password = watch("password");
 
-  // If there's errors in backend, we set them to the state
-  useEffect(() => {
-    setBackEndErrors(state?.formError);
-  }, [state?.formError]);
-
-  useEffect(() => {
-    if (!password?.trim()) {
-      setSecurityLevel("");
-    } else if (password.length < 6) {
-      setSecurityLevel(1);
-    } else if (password.length < 8) {
-      setSecurityLevel(2);
-    } else if (password.length < 10) {
-      setSecurityLevel(3);
-    } else {
-      setSecurityLevel(4);
-    }
+  const securityLevel = useMemo(() => {
+    if (!password?.trim()) return "";
+    if (password.length < 6) return 1;
+    if (password.length < 8) return 2;
+    if (password.length < 10) return 3;
+    return 4;
   }, [password]);
 
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      action={formAction}
-      className="mt-8"
+  const onSubmit = async (data) => {
+    setIsPending(true);
+    setBackEndErrors({});
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        // Set backend errors
+        setBackEndErrors({ email: result.error });
+        setError("email", { type: "server", message: result.error });
+        return;
+      }
+
+      // Store JWT in localStorage
+      localStorage.setItem("token", result.token);
+
+      // Redirect to dashboard
+router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
+    } catch (err) {
+      console.error("Registration failed:", err);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const renderInput = ({
+    name,
+    placeholder,
+    startIcon,
+    type = "text",
+    toggleable = false,
+  }) => (
+    <InputLeftStickStatus
+      inputBarStatusClassName={getLeftStickInputColorStatus(
+        errors,
+        backEndErrors,
+        watch(name),
+        name
+      )}
     >
-      <div className="space-y-3">
-        {/* Firtname && Lastname input */}
-        <div className="flex gap-3 items-center">
-          <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("firstName"),
-              "firstName"
+      <CustomNextUiInput
+        type={toggleable && showPassword ? "text" : type}
+        placeholder={placeholder}
+        name={name}
+        startContent={<InputBGWrapperIcon>{startIcon}</InputBGWrapperIcon>}
+        endContent={
+          <>
+            {toggleable && (
+              <InputBGWrapperIcon
+                className="absolute right-10 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeWithDashIcon fillColor="fill-primary-color-P4" />
+                ) : (
+                  <EyeWithoutDashIcon fillColor="fill-primary-color-P4" />
+                )}
+              </InputBGWrapperIcon>
             )}
-          >
-            <CustomNextUiInput
-              type="text"
-              placeholder="First name"
-              name="firstName"
-              startContent={
-                <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <UserBigIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              isClearable
-              classNames={{
-                inputWrapper:
-                  (frontEndErrors?.firstName?.type || backEndErrors?.message) &&
-                  "form-input-error",
-              }}
-              {...register("firstName", {
-                required: "Invalid First Name --- First name can't be empty.",
-                pattern: /^[A-Za-z\s-]+$/,
-                setValueAs: (value) => value.trim(),
-                maxLength: 254,
-                minLength: 2,
-              })}
-            />
-          </InputLeftStickStatus>
+            <InputBGWrapperIcon className="cursor-pointer">
+              <CloseIcon strokeColor="stroke-primary-color-P4" />
+            </InputBGWrapperIcon>
+          </>
+        }
+        isClearable
+        classNames={{
+          inputWrapper:
+            (errors?.[name]?.type || backEndErrors?.[name]) &&
+            "form-input-error",
+          ...(toggleable && { input: "!pe-20" }),
+        }}
+        {...register(name)}
+      />
+    </InputLeftStickStatus>
+  );
 
-          <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("lastName"),
-              "lastName"
-            )}
-          >
-            <CustomNextUiInput
-              type="text"
-              name="lastName"
-              placeholder="Last name"
-              startContent={
-                <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <ThreeUsersIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              isClearable
-              classNames={{
-                inputWrapper:
-                  (frontEndErrors?.lastName?.type || backEndErrors?.message) &&
-                  "form-input-error",
-              }}
-              {...register("lastName", {
-                required: "Invalid Last Name --- Last name can't be empty.",
-                pattern: /^[A-Za-z\s-]+$/,
-                setValueAs: (value) => value.trim(),
-                maxLength: 254,
-                minLength: 2,
-              })}
-            />
-          </InputLeftStickStatus>
-        </div>
-
-        <DynamicInputErrorMessage
-          errorMessages={errorFormMessages}
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="firstName"
-        />
-
-        <DynamicInputErrorMessage
-          errorMessages={errorFormMessages}
-          frontEndErrors={frontEndErrors}
-          backEndErrors={backEndErrors}
-          fieldName="lastName"
-        />
-
-        {/* Email Input */}
-        <div>
-          <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("email"),
-              "email"
-            )}
-          >
-            <CustomNextUiInput
-              type="text"
-              name="email"
-              placeholder="Enter your email address"
-              startContent={
-                <InputBGWrapperIcon>
-                  <MailIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              isClearable
-              classNames={{
-                inputWrapper:
-                  (frontEndErrors?.email?.type || backEndErrors?.message) &&
-                  "form-input-error",
-              }}
-              {...register("email", {
-                required: "Invalid Email --- Check your spelling email",
-                pattern: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
-                maxLength: 254,
-              })}
-            />
-          </InputLeftStickStatus>
-
-          <DynamicInputErrorMessage
-            errorMessages={errorFormMessages}
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            fieldName="email"
-          />
-        </div>
-
-        {/* Password Input */}
-        <div>
-          <InputLeftStickStatus
-            inputBarStatusClassName={getLeftStickInputColorStatus(
-              frontEndErrors,
-              backEndErrors,
-              watch("password"),
-              "password"
-            )}
-          >
-            <CustomNextUiInput
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Enter your password"
-              startContent={
-                <InputBGWrapperIcon>
-                  <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              {...register("password", {
-                required: "Invalid Password --- Password can't be empty.",
-                setValueAs: (value) => value.trim(),
-                maxLength: 30,
-                minLength: 8,
-              })}
-              endContent={
-                <>
-                  <InputBGWrapperIcon
-                    className={"absolute right-10 cursor-pointer"}
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    {showPassword ? (
-                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                    ) : (
-                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
-                    )}
-                  </InputBGWrapperIcon>
-
-                  <InputBGWrapperIcon className={"cursor-pointer"}>
-                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                  </InputBGWrapperIcon>
-                </>
-              }
-              isClearable
-              classNames={{
-                inputWrapper:
-                  (frontEndErrors?.password?.type || backEndErrors?.message) &&
-                  "form-input-error",
-                input: "!pe-20",
-              }}
-            />
-          </InputLeftStickStatus>
-
-          <DynamicInputErrorMessage
-            errorMessages={errorFormMessages}
-            frontEndErrors={frontEndErrors}
-            backEndErrors={backEndErrors}
-            fieldName="password"
-          />
-
-          <PasswordLevels securityLevel={securityLevel} />
-
-          <h3 className="px-2.5 mt-2 ST-4 text-primary-color-P1">
-            Password Security Level{securityLevel && ":"}
-            <span className="ps-1">
-              {getSecurityLevelMessage(securityLevel)}
-            </span>
-          </h3>
-        </div>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-3">
+      {/* First & Last Name */}
+      <div className="flex gap-3 items-center">
+        {renderInput({
+          name: "firstName",
+          placeholder: "First name",
+          startIcon: <UserBigIcon fillColor="fill-primary-color-P4" />,
+        })}
+        {renderInput({
+          name: "lastName",
+          placeholder: "Last name",
+          startIcon: <ThreeUsersIcon fillColor="fill-primary-color-P4" />,
+        })}
       </div>
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        frontEndErrors={errors}
+        backEndErrors={backEndErrors}
+        fieldName="firstName"
+      />
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        frontEndErrors={errors}
+        backEndErrors={backEndErrors}
+        fieldName="lastName"
+      />
 
+      {/* Email */}
+      {renderInput({
+        name: "email",
+        placeholder: "Enter your email address",
+        startIcon: <MailIcon fillColor="fill-primary-color-P4" />,
+      })}
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        frontEndErrors={errors}
+        backEndErrors={backEndErrors}
+        fieldName="email"
+      />
+
+      {/* Password */}
+      {renderInput({
+        name: "password",
+        placeholder: "Enter your password",
+        startIcon: <PadLockClosedBigIcon fillColor="fill-primary-color-P4" />,
+        type: "password",
+        toggleable: true,
+      })}
+      <DynamicInputErrorMessage
+        errorMessages={errorFormMessages}
+        frontEndErrors={errors}
+        backEndErrors={backEndErrors}
+        fieldName="password"
+      />
+      <PasswordLevels securityLevel={securityLevel} />
+      <h3 className="px-2.5 mt-2 ST-4 text-primary-color-P1">
+        Password Security Level
+        {securityLevel && `: ${getSecurityLevelMessage(securityLevel)}`}
+      </h3>
+
+      {/* Submit Button */}
       <button
         className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center mt-8"
         disabled={isPending}
@@ -291,9 +232,8 @@ const Form = () => {
         <span className="flex-1">
           {isPending ? "Loading..." : "Create an account"}
         </span>
-
         <InputBGWrapperIcon>
-          <UserAddCircleMediumIcon fillColor={"fill-tertiary-color-SC5"} />
+          <UserAddCircleMediumIcon fillColor="fill-tertiary-color-SC5" />
         </InputBGWrapperIcon>
       </button>
     </form>

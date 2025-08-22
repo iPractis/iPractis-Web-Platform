@@ -36,27 +36,40 @@ const Form = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
+  buttonRef.current.loading();
 
-    try {
-      const response = await logInUser(data);
+  try {
+    const response = await logInUser(data);
 
-      // If there's error we display the error
-      if (response?.message && response?.title) {
-        return setBackEndErrors({
-          field: response?.field,
-          message: response.message,
-          title: response.title,
-        });
-      } else {
-        router.push(`/authenticator?email=${data?.email}`);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      buttonRef.current.notIsLoading();
+    // If backend returned an error
+    if (response?.message) {
+      return setBackEndErrors({
+        field: response?.field || "email", // fallback field
+        message: response.message,
+        title: response.title || "Login Failed",
+      });
     }
-  };
+
+    // Save token in localStorage (or cookies if more secure)
+    if (response?.token) {
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("user", JSON.stringify(response.user));
+
+      // Redirect to dashboard after successful login
+      router.push("/dashboard");
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    setBackEndErrors({
+      field: "general",
+      message: "Something went wrong. Please try again.",
+      title: "Error",
+    });
+  } finally {
+    buttonRef.current.notIsLoading();
+  }
+};
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">

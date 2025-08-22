@@ -23,25 +23,21 @@ export async function registerUser(prevState, reactHookFormData) {
 }
 
 // WITHOUT AUTHJS
-export async function logInUser(reactHookFormData) {
+export const logInUser = async (data) => {
+  console.log("user login data", data)
   try {
-    const res = await fetch(`${process.env.BASE_URL}/auth/login`, {
+    const res = await fetch("http://localhost:3000/api/auth/login", {
       method: "POST",
-      body: JSON.stringify(reactHookFormData),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    const json = await res.json();
-
-    if (!res.ok) {
-      return json;
-    }
+    return await res.json();
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return { message: "Something went wrong" };
   }
-}
+};
 
 // WITHOUT AUTHJS
 export async function requestPasswordInput(reactHookFormData) {
