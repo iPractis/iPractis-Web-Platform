@@ -1,5 +1,6 @@
 import HeadingTitle from "./HeadingTitle";
 import Form from "./Form";
+import ResetPasswordForm from "./Form";
 
 export const PasswordRecovery = () => {
   return (
@@ -8,7 +9,7 @@ export const PasswordRecovery = () => {
       <HeadingTitle />
 
       {/* Form email */}
-      <Form />
+      <ResetPasswordForm />
     </section>
   );
 };
