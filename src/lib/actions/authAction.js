@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 // WITHOUT AUTHJS
 export async function registerUser(prevState, reactHookFormData) {
-  const res = await fetch(`${process.env.BASE_URL}/auth/register`, {
+  const res = await fetch(`https://i-practis-web-platform.vercel.app/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -26,7 +26,7 @@ export async function registerUser(prevState, reactHookFormData) {
 export const logInUser = async (data) => {
   console.log("user login data", data)
   try {
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch("https://i-practis-web-platform.vercel.app/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -42,7 +42,7 @@ export const logInUser = async (data) => {
 // WITHOUT AUTHJS
 export async function requestPasswordInput(reactHookFormData) {
   try {
-    const res = await fetch(`${process.env.BASE_URL}/auth/recover-password`, {
+    const res = await fetch(`https://i-practis-web-platform.vercel.app/auth/recover-password`, {
       method: "POST",
       body: JSON.stringify(reactHookFormData),
       headers: {
@@ -63,7 +63,7 @@ export async function requestPasswordInput(reactHookFormData) {
 // WITHOUT AUTHJS
 export async function newPasswordInputs(reactHookFormData) {
   try {
-    const res = await fetch(`${process.env.BASE_URL}/auth/confirm-password`, {
+    const res = await fetch(`https://i-practis-web-platform.vercel.app/auth/confirm-password`, {
       method: "POST",
       body: JSON.stringify(reactHookFormData),
       headers: {
@@ -92,7 +92,7 @@ export async function supportRequestIssue(reactHookFormData) {
   };
 
   try {
-    const res = await fetch(`${process.env.BASE_URL}/support/issue`, {
+    const res = await fetch(`/support/issue`, {
       method: "POST",
       body: JSON.stringify(constructedData),
       headers: {
