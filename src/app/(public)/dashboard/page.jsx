@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import TeacherGrid from './TeacherGrid';
 import Link from 'next/link';
 
-function page() {
+export default function page() {
     const [active, setActive] = useState("English");
 
    const subjects = [
@@ -459,4 +459,3 @@ function page() {
   )
 }
 
-export default page
