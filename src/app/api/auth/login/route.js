@@ -6,7 +6,6 @@ import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
-console.log(email, password , "user data coming")
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -22,7 +21,6 @@ console.log(email, password , "user data coming")
       .single();
       
 
-      console.log("user profile data", error)
     if (error || !user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -47,9 +45,10 @@ console.log(email, password , "user data coming")
       { expiresIn: "7d" }
     );
 
+
     return NextResponse.json(
-      { token, user: { id: user.id, email: user.email } },
-      { status: 200 }
+      { token, user: { id: user.user_id, email: user.email } },
+      { status: 404 }
     );
   } catch (err) {
     console.error(err);

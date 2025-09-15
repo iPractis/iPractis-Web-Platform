@@ -38,10 +38,7 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.careerExperience = data?.careerExperience;
         actualDraftInfo.education = data?.education;
 
-        const response = await axios.post(
-          `/teacher/set/background`,
-          actualDraftInfo
-        );
+        console.log(actualDraftInfo, "ACTUAL DRAFT");
 
         setActiveTab((prev) => prev + 1);
         console.log(response, "BACKGROUND");

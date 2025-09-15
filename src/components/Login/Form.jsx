@@ -49,8 +49,10 @@ const Form = () => {
       }
 
       if (response?.token) {
+        console.log("Login successful:", response);
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
+        localStorage.setItem("userId", response.user.id);
         router.push("/dashboard");
       }
     } catch (error) {

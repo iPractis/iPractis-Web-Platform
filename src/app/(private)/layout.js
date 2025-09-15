@@ -6,10 +6,10 @@ import { useEffect } from "react";
 
 const Layout = ({ children }) => {
   const { data: session, status } = useSession();
-
+console.log(session, status, "LAYOUT SESSION");
   useEffect(() => {
     if (!session?.user?.token && status !== "loading") {
-      redirect("/login");
+
     }
   }, [status]);
 

@@ -4,10 +4,10 @@ import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";
 import TeacherInfo from "./TeacherInfo";
 
-const AvailabilityRevision = () => {
+const AvailabilityRevision = ({draftData}) => {
   return (
     <section>
-      <TeacherInfo />
+      <TeacherInfo draftData={draftData}/>
 
       {/* <SectionHeader
         titleIcon={<Clock1215Icon fillColor={"fill-primary-color-P1 "} />}
@@ -24,13 +24,13 @@ const AvailabilityRevision = () => {
         fromToFilter
       /> */}
 
-      <TeacherInfoSpecialties />
+      <TeacherInfoSpecialties draftData={draftData}/>
 
       {/* <TeacherInfoReviews /> */}
 
-      <TeacherInfoExperience />
+      <TeacherInfoExperience draftData={draftData}/>
 
-      <TeacherInfoEducation />
+      <TeacherInfoEducation draftData={draftData}/>
     </section>
   );
 };

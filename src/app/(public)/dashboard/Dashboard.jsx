@@ -443,7 +443,7 @@ export default function Dashboard() {
       <ProfileBrief></ProfileBrief>
       <div className='flex justify-center mt-10'> 
 
-<Link href={"/become-a-tutor"}>
+<Link href={"/teacher-registration"}>
       <HeaderCard invertImage={true} image={"/icons/additionalDetails.png"} title={"Become a teacher"} subtitle={"Find any feature or setting quickly."}/>
 </Link>
       </div>

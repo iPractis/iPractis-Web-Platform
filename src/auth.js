@@ -1,9 +1,8 @@
 import Credentials from "next-auth/providers/credentials";
 import NextAuth, { AuthError } from "next-auth";
 import Google from "next-auth/providers/google";
-import "next-auth/jwt";
 
-class customError extends AuthError {
+class CustomError extends AuthError {
   constructor(message) {
     super();
     this.message = message;
@@ -12,41 +11,44 @@ class customError extends AuthError {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
-    strategy: "jwt",
+    strategy: "jwt", // keep JWT strategy
   },
   providers: [
     Credentials({
+      name: "Credentials",
       authorize: async (credentials) => {
-        const credentialsLogInInfo = {
-          email: credentials?.email,
-          otp: credentials?.otp,
-        };
-
         try {
           const res = await fetch(
             `${process.env.BASE_URL}/auth/login-verify-otp`,
             {
               method: "POST",
-              body: JSON.stringify(credentialsLogInInfo),
+              body: JSON.stringify({
+                email: credentials?.email,
+                otp: credentials?.otp,
+              }),
               headers: {
                 "Content-Type": "application/json",
               },
             }
           );
 
-          const json = await res.json();
+          const data = await res.json();
 
-          if (!res.ok) {
-            throw new customError(json);
+          if (!res.ok || !data?.token) {
+            throw new CustomError(data?.detail || "Login failed");
           }
 
-          return json;
+          // Return user object
+          return {
+            token: data.token,
+            email: data.email,
+            firstName: data.firstName || "", // optional
+          };
         } catch (error) {
-          throw error;
+          throw new CustomError(error.message || "Login failed");
         }
       },
     }),
-
     Google({
       clientId: process.env.AUTH_GOOGLE_ID,
       clientSecret: process.env.AUTH_GOOGLE_SECRET,
@@ -61,51 +63,44 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
+    // Called on login or token refresh
     async jwt({ token, user, account }) {
-      if (account?.provider == "credentials") {
-        token.token = user.token;
-        token.firstName = user.firstName;
+      if (user) {
+        // Credentials login
+        token.accessToken = user.token || token.accessToken;
+        token.email = user.email || token.email;
+        token.firstName = user.firstName || token.firstName;
       }
 
-      if (account?.provider == "google") {
-        // console.log(account, "account de google");
-        // console.log(token, "este token");
-        // console.log(user, "este user");
-        // console.log("entro al google provider");
-
-        const response = await fetch(
-          `${process.env.BASE_URL}/auth/login-google`,
-          {
-            method: "POST",
-            body: JSON.stringify({ access_token: account.access_token }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      if (account?.provider === "google" && !token.accessToken) {
+        // Exchange Google access token for backend token
+        const response = await fetch(`${process.env.BASE_URL}/auth/login-google`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ access_token: account.access_token }),
+        });
 
         const data = await response.json();
-        // console.log(data, 'data de google')
-
         if (response.ok && data?.token) {
-          // console.log("entro en if")
-          token.firstName = user.name;
-          token.token = data.token;
+          token.accessToken = data.token;
+          token.email = user?.email || token.email;
+          token.firstName = user?.name || token.firstName;
         } else {
-          // console.log("entro en else")
-          throw new Error(data.detail);
+          throw new Error(data?.detail || "Google login failed");
         }
       }
 
       return token;
     },
 
+    // Called when client calls useSession()
     async session({ session, token }) {
-      if (token) {
-        session.user.token = token.token;
-        session.user.firstName = token.firstName;
-      }
-
+      session.user = {
+        ...session.user,
+        token: token.accessToken,
+        email: token.email,
+        firstName: token.firstName,
+      };
       return session;
     },
   },
