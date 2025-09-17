@@ -20,6 +20,33 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
 
   const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
 
+ const handleApplyNowClick = async () => {
+  const userId = localStorage.getItem("userId");
+
+  try {
+
+
+    // Example: save draft to backend
+    draft = { ...draft, userId: userId };
+    const response = await fetch("/api/teachers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(draft),
+
+    });
+
+    if (!response.ok) throw new Error("Failed to save application");
+
+    const result = await response.json();
+    console.log("Application submitted:", result);
+      setActiveTab(5);
+
+  } catch (error) {
+    console.error("Error submitting draft:", error);
+  }
+};
+
+
   return (
     <section>
       <div
@@ -79,7 +106,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
           <div className="flex-1 w-full">
             <button
               className="btn btn-secondary flex justify-between items-center gap-2.5 p-1.5 ps-4 rounded-2xl w-full MT-SB-1"
-              onClick={() => setActiveTab(5)}
+              onClick={handleApplyNowClick}
               type="button"
             >
               <span className="px-1.5">Apply now!</span>{" "}

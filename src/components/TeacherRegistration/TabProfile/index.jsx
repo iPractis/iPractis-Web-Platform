@@ -58,11 +58,6 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.country = data?.country;
         actualDraftInfo.gender = data?.gender;
 
-        const response = await axios.post(
-          `/teacher/set/profile`,
-          actualDraftInfo
-        );
-
         setActiveTab((prev) => prev + 1);
         console.log(response, "PROFILE");
       }

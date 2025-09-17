@@ -42,11 +42,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.workSchedule = data?.workSchedule;
         actualDraftInfo.timeZone = data?.timeZone;
 
-        const response = await axios.post(
-          `/teacher/set/availability`,
-          actualDraftInfo
-        );
-
+        console.log(actualDraftInfo, "ACTUAL DRAFT");
         setActiveTab((prev) => prev + 1);
         console.log(response, "AVAILABILITY");
       }

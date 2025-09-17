@@ -1,6 +1,5 @@
 "use client";
 
-import SocialMediaButtons from "./SocialMediaButtons";
 import SectionHeader from "../Shared/SectionHeader";
 import Form from "./Form";
 
@@ -22,7 +21,7 @@ const WrapperForm = () => {
       />
 
       {/* Log In Section */}
-      <div className="sm:px-8 sm:mt-[50px] mt-8">
+      <div className="sm:px-8 sm:mt-[50px] mt-8 shadow-lg rounded-xl">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
           headerContainerClassName="px-4"
@@ -33,7 +32,7 @@ const WrapperForm = () => {
         />
 
         {/* Social media buttons to login */}
-        <SocialMediaButtons />
+        {/* <SocialMediaButtons /> */}
 
         {/* Login form inputs */}
         <Form />

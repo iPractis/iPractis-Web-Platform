@@ -2,14 +2,11 @@ import TeacherInfoProfile from "./TeacherInfoProfile";
 import TeacherInfoVideo from "./TeacherInfoVideo";
 import TeacherInfoAbout from "./TeacherInfoAbout";
 
-const TeacherInfo = () => {
+const TeacherInfo = ({draftData}) => {
   return (
     <>
-      <TeacherInfoProfile />
-
-      <TeacherInfoAbout />
-
-      {/* <TeacherInfoVideo /> */}
+      <TeacherInfoProfile draftData={draftData}/>
+      <TeacherInfoAbout draftData={draftData}/>
     </>
   );
 };

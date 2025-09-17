@@ -1,9 +1,9 @@
 import AvailabilityRevision from "./AvailabilityRevision";
 
-const TabReview = ({ activeTab }) => {
+const TabReview = ({ activeTab , draftData}) => {
   return (
     <div className={`${activeTab !== 4 && "hidden"}`}>
-      <AvailabilityRevision />
+      <AvailabilityRevision draftData={draftData}/>
     </div>
   );
 };
