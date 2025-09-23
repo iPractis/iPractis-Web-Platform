@@ -48,7 +48,7 @@ export async function POST(req) {
 
     return NextResponse.json(
       { token, user: { id: user.user_id, email: user.email } },
-      { status: 404 }
+      { status: 200 }
     );
   } catch (err) {
     console.error(err);

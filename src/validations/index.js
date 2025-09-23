@@ -173,113 +173,53 @@ export const tabSubjectSchema = z.object({
     }),
 });
 
+const fileMetaSchema = z.object({
+  name: z.string(),
+  path: z.string(),
+  url: z.string().url(),
+  type: z.string(),
+  size: z.number(),
+  uploaded_at: z.string(),
+});
+
 export const tabBackgroundSchema = z.object({
-  careerExperience: z
-    .array(
-      z
-        .object({
-          company: z.string().min(1, {
-            message:
-              "Invalid field --- Must contain 3 or more characters long.",
-          }),
-          uploadFile: z.instanceof(File, {
-            message:
-              "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
-          }),
-          from: z.coerce
-            .number({
-              invalid_type_error:
-                "Invalid characters --- Only numbers are allowed in this field.",
-            })
-            .int()
-            .min(1, {
-              message: "Invalid field --- Must input a number.",
-            }),
-          to: z.coerce
-            .number({
-              invalid_type_error:
-                "Invalid characters --- Only numbers are allowed in this field.",
-            })
-            .int()
-            .min(1, {
-              message: "Invalid field --- Must input a number.",
-            }),
-          description: z
-            .string()
-            .min(3, {
-              message:
-                "Invalid field --- Must contain 3 or more characters long.",
-            })
-            .regex(
-              /^(?!.*\b\d{7,15}\b)(?!.*\b[A-Za-z0-9._%+-]+@gmail\.com\b)(?!.*\+\d{1,4}[\s-]?\d{4,}\b)[\s\S]+$/,
-              {
-                message:
-                  "Privacy compromised --- Your input contains sensitive or private information. Please remove any personal details to ensure your privacy is protected.",
-              }
-            ),
-        })
-        .refine((data) => data.to >= data.from, {
-          message:
-            "Invalid field --- 'To' must be greater than or equal to 'From'.",
-          path: ["to"],
-        })
-    )
-    .min(1, {
-      message: "Invalid submission --- At least one experience is required.",
-    }),
-  education: z
-    .array(
-      z
-        .object({
-          company: z.string().min(1, {
-            message:
-              "Invalid field --- Must contain 3 or more characters long.",
-          }),
-          uploadFile: z.instanceof(File, {
-            message:
-              "Invalid submission --- Must provide a file (PDF, PNG or JPEG).",
-          }),
-          from: z.coerce
-            .number({
-              invalid_type_error:
-                "Invalid characters --- Only numbers are allowed in this field.",
-            })
-            .int()
-            .min(1, {
-              message: "Invalid field --- Must input a number.",
-            }),
-          to: z.coerce
-            .number({
-              invalid_type_error:
-                "Invalid characters --- Only numbers are allowed in this field.",
-            })
-            .int()
-            .min(1, {
-              message: "Invalid field --- Must input a number.",
-            }),
-          description: z
-            .string()
-            .min(3, {
-              message:
-                "Invalid field --- Must contain 3 or more characters long.",
-            })
-            .regex(
-              /^(?!.*\b\d{7,15}\b)(?!.*\b[A-Za-z0-9._%+-]+@gmail\.com\b)(?!.*\+\d{1,4}[\s-]?\d{4,}\b)[\s\S]+$/,
-              {
-                message:
-                  "Privacy compromised --- Your input contains sensitive or private information. Please remove any personal details to ensure your privacy is protected.",
-              }
-            ),
-        })
-        .refine((data) => data.to >= data.from, {
-          message:
-            "Invalid field --- 'To' must be greater than or equal to 'From'.",
-          path: ["to"],
-        })
-    )
-    .min(1, {
-      message: "Invalid submission --- At least one education is required.",
-    }),
+  careerExperience: z.array(
+    z.object({
+      company: z.string().min(1, {
+        message: "Invalid field --- Must contain 3 or more characters long.",
+      }),
+      uploadFile: z.union([
+        z.instanceof(File),   // allow raw File
+        fileMetaSchema        // allow uploaded file metadata
+      ]),
+      from: z.coerce.number().int().min(1),
+      to: z.coerce.number().int().min(1),
+      description: z.string().min(3),
+    })
+    .refine((data) => data.to >= data.from, {
+      message: "Invalid field --- 'To' must be greater than or equal to 'From'.",
+      path: ["to"],
+    })
+  ).min(1, { message: "At least one experience is required." }),
+
+  education: z.array(
+    z.object({
+      company: z.string().min(1, {
+        message: "Invalid field --- Must contain 3 or more characters long.",
+      }),
+      uploadFile: z.union([
+        z.instanceof(File),
+        fileMetaSchema
+      ]),
+      from: z.coerce.number().int().min(1),
+      to: z.coerce.number().int().min(1),
+      description: z.string().min(3),
+    })
+    .refine((data) => data.to >= data.from, {
+      message: "Invalid field --- 'To' must be greater than or equal to 'From'.",
+      path: ["to"],
+    })
+  ).min(1, { message: "At least one education is required." }),
 });
 
 export const tabAvailabilitySchema = z.object({

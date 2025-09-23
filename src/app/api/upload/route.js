@@ -17,22 +17,13 @@ const ALLOWED_TYPES = ["application/pdf", "image/png", "image/jpeg"];
 
 export async function POST(req) {
   try {
-    const form = await req.formData();
-    const file = form.get("file");
-    const userId = form.get("userId") || "anon";
+   const form = await req.formData();
+const file = form.get("file");
+const userId = form.get("userId") || "anon";
 
-    if (!file) {
-      return NextResponse.json({ message: "No file provided" }, { status: 400 });
-    }
-
-    // Validate
-    if (!ALLOWED_TYPES.includes(file.type)) {
-      return NextResponse.json({ message: "Unsupported file type" }, { status: 415 });
-    }
-
-    if (file.size > MAX_BYTES) {
-      return NextResponse.json({ message: "File too large" }, { status: 413 });
-    }
+if (!file) {
+  return NextResponse.json({ message: "No file provided" }, { status: 400 });
+}
 
     // Build unique, safe path
     const timestamp = Date.now();

@@ -8,7 +8,7 @@ import { supabaseServer } from "@/src/lib/supabaseClient";
  * Returns { success: true } or { success: false, error }
  */
 
-const BUCKET = "your-bucket-name"; // <-- same bucket name
+const BUCKET = "teacher-applications"; // <-- same bucket name
 
 export async function POST(req) {
   try {

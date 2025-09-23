@@ -24,6 +24,8 @@ export async function POST(req) {
       workSchedule,
     } = body;
 
+    console.log("body data", body)
+
     // 1. Insert teacher
     const { data: teacher, error: teacherError } = await supabaseServer
       .from("teachers")
@@ -80,6 +82,7 @@ export async function POST(req) {
           year_from: e.from,
           year_to: e.to,
           description: e.description,
+          file_url: e.uploadFile.url
         }))
       );
     }
@@ -90,6 +93,7 @@ export async function POST(req) {
           teacher_id: teacherId,
           institution: ed.company,
           year_from: ed.from,
+          file_url:ed.uploadFile.url,
           year_to: ed.to,
           description: ed.description,
         }))
