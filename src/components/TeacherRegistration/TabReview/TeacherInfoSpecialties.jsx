@@ -10,7 +10,6 @@ const TeacherInfoSpecialties = ({draftData}) => {
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
         titleText={"Specialties"}
       />
-
      {draftData.subSubject.map((data,index)=>{
       return  <WhiteSpaceWrapper className={"bg-primary-color-P11 mt-5"} key={index}>
         <h3 className="MT-SB-1 text-primary-color-P1 mb-5">{data.selected}</h3>
