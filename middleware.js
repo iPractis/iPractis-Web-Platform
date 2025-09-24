@@ -10,6 +10,7 @@ export default auth((req) => {
       pathname.includes('.') || pathname === '/') {
     return;
   }
+
   
   // Public routes- no authentication needed
   const publicRoutes = ['/login', '/register', '/authenticator', '/dashboard', 
