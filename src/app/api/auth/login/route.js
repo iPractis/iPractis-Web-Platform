@@ -19,6 +19,13 @@ export async function POST(req) {
       .select(" *")
       .eq("email", email)
       .single();
+
+    // Fetch user profile with role info  
+    const { data: profile, error: profileError } = await supabaseServer
+      .from("profiles")
+      .select("*")
+      .eq("user_id", user.user_id)
+      .single();
       
 
     if (error || !user) {
@@ -40,16 +47,16 @@ export async function POST(req) {
 
     // Create JWT
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.user_id, email: user.email, role: profile.role || "student" },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-
     return NextResponse.json(
-      { token, user: { id: user.user_id, email: user.email } },
-      { status: 404 }
+      { token, user: { userId: user.user_id, email: user.email , role: profile.role || "student" } },
+      { status: 200 }
     );
+
   } catch (err) {
     console.error(err);
     return NextResponse.json(

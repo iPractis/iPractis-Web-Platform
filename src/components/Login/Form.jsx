@@ -53,6 +53,7 @@ const Form = () => {
         localStorage.setItem("token", response.token);
         localStorage.setItem("user", JSON.stringify(response.user));
         localStorage.setItem("userId", response.user.id);
+        localStorage.setItem("role", response.user.role);
         router.push("/dashboard");
       }
     } catch (error) {
