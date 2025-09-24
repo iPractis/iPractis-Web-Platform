@@ -12,6 +12,7 @@ export async function POST(req) {
       subjectIntroduction,
       videoLink,
       hourlyPrice,
+      profile_url,
       studentLevel,
       teachToAmateurPersons,
       teachToYoungPersons,
@@ -42,13 +43,14 @@ export async function POST(req) {
         teach_young: teachToYoungPersons,
         daily_work_time: dailyWorkTime,
         timezone: timeZone,
+        profile_image: profile_url,
       })
       .select()
       .single();
 
     if (teacherError) {
       console.error("Teacher insert failed:", teacherError);
-      return NextResponse.json({ message: "Failed to create teacher" }, { status: 400 });
+      return NextResponse.json({ message: "Failed to create teacher", code: "23505" }, { status: 400 });
     }
 
     const teacherId = teacher.teacher_id;

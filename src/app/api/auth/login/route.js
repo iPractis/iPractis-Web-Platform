@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
+import { supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
   try {

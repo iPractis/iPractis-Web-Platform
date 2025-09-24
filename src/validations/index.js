@@ -4,10 +4,24 @@ import { calculateAge } from "../lib/utils/calculateAge";
 import moment from "moment";
 import { z } from "zod";
 
+
+const fileMetaSchema = z.object({
+  name: z.string(),
+  path: z.string(),
+  url: z.string().url(),
+  type: z.string(),
+  size: z.number(),
+  uploaded_at: z.string(),
+});
+
+const image_url = z.string().url().optional();
 export const tabProfileSchema = z.object({
-  uploadProfileImage: z.instanceof(File, {
-    message: "Invalid submission --- Must provide an image (PNG or JPEG).",
-  }),
+   uploadProfileImage: z.union([
+        z.instanceof(File),   // allow raw File
+        
+          ]),
+          profile_url: z.string().url().optional(),
+
   firstName: z
     .string()
     .trim()
@@ -173,14 +187,7 @@ export const tabSubjectSchema = z.object({
     }),
 });
 
-const fileMetaSchema = z.object({
-  name: z.string(),
-  path: z.string(),
-  url: z.string().url(),
-  type: z.string(),
-  size: z.number(),
-  uploaded_at: z.string(),
-});
+
 
 export const tabBackgroundSchema = z.object({
   careerExperience: z.array(

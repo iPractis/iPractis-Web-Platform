@@ -12,7 +12,9 @@ const TeacherInfoProfile = ({ draftData }) => {
         <Image
           alt={"Tutor Image"}
           className="w-[120px] rounded-[10px]"
-          src={tutorImagePreview}
+          width={120}
+          height={120}
+          src={draftData.profile_url ? draftData.profile_url : tutorImagePreview}
         />
 
         <div className="absolute right-1 bottom-1 rounded-full w-3.5 h-3.5 bg-quinary-color-VS5"></div>
