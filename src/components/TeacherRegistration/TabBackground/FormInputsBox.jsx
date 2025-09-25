@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
@@ -70,7 +71,7 @@ const FormInputsBox = ({
   } = useController({
     name: `${array}.${index}.uploadFile`,
     control: control,
-    defaultValue: item?.uploadFile,
+    defaultValue: item?.uploadFile || null,
   });
 
   const {
@@ -82,11 +83,81 @@ const FormInputsBox = ({
     defaultValue: item?.description,
   });
 
+  // Local UI state for upload status
+  const [uploadStatus, setUploadStatus] = useState(
+    uploadFile?.value ? "uploaded" : null
+  );
+  useEffect(() => {
+    setUploadStatus(uploadFile?.value ? "uploaded" : null);
+  }, [uploadFile?.value]);
+
   const descriptionTextOnChange = (e) => {
     const textValue = e?.target?.value;
-
     if (textValue?.length <= 1000) {
       descriptionField.onChange(textValue);
+    }
+  };
+
+  // handle file select: uploads new file, updates form field with returned metadata,
+  // then attempts to delete the old path (best-effort).
+  const handleFileSelect = async (e) => {
+    const file = e.target.files?.[0];
+    // clear input value so same file can be reselected later
+    e.target.value = "";
+
+    if (!file) return;
+
+    // keep the old path before uploading
+    const oldPath = uploadFile?.value?.path || item?.uploadFile?.path || null;
+
+    // quick client-side validation (optional)
+    const allowedTypes = ["application/pdf", "image/png", "image/jpeg"];
+    if (!allowedTypes.includes(file.type)) {
+      // optionally set a form error; here we just return and could show uploadFileError
+      console.warn("Unsupported file type:", file.type);
+      return;
+    }
+
+    setUploadStatus("uploading");
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      // optionally append userId: fd.append("userId", currentUserId);
+
+      const res = await fetch("/api/upload", { method: "POST", body: fd });
+      const json = await res.json();
+
+      if (!res.ok) {
+        console.error("Upload failed:", json);
+        setUploadStatus("failed");
+        return;
+      }
+
+      // json should be: { name, path, url, type, size, uploaded_at }
+      const newMeta = json;
+
+      // update react-hook-form field with metadata (not raw file)
+      uploadFile.onChange(newMeta);
+      setUploadStatus("uploaded");
+
+      // best-effort deletion of old file after successful upload
+      if (oldPath) {
+        try {
+          await fetch("/api/delete-file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: oldPath }),
+          });
+        } catch (deleteErr) {
+          console.warn("Failed to delete old file (scheduled for cleanup):", deleteErr);
+          // don't block user flow; rely on cron/cleanup or uploads table
+        }
+      }
+    } catch (err) {
+      console.error("Upload error:", err);
+      setUploadStatus("failed");
+      // keep previous value (do not override) so user doesn't lose previous uploaded file
     }
   };
 
@@ -175,25 +246,19 @@ const FormInputsBox = ({
           <label className="relative cursor-pointer">
             <input
               className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-
-                if (file) {
-                  uploadFile.onChange(file);
-                }
-              }}
+              onChange={handleFileSelect}
               accept=".pdf, .png, .jpeg"
               type="file"
             />
 
             <InputBGWrapperIcon
               className={`btn-septenary rounded-2xl ${
-                uploadFileError?.message
-                  ? "form-input-error"
-                  : "bg-primary-color-P11"
+                uploadFileError?.message ? "form-input-error" : "bg-primary-color-P11"
               } w-[48px] h-[48px] cursor-pointer`}
             >
-              {uploadFile?.value ? (
+              {uploadStatus === "uploading" ? (
+                <span className="text-[11px]">Uploading...</span>
+              ) : uploadFile?.value ? (
                 <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
               ) : (
                 <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
@@ -206,14 +271,9 @@ const FormInputsBox = ({
         <div className="flex-1">
           <button type="button" onClick={() => handleDelete(index)}>
             <InputBGWrapperIcon
-              className={
-                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
-              }
+              className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}
             >
-              <TrashBinIcon
-                strokeColor={"stroke-primary-color-P4"}
-                fillColor={"fill-primary-color-P4"}
-              />
+              <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           </button>
         </div>

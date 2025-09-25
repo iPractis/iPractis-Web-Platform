@@ -12,6 +12,7 @@ export async function POST(req) {
       subjectIntroduction,
       videoLink,
       hourlyPrice,
+      profile_url,
       studentLevel,
       teachToAmateurPersons,
       teachToYoungPersons,
@@ -23,6 +24,8 @@ export async function POST(req) {
       education,
       workSchedule,
     } = body;
+
+    console.log("body data", body)
 
     // 1. Insert teacher
     const { data: teacher, error: teacherError } = await supabaseServer
@@ -40,13 +43,14 @@ export async function POST(req) {
         teach_young: teachToYoungPersons,
         daily_work_time: dailyWorkTime,
         timezone: timeZone,
+        profile_image: profile_url,
       })
       .select()
       .single();
 
     if (teacherError) {
       console.error("Teacher insert failed:", teacherError);
-      return NextResponse.json({ message: "Failed to create teacher" }, { status: 400 });
+      return NextResponse.json({ message: "Failed to create teacher", code: "23505" }, { status: 400 });
     }
 
     const teacherId = teacher.teacher_id;
@@ -80,6 +84,7 @@ export async function POST(req) {
           year_from: e.from,
           year_to: e.to,
           description: e.description,
+          file_url: e.uploadFile.url
         }))
       );
     }
@@ -90,6 +95,7 @@ export async function POST(req) {
           teacher_id: teacherId,
           institution: ed.company,
           year_from: ed.from,
+          file_url:ed.uploadFile.url,
           year_to: ed.to,
           description: ed.description,
         }))

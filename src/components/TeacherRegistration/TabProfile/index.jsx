@@ -8,7 +8,6 @@ import PersonalInfo from "./PersonalInfo";
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 // React imports
 import { useRef } from "react";
@@ -18,6 +17,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
     formState: { errors },
     handleSubmit,
     setError,
+    setValue,
     control,
     watch,
   } = useForm({
@@ -27,8 +27,9 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       firstName: draft?.firstName,
       middleName: draft?.middleName,
       lastName: draft?.lastName,
+      profile_url: draft?.profile_url,
       introduction: draft?.introduction,
-      uploadProfileImage: draft?.uploadProfileImage,
+      profile_url: draft?.profile_url,
       languages: draft?.languages,
       nationality: draft?.nationality || "United Kingdom",
       country: draft?.country || "United Kingdom",
@@ -47,7 +48,6 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
     try {
       // TAB PROFILE
       if (activeTab === 0) {
-        actualDraftInfo.uploadProfileImage = data?.uploadProfileImage;
         actualDraftInfo.introduction = data?.introduction;
         actualDraftInfo.nationality = data?.nationality;
         actualDraftInfo.middleName = data?.middleName;
@@ -57,9 +57,9 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
         actualDraftInfo.lastName = data?.lastName;
         actualDraftInfo.country = data?.country;
         actualDraftInfo.gender = data?.gender;
-
+        actualDraftInfo.profile_url = data?.profile_url;
+        console.log(actualDraftInfo, "ACTUAL DRAFT");
         setActiveTab((prev) => prev + 1);
-        console.log(response, "PROFILE");
       }
     } catch (err) {
       console.log(err);
@@ -75,7 +75,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Profile Picture */}
-      <ProfilePicture errors={errors} control={control} />
+      <ProfilePicture errors={errors} control={control} setValue={setValue}/>
 
       {/* Personal Informations */}
       <PersonalInfo control={control} errors={errors} watch={watch} />
