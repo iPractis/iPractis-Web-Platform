@@ -11,47 +11,58 @@ import {
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
-
+import { useState } from "react";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
+  const [submitError, setSubmitError] = useState(null); // 👈 error state
+
   const completedTabProfile = hasIncompleteFields(tabProfileFields, draft);
   const completedTabSubject = hasIncompleteFields(tabSubjectFields, draft);
   const completedTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
   const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
 
-  const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
+  const allTabsCompleted =
+    !completedTabProfile &&
+    !completedTabSubject &&
+    !completedTabBackground &&
+    !completedTabAvailability;
 
- const handleApplyNowClick = async () => {
-  const userId = localStorage.getItem("userId");
+  const handleApplyNowClick = async () => {
+    const userId = localStorage.getItem("userId");
+    setSubmitError(null); // reset on new try
 
-  try {
+    try {
+      const draftWithUserId = { ...draft, userId };
 
+      const response = await fetch("/api/teachers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draftWithUserId),
+      });
 
-    // Example: save draft to backend
-    draft = { ...draft, userId: userId };
-    const response = await fetch("/api/teachers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(draft),
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Insert failed:", errorData);
 
-    });
+        if (errorData?.code === "23505") {
+          setSubmitError("Form already in review, cannot submit new application.");
+        } else {
+          setSubmitError(errorData?.message || "Failed to submit application.");
+        }
+        return;
+      }
 
-    if (!response.ok) throw new Error("Failed to save application");
-
-    const result = await response.json();
-    console.log("Application submitted:", result);
+      const result = await response.json();
+      console.log("Application submitted:", result);
       setActiveTab(5);
-
-  } catch (error) {
-    console.error("Error submitting draft:", error);
-  }
-};
-
+    } catch (error) {
+      console.error("Error submitting draft:", error);
+      setSubmitError(error.message || "Unexpected error occurred.");
+    }
+  };
 
   return (
     <section>
-      <div
-        className={`flex items-center gap-2.5 rounded-[22px] p-1.5 mb-4 bg-primary-color-P1`}
-      >
+      <div className="flex items-center gap-2.5 rounded-[22px] p-1.5 mb-4 bg-primary-color-P1">
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
             key={TabIndex}
@@ -60,7 +71,6 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
             }`}
             onClick={() => setActiveTab(TabIndex)}
           >
-            {completedTabSubject && TabIndex === 1}
             <span
               className={`p-1 rounded-[10px] ${
                 activeTab === TabIndex
@@ -88,7 +98,6 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
                 }
               />
             </span>
-
             <span className="md:block hidden">{TabButton?.textButton}</span>
           </button>
         ))}
@@ -96,10 +105,10 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
 
       {activeTab === 4 ? (
         <SectionHeader
-          wrapperSectionHeaderClassName={`flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1`}
+          wrapperSectionHeaderClassName="flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1"
           descriptionText={sectionHeaderContent[2]?.descriptionText}
           titleText={sectionHeaderContent[2]?.titleText}
-          descriptionClassName={"mt-[4px]"}
+          descriptionClassName="mt-[4px]"
           titleIcon={<DocumentIcon />}
           titleClassName="MT-SB-1"
         >
@@ -109,11 +118,15 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               onClick={handleApplyNowClick}
               type="button"
             >
-              <span className="px-1.5">Apply now!</span>{" "}
+              <span className="px-1.5">Apply now!</span>
               <InputBGWrapperIcon>
-                <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+                <ChevronRightBiggerIcon fillColor="fill-tertiary-color-SC5" />
               </InputBGWrapperIcon>
             </button>
+
+            {submitError && (
+              <p className="text-red-600 mt-2 text-sm">{submitError}</p>
+            )}
           </div>
         </SectionHeader>
       ) : (
@@ -133,7 +146,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               ? sectionHeaderContent[0]?.titleText
               : sectionHeaderContent[1]?.titleText
           }
-          descriptionClassName={"mt-[4px]"}
+          descriptionClassName="mt-[4px]"
           titleIcon={<DocumentIcon />}
           titleClassName="MT-SB-1"
         />

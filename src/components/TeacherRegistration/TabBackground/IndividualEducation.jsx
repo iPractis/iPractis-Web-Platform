@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
 import CustomNextUiTextarea from "../../Shared/CustomNextUiTextarea";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
@@ -23,277 +26,259 @@ import {
 } from "../../Icons";
 import { CalendarDate } from "@internationalized/date";
 
-// import { ErrorMultipleZodResponse } from "../../Shared/ErrorMessageiPractis";
-// import { findInputMultipleErrorZod } from "@/src/lib/utils/getZodValidations";
-import { useState } from "react";
-
 const IndividualEducation = ({
   handleDeleteEducation,
   handleUpdateEducation,
-  education,
+  education = {},
   errors,
   index,
 }) => {
-  const [image, setImage] = useState({});
-  const certainEducationPosition = education?.index === index;
+  // local preview state for file + status
+  const [image, setImage] = useState(education.uploadFile || null);
+  const [uploadStatus, setUploadStatus] = useState(null); // null | 'uploading' | 'uploaded' | 'failed'
+
+  useEffect(() => {
+    setImage(education.uploadFile || null);
+  }, [education.uploadFile]);
+
+  const educationIndex = typeof education.index !== "undefined" ? education.index : null;
+  const certainEducationPosition = educationIndex === index;
 
   const handleInputChange = (field, value) => {
     const updatedEducation = { ...education, [field]: value };
     handleUpdateEducation(index, updatedEducation);
   };
 
+  // Upload + replace flow:
+  // 1) Upload new file to /api/upload
+  // 2) If upload succeeds, attempt to delete old path (best-effort)
+  // 3) Update parent with new uploadFile metadata
+  const onFileChange = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    console.log("triggered")
+
+    // quick client-side validation (optional)
+    const allowed = [".pdf", ".png", ".jpeg", ".jpg"];
+    const ext = file.name.split(".").pop()?.toLowerCase() || "";
+    // not blocking here — you may want to enforce stricter checks
+    setUploadStatus("uploading");
+    setImage({ name: file.name, size: file.size, type: file.type });
+
+    try {
+      const fd = new FormData();
+      fd.append("file", file);
+      // optionally append userId: fd.append('userId', userId);
+
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: fd,
+      });
+
+      const uploadJson = await uploadRes.json();
+      if (!uploadRes.ok) {
+        console.error("Upload failed:", uploadJson);
+        setUploadStatus("failed");
+        return;
+      }
+
+      // uploadJson expected: { name, path, url, type, size, uploaded_at }
+      const newMeta = uploadJson;
+
+      // attempt to delete old file if exists (best-effort)
+      const oldPath = education.uploadFile?.path;
+      if (oldPath) {
+        try {
+          await fetch("/api/delete-file", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: oldPath }),
+          });
+        } catch (delErr) {
+          // don't block; schedule cleanup server-side if necessary
+          console.warn("Failed to delete old file (best-effort):", delErr);
+        }
+      }
+
+      // Update local preview and parent state with new metadata
+      setImage(newMeta);
+      setUploadStatus("uploaded");
+      handleInputChange("uploadFile", newMeta);
+    } catch (err) {
+      console.error("File upload error:", err);
+      setUploadStatus("failed");
+      // revert preview if you want:
+      // setImage(education.uploadFile || null);
+    } finally {
+      // reset the input value so the same file can be re-selected if needed
+      // (we can't access the input directly from here; ensure input has no persistent value)
+    }
+  };
+
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-2.5">
-        {/* Company */}
-        <div className="flex-[40%]">
-          <CustomNextUiInput
-            value={education?.company}
-            onChange={(e) => handleInputChange("company", e.target.value)}
-            type="text"
-            name="company"
-            placeholder="Example: Google"
-            startContent={
-              <InputBGWrapperIcon>
-                <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            // classNames={{
-            //   inputWrapper:
-            //     certainEducationPosition &&
-            //     findInputMultipleErrorZod(errors, "company", 2)?.message &&
-            //     "form-input-error",
-            // }}
-          />
-        </div>
+    // <div className="mb-8">
+    //   <div className="flex items-center gap-2.5">
+    //     {/* Company */}
+    //     <div className="flex-[40%]">
+    //       <CustomNextUiInput
+    //         value={education?.company || ""}
+    //         onChange={(e) => handleInputChange("company", e.target.value)}
+    //         type="text"
+    //         name="company"
+    //         placeholder="Example: Google"
+    //         startContent={
+    //           <InputBGWrapperIcon>
+    //             <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+    //           </InputBGWrapperIcon>
+    //         }
+    //       />
+    //     </div>
 
-        {/* Calendar FROM */}
-        <div className="flex-[15%]">
-          <CustomNextUiInput
-            type="text"
-            isReadOnly
-            value={education?.from}
-            name="from"
-            placeholder="From"
-            startContent={
-              <InputBGWrapperIcon>
-                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            endContent={
-              <Dropdown
-                classNames={{
-                  content: "p-0",
-                }}
-                closeOnSelect={false}
-              >
-                <DropdownTrigger>
-                  <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                    variant="flat"
-                    type="button"
-                  >
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                  </Button>
-                </DropdownTrigger>
+    //     {/* Calendar FROM */}
+    //     <div className="flex-[15%]">
+    //       <CustomNextUiInput
+    //         type="text"
+    //         isReadOnly
+    //         value={education?.from || ""}
+    //         name="from"
+    //         placeholder="From"
+    //         startContent={
+    //           <InputBGWrapperIcon>
+    //             <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+    //           </InputBGWrapperIcon>
+    //         }
+    //         endContent={
+    //           <Dropdown classNames={{ content: "p-0" }} closeOnSelect={false}>
+    //             <DropdownTrigger>
+    //               <Button
+    //                 className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
+    //                 variant="flat"
+    //                 type="button"
+    //                 aria-label="Open from date picker"
+    //               >
+    //                 <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+    //               </Button>
+    //             </DropdownTrigger>
 
-                <DropdownMenu
-                  className="p-0 h-0"
-                  itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
-                  }}
-                >
-                  <DropdownItem className="p-0">
-                    <Calendar
-                      onChange={(date) => {
-                        let validDate = new CalendarDate(
-                          date?.year,
-                          date?.month,
-                          date?.day
-                        );
+    //             <DropdownMenu className="p-0 h-0" itemClasses={{ base: "data-[hover=true]:bg-transparent" }}>
+    //               <DropdownItem className="p-0">
+    //                 <Calendar
+    //                   onChange={(date) => {
+    //                     if (!date) return;
+    //                     const validDate = new CalendarDate(date.year, date.month, date.day);
+    //                     handleInputChange("from", validDate.toString());
+    //                   }}
+    //                   disableAnimation
+    //                 />
+    //               </DropdownItem>
+    //             </DropdownMenu>
+    //           </Dropdown>
+    //         }
+    //       />
+    //     </div>
 
-                        handleInputChange("from", validDate?.toString());
-                      }}
-                      disableAnimation
-                    />
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            }
-            // classNames={{
-            //   inputWrapper:
-            //     certainEducationPosition &&
-            //     findInputMultipleErrorZod(errors, "from", 2)?.message &&
-            //     "form-input-error",
-            // }}
-          />
-        </div>
+    //     {/* Calendar TO */}
+    //     <div className="flex-[15%]">
+    //       <CustomNextUiInput
+    //         type="text"
+    //         isReadOnly
+    //         value={education?.to || ""}
+    //         name="to"
+    //         placeholder="To"
+    //         startContent={
+    //           <InputBGWrapperIcon>
+    //             <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+    //           </InputBGWrapperIcon>
+    //         }
+    //         endContent={
+    //           <Dropdown classNames={{ content: "p-0" }} closeOnSelect={false}>
+    //             <DropdownTrigger>
+    //               <Button
+    //                 className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
+    //                 variant="flat"
+    //                 type="button"
+    //                 aria-label="Open to date picker"
+    //               >
+    //                 <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+    //               </Button>
+    //             </DropdownTrigger>
 
-        {/* Calendar TO */}
-        <div className="flex-[15%]">
-          <CustomNextUiInput
-            type="text"
-            isReadOnly
-            value={education?.to}
-            name="to"
-            placeholder="To"
-            startContent={
-              <InputBGWrapperIcon>
-                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
-              </InputBGWrapperIcon>
-            }
-            endContent={
-              <Dropdown
-                classNames={{
-                  content: "p-0",
-                }}
-                closeOnSelect={false}
-              >
-                <DropdownTrigger>
-                  <Button
-                    className="data-[hover=true]:opacity-100 border-0 min-w-fit bg-primary-color-P12 animation-fade flex justify-center items-center w-9 h-9 p-0 px-1.5 rounded-[10px] shadow-none"
-                    variant="flat"
-                    type="button"
-                  >
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
-                  </Button>
-                </DropdownTrigger>
+    //             <DropdownMenu className="p-0 h-0" itemClasses={{ base: "data-[hover=true]:bg-transparent" }}>
+    //               <DropdownItem className="p-0">
+    //                 <Calendar
+    //                   onChange={(date) => {
+    //                     if (!date) return;
+    //                     const validDate = new CalendarDate(date.year, date.month, date.day);
+    //                     handleInputChange("to", validDate.toString());
+    //                   }}
+    //                   disableAnimation
+    //                 />
+    //               </DropdownItem>
+    //             </DropdownMenu>
+    //           </Dropdown>
+    //         }
+    //       />
+    //     </div>
 
-                <DropdownMenu
-                  className="p-0 h-0"
-                  itemClasses={{
-                    base: "data-[hover=true]:bg-transparent",
-                  }}
-                >
-                  <DropdownItem className="p-0">
-                    <Calendar
-                      onChange={(date) => {
-                        let validDate = new CalendarDate(
-                          date?.year,
-                          date?.month,
-                          date?.day
-                        );
+    //     {/* Download / Upload file
+    //     <div className="flex-1">
+    //       <button type="button" className="relative" aria-label="Upload education file">
+    //         <input
+    //           className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+    //           onChange={()=>console.log("hello")}
+    //           accept=".pdf, .png, .jpeg"
+    //           name="uploadEducationFile"
+    //           type="file"
+    //           aria-label="Choose a file to upload"
+    //         />
 
-                        handleInputChange("to", validDate?.toString());
-                      }}
-                      disableAnimation
-                    />
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            }
-            // classNames={{
-            //   inputWrapper:
-            //     certainEducationPosition &&
-            //     findInputMultipleErrorZod(errors, "to", 2)?.message &&
-            //     "form-input-error",
-            // }}
-          />
-        </div>
+    //         <InputBGWrapperIcon>
+    //           {uploadStatus === "uploading" ? (
+    //             // simple visual hint; replace with spinner component if you have one
+    //             <span className="text-xs">Uploading...</span>
+    //           ) : image?.name ? (
+    //             <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+    //           ) : (
+    //             <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+    //           )}
+    //         </InputBGWrapperIcon>
+    //       </button>
+    //     </div> */}
 
-        {/* Download */}
-        <div className="flex-1">
-          <button type="button" className="relative">
-            <input
-              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              onChange={(e) => setImage(e.target.files[0])}
-              accept=".pdf, .png, .jpeg"
-              name="uploadEducationFile"
-              type="file"
-            />
+    //     {/* Recycle bin */}
+    //     <div className="flex-1">
+    //       <button type="button" onClick={() => handleDeleteEducation(index)} aria-label="Delete education entry">
+    //         <InputBGWrapperIcon className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}>
+    //           <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
+    //         </InputBGWrapperIcon>
+    //       </button>
+    //     </div>
+    //   </div>
 
-            <InputBGWrapperIcon
-              // className={`
-              //   ${
-              //   certainEducationPosition &&
-              //   findInputMultipleErrorZod(errors, "uploadEducationFile", 2)
-              //     ?.message
-              //     ? "form-input-error"
-              //     : "bg-primary-color-P11"
-              // } 
-              // btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
-            >
-              {image?.name ? (
-                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
-              ) : (
-                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
-              )}
-            </InputBGWrapperIcon>
-          </button>
-        </div>
-
-        {/* Recycle bin */}
-        <div className="flex-1">
-          <button type="button" onClick={() => handleDeleteEducation(index)}>
-            <InputBGWrapperIcon
-              className={
-                "btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"
-              }
-            >
-              <TrashBinIcon
-                strokeColor={"stroke-primary-color-P4"}
-                fillColor={"fill-primary-color-P4"}
-              />
-            </InputBGWrapperIcon>
-          </button>
-        </div>
-      </div>
-
-      {/* {certainEducationPosition && (
-        <>
-          <ErrorMultipleZodResponse
-            fieldName={"company"}
-            errors={errors}
-            pathIndex={2}
-          />
-
-          <ErrorMultipleZodResponse
-            fieldName={"from"}
-            errors={errors}
-            pathIndex={2}
-          />
-
-          <ErrorMultipleZodResponse
-            fieldName={"to"}
-            errors={errors}
-            pathIndex={2}
-          />
-
-          <ErrorMultipleZodResponse
-            fieldName={"uploadEducationFile"}
-            errors={errors}
-            pathIndex={2}
-          />
-        </>
-      )} */}
-
-      {/* Description */}
-      <CustomNextUiTextarea
-        value={education?.description}
-        onChange={(e) => handleInputChange("description", e.target.value)}
-        classNames={{
-          base: "mt-2.5",
-          // inputWrapper:
-          //   certainEducationPosition &&
-          //   findInputMultipleErrorZod(errors, "description", 2)?.message &&
-          //   "form-input-error",
-          input: "h-[150px]",
-        }}
-        placeholder="Enter a text"
-        size="primaryiPractis"
-        name="description"
-        disableAutosize
-      />
-
-      {/* {certainEducationPosition && (
-        <ErrorMultipleZodResponse
-          fieldName={"description"}
-          pathIndex={2}
-          errors={errors}
-        />
-      )} */}
-    </div>
+    //   {/* Description */}
+    //   <CustomNextUiTextarea
+    //     value={education?.description || ""}
+    //     onChange={(e) => handleInputChange("description", e.target.value)}
+    //     classNames={{
+    //       base: "mt-2.5",
+    //       input: "h-[150px]",
+    //     }}
+    //     placeholder="Enter a text"
+    //     size="primaryiPractis"
+    //     name="description"
+    //     disableAutosize
+    //   />
+    // </div>
+    <></>
   );
+};
+
+IndividualEducation.propTypes = {
+  handleDeleteEducation: PropTypes.func.isRequired,
+  handleUpdateEducation: PropTypes.func.isRequired,
+  education: PropTypes.object,
+  errors: PropTypes.any,
+  index: PropTypes.number.isRequired,
 };
 
 export default IndividualEducation;

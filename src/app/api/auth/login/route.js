@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
+import { supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
   try {
@@ -48,7 +48,7 @@ export async function POST(req) {
 
     return NextResponse.json(
       { token, user: { id: user.user_id, email: user.email } },
-      { status: 404 }
+      { status: 200 }
     );
   } catch (err) {
     console.error(err);
