@@ -12,7 +12,7 @@ const TeacherInfoSpecialties = ({draftData}) => {
       />
 
      {draftData.subSubject.map(data=>{
-      return  <WhiteSpaceWrapper className={"bg-primary-color-P11 mt-5"}>
+      return  <WhiteSpaceWrapper key={data.selected} className={"bg-primary-color-P11 mt-5"}>  {/*build error fix */}
         <h3 className="MT-SB-1 text-primary-color-P1 mb-5">{data.selected}</h3>
         <p className="ST-4 text-primary-color-P4">
           {data.description}
