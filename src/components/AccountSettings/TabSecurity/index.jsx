@@ -5,11 +5,11 @@ import LogInID from "./LogInID";
 import Devices from "./Devices";
 
 // External imports
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/src/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 const TabSecurity = ({ activeTab }) => {
-  const { data: session } = useSession();
+  const { user } = useAuth();
 
   const {
     formState: { errors },
@@ -18,13 +18,13 @@ const TabSecurity = ({ activeTab }) => {
   } = useForm({
     mode: "onBlur",
     defaultValues: {
-      email: session?.user?.email,
+      email: user?.email,
     },
   });
 
   return (
     <form className={`${activeTab !== 2 && "hidden"} space-y-16 mb-24`}>
-      <LogInID userEmail={session?.user?.email} errors={errors} />
+      <LogInID userEmail={user?.email} errors={errors} />
 
       <Password />
 

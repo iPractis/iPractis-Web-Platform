@@ -144,3 +144,18 @@ export async function logOutUser() {
 
   redirect("/login");
 }
+
+export async function logOutUserCookie() {
+  try {
+    // Call logout API to clear httpOnly cookie
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include' // Include cookies
+    });
+    
+    await signOut();
+  } catch (error) {
+    console.log(error);
+  }
+  redirect("/login");
+}

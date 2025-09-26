@@ -1,21 +1,21 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/src/hooks/useAuth";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import {usePathname} from "next/navigation";
 
 const Layout = ({ children }) => {
-  const { data: session, status } = useSession();
+  const { authenticated, user, loading } = useAuth();
   const pathname = usePathname();
-console.log(session, status, "LAYOUT SESSION");
+console.log(authenticated, user, loading, "LAYOUT SESSION");
   useEffect(() => {
-    if (!session?.user?.token && status !== "loading") {
+    if (!loading && !authenticated) {
       redirect("/login");
     }
 
-    if (session?.user && status !== "loading") {
-      const userRole = session.user.role || "student";
+    if (authenticated && user && !loading) {
+      const userRole = user.role || "student";
       
       // Teacher registration - only students can apply or teachers can edit
       if (pathname.startsWith('/teacher-registration')) {
@@ -32,9 +32,9 @@ console.log(session, status, "LAYOUT SESSION");
       }
     }
     
-  }, [session,status,pathname]);
+  }, [authenticated,loading,user,pathname]);
 
-  if (!session?.user?.token) {
+  if (!authenticated) {
     return null; // Blocking the rendering completely to avoid flashing unprotected content
   }
 

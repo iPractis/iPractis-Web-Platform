@@ -7,14 +7,14 @@ import {
   tabSubjectFields,
   tabsButtons,
 } from "@/src/data/dataTeacherRegistration";
-
+import { useAuth } from "@/src/hooks/useAuth";
 import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const [submitError, setSubmitError] = useState(null); // 👈 error state
-
+  const { user } = useAuth();
   const completedTabProfile = hasIncompleteFields(tabProfileFields, draft);
   const completedTabSubject = hasIncompleteFields(tabSubjectFields, draft);
   const completedTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
@@ -27,7 +27,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
     !completedTabAvailability;
 
   const handleApplyNowClick = async () => {
-    const userId = localStorage.getItem("userId");
+    const userId = user?.userId;
     setSubmitError(null); // reset on new try
 
     try {
