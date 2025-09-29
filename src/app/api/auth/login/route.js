@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabaseServer } from "@/src/lib/supabaseClient";
+import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
   try {
@@ -20,6 +20,13 @@ export async function POST(req) {
       .eq("email", email)
       .single();
 
+      if (error || !user) {
+        return NextResponse.json(
+          { message: "Invalid credentials" },
+          { status: 401 }
+        );
+      }
+
     // Fetch user profile with role info  
     const { data: profile, error: profileError } = await supabaseServer
       .from("profiles")
@@ -27,13 +34,6 @@ export async function POST(req) {
       .eq("user_id", user.user_id)
       .single();
       
-
-    if (error || !user) {
-      return NextResponse.json(
-        { message: "Invalid credentials" },
-        { status: 401 }
-      );
-    }
 
 
     // Verify password
@@ -47,15 +47,31 @@ export async function POST(req) {
 
     // Create JWT
     const token = jwt.sign(
-      { userId: user.user_id, email: user.email, role: profile.role || "student" },
+      { 
+        userId: user.user_id, 
+        email: user.email, 
+        role: profile.role || "student",
+        firstName: user.first_name || user.email.split('@')[0] // Added firstName
+      },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    return NextResponse.json(
-      { token, user: { userId: user.user_id, email: user.email , role: profile.role || "student" } },
+    const response = NextResponse.json(
+      { success: true, user: { userId: user.user_id, email: user.email, role: profile.role || "student" } },
       { status: 200 }
     );
+    
+    // Set httpOnly cookie
+    response.cookies.set('auth-token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60 , // 7 days
+      path: '/'
+    });
+    
+    return response;
 
   } catch (err) {
     console.error(err);
