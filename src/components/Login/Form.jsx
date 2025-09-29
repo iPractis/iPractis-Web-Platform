@@ -213,20 +213,22 @@ const Form = () => {
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col gap-3">
+      <div className="flex gap-4 mt-8">
         <button
-          className="w-full rounded-xl py-3 font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition"
+          className="w-[207px] h-12 rounded-2xl p-1.5 font-medium text-[14.4px] bg-black hover:bg-gray-800 text-white transition flex items-center justify-center"
           type="button"
         >
           Presskey
         </button>
 
         <ButtonSubmitForm
-          buttonClassName="w-full rounded-xl py-3 flex items-center justify-center gap-2 font-medium bg-primary-color-P4 text-white hover:opacity-90 transition relative"
+          buttonClassName="w-[207px] h-12 rounded-2xl p-1.5 flex items-center justify-center font-medium text-[14.4px] bg-[#1A47FF] text-white hover:opacity-90 transition relative"
           ref={buttonRef}
         >
           <span>Log in</span>
-          <ChevronRightDoorIcon fillColor={"fill-white group-hover:fill-white"} />
+          <div className="absolute right-1.5 w-9 h-9 bg-white rounded-[10px] p-2 flex items-center justify-center">
+            <ChevronRightDoorIcon fillColor={"fill-[#1A47FF]"} />
+          </div>
         </ButtonSubmitForm>
       </div>
 

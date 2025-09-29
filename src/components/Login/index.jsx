@@ -12,11 +12,16 @@ export const Login = () => {
         <WrapperForm />
 
         {/* Register if user doesn't have an account */}
-        <AccountPrompt
+        <div className="sm:-mt-[18px] -mt-12">
+          <AccountPrompt
           descText={'Press on "Register" to create your account.'}
           titleText={`You don't have an account yet?`}
           headerContainerClassName={"px-4"}
-          titleIcon={<UserAddIcon />}
+          titleIcon={
+            <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
+              <UserAddIcon />
+            </div>
+          }
           btnColor={"btn-primary"}
           hrefLink={"/register"}
           textLink={"Register"}
@@ -27,6 +32,7 @@ export const Login = () => {
             </p>
           }
         />
+        </div>
       </div>
     </section>
   );

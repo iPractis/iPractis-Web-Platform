@@ -11,24 +11,32 @@ const WrapperForm = () => {
     <>
       {/* Heading Title */}
       <SectionHeader
-        descriptionText="Sign in to continue your journey with iPractis."
+        descriptionText="Log in to continue your journey with iPractis."
         wrapperSectionHeaderClassName={
-          "bg-primary-color-P11 rounded-[32px] p-8"
+          "bg-[#F8F7F5] rounded-[32px] p-8"
         }
-        titleIcon={<SparkleIcon />}
+        titleIcon={
+          <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
+            <SparkleIcon />
+          </div>
+        }
         titleClassName="MT-SB-1"
         titleText="Welcome back"
       />
 
       {/* Log In Section */}
-      <div className="sm:px-8 sm:mt-[50px] mt-8 shadow-lg rounded-xl">
+      <div className="px-8 mt-8 rounded-xl">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
           headerContainerClassName="px-4"
-          titleIcon={<PadLockUserIcon />}
+          titleIcon={
+            <div className="w-12 h-12 bg-[#F8F7F5] rounded-2xl p-3.5 flex items-center justify-center">
+              <PadLockUserIcon />
+            </div>
+          }
           descriptionClassName="mt-1"
           titleClassName="MT-SB-1"
-          titleText="Log in"
+          titleText="Account Credentials"
         />
 
         {/* Social media buttons to login */}
