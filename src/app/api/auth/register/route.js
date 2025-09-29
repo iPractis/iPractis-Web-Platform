@@ -2,6 +2,7 @@
 import bcrypt from "bcrypt";
 import { supabaseServer } from "../../../../lib/supabaseClient";
 import nodemailer from "nodemailer";
+import jwt from "jsonwebtoken";
 
 export async function POST(req) {
   try {
@@ -88,12 +89,35 @@ export async function POST(req) {
   `,
 });
 
-
-    return new Response(
-      JSON.stringify({ message: "User registered. Please verify OTP sent to email." }),
-      { status: 201 }
+    // Create JWT token for auto-login after registration
+    const token = jwt.sign(
+    { 
+      userId: user.user_id, 
+      email: user.email,
+      role: "student", // Default role 
+      firstName: user.email.split('@')[0]
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
     );
-  } catch (err) {
+
+    // Create response with HTTP-only cookie
+    const response = new Response(JSON.stringify({ 
+      message: "Registration successful. Please check your email for verification code." 
+    }), { status: 201 });
+
+    // Set HTTP-only cookie for immediate session
+    response.cookies.set('auth-token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 7 * 24 * 60 * 60,
+      path: '/'
+    });
+
+    return response;
+  } 
+  catch (err) {
     console.error(err);
     return new Response(JSON.stringify({ message: "Server error" }), { status: 500 });
   }

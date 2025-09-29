@@ -1,5 +1,6 @@
 // app/api/auth/verify-otp/route.js
 import { supabaseServer } from "../../../../lib/supabaseClient";
+import jwt from "jsonwebtoken";
 
 export async function POST(req) {
   try {
@@ -64,9 +65,35 @@ export async function POST(req) {
       })
       .eq("user_id", user.user_id);
 
+    // Create JWT token for auto-login after verification
+  const token = jwt.sign(
+    { 
+    userId: user.user_id, 
+    email: email,
+    role: "student", // Default role for new users
+    firstName: email.split('@')[0]
+    },
+  process.env.JWT_SECRET,
+  { expiresIn: "7d" }
+  );
+
+  // Create response with HTTP-only cookie
+  const response = new Response(JSON.stringify({ message: "Verification successful" }), { 
+  status: 200 
+  });
+
+// Set HTTP-only cookie
+  response.cookies.set('auth-token', token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'strict',
+  maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
+  path: '/'
+  });
 
 
-    return new Response(JSON.stringify({ message: "Verification successful" }), { status: 200 });
+
+  return response;
   } catch (err) {
     console.error(err);
     return new Response(JSON.stringify({ message: "Server error" }), { status: 500 });
