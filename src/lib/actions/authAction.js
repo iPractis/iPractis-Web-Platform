@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 // WITHOUT AUTHJS
 export async function registerUser(prevState, reactHookFormData) {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/auth/register`, {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
