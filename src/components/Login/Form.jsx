@@ -4,11 +4,12 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import { logInUser } from "@/src/lib/actions/authAction";
-
+import { useAuth } from "@/src/hooks/useAuth";
 // React imports
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useRef, useState } from "react";
+
 import Link from "next/link";
 
 // Images && icons
@@ -22,6 +23,7 @@ import {
 } from "../Icons";
 
 const Form = () => {
+  const {refreshAuth} = useAuth();
   const {
     register,
     handleSubmit,
@@ -48,11 +50,10 @@ const Form = () => {
         });
       }
 
-      if (response?.token) {
+      if (response?.success) {
         console.log("Login successful:", response);
-        localStorage.setItem("token", response.token);
-        localStorage.setItem("user", JSON.stringify(response.user));
-        localStorage.setItem("userId", response.user.id);
+        refreshAuth();  //refresh auth state after login
+     //No need to store anything in localstorage - httpOnly cookie is set automatically
         router.push("/dashboard");
       }
     } catch (error) {

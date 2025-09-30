@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 // WITHOUT AUTHJS
 export async function registerUser(prevState, reactHookFormData) {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/auth/register`, {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -142,5 +142,20 @@ export async function logOutUser() {
     console.log(error);
   }
 
+  redirect("/login");
+}
+
+export async function logOutUserCookie() {
+  try {
+    // Call logout API to clear httpOnly cookie
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include' // Include cookies
+    });
+    
+    await signOut();
+  } catch (error) {
+    console.log(error);
+  }
   redirect("/login");
 }
