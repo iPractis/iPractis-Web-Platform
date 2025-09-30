@@ -28,7 +28,7 @@ const WrapperForm = () => {
       <div className="px-8 mt-8 rounded-xl">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
-          headerContainerClassName="px-4"
+          // headerContainerClassName="px-4"
           titleIcon={
             <div className="w-12 h-12 bg-[#F8F7F5] rounded-2xl p-3.5 flex items-center justify-center">
               <PadLockUserIcon />

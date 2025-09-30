@@ -12,7 +12,7 @@ export const Login = () => {
         <WrapperForm />
 
         {/* Register if user doesn't have an account */}
-        <div className="sm:-mt-[18px] -mt-12">
+        <div className="sm:-mt-[45px] -mt-16">
           <AccountPrompt
           descText={'Press on "Register" to create your account.'}
           titleText={`You don't have an account yet?`}
