@@ -2,6 +2,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { supabaseServer } from "../../../../lib/supabaseClient";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
@@ -71,7 +72,7 @@ export async function POST(req) {
       );
 
       // Create response with HTTP-only cookie
-      const response = new Response(JSON.stringify({ message: "Password reset successful" }), { 
+      const response = NextResponse.json({ message: "Password reset successful" }, { 
         status: 200 
       });
 
