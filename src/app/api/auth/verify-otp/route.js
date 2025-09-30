@@ -1,6 +1,7 @@
 // app/api/auth/verify-otp/route.js
 import { supabaseServer } from "../../../../lib/supabaseClient";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
@@ -78,8 +79,8 @@ export async function POST(req) {
   );
 
   // Create response with HTTP-only cookie
-  const response = new Response(JSON.stringify({ message: "Verification successful" }), { 
-  status: 200 
+  const response = NextResponse.json({ message: "Verification successful" }, { 
+    status: 200 
   });
 
 // Set HTTP-only cookie

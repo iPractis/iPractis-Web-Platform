@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { supabaseServer } from "../../../../lib/supabaseClient";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
@@ -102,9 +103,9 @@ export async function POST(req) {
     );
 
     // Create response with HTTP-only cookie
-    const response = new Response(JSON.stringify({ 
-      message: "Registration successful. Please check your email for verification code." 
-    }), { status: 201 });
+    const response = NextResponse.json({ 
+      message: "Registration successful.Please check your email for verification code." 
+    }, { status: 201 });
 
     // Set HTTP-only cookie for immediate session
     response.cookies.set('auth-token', token, {
