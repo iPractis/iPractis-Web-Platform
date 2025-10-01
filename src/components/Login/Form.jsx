@@ -3,7 +3,6 @@ import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
-import { logInUser } from "@/src/lib/actions/authAction";
 import { useAuth } from "@/src/hooks/useAuth";
 // React imports
 import { useRouter } from "next/navigation";
@@ -23,7 +22,6 @@ import {
 } from "../Icons";
 
 const Form = () => {
-  const {refreshAuth} = useAuth();
   const {
     register,
     handleSubmit,
@@ -34,39 +32,50 @@ const Form = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
-  const router = useRouter();
+ const router = useRouter();
+  const { refreshAuth } = useAuth();
 
-  const onSubmit = async (data) => {
-    buttonRef.current.loading();
+const onSubmit = async (data) => {
+  buttonRef.current.loading();
+ 
 
-    try {
-      const response = await logInUser(data);
+  try {
+    const response = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include", // ✅ important so httpOnly cookie is set
+      body: JSON.stringify(data),
+    });
 
-      if (response?.message) {
-        return setBackEndErrors({
-          field: response?.field || "email",
-          message: response.message,
-          title: response.title || "Login Failed",
-        });
-      }
+    const result = await response.json();
 
-      if (response?.success) {
-        console.log("Login successful:", response);
-        refreshAuth();  //refresh auth state after login
-     //No need to store anything in localstorage - httpOnly cookie is set automatically
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setBackEndErrors({
-        field: "general",
-        message: "Something went wrong. Please try again.",
-        title: "Error",
+    if (!response.ok) {
+      // API returned error
+      return setBackEndErrors({
+        field: result?.field || "email",
+        message: result?.message || "Login failed",
+        title: result?.title || "Login Failed",
       });
-    } finally {
-      buttonRef.current.notIsLoading();
     }
-  };
+
+    // ✅ Success
+    console.log("Login successful:", result);
+    await refreshAuth(); // make sure AuthContext is updated
+    router.push("/dashboard"); // navigate client-side (no full reload)
+  } catch (error) {
+    console.error("Login error:", error);
+    setBackEndErrors({
+      field: "general",
+      message: "Something went wrong. Please try again.",
+      title: "Error",
+    });
+  } finally {
+    buttonRef.current.notIsLoading();
+  }
+};
+
 
   return (
     <form
