@@ -25,9 +25,14 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const completedTabSubject = hasIncompleteFields(tabSubjectFields, normalizedDraft);
   const completedTabBackground = hasIncompleteFields(tabBackgroundFields, normalizedDraft);
   const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, normalizedDraft);
-  const allTabsCompleted = completedTabProfile && completedTabSubject && completedTabBackground && completedTabAvailability;
+  const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
 
+  console.log("allTabCompleted",allTabsCompleted)
   console.log("completedTabProfile",completedTabProfile)
+  console.log("completedTabSubject",completedTabSubject)
+  console.log("completedTabBackground",completedTabBackground)
+  console.log("completedTabAvailability",completedTabAvailability)
+
   const handleApplyNowClick = async () => {
   const userId = user?.userId;
   setSubmitError(null);
