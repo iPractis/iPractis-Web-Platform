@@ -11,12 +11,14 @@ import StudentAge from "./StudentAge";
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 // React imports
-import { useRef } from "react";
+import { useState } from "react";
+import { useAuth } from "@/src/hooks/useAuth";
 
-const TabSubject = ({ setActiveTab, activeTab, draft }) => {
+const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
+  const [loading, setLoading] = useState(false);
+
   const {
     formState: { errors, isSubmitted },
     handleSubmit,
@@ -27,45 +29,63 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabSubjectSchema),
     defaultValues: {
-      subjectIntroduction: draft?.subjectIntroduction,
-      profileTitle: draft?.profileTitle,
-      teachToAmateurPersons: draft?.teachToAmateurPersons,
-      teachToYoungPersons: draft?.teachToYoungPersons,
-      hourlyPrice: draft?.hourlyPrice,
-      studentLevel: draft?.studentLevel,
-      subject: draft?.subject,
-      videoLink: draft?.videoLink,
-      subSubject: draft?.subSubject,
+      subjectIntroduction: draft?.subjectIntroduction || "",
+      profileTitle: draft?.profileTitle || "",
+      teachToAmateurPersons: draft?.teachToAmateurPersons || false,
+      teachToYoungPersons: draft?.teachToYoungPersons || false,
+      hourlyPrice: draft?.hourlyPrice || "",
+      studentLevel: draft?.studentLevel || "",
+      subject: draft?.subject || "",
+      videoLink: draft?.videoLink || "",
+      subSubject: draft?.subSubject || [],
     },
   });
 
-  const buttonRef = useRef(null);
+  const { user } = useAuth();
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
-
-    const actualDraftInfo = draft;
-
     try {
-      // TAB SUBJECT
-      if (activeTab === 1) {
-        actualDraftInfo.teachToAmateurPersons = data?.teachToAmateurPersons;
-        actualDraftInfo.subjectIntroduction = data?.subjectIntroduction;
-        actualDraftInfo.teachToYoungPersons = data?.teachToYoungPersons;
-        actualDraftInfo.profileTitle = data?.profileTitle;
-        actualDraftInfo.studentLevel = data?.studentLevel;
-        actualDraftInfo.hourlyPrice = data?.hourlyPrice;
-        actualDraftInfo.subSubject = data?.subSubject;
-        actualDraftInfo.videoLink = data?.videoLink;
-        actualDraftInfo.subject = data?.subject;
+      setLoading(true);
 
-        setActiveTab((prev) => prev + 1);
+      const payload = {
+        userId: user?.userId,
+        subjectIntroduction: data.subjectIntroduction,
+        profileTitle: data.profileTitle,
+        teachToAmateurPersons: data.teachToAmateurPersons,
+        teachToYoungPersons: data.teachToYoungPersons,
+        hourlyPrice: data.hourlyPrice,
+        studentLevel: data.studentLevel,
+        subject: data.subject,
+        videoLink: data.videoLink,
+        subSubject: data.subSubject,
+      };
+
+      console.log("SUBJECT PAYLOAD TO DRAFT API:", payload);
+
+      // 🔥 Save/merge into teacher_draft
+      const res = await fetch("/api/teacher-draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to save subject tab");
       }
+
+      const { draft: updatedDraft } = await res.json();
+
+      // ✅ update parent draft state
+      if (setDraft) setDraft(updatedDraft);
+
+      // ✅ move to next tab
+      setActiveTab((prev) => prev + 1);
     } catch (err) {
-      console.log(err);
-      setError(err?.response?.data?.message);
+      console.error("Save error:", err);
+      setError("general", { message: err.message });
     } finally {
-      buttonRef.current.notIsLoading();
+      setLoading(false);
     }
   };
 
@@ -74,26 +94,17 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
       className={`${activeTab !== 1 && "hidden"}`}
     >
-      <WhiteSpaceWrapper className={"p-0"}>
+      <WhiteSpaceWrapper className="p-0">
         <SubjectsToTeach control={control} errors={errors} />
-
         <RelatedSubTopics control={control} errors={errors} />
-
         <PresentYourSelf control={control} errors={errors} />
-
         <StudentPreference control={control} errors={errors} />
-
         <StudentAge isSubmitted={isSubmitted} control={control} />
-
         <AveragePrice control={control} errors={errors} watch={watch} />
       </WhiteSpaceWrapper>
 
       {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      <TabsButtonsBottomNav setActiveTab={setActiveTab} activeTab={activeTab} />
     </form>
   );
 };

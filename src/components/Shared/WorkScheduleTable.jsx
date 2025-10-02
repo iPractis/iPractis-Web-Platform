@@ -28,8 +28,11 @@ const WorkScheduleTable = ({
   timeZoneFilter,
   fromToFilter,
   control,
+  defaultTimeZone, // ✅ new
 }) => {
-  const [selectedTimeZone, setSelectedTimeZone] = useState("America/Chicago");
+  const [selectedTimeZone, setSelectedTimeZone] = useState(
+    defaultTimeZone || "America/Chicago" // ✅ use draft timezone if available
+  );
   const [is12HourFormat, setIs12HourFormat] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [currentDay, setCurrentDay] = useState("");
@@ -417,7 +420,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-2 !py-1.5 w-[48px] h-9"
-              defaultValue={minDate?.actualDate}
+              defaultValue={minDate?.actualDate || ""}
               name="birthDateNumber"
               readOnly
             />
@@ -425,7 +428,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
-              defaultValue={getMonthNumberAsText(minDate?.actualMonth + 1)}
+              defaultValue={getMonthNumberAsText(minDate?.actualMonth + 1) || ""}
               name="birthDateMonth"
               readOnly
             />
@@ -433,7 +436,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-              defaultValue={minDate?.actualYear}
+              defaultValue={minDate?.actualYear || ""}
               name="birthDateYear"
               readOnly
             />
@@ -446,14 +449,14 @@ const WorkScheduleTable = ({
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
               name="birthDateNumber"
-              defaultValue={maxDate?.actualDate}
+              defaultValue={maxDate?.actualDate || ""}
               readOnly
             />
 
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
-              defaultValue={getMonthNumberAsText(maxDate?.actualMonth + 1)}
+              defaultValue={getMonthNumberAsText(maxDate?.actualMonth + 1) || ""}
               name="birthDateMonth"
               readOnly
             />
@@ -462,7 +465,7 @@ const WorkScheduleTable = ({
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
               name="birthDateYear"
-              defaultValue={maxDate?.actualYear}
+              defaultValue={maxDate?.actualYear || ""}
               readOnly
             />
           </div>

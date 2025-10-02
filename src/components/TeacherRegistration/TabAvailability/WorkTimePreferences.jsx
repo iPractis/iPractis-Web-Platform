@@ -43,11 +43,11 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
   });
 
   // Calculate total hours from all selected time slots
-  const calculateTotalHours = () => {
-    return dailyWorkTimeLimit.reduce((totalHours, daySlot) => {
-      return totalHours + daySlot.hour.length * 0.5;
-    }, 0);
-  };
+ const calculateTotalHours = () => {
+  return dailyWorkTimeLimit.reduce((totalHours, daySlot) => {
+    return totalHours + daySlot.hour.length/2; // each entry = 30 mins
+  }, 0);
+};
 
   const totalHours = calculateTotalHours();
 
