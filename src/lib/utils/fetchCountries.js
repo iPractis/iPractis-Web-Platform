@@ -1,7 +1,7 @@
 import { getWordsCapitalized } from "./getWordsCapitalized";
 
 export const fetchCountries = async () => {
-  const url = "https://restcountries.com/v3.1/all";
+  const url = "https://restcountries.com/v3.1/all?fields=name,flags";
 
   try {
     const response = await fetch(url);
@@ -14,7 +14,7 @@ export const fetchCountries = async () => {
 
     return json.map((country) => ({
       name: getWordsCapitalized(country.name.common),
-      flag: country.flags.svg,
+      flag: country.flags?.svg || country.flags?.png, // fallback if svg missing
     }));
   } catch (error) {
     console.error(error);

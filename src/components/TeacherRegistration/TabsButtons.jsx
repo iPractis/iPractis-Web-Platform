@@ -13,52 +13,60 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
+  console.log("final data",draft)
   const [submitError, setSubmitError] = useState(null); // 👈 error state
   const { user } = useAuth();
-  const completedTabProfile = hasIncompleteFields(tabProfileFields, draft);
-  const completedTabSubject = hasIncompleteFields(tabSubjectFields, draft);
-  const completedTabBackground = hasIncompleteFields(tabBackgroundFields, draft);
-  const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, draft);
+  const normalizedDraft = {
+  ...draft,
+  workSchedule: draft?.availability,
+  uploadProfileImage: draft?.profile_url,
+};
+  const completedTabProfile = hasIncompleteFields(tabProfileFields, normalizedDraft);
+  const completedTabSubject = hasIncompleteFields(tabSubjectFields, normalizedDraft);
+  const completedTabBackground = hasIncompleteFields(tabBackgroundFields, normalizedDraft);
+  const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, normalizedDraft);
+  const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
 
-  const allTabsCompleted =
-    !completedTabProfile &&
-    !completedTabSubject &&
-    !completedTabBackground &&
-    !completedTabAvailability;
-
+  console.log("completedTabProfile",completedTabProfile)
   const handleApplyNowClick = async () => {
-    const userId = user?.userId;
-    setSubmitError(null); // reset on new try
+  const userId = user?.userId;
+  setSubmitError(null);
 
-    try {
-      const draftWithUserId = { ...draft, userId };
+  if (!allTabsCompleted) {
+    setSubmitError("Please complete all sections before applying.");
+    return;
+  }
 
-      const response = await fetch("/api/teachers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(draftWithUserId),
-      });
+  try {
+    const draftWithUserId = { ...draft, userId };
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Insert failed:", errorData);
+    const response = await fetch("/api/teachers", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(draftWithUserId),
+    });
 
-        if (errorData?.code === "23505") {
-          setSubmitError("Form already in review, cannot submit new application.");
-        } else {
-          setSubmitError(errorData?.message || "Failed to submit application.");
-        }
-        return;
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("Insert failed:", errorData);
+
+      if (errorData?.code === "23505") {
+        setSubmitError("Form already in review, cannot submit new application.");
+      } else {
+        setSubmitError(errorData?.message || "Failed to submit application.");
       }
-
-      const result = await response.json();
-      console.log("Application submitted:", result);
-      setActiveTab(5);
-    } catch (error) {
-      console.error("Error submitting draft:", error);
-      setSubmitError(error.message || "Unexpected error occurred.");
+      return;
     }
-  };
+
+    const result = await response.json();
+    console.log("Application submitted:", result);
+    setActiveTab(5); // Move to "Success" tab
+  } catch (error) {
+    console.error("Error submitting draft:", error);
+    setSubmitError(error.message || "Unexpected error occurred.");
+  }
+};
+
 
   return (
     <section>

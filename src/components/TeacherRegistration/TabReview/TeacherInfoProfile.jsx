@@ -6,6 +6,7 @@ import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 
 const TeacherInfoProfile = ({ draftData }) => {
+  console.log("Draft Data in TeacherInfoProfile:", draftData);
   return (
     <div className="flex gap-2.5">
       <div className="relative">
@@ -14,7 +15,7 @@ const TeacherInfoProfile = ({ draftData }) => {
           className="w-[120px] rounded-[10px]"
           width={120}
           height={120}
-          src={draftData.profile_url ? draftData.profile_url : tutorImagePreview}
+          src={draftData.profile_url ? draftData.profile_url : tutorImagePreview || null}
         />
 
         <div className="absolute right-1 bottom-1 rounded-full w-3.5 h-3.5 bg-quinary-color-VS5"></div>
