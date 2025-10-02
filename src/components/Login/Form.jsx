@@ -70,7 +70,11 @@ const Form = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl p-8 space-y-8 w-full max-w-md mx-auto animate-fade-in"
+      className="bg-white rounded-2xl p-8 space-y-8 w-full animate-fade-in"
+        style={{
+          marginLeft: '0px',
+          marginRight: '0px'
+        }}
     >
       {/* Global Backend Error */}
       {backEndErrors?.field === "general" && (
@@ -213,7 +217,7 @@ const Form = () => {
       </div>
 
       {/* Buttons */}
-      <div className="flex gap-4 mt-8">
+      <div className="flex gap-4 mt-8 -ml-1.5">
         <button
           className="w-[207px] h-12 rounded-2xl p-1.5 font-medium text-[14.4px] bg-black hover:bg-gray-800 text-white transition flex items-center justify-center"
           type="button"

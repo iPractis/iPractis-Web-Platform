@@ -43,7 +43,9 @@ const WrapperForm = () => {
         {/* <SocialMediaButtons /> */}
 
         {/* Login form inputs */}
-        <Form />
+        <div className="-ml-6 -mr-8">
+          <Form />
+        </div>
       </div>
     </>
   );
