@@ -16,7 +16,7 @@ export const Login = () => {
           <AccountPrompt
           descText={'Press on "Register" to create your account.'}
           titleText={`You don't have an account yet?`}
-          headerContainerClassName={"px-4"}
+          headerContainerClassName={"px-0 -ml-[1px]"}
           titleIcon={
             <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
               <UserAddIcon />
