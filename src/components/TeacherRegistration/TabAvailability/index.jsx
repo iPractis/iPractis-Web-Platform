@@ -14,7 +14,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const [dailyWorkTimeLimit, setDailyWorkTimeLimit] = useState([]);
 
   // Transform DB draft data into UI format
-  const mappedSchedule = draft?.availability;
+  const mappedSchedule = draft?.availability || [];
 
   const {
     formState: { errors },
@@ -26,7 +26,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabAvailabilitySchema),
     defaultValues: {
-      dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length,
+      dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length || 0,
       workSchedule: mappedSchedule,
       timeZone: draft?.timeZone || "America/Chicago",
     },
