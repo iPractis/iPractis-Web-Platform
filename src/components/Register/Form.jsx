@@ -11,6 +11,7 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import PasswordLevels from "./PasswordLevels";
+import SocialMediaButtons from "./SocialMediaButtons";
 
 // Utils
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
@@ -152,9 +153,10 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         }
         isClearable
         classNames={{
-          inputWrapper:
+          inputWrapper: `!bg-[#F8F7F5] ${
             (errors?.[name]?.type || backEndErrors?.[name]) &&
-            "form-input-error",
+            "form-input-error"
+          }`,
           ...(toggleable && { input: "!pe-20" }),
         }}
         {...register(name)}
@@ -225,7 +227,8 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
 
       {/* Submit Button */}
       <button
-        className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center mt-8"
+        className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center -ml-1.5 -mr-4"
+        style={{ marginTop: '32px' }}
         disabled={isPending}
         type="submit"
       >
@@ -236,6 +239,11 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
           <UserAddCircleMediumIcon fillColor="fill-tertiary-color-SC5" />
         </InputBGWrapperIcon>
       </button>
+
+      {/* Social Media Buttons */}
+      <div style={{ marginTop: '32px' }}>
+        <SocialMediaButtons />
+      </div>
     </form>
   );
 };

@@ -168,18 +168,31 @@ const Form = () => {
               </InputBGWrapperIcon>
             }
             endContent={
-              <InputBGWrapperIcon
-                className="cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                ) : (
-                  <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
-                )}
-              </InputBGWrapperIcon>
+              <div className="flex items-center gap-1">
+                <InputBGWrapperIcon
+                  className="cursor-pointer px-3 py-1 min-w-fit"
+                  onClick={() => window.location.href = '/password-recovery'}
+                >
+                  <span className="text-xs text-primary-color-P4 whitespace-nowrap">Forgot?</span>
+                </InputBGWrapperIcon>
+                <InputBGWrapperIcon
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                  ) : (
+                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                  )}
+                </InputBGWrapperIcon>
+                <InputBGWrapperIcon
+                  className="cursor-pointer"
+                  onClick={() => setValue("password", "")}
+                >
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              </div>
             }
-            isClearable
             classNames={{
               inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.password?.type || backEndErrors?.field === "password"
@@ -204,16 +217,11 @@ const Form = () => {
           />
         </InputLeftStickStatus>
 
-        <div className="flex justify-between items-start mt-1">
-          {(frontEndErrors?.password || backEndErrors?.field === "password") && (
-            <p className="text-red-600 text-xs">
-              {frontEndErrors?.password?.message || backEndErrors?.message}
-            </p>
-          )}
-          <Link href="/password-recovery" className="text-xs text-primary-color-P4 hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
+        {(frontEndErrors?.password || backEndErrors?.field === "password") && (
+          <p className="text-red-600 text-xs mt-1">
+            {frontEndErrors?.password?.message || backEndErrors?.message}
+          </p>
+        )}
       </div>
 
       {/* Buttons */}
