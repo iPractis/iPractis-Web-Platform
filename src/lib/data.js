@@ -20,7 +20,7 @@ export async function fetchDraft() {
     }
 
     // 🔥 Hit teacher-draft endpoint instead of teachers
-    const res = await fetch(`http://localhost:3000/api/teacher-draft/${userId}`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/teacher-draft/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
