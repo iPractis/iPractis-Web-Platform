@@ -1,6 +1,8 @@
 // app/api/auth/reset-password/route.js
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { supabaseServer } from "../../../../lib/supabaseClient";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
@@ -57,8 +59,34 @@ export async function POST(req) {
       .eq("user_id", user.user_id);
 
     if (updateError) throw updateError;
+    // Create JWT token for auto-login after password reset
+      const token = jwt.sign(
+        { 
+          userId: user.user_id, 
+          email: email,
+          role: "student", // You might want to fetch actual role from profiles table
+          firstName: email.split('@')[0]
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+      );
 
-    return new Response(JSON.stringify({ message: "Password reset successful" }), { status: 200 });
+      // Create response with HTTP-only cookie
+      const response = NextResponse.json({ message: "Password reset successful" }, { 
+        status: 200 
+      });
+
+      // Set HTTP-only cookie for immediate session
+      response.cookies.set('auth-token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60,
+        path: '/'
+      });
+
+      return response;
+
   } catch (err) {
     console.error(err);
     return new Response(JSON.stringify({ message: "Server error" }), { status: 500 });

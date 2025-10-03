@@ -101,7 +101,7 @@ const Form = () => {
       }
 
       // Store JWT in localStorage
-      localStorage.setItem("token", result.token);
+      // localStorage.setItem("token", result.token);
 
       // Redirect to dashboard
 router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
