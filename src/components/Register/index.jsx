@@ -17,9 +17,24 @@ export const Register = () => {
           titleText={`You already have an account?`}
           linkButtonStyles={"!p-1.5 flex justify-center items-center"}
           descText={'Press on "Log in" to access to your account.'}
-          headerContainerClassName={"px-4"}
+          headerContainerClassName={"px-0 -ml-1.5"}
           accountPromptPosition="vertical"
-          titleIcon={<PadLockUserIcon />}
+          titleIcon={
+            <div 
+              style={{
+                width: '48px',
+                height: '48px',
+                borderRadius: '16px',
+                padding: '14px',
+                gap: '10px',
+                opacity: 1,
+                backgroundColor: 'white'
+              }}
+              className="flex items-center justify-center"
+            >
+              <PadLockUserIcon />
+            </div>
+          }
           btnColor={"btn-primary"}
           hrefLink={"/login"}
           textLink={

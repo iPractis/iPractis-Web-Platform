@@ -80,7 +80,11 @@ const onSubmit = async (data) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl p-8 space-y-8 w-full max-w-md mx-auto animate-fade-in"
+      className="bg-white rounded-2xl p-8 space-y-8 w-full animate-fade-in"
+        style={{
+          marginLeft: '0px',
+          marginRight: '0px'
+        }}
     >
       {/* Global Backend Error */}
       {backEndErrors?.field === "general" && (
@@ -128,7 +132,7 @@ const onSubmit = async (data) => {
             }
             isClearable
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.email?.type || backEndErrors?.field === "email"
                   ? "border-red-500 animate-shake"
                   : watch("email")
@@ -174,20 +178,33 @@ const onSubmit = async (data) => {
               </InputBGWrapperIcon>
             }
             endContent={
-              <InputBGWrapperIcon
-                className="cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                ) : (
-                  <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
-                )}
-              </InputBGWrapperIcon>
+              <div className="flex items-center gap-1">
+                <InputBGWrapperIcon
+                  className="cursor-pointer px-3 py-1 min-w-fit"
+                  onClick={() => window.location.href = '/password-recovery'}
+                >
+                  <span className="text-xs text-primary-color-P4 whitespace-nowrap">Forgot?</span>
+                </InputBGWrapperIcon>
+                <InputBGWrapperIcon
+                  className="cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                  ) : (
+                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                  )}
+                </InputBGWrapperIcon>
+                <InputBGWrapperIcon
+                  className="cursor-pointer"
+                  onClick={() => setValue("password", "")}
+                >
+                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                </InputBGWrapperIcon>
+              </div>
             }
-            isClearable
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.password?.type || backEndErrors?.field === "password"
                   ? "border-red-500 animate-shake"
                   : watch("password")
@@ -210,33 +227,30 @@ const onSubmit = async (data) => {
           />
         </InputLeftStickStatus>
 
-        <div className="flex justify-between items-start mt-1">
-          {(frontEndErrors?.password || backEndErrors?.field === "password") && (
-            <p className="text-red-600 text-xs">
-              {frontEndErrors?.password?.message || backEndErrors?.message}
-            </p>
-          )}
-          <Link href="/password-recovery" className="text-xs text-primary-color-P4 hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
+        {(frontEndErrors?.password || backEndErrors?.field === "password") && (
+          <p className="text-red-600 text-xs mt-1">
+            {frontEndErrors?.password?.message || backEndErrors?.message}
+          </p>
+        )}
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col gap-3">
+      <div className="flex gap-4 mt-8 -ml-1.5">
         <button
-          className="w-full rounded-xl py-3 font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition"
+          className="w-[207px] h-12 rounded-2xl p-1.5 font-medium text-[14.4px] bg-black hover:bg-gray-800 text-white transition flex items-center justify-center"
           type="button"
         >
           Presskey
         </button>
 
         <ButtonSubmitForm
-          buttonClassName="w-full rounded-xl py-3 flex items-center justify-center gap-2 font-medium bg-primary-color-P4 text-white hover:opacity-90 transition relative"
+          buttonClassName="w-[207px] h-12 rounded-2xl p-1.5 flex items-center justify-center font-medium text-[14.4px] bg-[#1A47FF] text-white hover:opacity-90 transition relative"
           ref={buttonRef}
         >
           <span>Log in</span>
-          <ChevronRightDoorIcon fillColor={"fill-white group-hover:fill-white"} />
+          <div className="absolute right-1.5 w-9 h-9 bg-white rounded-[10px] p-2 flex items-center justify-center">
+            <ChevronRightDoorIcon fillColor={"fill-[#1A47FF]"} />
+          </div>
         </ButtonSubmitForm>
       </div>
 

@@ -13,24 +13,28 @@ const SectionHeader = ({
   <>
     <div className={wrapperSectionHeaderClassName}>
       <div className={headerContainerClassName}>
-        <h3
-          className={twMerge(
-            "flex gap-2.5 text-primary-color-P1 items-center",
-            titleClassName
-          )}
-        >
+        <div className="flex gap-2.5 items-center">
           {titleIcon}
-          {titleText}
-        </h3>
+          <div className="flex flex-col">
+            <h3
+              className={twMerge(
+                "text-primary-color-P1",
+                titleClassName
+              )}
+            >
+              {titleText}
+            </h3>
 
-        <p
-          className={twMerge(
-            "ST-3 text-primary-color-P4",
-            descriptionClassName
-          )}
-        >
-          {descriptionText}
-        </p>
+            <p
+              className={twMerge(
+                "ST-3 text-primary-color-P4",
+                descriptionClassName
+              )}
+            >
+              {descriptionText}
+            </p>
+          </div>
+        </div>
       </div>
 
       {children}

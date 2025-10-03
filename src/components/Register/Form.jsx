@@ -11,6 +11,7 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import PasswordLevels from "./PasswordLevels";
+import SocialMediaButtons from "./SocialMediaButtons";
 
 // Utils
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
@@ -152,9 +153,10 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         }
         isClearable
         classNames={{
-          inputWrapper:
+          inputWrapper: `!bg-[#F8F7F5] ${
             (errors?.[name]?.type || backEndErrors?.[name]) &&
-            "form-input-error",
+            "form-input-error"
+          }`,
           ...(toggleable && { input: "!pe-20" }),
         }}
         {...register(name)}
@@ -223,12 +225,13 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         {securityLevel && `: ${getSecurityLevelMessage(securityLevel)}`}
       </h3>
 
-      {/* Submit Button */}
-      <button
-        className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center mt-8"
-        disabled={isPending}
-        type="submit"
-      >
+        {/* Submit Button */}
+        <button
+          className="btn btn-secondary MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center"
+          style={{ marginTop: '32px', width: 'calc(100% + 8.5px)', marginLeft: '-7px' }}
+          disabled={isPending}
+          type="submit"
+        >
         <span className="flex-1">
           {isPending ? "Loading..." : "Create an account"}
         </span>
@@ -236,6 +239,11 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
           <UserAddCircleMediumIcon fillColor="fill-tertiary-color-SC5" />
         </InputBGWrapperIcon>
       </button>
+
+      {/* Social Media Buttons */}
+      <div style={{ marginTop: '32px' }}>
+        <SocialMediaButtons />
+      </div>
     </form>
   );
 };
