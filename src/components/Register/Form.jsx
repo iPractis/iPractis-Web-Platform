@@ -225,13 +225,13 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         {securityLevel && `: ${getSecurityLevelMessage(securityLevel)}`}
       </h3>
 
-      {/* Submit Button */}
-      <button
-        className="btn btn-secondary w-full MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center -ml-1.5 -mr-4"
-        style={{ marginTop: '32px' }}
-        disabled={isPending}
-        type="submit"
-      >
+        {/* Submit Button */}
+        <button
+          className="btn btn-secondary MT-SB-1 rounded-2xl p-1.5 flex justify-center items-center"
+          style={{ marginTop: '32px', width: 'calc(100% + 8.5px)', marginLeft: '-7px' }}
+          disabled={isPending}
+          type="submit"
+        >
         <span className="flex-1">
           {isPending ? "Loading..." : "Create an account"}
         </span>

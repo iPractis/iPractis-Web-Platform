@@ -122,7 +122,7 @@ const Form = () => {
             }
             isClearable
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.email?.type || backEndErrors?.field === "email"
                   ? "border-red-500 animate-shake"
                   : watch("email")
@@ -194,7 +194,7 @@ const Form = () => {
               </div>
             }
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.password?.type || backEndErrors?.field === "password"
                   ? "border-red-500 animate-shake"
                   : watch("password")
