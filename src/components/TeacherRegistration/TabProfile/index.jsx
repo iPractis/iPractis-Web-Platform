@@ -10,9 +10,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // React imports
-import { useRef } from "react";
+import { useState } from "react";
+import { useAuth } from "@/src/hooks/useAuth";
 
-const TabProfile = ({ setActiveTab, activeTab, draft }) => {
+const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const {
     formState: { errors },
     handleSubmit,
@@ -24,50 +25,71 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabProfileSchema),
     defaultValues: {
-      firstName: draft?.firstName,
-      middleName: draft?.middleName,
-      lastName: draft?.lastName,
-      profile_url: draft?.profile_url,
-      introduction: draft?.introduction,
-      profile_url: draft?.profile_url,
-      languages: draft?.languages,
+      firstName: draft?.firstName || "",
+      middleName: draft?.middleName || "",
+      lastName: draft?.lastName || "",
+      profile_url: draft?.profile_url || "",
+      introduction: draft?.introduction || "",
+      languages: draft?.languages || [],
       nationality: draft?.nationality || "United Kingdom",
       country: draft?.country || "United Kingdom",
-      birthDate: draft?.birthDate,
-      gender: draft?.gender,
+      birthDate: draft?.birthDate || "",
+      gender: draft?.gender || "",
     },
   });
 
-  const buttonRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
-
-    const actualDraftInfo = draft;
-
     try {
-      // TAB PROFILE
-      if (activeTab === 0) {
-        actualDraftInfo.introduction = data?.introduction;
-        actualDraftInfo.nationality = data?.nationality;
-        actualDraftInfo.middleName = data?.middleName;
-        actualDraftInfo.languages = data?.languages;
-        actualDraftInfo.birthDate = data?.birthDate;
-        actualDraftInfo.firstName = data?.firstName;
-        actualDraftInfo.lastName = data?.lastName;
-        actualDraftInfo.country = data?.country;
-        actualDraftInfo.gender = data?.gender;
-        actualDraftInfo.profile_url = data?.profile_url;
-        console.log(actualDraftInfo, "ACTUAL DRAFT");
-        setActiveTab((prev) => prev + 1);
+      setLoading(true);
+
+      // Payload = only current form values + userId
+      const payload = {
+        userId: user?.userId,
+        firstName: data.firstName,
+        middleName: data.middleName,
+        lastName: data.lastName,
+        profile_url: data.profile_url,
+        introduction: data.introduction,
+        languages: data.languages,
+        nationality: data.nationality,
+        country: data.country,
+        birthDate: data.birthDate,
+        gender: data.gender,
+      };
+
+      console.log("PROFILE PAYLOAD TO DRAFT API:", payload);
+
+      // 🔥 save/merge into teacher_draft
+      const res = await fetch("/api/teacher-draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to save draft");
       }
+
+      const { draft: updatedDraft } = await res.json();
+
+      // Keep draft state in parent up-to-date
+      if (setDraft) setDraft(updatedDraft);
+
+      // Move to next tab
+      setActiveTab((prev) => prev + 1);
     } catch (err) {
-      console.log(err);
-      setError(err?.response?.data?.message);
+      console.error("Save error:", err);
+      setError("general", { message: err.message });
     } finally {
-      buttonRef.current.notIsLoading();
+      setLoading(false);
     }
   };
+
+  console.log("DRAFT IN PROFILE TAB:", draft);
 
   return (
     <form
@@ -75,7 +97,12 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Profile Picture */}
-      <ProfilePicture errors={errors} control={control} setValue={setValue}/>
+      <ProfilePicture
+        errors={errors}
+        control={control}
+        setValue={setValue}
+        draftUrl={draft?.profile_url}
+      />
 
       {/* Personal Informations */}
       <PersonalInfo control={control} errors={errors} watch={watch} />
@@ -86,11 +113,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       </AboutYourself>
 
       {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      <TabsButtonsBottomNav setActiveTab={setActiveTab} activeTab={activeTab} />
     </form>
   );
 };

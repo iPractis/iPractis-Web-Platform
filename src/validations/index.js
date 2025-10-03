@@ -14,10 +14,9 @@ const fileMetaSchema = z.object({
   uploaded_at: z.string(),
 });
 
-const image_url = z.string().url().optional();
 export const tabProfileSchema = z.object({
    uploadProfileImage: z.union([
-        z.instanceof(File),   // allow raw File
+        z.instanceof(File).optional(),   // allow raw File
         
           ]),
           profile_url: z.string().url().optional(),

@@ -6,12 +6,14 @@ import Education from "./Education";
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 
 // React imports
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { useAuth } from "@/src/hooks/useAuth";
 
-const TabBackground = ({ setActiveTab, activeTab, draft }) => {
+const TabBackground = ({ setActiveTab, activeTab, draft, setDraft }) => {
+  const [loading, setLoading] = useState(false);
+
   const {
     formState: { errors },
     handleSubmit,
@@ -21,33 +23,51 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabBackgroundSchema),
     defaultValues: {
-      careerExperience: draft?.careerExperience,
-      education: draft?.education,
+      careerExperience: draft?.careerExperience || [],
+      education: draft?.education || [],
     },
   });
+
   const buttonRef = useRef(null);
+  const { user } = useAuth();
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
-
-    const actualDraftInfo = draft;
-
     try {
-      // TAB BACKGROUND
-      if (activeTab === 2) {
-        actualDraftInfo.careerExperience = data?.careerExperience;
-        actualDraftInfo.education = data?.education;
+      setLoading(true);
+      buttonRef.current?.loading();
 
-        console.log(actualDraftInfo, "ACTUAL DRAFT");
+      const payload = {
+        userId: user?.userId,
+        careerExperience: data.careerExperience,
+        education: data.education,
+      };
 
-        setActiveTab((prev) => prev + 1);
-        console.log(response, "BACKGROUND");
+      console.log("BACKGROUND PAYLOAD TO DRAFT API:", payload);
+
+      // 🔥 Save/merge into teacher_drafts
+      const res = await fetch("/api/teacher-draft", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to save background tab");
       }
+
+      const { draft: updatedDraft } = await res.json();
+
+      // ✅ update parent draft state
+      if (setDraft) setDraft(updatedDraft);
+
+      // ✅ move to next tab
+      setActiveTab((prev) => prev + 1);
     } catch (err) {
-      console.log(err);
-      setError(err?.response?.data?.message);
+      setError("general", { message: err.message });
     } finally {
-      buttonRef.current.notIsLoading();
+      setLoading(false);
+      buttonRef.current?.notIsLoading();
     }
   };
 
