@@ -30,26 +30,24 @@ const BaseCountryInput = ({
       const data = await fetchCountries();
       setCountries(data);
     };
-
     getCountries();
   }, []);
 
   const handleInputChange = (value) => {
     const capitalizedValue = getWordsCapitalized(value);
-
     field.onChange(capitalizedValue);
 
     if (capitalizedValue) {
       const filteredSuggestions = countries.filter((country) =>
         country.name.toLowerCase().startsWith(capitalizedValue.toLowerCase())
       );
-
       setSuggestions(filteredSuggestions);
     } else {
       setSuggestions([]);
     }
   };
 
+  // ✅ Handle autocomplete on Tab/Enter/ArrowRight
   const handleKeyDown = (e) => {
     if (
       (e.key === "Tab" || e.key === "ArrowRight" || e.key === "Enter") &&
@@ -57,25 +55,38 @@ const BaseCountryInput = ({
     ) {
       e.preventDefault();
       const completedCountry = suggestions[0].name;
-      field.onChange(completedCountry);
 
+      // set full country
+      field.onChange(completedCountry);
+      setSuggestions([]);
+
+      // move to next field
       const nextInput = document.querySelector(
         `input[name="${nextInputName}"]`
       );
-      if (nextInput) {
-        nextInput.focus();
-      }
+      if (nextInput) nextInput.focus();
+    }
+  };
+
+  // ✅ On blur: if invalid, clear input
+  const handleBlur = () => {
+    const value = field?.value?.trim();
+    if (!value) return;
+
+    const exists = countries.some(
+      (country) => country.name.toLowerCase() === value.toLowerCase()
+    );
+
+    if (!exists) {
+      field.onChange(""); // clear invalid
+      setSuggestions([]);
     }
   };
 
   return (
-    <div>
+    <div className="relative">
       <InputLeftStickStatus
-        inputBarStatusClassName={getInputStatusBorder(
-          errors,
-          field?.value,
-          name
-        )}
+        inputBarStatusClassName={getInputStatusBorder(errors, field?.value, name)}
       >
         <CustomNextUiInput
           type="text"
@@ -85,7 +96,7 @@ const BaseCountryInput = ({
             inputWrapper: fieldError?.message && "form-input-error",
           }}
           value={field?.value}
-          onBlur={field?.onBlur}
+          onBlur={handleBlur}
           onChange={(e) => handleInputChange(e.target.value)}
           onKeyDown={handleKeyDown}
           name={name}
@@ -105,7 +116,8 @@ const BaseCountryInput = ({
           }
         />
 
-        {suggestions?.length > 0 && (
+        {/* Autocomplete ghost text */}
+        {suggestions?.length > 0 && field?.value && (
           <span
             className={`absolute right-1/2 top-0 h-full flex items-center pointer-events-none text-primary-color-P7`}
           >
