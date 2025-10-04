@@ -18,7 +18,7 @@ const AccountPrompt = ({
         <div className="flex-1">
           <SectionHeader
             headerContainerClassName={headerContainerClassName}
-            descriptionClassName="mt-1"
+            descriptionClassName="mt-0.5"
             descriptionText={descText}
             titleClassName="MT-SB-1"
             titleIcon={titleIcon}

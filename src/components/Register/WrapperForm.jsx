@@ -31,6 +31,7 @@ const WrapperForm = () => {
           "bg-[#F8F7F5] rounded-[32px] p-8 -ml-1.5"
         }
         titleClassName="MT-SB-1"
+        descriptionClassName="mt-0.5"
       />
 
       {/* Sign Up Section */}
@@ -55,7 +56,7 @@ const WrapperForm = () => {
               <UserAddCircleIcon />
             </div>
           }
-          descriptionClassName="mt-1"
+          descriptionClassName="mt-0.5"
           titleClassName="MT-SB-1"
         />
 

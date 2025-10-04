@@ -21,6 +21,7 @@ const WrapperForm = () => {
           </div>
         }
         titleClassName="MT-SB-1"
+        descriptionClassName="mt-0.5"
         titleText="Welcome back"
       />
 
