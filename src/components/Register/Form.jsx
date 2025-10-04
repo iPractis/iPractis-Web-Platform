@@ -136,7 +136,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
           <>
             {toggleable && (
               <InputBGWrapperIcon
-                className="absolute right-10 cursor-pointer mr-1"
+                className="absolute right-10 cursor-pointer mr-[6px]"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (

@@ -180,13 +180,13 @@ const onSubmit = async (data) => {
             endContent={
               <div className="flex items-center gap-1">
                 <InputBGWrapperIcon
-                  className="cursor-pointer px-3 py-1 min-w-fit"
+                  className="cursor-pointer px-3 py-1 mr-[2.5px] min-w-fit"
                   onClick={() => window.location.href = '/password-recovery'}
                 >
                   <span className="text-xs text-primary-color-P4 whitespace-nowrap">Forgot?</span>
                 </InputBGWrapperIcon>
                 <InputBGWrapperIcon
-                  className="cursor-pointer"
+                  className="cursor-pointer mr-[2px]"
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
