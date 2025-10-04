@@ -131,12 +131,12 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         type={toggleable && showPassword ? "text" : type}
         placeholder={placeholder}
         name={name}
-        startContent={<InputBGWrapperIcon>{startIcon}</InputBGWrapperIcon>}
+        startContent={<InputBGWrapperIcon className="ml-[1px]">{startIcon}</InputBGWrapperIcon>}
         endContent={
           <>
             {toggleable && (
               <InputBGWrapperIcon
-                className="absolute right-10 cursor-pointer"
+                className="absolute right-10 cursor-pointer mr-1"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
@@ -146,7 +146,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
                 )}
               </InputBGWrapperIcon>
             )}
-            <InputBGWrapperIcon className="cursor-pointer">
+            <InputBGWrapperIcon className="cursor-pointer mr-[3px]">
               <CloseIcon strokeColor="stroke-primary-color-P4" />
             </InputBGWrapperIcon>
           </>

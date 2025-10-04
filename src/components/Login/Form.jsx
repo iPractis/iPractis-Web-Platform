@@ -116,14 +116,14 @@ const onSubmit = async (data) => {
             name="email"
             placeholder="Email address"
             startContent={
-              <InputBGWrapperIcon>
+              <InputBGWrapperIcon className="ml-[1px]">
                 <UserBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
               watch("email") && (
                 <InputBGWrapperIcon
-                  className="cursor-pointer"
+                  className="cursor-pointer mr-[3px]"
                   onClick={() => setValue("email", "")}
                 >
                   <CloseIcon strokeColor={"stroke-primary-color-P4"} />
@@ -173,7 +173,7 @@ const onSubmit = async (data) => {
             name="password"
             placeholder="Password"
             startContent={
-              <InputBGWrapperIcon>
+              <InputBGWrapperIcon className="ml-[1px]">
                 <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
@@ -196,7 +196,7 @@ const onSubmit = async (data) => {
                   )}
                 </InputBGWrapperIcon>
                 <InputBGWrapperIcon
-                  className="cursor-pointer"
+                  className="cursor-pointer mr-[1px]"
                   onClick={() => setValue("password", "")}
                 >
                   <CloseIcon strokeColor={"stroke-primary-color-P4"} />
