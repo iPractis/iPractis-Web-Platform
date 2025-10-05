@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
-import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
+import { DynamicInputErrorMessage, DynamicInputErrorMessageWithZod } from "../../lib/utils/getZodValidations";
 import PasswordLevels from "./PasswordLevels";
 import SocialMediaButtons from "./SocialMediaButtons";
 
@@ -36,21 +36,28 @@ import { z } from "zod";
 const schema = z.object({
   firstName: z
     .string()
-    .min(2, "Invalid First Name --- First name can't be empty.")
+    .nonempty("Invalid First Name --- First name can't be empty.")
+    .min(2, "Invalid First Name --- You need at least 2 characters.")
     .max(254)
-    .regex(/^[A-Za-z\s-]+$/),
+    .regex(/^[A-Za-z\s-]+$/u, {
+      message:
+        "Invalid First Name --- First name shouldn't contain accents, special characters, or numbers.",
+    }),
   lastName: z
     .string()
-    .min(2, "Invalid Last Name --- Last name can't be empty.")
+    .nonempty("Invalid Last Name --- Last name can't be empty.")
+    .min(2, "Invalid Last Name --- You need at least 2 characters.")
     .max(254)
-    .regex(/^[A-Za-z\s-]+$/),
+    .regex(/^[A-Za-z\s-]+$/u, {
+      message:
+        "Invalid Last Name --- Last name shouldn't contain accents, special characters, or numbers.",
+    }),
   email: z
     .string()
-    .email("Invalid Email --- Check your spelling email")
-    .regex(/^[a-zA-Z0-9._%+-]+@gmail\.com$/),
+    .email("Invalid Email --- Enter a valid email address."),
   password: z
     .string()
-    .min(8, "Invalid Password --- Password can't be empty.")
+    .min(8, "Invalid Password --- Password can't less than 8 characters.")
     .max(30),
 });
 
@@ -179,14 +186,12 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
           startIcon: <ThreeUsersIcon fillColor="fill-primary-color-P4" />,
         })}
       </div>
-      <DynamicInputErrorMessage
-        errorMessages={errorFormMessages}
+      <DynamicInputErrorMessageWithZod
         frontEndErrors={errors}
         backEndErrors={backEndErrors}
         fieldName="firstName"
       />
-      <DynamicInputErrorMessage
-        errorMessages={errorFormMessages}
+      <DynamicInputErrorMessageWithZod
         frontEndErrors={errors}
         backEndErrors={backEndErrors}
         fieldName="lastName"
@@ -198,8 +203,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         placeholder: "Enter your email address",
         startIcon: <MailIcon fillColor="fill-primary-color-P4" />,
       })}
-      <DynamicInputErrorMessage
-        errorMessages={errorFormMessages}
+      <DynamicInputErrorMessageWithZod
         frontEndErrors={errors}
         backEndErrors={backEndErrors}
         fieldName="email"
@@ -213,8 +217,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         type: "password",
         toggleable: true,
       })}
-      <DynamicInputErrorMessage
-        errorMessages={errorFormMessages}
+      <DynamicInputErrorMessageWithZod
         frontEndErrors={errors}
         backEndErrors={backEndErrors}
         fieldName="password"

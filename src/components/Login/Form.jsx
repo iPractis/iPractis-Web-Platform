@@ -1,9 +1,11 @@
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import { useAuth } from "@/src/hooks/useAuth";
+import { errorFormMessages } from "@/src/data/dataLogin";
 // React imports
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -88,17 +90,23 @@ const onSubmit = async (data) => {
     >
       {/* Global Backend Error */}
       {backEndErrors?.field === "general" && (
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative">
-          <strong className="font-semibold">{backEndErrors.title}:</strong>{" "}
-          <span>{backEndErrors.message}</span>
-          <button
-            className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-            onClick={() => setBackEndErrors("")}
-            type="button"
-          >
-            ×
-          </button>
-        </div>
+        <DynamicInputErrorMessage
+          errorMessages={{
+            general: {
+              server: {
+                typeError: backEndErrors.title,
+                descError: backEndErrors.message,
+              },
+            },
+          }}
+          frontEndErrors={{}}
+          backEndErrors={{
+            field: "general",
+            title: backEndErrors.title,
+            message: backEndErrors.message,
+          }}
+          fieldName="general"
+        />
       )}
 
       {/* Email Input */}
@@ -151,11 +159,12 @@ const onSubmit = async (data) => {
           />
         </InputLeftStickStatus>
 
-        {(frontEndErrors?.email || backEndErrors?.field === "email") && (
-          <p className="text-red-600 text-xs mt-1">
-            {frontEndErrors?.email?.message || backEndErrors?.message}
-          </p>
-        )}
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="email"
+        />
       </div>
 
       {/* Password Input */}
@@ -227,11 +236,12 @@ const onSubmit = async (data) => {
           />
         </InputLeftStickStatus>
 
-        {(frontEndErrors?.password || backEndErrors?.field === "password") && (
-          <p className="text-red-600 text-xs mt-1">
-            {frontEndErrors?.password?.message || backEndErrors?.message}
-          </p>
-        )}
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="password"
+        />
       </div>
 
       {/* Buttons */}
