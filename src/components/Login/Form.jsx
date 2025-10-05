@@ -134,7 +134,7 @@ const onSubmit = async (data) => {
             classNames={{
               inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.email?.type || backEndErrors?.field === "email"
-                  ? "border-red-500 animate-shake"
+                  ? "form-input-error border-red-500 animate-shake"
                   : watch("email")
                   ? "border-green-500 focus:ring-green-400"
                   : "focus:ring-primary-color-P4"
@@ -206,7 +206,7 @@ const onSubmit = async (data) => {
             classNames={{
               inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.password?.type || backEndErrors?.field === "password"
-                  ? "border-red-500 animate-shake"
+                  ? "form-input-error border-red-500 animate-shake"
                   : watch("password")
                   ? "border-green-500 focus:ring-green-400"
                   : "focus:ring-primary-color-P4"
