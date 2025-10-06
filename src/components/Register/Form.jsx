@@ -74,7 +74,7 @@ const Form = () => {
     watch,
     setError,
   } = useForm({
-    mode: "onBlur",
+    mode: "onSubmit",
     resolver: zodResolver(schema),
   });
 

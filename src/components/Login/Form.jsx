@@ -30,7 +30,7 @@ const Form = () => {
     formState: { errors: frontEndErrors },
     watch,
     setValue,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: "onSubmit" });
   const [showPassword, setShowPassword] = useState(false);
   const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
@@ -194,22 +194,31 @@ const onSubmit = async (data) => {
                 >
                   <span className="text-xs text-primary-color-P4 whitespace-nowrap">Forgot?</span>
                 </InputBGWrapperIcon>
-                <InputBGWrapperIcon
-                  className="cursor-pointer mr-[2px]"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? (
-                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                  ) : (
-                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
-                  )}
-                </InputBGWrapperIcon>
-                <InputBGWrapperIcon
-                  className="cursor-pointer mr-[1px]"
-                  onClick={() => setValue("password", "")}
-                >
-                  <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
+                {watch("password") && (
+                  <InputBGWrapperIcon
+                    className="cursor-pointer mr-[2px]"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
+                )}
+                {watch("password") && (
+                  <InputBGWrapperIcon
+                    className="cursor-pointer mr-[1px]"
+                    onClick={() =>
+                      setValue("password", "", {
+                        shouldDirty: true,
+                        shouldValidate: false,
+                      })
+                    }
+                  >
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                )}
               </div>
             }
             classNames={{
@@ -233,6 +242,13 @@ const onSubmit = async (data) => {
               },
               setValueAs: (value) => value.trim(),
             })}
+            value={watch("password") || ""}
+            onChange={(e) =>
+              setValue("password", e.target.value, {
+                shouldDirty: true,
+                shouldValidate: false,
+              })
+            }
           />
         </InputLeftStickStatus>
 
