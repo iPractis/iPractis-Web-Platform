@@ -14,7 +14,7 @@ import { useRef, useState } from "react";
 
 // Icons
 import {
-  ChevronDownBigIcon,
+  AddBoxIcon,
   QuestionMark,
   UserSpeakingIcon,
 } from "../../Icons";
@@ -57,7 +57,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8 items-start gap-[50px] mt-[90px]">
+    <div className="mx-[285px] mt-[32px]">
       {/* Select Language */}
       <div>
         <InputLeftStickStatus
@@ -70,18 +70,6 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           <div className="flex items-end gap-2">
             <Select
               name="languages"
-              label={
-                <div className="ps-[5px] mb-2">
-                  <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Select the languages your masters{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
-                  </span>
-
-                  <span className="text-primary-color-P4 ST-3">
-                    Select only the languages you can use to teach.
-                  </span>
-                </div>
-              }
               ref={masteredLanguageRef}
               selectedKeys={language?.value}
               onChange={handleAddMasteredLanguage}
@@ -102,19 +90,26 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                 </InputBGWrapperIcon>
               }
               endContent={
-                <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
+                    <path
+                      d="M8 2V14M2 8H14"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
                 </InputBGWrapperIcon>
               }
               classNames={{
                 trigger: [
-                  "select-wrapper-ipractis",
+                  "!bg-blue-500 rounded-2xl p-1.5 h-auto border-0 shadow-none",
                   (languagesError?.message || languagesError !== undefined) &&
                     "form-input-error",
                 ],
-                innerWrapper: ["select-ipractis", "w-full"],
+                innerWrapper: ["text-white placeholder:text-white", "w-full"],
                 value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                  "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
                 ],
                 listbox: ["text-primary-color-P4"],
                 base: "!mt-0",
@@ -138,7 +133,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
       </div>
 
       {/* Select Level Language */}
-      <div>
+      <div className="mt-4">
         {languages.map((field, index) => (
           <AboutYourselfLevelLanguage
             handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}

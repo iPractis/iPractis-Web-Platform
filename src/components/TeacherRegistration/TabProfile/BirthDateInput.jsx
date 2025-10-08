@@ -165,7 +165,7 @@ const BirthDateInput = ({ errors, control }) => {
           className={`flex justify-between gap-1.5 rounded-2xl p-1.5 ST-3 ${
             birthDateError?.message
               ? "form-input-error"
-              : "bg-primary-color-P11"
+              : "bg-[#F8F7F5]"
           } group-hover:bg-secondary-color-S9`}
         >
           <div>
