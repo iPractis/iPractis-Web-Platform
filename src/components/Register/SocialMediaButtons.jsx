@@ -8,9 +8,9 @@ import apple from "@/public/icons/apple.png";
 
 const SocialMediaButtons = () => {
   return (
-    <div className="flex gap-3 mt-8">
+    <div className="flex gap-3 mt-8 -ml-1.5">
       <button
-        className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
+        className="btn w-full py-3 px-4 bg-[#f8f7f5] hover:bg-secondary-color-S9 rounded-2xl"
         type="button"
       >
         <Image
@@ -21,7 +21,7 @@ const SocialMediaButtons = () => {
       </button>
 
       <button
-        className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
+        className="btn w-full py-3 px-4 bg-[#F8F7F5] hover:bg-secondary-color-S9 rounded-2xl"
         type="button"
       >
         <Image
@@ -32,7 +32,7 @@ const SocialMediaButtons = () => {
       </button>
 
       <button
-        className="btn w-full py-3 px-4 bg-primary-color-P11 hover:bg-secondary-color-S9 rounded-2xl"
+        className="btn w-full py-3 px-4 bg-[#F8F7F5] hover:bg-secondary-color-S9 rounded-2xl"
         type="button"
       >
         <Image
