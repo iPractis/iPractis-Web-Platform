@@ -82,7 +82,7 @@ const onSubmit = async (data) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl p-8 space-y-8 w-full animate-fade-in"
+      className="bg-white rounded-2xl p-8 w-full animate-fade-in"
         style={{
           marginLeft: '0px',
           marginRight: '0px'
@@ -106,11 +106,12 @@ const onSubmit = async (data) => {
             message: backEndErrors.message,
           }}
           fieldName="general"
+          className="mb-8"
         />
       )}
 
       {/* Email Input */}
-      <div>
+      <div className="mb-3">
         <InputLeftStickStatus
           inputBarStatusClassName={getLeftStickInputColorStatus(
             frontEndErrors,
@@ -168,7 +169,7 @@ const onSubmit = async (data) => {
       </div>
 
       {/* Password Input */}
-      <div>
+      <div className="mb-8">
         <InputLeftStickStatus
           inputBarStatusClassName={getLeftStickInputColorStatus(
             frontEndErrors,
@@ -261,7 +262,7 @@ const onSubmit = async (data) => {
       </div>
 
       {/* Buttons */}
-      <div className="flex gap-4 mt-8 -ml-1.5">
+      <div className="flex gap-4 -ml-1.5 mb-8">
         <button
           className="w-[207px] h-12 rounded-2xl p-1.5 font-medium text-[14.4px] bg-black hover:bg-gray-800 text-white transition flex items-center justify-center"
           type="button"
