@@ -15,16 +15,20 @@ import {
   Clock5Icon,
   FileBigIcon,
 } from "../../Icons";
+import { useAuth } from "@/src/hooks/useAuth";
 
 const AccountObservationCenter = () => {
+      const { authenticated, user } = useAuth();
+    
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/teachers/logs?teacher_id=c8014721-4cb6-448e-ada7-169080558939");
+        const res = await fetch(`/api/teachers/logs?teacher_id=${user?.teacherId}`);
         const data = await res.json();
+       console.log("Fetched logs:", data);
         setLogs(data.logs || []);
       } catch (err) {
         console.error("Error fetching logs:", err);
