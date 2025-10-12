@@ -45,12 +45,15 @@ export async function POST(req) {
       );
     }
 
+    // Get role from profile or default to "student"
+    const userRole = profile?.role || "student";
+
     // Create JWT
     const token = jwt.sign(
       { 
         userId: user.user_id, 
         email: user.email, 
-        role: profile.role || "student",
+        role: userRole,
         firstName: user.first_name || user.email.split('@')[0] // Added firstName
       },
       process.env.JWT_SECRET,
@@ -58,7 +61,7 @@ export async function POST(req) {
     );
 
     const response = NextResponse.json(
-      { success: true, user: { userId: user.user_id, email: user.email, role: profile.role || "student" } },
+      { success: true, user: { userId: user.user_id, email: user.email, role: userRole } },
       { status: 200 }
     );
     

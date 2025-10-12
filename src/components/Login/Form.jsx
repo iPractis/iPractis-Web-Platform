@@ -1,9 +1,11 @@
 import { getLeftStickInputColorStatus } from "@/src/lib/utils/getLeftStickInputColorStatus";
+import { DynamicInputErrorMessage } from "@/src/lib/utils/getZodValidations";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
 import { useAuth } from "@/src/hooks/useAuth";
+import { errorFormMessages } from "@/src/data/dataLogin";
 // React imports
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -28,7 +30,7 @@ const Form = () => {
     formState: { errors: frontEndErrors },
     watch,
     setValue,
-  } = useForm({ mode: "onBlur" });
+  } = useForm({ mode: "onSubmit" });
   const [showPassword, setShowPassword] = useState(false);
   const [backEndErrors, setBackEndErrors] = useState("");
   const buttonRef = useRef(null);
@@ -80,25 +82,36 @@ const onSubmit = async (data) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white rounded-2xl p-8 space-y-8 w-full max-w-md mx-auto animate-fade-in"
+      className="bg-white rounded-2xl p-8 w-full animate-fade-in"
+        style={{
+          marginLeft: '0px',
+          marginRight: '0px'
+        }}
     >
       {/* Global Backend Error */}
       {backEndErrors?.field === "general" && (
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative">
-          <strong className="font-semibold">{backEndErrors.title}:</strong>{" "}
-          <span>{backEndErrors.message}</span>
-          <button
-            className="absolute top-2 right-2 text-red-600 hover:text-red-800"
-            onClick={() => setBackEndErrors("")}
-            type="button"
-          >
-            ×
-          </button>
-        </div>
+        <DynamicInputErrorMessage
+          errorMessages={{
+            general: {
+              server: {
+                typeError: backEndErrors.title,
+                descError: backEndErrors.message,
+              },
+            },
+          }}
+          frontEndErrors={{}}
+          backEndErrors={{
+            field: "general",
+            title: backEndErrors.title,
+            message: backEndErrors.message,
+          }}
+          fieldName="general"
+          className="mb-8"
+        />
       )}
 
       {/* Email Input */}
-      <div>
+      <div className="mb-3">
         <InputLeftStickStatus
           inputBarStatusClassName={getLeftStickInputColorStatus(
             frontEndErrors,
@@ -112,14 +125,14 @@ const onSubmit = async (data) => {
             name="email"
             placeholder="Email address"
             startContent={
-              <InputBGWrapperIcon>
+              <InputBGWrapperIcon className="ml-[1px]">
                 <UserBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
               watch("email") && (
                 <InputBGWrapperIcon
-                  className="cursor-pointer"
+                  className="cursor-pointer mr-[3px]"
                   onClick={() => setValue("email", "")}
                 >
                   <CloseIcon strokeColor={"stroke-primary-color-P4"} />
@@ -128,9 +141,9 @@ const onSubmit = async (data) => {
             }
             isClearable
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.email?.type || backEndErrors?.field === "email"
-                  ? "border-red-500 animate-shake"
+                  ? "form-input-error border-red-500 animate-shake"
                   : watch("email")
                   ? "border-green-500 focus:ring-green-400"
                   : "focus:ring-primary-color-P4"
@@ -147,15 +160,16 @@ const onSubmit = async (data) => {
           />
         </InputLeftStickStatus>
 
-        {(frontEndErrors?.email || backEndErrors?.field === "email") && (
-          <p className="text-red-600 text-xs mt-1">
-            {frontEndErrors?.email?.message || backEndErrors?.message}
-          </p>
-        )}
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="email"
+        />
       </div>
 
       {/* Password Input */}
-      <div>
+      <div className="mb-8">
         <InputLeftStickStatus
           inputBarStatusClassName={getLeftStickInputColorStatus(
             frontEndErrors,
@@ -169,27 +183,49 @@ const onSubmit = async (data) => {
             name="password"
             placeholder="Password"
             startContent={
-              <InputBGWrapperIcon>
+              <InputBGWrapperIcon className="ml-[1px]">
                 <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
-              <InputBGWrapperIcon
-                className="cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
-                ) : (
-                  <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+              <div className="flex items-center gap-1">
+                <InputBGWrapperIcon
+                  className="cursor-pointer px-3 py-1 mr-[2.5px] min-w-fit"
+                  onClick={() => window.location.href = '/password-recovery'}
+                >
+                  <span className="text-xs text-primary-color-P4 whitespace-nowrap">Forgot?</span>
+                </InputBGWrapperIcon>
+                {watch("password") && (
+                  <InputBGWrapperIcon
+                    className="cursor-pointer mr-[2px]"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? (
+                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    ) : (
+                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    )}
+                  </InputBGWrapperIcon>
                 )}
-              </InputBGWrapperIcon>
+                {watch("password") && (
+                  <InputBGWrapperIcon
+                    className="cursor-pointer mr-[1px]"
+                    onClick={() =>
+                      setValue("password", "", {
+                        shouldDirty: true,
+                        shouldValidate: false,
+                      })
+                    }
+                  >
+                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                )}
+              </div>
             }
-            isClearable
             classNames={{
-              inputWrapper: `rounded-xl border px-3 py-2 transition-all ${
+              inputWrapper: `!bg-[#F8F7F5] rounded-xl border px-3 py-2 transition-all ${
                 frontEndErrors?.password?.type || backEndErrors?.field === "password"
-                  ? "border-red-500 animate-shake"
+                  ? "form-input-error border-red-500 animate-shake"
                   : watch("password")
                   ? "border-green-500 focus:ring-green-400"
                   : "focus:ring-primary-color-P4"
@@ -207,36 +243,41 @@ const onSubmit = async (data) => {
               },
               setValueAs: (value) => value.trim(),
             })}
+            value={watch("password") || ""}
+            onChange={(e) =>
+              setValue("password", e.target.value, {
+                shouldDirty: true,
+                shouldValidate: false,
+              })
+            }
           />
         </InputLeftStickStatus>
 
-        <div className="flex justify-between items-start mt-1">
-          {(frontEndErrors?.password || backEndErrors?.field === "password") && (
-            <p className="text-red-600 text-xs">
-              {frontEndErrors?.password?.message || backEndErrors?.message}
-            </p>
-          )}
-          <Link href="/password-recovery" className="text-xs text-primary-color-P4 hover:underline">
-            Forgot Password?
-          </Link>
-        </div>
+        <DynamicInputErrorMessage
+          errorMessages={errorFormMessages}
+          frontEndErrors={frontEndErrors}
+          backEndErrors={backEndErrors}
+          fieldName="password"
+        />
       </div>
 
       {/* Buttons */}
-      <div className="flex flex-col gap-3">
+      <div className="flex gap-4 -ml-1.5 mb-8">
         <button
-          className="w-full rounded-xl py-3 font-medium bg-gray-100 hover:bg-gray-200 text-gray-700 transition"
+          className="w-[207px] h-12 rounded-2xl p-1.5 font-medium text-[14.4px] bg-black hover:bg-gray-800 text-white transition flex items-center justify-center"
           type="button"
         >
           Presskey
         </button>
 
         <ButtonSubmitForm
-          buttonClassName="w-full rounded-xl py-3 flex items-center justify-center gap-2 font-medium bg-primary-color-P4 text-white hover:opacity-90 transition relative"
+          buttonClassName="w-[207px] h-12 rounded-2xl p-1.5 flex items-center justify-center font-medium text-[14.4px] bg-[#1A47FF] text-white hover:opacity-90 transition relative"
           ref={buttonRef}
         >
           <span>Log in</span>
-          <ChevronRightDoorIcon fillColor={"fill-white group-hover:fill-white"} />
+          <div className="absolute right-1.5 w-9 h-9 bg-white rounded-[10px] p-2 flex items-center justify-center">
+            <ChevronRightDoorIcon fillColor={"fill-[#1A47FF]"} />
+          </div>
         </ButtonSubmitForm>
       </div>
 
