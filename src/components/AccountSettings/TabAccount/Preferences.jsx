@@ -89,7 +89,6 @@ const Preferences = ({ errors, control, watch }) => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[50px] lg:px-8">
-        {/* language */}
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
@@ -122,10 +121,10 @@ const Preferences = ({ errors, control, watch }) => {
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([language.value])}
-              onSelectionChange={(keys) => {
-                const key = Array.from(keys)[0];
-                language.onChange(key);
-              }}
+               onSelectionChange={(keys) => {
+    const selectedKey = Array.from(keys).at(0);
+    language.onChange(selectedKey);
+  }}
               onOpenChange={(open) => {
                 setIsOpenLanguage(open);
 

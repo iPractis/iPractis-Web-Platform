@@ -16,14 +16,15 @@ dayjs.extend(relativeTime);
 const ActivityLog = () => {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [downloading, setDownloading] = useState(false);
 
-  // 🔹 Fetch logs from API
+  // 🔹 Fetch logs (limited for display)
   useEffect(() => {
     async function fetchLogs() {
       try {
         const res = await fetch("/api/logs");
         const data = await res.json();
-        setLogs(data.logs || []);
+        setLogs(data.logs.slice(0, 5) || []);
       } catch (err) {
         console.error("Error fetching activity logs:", err);
       } finally {
@@ -34,14 +35,50 @@ const ActivityLog = () => {
     fetchLogs();
   }, []);
 
-  // 🔹 Utility to format date as “x hours ago”, “Yesterday”, or full date
-  const formatDate = (timestamp) => {
-    const now = dayjs();
-    const date = dayjs(timestamp);
+  // 🔹 Download all logs as CSV
+  const handleDownloadAllLogs = async () => {
+    try {
+      setDownloading(true);
+      const res = await fetch("/api/logs");
+      const data = await res.json();
 
-    if (now.diff(date, "hour") < 24) return date.fromNow();
-    if (now.diff(date, "day") === 1) return "Yesterday";
-    return date.format("DD MMM, YYYY • hh:mm A");
+      if (!res.ok || !data.logs) {
+        alert("Failed to download logs");
+        return;
+      }
+
+      const csv = convertToCSV(data.logs);
+      downloadFile(csv, "activity_logs.csv");
+    } catch (err) {
+      console.error("Error downloading logs:", err);
+      alert("Something went wrong while downloading logs.");
+    } finally {
+      setDownloading(false);
+    }
+  };
+
+  // 🔹 Convert logs array → CSV string
+  const convertToCSV = (logs) => {
+    if (!logs.length) return "";
+
+    const headers = Object.keys(logs[0]);
+    const rows = logs.map((log) =>
+      headers.map((h) => JSON.stringify(log[h] ?? "")).join(",")
+    );
+
+    return [headers.join(","), ...rows].join("\n");
+  };
+
+  // 🔹 Utility to trigger browser download
+  const downloadFile = (content, filename) => {
+    const blob = new Blob([content], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", filename);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   // 🔹 Map table/column names to readable text
@@ -71,10 +108,16 @@ const ActivityLog = () => {
       >
         <div className="flex-1">
           <button
-            className="btn btn-tertiary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl"
+            className={`btn btn-tertiary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl ${
+              downloading ? "opacity-70 cursor-not-allowed" : ""
+            }`}
             type="button"
+            onClick={handleDownloadAllLogs}
+            disabled={downloading}
           >
-            <span className="MT-1 px-1.5">Download</span>
+            <span className="MT-1 px-1.5">
+              {downloading ? "Downloading..." : "Download"}
+            </span>
             <InputBGWrapperIcon className="bg-primary-color-P1">
               <DownloadMediumIcon fillColor={"fill-primary-color-P12"} />
             </InputBGWrapperIcon>
@@ -84,9 +127,13 @@ const ActivityLog = () => {
 
       {/* Loading / Empty states */}
       {loading ? (
-        <p className="text-center text-primary-color-P4 ST-3">Loading activity logs...</p>
+        <p className="text-center text-primary-color-P4 ST-3">
+          Loading activity logs...
+        </p>
       ) : logs.length === 0 ? (
-        <p className="text-center text-primary-color-P4 ST-3">No recent activities found.</p>
+        <p className="text-center text-primary-color-P4 ST-3">
+          No recent activities found.
+        </p>
       ) : (
         <section className="space-y-2.5 lg:px-8">
           {logs.map((log, idx) => {
