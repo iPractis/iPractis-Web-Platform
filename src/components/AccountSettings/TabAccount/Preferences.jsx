@@ -28,6 +28,7 @@ import {
   Clock5Icon,
 } from "../../Icons";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import { useAuth } from "@/src/hooks/useAuth";
 
 const Preferences = ({ errors, control, watch }) => {
   const [isOpenTimezone, setIsOpenTimezone] = useState(false);
@@ -72,6 +73,10 @@ const Preferences = ({ errors, control, watch }) => {
     timeFormat.onChange(timeSelected);
   };
 
+  const { user } = useAuth();
+
+  const isTeacher = user.role.toLowerCase() === "teacher";
+
   return (
     <div>
       <SectionHeader
@@ -84,7 +89,6 @@ const Preferences = ({ errors, control, watch }) => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-[50px] lg:px-8">
-        {/* language */}
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
@@ -117,10 +121,10 @@ const Preferences = ({ errors, control, watch }) => {
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([language.value])}
-              onSelectionChange={(keys) => {
-                const key = Array.from(keys)[0];
-                language.onChange(key);
-              }}
+               onSelectionChange={(keys) => {
+    const selectedKey = Array.from(keys).at(0);
+    language.onChange(selectedKey);
+  }}
               onOpenChange={(open) => {
                 setIsOpenLanguage(open);
 
@@ -221,7 +225,7 @@ const Preferences = ({ errors, control, watch }) => {
         </div>
 
         {/* Currency */}
-        <div>
+        {isTeacher && <div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -286,7 +290,7 @@ const Preferences = ({ errors, control, watch }) => {
           </InputLeftStickStatus>
 
           <SplitDynamicErrorZod message={currencyError?.message} />
-        </div>
+        </div>}
 
         {/* Time format */}
         <div className="relative">

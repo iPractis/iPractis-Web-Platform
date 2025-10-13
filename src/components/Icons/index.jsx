@@ -118,6 +118,100 @@ export const UserMonitorMediumIcon = ({ fillColor }) => (
   </svg>
 );
 
+export const TimeIcon = ({ fillColor }) => (
+  <svg width="25" height="25" viewBox="0 0 14 14" fill={fillColor} xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.99403 2.33331C4.41803 2.33331 2.33203 4.42398 2.33203 6.99998C2.33203 9.57598 4.41803 11.6666 6.99403 11.6666C9.5747 11.6666 11.6654 9.57598 11.6654 6.99998C11.6654 4.42398 9.5747 2.33331 6.99403 2.33331ZM8.86537 8.86665C8.68336 9.04865 8.38937 9.04865 8.20737 8.86665L6.67203 7.33131C6.58336 7.24265 6.53203 7.12598 6.53203 6.99998V5.13331C6.53203 4.87665 6.74203 4.66665 6.9987 4.66665C7.25536 4.66665 7.46536 4.87665 7.46536 5.13331V6.80865L8.86537 8.20865C9.04737 8.39065 9.04737 8.68465 8.86537 8.86665Z" fill="#636366" />
+  </svg>
+);
+
+
+export const EyeBiggerIcon = ({ fillColor }) => (
+<svg width="50" height="50" viewBox="0 0 48 48" fill={fillColor} xmlns="http://www.w3.org/2000/svg">
+<rect width="50" height="50" rx="16" fill="#F8F7F5"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M16.5 24C17.6795 21.0733 20.5909 19 24 19C27.4091 19 30.3205 21.0733 31.5 24C30.3205 26.9267 27.4091 29 24 29C20.5909 29 17.6795 26.9267 16.5 24ZM24 27.3333C25.8409 27.3333 27.3333 25.8409 27.3333 24C27.3333 22.1591 25.8409 20.6667 24 20.6667C22.1591 20.6667 20.6667 22.1591 20.6667 24C20.6667 25.8409 22.1591 27.3333 24 27.3333Z" fill="black"/>
+<path d="M25.6654 24C25.6654 24.9205 24.9192 25.6666 23.9987 25.6666C23.0782 25.6666 22.332 24.9205 22.332 24C22.332 23.0795 23.0782 22.3333 23.9987 22.3333C24.9192 22.3333 25.6654 23.0795 25.6654 24Z" fill="black"/>
+</svg>
+
+);
+
+export const EducationBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill={fillColor} xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <path
+      d="M24 13L10 20L24 27L38 20L24 13Z"
+      fill="black"
+    />
+    <path
+      d="M10 23L24 30L38 23V28L24 35L10 28V23Z"
+      fill="black"
+    />
+  </svg>
+);
+
+export const TeacherBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <circle cx="24" cy="17" r="5" fill="black" />
+    <path
+      d="M13 33C13 27.4772 17.4772 23 23 23H25C30.5228 23 35 27.4772 35 33V35H13V33Z"
+      fill="black"
+    />
+  </svg>
+);
+
+export const LanguageBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <circle cx="24" cy="24" r="9" stroke="black" strokeWidth="2" />
+    <path
+      d="M15 24H33M24 15C26 18 27 21 27 24C27 27 26 30 24 33C22 30 21 27 21 24C21 21 22 18 24 15Z"
+      stroke="black"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
+
+
+export const FileBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <path
+      d="M16 14H28L34 20V34C34 35.1046 33.1046 36 32 36H16C14.8954 36 14 35.1046 14 34V16C14 14.8954 14.8954 14 16 14Z"
+      fill="black"
+    />
+    <path d="M28 14V20H34" fill="#F8F7F5" />
+  </svg>
+);
+
+export const EditBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <path
+      d="M32.1213 16.1213C32.6839 15.5587 33.612 15.5587 34.1745 16.1213L35.8787 17.8255C36.4413 18.388 36.4413 19.3161 35.8787 19.8787L21 34.7574H16V29.7574L30.8787 14.8787L32.1213 16.1213Z"
+      fill="black"
+    />
+  </svg>
+);
+export const EducationAltIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <path
+      d="M24 13L12 19L24 25L36 19L24 13ZM12 22V28L24 34L36 28V22L24 28L12 22Z"
+      fill="black"
+    />
+  </svg>
+);
+export const DatabaseBigIcon = ({ fillColor = "fill-black" }) => (
+  <svg width="50" height="50" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="50" height="50" rx="16" fill="#F8F7F5" />
+    <ellipse cx="24" cy="16" rx="10" ry="4" fill="black" />
+    <path d="M14 16V32C14 34 18 36 24 36C30 36 34 34 34 32V16" fill="black" />
+  </svg>
+);
+
+
+
 export const UserBoxIcon = ({ fillColor }) => (
   <svg
     width="20"

@@ -1,8 +1,7 @@
+import { Controller } from "react-hook-form";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
-
-// Icons
 import { MonitorMediumIcon, MailIcon } from "../../Icons";
 
 const NotificationItem = ({
@@ -12,9 +11,11 @@ const NotificationItem = ({
   items = [],
   title,
   icon,
+  control,
 }) => {
   return (
     <article className="flex items-start gap-4 lg:px-8">
+      {/* 🖥️ Web Column */}
       {hasWebOption && (
         <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
           <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
@@ -25,17 +26,30 @@ const NotificationItem = ({
           </InputBGWrapperIcon>
 
           <div className="notifications-checkboxes flex flex-col items-center justify-center gap-8">
-            {items.map((item) => (
-              <CustomNextUiCheckbox
-                className="checkbox-label-ipractis"
-                key={item}
-                size="sm"
-              />
-            ))}
+            {items.map((item) => {
+              const fieldName = `notifications.${item.replace(/\s+/g, "")}_web`;
+
+              return (
+                <Controller
+                  key={fieldName}
+                  name={fieldName}
+                  control={control}
+                  defaultValue={false}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomNextUiCheckbox
+                      isSelected={value}
+                      onChange={onChange}
+                      size="sm"
+                    />
+                  )}
+                />
+              );
+            })}
           </div>
         </div>
       )}
 
+      {/* 📧 Mail Column */}
       {hasMailOption && (
         <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
           <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
@@ -46,17 +60,30 @@ const NotificationItem = ({
           </InputBGWrapperIcon>
 
           <div className="notifications-checkboxes flex flex-col items-center justify-center gap-8">
-            {items.map((item) => (
-              <CustomNextUiCheckbox
-                className="checkbox-label-ipractis"
-                key={item}
-                size="sm"
-              />
-            ))}
+            {items.map((item) => {
+              const fieldName = `notifications.${item.replace(/\s+/g, "")}_mail`;
+
+              return (
+                <Controller
+                  key={fieldName}
+                  name={fieldName}
+                  control={control}
+                  defaultValue={false}
+                  render={({ field: { value, onChange } }) => (
+                    <CustomNextUiCheckbox
+                      isSelected={value}
+                      onChange={onChange}
+                      size="sm"
+                    />
+                  )}
+                />
+              );
+            })}
           </div>
         </div>
       )}
 
+      {/* 🧩 Right side - Description */}
       <div className="pt-1.5">
         <SectionHeader
           wrapperSectionHeaderClassName="mb-4 py-2.5"
