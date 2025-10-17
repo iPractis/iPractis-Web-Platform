@@ -72,7 +72,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
             <UserIcon fillColor={"fill-primary-color-P1"} />
           </div>
         }
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-xl max-w-[1000px] h-[112px] flex items-center justify-between"
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
         titleText="Personal Informations"
         titleClassName="MT-SB-1 ml-[80px]"
         descriptionClassName="ml-[80px]"

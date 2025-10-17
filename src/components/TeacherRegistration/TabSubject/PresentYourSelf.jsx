@@ -27,14 +27,20 @@ const PresentYourSelf = ({ control, errors }) => {
   return (
     <>
       <SectionHeader
-        descriptionText="Introduce yourself to students in the language you'll be teaching and make sure your video meets the requirements to get approved."
-        titleText="Present yourself"
-        titleIcon={<CameraIcon fillColor={"fill-primary-color-P1"} />}
-        titleClassName="MT-SB-1"
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] mt-20 mb-[90px]"
+        descriptionText="Introduce yourself to your future students"
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <CameraIcon fillColor={"fill-primary-color-P1"} />
+          </div>
+        }
+        titleText="Introduce yourself"
+        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
       />
 
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8">
+      <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[120px] md:mt-[120px] mt-[120px]">
+        <div className="w-full">
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
@@ -60,7 +66,7 @@ const PresentYourSelf = ({ control, errors }) => {
               }
               classNames={{
                 label: "!-top-20",
-                inputWrapper: videoLinkError?.message && "form-input-error",
+                inputWrapper: `${videoLinkError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
               }}
               value={videoLink.value}
               onChange={videoLink.onChange}
@@ -94,6 +100,7 @@ const PresentYourSelf = ({ control, errors }) => {
               provide the link in the right area.
             </li>
           </ul>
+        </div>
         </div>
       </div>
     </>

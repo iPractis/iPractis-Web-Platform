@@ -53,16 +53,20 @@ const SubjectsToTeach = ({ errors, control }) => {
     <div>
       <SectionHeader
         descriptionText="Remember, students rely on this information to choose their teacher."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px]"
-        titleIcon={<UserBoxIcon fillColor={"fill-primary-color-P1"} />}
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <UserBoxIcon fillColor={"fill-primary-color-P1"} />
+          </div>
+        }
         titleText="Set up your teaching subject"
-        titleClassName="MT-SB-1"
+        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
       />
 
-      <div className="space-y-[40px] lg:px-8">
-        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-[50px] gap-20 mt-[90px]">
-          {/* Select subject to teach */}
-          <div>
+      <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[92px] md:mt-[64px] mt-[80px]">
+        {/* Select subject to teach */}
+        <div>
             <InputLeftStickStatus
               inputBarStatusClassName={`${getInputStatusBorder(
                 errors,
@@ -85,7 +89,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }}
                 labelPlacement="outside"
                 label={
-                  <div className="flex flex-col mb-2 ps-1.5">
+                  <div className="flex flex-col lg:mb-2 mb-2 ps-1.5">
                     <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                       Select the subject you wish to teach{" "}
                       <QuestionMark fillColor={"fill-primary-color-P4"} />
@@ -115,7 +119,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }
                 classNames={{
                   trigger: [
-                    "select-wrapper-ipractis min-h-fit",
+                    "select-wrapper-ipractis min-h-fit lg:w-full w-[366px] !bg-[#F8F7F5]",
                     errorSubject?.message && "form-input-error",
                   ],
                   innerWrapper: ["select-ipractis w-full"],
@@ -140,25 +144,30 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }
               />
             </InputLeftStickStatus>
-          </div>
+        </div>
 
-          {/* Profile title and description */}
+        {/* Profile title and description */}
+        <div className="lg:mt-[80px] md:mt-[60px] mt-[64px]">
           <ProfileTitle errors={errors} control={control} />
         </div>
 
-        <div>
+             
+        {/* Subject Introduction */}
+        <div className="lg:mt-[32px] md:mt-[24px] mt-[20px]">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
               errors,
               subjectIntroduction.value,
               "subjectIntroduction"
-            )} -translate-y-0 top-[30%] h-[129px]`}
+            )} -translate-y-0 top-[35%] h-[129px]`}
           >
-            <CustomNextUiTextareaWithMaxLength
+            <div className="[&_.textarea-wrapper]:!bg-[#F8F7F5]">
+              <CustomNextUiTextareaWithMaxLength
               labelTitle={"Subject Introduction"}
               labelSubtitle={
                 "Describe your teaching methods, experience, and expertise in this subject."
               }
+            
               labelClassName={"!top-3"}
               nameTextarea={"subjectIntroduction"}
               inputClassName={"h-[150px]"}
@@ -171,13 +180,15 @@ const SubjectsToTeach = ({ errors, control }) => {
               labelDisabled={false}
               backgroundError={subjectIntroductionError?.message}
               inputProps={{ onBlur: subjectIntroduction.onBlur }}
-            />
+              />
+            </div>
           </InputLeftStickStatus>
 
           <SplitDynamicErrorZod message={subjectIntroductionError?.message} />
         </div>
+        </div> 
       </div>
-    </div>
+   
   );
 };
 

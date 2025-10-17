@@ -92,7 +92,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft }) => {
       <div className="mt-16">
         <SectionHeader
           descriptionText="These information will be subject to review"
-          wrapperSectionHeaderClassName="relative bg-[#FFF4B8] p-4 rounded-xl max-w-[1000px] h-[112px] flex items-center justify-between"
+          wrapperSectionHeaderClassName="relative bg-[#FFF4B8] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
           titleIcon={
             <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
               <CircleImportantIcon />

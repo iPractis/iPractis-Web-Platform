@@ -103,7 +103,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
         ))}
       </div>
 
-      {activeTab === 4 ? (
+      {activeTab === 4 && (
         <SectionHeader
           wrapperSectionHeaderClassName="flex flex-col md:flex-row sm:items-center items-start md:gap-[70px] gap-4 p-8 rounded-[22px] bg-tertiary-color-SC11 MT-1"
           descriptionText={sectionHeaderContent[2]?.descriptionText}
@@ -129,27 +129,6 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
             )}
           </div>
         </SectionHeader>
-      ) : (
-        <SectionHeader
-          wrapperSectionHeaderClassName={`p-8 rounded-[22px] ${
-            activeTab === 5
-              ? "bg-quinary-color-VS10"
-              : "bg-quaternary-color-A10"
-          }`}
-          descriptionText={
-            activeTab < 4
-              ? sectionHeaderContent[0]?.descriptionText
-              : sectionHeaderContent[1]?.descriptionText
-          }
-          titleText={
-            activeTab < 4
-              ? sectionHeaderContent[0]?.titleText
-              : sectionHeaderContent[1]?.titleText
-          }
-          descriptionClassName="mt-[4px]"
-          titleIcon={<DocumentIcon />}
-          titleClassName="MT-SB-1"
-        />
       )}
     </section>
   );

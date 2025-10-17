@@ -52,16 +52,21 @@ const RelatedSubTopics = ({ control, errors }) => {
     <div className="flex-1">
       <SectionHeader
         descriptionText="Highlight your teaching methods and the subtopics you've mastered."
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px] my-16"
-        titleIcon={<TagIcon fillColor={"fill-primary-color-P1"} />}
-        titleText="Choose your specialties"
-        titleClassName="MT-SB-1"
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <TagIcon fillColor={"fill-primary-color-P1"} />
+          </div>
+        }
+        titleText="Pick specialties or sub-subject"
+        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
       />
 
-      <div className="lg:px-8">
-        <div className="space-y-[40px]">
+      <div className="lg:mx-[285px] md:mx-[100px] mx-4">
+        <div className="lg:space-y-[40px] md:space-y-[32px] space-y-[24px]">
           {/* Select Sub-subject */}
-          <div className="grid lg:grid-cols-2 grid-cols-1">
+          <div>
             <InputLeftStickStatus
               inputBarStatusClassName={`${getInputStatusBorder(
                 errors,
@@ -69,22 +74,8 @@ const RelatedSubTopics = ({ control, errors }) => {
                 "subSubject"
               )} top-[54%] -translate-y-0`}
             >
-              <div className="flex items-end gap-2">
-                <Select
+              <Select
                   name="subSubject"
-                  label={
-                    <div className="flex flex-col mb-2 ps-1">
-                      <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                        Related sub topics{" "}
-                        <QuestionMark fillColor={"fill-primary-color-P4"} />
-                      </span>
-                      <div className="self-start">
-                        <span className="text-primary-color-P4 ST-3">
-                          Sub topics allow you to match with students needs.
-                        </span>
-                      </div>
-                    </div>
-                  }
                   selectedKeys={value}
                   onChange={(e) => handleAddSubSubject(e)}
                   onOpenChange={(open) => {
@@ -109,7 +100,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    trigger: `px-1 py-1.5 h-auto ${
+                    trigger: `px-1 py-1.5 h-auto !bg-[#F8F7F5] ${
                       (error?.message || error !== undefined) &&
                       "form-input-error"
                     }`,
@@ -118,6 +109,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                       "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                     ],
                     listbox: ["text-primary-color-P4"],
+                    base: "w-full",
                   }}
                 >
                   {subSubjects
@@ -131,7 +123,6 @@ const RelatedSubTopics = ({ control, errors }) => {
                       <SelectItem key={subSubject}>{subSubject}</SelectItem>
                     ))}
                 </Select>
-              </div>
             </InputLeftStickStatus>
           </div>
 

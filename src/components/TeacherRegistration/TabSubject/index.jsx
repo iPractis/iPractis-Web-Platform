@@ -1,5 +1,4 @@
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
-import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import StudentPreference from "./StudentPreferences";
 import { tabSubjectSchema } from "@/src/validations";
 import RelatedSubTopics from "./RelatedSubTopics";
@@ -7,6 +6,8 @@ import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
 import AveragePrice from "./AveragePrice";
 import StudentAge from "./StudentAge";
+import GenderRestriction from "./GenderRestriction";
+import SaveAndContinueBox from "./SaveAndContinueBox";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -85,15 +86,12 @@ const TabSubject = ({ setActiveTab, activeTab, draft }) => {
 
         <StudentAge isSubmitted={isSubmitted} control={control} />
 
+        <GenderRestriction isSubmitted={isSubmitted} control={control} />
+
         <AveragePrice control={control} errors={errors} watch={watch} />
       </WhiteSpaceWrapper>
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };

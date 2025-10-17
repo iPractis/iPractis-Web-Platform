@@ -1,7 +1,7 @@
-import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import { tabBackgroundSchema } from "@/src/validations";
 import Experience from "./Experience";
 import Education from "./Education";
+import SaveAndContinueBox from "../TabSubject/SaveAndContinueBox";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -62,12 +62,8 @@ const TabBackground = ({ setActiveTab, activeTab, draft }) => {
       {/* Education Section */}
       <Education errors={errors} control={control} />
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      {/* Save and Continue Box */}
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };
