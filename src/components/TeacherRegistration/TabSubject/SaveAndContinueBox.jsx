@@ -4,7 +4,7 @@ import { ChevronDownBigIcon, CircleImportantIcon } from "../../Icons";
 
 const SaveAndContinueBox = ({ buttonRef }) => {
   return (
-    <div className="mt-16">
+    <div className="mt-20">
       <SectionHeader
         descriptionText="These information will be subject to review"
         wrapperSectionHeaderClassName="relative bg-[#FFF4B8] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"

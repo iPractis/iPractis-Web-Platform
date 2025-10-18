@@ -1,4 +1,4 @@
-import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
+import SaveAndContinueBox from "../TabSubject/SaveAndContinueBox";
 import { tabAvailabilitySchema } from "@/src/validations";
 import WorkTimePreferences from "./WorkTimePreferences";
 import WorkSchedule from "./WorkSchedule";
@@ -70,12 +70,8 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
         control={control}
       />
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      {/* Save and Continue Box */}
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };
