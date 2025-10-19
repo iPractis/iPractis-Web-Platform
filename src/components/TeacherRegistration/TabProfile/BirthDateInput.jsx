@@ -70,7 +70,7 @@ const BirthDateInput = ({ errors, control }) => {
       birthDateYear.onChange(date.format("YYYY"));
       setInputValue(getMonthNumberAsText(date.format("MM")));
     }
-  }, [birthDate.value, birthDateNumber, birthDateMonth, birthDateYear, defaultDate, defaultMonth, defaultYear]);
+  }, [birthDate.value, defaultDate, defaultMonth, defaultYear]);
 
   useEffect(() => {
     if (birthDateMonth.value) {
@@ -271,22 +271,28 @@ const BirthDateInput = ({ errors, control }) => {
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
               onChange={(e) => {
                 const numericValue = e.target.value.replace(/\D/g, "");
-                birthDateYear.onChange(numericValue.slice(0, 4));
-                const newDate = moment(
-                  `${numericValue.slice(0, 4)}/${birthDateMonth.value}/${
-                    birthDateNumber.value
-                  }`,
-                  "YYYY/MM/D"
-                ).format("YYYY/MM/D");
-                birthDate.onChange(newDate);
+                const yearValue = numericValue.slice(0, 4);
+                birthDateYear.onChange(yearValue);
+                
+                // Only update the full date if we have a complete year (4 digits) and valid month/day
+                if (yearValue.length === 4 && birthDateMonth.value && birthDateNumber.value) {
+                  const newDate = moment(
+                    `${yearValue}/${birthDateMonth.value}/${birthDateNumber.value}`,
+                    "YYYY/MM/D"
+                  );
+                  if (newDate.isValid()) {
+                    birthDate.onChange(newDate.format("YYYY/MM/D"));
+                  }
+                }
               }}
               onBlur={() => {
                 birthDateYear.onBlur();
                 birthDate.onBlur();
               }}
-              value={birthDateYear.value}
+              value={birthDateYear.value || ""}
               name="birthDateYear"
               type="text"
+              placeholder="YYYY"
             />
           </div>
 
