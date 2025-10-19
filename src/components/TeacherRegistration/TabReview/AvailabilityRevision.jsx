@@ -80,7 +80,7 @@ const AvailabilityRevision = ({draftData}) => {
       
         {/* Text content */}
         <div className="flex flex-col justify-center">
-          <h3 className="MT-SB-1 text-primary-color-P1">Teacher's information</h3>
+          <h3 className="MT-SB-1 text-primary-color-P1">Teacher&apos;s information</h3>
           <p className="ST-3 text-primary-color-P4">Text</p>
         </div>
       </div>
@@ -211,7 +211,7 @@ const AvailabilityRevision = ({draftData}) => {
       <div className="w-[1000px] max-w-[1000px] mx-auto mb-8 bg-white rounded-[32px] px-8 py-4 flex flex-col gap-4">
         <h3 className="MT-SB-1 text-primary-color-P1">About {draftData.firstName}</h3>
         <p className="ST-3 text-primary-color-P4 leading-relaxed">
-          {draftData.introduction || "Hi everyone! My name is Irina and, as an English teacher, I'll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone."}
+          {draftData.introduction || "Hi everyone! My name is Irina and, as an English teacher, I&apos;ll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone."}
         </p>
         
         {/* Language Tags */}
@@ -262,7 +262,7 @@ const AvailabilityRevision = ({draftData}) => {
       <div className="w-[1000px] max-w-[1000px] mx-auto mb-0 bg-[#F8F7F5] rounded-[32px] p-8 min-h-[144px] flex flex-col gap-8">
         <h3 className="MT-SB-1 text-primary-color-P1">Friendly and fun Native English Speaker teaching conversational English</h3>
         <p className="ST-3 text-primary-color-P4 leading-relaxed">
-          Hi everyone! My name is Irina and, as an English teacher, I'll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone.
+          Hi everyone! My name is Irina and, as an English teacher, I&apos;ll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone.
         </p>
       </div>
 
@@ -284,7 +284,7 @@ const AvailabilityRevision = ({draftData}) => {
           </svg>
         </div>
         <div className="flex flex-col justify-center">
-          <h3 className="MT-SB-1 text-primary-color-P1">Teacher's availability</h3>
+          <h3 className="MT-SB-1 text-primary-color-P1">Teacher&apos;s availability</h3>
           <p className="ST-3 text-primary-color-P4">Text</p>
         </div>
       </div>

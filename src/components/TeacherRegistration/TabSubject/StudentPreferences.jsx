@@ -34,7 +34,7 @@ const StudentPreference = ({ control, errors }) => {
               />
             </div>
             <div className="flex flex-col justify-center h-[48px]">
-              <h3 className="MT-SB-1 text-sm leading-none">Student's level</h3>
+              <h3 className="MT-SB-1 text-sm leading-none">Student&apos;s level</h3>
               <p className="text-xs leading-none mt-1">Select the level you can teach</p>
             </div>
           </div>

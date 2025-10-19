@@ -70,7 +70,7 @@ const BirthDateInput = ({ errors, control }) => {
       birthDateYear.onChange(date.format("YYYY"));
       setInputValue(getMonthNumberAsText(date.format("MM")));
     }
-  }, [birthDate.value]);
+  }, [birthDate.value, birthDateNumber, birthDateMonth, birthDateYear, defaultDate, defaultMonth, defaultYear]);
 
   useEffect(() => {
     if (birthDateMonth.value) {

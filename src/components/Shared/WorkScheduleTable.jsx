@@ -101,7 +101,7 @@ const WorkScheduleTable = ({
 
   useEffect(() => {
     setDailyWorkTimeLimit(fields);
-  }, [fields]);
+  }, [fields, setDailyWorkTimeLimit]);
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {

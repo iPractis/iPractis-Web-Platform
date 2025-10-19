@@ -53,7 +53,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
 
   useEffect(() => {
     dailyWorkTime.onChange(totalHours);
-  }, [totalHours]);
+  }, [totalHours, dailyWorkTime]);
 
   return (
     <>
