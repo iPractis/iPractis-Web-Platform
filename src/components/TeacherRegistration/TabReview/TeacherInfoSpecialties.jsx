@@ -10,14 +10,23 @@ const TeacherInfoSpecialties = ({draftData}) => {
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
         titleText={"Specialties"}
       />
-     {draftData.subSubject.map((data,idx)=>{
-      return  <WhiteSpaceWrapper key={idx} className={"bg-primary-color-P11 mt-5"}>
-        <h3 className="MT-SB-1 text-primary-color-P1 mb-5">{data.selected}</h3>
-        <p className="ST-4 text-primary-color-P4">
-          {data.description}
-        </p>
-      </WhiteSpaceWrapper>
-     })}
+     {(draftData.subSubject && draftData.subSubject.length > 0) ? (
+       draftData.subSubject.map((data,idx)=>{
+        return  <WhiteSpaceWrapper key={idx} className={"bg-[#f8f7f5] mt-5"}>
+          <h3 className="MT-SB-1 text-primary-color-P1 mb-5">{data.selected}</h3>
+          <p className="ST-4 text-primary-color-P4">
+            {data.description}
+          </p>
+        </WhiteSpaceWrapper>
+       })
+     ) : (
+       <WhiteSpaceWrapper className={"bg-[#f8f7f5] mt-5"}>
+         <h3 className="MT-SB-1 text-primary-color-P1 mb-5">Digital Compositing</h3>
+         <p className="ST-4 text-primary-color-P4">
+           Help students improve image qualities by teaching them the secrets of professionals. Teach how to develop creative skill to produce professional level digital compositing art. Teach students how to create commercial level digital compositing.
+         </p>
+       </WhiteSpaceWrapper>
+     )}
     </article>
   );
 };

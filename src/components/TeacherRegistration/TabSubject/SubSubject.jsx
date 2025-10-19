@@ -67,6 +67,9 @@ const SubSubject = ({
                   type="text"
                   {...field}
                   isReadOnly
+                  classNames={{
+                    inputWrapper: "!bg-[#f8f7f5]"
+                  }}
                 />
               )}
             />
@@ -75,7 +78,7 @@ const SubSubject = ({
 
         {/* Delete button */}
         <button
-          className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+          className="bg-[#f8f7f5] hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
           onClick={() => handleDeleteSelectedSubSuject(index)}
           type="button"
         >

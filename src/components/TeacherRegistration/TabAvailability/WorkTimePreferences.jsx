@@ -119,6 +119,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
                 trigger: [
                   "select-wrapper-ipractis",
                   timeZoneError?.message && "form-input-error",
+                  "!bg-[#f8f7f5]",
                 ],
                 innerWrapper: ["select-ipractis", "w-full"],
                 value: [
@@ -171,7 +172,10 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
                 </InputBGWrapperIcon>
               }
               classNames={{
-                inputWrapper: dailyWorkTimeError?.message && "form-input-error",
+                inputWrapper: [
+                  dailyWorkTimeError?.message && "form-input-error",
+                  "!bg-[#f8f7f5]",
+                ],
               }}
               onChange={dailyWorkTime.onChange}
               onBlur={dailyWorkTime.onBlur}

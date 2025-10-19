@@ -480,7 +480,7 @@ const WorkScheduleTable = ({
           {/* Format button placeholder to align with day headers */}
           <div className="h-[40px] flex items-center">
             <button
-              className="bg-[#f8f7f5] text-black text-center rounded-md ST-SB-3 px-4 py-2 w-auto"
+              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >

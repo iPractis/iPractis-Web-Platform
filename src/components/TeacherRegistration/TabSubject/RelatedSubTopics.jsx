@@ -100,7 +100,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    trigger: `px-1 py-1.5 h-auto !bg-[#F8F7F5] ${
+                    trigger: `px-1 py-1.5 h-auto !bg-[#f8f7f5] ${
                       (error?.message || error !== undefined) &&
                       "form-input-error"
                     }`,
