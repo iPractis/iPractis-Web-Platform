@@ -1,7 +1,7 @@
 import { getWordsCapitalized } from "./getWordsCapitalized";
 
 export const fetchCountries = async () => {
-  const url = "https://restcountries.com/v3.1/all";
+  const url = "https://restcountries.com/v3.1/all?fields=name,flags";
 
   try {
     const response = await fetch(url);
@@ -18,5 +18,7 @@ export const fetchCountries = async () => {
     }));
   } catch (error) {
     console.error(error);
+    // Return empty array as fallback to prevent crashes
+    return [];
   }
 };
