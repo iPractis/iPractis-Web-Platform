@@ -32,6 +32,7 @@ const defaultValue = {
 export const TabBody = ({ draftData }) => {
   const [draft, setDraft] = useState({ ...defaultValue, ...draftData });
   const [activeTab, setActiveTab] = useState(0);
+  console.log("DRAFT IN TAB BODY:", draft);
   return (
     <section className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
       {/* Tabs buttons (top) */}

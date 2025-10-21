@@ -6,51 +6,89 @@ import WorkSchedule from "./WorkSchedule";
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import { useRef, useState, useEffect } from "react";
+import { mapDbAvailability } from "@/src/utils/mapDbAvailability";
+import { useAuth } from "@/src/hooks/useAuth";
 
-// React imports
-import { useRef, useState } from "react";
-
-const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
+const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const [dailyWorkTimeLimit, setDailyWorkTimeLimit] = useState([]);
+
+  // Transform DB draft data into UI format
+  const mappedSchedule = draft?.availability || [];
 
   const {
     formState: { errors },
     handleSubmit,
     setError,
     control,
+    reset,
   } = useForm({
     mode: "onBlur",
     resolver: zodResolver(tabAvailabilitySchema),
     defaultValues: {
-      dailyWorkTime: draft?.workSchedule?.length,
-      workSchedule: draft?.workSchedule,
-      timeZone: draft?.timeZone,
+      dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length || 0,
+      workSchedule: mappedSchedule,
+      timeZone: draft?.timeZone || "America/Chicago",
     },
   });
+
+  // ✅ Re-apply draft data if it changes (like after save)
+  useEffect(() => {
+    if (draft) {
+      reset({
+        dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length || 0,
+        workSchedule: draft?.availability ,
+        timeZone: draft?.timeZone || "America/Chicago",
+      });
+    }
+  }, [draft, reset]);
+
   const buttonRef = useRef(null);
+  const { user } = useAuth();
 
   const onSubmit = async (data) => {
-    buttonRef.current.loading();
-
-    const actualDraftInfo = draft;
-
     try {
-      // TAB AVAILABILITY
-      if (activeTab === 3) {
-        actualDraftInfo.dailyWorkTime = data?.dailyWorkTime;
-        actualDraftInfo.workSchedule = data?.workSchedule;
-        actualDraftInfo.timeZone = data?.timeZone;
+      buttonRef.current?.loading();
 
-        console.log(actualDraftInfo, "ACTUAL DRAFT");
+      if (activeTab === 3) {
+        // Convert UI format to DB-ready format
+        const availabilityForDb = data?.workSchedule;
+
+        const payload = {
+          userId: user?.userId,
+          dailyWorkTime: data?.dailyWorkTime,
+          availability: availabilityForDb, // DB-ready format
+          timeZone: data?.timeZone,
+        };
+
+        console.log("AVAILABILITY PAYLOAD TO DRAFT API:", payload);
+
+        // 🔥 Save/merge into teacher_drafts
+        const res = await fetch("/api/teacher-draft", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.message || "Failed to save availability");
+        }
+
+        const { draft: updatedDraft } = await res.json();
+
+        // ✅ update parent draft state
+        if (setDraft) setDraft(updatedDraft);
+
+        // ✅ move to next tab
         setActiveTab((prev) => prev + 1);
-        console.log(response, "AVAILABILITY");
       }
     } catch (err) {
-      console.log(err);
-      setError(err?.response?.data?.message);
+      setError("general", {
+        message: err.message || "Something went wrong",
+      });
     } finally {
-      buttonRef.current.notIsLoading();
+      buttonRef.current?.notIsLoading();
     }
   };
 
@@ -68,6 +106,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft }) => {
       <WorkSchedule
         setDailyWorkTimeLimit={setDailyWorkTimeLimit}
         control={control}
+        defaultTimeZone={draft?.timeZone}
       />
 
       {/* Save and Continue Box */}

@@ -1,22 +1,41 @@
 import { auth } from "@/src/auth";
-
-// This if for fetching data that user input in fields,
-// if he leaves the page we'll fetch them and fill up the blanks that he filled.
+import { cookies } from 'next/headers';
+import jwt from 'jsonwebtoken';
 export async function fetchDraft() {
-  const session = await auth();
-
+  console.log("Fetching draft data...");
   try {
-    const data = await fetch(`${process.env.BASE_URL}/teacher/draft`, {
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth-token")?.value;
+
+    if (!token) {
+      return null; // not logged in
+    }
+
+    // ✅ decode JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded?.userId;
+
+    if (!userId) {
+      throw new Error("Invalid token: missing userId");
+    }
+
+    // 🔥 Hit teacher-draft endpoint instead of teachers
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/teacher-draft/${userId}`, {
       headers: {
-        Authorization: `Bearer ${session?.user?.token}`,
+        Authorization: `Bearer ${token}`,
       },
-      cache: "no-store",
+      cache: "no-store", // don’t cache, always fresh
     });
 
-    const draft = await data.json();
+    if (!res.ok) {
+      console.error("Failed to fetch teacher draft:", res.statusText);
+      return null;
+    }
 
+    const { draft } = await res.json(); // API should return { draft: {...} }
     return draft;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.error("Error fetching teacher draft:", err);
+    return null;
   }
 }

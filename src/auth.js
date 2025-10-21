@@ -19,7 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         try {
           const res = await fetch(
-            `${process.env.BASE_URL}/auth/login-verify-otp`,
+            `${process.env.BASE_URL}/api/auth/login-verify-otp`,
             {
               method: "POST",
               body: JSON.stringify({
@@ -70,21 +70,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token.accessToken = user.token || token.accessToken;
         token.email = user.email || token.email;
         token.firstName = user.firstName || token.firstName;
+        token.role = user.role || token.role;
       }
 
       if (account?.provider === "google" && !token.accessToken) {
         // Exchange Google access token for backend token
-        const response = await fetch(`${process.env.BASE_URL}/auth/login-google`, {
+        const response = await fetch(`${process.env.BASE_URL}/api/auth/login-google`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ access_token: account.access_token }),
         });
-
+        
         const data = await response.json();
         if (response.ok && data?.token) {
           token.accessToken = data.token;
           token.email = user?.email || token.email;
           token.firstName = user?.name || token.firstName;
+          token.role = user.role || token.role;
         } else {
           throw new Error(data?.detail || "Google login failed");
         }
@@ -100,6 +102,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         token: token.accessToken,
         email: token.email,
         firstName: token.firstName,
+        role: token.role || "student",  //Added role to the session
       };
       return session;
     },

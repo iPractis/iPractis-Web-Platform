@@ -1,17 +1,17 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuth } from "@/src/hooks/useAuth";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
 const Layout = ({ children }) => {
-  const { data: session, status } = useSession();
+  const { authenticated, loading } = useAuth();
 
   useEffect(() => {
-    if (session?.user?.token && status !== "loading") {
-      redirect("/");
+    if (!loading && authenticated) {
+      redirect("/dashboard");
     }
-  }, [status]);
+  }, [authenticated,loading]);
 
   return children;
 };

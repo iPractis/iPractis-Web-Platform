@@ -17,7 +17,7 @@ import {
 } from "../../Icons";
 
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import { signOut } from "next-auth/react";
+import { useAuth } from "@/src/hooks/useAuth";
 import Image from "next/image";
 
 import {
@@ -31,6 +31,7 @@ import {
 import Link from "next/link";
 
 const NavDropdown = ({ isDropdownHidden, userName }) => {
+  const { logout } = useAuth();
   const firstName = userName.split(" ")[0];
 
   return (
@@ -286,7 +287,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           <DropdownItem className="p-0 disable-hover" key="logOut">
             <button
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full hover:text-primary-color-P12 hover:bg-primary-color-P4 bg-septenary-color-MA6 "
-              onClick={signOut}
+              onClick={logout} //logout function is in useAuth.js now instead of next-auth/react
               type="button"
             >
               <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>

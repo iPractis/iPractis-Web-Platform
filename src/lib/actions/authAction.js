@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 // WITHOUT AUTHJS
 export async function registerUser(prevState, reactHookFormData) {
-  const res = await fetch(`${process.env.NEXTAUTH_URL}/auth/register`, {
+  const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export const logInUser = async (data) => {
 // WITHOUT AUTHJS
 export async function requestPasswordInput(reactHookFormData) {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/auth/recover-password`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/recover-password`, {
       method: "POST",
       body: JSON.stringify(reactHookFormData),
       headers: {
@@ -63,7 +63,7 @@ export async function requestPasswordInput(reactHookFormData) {
 // WITHOUT AUTHJS
 export async function newPasswordInputs(reactHookFormData) {
   try {
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/auth/confirm-password`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/confirm-password`, {
       method: "POST",
       body: JSON.stringify(reactHookFormData),
       headers: {
@@ -92,7 +92,7 @@ export async function supportRequestIssue(reactHookFormData) {
   };
 
   try {
-    const res = await fetch(`/support/issue`, {
+    const res = await fetch(`/api/support/issue`, {
       method: "POST",
       body: JSON.stringify(constructedData),
       headers: {
@@ -142,5 +142,20 @@ export async function logOutUser() {
     console.log(error);
   }
 
+  redirect("/login");
+}
+
+export async function logOutUserCookie() {
+  try {
+    // Call logout API to clear httpOnly cookie
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include' // Include cookies
+    });
+    
+    await signOut();
+  } catch (error) {
+    console.log(error);
+  }
   redirect("/login");
 }

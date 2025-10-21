@@ -45,7 +45,7 @@ const TeacherInfoReviews = () => {
               <Image
                 alt={"Tutor Image"}
                 className="w-[46px] rounded-[10px]"
-                src={tutorImagePreview}
+                src={tutorImagePreview || null}
               />
               <div className="absolute right-1 bottom-1 rounded-full w-2 h-2 bg-quinary-color-VS5"></div>
             </div>
@@ -94,7 +94,7 @@ const TeacherInfoReviews = () => {
               <Image
                 alt={"Tutor Image"}
                 className="w-[46px] rounded-[10px]"
-                src={tutorImagePreview}
+                src={tutorImagePreview || null}
               />
               <div className="absolute right-1 bottom-1 rounded-full w-2 h-2 bg-quinary-color-VS5"></div>
             </div>
