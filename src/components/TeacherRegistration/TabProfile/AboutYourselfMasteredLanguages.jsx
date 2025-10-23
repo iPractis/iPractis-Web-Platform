@@ -119,98 +119,103 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
         </Select>
 
         {/* Select Language Button Outer Attribute - 16px below the Add Language button */}
-        <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
-          {/* Floating Yellow Stick - like other input boxes */}
-          <div className="pointer-events-none w-1 h-4 bg-yellow-500 rounded-sm absolute top-1/2 -left-1.5 transform -translate-y-1/2 z-10"></div>
-          
-          {/* Language Selector Dropdown - 6px from top, bottom, left of outer container */}
-          <div className="mt-[6px] mb-[6px] ml-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200">
-            <Select
-              placeholder="Language"
-              selectedKeys={selectedLanguage ? [selectedLanguage] : []}
-              onSelectionChange={(keys) => {
-                const selected = Array.from(keys).join("");
-                setSelectedLanguage(selected);
-              }}
-              onOpenChange={(open) => setIsLanguageOpen(open)}
-              isOpen={isLanguageOpen}
-              selectorIcon={<span></span>}
-              startContent={
-                selectedLanguageImage && (
-                  <Image
-                    className="h-6 w-[39px] rounded-[4px]"
-                    src={selectedLanguageImage.src}
-                    alt={selectedLanguage}
-                    width={39}
-                    height={24}
-                  />
-                )
-              }
-              endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
-              classNames={{
-                trigger: [
-                  "select-wrapper-ipractis",
-                  "!bg-primary-color-P12",
-                  "w-full",
-                  "min-h-fit",
-                  "!rounded-xl",
-                ],
-                innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
-                value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                ],
-                listbox: ["text-primary-color-P4"],
-                base: "!w-full",
-              }}
-            >
-              {allLanguages
-                ?.filter(
-                  (language) =>
-                    !languages.some(
-                      (masteredLanguage) => masteredLanguage.name === language
-                    )
-                )
-                .map((language) => (
-                  <SelectItem key={language}>{language}</SelectItem>
-                ))}
-            </Select>
-          </div>
+        <InputLeftStickStatus
+          inputBarStatusClassName={getInputStatusBorder(
+            errors,
+            selectedLanguage && selectedLevel ? "valid" : null,
+            "languages"
+          )}
+        >
+          <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
+            {/* Language Selector Dropdown - 6px from top, bottom, left of outer container */}
+            <div className="mt-[6px] mb-[6px] ml-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200">
+              <Select
+                placeholder="Language"
+                selectedKeys={selectedLanguage ? [selectedLanguage] : []}
+                onSelectionChange={(keys) => {
+                  const selected = Array.from(keys).join("");
+                  setSelectedLanguage(selected);
+                }}
+                onOpenChange={(open) => setIsLanguageOpen(open)}
+                isOpen={isLanguageOpen}
+                selectorIcon={<span></span>}
+                startContent={
+                  selectedLanguageImage && (
+                    <Image
+                      className="h-6 w-[39px] rounded-[4px]"
+                      src={selectedLanguageImage.src}
+                      alt={selectedLanguage}
+                      width={39}
+                      height={24}
+                    />
+                  )
+                }
+                endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                classNames={{
+                  trigger: [
+                    "select-wrapper-ipractis",
+                    "!bg-primary-color-P12",
+                    "w-full",
+                    "min-h-fit",
+                    "!rounded-xl",
+                  ],
+                  innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
+                  value: [
+                    "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                  ],
+                  listbox: ["text-primary-color-P4"],
+                  base: "!w-full",
+                }}
+              >
+                {allLanguages
+                  ?.filter(
+                    (language) =>
+                      !languages.some(
+                        (masteredLanguage) => masteredLanguage.name === language
+                      )
+                  )
+                  .map((language) => (
+                    <SelectItem key={language}>{language}</SelectItem>
+                  ))}
+              </Select>
+            </div>
 
-          {/* Level Dropdown - 6px from top, bottom, right of outer container */}
-          <div className="mt-[6px] mb-[6px] mr-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200 ml-auto">
-            <Select
-              placeholder="Level"
-              selectedKeys={selectedLevel ? [selectedLevel] : []}
-              onSelectionChange={(keys) => {
-                const selected = Array.from(keys).join("");
-                setSelectedLevel(selected);
-              }}
-              onOpenChange={(open) => setIsLevelOpen(open)}
-              isOpen={isLevelOpen}
-              selectorIcon={<span></span>}
-              endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
-              classNames={{
-                trigger: [
-                  "select-wrapper-ipractis",
-                  "!bg-primary-color-P12",
-                  "w-full",
-                  "min-h-fit",
-                  "!rounded-xl",
-                ],
-                innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
-                value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                ],
-                listbox: ["text-primary-color-P4"],
-                base: "!w-full",
-              }}
-            >
-              {languagesLevels.map((level) => (
-                <SelectItem key={level}>{level}</SelectItem>
-              ))}
-            </Select>
+            {/* Level Dropdown - 6px from top, bottom, right of outer container */}
+            <div className="mt-[6px] mb-[6px] mr-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200 ml-auto">
+              <Select
+                placeholder="Level"
+                selectedKeys={selectedLevel ? [selectedLevel] : []}
+                onSelectionChange={(keys) => {
+                  const selected = Array.from(keys).join("");
+                  setSelectedLevel(selected);
+                }}
+                onOpenChange={(open) => setIsLevelOpen(open)}
+                isOpen={isLevelOpen}
+                selectorIcon={<span></span>}
+                endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                classNames={{
+                  trigger: [
+                    "select-wrapper-ipractis",
+                    "!bg-primary-color-P12",
+                    "w-full",
+                    "min-h-fit",
+                    "!rounded-xl",
+                  ],
+                  innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
+                  value: [
+                    "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                  ],
+                  listbox: ["text-primary-color-P4"],
+                  base: "!w-full",
+                }}
+              >
+                {languagesLevels.map((level) => (
+                  <SelectItem key={level}>{level}</SelectItem>
+                ))}
+              </Select>
+            </div>
           </div>
-        </div>
+        </InputLeftStickStatus>
       </div>
 
       <SplitDynamicErrorZod message={languagesError?.message} />
