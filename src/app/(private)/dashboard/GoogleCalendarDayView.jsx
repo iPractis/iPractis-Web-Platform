@@ -158,57 +158,59 @@ export default function GoogleCalendarWeekView({
       </div>
 
       {/* Grid */}
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] text-sm min-w-[1000px]">
-        {Array.from({ length: 24 }, (_, hour) => (
-          <React.Fragment key={hour}>
-            {/* Time Label */}
-            <div className="p-2 text-gray-500 border-t border-gray-100 text-right pr-3 bg-gray-50">
-              {hour.toString().padStart(2, "0")}:00
-            </div>
-
-            {/* Each day cell */}
-            {sortedEvents.map((dayObj) => {
-  const busy = isBusy(dayObj.date, hour);
-  const past = isPastSlot(dayObj.date, hour);
-  const isToday = dayObj.date === currentDate;
-console.log(dayObj)
-  return (
-    <div
-      key={`${dayObj.date}-${hour}`}
-      onClick={() => handleSlotClick(dayObj, hour)}
-      className={`relative border-t border-l border-gray-100 cursor-pointer h-14 flex items-center justify-center transition-all
-        ${
-          busy
-            ? `bg-gray-300 text-gray-800 h-[${dayObj.hour[1]-dayObj.hour[0]/60}] font-medium cursor-not-allowed`
-            : past
-            ? "bg-gray-50 text-gray-400 cursor-not-allowed"
-            : "hover:bg-blue-50 text-gray-600"
-        }`}
-    >
-      {/* ✅ Message only visible if this slot has a busy event */}
-      {busy && dayObj?.messages && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-xs text-gray-700 font-medium truncate px-2 text-center leading-tight">
-          {dayObj.messages}
-          <div>
-          {"("}<span>{dayObj.hour[0]}</span> - <span>{dayObj.hour[1]}</span>{")"}
-          </div>
-        </div>
-      )}
-
-      {/* 🔴 Current time indicator */}
-      {isToday && hour === currentHour && (
-        <div
-          className="absolute left-0 right-0 h-[2px] bg-red-500"
-          style={{ top: `${progressWithinHour}%` }}
-        />
-      )}
-    </div>
-  );
-})}
-
-          </React.Fragment>
-        ))}
+     <div className="grid grid-cols-9 overflow-y-scroll border-t border-gray-200 relative">
+  {/* Hour labels */}
+  <div className="col-span-1 border-r border-gray-200">
+    {Array.from({ length: 24 }, (_, hour) => (
+      <div
+        key={hour}
+        className="h-14 flex items-start justify-end pr-2 text-xs text-gray-400"
+      >
+        {hour.toString().padStart(2, "0")}:00
       </div>
+    ))}
+  </div>
+
+  {/* Day columns */}
+  {sortedEvents.map((dayObj) => (
+    <div key={dayObj.date} className="relative border-l border-gray-100">
+      {/* Hour grid background */}
+      {Array.from({ length: 24 }, (_, hour) => (
+        <div
+          key={hour}
+          className="h-14 border-b border-gray-50 hover:bg-blue-50 transition-colors"
+        />
+      ))}
+
+      {/* ✅ Event blocks overlayed on top */}
+      {dayObj.events?.map((event, i) => {
+        const [startH, startM] = event.start.split(":").map(Number);
+        const [endH, endM] = event.end.split(":").map(Number);
+
+        const startMinutes = startH * 60 + startM;
+        const endMinutes = endH * 60 + endM;
+        const duration = endMinutes - startMinutes;
+
+        const HOUR_HEIGHT = 56;
+const top = (startMinutes / 60) * HOUR_HEIGHT;
+const height = (duration / 60) * HOUR_HEIGHT;
+
+        return (
+          <div
+            key={i}
+            className="absolute left-1 right-1 bg-gray-300 rounded-md text-gray-800 text-xs font-medium px-1 py-1 flex items-center justify-center shadow-sm"
+            style={{ top, height }}
+          >
+            {event.title}
+            <div className="text-[10px] text-gray-600">
+              {event.start} - {event.end}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  ))}
+</div>
 
       {/* Modal for creating event */}
       {showModal && selectedSlot && (
