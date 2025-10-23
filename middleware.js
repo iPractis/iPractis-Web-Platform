@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+// src/middleware.ts
+
+export { auth as middleware } from "@/src/lib/auth";
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;

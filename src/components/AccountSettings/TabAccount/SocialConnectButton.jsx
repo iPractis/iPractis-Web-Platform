@@ -5,6 +5,7 @@ const SocialConnectButton = ({
   IconComponent,
   label,
   onClick,
+  disabled
 }) => {
   return (
     <div className="bg-primary-color-P11 flex justify-between items-center gap-4 p-1.5 rounded-2xl">
@@ -23,6 +24,7 @@ const SocialConnectButton = ({
           } btn w-full px-7 py-1.5 rounded-[10px]`}
           onClick={onClick}
           type="button"
+          disabled={disabled}
         >
           {isConnected ? "Connected" : "Connect"}
         </button>

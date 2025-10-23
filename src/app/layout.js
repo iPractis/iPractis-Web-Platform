@@ -3,6 +3,7 @@ import Header from "@/src/components/Header/Header";
 import { poppins } from "@/src/ui/font";
 import "./globals.css";
 import { AuthProvider } from "@/src/hooks/useAuth";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "iPractis",
@@ -13,6 +14,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <SessionProvider>
+          
         <AuthProvider>
         <Providers>
           <Header />
@@ -20,6 +23,7 @@ export default function RootLayout({ children }) {
           <main>{children}</main>
         </Providers>
         </AuthProvider>
+        </SessionProvider>
       </body>
     </html>
   );

@@ -6,7 +6,7 @@ import Preferences from "./Preferences";
 import DeleteAccount from "./DeleteAccount";
 import { Button } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const TabAccount = ({ activeTab }) => {
   const {
