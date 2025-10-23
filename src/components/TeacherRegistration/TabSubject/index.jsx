@@ -36,7 +36,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       teachToAmateurPersons: draft?.teachToAmateurPersons || false,
       teachToYoungPersons: draft?.teachToYoungPersons || false,
       hourlyPrice: draft?.hourlyPrice || "",
-      studentLevel: draft?.studentLevel || "",
+      studentLevel: draft?.studentLevel || [],
       subject: draft?.subject || "",
       videoLink: draft?.videoLink || "",
       subSubject: draft?.subSubject || [],
@@ -105,10 +105,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
         <GenderRestriction isSubmitted={isSubmitted} control={control} />
 
-        <AveragePrice control={control} errors={errors} watch={watch} />
-     
-
-      
         <AveragePrice control={control} errors={errors} watch={watch} />
         <SaveAndContinueBox buttonRef={buttonRef} />
       </WhiteSpaceWrapper>

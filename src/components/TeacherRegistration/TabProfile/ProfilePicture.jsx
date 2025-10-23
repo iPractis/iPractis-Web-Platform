@@ -50,7 +50,10 @@ console.log("CURRENT IMAGE URL:", currentImageUrl)
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(errors, profileUrlField.value, "profile_url")}
           >
-            <div className="relative">
+            <div 
+              className="relative cursor-pointer"
+              onClick={() => document.getElementById('profile-image-upload')?.click()}
+            >
               {currentImageUrl ? (
                 <Image
                   className="w-[100px] h-[100px] rounded-2xl object-cover"

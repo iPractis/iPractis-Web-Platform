@@ -96,7 +96,7 @@ const BaseCountryInput = ({
             placeholder={placeholder}
             label={label}
             classNames={{
-              inputWrapper: fieldError?.message && "form-input-error",
+              inputWrapper: fieldError?.message ? "form-input-error" : "!bg-[#F8F7F5]",
               input: "relative z-10 bg-transparent",
             }}
             value={field?.value || ""}

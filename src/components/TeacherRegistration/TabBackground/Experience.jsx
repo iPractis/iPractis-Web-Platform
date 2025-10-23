@@ -83,7 +83,7 @@ const Experience = ({ errors, control }) => {
               }
               classNames={{
                 trigger: [
-                  "!bg-blue-500 rounded-2xl p-1.5 h-auto border-0 shadow-none",
+                  "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
                   error?.message && "form-input-error",
                 ],
                 innerWrapper: ["text-white placeholder:text-white", "w-full"],

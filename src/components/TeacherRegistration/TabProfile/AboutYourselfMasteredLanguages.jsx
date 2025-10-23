@@ -103,7 +103,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           }
           classNames={{
             trigger: [
-              "!bg-blue-500 rounded-2xl p-1.5 h-auto border-0 shadow-none",
+              "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
               (languagesError?.message || languagesError !== undefined) &&
                 "form-input-error",
             ],

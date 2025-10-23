@@ -48,7 +48,7 @@ const AveragePrice = ({ control, errors, watch }) => {
               "hourlyPrice"
             )} -translate-y-0 top-[54%]`}
           >
-            <div className="flex items-end gap-2 mt-7">
+            <div className="mt-7">
               <CustomNextUiInput
                 type="text"
                 name="hourlyPrice"
@@ -76,6 +76,29 @@ const AveragePrice = ({ control, errors, watch }) => {
                   <InputBGWrapperIcon>
                     <DollarSignIcon fillColor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
+                }
+                endContent={
+                  <div 
+                    className="bg-[#FFD600] rounded-[10px] flex items-center justify-center px-[12px] py-[6px] h-full"
+                    style={{
+                      width: '159px',
+                      height: '36px',
+                      gap: '10px',
+                      opacity: 1,
+                      paddingTop: '6px',
+                      paddingRight: '12px',
+                      paddingBottom: '6px',
+                      paddingLeft: '12px',
+                      borderRadius: '10px',
+                      fontFamily: 'Poppins',
+                      fontWeight: 500,
+                      fontSize: '11.2px',
+                      lineHeight: '100%',
+                      letterSpacing: '0%'
+                    }}
+                  >
+                    <span className="text-gray-800 font-medium whitespace-nowrap">For 30 minutes sessions</span>
+                  </div>
                 }
                 value={hourlyPrice.value}
                 onChange={hourlyPrice.onChange}

@@ -14,7 +14,7 @@ import { Select, SelectItem } from "@nextui-org/react";
 import { useState } from "react";
 
 // Images && icons
-import { ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
+import { AddBoxIcon, ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
 
 const RelatedSubTopics = ({ control, errors }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +96,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                   }
                   endContent={
                     <InputBGWrapperIcon>
-                      <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                      <AddBoxIcon fillColor={"fill-primary-color-P1"} />
                     </InputBGWrapperIcon>
                   }
                   classNames={{

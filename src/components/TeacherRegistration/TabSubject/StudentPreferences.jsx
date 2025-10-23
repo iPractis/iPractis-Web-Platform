@@ -39,7 +39,7 @@ const StudentPreference = ({ control, errors }) => {
             </div>
           </div>
 
-          {/* Radio Buttons */}
+          {/* Multiple Selection Checkboxes */}
           <Controller
             name="studentLevel"
             control={control}
@@ -58,8 +58,19 @@ const StudentPreference = ({ control, errors }) => {
                           studentLevelError?.message && "form-input-error"
                         } w-[19px] h-[19px]`,
                       }}
-                      isSelected={field.value === level.value}
-                      onChange={() => field.onChange(level.value)}
+                      isSelected={Array.isArray(field.value) ? field.value.includes(level.value) : false}
+                      onValueChange={(isSelected) => {
+                        const currentValues = Array.isArray(field.value) ? field.value : [];
+                        if (isSelected) {
+                          // Add the level if not already present
+                          if (!currentValues.includes(level.value)) {
+                            field.onChange([...currentValues, level.value]);
+                          }
+                        } else {
+                          // Remove the level
+                          field.onChange(currentValues.filter(val => val !== level.value));
+                        }
+                      }}
                     >
                       {level.label}
                     </CustomNextUiCheckbox>

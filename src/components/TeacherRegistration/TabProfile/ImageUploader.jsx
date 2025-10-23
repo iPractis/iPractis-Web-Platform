@@ -32,16 +32,14 @@ const ImageUploader = ({ userId, setValue }) => {
 
   return (
     <div>
-      <label className="cursor-pointer bg-primary-color-P1 text-white px-4 py-2 rounded-lg">
-        {uploading ? "Uploading..." : "Change Picture"}
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          className="hidden"
-          onChange={handleFileChange}
-          disabled={uploading}
-        />
-      </label>
+      <input
+        type="file"
+        accept="image/png, image/jpeg"
+        className="hidden"
+        onChange={handleFileChange}
+        disabled={uploading}
+        id="profile-image-upload"
+      />
     </div>
   );
 };

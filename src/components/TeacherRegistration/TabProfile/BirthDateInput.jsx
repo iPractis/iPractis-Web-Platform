@@ -237,11 +237,9 @@ const BirthDateInput = ({ errors, control }) => {
             />
           </div>
 
-          <div className="relative flex-[65%]">
+          <div className="flex-[65%]">
             <input
-              className={`input-ipractis w-full outline-none rounded-xl !p-0 lg:text-start text-center h-9 ${getPaddingClass(
-                inputValue
-              )}`}
+              className="input-ipractis w-full outline-none rounded-xl !p-0 text-center h-9 px-2"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -251,19 +249,8 @@ const BirthDateInput = ({ errors, control }) => {
               name="birthDateMonth"
               value={inputValue}
               type="text"
+              placeholder="Month"
             />
-
-            {suggestions.length > 0 && (
-              <span
-                className={`absolute top-0 ${
-                  !inputValue.length
-                    ? "-translate-x-1/2 left-1/2"
-                    : getSuggestionClassName(inputValue)
-                } h-full flex items-center pointer-events-none text-primary-color-P7`}
-              >
-                {suggestions[0].slice(inputValue.length)}
-              </span>
-            )}
           </div>
 
           <div className="flex-[45%]">
