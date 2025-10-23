@@ -22,6 +22,7 @@ const BaseCountryInput = ({
   const [countries, setCountries] = useState([]);
   const mirrorRef = useRef(null);
   const prefixRef = useRef(null);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     const getCountries = async () => {
@@ -92,6 +93,7 @@ const BaseCountryInput = ({
         <div className="relative w-full">
           {/* Input with startContent */}
           <CustomNextUiInput
+            ref={inputRef}
             type="text"
             placeholder={placeholder}
             label={label}
@@ -124,18 +126,28 @@ const BaseCountryInput = ({
           <span
             ref={mirrorRef}
             className="absolute top-0 left-0 invisible whitespace-pre px-3 py-2 font-inherit text-base"
+            style={{
+              fontFamily: 'inherit',
+              fontSize: 'inherit',
+              fontWeight: 'inherit',
+              letterSpacing: 'inherit',
+              lineHeight: 'inherit'
+            }}
           >
             {field?.value}
           </span>
 
-          {/* Ghost suggestion */}
+          {/* Ghost suggestion - positioned right after typed text */}
           {suggestions.length > 0 && field?.value && (
             <span
-              className="absolute top-1/2 left-1/2 -translate-y-1/2 text-primary-color-P7 pointer-events-none"
+              className="absolute top-1/2 -translate-y-1/2 text-primary-color-P7 pointer-events-none whitespace-pre"
               style={{
-                left:
-                  (prefixRef.current?.offsetWidth || 0) +
-                  (mirrorRef.current?.offsetWidth || 0),
+                left: `calc(${(prefixRef.current?.offsetWidth || 0)}px + ${(mirrorRef.current?.offsetWidth || 0)}px + 4px)`,
+                fontFamily: 'inherit',
+                fontSize: 'inherit',
+                fontWeight: 'inherit',
+                letterSpacing: 'inherit',
+                lineHeight: 'inherit'
               }}
             >
               {suggestions[0].slice(field.value.length)}

@@ -10,12 +10,17 @@ import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import { useEffect, useState } from "react";
+import { fetchCountries } from "@/src/lib/utils/fetchCountries";
 
 const AvailabilityRevision = ({draftData}) => {
   // Date picker state (extracted from WorkScheduleTable logic)
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
+  
+  // Country data state
+  const [countries, setCountries] = useState([]);
+  const [selectedCountryFlag, setSelectedCountryFlag] = useState(unitedKingdom);
 
   // Initialize week dates (same logic as WorkScheduleTable)
   useEffect(() => {
@@ -39,6 +44,31 @@ const AvailabilityRevision = ({draftData}) => {
     setMinDate(weekDatesArray[0]);
     setMaxDate(weekDatesArray[6]);
   }, []);
+
+  // Fetch countries and set correct flag
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const countriesData = await fetchCountries();
+        setCountries(countriesData);
+        
+        // Find the correct country flag based on draftData.country
+        if (draftData?.country && countriesData.length > 0) {
+          const matchingCountry = countriesData.find(
+            country => country.name.toLowerCase() === draftData.country.toLowerCase()
+          );
+          if (matchingCountry) {
+            setSelectedCountryFlag(matchingCountry.flag);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        // Keep default UK flag if error
+      }
+    };
+
+    loadCountries();
+  }, [draftData?.country]);
 
   // Week navigation functions (same logic as WorkScheduleTable)
   const handleDecrementWeek = () => {
@@ -106,7 +136,7 @@ const AvailabilityRevision = ({draftData}) => {
               <Image
                 alt={"Country Flag"}
                 className="w-[16px] h-[12px]"
-                src={unitedKingdom}
+                src={selectedCountryFlag}
               />
               <p className="ST-3 text-primary-color-P6">Teaches {draftData.subject}</p>
             </div>
@@ -143,16 +173,20 @@ const AvailabilityRevision = ({draftData}) => {
         <div className="w-[430px] h-[302.625px] max-w-[430px] flex flex-col justify-between py-4">
           {/* Top Section - Teaching Details */}
           <div className="space-y-3">
-            {/* Teaches all levels */}
+            {/* Teaching levels */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
               <UserSpeakingIcon fillColor={"fill-primary-color-P1"} />
-              <p className="ST-3 text-primary-color-P6">Teaches all levels</p>
+              <p className="ST-3 text-primary-color-P6">
+                {draftData.studentLevel ? `Teaches ${Array.isArray(draftData.studentLevel) ? draftData.studentLevel.join(', ') : draftData.studentLevel} level${Array.isArray(draftData.studentLevel) && draftData.studentLevel.length > 1 ? 's' : ''}` : 'Teaches all levels'}
+              </p>
             </div>
             
-            {/* Teaches all ages */}
+            {/* Teaching ages */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
               <UserHatIcon fillColor={"fill-primary-color-P1"} />
-              <p className="ST-3 text-primary-color-P6">Teaches all ages</p>
+              <p className="ST-3 text-primary-color-P6">
+                {draftData.teachToYoungPersons ? 'Teaches all ages' : 'Teaches adults only'}
+              </p>
             </div>
           </div>
 
@@ -180,7 +214,7 @@ const AvailabilityRevision = ({draftData}) => {
             <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
               <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
               <div className="flex items-center gap-2">
-                <span className="MT-SB-1 text-primary-color-P1">8 USD</span>
+                <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice ? `${draftData.hourlyPrice} USD` : '8 USD'}</span>
                 <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
               </div>
             </div>

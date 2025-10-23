@@ -17,7 +17,7 @@ import moment from "moment";
 
 // React imports
 import { useController } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // Icons
 import { CalendarBiggerIcon, BabyWalkerIcon, QuestionMark } from "../../Icons";
@@ -30,6 +30,11 @@ const BirthDateInput = ({ errors, control }) => {
 
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  
+  // Refs for month input suggestive text positioning
+  const monthMirrorRef = useRef(null);
+  const monthInputRef = useRef(null);
+  const [textWidth, setTextWidth] = useState(0);
 
   const {
     field: birthDate,
@@ -77,6 +82,13 @@ const BirthDateInput = ({ errors, control }) => {
       setInputValue(getMonthNumberAsText(birthDateMonth.value));
     }
   }, [birthDateMonth.value]);
+
+  // Measure text width for accurate positioning
+  useEffect(() => {
+    if (monthMirrorRef.current) {
+      setTextWidth(monthMirrorRef.current.offsetWidth);
+    }
+  }, [inputValue]);
 
   const handleInputChange = (value) => {
     const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
@@ -237,9 +249,10 @@ const BirthDateInput = ({ errors, control }) => {
             />
           </div>
 
-          <div className="flex-[65%]">
+          <div className="flex-[65%] relative">
             <input
-              className="input-ipractis w-full outline-none rounded-xl !p-0 text-center h-9 px-2"
+              ref={monthInputRef}
+              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-transparent"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -251,6 +264,41 @@ const BirthDateInput = ({ errors, control }) => {
               type="text"
               placeholder="Month"
             />
+            
+            {/* Invisible mirror span for typed text */}
+            <span
+              ref={monthMirrorRef}
+              className="absolute top-0 left-1/2 -translate-x-1/2 invisible whitespace-pre px-2 py-2 font-inherit text-base text-center"
+              style={{
+                fontFamily: 'inherit',
+                fontSize: 'inherit',
+                fontWeight: 'inherit',
+                letterSpacing: 'inherit',
+                lineHeight: 'inherit'
+              }}
+            >
+              {inputValue}
+            </span>
+
+            {/* Ghost suggestion - positioned right after typed text */}
+            {suggestions.length > 0 && inputValue && (
+              <span
+                className="absolute text-primary-color-P7 pointer-events-none whitespace-pre text-center"
+                style={{
+                  top: '50%',
+                  left: `calc(50% + ${textWidth / 2}px + 1px)`,
+                  transform: 'translateY(-50%)',
+                  fontFamily: 'inherit',
+                  fontSize: 'inherit',
+                  fontWeight: 'inherit',
+                  letterSpacing: 'inherit',
+                  lineHeight: 'inherit',
+                  height: 'inherit'
+                }}
+              >
+                {suggestions[0].slice(inputValue.length)}
+              </span>
+            )}
           </div>
 
           <div className="flex-[45%]">

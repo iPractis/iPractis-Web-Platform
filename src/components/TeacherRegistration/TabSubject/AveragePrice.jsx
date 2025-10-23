@@ -46,7 +46,7 @@ const AveragePrice = ({ control, errors, watch }) => {
               errors,
               hourlyPrice.value,
               "hourlyPrice"
-            )} -translate-y-0 top-[54%]`}
+            )} top-1/2 -translate-y-1/2`}
           >
             <div className="mt-7">
               <CustomNextUiInput
@@ -56,6 +56,14 @@ const AveragePrice = ({ control, errors, watch }) => {
                 classNames={{
                   label: "!-top-12 ms-0.5",
                   inputWrapper: `${hourlyPriceError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
+                  input: "placeholder:text-primary-color-P4 text-primary-color-P4 ps-4 pe-10",
+                }}
+                style={{
+                  fontFamily: 'Poppins',
+                  fontWeight: 500,
+                  fontSize: '11px',
+                  lineHeight: '100%',
+                  letterSpacing: '0%'
                 }}
                 label={
                   <div className="flex flex-col">

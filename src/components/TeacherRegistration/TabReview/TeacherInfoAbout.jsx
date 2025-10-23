@@ -28,7 +28,7 @@ const TeacherInfoAbout = ({draftData}) => {
             type="button"
             className="btn btn-primary MT-SB-1 px-4 py-1.5 rounded-2xl h-12"
           >
-            Teaches {draftData.studentLevel} level
+            Teaches {draftData.studentLevel ? (Array.isArray(draftData.studentLevel) ? draftData.studentLevel.join(', ') : draftData.studentLevel) : 'all'} level{draftData.studentLevel && Array.isArray(draftData.studentLevel) && draftData.studentLevel.length > 1 ? 's' : ''}
           </button>
 
           {draftData.teachToYoungPersons && <button
