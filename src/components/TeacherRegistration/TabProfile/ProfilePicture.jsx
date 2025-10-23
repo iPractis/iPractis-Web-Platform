@@ -48,7 +48,7 @@ console.log("CURRENT IMAGE URL:", currentImageUrl)
       <div className="mt-8 mb-16 md:px-8 ml-[285px]">
         <div className="flex items-start sm:gap-8 gap-4">
           <InputLeftStickStatus
-            inputBarStatusClassName={getInputStatusBorder(errors, profileUrlField.value, "profile_url")}
+            inputBarStatusClassName={`${getInputStatusBorder(errors, profileUrlField.value, "profile_url")} !h-[68px] !rounded-[2px]`}
           >
             <div 
               className="relative cursor-pointer"
