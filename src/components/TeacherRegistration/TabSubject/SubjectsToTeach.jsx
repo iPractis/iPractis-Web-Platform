@@ -16,7 +16,7 @@ import { useState } from "react";
 
 // Images && icons
 import {
-  ChevronDownBigIcon,
+  AddBoxIcon,
   NotebookOpenedIconBigger,
   QuestionMark,
   UserBoxIcon,
@@ -114,7 +114,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }
                 endContent={
                   <InputBGWrapperIcon>
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                    <AddBoxIcon fillColor={"fill-primary-color-P1"} />
                   </InputBGWrapperIcon>
                 }
                 classNames={{
