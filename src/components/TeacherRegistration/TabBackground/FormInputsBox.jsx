@@ -162,10 +162,10 @@ const FormInputsBox = ({
   };
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-2.5">
-        {/* Company */}
-        <div className="flex-[40%]">
+    <div className="mb-8 ml-2">
+      {/* Company/Experience Title with Delete Button */}
+      <div className="flex items-center gap-2.5 mb-2.5">
+        <div className="flex-1">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
               errors,
@@ -189,8 +189,22 @@ const FormInputsBox = ({
           </InputLeftStickStatus>
         </div>
 
+        {/* Delete Button */}
+        <div className="flex-shrink-0">
+          <button type="button" onClick={() => handleDelete(index)}>
+            <InputBGWrapperIcon
+              className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}
+            >
+              <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
+            </InputBGWrapperIcon>
+          </button>
+        </div>
+      </div>
+
+      {/* Date Fields */}
+      <div className="flex items-center gap-2.5 mb-2.5">
         {/* Calendar FROM */}
-        <div className="flex-[15%]">
+        <div className="flex-[50%]">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
               errors,
@@ -216,7 +230,7 @@ const FormInputsBox = ({
         </div>
 
         {/* Calendar TO */}
-        <div className="flex-[15%]">
+        <div className="flex-[50%]">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
               errors,
@@ -240,43 +254,6 @@ const FormInputsBox = ({
             />
           </InputLeftStickStatus>
         </div>
-
-        {/* File (PDF, PNG, JPEG) */}
-        <div className="flex-1">
-          <label className="relative cursor-pointer">
-            <input
-              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-              onChange={handleFileSelect}
-              accept=".pdf, .png, .jpeg"
-              type="file"
-            />
-
-            <InputBGWrapperIcon
-              className={`btn-septenary rounded-2xl ${
-                uploadFileError?.message ? "form-input-error" : "bg-primary-color-P11"
-              } w-[48px] h-[48px] cursor-pointer`}
-            >
-              {uploadStatus === "uploading" ? (
-                <span className="text-[11px]">Uploading...</span>
-              ) : uploadFile?.value ? (
-                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
-              ) : (
-                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
-              )}
-            </InputBGWrapperIcon>
-          </label>
-        </div>
-
-        {/* Recycle bin */}
-        <div className="flex-1">
-          <button type="button" onClick={() => handleDelete(index)}>
-            <InputBGWrapperIcon
-              className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}
-            >
-              <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          </button>
-        </div>
       </div>
 
       <SplitDynamicErrorZod message={companyError?.message} />
@@ -284,8 +261,6 @@ const FormInputsBox = ({
       <SplitDynamicErrorZod message={calendarFromError?.message} />
 
       <SplitDynamicErrorZod message={calendarToError?.message} />
-
-      <SplitDynamicErrorZod message={uploadFileError?.message} />
 
       {/* Description */}
       <div className="mt-2.5">
@@ -314,6 +289,52 @@ const FormInputsBox = ({
         </InputLeftStickStatus>
 
         <SplitDynamicErrorZod message={descriptionError?.message} />
+      </div>
+
+      {/* Upload Document Button - Below Description */}
+      <div className="mt-2.5">
+        <label className="relative cursor-pointer">
+          <input
+            className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+            onChange={handleFileSelect}
+            accept=".pdf, .png, .jpeg"
+            type="file"
+          />
+          <div className={`w-full h-[48px] flex items-center ${
+            uploadFileError?.message ? "form-input-error" : ""
+          }`}>
+            {/* Left Upload Icon Container */}
+            <div className="w-[54px] h-[48px] bg-[#F8F7F5] rounded-2xl flex items-center justify-center">
+              <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+            </div>
+            
+            {/* Increased Gap */}
+            <div className="w-[8px] h-[48px]"></div>
+            
+            {/* Right Section with Text and Plus */}
+            <div className="w-[366px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center justify-between pt-[6px] pr-[6px] pb-[6px] pl-[16px]">
+              <span className="text-primary-color-P4 ST-3">
+                {uploadStatus === "uploading" 
+                  ? "Uploading..." 
+                  : uploadFile?.value 
+                    ? "Document uploaded" 
+                    : "Upload your document"
+                }
+              </span>
+              <div className="flex items-center justify-center w-[36px] h-[36px] bg-white rounded-[10px]">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
+                  <path
+                    d="M8 2V14M2 8H14"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </label>
+        <SplitDynamicErrorZod message={uploadFileError?.message} />
       </div>
     </div>
   );

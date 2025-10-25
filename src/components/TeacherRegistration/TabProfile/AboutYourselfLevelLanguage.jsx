@@ -52,7 +52,7 @@ const AboutYourselfLevelLanguage = ({
           <div className="flex items-end gap-2">
             <div
               className={`flex justify-between items-center gap-2.5 h-12 w-full rounded-2xl p-1.5 ${
-                error ? "form-input-error" : "bg-primary-color-P11"
+                error ? "form-input-error" : "bg-[#F8F7F5]"
               }`}
             >
               <div className="flex-1 flex items-center gap-2.5 p-1.5">
@@ -115,7 +115,7 @@ const AboutYourselfLevelLanguage = ({
             </div>
 
             <button
-              className="bg-primary-color-P11 hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+              className="bg-[#F8F7F5] hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
               onClick={() => handleDeleteMasteredLanguage(index)}
               type="button"
             >

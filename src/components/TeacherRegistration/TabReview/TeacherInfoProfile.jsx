@@ -1,11 +1,39 @@
 // React imports
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 // Images
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
+import { fetchCountries } from "@/src/lib/utils/fetchCountries";
 
 const TeacherInfoProfile = ({ draftData }) => {
+  const [selectedCountryFlag, setSelectedCountryFlag] = useState(unitedKingdom);
+
+  // Fetch countries and set correct flag
+  useEffect(() => {
+    const loadCountries = async () => {
+      try {
+        const countriesData = await fetchCountries();
+        
+        // Find the correct country flag based on draftData.country
+        if (draftData?.country && countriesData.length > 0) {
+          const matchingCountry = countriesData.find(
+            country => country.name.toLowerCase() === draftData.country.toLowerCase()
+          );
+          if (matchingCountry) {
+            setSelectedCountryFlag(matchingCountry.flag);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        // Keep default UK flag if error
+      }
+    };
+
+    loadCountries();
+  }, [draftData?.country]);
+
   console.log("Draft Data in TeacherInfoProfile:", draftData);
   return (
     <div className="flex gap-2.5">
@@ -29,7 +57,7 @@ const TeacherInfoProfile = ({ draftData }) => {
             <Image
               alt={"Country Image"}
               className="w-[15px] h-[13px]"
-              src={unitedKingdom}
+              src={selectedCountryFlag}
             />
             <h4 className="text-primary-color-P6 ST-3">Teaches {draftData.subject}</h4>
           </div>

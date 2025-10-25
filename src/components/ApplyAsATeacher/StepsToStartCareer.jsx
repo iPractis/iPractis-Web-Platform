@@ -24,7 +24,7 @@ const StepsToStartCareer = () => {
       {/* From 640px to up - Desktop */}
       <article className="sm:block hidden">
         <div className="grid gap-[33px] grid-cols-4 relative">
-          <div className="absolute top-6 -z-10 w-full bg-primary-color-P1 h-[4px]"></div>
+          <div className="absolute top-6 -z-10 w-[80%] bg-primary-color-P1 h-[4px]"></div>
 
           <div>
             <Image alt="Book Icon" className="w-[50px]" src={book} />

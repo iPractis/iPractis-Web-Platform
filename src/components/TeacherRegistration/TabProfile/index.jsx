@@ -4,13 +4,14 @@ import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import ProfilePicture from "./ProfilePicture";
 import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
+import SaveAndContinueBox from "../TabSubject/SaveAndContinueBox";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // React imports
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 
 const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
@@ -39,6 +40,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const buttonRef = useRef(null);
   const { user } = useAuth();
 
   const onSubmit = async (data) => {
@@ -112,8 +114,8 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
         <AboutYourselfMasteredLanguages errors={errors} control={control} />
       </AboutYourself>
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav setActiveTab={setActiveTab} activeTab={activeTab} />
+      {/* Save and Continue Section */}
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };

@@ -42,7 +42,8 @@ const ProfileTitle = ({ control, errors }) => {
           profileTitle?.value?.length === 120 ? "top-[12%]" : "top-[25%]"
         }`}
       >
-        <CustomNextUiInputWithMaxLength
+        <div className="[&_.input-wrapper-ipractis]:!bg-[#F8F7F5]">
+          <CustomNextUiInputWithMaxLength
           base={"!mt-0"}
           nameInput={"profileTitle"}
           labelTitle={"Write a catchy headline"}
@@ -72,7 +73,8 @@ const ProfileTitle = ({ control, errors }) => {
           }
           backgroundError={profileTitleError?.message}
           inputProps={{ onBlur: profileTitle.onBlur }}
-        />
+          />
+        </div>
       </InputLeftStickStatus>
 
       <SplitDynamicErrorZod message={profileTitleError?.message} />

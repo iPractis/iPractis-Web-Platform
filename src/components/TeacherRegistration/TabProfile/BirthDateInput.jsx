@@ -13,23 +13,28 @@ import BirthDateCustomHeader from "./BirthDateCustomHeader";
 // External imports
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
-import moment from "moment";
+import dayjs from "dayjs";
 
 // React imports
 import { useController } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 // Icons
 import { CalendarBiggerIcon, BabyWalkerIcon, QuestionMark } from "../../Icons";
 
 const BirthDateInput = ({ errors, control }) => {
-  const currentDate = moment(getDateYearsAgo(18));
+  const currentDate = dayjs(getDateYearsAgo(18));
   const defaultDate = currentDate.format("D");
   const defaultMonth = currentDate.format("MM");
   const defaultYear = currentDate.format("YYYY");
 
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
+  
+  // Refs for month input suggestive text positioning
+  const monthMirrorRef = useRef(null);
+  const monthInputRef = useRef(null);
+  const [textWidth, setTextWidth] = useState(0);
 
   const {
     field: birthDate,
@@ -64,19 +69,26 @@ const BirthDateInput = ({ errors, control }) => {
       birthDateYear.onChange(defaultYear);
       setInputValue(getMonthNumberAsText(defaultMonth));
     } else {
-      const date = moment(birthDate.value, "YYYY/MM/D");
+      const date = dayjs(birthDate.value, "YYYY/MM/D");
       birthDateNumber.onChange(date.format("D"));
       birthDateMonth.onChange(date.format("MM"));
       birthDateYear.onChange(date.format("YYYY"));
       setInputValue(getMonthNumberAsText(date.format("MM")));
     }
-  }, [birthDate.value]);
+  }, [birthDate.value, defaultDate, defaultMonth, defaultYear]);
 
   useEffect(() => {
     if (birthDateMonth.value) {
       setInputValue(getMonthNumberAsText(birthDateMonth.value));
     }
   }, [birthDateMonth.value]);
+
+  // Measure text width for accurate positioning
+  useEffect(() => {
+    if (monthMirrorRef.current) {
+      setTextWidth(monthMirrorRef.current.offsetWidth);
+    }
+  }, [inputValue]);
 
   const handleInputChange = (value) => {
     const validCharacters = /^[JFMASONDjfmasond][a-zA-Z]*$/;
@@ -94,7 +106,7 @@ const BirthDateInput = ({ errors, control }) => {
         monthNumber !== null &&
         value.toLowerCase() === getMonthNumberAsText(monthNumber).toLowerCase()
       ) {
-        const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+        const updatedDate = dayjs(birthDate.value || currentDate, "YYYY/MM/D")
           .month(monthNumber - 1)
           .format("YYYY/MM/D");
         birthDate.onChange(updatedDate);
@@ -105,18 +117,18 @@ const BirthDateInput = ({ errors, control }) => {
 
   const handleDateChange = (date) => {
     const dateString = date
-      ? moment(date).format("YYYY/MM/D")
+      ? dayjs(date).format("YYYY/MM/D")
       : currentDate.format("YYYY/MM/D");
     birthDate.onChange(dateString);
-    birthDateNumber.onChange(moment(dateString, "YYYY/MM/D").format("D"));
-    birthDateMonth.onChange(moment(dateString, "YYYY/MM/D").format("MM"));
-    birthDateYear.onChange(moment(dateString, "YYYY/MM/D").format("YYYY"));
+    birthDateNumber.onChange(dayjs(dateString, "YYYY/MM/D").format("D"));
+    birthDateMonth.onChange(dayjs(dateString, "YYYY/MM/D").format("MM"));
+    birthDateYear.onChange(dayjs(dateString, "YYYY/MM/D").format("YYYY"));
     setInputValue(
-      getMonthNumberAsText(moment(dateString, "YYYY/MM/D").format("MM"))
+      getMonthNumberAsText(dayjs(dateString, "YYYY/MM/D").format("MM"))
     );
   };
 
-  const selectedDate = moment(
+  const selectedDate = dayjs(
     `${birthDateYear.value}/${birthDateMonth.value}/${birthDateNumber.value}`,
     "YYYY/MM/D"
   ).toDate();
@@ -133,7 +145,7 @@ const BirthDateInput = ({ errors, control }) => {
       // Update the month and date
       const monthNumber = getMonthNumberFromText(completedMonth);
       if (monthNumber !== null) {
-        const updatedDate = moment(birthDate.value || currentDate, "YYYY/MM/D")
+        const updatedDate = dayjs(birthDate.value || currentDate, "YYYY/MM/D")
           .month(monthNumber - 1)
           .format("YYYY/MM/D");
         birthDate.onChange(updatedDate);
@@ -165,7 +177,7 @@ const BirthDateInput = ({ errors, control }) => {
           className={`flex justify-between gap-1.5 rounded-2xl p-1.5 ST-3 ${
             birthDateError?.message
               ? "form-input-error"
-              : "bg-primary-color-P11"
+              : "bg-[#F8F7F5]"
           } group-hover:bg-secondary-color-S9`}
         >
           <div>
@@ -197,7 +209,7 @@ const BirthDateInput = ({ errors, control }) => {
                 // Calculate the maximum number of days for the current month
                 let maxDays = 31; // Value by default
                 if (month && year) {
-                  const daysInMonth = moment(
+                  const daysInMonth = dayjs(
                     `${year}-${month}`,
                     "YYYY-MM"
                   ).daysInMonth();
@@ -217,7 +229,7 @@ const BirthDateInput = ({ errors, control }) => {
                 // Validate and format the date
                 const day = numericValue.slice(0, 2);
                 if (day.length > 0 && month && year) {
-                  const date = moment(
+                  const date = dayjs(
                     `${year}/${month}/${day}`,
                     "YYYY/MM/D",
                     true
@@ -237,11 +249,10 @@ const BirthDateInput = ({ errors, control }) => {
             />
           </div>
 
-          <div className="relative flex-[65%]">
+          <div className="flex-[65%] relative">
             <input
-              className={`input-ipractis w-full outline-none rounded-xl !p-0 lg:text-start text-center h-9 ${getPaddingClass(
-                inputValue
-              )}`}
+              ref={monthInputRef}
+              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-transparent"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -251,15 +262,39 @@ const BirthDateInput = ({ errors, control }) => {
               name="birthDateMonth"
               value={inputValue}
               type="text"
+              placeholder="Month"
             />
+            
+            {/* Invisible mirror span for typed text */}
+            <span
+              ref={monthMirrorRef}
+              className="absolute top-0 left-1/2 -translate-x-1/2 invisible whitespace-pre px-2 py-2 font-inherit text-base text-center"
+              style={{
+                fontFamily: 'inherit',
+                fontSize: 'inherit',
+                fontWeight: 'inherit',
+                letterSpacing: 'inherit',
+                lineHeight: 'inherit'
+              }}
+            >
+              {inputValue}
+            </span>
 
-            {suggestions.length > 0 && (
+            {/* Ghost suggestion - positioned right after typed text */}
+            {suggestions.length > 0 && inputValue && (
               <span
-                className={`absolute top-0 ${
-                  !inputValue.length
-                    ? "-translate-x-1/2 left-1/2"
-                    : getSuggestionClassName(inputValue)
-                } h-full flex items-center pointer-events-none text-primary-color-P7`}
+                className="absolute text-primary-color-P7 pointer-events-none whitespace-pre text-center"
+                style={{
+                  top: '50%',
+                  left: `calc(50% + ${textWidth / 2}px + 1px)`,
+                  transform: 'translateY(-50%)',
+                  fontFamily: 'inherit',
+                  fontSize: 'inherit',
+                  fontWeight: 'inherit',
+                  letterSpacing: 'inherit',
+                  lineHeight: 'inherit',
+                  height: 'inherit'
+                }}
               >
                 {suggestions[0].slice(inputValue.length)}
               </span>
@@ -271,22 +306,28 @@ const BirthDateInput = ({ errors, control }) => {
               className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
               onChange={(e) => {
                 const numericValue = e.target.value.replace(/\D/g, "");
-                birthDateYear.onChange(numericValue.slice(0, 4));
-                const newDate = moment(
-                  `${numericValue.slice(0, 4)}/${birthDateMonth.value}/${
-                    birthDateNumber.value
-                  }`,
-                  "YYYY/MM/D"
-                ).format("YYYY/MM/D");
-                birthDate.onChange(newDate);
+                const yearValue = numericValue.slice(0, 4);
+                birthDateYear.onChange(yearValue);
+                
+                // Only update the full date if we have a complete year (4 digits) and valid month/day
+                if (yearValue.length === 4 && birthDateMonth.value && birthDateNumber.value) {
+                  const newDate = dayjs(
+                    `${yearValue}/${birthDateMonth.value}/${birthDateNumber.value}`,
+                    "YYYY/MM/D"
+                  );
+                  if (newDate.isValid()) {
+                    birthDate.onChange(newDate.format("YYYY/MM/D"));
+                  }
+                }
               }}
               onBlur={() => {
                 birthDateYear.onBlur();
                 birthDate.onBlur();
               }}
-              value={birthDateYear.value}
+              value={birthDateYear.value || ""}
               name="birthDateYear"
               type="text"
+              placeholder="YYYY"
             />
           </div>
 

@@ -32,22 +32,24 @@ const AboutYourSelfIntro = ({ control, errors }) => {
           "introduction"
         )} -translate-y-0 top-[30%] h-[129px]`}
       >
-        <CustomNextUiTextareaWithMaxLength
-          value={introduction.value}
-          nameTextarea="introduction"
-          inputClassName={"h-[150px]"}
-          onChange={introTextOnChange}
-          placeholder={"Enter a text"}
-          maxCharactersLength={1000}
-          typeError={"Max Length Exceeded"}
-          descError={"The text cannot exceed 1000 characters."}
-          labelTitle={"Write Introduction about yourself"}
-          labelSubtitle={
-            "Introduce yourself and highlight your unique interests."
-          }
-          backgroundError={introductionError?.message}
-          inputProps={{ onBlur: introduction.onBlur }}
-        />
+        <div className="[&_.textarea-wrapper]:!bg-[#F8F7F5]">
+          <CustomNextUiTextareaWithMaxLength
+            value={introduction.value}
+            nameTextarea="introduction"
+            inputClassName={"h-[150px]"}
+            onChange={introTextOnChange}
+            placeholder={"Enter a text"}
+            maxCharactersLength={1000}
+            typeError={"Max Length Exceeded"}
+            descError={"The text cannot exceed 1000 characters."}
+            labelTitle={"Write Introduction about yourself"}
+            labelSubtitle={
+              "Introduce yourself and highlight your unique interests."
+            }
+            backgroundError={introductionError?.message}
+            inputProps={{ onBlur: introduction.onBlur }}
+          />
+        </div>
       </InputLeftStickStatus>
 
       <SplitDynamicErrorZod message={introductionError?.message} />

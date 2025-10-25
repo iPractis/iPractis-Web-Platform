@@ -1,4 +1,4 @@
-import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
+import SaveAndContinueBox from "../TabSubject/SaveAndContinueBox";
 import { tabAvailabilitySchema } from "@/src/validations";
 import WorkTimePreferences from "./WorkTimePreferences";
 import WorkSchedule from "./WorkSchedule";
@@ -77,10 +77,11 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
         const { draft: updatedDraft } = await res.json();
 
-        // ✅ update parent draft state
-        if (setDraft) setDraft(updatedDraft);
+        if (setDraft) {
+         
+          setDraft(updatedDraft);
+        }
 
-        // ✅ move to next tab
         setActiveTab((prev) => prev + 1);
       }
     } catch (err) {
@@ -109,12 +110,8 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
         defaultTimeZone={draft?.timeZone}
       />
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav
-        setActiveTab={setActiveTab}
-        activeTab={activeTab}
-        buttonRef={buttonRef}
-      />
+      {/* Save and Continue Box */}
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };

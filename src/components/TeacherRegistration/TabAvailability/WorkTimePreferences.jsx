@@ -53,21 +53,24 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
 
   useEffect(() => {
     dailyWorkTime.onChange(totalHours);
-  }, [totalHours]);
+  }, [totalHours, dailyWorkTime]);
 
   return (
     <>
       <SectionHeader
         descriptionText="Minimum working time is set to 8 hours par week, please consider your weekly tasks and commitment to define your work time."
-        wrapperSectionHeaderClassName={
-          "bg-primary-color-P11 rounded-[32px] p-8 mb-[50px]"
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between mb-[50px]"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <LuggageClockIcon fillColor={"fill-primary-color-P1"} />
+          </div>
         }
-        titleIcon={<LuggageClockIcon fillColor={"fill-primary-color-P1"} />}
         titleText="Work time preferences"
-        titleClassName="MT-SB-1"
+        titleClassName="MT-SB-1 ml-[80px]"
+        descriptionClassName="ml-[80px]"
       />
 
-      <div className="grid lg:grid-cols-2 grid-cols-1 gap-[50px] lg:px-8">
+      <div className="flex flex-col gap-[50px] ml-[285px] max-w-[430px]">
         {/* Set your time zone */}
         <div>
           <SectionHeader
@@ -116,6 +119,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
                 trigger: [
                   "select-wrapper-ipractis",
                   timeZoneError?.message && "form-input-error",
+                  "!bg-[#f8f7f5]",
                 ],
                 innerWrapper: ["select-ipractis", "w-full"],
                 value: [
@@ -168,7 +172,10 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
                 </InputBGWrapperIcon>
               }
               classNames={{
-                inputWrapper: dailyWorkTimeError?.message && "form-input-error",
+                inputWrapper: [
+                  dailyWorkTimeError?.message && "form-input-error",
+                  "!bg-[#f8f7f5]",
+                ],
               }}
               onChange={dailyWorkTime.onChange}
               onBlur={dailyWorkTime.onBlur}

@@ -18,5 +18,7 @@ export const fetchCountries = async () => {
     }));
   } catch (error) {
     console.error(error);
+    // Return empty array as fallback to prevent crashes
+    return [];
   }
 };

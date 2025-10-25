@@ -52,9 +52,11 @@ export const CustomNextUiTextareaWithMaxLength = ({
         placeholder={placeholder}
         classNames={{
           input: [inputClassName],
-          inputWrapper:
+          inputWrapper: [
             (exceedValueMaxLength && "form-input-error") ||
             (backgroundError && "form-input-error"),
+            "!bg-[#f8f7f5]"
+          ],
           label: [labelClassName],
           label: "ps-[5px]"
         }}
