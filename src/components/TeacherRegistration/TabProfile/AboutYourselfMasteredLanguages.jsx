@@ -159,7 +159,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                     "min-h-fit",
                     "!rounded-xl",
                   ],
-                  innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
+                  innerWrapper: ["select-ipractis", "w-full", "ps--1"],
                   value: [
                     "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                   ],
@@ -201,7 +201,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                     "min-h-fit",
                     "!rounded-xl",
                   ],
-                  innerWrapper: ["select-ipractis", "w-full", "ps-2.5"],
+                  innerWrapper: ["select-ipractis", "w-full", "ps-1"],
                   value: [
                     "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                   ],

@@ -16,14 +16,7 @@ const AboutYourself = ({ children }) => {
         titleText="Language proficiency level"
         titleClassName="MT-SB-1 ml-[80px]"
         descriptionClassName="ml-[80px]"
-      >
-        <div className="absolute top-[32px] bottom-[32px] right-[32px] w-[190px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px]">
-          <span className="text-primary-color-P1 ST-3 ml-[16px]">Edit Information</span>
-          <div className="mr-[6px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-center gap-[10px] p-[8px]">
-            <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
-          </div>
-        </div>
-      </SectionHeader>
+      />
 
       {children}
     </WhiteSpaceWrapper>

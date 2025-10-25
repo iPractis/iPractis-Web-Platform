@@ -20,11 +20,11 @@ export async function fetchDraft() {
     }
 
     // 🔥 Hit teacher-draft endpoint instead of teachers
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/teacher-draft/${userId}`, {
+    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/teacher-draft?userId=${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      cache: "no-store", // don’t cache, always fresh
+      cache: "no-store", // don't cache, always fresh
     });
 
     if (!res.ok) {

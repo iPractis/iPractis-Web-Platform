@@ -13,6 +13,15 @@ import { useEffect, useState } from "react";
 import { fetchCountries } from "@/src/lib/utils/fetchCountries";
 
 const AvailabilityRevision = ({draftData}) => {
+  // Debug logging
+  console.log("AvailabilityRevision - draftData:", draftData);
+  console.log("AvailabilityRevision - availability:", draftData?.availability);
+  
+  // Debug when draftData changes
+  useEffect(() => {
+   
+  }, [draftData]);
+  
   // Date picker state (extracted from WorkScheduleTable logic)
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
@@ -122,10 +131,11 @@ const AvailabilityRevision = ({draftData}) => {
           <div className="relative w-[52px] h-[52px] rounded-[10px] overflow-hidden">
             <Image
               alt={"Teacher Profile"}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               width={52}
               height={52}
               src={draftData.profile_url || tutorImagePreview}
+              unoptimized={true}
             />
             <div className="absolute right-1 bottom-1 rounded-full w-2.5 h-2.5 bg-quinary-color-VS5 border border-white"></div>
           </div>
@@ -137,6 +147,9 @@ const AvailabilityRevision = ({draftData}) => {
                 alt={"Country Flag"}
                 className="w-[16px] h-[12px]"
                 src={selectedCountryFlag}
+                width={16}
+                height={12}
+                unoptimized={true}
               />
               <p className="ST-3 text-primary-color-P6">Teaches {draftData.subject}</p>
             </div>
@@ -162,10 +175,11 @@ const AvailabilityRevision = ({draftData}) => {
         <div className="w-[538px] h-[302.625px] overflow-hidden rounded-[16px]">
           <Image
             alt={"Teacher Profile"}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain"
             width={538}
             height={303}
             src={draftData.profile_url || tutorImagePreview}
+            unoptimized={true}
           />
         </div>
 
@@ -411,30 +425,49 @@ const AvailabilityRevision = ({draftData}) => {
 
           {/* Day rows: Day labels + Availability cells */}
           {[
-            { day: 'Sa', num: 1 },
-            { day: 'Su', num: 2 },
-            { day: 'Mo', num: 3 },
-            { day: 'Tu', num: 4 },
-            { day: 'We', num: 5 },
-            { day: 'Th', num: 6 },
-            { day: 'Fr', num: 7 }
-          ].map(({ day, num }, dayIndex) => (
-            <div key={day} className="flex gap-1">
-              {/* Day Label */}
-              <div className="bg-black text-white rounded-[8px] w-[80px] h-[32px] flex items-center justify-center text-xs font-medium">
-                {day} {num}
+            { day: 'Sa', num: 1, dbDay: 'Sat' },
+            { day: 'Su', num: 2, dbDay: 'Sun' },
+            { day: 'Mo', num: 3, dbDay: 'Mon' },
+            { day: 'Tu', num: 4, dbDay: 'Tue' },
+            { day: 'We', num: 5, dbDay: 'Wed' },
+            { day: 'Th', num: 6, dbDay: 'Thu' },
+            { day: 'Fr', num: 7, dbDay: 'Fri' }
+          ].map(({ day, num, dbDay }, dayIndex) => {
+            // Find the availability data for this day using the database day format
+            const dayAvailability = draftData?.availability?.find(slot => slot.day === dbDay);
+            
+            console.log(`Checking ${day} (${dbDay}):`, dayAvailability);
+            
+            return (
+              <div key={day} className="flex gap-1">
+                {/* Day Label */}
+                <div className="bg-black text-white rounded-[8px] w-[80px] h-[32px] flex items-center justify-center text-xs font-medium">
+                  {day} {num}
+                </div>
+                {/* Availability Cells for the day */}
+                {Array.from({ length: 24 }).map((_, hour) => {
+                  // Check if this hour is selected in the availability data
+                  const isSelected = dayAvailability?.hour?.some(time => {
+                    const [timeHour] = time.split(':').map(Number);
+                    return timeHour === hour;
+                  });
+                  
+                  if (isSelected) {
+                    console.log(`Selected: ${day} ${hour}:00`);
+                  }
+                  
+                  return (
+                    <div
+                      key={`${day}-${hour}`}
+                      className={`w-[32px] h-[32px] rounded-[4px] ${
+                        isSelected ? 'bg-yellow-300' : 'bg-gray-100'
+                      }`}
+                    ></div>
+                  );
+                })}
               </div>
-              {/* Availability Cells for the day */}
-              {Array.from({ length: 24 }).map((_, hour) => (
-                <div
-                  key={`${day}-${hour}`}
-                  className={`w-[32px] h-[32px] rounded-[4px] ${
-                    day === 'Sa' ? 'bg-yellow-300' : 'bg-gray-100'
-                  }`}
-                ></div>
-              ))}
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Legend and Timezone */}

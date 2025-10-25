@@ -77,10 +77,11 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
         const { draft: updatedDraft } = await res.json();
 
-        // ✅ update parent draft state
-        if (setDraft) setDraft(updatedDraft);
+        if (setDraft) {
+         
+          setDraft(updatedDraft);
+        }
 
-        // ✅ move to next tab
         setActiveTab((prev) => prev + 1);
       }
     } catch (err) {

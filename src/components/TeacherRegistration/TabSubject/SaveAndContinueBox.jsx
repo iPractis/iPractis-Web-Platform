@@ -1,6 +1,6 @@
 import ButtonSubmitForm from "../../Shared/ButtonSubmitForm";
 import SectionHeader from "../../Shared/SectionHeader";
-import { ChevronDownBigIcon, CircleImportantIcon } from "../../Icons";
+import { ChevronRightIcon, CircleImportantIcon } from "../../Icons";
 
 const SaveAndContinueBox = ({ buttonRef }) => {
   return (
@@ -24,8 +24,8 @@ const SaveAndContinueBox = ({ buttonRef }) => {
           >
             Save, and continue
           </ButtonSubmitForm>
-          <div className="mr-[6px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-center gap-[10px] p-[8px]">
-            <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+          <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
+            <ChevronRightIcon fillColor={"fill-primary-color-P1"} />
           </div>
         </div>
       </SectionHeader>
