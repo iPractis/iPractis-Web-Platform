@@ -17,12 +17,8 @@ export async function fetchDraft() {
     if (!userId) throw new Error("Invalid token: missing userId");
 
     // 🧠 Ensure base URL works in both local + deployed
-    const baseUrl =
-      process.env.NEXTAUTH_URL?.replace(/\/$/, "") ||
-      process.env.NEXT_PUBLIC_APP_URL ||
-      "http://localhost:3000";
 
-    const res = await fetch(`${baseUrl}/api/teacher-draft?userId=${userId}`, {
+    const res = await fetch(`https://i-practis-web-platform.vercel.app/api/teacher-draft/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });
