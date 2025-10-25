@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { fetchCountries } from "@/src/lib/utils/fetchCountries";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
 import { useAuth } from "@/src/hooks/useAuth";
+import { getYoutubeVideoIdUrl } from "@/src/lib/utils/getYoutubeVideoIdUrl";
 
 const NoticeBox = ({ draftData }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -310,16 +311,30 @@ const AvailabilityRevision = ({draftData}) => {
 
       {/* Teacher Details Section with Image and Info */}
       <div className="w-[1000px] h-[302.625px] max-w-[1000px] flex gap-8 mb-8 mx-auto">
-        {/* Left side - Teacher Image */}
+        {/* Left side - Teacher Video or Image */}
         <div className="w-[538px] h-[302.625px] overflow-hidden rounded-[16px]">
-          <Image
-            alt={"Teacher Profile"}
-            className="w-full h-full object-contain"
-            width={538}
-            height={303}
-            src={draftData.profile_url || tutorImagePreview}
-            unoptimized={true}
-          />
+          {draftData.videoLink ? (
+            <iframe
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              className="w-full h-full"
+              src={(() => {
+                const videoId = getYoutubeVideoIdUrl(draftData.videoLink);
+                return videoId ? `https://www.youtube.com/embed/${videoId}` : draftData.videoLink;
+              })()}
+              title="Teacher Introduction Video"
+              allowFullScreen
+              frameBorder="0"
+            ></iframe>
+          ) : (
+            <Image
+              alt={"Teacher Profile"}
+              className="w-full h-full object-contain"
+              width={538}
+              height={303}
+              src={draftData.profile_url || tutorImagePreview}
+              unoptimized={true}
+            />
+          )}
         </div>
 
         {/* Right side - Details Container */}
