@@ -24,6 +24,17 @@ const AveragePrice = ({ control, errors, watch }) => {
     control,
   });
 
+  // Handle input change to strip non-numeric characters except numbers
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+    // Remove all non-numeric characters and keep only numbers
+    const numericValue = value.replace(/[^0-9]/g, '');
+    hourlyPrice.onChange(numericValue);
+  };
+
+  // Display value with dollar sign for better UX
+  const displayValue = hourlyPrice.value ? `$ ${hourlyPrice.value}` : '';
+
   return (
     <>
       <SectionHeader
@@ -108,8 +119,8 @@ const AveragePrice = ({ control, errors, watch }) => {
                     <span className="text-gray-800 font-medium whitespace-nowrap">For 30 minutes sessions</span>
                   </div>
                 }
-                value={hourlyPrice.value}
-                onChange={hourlyPrice.onChange}
+                value={displayValue}
+                onChange={handlePriceChange}
                 onBlur={hourlyPrice.onBlur}
               />
             </div>

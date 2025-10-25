@@ -22,9 +22,10 @@ const defaultValue = {
   subjectIntroduction: "",
   videoLink: "",
   hourlyPrice: "",
-  studentLevel: "",
+  studentLevel: [],
   teachToAmateurPersons: false,
   teachToYoungPersons: false,
+  teachToSameGender: false,
   careerExperience: [],
   education: [],
   availability: [], // Add availability field to default value

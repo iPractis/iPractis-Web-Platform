@@ -35,7 +35,8 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       profileTitle: draft?.profileTitle || "",
       teachToAmateurPersons: draft?.teachToAmateurPersons || false,
       teachToYoungPersons: draft?.teachToYoungPersons || false,
-      hourlyPrice: draft?.hourlyPrice || "",
+      teachToSameGender: draft?.teachToSameGender || false,
+      hourlyPrice: draft?.hourlyPrice ?? "",
       studentLevel: draft?.studentLevel || [],
       subject: draft?.subject || "",
       videoLink: draft?.videoLink || "",
@@ -48,6 +49,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      buttonRef.current?.loading();
 
       const payload = {
         userId: user?.userId,
@@ -55,6 +57,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
         profileTitle: data.profileTitle,
         teachToAmateurPersons: data.teachToAmateurPersons,
         teachToYoungPersons: data.teachToYoungPersons,
+        teachToSameGender: data.teachToSameGender,
         hourlyPrice: data.hourlyPrice,
         studentLevel: data.studentLevel,
         subject: data.subject,
@@ -88,12 +91,17 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       setError("general", { message: err.message });
     } finally {
       setLoading(false);
+      buttonRef.current?.notIsLoading();
     }
+  };
+
+  const onError = (errors) => {
+    console.log("FORM VALIDATION ERRORS:", errors);
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className={`${activeTab !== 1 && "hidden"}`}
     >
       <WhiteSpaceWrapper className="p-0">

@@ -4,15 +4,124 @@ import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";
 import TeacherInfo from "./TeacherInfo";
 import SectionHeader from "../../Shared/SectionHeader";
-import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon } from "../../Icons";
+import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon } from "../../Icons";
 import Image from "next/image";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
 import { useEffect, useState } from "react";
 import { fetchCountries } from "@/src/lib/utils/fetchCountries";
+import { timeZones } from "@/src/data/dataTeacherRegistration";
+import { useAuth } from "@/src/hooks/useAuth";
+
+const NoticeBox = ({ draftData }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
+  const [error, setError] = useState(null);
+
+  const handleSendApplication = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const draftWithUserId = { ...draftData, userId: user?.userId };
+
+      const response = await fetch("/api/teachers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(draftWithUserId),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Insert failed:", errorData);
+
+        if (errorData?.code === "23505") {
+          setError("Form already in review, cannot submit new application.");
+        } else {
+          setError(errorData?.message || "Failed to submit application.");
+        }
+        return;
+      }
+
+      const result = await response.json();
+      console.log("Application submitted:", result);
+      // Redirect to status tab
+      window.location.href = "/teacher-registration?tab=status";
+    } catch (error) {
+      console.error("Error submitting draft:", error);
+      setError(error.message || "Unexpected error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="mt-20">
+      <SectionHeader
+        descriptionText="Double-check your information, then click Send application to finalize. Good luck!"
+        wrapperSectionHeaderClassName="relative bg-[#FFD600] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <CircleImportantIcon />
+          </div>
+        }
+        titleText="Attention required"
+        titleClassName="MT-SB-1 ml-[80px]"
+        descriptionClassName="ml-[80px]"
+      >
+        <div className="absolute top-[32px] bottom-[32px] right-[32px] w-[210px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px]">
+          <button
+            type="button"
+            onClick={handleSendApplication}
+            disabled={isLoading}
+            className="text-primary-color-P1 ST-3 ml-[8px] bg-transparent border-0 p-0 cursor-pointer flex items-center whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Loading..." : "Send application"}
+          </button>
+          <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
+            <ChevronRightIcon fillColor={"fill-primary-color-P1"} />
+          </div>
+        </div>
+      </SectionHeader>
+      {error && (
+        <div className="mt-2 text-red-500 text-sm text-center">{error}</div>
+      )}
+    </div>
+  );
+};
 
 const AvailabilityRevision = ({draftData}) => {
+  // Function to get color based on language level
+  const getLevelColor = (level) => {
+    const levelColors = {
+      'C2': 'bg-green-200', // Green
+      'C1': 'bg-blue-200', // Blue
+      'B2': 'bg-purple-200', // Purple
+      'B1': 'bg-orange-200', // Orange
+      'A2': 'bg-pink-200', // Pink
+      'A1': 'bg-yellow-200', // Yellow
+      'Native': 'bg-black', // Black
+      'Fluent': 'bg-green-200', // Green
+      'Basic': 'bg-orange-200', // Orange
+    };
+    
+    // Check for exact match first
+    if (levelColors[level]) {
+      return levelColors[level];
+    }
+    
+    // Check if level contains any of the keys
+    for (const [key, color] of Object.entries(levelColors)) {
+      if (level && level.includes(key)) {
+        return color;
+      }
+    }
+    
+    // Default color
+    return 'bg-gray-200';
+  };
+
   // Debug logging
   console.log("AvailabilityRevision - draftData:", draftData);
   console.log("AvailabilityRevision - availability:", draftData?.availability);
@@ -30,6 +139,36 @@ const AvailabilityRevision = ({draftData}) => {
   // Country data state
   const [countries, setCountries] = useState([]);
   const [selectedCountryFlag, setSelectedCountryFlag] = useState(unitedKingdom);
+
+  // Get timezone label from timezone value
+  const getTimezoneLabel = (timezoneValue) => {
+    const tz = timeZones.find(tz => tz.value === timezoneValue);
+    return tz?.label || timezoneValue || "GMT+1";
+  };
+
+  // Get age display text
+  const getAgeText = () => {
+    const teachesYoung = draftData.teachToYoungPersons;
+    const teachesAmateur = draftData.teachToAmateurPersons;
+
+    // If both selected, show "all ages"
+    if (teachesYoung && teachesAmateur) {
+      return 'Teaches all ages';
+    }
+
+    // If only young persons, show "Teaches children & teenagers"
+    if (teachesYoung && !teachesAmateur) {
+      return 'Teaches children & teenagers';
+    }
+
+    // If only amateur persons, show "Teaches adults only"
+    if (!teachesYoung && teachesAmateur) {
+      return 'Teaches adults only';
+    }
+
+    // Default fallback
+    return 'Teaches all ages';
+  };
 
   // Initialize week dates (same logic as WorkScheduleTable)
   useEffect(() => {
@@ -199,40 +338,24 @@ const AvailabilityRevision = ({draftData}) => {
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
               <UserHatIcon fillColor={"fill-primary-color-P1"} />
               <p className="ST-3 text-primary-color-P6">
-                {draftData.teachToYoungPersons ? 'Teaches all ages' : 'Teaches adults only'}
+                {getAgeText()}
               </p>
             </div>
           </div>
 
-          {/* Middle Section - Stats Blocks */}
-          <div className="flex gap-2 mt-[17px]">
-            {/* Lessons Block */}
-            <div className="w-[101px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-              <h4 className="ST-2 text-primary-color-P4">1201 Lessons</h4>
-              <div className="flex items-center gap-1">
-                <span className="MT-SB-1 text-primary-color-P1">5.0</span>
-                <StarIcon fillColor={"fill-yellow-500"} />
-              </div>
-            </div>
-
-            {/* Active Students Block */}
-            <div className="w-[120px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-              <h4 className="ST-2 text-primary-color-P4">Active students</h4>
-              <div className="flex items-center gap-1">
-                <span className="MT-SB-1 text-primary-color-P1">50+</span>
-                <UserHatIcon fillColor={"fill-primary-color-P1"} />
-              </div>
-            </div>
-
-            {/* Lesson Rate Block */}
-            <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-              <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
-              <div className="flex items-center gap-2">
-                <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice ? `${draftData.hourlyPrice} USD` : '8 USD'}</span>
-                <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
-              </div>
-            </div>
-          </div>
+                     {/* Middle Section - Stats Blocks - Only show if hourlyPrice exists */}
+           {draftData.hourlyPrice && (
+             <div className="flex gap-2 mt-[17px]">
+               {/* Lesson Rate Block */}
+               <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+                 <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
+                 <div className="flex items-center gap-2">
+                   <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice} USD</span>
+                   <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
+                 </div>
+               </div>
+             </div>
+           )}
 
           {/* Bottom Section - Action Buttons */}
           <div className="w-[430px] h-[48px] flex items-center gap-4">
@@ -255,74 +378,49 @@ const AvailabilityRevision = ({draftData}) => {
       </div>
 
 
-      {/* About Section */}
-      <div className="w-[1000px] max-w-[1000px] mx-auto mb-8 bg-white rounded-[32px] px-8 py-4 flex flex-col gap-4">
-        <h3 className="MT-SB-1 text-primary-color-P1">About {draftData.firstName}</h3>
-        <p className="ST-3 text-primary-color-P4 leading-relaxed">
-          {draftData.introduction || "Hi everyone! My name is Irina and, as an English teacher, I&apos;ll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone."}
-        </p>
-        
-        {/* Language Tags */}
-        <div className="w-[311px] h-[18px] flex gap-[10px] items-center">
-          {(draftData.languages && draftData.languages.length > 0) ? (
-            draftData.languages.map((language, index) => (
-              <div key={index} className="flex items-center gap-1">
-                <span className="text-xs text-black">{language.name}</span>
-                <div className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap ${
-                  language.level === 'Native' 
-                    ? 'bg-black text-white' 
-                    : language.level === 'Fluent C2'
-                    ? 'bg-green-200 text-black'
-                    : language.level === 'Basic A2'
-                    ? 'bg-orange-200 text-black'
-                    : 'bg-gray-200 text-black'
-                }`}>
-                  <span>{language.level}</span>
-                </div>
-              </div>
-            ))
-          ) : (
-            <>
-              <div className="flex items-center gap-1">
-                <span className="text-xs text-black">English</span>
-                <div className="px-3 py-1 rounded text-xs font-medium bg-black text-white whitespace-nowrap">
-                  <span>Native</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-xs text-black">French</span>
-                <div className="px-3 py-1 rounded text-xs font-medium bg-green-200 text-black whitespace-nowrap">
-                  <span>Fluent C2</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1">
-                <span className="text-xs text-black">Korean</span>
-                <div className="px-3 py-1 rounded text-xs font-medium bg-orange-200 text-black whitespace-nowrap">
-                  <span>Basic A2</span>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
+             {/* About Section - Only show if introduction exists */}
+       {(draftData.introduction || (draftData.languages && draftData.languages.length > 0)) && (
+         <div className="w-[1000px] max-w-[1000px] mx-auto mb-8 bg-white rounded-[32px] px-8 py-4 flex flex-col gap-4">
+           {draftData.introduction && (
+             <>
+               <h3 className="MT-SB-1 text-primary-color-P1">About {draftData.firstName}</h3>
+               <p className="ST-3 text-primary-color-P4 leading-relaxed">
+                 {draftData.introduction}
+               </p>
+             </>
+           )}
+           
+           {/* Language Tags - Only show if languages exist */}
+           {draftData.languages && draftData.languages.length > 0 && (
+             <div className="w-[311px] h-[18px] flex gap-[10px] items-center">
+               {draftData.languages.map((language, index) => (
+                 <div key={index} className="flex items-center gap-1">
+                   <span className="text-xs text-black">{language.name}</span>
+                   <div className={`px-3 py-1 rounded text-xs font-medium whitespace-nowrap ${getLevelColor(language.level)} ${language.level === 'Native' ? 'text-white' : 'text-black'}`}>
+                     <span>{language.level}</span>
+                   </div>
+                 </div>
+               ))}
+             </div>
+           )}
+         </div>
+       )}
 
-      {/* Friendly and fun Native English Speaker Section */}
-      <div className="w-[1000px] max-w-[1000px] mx-auto mb-0 bg-[#F8F7F5] rounded-[32px] p-8 min-h-[144px] flex flex-col gap-8">
-        <h3 className="MT-SB-1 text-primary-color-P1">Friendly and fun Native English Speaker teaching conversational English</h3>
-        <p className="ST-3 text-primary-color-P4 leading-relaxed">
-          Hi everyone! My name is Irina and, as an English teacher, I&apos;ll be happy to help you to acquire and develop the necessary skills in speaking, listening, reading, and writing. I use different teaching techniques, taking into account the individual needs and learning styles of each student. My goal is to make learning English enjoyable and effective for everyone.
-        </p>
-      </div>
-
-      {/* Profile Title Section */}
-      <div className="bg-white rounded-[32px] p-8 mb-8">
-        <h3 className="MT-SB-1 text-primary-color-P1 mb-4">
-          {draftData.profileTitle}
-        </h3>
-        <p className="ST-3 text-primary-color-P4 leading-relaxed">
-          {draftData.subjectIntroduction}
-        </p>
-      </div>
+             {/* Profile Title Section - Only show if data exists */}
+       {(draftData.profileTitle || draftData.subjectIntroduction) && (
+         <div className="bg-white rounded-[32px] p-8 mb-8">
+           {draftData.profileTitle && (
+             <h3 className="MT-SB-1 text-primary-color-P1 mb-4">
+               {draftData.profileTitle}
+             </h3>
+           )}
+           {draftData.subjectIntroduction && (
+             <p className="ST-3 text-primary-color-P4 leading-relaxed">
+               {draftData.subjectIntroduction}
+             </p>
+           )}
+         </div>
+       )}
 
       {/* Teacher's Availability Header */}
       <div className="bg-white rounded-[32px] p-4 mb-0 h-[48px] flex items-center gap-[10px] -mt-10">
@@ -492,7 +590,7 @@ const AvailabilityRevision = ({draftData}) => {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" fill="currentColor"/>
             </svg>
-            <span className="ST-3 text-primary-color-P1">{draftData.timezone || "GMT+1 (Algeria, Algiers)"}</span>
+            <span className="ST-3 text-primary-color-P1">{getTimezoneLabel(draftData.timeZone)}</span>
           </div>
         </div>
       </div>
@@ -505,6 +603,9 @@ const AvailabilityRevision = ({draftData}) => {
 
       {/* Education Section */}
       <TeacherInfoEducation draftData={draftData}/>
+
+             {/* Notice Box */}
+       <NoticeBox draftData={draftData} />
     </section>
   );
 };

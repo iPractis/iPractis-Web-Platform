@@ -61,12 +61,12 @@ const StudentAge = ({ isSubmitted, control }) => {
 
         <div className="mb-2.5">
           <Controller
-            name="teachToMaturePersons"
+            name="teachToAmateurPersons"
             control={control}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <>
                 <Switch
-                  name="teachToMaturePersons"
+                  name="teachToAmateurPersons"
                   isSelected={value}
                   onValueChange={onChange}
                   size="sm"

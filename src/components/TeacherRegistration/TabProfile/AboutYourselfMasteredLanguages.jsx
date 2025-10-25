@@ -1,7 +1,6 @@
 import { languages as allLanguages, languagesLevels, masteredLanguagesImages } from "@/src/data/dataTeacherRegistration";
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
-import AboutYourselfLevelLanguage from "./AboutYourselfLevelLanguage";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
@@ -10,7 +9,7 @@ import { useController, useFieldArray } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
 
 // React imports
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 // Icons
 import {
@@ -18,16 +17,18 @@ import {
   QuestionMark,
   UserSpeakingIcon,
   ChevronDownBigIcon,
+  TrashBinIcon,
 } from "../../Icons";
 import Image from "next/image";
 
 const AboutYourselfMasteredLanguages = ({ errors, control }) => {
-  const {
-    fields: languages,
-    append,
-    remove,
-  } = useFieldArray({ control, name: "languages" });
+  // State for managing multiple selector boxes
+  const [selectors, setSelectors] = useState([
+    { language: "", level: "", id: 0 }
+  ]);
+  const [nextId, setNextId] = useState(1);
 
+  // Get the languages field array for validation
   const {
     field: language,
     fieldState: { error: languagesError },
@@ -36,44 +37,59 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
     control: control,
   });
 
-  const [selectedLanguage, setSelectedLanguage] = useState("");
-  const [selectedLevel, setSelectedLevel] = useState("");
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [isLevelOpen, setIsLevelOpen] = useState(false);
+  // Initialize selectors from draft data
+  useEffect(() => {
+    if (language?.value && language.value.length > 0) {
+      const draftSelectors = language.value.map((lang, idx) => ({
+        language: lang.name,
+        level: lang.level,
+        id: idx,
+      }));
+      setSelectors(draftSelectors);
+      setNextId(draftSelectors.length);
+    }
+  }, []);
 
-
-  // Add Language when + button is clicked
-  const handleAddLanguage = () => {
-    if (selectedLanguage && selectedLevel) {
-      // Check if language already exists
-      const languageExists = languages.some(
-        (lang) => lang.name === selectedLanguage
-      );
-      
-      if (!languageExists) {
-        append({
-          name: selectedLanguage,
-          level: selectedLevel,
-        });
-        
-        // Clear selections
-        setSelectedLanguage("");
-        setSelectedLevel("");
-      }
+  // Sync selectors to form array
+  const syncToFormArray = () => {
+    const validLanguages = selectors
+      .filter(sel => sel.language && sel.level)
+      .map(sel => ({ name: sel.language, level: sel.level }));
+    
+    if (language?.onChange) {
+      language.onChange(validLanguages);
     }
   };
 
-  // Delete Mastered Language
-  const handleDeleteMasteredLanguage = (index) => {
-    remove(index);
+  // Update selector
+  const updateSelector = (id, field, value) => {
+    setSelectors(prev => {
+      const updated = prev.map(sel => sel.id === id ? { ...sel, [field]: value } : sel);
+      return updated;
+    });
   };
 
-  const selectedLanguageImage = masteredLanguagesImages[selectedLanguage];
+  // Add new selector box when + is clicked
+  const handleAddSelector = () => {
+    const newId = nextId;
+    setSelectors(prev => [...prev, { language: "", level: "", id: newId }]);
+    setNextId(prev => prev + 1);
+  };
+
+  // Delete selector
+  const handleDeleteSelector = (id) => {
+    setSelectors(prev => prev.filter(sel => sel.id !== id));
+  };
+
+  // Sync whenever selectors change
+  useEffect(() => {
+    syncToFormArray();
+  }, [selectors]);
 
   return (
     <div className="mx-[285px] mt-[32px]">
       <div className="space-y-4">
-        {/* Add Language Button - Keep existing styling */}
+        {/* Add Language Button - Keep existing styling at top */}
         <Select
           name="languages"
           selectedKeys={[]}
@@ -89,7 +105,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           endContent={
             <InputBGWrapperIcon 
               className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px] cursor-pointer"
-              onClick={handleAddLanguage}
+              onClick={handleAddSelector}
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
                 <path
@@ -118,121 +134,123 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           {/* Empty - this is just for styling */}
         </Select>
 
-        {/* Select Language Button Outer Attribute - 16px below the Add Language button */}
-        <InputLeftStickStatus
-          inputBarStatusClassName={getInputStatusBorder(
-            errors,
-            selectedLanguage && selectedLevel ? "valid" : null,
-            "languages"
-          )}
-        >
-          <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
-            {/* Language Selector Dropdown - 6px from top, bottom, left of outer container */}
-            <div className="mt-[6px] mb-[6px] ml-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200">
-              <Select
-                placeholder="Language"
-                selectedKeys={selectedLanguage ? [selectedLanguage] : []}
-                onSelectionChange={(keys) => {
-                  const selected = Array.from(keys).join("");
-                  setSelectedLanguage(selected);
-                }}
-                onOpenChange={(open) => setIsLanguageOpen(open)}
-                isOpen={isLanguageOpen}
-                selectorIcon={<span></span>}
-                startContent={
-                  selectedLanguageImage && (
-                    <Image
-                      className="h-6 w-[39px] rounded-[4px]"
-                      src={selectedLanguageImage.src}
-                      alt={selectedLanguage}
-                      width={39}
-                      height={24}
-                    />
-                  )
-                }
-                endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
-                classNames={{
-                  trigger: [
-                    "select-wrapper-ipractis",
-                    "!bg-primary-color-P12",
-                    "w-full",
-                    "min-h-fit",
-                    "!rounded-xl",
-                  ],
-                  innerWrapper: ["select-ipractis", "w-full", "ps--1"],
-                  value: [
-                    "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                  ],
-                  listbox: ["text-primary-color-P4"],
-                  base: "!w-full",
-                }}
-              >
-                {allLanguages
-                  ?.filter(
-                    (language) =>
-                      !languages.some(
-                        (masteredLanguage) => masteredLanguage.name === language
-                      )
-                  )
-                  .map((language) => (
-                    <SelectItem key={language}>{language}</SelectItem>
-                  ))}
-              </Select>
-            </div>
+                                   {/* Show selector boxes */}
+          {selectors.map((selector) => {
+            const selectedLanguageImage = masteredLanguagesImages[selector.language];
+            
+            return (
+              <div key={selector.id} className="flex items-center gap-[2px]">
+                <InputLeftStickStatus
+                  inputBarStatusClassName={getInputStatusBorder(
+                    errors,
+                    selector.language && selector.level ? "valid" : null,
+                    "languages"
+                  )}
+                >
+                  <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
+                    {/* Language Selector Dropdown */}
+                    <div className="mt-[6px] mb-[6px] ml-[6px] w-[195px] h-[36px] bg-white rounded-[10px] border border-gray-200">
+                      <Select
+                        placeholder="Language"
+                        selectedKeys={selector.language ? [selector.language] : []}
+                        onSelectionChange={(keys) => {
+                          const selected = Array.from(keys).join("");
+                          updateSelector(selector.id, "language", selected);
+                        }}
+                        selectorIcon={<span></span>}
+                        startContent={
+                          selectedLanguageImage && (
+                            <Image
+                              className="h-6 w-[39px] rounded-[4px]"
+                              src={selectedLanguageImage.src}
+                              alt={selector.language}
+                              width={39}
+                              height={24}
+                            />
+                          )
+                        }
+                        endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                        classNames={{
+                          trigger: [
+                            "select-wrapper-ipractis",
+                            "!bg-primary-color-P12",
+                            "w-full",
+                            "min-h-fit",
+                            "!rounded-xl",
+                          ],
+                          innerWrapper: ["select-ipractis", "w-full", "ps--1"],
+                          value: [
+                            "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                          ],
+                          listbox: ["text-primary-color-P4"],
+                          base: "!w-full",
+                        }}
+                      >
+                        {allLanguages
+                          ?.filter(
+                            (language) =>
+                              !selectors.some(
+                                (sel) => sel.language === language && sel.id !== selector.id
+                              ) || language === selector.language
+                          )
+                          .map((language) => (
+                            <SelectItem key={language}>{language}</SelectItem>
+                          ))}
+                      </Select>
+                    </div>
 
-            {/* Level Dropdown - 6px from top, bottom, right of outer container */}
-            <div className="mt-[6px] mb-[6px] mr-[6px] w-[203px] h-[36px] bg-white rounded-[10px] border border-gray-200 ml-auto">
-              <Select
-                placeholder="Level"
-                selectedKeys={selectedLevel ? [selectedLevel] : []}
-                onSelectionChange={(keys) => {
-                  const selected = Array.from(keys).join("");
-                  setSelectedLevel(selected);
-                }}
-                onOpenChange={(open) => setIsLevelOpen(open)}
-                isOpen={isLevelOpen}
-                selectorIcon={<span></span>}
-                endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
-                classNames={{
-                  trigger: [
-                    "select-wrapper-ipractis",
-                    "!bg-primary-color-P12",
-                    "w-full",
-                    "min-h-fit",
-                    "!rounded-xl",
-                  ],
-                  innerWrapper: ["select-ipractis", "w-full", "ps-1"],
-                  value: [
-                    "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                  ],
-                  listbox: ["text-primary-color-P4"],
-                  base: "!w-full",
-                }}
-              >
-                {languagesLevels.map((level) => (
-                  <SelectItem key={level}>{level}</SelectItem>
-                ))}
-              </Select>
-            </div>
-          </div>
-        </InputLeftStickStatus>
+                                         {/* Level Dropdown */}
+                     <div className="mt-[6px] mb-[6px] mr-[6px] w-[153px] h-[36px] bg-white rounded-[10px] border border-gray-200 ml-1">
+                       <Select
+                         placeholder="Level"
+                         selectedKeys={selector.level ? [selector.level] : []}
+                         onSelectionChange={(keys) => {
+                           const selected = Array.from(keys).join("");
+                           updateSelector(selector.id, "level", selected);
+                         }}
+                         selectorIcon={<span></span>}
+                         endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                         classNames={{
+                           trigger: [
+                             "select-wrapper-ipractis",
+                             "!bg-primary-color-P12",
+                             "w-full",
+                             "min-h-fit",
+                             "!rounded-xl",
+                           ],
+                           innerWrapper: ["select-ipractis", "w-full", "ps-1"],
+                           value: [
+                             "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                           ],
+                           listbox: ["text-primary-color-P4"],
+                           base: "!w-full",
+                         }}
+                       >
+                         {languagesLevels.map((level) => (
+                           <SelectItem key={level}>{level}</SelectItem>
+                         ))}
+                       </Select>
+                     </div>
+                  </div>
+                </InputLeftStickStatus>
+
+                {/* Delete Button - separated with 2px gap */}
+                <button
+                  className="bg-[#F8F7F5] hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
+                  onClick={() => handleDeleteSelector(selector.id)}
+                  type="button"
+                >
+                  <TrashBinIcon
+                    fillColor={"fill-primary-color-P4"}
+                    strokeColor={"stroke-primary-color-P4"}
+                  />
+                </button>
+              </div>
+            );
+          })}
       </div>
 
       <SplitDynamicErrorZod message={languagesError?.message} />
-
-      {/* Select Level Language */}
-      <div className="mt-4">
-        {languages.map((field, index) => (
-          <AboutYourselfLevelLanguage
-            handleDeleteMasteredLanguage={handleDeleteMasteredLanguage}
-            control={control}
-            errors={errors}
-            key={field.id}
-            index={index}
-            field={field}
-          />
-        ))}
-      </div>
     </div>
   );
 };
