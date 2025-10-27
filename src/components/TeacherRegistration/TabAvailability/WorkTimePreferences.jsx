@@ -61,7 +61,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
         descriptionText="Minimum working time is set to 8 hours par week, please consider your weekly tasks and commitment to define your work time."
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between mb-[50px]"
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <LuggageClockIcon fillColor={"fill-primary-color-P1"} />
           </div>
         }
@@ -76,7 +76,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
           <SectionHeader
             descriptionText="Please set your time zone to ensure that all session times are displayed accurately in your local time. This helps avoid any scheduling conflicts and ensures smooth coordination between tutor and students."
             wrapperSectionHeaderClassName={"p-0 mb-[50px]"}
-            titleIcon={<Clock1220Icon fillColor={"fill-primary-color-P1"} />}
+            titleIcon={null}
             titleText="Set your time zone"
             titleClassName="MT-SB-1"
           />
@@ -149,7 +149,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
           <SectionHeader
             descriptionText="Set your daily work time limit to manage your workload effectively and maintain a healthy work-life balance. This limit helps ensure you don't overcommit and have enough time for rest and practice personal activities."
             wrapperSectionHeaderClassName={"p-0 mb-[50px]"}
-            titleIcon={<Clock12Icon fillColor={"fill-primary-color-P1"} />}
+            titleIcon={null}
             titleText="Set your daily work time limit"
             titleClassName="MT-SB-1"
           />

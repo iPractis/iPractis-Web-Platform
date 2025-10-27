@@ -81,17 +81,18 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
       const { draft: updatedDraft } = await res.json();
 
-      // ✅ update parent draft state
       if (setDraft) setDraft(updatedDraft);
+      
+      // Reset button state BEFORE navigation
+      buttonRef.current?.notIsLoading();
+      setLoading(false);
 
-      // ✅ move to next tab
       setActiveTab((prev) => prev + 1);
     } catch (err) {
       console.error("Save error:", err);
       setError("general", { message: err.message });
-    } finally {
-      setLoading(false);
       buttonRef.current?.notIsLoading();
+      setLoading(false);
     }
   };
 

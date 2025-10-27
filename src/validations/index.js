@@ -210,8 +210,8 @@ export const tabBackgroundSchema = z.object({
         z.instanceof(File),   // allow raw File
         fileMetaSchema        // allow uploaded file metadata
       ]),
-      from: z.coerce.number().int().min(1),
-      to: z.coerce.number().int().min(1),
+      from: z.coerce.number().int().min(1, { message: "enter a valid year" }),
+      to: z.coerce.number().int().min(1, { message: "enter a valid year" }),
       description: z.string().min(3),
     })
     .refine((data) => data.to >= data.from, {
@@ -229,8 +229,8 @@ export const tabBackgroundSchema = z.object({
         z.instanceof(File),
         fileMetaSchema
       ]),
-      from: z.coerce.number().int().min(1),
-      to: z.coerce.number().int().min(1),
+      from: z.coerce.number().int().min(1, { message: "enter a valid year" }),
+      to: z.coerce.number().int().min(1, { message: "enter a valid year" }),
       description: z.string().min(3),
     })
     .refine((data) => data.to >= data.from, {

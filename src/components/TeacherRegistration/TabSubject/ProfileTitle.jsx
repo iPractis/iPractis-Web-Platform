@@ -64,12 +64,14 @@ const ProfileTitle = ({ control, errors }) => {
             </InputBGWrapperIcon>
           }
           endContent={
-            <InputBGWrapperIcon
-              className={"cursor-pointer"}
-              onClick={handleClearInput}
-            >
-              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-            </InputBGWrapperIcon>
+            profileTitle?.value && profileTitle?.value?.length > 0 && (
+              <InputBGWrapperIcon
+                className={"cursor-pointer"}
+                onClick={handleClearInput}
+              >
+                <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            )
           }
           backgroundError={profileTitleError?.message}
           inputProps={{ onBlur: profileTitle.onBlur }}

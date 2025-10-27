@@ -175,7 +175,7 @@ const FormInputsBox = ({
           >
             <CustomNextUiInput
               classNames={{
-                inputWrapper: companyError?.message && "form-input-error",
+                inputWrapper: `${companyError?.message ? "form-input-error" : ""} !bg-[#f8f7f5] data-[hover=true]:!bg-[#f8f7f5] data-[focus=true]:!bg-[#f8f7f5]`,
               }}
               placeholder={firstInputPlaceholder}
               startContent={
@@ -193,7 +193,7 @@ const FormInputsBox = ({
         <div className="flex-shrink-0">
           <button type="button" onClick={() => handleDelete(index)}>
             <InputBGWrapperIcon
-              className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}
+              className={"btn-septenary rounded-2xl bg-[#f8f7f5] w-[48px] h-[48px]"}
             >
               <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
@@ -215,14 +215,14 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarFromField}
               type="text"
-              placeholder="From"
+              placeholder="From (e.g. 2022)"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               classNames={{
-                inputWrapper: calendarFromError?.message && "form-input-error",
+                inputWrapper: `${calendarFromError?.message ? "form-input-error" : ""} !bg-[#f8f7f5] data-[hover=true]:!bg-[#f8f7f5] data-[focus=true]:!bg-[#f8f7f5]`,
                 input: "!pe-1",
               }}
             />
@@ -241,14 +241,14 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarToField}
               type="text"
-              placeholder="To"
+              placeholder="To (e.g. 2025)"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               classNames={{
-                inputWrapper: calendarToError?.message && "form-input-error",
+                inputWrapper: `${calendarToError?.message ? "form-input-error" : ""} !bg-[#f8f7f5] data-[hover=true]:!bg-[#f8f7f5] data-[focus=true]:!bg-[#f8f7f5]`,
                 input: "!pe-1",
               }}
             />

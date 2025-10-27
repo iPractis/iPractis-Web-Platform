@@ -90,49 +90,56 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
     <div className="mx-[285px] mt-[32px]">
       <div className="space-y-4">
         {/* Add Language Button - Keep existing styling at top */}
-        <Select
-          name="languages"
-          selectedKeys={[]}
-          onChange={() => {}} // This won't be used
-          labelPlacement="outside"
-          placeholder="Add a language"
-          selectorIcon={<span></span>}
-          startContent={
-            <InputBGWrapperIcon>
-              <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          }
-          endContent={
-            <InputBGWrapperIcon 
-              className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px] cursor-pointer"
-              onClick={handleAddSelector}
-            >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
-                <path
-                  d="M8 2V14M2 8H14"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
-            </InputBGWrapperIcon>
-          }
-          classNames={{
-            trigger: [
-              "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
-              (languagesError?.message || languagesError !== undefined) &&
-                "form-input-error",
-            ],
-            innerWrapper: ["text-white placeholder:text-white", "w-full"],
-            value: [
-              "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
-            ],
-            listbox: ["text-primary-color-P4"],
-            base: "!mt-0",
-          }}
-        >
-          {/* Empty - this is just for styling */}
-        </Select>
+        <div>
+          <Select
+            name="languages"
+            selectedKeys={[]}
+            onChange={() => {}} // This won't be used
+            labelPlacement="outside"
+            placeholder="Add a language"
+            selectorIcon={<span></span>}
+            startContent={
+              <InputBGWrapperIcon>
+                <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <div 
+                className="w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleAddSelector();
+                }}
+              >
+                <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1 pointer-events-none">
+                    <path
+                      d="M8 2V14M2 8H14"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </InputBGWrapperIcon>
+              </div>
+            }
+            classNames={{
+              trigger: [
+                "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
+                (languagesError?.message || languagesError !== undefined) &&
+                  "form-input-error",
+              ],
+              innerWrapper: ["text-white placeholder:text-white", "w-full"],
+              value: [
+                "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
+              ],
+              listbox: ["text-primary-color-P4"],
+              base: "!mt-0",
+            }}
+          >
+            {/* Empty - this is just for styling */}
+          </Select>
+        </div>
 
                                    {/* Show selector boxes */}
           {selectors.map((selector) => {
@@ -148,9 +155,9 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                   )}
                 >
                   <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
-                    {/* Language Selector Dropdown */}
-                    <div className="mt-[6px] mb-[6px] ml-[6px] w-[195px] h-[36px] bg-white rounded-[10px] border border-gray-200">
-                      <Select
+                                         {/* Language Selector Dropdown */}
+                     <div className="mt-[6px] mb-[6px] ml-[6px] w-[195px] h-[36px] bg-white rounded-[10px]">
+                       <Select
                         placeholder="Language"
                         selectedKeys={selector.language ? [selector.language] : []}
                         onSelectionChange={(keys) => {
@@ -199,9 +206,9 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                       </Select>
                     </div>
 
-                                         {/* Level Dropdown */}
-                     <div className="mt-[6px] mb-[6px] mr-[6px] w-[153px] h-[36px] bg-white rounded-[10px] border border-gray-200 ml-1">
-                       <Select
+                                                                                   {/* Level Dropdown */}
+                      <div className="mt-[6px] mb-[6px] mr-[6px] w-[153px] h-[36px] bg-white rounded-[10px] ml-1">
+                        <Select
                          placeholder="Level"
                          selectedKeys={selector.level ? [selector.level] : []}
                          onSelectionChange={(keys) => {

@@ -252,7 +252,7 @@ const BirthDateInput = ({ errors, control }) => {
           <div className="flex-[65%] relative">
             <input
               ref={monthInputRef}
-              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-transparent"
+              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-white"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {

@@ -26,14 +26,16 @@ const AveragePrice = ({ control, errors, watch }) => {
 
   // Handle input change to strip non-numeric characters except numbers
   const handlePriceChange = (e) => {
-    const value = e.target.value;
+    let value = e.target.value;
+    // Remove "USD" if it exists in the input
+    value = value.replace(/\s*USD\s*/gi, '');
     // Remove all non-numeric characters and keep only numbers
     const numericValue = value.replace(/[^0-9]/g, '');
     hourlyPrice.onChange(numericValue);
   };
 
-  // Display value with dollar sign for better UX
-  const displayValue = hourlyPrice.value ? `$ ${hourlyPrice.value}` : '';
+  // Display value with USD suffix for better UX
+  const displayValue = hourlyPrice.value ? `${hourlyPrice.value} USD` : '';
 
   return (
     <>
@@ -41,7 +43,7 @@ const AveragePrice = ({ control, errors, watch }) => {
         descriptionText="Lessons rate matter, guiding students to affordability and value."
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <DollarSignIcon fillColor={"fill-primary-color-P1"} />
           </div>
         }
@@ -60,15 +62,16 @@ const AveragePrice = ({ control, errors, watch }) => {
             )} top-1/2 -translate-y-1/2`}
           >
             <div className="mt-7">
-              <CustomNextUiInput
-                type="text"
-                name="hourlyPrice"
-                placeholder="Set your hourly base rate"
-                classNames={{
-                  label: "!-top-12 ms-0.5",
-                  inputWrapper: `${hourlyPriceError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
-                  input: "placeholder:text-primary-color-P4 text-primary-color-P4 ps-4 pe-10",
-                }}
+              <div className="relative">
+                <CustomNextUiInput
+                  type="text"
+                  name="hourlyPrice"
+                  placeholder="Set your hourly base rate"
+                  classNames={{
+                    label: "!-top-12 ms-0.5",
+                    inputWrapper: `${hourlyPriceError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
+                    input: "placeholder:text-primary-color-P4 text-primary-color-P4 ps-4 pe-10",
+                  }}
                 style={{
                   fontFamily: 'Poppins',
                   fontWeight: 500,
@@ -119,10 +122,19 @@ const AveragePrice = ({ control, errors, watch }) => {
                     <span className="text-gray-800 font-medium whitespace-nowrap">For 30 minutes sessions</span>
                   </div>
                 }
-                value={displayValue}
-                onChange={handlePriceChange}
-                onBlur={hourlyPrice.onBlur}
-              />
+                                                                   value={hourlyPrice.value || ''}
+                  onChange={handlePriceChange}
+                  onBlur={hourlyPrice.onBlur}
+                />
+                                                                   {hourlyPrice.value && (
+                    <span 
+                      className="absolute top-1/2 -translate-y-1/2 text-primary-color-P4 ST-3 pointer-events-none whitespace-nowrap"
+                      style={{ left: `${(String(hourlyPrice.value).length * 8) + 65}px` }}
+                    >
+                      {' USD'}
+                    </span>
+                  )}
+              </div>
             </div>
           </InputLeftStickStatus>
 

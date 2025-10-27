@@ -46,6 +46,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      buttonRef.current?.loading();
 
       // Payload = only current form values + userId
       const payload = {
@@ -80,13 +81,17 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
       // Keep draft state in parent up-to-date
       if (setDraft) setDraft(updatedDraft);
+      
+      // Reset button state BEFORE navigation
+      buttonRef.current?.notIsLoading();
+      setLoading(false);
 
       // Move to next tab
       setActiveTab((prev) => prev + 1);
     } catch (err) {
       console.error("Save error:", err);
       setError("general", { message: err.message });
-    } finally {
+      buttonRef.current?.notIsLoading();
       setLoading(false);
     }
   };

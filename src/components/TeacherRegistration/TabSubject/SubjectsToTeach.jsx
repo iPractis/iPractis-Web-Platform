@@ -17,6 +17,7 @@ import { useState } from "react";
 // Images && icons
 import {
   AddBoxIcon,
+  ChevronDownBigIcon,
   NotebookOpenedIconBigger,
   QuestionMark,
   UserBoxIcon,
@@ -55,7 +56,7 @@ const SubjectsToTeach = ({ errors, control }) => {
         descriptionText="Remember, students rely on this information to choose their teacher."
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between"
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <UserBoxIcon fillColor={"fill-primary-color-P1"} />
           </div>
         }
@@ -68,11 +69,11 @@ const SubjectsToTeach = ({ errors, control }) => {
         {/* Select subject to teach */}
         <div>
             <InputLeftStickStatus
-              inputBarStatusClassName={`${getInputStatusBorder(
+              inputBarStatusClassName={getInputStatusBorder(
                 errors,
                 subject.value,
                 "subject"
-              )} ${errorSubject?.message && "top-[20%]"}`}
+              )}
             >
               <Select
                 selectedKeys={new Set([subject.value])}
@@ -114,7 +115,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 }
                 endContent={
                   <InputBGWrapperIcon>
-                    <AddBoxIcon fillColor={"fill-primary-color-P1"} />
+                    <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
                   </InputBGWrapperIcon>
                 }
                 classNames={{
@@ -152,15 +153,15 @@ const SubjectsToTeach = ({ errors, control }) => {
         </div>
 
              
-        {/* Subject Introduction */}
-        <div className="lg:mt-[32px] md:mt-[24px] mt-[20px]">
-          <InputLeftStickStatus
-            inputBarStatusClassName={`${getInputStatusBorder(
-              errors,
-              subjectIntroduction.value,
-              "subjectIntroduction"
-            )} -translate-y-0 top-[35%] h-[129px]`}
-          >
+                 {/* Subject Introduction */}
+         <div className="lg:mt-[32px] md:mt-[24px] mt-[20px]">
+           <InputLeftStickStatus
+             inputBarStatusClassName={`${getInputStatusBorder(
+               errors,
+               subjectIntroduction.value,
+               "subjectIntroduction"
+             )} -translate-y-0 top-[35%] h-[129px]`}
+           >
             <div className="[&_.textarea-wrapper]:!bg-[#F8F7F5]">
               <CustomNextUiTextareaWithMaxLength
               labelTitle={"Subject Introduction"}
