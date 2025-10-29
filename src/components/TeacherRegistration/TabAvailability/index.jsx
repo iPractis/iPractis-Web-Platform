@@ -26,7 +26,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
     mode: "onBlur",
     resolver: zodResolver(tabAvailabilitySchema),
     defaultValues: {
-      dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length || 0,
+      dailyWorkTime: draft?.dailyWorkTime || 0,
       workSchedule: mappedSchedule,
       timeZone: draft?.timeZone || "America/Chicago",
     },
@@ -36,7 +36,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
   useEffect(() => {
     if (draft) {
       reset({
-        dailyWorkTime: draft?.dailyWorkTime || mappedSchedule.length || 0,
+        dailyWorkTime: draft?.dailyWorkTime || 0,
         workSchedule: draft?.availability ,
         timeZone: draft?.timeZone || "America/Chicago",
       });

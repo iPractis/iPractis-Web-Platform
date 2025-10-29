@@ -42,18 +42,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
     control,
   });
 
-  // Calculate total hours from all selected time slots
- const calculateTotalHours = () => {
-  return dailyWorkTimeLimit.reduce((totalHours, daySlot) => {
-    return totalHours + daySlot.hour.length/2; // each entry = 30 mins
-  }, 0);
-};
-
-  const totalHours = calculateTotalHours();
-
-  useEffect(() => {
-    dailyWorkTime.onChange(totalHours);
-  }, [totalHours, dailyWorkTime]);
+  // dailyWorkTime should be a static user-defined value (hours/day)
 
   return (
     <>
@@ -161,32 +150,45 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
               "dailyWorkTime"
             )}
           >
-            <CustomNextUiInput
-              readOnly
-              type="text"
-              name="dailyWorkTime"
-              placeholder="Define your daily work time"
-              startContent={
-                <InputBGWrapperIcon>
-                  <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              classNames={{
-                inputWrapper: [
-                  dailyWorkTimeError?.message && "form-input-error",
-                  "!bg-[#f8f7f5]",
-                ],
-              }}
-              onChange={dailyWorkTime.onChange}
-              onBlur={dailyWorkTime.onBlur}
-              value={totalHours}
-            />
+            <div className="relative">
+              <CustomNextUiInput
+                type="number"
+                step="0.5"
+                name="dailyWorkTime"
+                placeholder="Define your daily work time"
+                classNames={{
+                  inputWrapper: [
+                    dailyWorkTimeError?.message && "form-input-error",
+                    "!bg-[#f8f7f5]",
+                  ],
+                }}
+                startContent={
+                  <InputBGWrapperIcon>
+                    <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                  </InputBGWrapperIcon>
+                }
+                onChange={(e) => {
+                  const val = e.target.value;
+                  dailyWorkTime.onChange(val === "" ? "" : Number(val));
+                }}
+                onBlur={dailyWorkTime.onBlur}
+                value={dailyWorkTime.value ?? ""}
+              />
+              {dailyWorkTime.value !== undefined && dailyWorkTime.value !== "" && (
+                <span
+                  className="absolute top-1/2 -translate-y-1/2 text-primary-color-P4 ST-3 pointer-events-none whitespace-nowrap"
+                  style={{ left: `${(String(dailyWorkTime.value).length * 8) + 65}px` }}
+                >
+                  {" Hours"}
+                </span>
+              )}
+            </div>
           </InputLeftStickStatus>
 
           <SplitDynamicErrorZod
             message={
               dailyWorkTimeError?.message &&
-              "Working time don't meet requirement --- Minimum working time is set to 8 hours per week."
+              "Working time doesn't meet requirement — minimum is 1 hour per day."
             }
           />
         </div>

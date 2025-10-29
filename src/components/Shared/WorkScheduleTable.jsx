@@ -102,9 +102,8 @@ const WorkScheduleTable = ({
     setCurrentDay(new Date(now).getDate());
   }, []);
 
-  useEffect(() => {
-    setDailyWorkTimeLimit(fields);
-  }, [fields, setDailyWorkTimeLimit]);
+  // This component no longer pushes selected slots as the daily limit.
+  // The daily limit is a static, user-defined value handled in WorkTimePreferences.
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
