@@ -67,19 +67,17 @@ const Experience = ({ errors, control }) => {
                 </InputBGWrapperIcon>
               }
               endContent={
-                <InputBGWrapperIcon 
-                  className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px] cursor-pointer"
+                <button
+                  type="button"
+                  onMouseDown={(e) => e.preventDefault()}
                   onClick={handleAddExperience}
+                  className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px] cursor-pointer bg-white flex items-center justify-center"
+                  aria-label="Add professional experience"
                 >
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
-                    <path
-                      d="M8 2V14M2 8H14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
+                    <path d="M8 2V14M2 8H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>
-                </InputBGWrapperIcon>
+                </button>
               }
               classNames={{
                 trigger: [
