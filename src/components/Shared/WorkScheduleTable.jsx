@@ -167,7 +167,10 @@ const WorkScheduleTable = ({
 
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
-    const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    // Use independent markers for each half:
+    // Top half (first 30 min): stores hour:00 (start of slot)
+    // Bottom half (second 30 min): stores hour:30 (midpoint of slot)
+    const selectedTime = isSecondButton ? `${hour}:30` : `${hour}:00`;
 
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
@@ -203,7 +206,8 @@ const WorkScheduleTable = ({
 
   // Checks if a specific time is selected
   const isSelected = (hour, day, isSecondButton = false) => {
-    const timeToCheck = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    // Top half checks for hour:00, bottom half checks for hour:30
+    const timeToCheck = isSecondButton ? `${hour}:30` : `${hour}:00`;
 
     const daySlot = fields.find((slot) => slot.day === day);
     if (!daySlot) return false;
@@ -290,13 +294,17 @@ const WorkScheduleTable = ({
     setIs12HourFormat(!is12HourFormat);
   };
 
-  // Format hour (12H or 24H format)
-  const formatHour = (hour) => {
-    // Keep 0-23 if it's 24h format
-    if (!is12HourFormat) return hour;
-
-    // Convert 1-12 using modulo if it's 12h format
-    return (hour % 12) + 1;
+  // Format hour (12H or 24H format) with proper display
+  const formatHourDisplay = (hour) => {
+    if (!is12HourFormat) {
+      // 24h format: 00:00 to 23:00
+      return hour < 10 ? `0${hour}:00` : `${hour}:00`;
+    }
+    
+    // 12h format: 12:00 AM to 11:00 PM
+    const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    const period = hour < 12 ? 'AM' : 'PM';
+    return `${hour12}:00 ${period}`;
   };
 
   // Only acts if the click is pressed AND it is a different cell from the initial one
@@ -324,18 +332,21 @@ const WorkScheduleTable = ({
   // If users clicks on HOURS of the day (0-23 or 1-12)
   const handleHourClick = (hour) => {
     const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-    const time1 = `${hour}:30`;
-    const time2 = `${hour + 1}:00`;
+    // For full hour selection, we need both time markers
+    const time1 = `${hour}:00`;  // First half marker
+    const time2 = `${hour}:30`;  // Second half marker
 
-    // Check if ALL days already have the selected hours
+    // Check if ALL days already have the full hour selected (both times)
     const allSelected = days.every((day) => {
       const daySlot = fields.find((slot) => slot.day === day);
       return (
-        daySlot && daySlot.hour.includes(time1) && daySlot.hour.includes(time2)
+        daySlot && 
+        daySlot.hour.includes(time1) && 
+        daySlot.hour.includes(time2)
       );
     });
 
-    // Check if SOME days already have the selected hours (but not all)
+    // Check if SOME days already have any of these times
     const someSelected = days.some((day) => {
       const daySlot = fields.find((slot) => slot.day === day);
       return (
@@ -377,7 +388,7 @@ const WorkScheduleTable = ({
         }
       });
     } else {
-      // If some or none are selected, we select ALL the days
+      // If some or none are selected, we select ALL the days with full hour
       days.forEach((day) => {
         const existingIndex = fields.findIndex((slot) => slot.day === day);
 
@@ -483,7 +494,7 @@ const WorkScheduleTable = ({
           {/* Format button placeholder to align with day headers */}
           <div className="h-[40px] flex items-center">
             <button
-              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center"
+              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -494,7 +505,7 @@ const WorkScheduleTable = ({
           {/* Time slots column */}
           <div className="flex flex-col gap-3">
             {Array.from({ length: 24 }, (_, index) => {
-              const displayTime = index < 10 ? `0${index}:00` : `${index}:00`;
+              const displayTime = formatHourDisplay(index);
               
               return (
                 <div
@@ -549,21 +560,47 @@ const WorkScheduleTable = ({
                     columnDate.getMonth() === new Date().getMonth() &&
                     columnDate.getFullYear() === new Date().getFullYear();
 
+                  // Check if each half is selected for visual display
+                  const isTopHalfSelected = isSelected(hourIndex, column.key, false);
+                  const isBottomHalfSelected = isSelected(hourIndex, column.key, true);
+                  const bothSelected = isTopHalfSelected && isBottomHalfSelected;
+
                   return (
                     <div
-                      className={`flex-1 h-[40px] rounded-md bg-[#f8f7f5] hover:bg-secondary-color-S9 transition-colors ${
+                      className={`flex-1 h-[40px] relative group ${
                         showCurrentActiveDay &&
                         isToday &&
                         "bg-tertiary-color-SC5"
+                      } ${
+                        bothSelected ? "rounded-md overflow-hidden" : ""
                       }`}
                       key={`${column.key}-${hourIndex}`}
                     >
-                      <button
-                        className={`${
-                          isSelected(hourIndex, column.key, false)
+                      {/* Top half visual layer */}
+                      <div
+                        className={`absolute top-0 left-0 w-full h-1/2 ${
+                          isTopHalfSelected
                             ? "bg-quinary-color-VS10"
                             : "bg-[#f8f7f5]"
-                        } w-full h-full rounded-md cursor-pointer`}
+                        } ${
+                          !bothSelected && isTopHalfSelected ? "rounded-t-md" : ""
+                        }`}
+                      />
+                      
+                      {/* Bottom half visual layer */}
+                      <div
+                        className={`absolute bottom-0 left-0 w-full h-1/2 ${
+                          isBottomHalfSelected
+                            ? "bg-quinary-color-VS10"
+                            : "bg-[#f8f7f5]"
+                        } ${
+                          !bothSelected && isBottomHalfSelected ? "rounded-b-md" : ""
+                        }`}
+                      />
+                      
+                      {/* Top half button - invisible, just for click handling */}
+                      <button
+                        className="w-full h-1/2 cursor-pointer absolute top-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
                         onMouseDown={() =>
                           handleMouseDown(hourIndex, column.key, false)
                         }
@@ -572,6 +609,21 @@ const WorkScheduleTable = ({
                         }
                         onMouseUp={handleMouseUp}
                         type="button"
+                        aria-label={`Select first 30 minutes of ${hourIndex}:00`}
+                      ></button>
+                      
+                      {/* Bottom half button - invisible, just for click handling */}
+                      <button
+                        className="w-full h-1/2 cursor-pointer absolute bottom-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
+                        onMouseDown={() =>
+                          handleMouseDown(hourIndex, column.key, true)
+                        }
+                        onMouseEnter={() =>
+                          handleMouseEnter(hourIndex, column.key, true)
+                        }
+                        onMouseUp={handleMouseUp}
+                        type="button"
+                        aria-label={`Select second 30 minutes of ${hourIndex}:00`}
                       ></button>
                     </div>
                   );

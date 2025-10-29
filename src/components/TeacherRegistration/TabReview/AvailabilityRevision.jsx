@@ -557,25 +557,42 @@ const AvailabilityRevision = ({draftData}) => {
                 <div className="bg-black text-white rounded-[8px] w-[80px] h-[32px] flex items-center justify-center text-xs font-medium">
                   {day} {num}
                 </div>
-                {/* Availability Cells for the day */}
+                {/* Availability Cells for the day - split into vertical halves */}
                 {Array.from({ length: 24 }).map((_, hour) => {
-                  // Check if this hour is selected in the availability data
-                  const isSelected = dayAvailability?.hour?.some(time => {
-                    const [timeHour] = time.split(':').map(Number);
-                    return timeHour === hour;
-                  });
-                  
-                  if (isSelected) {
-                    console.log(`Selected: ${day} ${hour}:00`);
-                  }
+                  // Check for specific time markers: hour:00 for left half, hour:30 for right half
+                  const isLeftHalfSelected = dayAvailability?.hour?.includes(`${hour}:00`);
+                  const isRightHalfSelected = dayAvailability?.hour?.includes(`${hour}:30`);
+                  const bothHalvesSelected = isLeftHalfSelected && isRightHalfSelected;
                   
                   return (
                     <div
                       key={`${day}-${hour}`}
-                      className={`w-[32px] h-[32px] rounded-[4px] ${
-                        isSelected ? 'bg-yellow-300' : 'bg-gray-100'
+                      className={`w-[32px] h-[32px] relative ${
+                        bothHalvesSelected ? 'rounded-[4px] overflow-hidden' : ''
                       }`}
-                    ></div>
+                    >
+                      {/* Left half (first 30 min) */}
+                      <div
+                        className={`absolute top-0 left-0 w-1/2 h-full ${
+                          isLeftHalfSelected
+                            ? 'bg-yellow-300'
+                            : 'bg-gray-100'
+                        } ${
+                          !bothHalvesSelected && isLeftHalfSelected ? 'rounded-l-[4px]' : ''
+                        }`}
+                      />
+                      
+                      {/* Right half (second 30 min) */}
+                      <div
+                        className={`absolute top-0 right-0 w-1/2 h-full ${
+                          isRightHalfSelected
+                            ? 'bg-yellow-300'
+                            : 'bg-gray-100'
+                        } ${
+                          !bothHalvesSelected && isRightHalfSelected ? 'rounded-r-[4px]' : ''
+                        }`}
+                      />
+                    </div>
                   );
                 })}
               </div>
