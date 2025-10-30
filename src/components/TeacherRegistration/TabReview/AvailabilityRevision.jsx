@@ -526,7 +526,7 @@ const AvailabilityRevision = ({draftData}) => {
         <div className="flex flex-col gap-1">
           {/* Top row: Format button + Hour headers (0-23) */}
           <div className="flex gap-1">
-            <button className="bg-black text-white rounded-[8px] px-3 py-2 text-xs font-medium w-[80px] h-[32px] flex items-center justify-center">
+            <button className="bg-black text-white rounded-[8px] px-3 py-2 text-xs font-medium w-[80px] h-[32px] flex items-center justify-center mr-2">
               Format
             </button>
             {Array.from({ length: 24 }).map((_, hour) => (
@@ -553,9 +553,14 @@ const AvailabilityRevision = ({draftData}) => {
             
             return (
               <div key={day} className="flex gap-1">
-                {/* Day Label */}
-                <div className="bg-black text-white rounded-[8px] w-[80px] h-[32px] flex items-center justify-center text-xs font-medium">
-                  {day} {num}
+                {/* Day Label: white day name + black number pill */}
+                <div className="w-[80px] h-[32px] flex items-center gap-1 mr-2">
+                  <div className="bg-white text-black rounded-[8px] h-full flex-1 flex items-center justify-center text-xs font-medium">
+                    {day}
+                  </div>
+                  <div className="bg-black text-white rounded-[8px] h-full w-[32px] flex items-center justify-center text-xs font-bold">
+                    {num}
+                  </div>
                 </div>
                 {/* Availability Cells for the day - split into vertical halves */}
                 {Array.from({ length: 24 }).map((_, hour) => {
@@ -567,18 +572,14 @@ const AvailabilityRevision = ({draftData}) => {
                   return (
                     <div
                       key={`${day}-${hour}`}
-                      className={`w-[32px] h-[32px] relative ${
-                        bothHalvesSelected ? 'rounded-[4px] overflow-hidden' : ''
-                      }`}
+                      className={`w-[32px] h-[32px] relative rounded-[4px] overflow-hidden`}
                     >
                       {/* Left half (first 30 min) */}
                       <div
                         className={`absolute top-0 left-0 w-1/2 h-full ${
                           isLeftHalfSelected
                             ? 'bg-yellow-300'
-                            : 'bg-gray-100'
-                        } ${
-                          !bothHalvesSelected && isLeftHalfSelected ? 'rounded-l-[4px]' : ''
+                            : 'bg-[#f8f7f5]'
                         }`}
                       />
                       
@@ -587,9 +588,7 @@ const AvailabilityRevision = ({draftData}) => {
                         className={`absolute top-0 right-0 w-1/2 h-full ${
                           isRightHalfSelected
                             ? 'bg-yellow-300'
-                            : 'bg-gray-100'
-                        } ${
-                          !bothHalvesSelected && isRightHalfSelected ? 'rounded-r-[4px]' : ''
+                            : 'bg-[#f8f7f5]'
                         }`}
                       />
                     </div>
