@@ -42,6 +42,20 @@ const WorkScheduleTable = ({
   const [maxDate, setMaxDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  // Map two-letter day labels to three-letter display labels without changing keys/logic
+  const toThreeLetterDay = (twoLetter) => {
+    const map = {
+      Mo: "Mon",
+      Tu: "Tue",
+      We: "Wed",
+      Th: "Thu",
+      Fr: "Fri",
+      Sa: "Sat",
+      Su: "Sun",
+    };
+    return map[twoLetter] || twoLetter;
+  };
+
   // We use "useFieldArray" to manage the selected slots
   const { fields, append, remove, update } = useFieldArray({
     control,
@@ -504,14 +518,24 @@ const WorkScheduleTable = ({
           {/* Time slots column */}
           <div className="flex flex-col gap-3">
             {Array.from({ length: 24 }, (_, index) => {
-              const displayTime = formatHourDisplay(index);
-              
+              const is12 = is12HourFormat;
+              const hour12 = index === 0 ? 12 : index > 12 ? index - 12 : index;
+              const period = index < 12 ? "AM" : "PM";
+              const displayNumeric = is12 ? `${hour12}:00` : (index < 10 ? `0${index}:00` : `${index}:00`);
+
               return (
                 <div
-                  className="bg-[#f8f7f5] text-black rounded-[10px] w-[110px] h-[40px] flex items-center justify-center px-3"
+                  className="w-[110px] h-[40px] flex items-center justify-between gap-2"
                   key={`hour-${index}`}
                 >
-                  <span className="ST-3 font-bold">{displayTime}</span>
+                  <div className="bg-white text-black rounded-[10px] h-full flex-1 flex items-center justify-center px-3">
+                    <span className="ST-3 font-bold">{displayNumeric}</span>
+                  </div>
+                  {is12 && (
+                    <div className="bg-[#f8f7f5] text-black rounded-[10px] h-full w-[46px] flex items-center justify-center">
+                      <span className="ST-3 font-bold">{period}</span>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -536,11 +560,11 @@ const WorkScheduleTable = ({
                   className={`text-black rounded-md text-center p-2 min-w-[100px] w-full h-[40px] flex items-center justify-center ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
-                      : "bg-[#f8f7f5]"
+                      : "bg-white"
                   }`}
                   key={column.key}
                 >
-                  <h3 className="ST-3">{column.label}</h3>
+                  <h3 className="ST-3">{toThreeLetterDay(column.label)}</h3>
                 </div>
               );
             })}
@@ -566,12 +590,10 @@ const WorkScheduleTable = ({
 
                   return (
                     <div
-                      className={`flex-1 h-[40px] relative group ${
+                      className={`flex-1 h-[40px] relative group rounded-md overflow-hidden ${
                         showCurrentActiveDay &&
                         isToday &&
                         "bg-tertiary-color-SC5"
-                      } ${
-                        bothSelected ? "rounded-md overflow-hidden" : ""
                       }`}
                       key={`${column.key}-${hourIndex}`}
                     >
