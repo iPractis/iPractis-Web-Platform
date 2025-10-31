@@ -6,6 +6,7 @@ import TeacherInfo from "./TeacherInfo";
 import SectionHeader from "../../Shared/SectionHeader";
 import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon } from "../../Icons";
 import Image from "next/image";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 import unitedKingdom from "@/public/flags/united-kingdom.png";
 import { getMonthNumberAsText } from "@/src/lib/utils/getMonthNumberAsText";
@@ -268,16 +269,19 @@ const AvailabilityRevision = ({draftData}) => {
       <div className="bg-white rounded-[32px] p-0 mb-8 max-w-[1000px] h-[52px] flex items-center justify-between px-8 mx-auto">
         {/* Left side - Profile Image and Basic Info (same format as Teacher's info header) */}
         <div className="flex items-center gap-[10px]">
-          <div className="relative w-[52px] h-[52px] rounded-[10px] overflow-hidden">
-            <Image
-              alt={"Teacher Profile"}
-              className="w-full h-full object-contain"
-              width={52}
-              height={52}
-              src={draftData.profile_url || tutorImagePreview}
-              unoptimized={true}
-            />
-            <div className="absolute right-1 bottom-1 rounded-full w-2.5 h-2.5 bg-quinary-color-VS5 border border-white"></div>
+          <div className="ml-[4px]">
+            <InputLeftStickStatus inputBarStatusClassName="bg-quinary-color-VS5 !h-[28px] !rounded-[10px]">
+              <div className="relative w-[52px] h-[52px] rounded-[10px] overflow-hidden">
+                <Image
+                  alt={"Teacher Profile"}
+                  className="w-full h-full object-contain"
+                  width={52}
+                  height={52}
+                  src={draftData.profile_url || tutorImagePreview}
+                  unoptimized={true}
+                />
+              </div>
+            </InputLeftStickStatus>
           </div>
           
           <div className="flex flex-col justify-center">
@@ -339,54 +343,79 @@ const AvailabilityRevision = ({draftData}) => {
 
         {/* Right side - Details Container */}
         <div className="w-[430px] h-[302.625px] max-w-[430px] flex flex-col justify-between py-4">
-          {/* Top Section - Teaching Details */}
+          {/* Top Section - Stats Blocks (moved above teaching details). Render only when data exists */}
+          {(draftData.totalLessons || draftData.activeStudents || draftData.hourlyPrice) && (
+            <div className="flex gap-2 mt-[2px]">
+              {/* Lessons count */}
+              {draftData.totalLessons && (
+                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+                  <h4 className="ST-2 text-primary-color-P4">Lessons</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="MT-SB-1 text-primary-color-P1">{draftData.totalLessons}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Active students */}
+              {draftData.activeStudents && (
+                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+                  <h4 className="ST-2 text-primary-color-P4">Active students</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="MT-SB-1 text-primary-color-P1">{draftData.activeStudents}</span>
+                  </div>
+                </div>
+              )}
+
+              {/* Lesson Rate */}
+              {draftData.hourlyPrice && (
+                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+                  <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice} USD</span>
+                    <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Middle Section - Teaching Details (moved down) */}
           <div className="space-y-3">
             {/* Teaching levels */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
-              <UserSpeakingIcon fillColor={"fill-primary-color-P1"} />
+              <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
+                <UserSpeakingIcon fillColor={"fill-primary-color-P1"} />
+              </span>
               <p className="ST-3 text-primary-color-P6">
                 {draftData.studentLevel ? `Teaches ${Array.isArray(draftData.studentLevel) ? draftData.studentLevel.join(', ') : draftData.studentLevel} level${Array.isArray(draftData.studentLevel) && draftData.studentLevel.length > 1 ? 's' : ''}` : 'Teaches all levels'}
               </p>
             </div>
-            
             {/* Teaching ages */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
-              <UserHatIcon fillColor={"fill-primary-color-P1"} />
-              <p className="ST-3 text-primary-color-P6">
-                {getAgeText()}
-              </p>
+              <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
+                <UserHatIcon fillColor={"fill-primary-color-P1"} />
+              </span>
+              <p className="ST-3 text-primary-color-P6">{getAgeText()}</p>
             </div>
           </div>
-
-                     {/* Middle Section - Stats Blocks - Only show if hourlyPrice exists */}
-           {draftData.hourlyPrice && (
-             <div className="flex gap-2 mt-[17px]">
-               {/* Lesson Rate Block */}
-               <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-                 <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
-                 <div className="flex items-center gap-2">
-                   <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice} USD</span>
-                   <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
-                 </div>
-               </div>
-             </div>
-           )}
 
           {/* Bottom Section - Action Buttons */}
           <div className="w-[430px] h-[48px] flex items-center gap-4">
             {/* Message Icon */}
-            <button className="w-[48px] h-[48px] rounded-[16px] bg-primary-color-P1 hover:bg-primary-color-P2 transition-colors flex items-center justify-center p-[14px]">
+            <button className="w-[48px] h-[48px] rounded-[16px] bg-[#4166FF] hover:bg-[#3b5be6] transition-colors flex items-center justify-center p-[14px]">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2ZM20 16H5.17L4 17.17V4H20V16Z" fill="white"/>
               </svg>
             </button>
             
             {/* Try Now Button */}
-            <button className="w-[366px] h-[48px] bg-primary-color-P1 hover:bg-primary-color-P2 transition-colors flex items-center justify-between px-4 py-3 rounded-[16px]">
+            <button className="w-[366px] h-[48px] bg-[#4166FF] hover:bg-[#3b5be6] transition-colors flex items-center justify-between pl-4 pr-[6px] py-3 rounded-[16px]">
               <span className="text-white font-semibold">Try now!</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 5V19L19 12L8 5Z" fill="white"/>
-              </svg>
+              <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 flex items-center justify-center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8 5V19L19 12L8 5Z" fill="#4166FF"/>
+                </svg>
+              </span>
             </button>
           </div>
         </div>

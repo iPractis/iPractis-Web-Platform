@@ -128,10 +128,18 @@ const BirthDateInput = ({ errors, control }) => {
     );
   };
 
-  const selectedDate = dayjs(
-    `${birthDateYear.value}/${birthDateMonth.value}/${birthDateNumber.value}`,
-    "YYYY/MM/D"
-  ).toDate();
+  // Only provide a valid Date object to react-datepicker when year, month, and day form a valid date.
+  // Passing an invalid date can trigger internal update loops in the datepicker when the input is being edited.
+  const selectedDate = (() => {
+    const year = birthDateYear.value;
+    const month = birthDateMonth.value;
+    const day = birthDateNumber.value;
+    if (year && year.length === 4 && month && day) {
+      const parsed = dayjs(`${year}/${month}/${day}`, "YYYY/MM/D", true);
+      return parsed.isValid() ? parsed.toDate() : null;
+    }
+    return null;
+  })();
 
   const handleKeyDown = (e) => {
     if (

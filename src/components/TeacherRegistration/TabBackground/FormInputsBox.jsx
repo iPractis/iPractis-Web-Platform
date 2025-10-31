@@ -300,9 +300,7 @@ const FormInputsBox = ({
             accept=".pdf, .png, .jpeg"
             type="file"
           />
-          <div className={`w-full h-[48px] flex items-center ${
-            uploadFileError?.message ? "form-input-error" : ""
-          }`}>
+          <div className={`w-full h-[48px] flex items-center`}>
             {/* Left Upload Icon Container */}
             <div className="w-[54px] h-[48px] bg-[#F8F7F5] rounded-2xl flex items-center justify-center">
               <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
