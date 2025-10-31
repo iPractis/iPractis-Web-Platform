@@ -196,7 +196,7 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="flex-[30%]">
             <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
+              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9 placeholder:!text-black"
               onChange={(e) => {
                 let numericValue = e.target.value.replace(/\D/g, "");
 
@@ -254,13 +254,14 @@ const BirthDateInput = ({ errors, control }) => {
               value={birthDateNumber.value}
               name="birthDateNumber"
               type="text"
+              placeholder="Day"
             />
           </div>
 
           <div className="flex-[65%] relative">
             <input
               ref={monthInputRef}
-              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-white"
+              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-white focus:bg-white placeholder:!text-black"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -311,7 +312,7 @@ const BirthDateInput = ({ errors, control }) => {
 
           <div className="flex-[45%]">
             <input
-              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9"
+              className="input-ipractis text-center w-full outline-none rounded-xl !p-0 h-9 placeholder:!text-black"
               onChange={(e) => {
                 const numericValue = e.target.value.replace(/\D/g, "");
                 const yearValue = numericValue.slice(0, 4);
@@ -335,7 +336,7 @@ const BirthDateInput = ({ errors, control }) => {
               value={birthDateYear.value || ""}
               name="birthDateYear"
               type="text"
-              placeholder="YYYY"
+              placeholder="Year"
             />
           </div>
 

@@ -4,7 +4,7 @@ import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";
 import TeacherInfo from "./TeacherInfo";
 import SectionHeader from "../../Shared/SectionHeader";
-import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon } from "../../Icons";
+import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon, FlagIcon } from "../../Icons";
 import Image from "next/image";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
@@ -266,7 +266,7 @@ const AvailabilityRevision = ({draftData}) => {
       </div>
 
       {/* Teacher Profile Container */}
-      <div className="bg-white rounded-[32px] p-0 mb-8 max-w-[1000px] h-[52px] flex items-center justify-between px-8 mx-auto">
+      <div className="bg-white rounded-[32px] p-0 mb-8 max-w-[1000px] h-[48px] flex items-center justify-between px-8 mx-auto">
         {/* Left side - Profile Image and Basic Info (same format as Teacher's info header) */}
         <div className="flex items-center gap-[10px]">
           <div className="ml-[4px]">
@@ -285,7 +285,7 @@ const AvailabilityRevision = ({draftData}) => {
           </div>
           
           <div className="flex flex-col justify-center">
-            <h3 className="MT-SB-1 text-primary-color-P1">{draftData.firstName} {draftData.lastName}</h3>
+            <h3 className="MT-SB-1 text-primary-color-P1">{draftData.firstName} {draftData.lastName ? draftData.lastName.charAt(0).toUpperCase() + '.' : ''}</h3>
             <div className="flex items-center gap-1">
               <Image
                 alt={"Country Flag"}
@@ -301,14 +301,12 @@ const AvailabilityRevision = ({draftData}) => {
         </div>
 
         {/* Right side - Action buttons with same attributes as profile picture */}
-        <div className="flex gap-3">
-          <button className="w-[52px] h-[52px] rounded-[10px] bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17 3H7C5.9 3 5 3.9 5 5V19L12 16L19 19V5C19 3.9 18.1 3 17 3ZM17 16L12 14L7 16V5H17V16Z" fill="currentColor"/>
-            </svg>
+        <div className="flex gap-[10px]">
+          <button className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] hover:bg-[#f0efed] transition-colors flex items-center justify-center p-[14px]">
+            <FlagIcon fillColor={"fill-black"} />
           </button>
-          <button className="w-[52px] h-[52px] rounded-[10px] bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center">
-            <HeartSmallIcon fillColor={"fill-pink-500"} />
+          <button className="w-[48px] h-[48px] rounded-[16px] bg-[#FFB8BC] hover:bg-[#ffc0e1] transition-colors flex items-center justify-center p-[14px]">
+            <HeartSmallIcon fillColor={"fill-white"} />
           </button>
         </div>
       </div>
@@ -332,7 +330,7 @@ const AvailabilityRevision = ({draftData}) => {
           ) : (
             <Image
               alt={"Teacher Profile"}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-cover"
               width={538}
               height={303}
               src={draftData.profile_url || tutorImagePreview}
@@ -343,41 +341,47 @@ const AvailabilityRevision = ({draftData}) => {
 
         {/* Right side - Details Container */}
         <div className="w-[430px] h-[302.625px] max-w-[430px] flex flex-col justify-between py-4">
-          {/* Top Section - Stats Blocks (moved above teaching details). Render only when data exists */}
-          {(draftData.totalLessons || draftData.activeStudents || draftData.hourlyPrice) && (
-            <div className="flex gap-2 mt-[2px]">
-              {/* Lessons count */}
-              {draftData.totalLessons && (
-                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+          {/* Top Section - Stats Blocks (moved above teaching details) */}
+          <div className="flex gap-2 mt-[2px]">
+            {/* Lessons count - always show */}
+            <div className="w-[120px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+              {draftData.totalLessons ? (
+                <>
+                  <span className="ST-2 text-primary-color-P4">{draftData.totalLessons} Lessons</span>
+                  <div className="flex items-center gap-1">
+                    <span className="MT-SB-1 text-primary-color-P1">5.0</span>
+                    <StarIcon fillColor={"fill-quaternary-color-A5"} />
+                  </div>
+                </>
+              ) : (
+                <>
                   <h4 className="ST-2 text-primary-color-P4">Lessons</h4>
                   <div className="flex items-center gap-2">
-                    <span className="MT-SB-1 text-primary-color-P1">{draftData.totalLessons}</span>
+                    <span className="ST-3 text-primary-color-P1">N/A</span>
                   </div>
-                </div>
-              )}
-
-              {/* Active students */}
-              {draftData.activeStudents && (
-                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-                  <h4 className="ST-2 text-primary-color-P4">Active students</h4>
-                  <div className="flex items-center gap-2">
-                    <span className="MT-SB-1 text-primary-color-P1">{draftData.activeStudents}</span>
-                  </div>
-                </div>
-              )}
-
-              {/* Lesson Rate */}
-              {draftData.hourlyPrice && (
-                <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
-                  <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
-                  <div className="flex items-center gap-2">
-                    <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice} USD</span>
-                    <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
-                  </div>
-                </div>
+                </>
               )}
             </div>
-          )}
+
+            {/* Active students - always show */}
+            <div className="w-[120px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+              <h4 className="ST-2 text-primary-color-P4 whitespace-nowrap">Active students</h4>
+              <div className="flex items-center gap-2">
+                <span className={draftData.activeStudents ? "MT-SB-1 text-primary-color-P1" : "ST-3 text-primary-color-P1"}>{draftData.activeStudents || 'N/A'}</span>
+              </div>
+            </div>
+
+            {/* Lesson Rate */}
+            {draftData.hourlyPrice && (
+              <div className="w-[177px] h-[75px] bg-[#F8F7F5] rounded-[16px] p-4 flex flex-col gap-0.5">
+                <h4 className="ST-2 text-primary-color-P4">Lesson rate</h4>
+                <div className="flex items-center gap-2">
+                  <span className="MT-SB-1 text-primary-color-P1">{draftData.hourlyPrice} USD</span>
+                  <span className="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs font-semibold">30mins</span>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Middle Section - Teaching Details (moved down) */}
           <div className="space-y-3">
@@ -386,7 +390,7 @@ const AvailabilityRevision = ({draftData}) => {
               <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
                 <UserSpeakingIcon fillColor={"fill-primary-color-P1"} />
               </span>
-              <p className="ST-3 text-primary-color-P6">
+              <p className="ST-3 text-primary-color-P1">
                 {draftData.studentLevel ? `Teaches ${Array.isArray(draftData.studentLevel) ? draftData.studentLevel.join(', ') : draftData.studentLevel} level${Array.isArray(draftData.studentLevel) && draftData.studentLevel.length > 1 ? 's' : ''}` : 'Teaches all levels'}
               </p>
             </div>
@@ -395,7 +399,7 @@ const AvailabilityRevision = ({draftData}) => {
               <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
                 <UserHatIcon fillColor={"fill-primary-color-P1"} />
               </span>
-              <p className="ST-3 text-primary-color-P6">{getAgeText()}</p>
+              <p className="ST-3 text-primary-color-P1">{getAgeText()}</p>
             </div>
           </div>
 
@@ -452,9 +456,9 @@ const AvailabilityRevision = ({draftData}) => {
 
              {/* Profile Title Section - Only show if data exists */}
        {(draftData.profileTitle || draftData.subjectIntroduction) && (
-         <div className="bg-white rounded-[32px] p-8 mb-8">
+         <div className="w-[1000px] max-w-[1000px] h-[144px] bg-[#F8F7F5] rounded-[32px] p-8 mb-[100px] mx-auto flex flex-col gap-4">
            {draftData.profileTitle && (
-             <h3 className="MT-SB-1 text-primary-color-P1 mb-4">
+             <h3 className="MT-SB-1 text-primary-color-P1">
                {draftData.profileTitle}
              </h3>
            )}
