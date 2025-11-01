@@ -1,3 +1,2 @@
-// Referring to the auth.ts we just created
-import { handlers } from "@/src/auth";
+import { handlers } from "@/src/lib/auth";
 export const { GET, POST } = handlers;

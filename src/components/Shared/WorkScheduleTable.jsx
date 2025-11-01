@@ -28,7 +28,7 @@ const WorkScheduleTable = ({
   timeZoneFilter,
   fromToFilter,
   control,
-  defaultTimeZone, // ✅ new
+  defaultTimeZone,
 }) => {
   const [selectedTimeZone, setSelectedTimeZone] = useState(
     defaultTimeZone || "America/Chicago" // ✅ use draft timezone if available
