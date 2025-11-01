@@ -1,4 +1,3 @@
-// POST /api/teacher-draft
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/src/lib/supabaseClient";
 import { mapUiToDbAvailability } from "@/src/utils/mapDbAvailability";
@@ -17,24 +16,26 @@ export async function POST(req) {
       return NextResponse.json({ message: "userId is required" }, { status: 400 });
     }
 
-    // 1. Upsert into teachers
+    console.log("Saving teacher draft for user:", userId);
+
+    // 1️⃣ Upsert into teachers
     const { data: teacher, error: teacherError } = await supabaseServer
       .from("teachers")
       .upsert(
         {
           user_id: userId,
-          profile_title: draft.profileTitle,
-          introduction: draft.introduction,
-          subject: draft.subject,
-          subject_intro: draft.subjectIntroduction,
-          video_link: draft.videoLink,
+          profile_title: draft.profileTitle || null,
+          introduction: draft.introduction || null,
+          subject: draft.subject || null,
+          subject_intro: draft.subjectIntroduction || null,
+          video_link: draft.videoLink || null,
           hourly_price: normalizeNumeric(draft.hourlyPrice),
-          student_level: draft.studentLevel,
-          teach_amateurs: draft.teachToAmateurPersons,
-          teach_young: draft.teachToYoungPersons,
+          student_level: draft.studentLevel || null,
+          teach_amateurs: draft.teachToAmateurPersons ?? false,
+          teach_young: draft.teachToYoungPersons ?? false,
           daily_work_time: normalizeNumeric(draft.dailyWorkTime),
-          timezone: draft.timeZone,
-          profile_image: draft.profile_url,
+          timezone: draft.timeZone || null,
+          profile_image: draft.profile_url || null,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "user_id" }
@@ -43,35 +44,43 @@ export async function POST(req) {
       .single();
 
     if (teacherError) {
-      console.error("Teacher insert failed:", teacherError);
+      console.error("Teacher upsert failed:", teacherError);
       return NextResponse.json({ message: "Failed to save teacher" }, { status: 500 });
     }
 
     const teacherId = teacher.teacher_id;
 
-    // 2. Update profile
-    await supabaseServer.from("profiles").upsert(
-      {
-        user_id: userId,
-        first_name: draft.firstName,
-        middle_name: draft.middleName,
-        last_name: draft.lastName,
-        gender: draft.gender,
-        nationality: draft.nationality,
-        country: draft.country,
-        birth_date: draft.birthDate,
+    // 2️⃣ Update user details (since profiles merged → users)
+    const { error: userError } = await supabaseServer
+      .from("users")
+      .update({
+        first_name: draft.firstName || null,
+        middle_name: draft.middleName || null,
+        last_name: draft.lastName || null,
+        gender: draft.gender || null,
+        nationality: draft.nationality || null,
+        country: draft.country || null,
+        birth_date: draft.birthDate || null,
         updated_at: new Date().toISOString(),
-      },
-      { onConflict: "user_id" }
-    );
+      })
+      .eq("user_id", userId);
 
-    // 3. Clear + re-insert relations
-    await supabaseServer.from("teacher_languages").delete().eq("teacher_id", teacherId);
-    await supabaseServer.from("teacher_sub_subjects").delete().eq("teacher_id", teacherId);
-    await supabaseServer.from("teacher_experiences").delete().eq("teacher_id", teacherId);
-    await supabaseServer.from("teacher_education").delete().eq("teacher_id", teacherId);
-    await supabaseServer.from("teacher_availability").delete().eq("teacher_id", teacherId);
+    if (userError) {
+      console.error("User update failed:", userError);
+      return NextResponse.json({ message: "Failed to update user info" }, { status: 500 });
+    }
 
+    // 3️⃣ Clear old relational data
+    const deleteOps = [
+      supabaseServer.from("teacher_languages").delete().eq("teacher_id", teacherId),
+      supabaseServer.from("teacher_sub_subjects").delete().eq("teacher_id", teacherId),
+      supabaseServer.from("teacher_experiences").delete().eq("teacher_id", teacherId),
+      supabaseServer.from("teacher_education").delete().eq("teacher_id", teacherId),
+      supabaseServer.from("teacher_availability").delete().eq("teacher_id", teacherId),
+    ];
+    await Promise.all(deleteOps);
+
+    // 4️⃣ Re-insert new relations (if present)
     if (draft.languages?.length) {
       await supabaseServer.from("teacher_languages").insert(
         draft.languages.map((l) => ({
@@ -118,32 +127,43 @@ export async function POST(req) {
       );
     }
 
-    if (draft.availability?.length) {
-      const slots = mapUiToDbAvailability(draft.availability).map((slot) => ({
-        teacher_id: teacherId,
-        ...slot,
-      }));
-      console.log("AVAILABILITY SLOTS TO INSERT:", slots);
-      if (slots.length) {
-        await supabaseServer.from("teacher_availability").insert(slots);
+    // 5️⃣ Optimized Availability — save as JSON instead of many rows
+    if (draft.availability && Array.isArray(draft.availability)) {
+      const availabilityJson = mapUiToDbAvailability(draft.availability); // returns something like { Mon: ["04:30", "05:30"], Tue: [...] }
+      const { error: availError } = await supabaseServer
+        .from("teacher_availability")
+        .upsert(
+          {
+            teacher_id: teacherId,
+            availability: availabilityJson,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "teacher_id" }
+        );
+
+      if (availError) {
+        console.error("Availability save failed:", availError);
       }
     }
 
-   await supabaseServer
-  .from("teacher_drafts")
-  .upsert(
-    {
-      user_id: userId,        // 👈 must include this!
-      is_published: true,
-      updated_at: new Date().toISOString(),
-    },
-    { onConflict: "user_id" }
-  );
+    // 6️⃣ Mark draft as published
+    await supabaseServer
+      .from("teacher_drafts")
+      .upsert(
+        {
+          user_id: userId,
+          is_published: true,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: "user_id" }
+      );
 
-
-    return NextResponse.json({ message: "Draft normalized and saved", teacherId }, { status: 201 });
+    return NextResponse.json(
+      { message: "Teacher draft saved successfully", teacherId },
+      { status: 201 }
+    );
   } catch (err) {
-    console.error("Teacher Draft API error:", err);
+    console.error("Teacher Draft POST API error:", err);
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }

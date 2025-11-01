@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
+import { supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
+
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -13,30 +14,22 @@ export async function POST(req) {
       );
     }
 
-    // Fetch user
-    const { data: user, error } = await supabaseServer
+    // 🟩 Fetch user from unified users table
+    const { data: user, error: userError } = await supabaseServer
       .from("users")
-      .select(" *")
+      .select("user_id, email, password_hash, first_name, last_name, role")
       .eq("email", email)
-      .single();
+      .maybeSingle();
 
-      if (error || !user) {
-        return NextResponse.json(
-          { message: "Invalid credentials" },
-          { status: 401 }
-        );
-      }
+    if (userError || !user) {
+      console.error("User lookup error:", userError);
+      return NextResponse.json(
+        { message: "Invalid credentials" },
+        { status: 401 }
+      );
+    }
 
-    // Fetch user profile with role info  
-    const { data: profile, error: profileError } = await supabaseServer
-      .from("profiles")
-      .select("*")
-      .eq("user_id", user.user_id)
-      .single();
-      
-
-
-    // Verify password
+    // 🟦 Verify password
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     if (!isPasswordValid) {
       return NextResponse.json(
@@ -45,39 +38,50 @@ export async function POST(req) {
       );
     }
 
-    // Get role from profile or default to "student"
-    const userRole = profile?.role || "student";
+    // 🧩 Determine display name
+    const displayName =
+      user.first_name || user.last_name
+        ? `${user.first_name || ""} ${user.last_name || ""}`.trim()
+        : user.email.split("@")[0];
 
-    // Create JWT
+    // 🛡️ Generate JWT token
     const token = jwt.sign(
-      { 
-        userId: user.user_id, 
-        email: user.email, 
-        role: userRole,
-        firstName: user.first_name || user.email.split('@')[0] // Added firstName
+      {
+        userId: user.user_id,
+        email: user.email,
+        role: user.role || "student",
+        name: displayName,
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
+    // 🧁 Build response
     const response = NextResponse.json(
-      { success: true, user: { userId: user.user_id, email: user.email, role: userRole } },
+      {
+        success: true,
+        user: {
+          userId: user.user_id,
+          email: user.email,
+          name: displayName,
+          role: user.role || "student",
+        },
+      },
       { status: 200 }
     );
-    
-    // Set httpOnly cookie
-    response.cookies.set('auth-token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60 , // 7 days
-      path: '/'
-    });
-    
-    return response;
 
+    // 🍪 Set HttpOnly cookie for JWT
+    response.cookies.set("auth-token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: "/",
+    });
+
+    return response;
   } catch (err) {
-    console.error(err);
+    console.error("Login API error:", err);
     return NextResponse.json(
       { message: "Internal server error" },
       { status: 500 }

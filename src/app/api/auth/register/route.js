@@ -1,125 +1,129 @@
 // app/api/auth/register/route.js
 import bcrypt from "bcrypt";
-import { supabaseServer } from "../../../../lib/supabaseClient";
+import { supabaseServer } from "@/src/lib/supabaseClient";
 import nodemailer from "nodemailer";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const { email, username, password } = await req.json();
+    const { email, password, first_name, last_name } = await req.json();
 
-    // check if exists
-    const { data: existing } = await supabaseServer
+    if (!email || !password) {
+      return NextResponse.json({ message: "Email and password are required" }, { status: 400 });
+    }
+
+    // 🟩 Check if user already exists
+    const { data: existingUser } = await supabaseServer
       .from("users")
       .select("user_id")
       .eq("email", email)
-      .single();
+      .maybeSingle();
 
-    if (existing) {
-      return new Response(JSON.stringify({ message: "Email already registered" }), { status: 400 });
+    if (existingUser) {
+      return NextResponse.json({ message: "Email already registered" }, { status: 400 });
     }
 
-    // hash password
-    const hashed = await bcrypt.hash(password, 10);
+    // 🧂 Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // generate OTP (6 digit numeric)
+    // 🧮 Generate OTP and expiry
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // expires in 10 mins
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
-    // create user (unverified, with OTP)
-    const { data: user, error } = await supabaseServer
+    // 🧾 Create user in unified users table
+    const { data: user, error: insertError } = await supabaseServer
       .from("users")
-      .insert({
-        email,
-        username,
-        password_hash: hashed,
-        is_verified: false,
-        otp,
-        otp_expires_at: otpExpiry.toISOString(),
-        otp_attempts: 0,
-      })
+      .insert([
+        {
+          email,
+          first_name: first_name || null,
+          last_name: last_name || null,
+          password_hash: hashedPassword,
+          role: "student",
+          is_verified: false,
+          otp,
+          otp_expires_at: otpExpiry,
+          otp_attempts: 0,
+        },
+      ])
       .select("user_id, email, otp")
       .single();
 
-    if (error) throw error;
+    if (insertError) {
+      console.error("Supabase insert error:", insertError);
+      throw insertError;
+    }
 
-    // create default profile (student)
-    await supabaseServer.from("profiles").insert({ user_id: user.user_id, role: "student" });
-
-    // send OTP via email
+    // 📨 Send OTP via email
     const transporter = nodemailer.createTransport({
-      service: "gmail", // or use SMTP settings
+      service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
     });
 
-   await transporter.sendMail({
-  from: `"MyApp" <${process.env.EMAIL_USER}>`,
-  to: email,
-  subject: "🔑 Verify your MyApp Account",
-  text: `Your OTP code is ${otp}. It will expire in 10 minutes.`,
+    await transporter.sendMail({
+      from: `"MyApp" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: "🔑 Verify your MyApp Account",
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #f9f9f9;">
+          <h2 style="color: #333; text-align: center;">Verify Your Account</h2>
+          <p style="color: #555; font-size: 16px;">
+            Hi ${first_name || "there"},<br /><br />
+            Use the following One-Time Password (OTP) to verify your account:
+          </p>
+          <div style="text-align: center; margin: 30px 0;">
+            <span style="display: inline-block; padding: 15px 30px; font-size: 22px; font-weight: bold; letter-spacing: 3px; color: #fff; background: #4f46e5; border-radius: 8px;">
+              ${otp}
+            </span>
+          </div>
+          <p style="color: #555; font-size: 14px;">
+            ⚠️ This code will expire in <strong>10 minutes</strong>. <br />
+            If you did not request this, you can safely ignore this email.
+          </p>
+          <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />
+          <p style="font-size: 12px; color: #999; text-align: center;">
+            &copy; ${new Date().getFullYear()} MyApp. All rights reserved.
+          </p>
+        </div>
+      `,
+    });
 
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #f9f9f9;">
-      <h2 style="color: #333; text-align: center;">Verify Your Account</h2>
-      <p style="color: #555; font-size: 16px;">
-        Hi there, <br /><br />
-        Use the following One-Time Password (OTP) to verify your account:
-      </p>
-      
-      <div style="text-align: center; margin: 30px 0;">
-        <span style="display: inline-block; padding: 15px 30px; font-size: 22px; font-weight: bold; letter-spacing: 3px; color: #fff; background: #4f46e5; border-radius: 8px;">
-          ${otp}
-        </span>
-      </div>
-
-      <p style="color: #555; font-size: 14px;">
-        ⚠️ This code will expire in <strong>10 minutes</strong>. <br />
-        If you did not request this, you can safely ignore this email.
-      </p>
-
-      <hr style="border: none; border-top: 1px solid #ddd; margin: 30px 0;" />
-
-      <p style="font-size: 12px; color: #999; text-align: center;">
-        &copy; ${new Date().getFullYear()} MyApp. All rights reserved.
-      </p>
-    </div>
-  `,
-});
-
-    // Create JWT token for auto-login after registration
+    // 🛡️ Create JWT for temporary login
     const token = jwt.sign(
-    { 
-      userId: user.user_id, 
-      email: user.email,
-      role: "student", // Default role 
-      firstName: user.email.split('@')[0]
+      {
+        userId: user.user_id,
+        email: user.email,
+        role: "student",
+        firstName: first_name || email.split("@")[0],
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // Create response with HTTP-only cookie
-    const response = NextResponse.json({ 
-      message: "Registration successful.Please check your email for verification code." 
-    }, { status: 201 });
+    // 🍪 Set HttpOnly session cookie
+    const response = NextResponse.json(
+      {
+        message:
+          "Registration successful. Please check your email for your verification code.",
+      },
+      { status: 201 }
+    );
 
-    // Set HTTP-only cookie for immediate session
-    response.cookies.set('auth-token', token, {
+    response.cookies.set("auth-token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 7 * 24 * 60 * 60,
-      path: '/'
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      maxAge: 7 * 24 * 60 * 60, // 7 days
+      path: "/",
     });
 
     return response;
-  } 
-  catch (err) {
-    console.error(err);
-    return new Response(JSON.stringify({ message: "Server error" }), { status: 500 });
+  } catch (err) {
+    console.error("Registration API error:", err);
+    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
