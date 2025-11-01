@@ -5,14 +5,15 @@ import TabSubject from "./TabSubject/index";
 import TabStatus from "./TabStatus/index";
 import TabReview from "./TabReview";
 
-const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
+const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft, setDraft }) => {
   return (
-    <main className={`max-w-[1000px] lg:px-0 px-8 sm:py-0 py-8 mx-auto`}>
+    <main className={`max-w-[1200px] lg:px-0 px-8 sm:py-0 py-8 mx-auto`}>
       {/* 0 */}
       <TabProfile
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         draft={draft}
+        setDraft={setDraft}
       />
 
       {/* 1 */}
@@ -20,6 +21,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         draft={draft}
+        setDraft={setDraft}
       />
 
       {/* 2 */}
@@ -27,6 +29,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         draft={draft}
+        setDraft={setDraft}
       />
 
       {/* 3 */}
@@ -34,6 +37,7 @@ const TabsDisplayedInfo = ({ setActiveTab, activeTab, draft }) => {
         setActiveTab={setActiveTab}
         activeTab={activeTab}
         draft={draft}
+        setDraft={setDraft}
       />
 
       {/* 4 */}

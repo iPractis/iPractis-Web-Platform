@@ -1,6 +1,6 @@
-import { auth } from "@/src/auth";
-import { cookies } from 'next/headers';
-import jwt from 'jsonwebtoken';
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
+
 export async function fetchDraft() {
   console.log("Fetching draft data...");
   try {
@@ -8,23 +8,19 @@ export async function fetchDraft() {
     const token = cookieStore.get("auth-token")?.value;
 
     if (!token) {
-      return null; // not logged in
+      console.warn("No auth token found");
+      return null;
     }
 
-    // ✅ decode JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded?.userId;
+    if (!userId) throw new Error("Invalid token: missing userId");
 
-    if (!userId) {
-      throw new Error("Invalid token: missing userId");
-    }
+    // 🧠 Ensure base URL works in both local + deployed
 
-    // 🔥 Hit teacher-draft endpoint instead of teachers
-    const res = await fetch(`${process.env.NEXTAUTH_URL}/api/teacher-draft/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store", // don’t cache, always fresh
+    const res = await fetch(`https://i-practis-web-platform.vercel.app/api/teacher-draft/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      cache: "no-store",
     });
 
     if (!res.ok) {
@@ -32,7 +28,7 @@ export async function fetchDraft() {
       return null;
     }
 
-    const { draft } = await res.json(); // API should return { draft: {...} }
+    const { draft } = await res.json();
     return draft;
   } catch (err) {
     console.error("Error fetching teacher draft:", err);

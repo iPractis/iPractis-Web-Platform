@@ -42,7 +42,8 @@ const ProfileTitle = ({ control, errors }) => {
           profileTitle?.value?.length === 120 ? "top-[12%]" : "top-[25%]"
         }`}
       >
-        <CustomNextUiInputWithMaxLength
+        <div className="[&_.input-wrapper-ipractis]:!bg-[#F8F7F5]">
+          <CustomNextUiInputWithMaxLength
           base={"!mt-0"}
           nameInput={"profileTitle"}
           labelTitle={"Write a catchy headline"}
@@ -63,16 +64,19 @@ const ProfileTitle = ({ control, errors }) => {
             </InputBGWrapperIcon>
           }
           endContent={
-            <InputBGWrapperIcon
-              className={"cursor-pointer"}
-              onClick={handleClearInput}
-            >
-              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-            </InputBGWrapperIcon>
+            profileTitle?.value && profileTitle?.value?.length > 0 && (
+              <InputBGWrapperIcon
+                className={"cursor-pointer"}
+                onClick={handleClearInput}
+              >
+                <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+              </InputBGWrapperIcon>
+            )
           }
           backgroundError={profileTitleError?.message}
           inputProps={{ onBlur: profileTitle.onBlur }}
-        />
+          />
+        </div>
       </InputLeftStickStatus>
 
       <SplitDynamicErrorZod message={profileTitleError?.message} />

@@ -4,13 +4,14 @@ import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import ProfilePicture from "./ProfilePicture";
 import AboutYourself from "./AboutYourself";
 import PersonalInfo from "./PersonalInfo";
+import SaveAndContinueBox from "../TabSubject/SaveAndContinueBox";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // React imports
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 
 const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
@@ -39,11 +40,13 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
   });
 
   const [loading, setLoading] = useState(false);
+  const buttonRef = useRef(null);
   const { user } = useAuth();
 
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      buttonRef.current?.loading();
 
       // Payload = only current form values + userId
       const payload = {
@@ -78,13 +81,17 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
       // Keep draft state in parent up-to-date
       if (setDraft) setDraft(updatedDraft);
+      
+      // Reset button state BEFORE navigation
+      buttonRef.current?.notIsLoading();
+      setLoading(false);
 
       // Move to next tab
       setActiveTab((prev) => prev + 1);
     } catch (err) {
       console.error("Save error:", err);
       setError("general", { message: err.message });
-    } finally {
+      buttonRef.current?.notIsLoading();
       setLoading(false);
     }
   };
@@ -112,8 +119,8 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
         <AboutYourselfMasteredLanguages errors={errors} control={control} />
       </AboutYourself>
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav setActiveTab={setActiveTab} activeTab={activeTab} />
+      {/* Save and Continue Section */}
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };

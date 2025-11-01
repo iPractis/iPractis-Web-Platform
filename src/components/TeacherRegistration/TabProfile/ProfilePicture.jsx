@@ -5,7 +5,9 @@ import SectionHeader from "../../Shared/SectionHeader";
 
 import { useController } from "react-hook-form";
 import Image from "next/image";
-import { UserBigIcon, UserIcon } from "../../Icons";
+
+// Icons
+import { UserBigIcon, UserIcon , CameraBoxIcon, ChevronDownBigIcon} from "../../Icons";
 import ImageUploader from "./ImageUploader";
 
 const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }) => {
@@ -25,18 +27,26 @@ console.log("CURRENT IMAGE URL:", currentImageUrl)
     <WhiteSpaceWrapper className="p-0">
       <SectionHeader
         descriptionText="Upload a photo to personalize your profile."
-        titleIcon={<UserIcon fillColor={"fill-primary-color-P1"} />}
-        wrapperSectionHeaderClassName="bg-primary-color-P11 p-8 rounded-[22px]"
+        titleIcon={
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+            <UserIcon fillColor={"fill-primary-color-P1"} />
+          </div>
+        }
+        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
         titleText="Profile Picture"
-        titleClassName="MT-SB-1"
+        titleClassName="MT-SB-1 ml-[80px]"
+        descriptionClassName="ml-[80px]"
       />
 
-      <div className="mt-8 mb-16 md:px-8">
+      <div className="mt-8 mb-16 md:px-8 ml-[285px]">
         <div className="flex items-start sm:gap-8 gap-4">
           <InputLeftStickStatus
-            inputBarStatusClassName={getInputStatusBorder(errors, profileUrlField.value, "profile_url")}
+            inputBarStatusClassName={`${getInputStatusBorder(errors, profileUrlField.value, "profile_url")} !h-[68px] !rounded-[2px]`}
           >
-            <div className="relative">
+            <div 
+              className="relative cursor-pointer"
+              onClick={() => document.getElementById('profile-image-upload')?.click()}
+            >
               {currentImageUrl ? (
                 <Image
                   className="w-[100px] h-[100px] rounded-2xl object-cover"
@@ -48,7 +58,7 @@ console.log("CURRENT IMAGE URL:", currentImageUrl)
                   height={100}
                 />
               ) : (
-                <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-primary-color-P11">
+                <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-[#F8F7F5]">
                   <UserBigIcon
                     fillColor={profileUrlError?.message ? "fill-senary-color-W10" : "fill-primary-color-P1"}
                   />

@@ -1,5 +1,4 @@
 import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
-import TabsButtonsBottomNav from "../TabsButtonsBottomNav";
 import StudentPreference from "./StudentPreferences";
 import { tabSubjectSchema } from "@/src/validations";
 import RelatedSubTopics from "./RelatedSubTopics";
@@ -7,17 +6,20 @@ import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
 import AveragePrice from "./AveragePrice";
 import StudentAge from "./StudentAge";
+import GenderRestriction from "./GenderRestriction";
+import SaveAndContinueBox from "./SaveAndContinueBox";
 
 // External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // React imports
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 
 const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const [loading, setLoading] = useState(false);
+  const buttonRef = useRef(null);
 
   const {
     formState: { errors, isSubmitted },
@@ -33,8 +35,9 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       profileTitle: draft?.profileTitle || "",
       teachToAmateurPersons: draft?.teachToAmateurPersons || false,
       teachToYoungPersons: draft?.teachToYoungPersons || false,
-      hourlyPrice: draft?.hourlyPrice || "",
-      studentLevel: draft?.studentLevel || "",
+      teachToSameGender: draft?.teachToSameGender || false,
+      hourlyPrice: draft?.hourlyPrice ?? "",
+      studentLevel: draft?.studentLevel || [],
       subject: draft?.subject || "",
       videoLink: draft?.videoLink || "",
       subSubject: draft?.subSubject || [],
@@ -46,6 +49,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const onSubmit = async (data) => {
     try {
       setLoading(true);
+      buttonRef.current?.loading();
 
       const payload = {
         userId: user?.userId,
@@ -53,6 +57,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
         profileTitle: data.profileTitle,
         teachToAmateurPersons: data.teachToAmateurPersons,
         teachToYoungPersons: data.teachToYoungPersons,
+        teachToSameGender: data.teachToSameGender,
         hourlyPrice: data.hourlyPrice,
         studentLevel: data.studentLevel,
         subject: data.subject,
@@ -76,22 +81,28 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
       const { draft: updatedDraft } = await res.json();
 
-      // ✅ update parent draft state
       if (setDraft) setDraft(updatedDraft);
+      
+      // Reset button state BEFORE navigation
+      buttonRef.current?.notIsLoading();
+      setLoading(false);
 
-      // ✅ move to next tab
       setActiveTab((prev) => prev + 1);
     } catch (err) {
       console.error("Save error:", err);
       setError("general", { message: err.message });
-    } finally {
+      buttonRef.current?.notIsLoading();
       setLoading(false);
     }
   };
 
+  const onError = (errors) => {
+    console.log("FORM VALIDATION ERRORS:", errors);
+  };
+
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       className={`${activeTab !== 1 && "hidden"}`}
     >
       <WhiteSpaceWrapper className="p-0">
@@ -100,11 +111,14 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
         <PresentYourSelf control={control} errors={errors} />
         <StudentPreference control={control} errors={errors} />
         <StudentAge isSubmitted={isSubmitted} control={control} />
+
+        <GenderRestriction isSubmitted={isSubmitted} control={control} />
+
         <AveragePrice control={control} errors={errors} watch={watch} />
+        <SaveAndContinueBox buttonRef={buttonRef} />
       </WhiteSpaceWrapper>
 
-      {/* Back && Save buttons */}
-      <TabsButtonsBottomNav setActiveTab={setActiveTab} activeTab={activeTab} />
+    
     </form>
   );
 };

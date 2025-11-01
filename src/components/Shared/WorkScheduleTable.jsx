@@ -42,6 +42,20 @@ const WorkScheduleTable = ({
   const [maxDate, setMaxDate] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
+  // Map two-letter day labels to three-letter display labels without changing keys/logic
+  const toThreeLetterDay = (twoLetter) => {
+    const map = {
+      Mo: "Mon",
+      Tu: "Tue",
+      We: "Wed",
+      Th: "Thu",
+      Fr: "Fri",
+      Sa: "Sat",
+      Su: "Sun",
+    };
+    return map[twoLetter] || twoLetter;
+  };
+
   // We use "useFieldArray" to manage the selected slots
   const { fields, append, remove, update } = useFieldArray({
     control,
@@ -102,9 +116,8 @@ const WorkScheduleTable = ({
     setCurrentDay(new Date(now).getDate());
   }, []);
 
-  useEffect(() => {
-    setDailyWorkTimeLimit(fields);
-  }, [fields]);
+  // This component no longer pushes selected slots as the daily limit.
+  // The daily limit is a static, user-defined value handled in WorkTimePreferences.
 
   // This is the main logic of the calendar, the goal of this func is to update the week dates by the timezone of the calendar!
   const updateWeekDates = (selectedTimeZone) => {
@@ -167,7 +180,10 @@ const WorkScheduleTable = ({
 
   // Function to handle the selection of day and hour
   const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
-    const selectedTime = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    // Use independent markers for each half:
+    // Top half (first 30 min): stores hour:00 (start of slot)
+    // Bottom half (second 30 min): stores hour:30 (midpoint of slot)
+    const selectedTime = isSecondButton ? `${hour}:30` : `${hour}:00`;
 
     const existingIndex = fields.findIndex((slot) => slot.day === day);
 
@@ -203,7 +219,8 @@ const WorkScheduleTable = ({
 
   // Checks if a specific time is selected
   const isSelected = (hour, day, isSecondButton = false) => {
-    const timeToCheck = isSecondButton ? `${hour + 1}:00` : `${hour}:30`;
+    // Top half checks for hour:00, bottom half checks for hour:30
+    const timeToCheck = isSecondButton ? `${hour}:30` : `${hour}:00`;
 
     const daySlot = fields.find((slot) => slot.day === day);
     if (!daySlot) return false;
@@ -290,13 +307,17 @@ const WorkScheduleTable = ({
     setIs12HourFormat(!is12HourFormat);
   };
 
-  // Format hour (12H or 24H format)
-  const formatHour = (hour) => {
-    // Keep 0-23 if it's 24h format
-    if (!is12HourFormat) return hour;
-
-    // Convert 1-12 using modulo if it's 12h format
-    return (hour % 12) + 1;
+  // Format hour (12H or 24H format) with proper display
+  const formatHourDisplay = (hour) => {
+    if (!is12HourFormat) {
+      // 24h format: 00:00 to 23:00
+      return hour < 10 ? `0${hour}:00` : `${hour}:00`;
+    }
+    
+    // 12h format: 12:00 AM to 11:00 PM
+    const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+    const period = hour < 12 ? 'AM' : 'PM';
+    return `${hour12}:00 ${period}`;
   };
 
   // Only acts if the click is pressed AND it is a different cell from the initial one
@@ -324,18 +345,21 @@ const WorkScheduleTable = ({
   // If users clicks on HOURS of the day (0-23 or 1-12)
   const handleHourClick = (hour) => {
     const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-    const time1 = `${hour}:30`;
-    const time2 = `${hour + 1}:00`;
+    // For full hour selection, we need both time markers
+    const time1 = `${hour}:00`;  // First half marker
+    const time2 = `${hour}:30`;  // Second half marker
 
-    // Check if ALL days already have the selected hours
+    // Check if ALL days already have the full hour selected (both times)
     const allSelected = days.every((day) => {
       const daySlot = fields.find((slot) => slot.day === day);
       return (
-        daySlot && daySlot.hour.includes(time1) && daySlot.hour.includes(time2)
+        daySlot && 
+        daySlot.hour.includes(time1) && 
+        daySlot.hour.includes(time2)
       );
     });
 
-    // Check if SOME days already have the selected hours (but not all)
+    // Check if SOME days already have any of these times
     const someSelected = days.some((day) => {
       const daySlot = fields.find((slot) => slot.day === day);
       return (
@@ -377,7 +401,7 @@ const WorkScheduleTable = ({
         }
       });
     } else {
-      // If some or none are selected, we select ALL the days
+      // If some or none are selected, we select ALL the days with full hour
       days.forEach((day) => {
         const existingIndex = fields.findIndex((slot) => slot.day === day);
 
@@ -477,14 +501,13 @@ const WorkScheduleTable = ({
       )}
 
       {/* Calendar */}
-      <main className="flex md:flex-row flex-col gap-3">
-        {/* Left column - days and format button */}
-        <div className="flex md:flex-col flex-row gap-1">
-          <div>
+      <main className="flex flex-row gap-3 max-w-[1000px] mx-auto w-full">
+        {/* Left column - time slots */}
+        <div className="flex flex-col gap-3 min-w-[110px] flex-shrink-0">
+          {/* Format button placeholder to align with day headers */}
+          <div className="h-[40px] flex items-center">
             <button
-              className={`bg-secondary-color-S4 text-primary-color-P12 text-center rounded-md ST-SB-3 px-2 md:w-auto w-[72px] ${
-                is12HourFormat ? "md:h-12 h-full" : "h-full"
-              }`}
+              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -492,11 +515,37 @@ const WorkScheduleTable = ({
             </button>
           </div>
 
-          <div
-            className={`flex md:flex-col flex-row md:gap-0 md:items-stretch items-start gap-2.5 md:px-0 px-1 md:space-y-2 w-full ${
-              is12HourFormat ? "md:py-1" : "md:py-0.5"
-            }`}
-          >
+          {/* Time slots column */}
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 24 }, (_, index) => {
+              const is12 = is12HourFormat;
+              const hour12 = index === 0 ? 12 : index > 12 ? index - 12 : index;
+              const period = index < 12 ? "AM" : "PM";
+              const displayNumeric = is12 ? `${hour12}:00` : (index < 10 ? `0${index}:00` : `${index}:00`);
+
+              return (
+                <div
+                  className="w-[110px] h-[40px] flex items-center justify-between gap-2"
+                  key={`hour-${index}`}
+                >
+                  <div className="bg-white text-black rounded-[10px] h-full flex-1 flex items-center justify-center px-3">
+                    <span className="ST-3 font-bold">{displayNumeric}</span>
+                  </div>
+                  {is12 && (
+                    <div className="bg-[#f8f7f5] text-black rounded-[10px] h-full w-[46px] flex items-center justify-center">
+                      <span className="ST-3 font-bold">{period}</span>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Calendar grid */}
+        <div className="flex flex-col gap-3 flex-1 min-w-0">
+          {/* Days header row */}
+          <div className="flex flex-row gap-3 items-center">
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
               const columnDate = weekDates[rowIndex];
               const isToday =
@@ -508,117 +557,100 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className={`text-primary-color-P12 rounded-md text-center md:p-0 p-1 w-full md:h-[22px] h-[28px] ${
+                  className={`text-black rounded-md text-center p-2 min-w-[100px] w-full h-[40px] flex items-center justify-center ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
-                      : "bg-primary-color-P1"
+                      : "bg-white"
                   }`}
                   key={column.key}
                 >
-                  <h3 className="ST-3">{column.label}</h3>
+                  <h3 className="ST-3">{toThreeLetterDay(column.label)}</h3>
                 </div>
               );
             })}
           </div>
-        </div>
 
-        {/* Right column - hours and slots */}
-        <div className="flex md:flex-col flex-row w-full gap-0">
-          <div className="flex md:gap-0 gap-1 md:flex-col flex-row md:px-1 md:py-0 py-1">
-            <div className="flex md:flex-row flex-col justify-between gap-1.5">
-              {Array.from({ length: 24 }, (_, index) => (
-                <button
-                  className={`bg-primary-color-P1 text-primary-color-P12 flex justify-center items-center rounded-md ST-SB-3 md:h-[22px] h-[28px] px-1 ${
-                    is12HourFormat ? "md:w-full w-[38px]" : "md:w-full w-[72px]"
-                  }`}
-                  onClick={() => handleHourClick(index)}
-                  key={`hour-${index}`}
-                  type="button"
-                >
-                  {formatHour(index)}
-                </button>
-              ))}
-            </div>
+          {/* Calendar grid rows */}
+          <div className="flex flex-col gap-3">
+            {Array.from({ length: 24 }, (_, hourIndex) => (
+              <div className="flex flex-row gap-3" key={`hour-row-${hourIndex}`}>
+                {columnsHeaderWorkSchedule.map((column, dayIndex) => {
+                  const columnDate = weekDates[dayIndex];
+                  const isToday =
+                    columnDate instanceof Date &&
+                    !isNaN(columnDate) &&
+                    columnDate.getDate() === currentDay &&
+                    columnDate.getMonth() === new Date().getMonth() &&
+                    columnDate.getFullYear() === new Date().getFullYear();
 
-            {is12HourFormat && (
-              <div className="flex md:flex-row flex-col gap-1.5 md:mt-1.5 md:mr-0 mr-1">
-                <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                  <h3 className="flex justify-center items-center h-full px-1">
-                    AM
-                  </h3>
-                </div>
+                  // Check if each half is selected for visual display
+                  const isTopHalfSelected = isSelected(hourIndex, column.key, false);
+                  const isBottomHalfSelected = isSelected(hourIndex, column.key, true);
+                  const bothSelected = isTopHalfSelected && isBottomHalfSelected;
 
-                <div className="flex-1 bg-primary-color-P1 text-primary-color-P12 text-center rounded-md ST-SB-3 w-[30px]">
-                  <h3 className="flex justify-center items-center h-full px-1">
-                    PM
-                  </h3>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="flex-1 md:mt-1 mt-0">
-            <div className="md:block flex justify-around">
-              {columnsHeaderWorkSchedule.map((column, rowIndex) => {
-                const columnDate = weekDates[rowIndex];
-                const isToday =
-                  columnDate instanceof Date &&
-                  !isNaN(columnDate) &&
-                  columnDate.getDate() === currentDay &&
-                  columnDate.getMonth() === new Date().getMonth() &&
-                  columnDate.getFullYear() === new Date().getFullYear();
-
-                return (
-                  <div
-                    className="md:flex block justify-between gap-1.5 p-1"
-                    key={column.key}
-                  >
-                    {Array.from({ length: 24 }, (_, hourIndex) => (
+                  return (
+                    <div
+                      className={`flex-1 h-[40px] relative group rounded-md overflow-hidden ${
+                        showCurrentActiveDay &&
+                        isToday &&
+                        "bg-tertiary-color-SC5"
+                      }`}
+                      key={`${column.key}-${hourIndex}`}
+                    >
+                      {/* Top half visual layer */}
                       <div
-                        className={`${
-                          showCurrentActiveDay &&
-                          isToday &&
-                          "bg-tertiary-color-SC5 [&:nth-child(1)]:rounded-l-lg [&:nth-child(24)]:rounded-r-lg h-7 w-[27.50px]"
-                        } flex md:w-full w-[38px] md:h-[22px] h-[28px] md:mb-0 mb-1.5 last:mb-0`}
-                        key={`${column.key}-${hourIndex}`}
-                      >
-                        <button
-                          className={`${
-                            isSelected(hourIndex, column.label, false)
-                              ? "bg-quinary-color-VS10"
-                              : "bg-primary-color-P11"
-                          } flex-1 rounded-s-md ST-4 h-full w-full`}
-                          onMouseDown={() =>
-                            handleMouseDown(hourIndex, column.label, false)
-                          }
-                          onMouseEnter={() =>
-                            handleMouseEnter(hourIndex, column.label, false)
-                          }
-                          onMouseUp={handleMouseUp}
-                          type="button"
-                        ></button>
-
-                        <button
-                          className={`${
-                            isSelected(hourIndex, column.label, true)
-                              ? "bg-quinary-color-VS10"
-                              : "bg-primary-color-P11"
-                          } flex-1 rounded-e-md ST-4 h-full w-full`}
-                          onMouseDown={() =>
-                            handleMouseDown(hourIndex, column.label, true)
-                          }
-                          onMouseEnter={() =>
-                            handleMouseEnter(hourIndex, column.label, true)
-                          }
-                          onMouseUp={handleMouseUp}
-                          type="button"
-                        ></button>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
+                        className={`absolute top-0 left-0 w-full h-1/2 ${
+                          isTopHalfSelected
+                            ? "bg-quinary-color-VS10"
+                            : "bg-[#f8f7f5]"
+                        } ${
+                          !bothSelected && isTopHalfSelected ? "rounded-t-md" : ""
+                        }`}
+                      />
+                      
+                      {/* Bottom half visual layer */}
+                      <div
+                        className={`absolute bottom-0 left-0 w-full h-1/2 ${
+                          isBottomHalfSelected
+                            ? "bg-quinary-color-VS10"
+                            : "bg-[#f8f7f5]"
+                        } ${
+                          !bothSelected && isBottomHalfSelected ? "rounded-b-md" : ""
+                        }`}
+                      />
+                      
+                      {/* Top half button - invisible, just for click handling */}
+                      <button
+                        className="w-full h-1/2 cursor-pointer absolute top-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
+                        onMouseDown={() =>
+                          handleMouseDown(hourIndex, column.key, false)
+                        }
+                        onMouseEnter={() =>
+                          handleMouseEnter(hourIndex, column.key, false)
+                        }
+                        onMouseUp={handleMouseUp}
+                        type="button"
+                        aria-label={`Select first 30 minutes of ${hourIndex}:00`}
+                      ></button>
+                      
+                      {/* Bottom half button - invisible, just for click handling */}
+                      <button
+                        className="w-full h-1/2 cursor-pointer absolute bottom-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
+                        onMouseDown={() =>
+                          handleMouseDown(hourIndex, column.key, true)
+                        }
+                        onMouseEnter={() =>
+                          handleMouseEnter(hourIndex, column.key, true)
+                        }
+                        onMouseUp={handleMouseUp}
+                        type="button"
+                        aria-label={`Select second 30 minutes of ${hourIndex}:00`}
+                      ></button>
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
           </div>
         </div>
       </main>
@@ -632,16 +664,6 @@ const WorkScheduleTable = ({
               <h3 className="ST-3 text-primary-color-P1">Booked lesson</h3>
             </div>
           )}
-
-          <div className="flex items-center gap-2.5">
-            <div className="h-[18px] w-[18px] bg-quinary-color-VS10 rounded-md"></div>
-            <h3 className="ST-3 text-primary-color-P1">Available for lesson</h3>
-          </div>
-
-          <div className="flex items-center gap-2.5">
-            <div className="h-[18px] w-[18px] bg-primary-color-P11 rounded-md"></div>
-            <h3 className="ST-3 text-primary-color-P1">Unavailable</h3>
-          </div>
         </div>
 
         <div>

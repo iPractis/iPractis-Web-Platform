@@ -245,6 +245,7 @@ export const tabSubjectFields = (object) => {
     teachToAmateurPersons: object?.teachToAmateurPersons,
     hourlyPrice: object?.hourlyPrice,
     teachToYoungPersons: object?.teachToYoungPersons,
+    teachToSameGender: object?.teachToSameGender,
     subSubject: object?.subSubject,
     videoLink: object?.videoLink,
     studentLevel: object?.studentLevel,

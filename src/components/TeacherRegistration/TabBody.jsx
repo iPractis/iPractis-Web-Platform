@@ -4,7 +4,7 @@ import TabsDisplayedInfo from "./TabsDisplayedInfo";
 import TabsButtons from "./TabsButtons";
 
 // React imports
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const defaultValue = {
   firstName: "",
@@ -22,17 +22,24 @@ const defaultValue = {
   subjectIntroduction: "",
   videoLink: "",
   hourlyPrice: "",
-  studentLevel: "",
+  studentLevel: [],
   teachToAmateurPersons: false,
   teachToYoungPersons: false,
+  teachToSameGender: false,
   careerExperience: [],
   education: [],
+  availability: [], // Add availability field to default value
 };
 
 export const TabBody = ({ draftData }) => {
+  
   const [draft, setDraft] = useState({ ...defaultValue, ...draftData });
   const [activeTab, setActiveTab] = useState(0);
-  console.log("DRAFT IN TAB BODY:", draft);
+
+  // Debug when draft state changes
+  useEffect(() => {
+    console.log("DRAFT IN TAB BODY CHANGED:", draft);
+  }, [draft]);
   return (
     <section className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
       {/* Tabs buttons (top) */}

@@ -1,8 +1,8 @@
-import moment from "moment";
+import dayjs from "dayjs";
 
 export const calculateAge = (date) => {
-  const today = moment();
-  const birthDate = moment(date, "YYYY/MM/D");
+  const today = dayjs();
+  const birthDate = dayjs(date, "YYYY/MM/D");
   
-  return today.diff(birthDate, "years");
+  return today.diff(birthDate, "year");
 };

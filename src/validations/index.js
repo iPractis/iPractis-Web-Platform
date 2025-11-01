@@ -1,7 +1,7 @@
 import { calculateAge } from "../lib/utils/calculateAge";
 
 // External imports
-import moment from "moment";
+import dayjs from "dayjs";
 import { z } from "zod";
 
 
@@ -85,7 +85,7 @@ export const tabProfileSchema = z.object({
     .string()
     .min(1, { message: "Invalid date --- Must provide a birth date." })
     .refine((date) => {
-      return moment(date, "YYYY/MM/D", true).isValid();
+      return dayjs(date, "YYYY/MM/D", true).isValid();
     })
     .refine(
       (date) => {
@@ -150,40 +150,52 @@ export const tabSubjectSchema = z.object({
     }),
   videoLink: z
     .string()
-    .regex(
-      /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|shorts\/|playlist\?list=)|youtu\.be\/)[a-zA-Z0-9_-]{11,}(&\S*)?$/,
+    .min(1, {
+      message: "Invalid link --- Please provide a YouTube URL.",
+    })
+    .refine(
+      (url) => {
+        // More flexible YouTube URL validation
+        const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+        return youtubeRegex.test(url);
+      },
       {
         message:
           "Invalid link --- Please ensure the link provided is a valid Youtube URL.",
       }
     ),
-  studentLevel: z.enum(["beginner", "intermediate", "advanced"], {
-    message: "Invalid submission --- Must choose a level you can teach.",
-  }),
-  teachToYoungPersons: z.literal(true, {
-    errorMap: () => ({
-      message: "Invalid submission --- You have to accept this term.",
+  studentLevel: z
+    .array(z.enum(["beginner", "intermediate", "advanced"]))
+    .min(1, {
+      message: "Invalid submission --- Must choose a level you can teach.",
     }),
+  teachToYoungPersons: z.boolean().optional(),
+  teachToAmateurPersons: z.boolean().optional(),
+  teachToSameGender: z.boolean().optional(),
+  hourlyPrice: z.preprocess(
+    (val) => {
+      // Convert empty string to undefined
+      if (val === "" || val === null) return undefined;
+      return val;
+    },
+    z.coerce
+      .number({
+        invalid_type_error:
+          "Invalid characters --- Only numbers are allowed in this field.",
+      })
+      .int()
+      .min(8, {
+        message:
+          "Lesson rate too low --- Lesson rate must be between 8 and 60 USD.",
+      })
+      .max(60, {
+        message:
+          "Lesson rate too high --- Lesson rate must be between 8 and 60 USD.",
+      })
+      .optional()
+  ).refine((val) => val !== undefined && val !== null && val !== "", {
+    message: "Invalid field --- You must set an hourly rate.",
   }),
-  teachToAmateurPersons: z.literal(true, {
-    errorMap: () => ({
-      message: "Invalid submission --- You have to accept this term.",
-    }),
-  }),
-  hourlyPrice: z.coerce
-    .number({
-      invalid_type_error:
-        "Invalid characters --- Only numbers are allowed in this field.",
-    })
-    .int()
-    .min(8, {
-      message:
-        "Lesson rate too low --- Lesson rate must be between 8 and 60 USD.",
-    })
-    .max(60, {
-      message:
-        "Lesson rate too high --- Lesson rate must be between 8 and 60 USD.",
-    }),
 });
 
 
@@ -198,8 +210,8 @@ export const tabBackgroundSchema = z.object({
         z.instanceof(File),   // allow raw File
         fileMetaSchema        // allow uploaded file metadata
       ]),
-      from: z.coerce.number().int().min(1),
-      to: z.coerce.number().int().min(1),
+      from: z.coerce.number().int().min(1, { message: "enter a valid year" }),
+      to: z.coerce.number().int().min(1, { message: "enter a valid year" }),
       description: z.string().min(3),
     })
     .refine((data) => data.to >= data.from, {
@@ -217,8 +229,8 @@ export const tabBackgroundSchema = z.object({
         z.instanceof(File),
         fileMetaSchema
       ]),
-      from: z.coerce.number().int().min(1),
-      to: z.coerce.number().int().min(1),
+      from: z.coerce.number().int().min(1, { message: "enter a valid year" }),
+      to: z.coerce.number().int().min(1, { message: "enter a valid year" }),
       description: z.string().min(3),
     })
     .refine((data) => data.to >= data.from, {
@@ -232,9 +244,9 @@ export const tabAvailabilitySchema = z.object({
   timeZone: z.string().trim().min(1, {
     message: "Invalid timezone --- Please provide a timezone from select.",
   }),
-  dailyWorkTime: z.coerce.number().min(8, {
+  dailyWorkTime: z.coerce.number().min(1, {
     message:
-      "Working time don't meet requirement --- Minimum working time is set to 8 hours per week.",
+      "Working time doesn't meet requirement — minimum is 1 hour per day.",
   }),
   workSchedule: z.array(
     z.object({
