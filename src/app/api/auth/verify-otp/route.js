@@ -20,8 +20,6 @@ export async function POST(req) {
 
 
     if (error || !user) {
-        console.log("error" , error)
-        console.log("user" ,user)
       return new Response(JSON.stringify({ message: "User not found" }), { status: 404 });
     }
 
@@ -32,14 +30,12 @@ export async function POST(req) {
 
     // check attempts
     if (user.otp_attempts >= 3) {
-        console.log("reached here")
       return new Response(JSON.stringify({ message: "Too many attempts. Please request a new OTP." }), { status: 403 });
     }
 
     // check expiry
     const now = new Date();
     if (!user.otp_expires_at || new Date(user.otp_expires_at) < now) {
-        console.log("reached here expired")
       return new Response(JSON.stringify({ message: "OTP expired. Please request a new one." }), { status: 400 });
     }
 
@@ -50,8 +46,6 @@ export async function POST(req) {
         .from("users")
         .update({ otp_attempts: user.otp_attempts + 1 })
         .eq("user_id", user.user_id);
-
-        console.log("reached till here")
       return new Response(JSON.stringify({ message: "Invalid OTP" }), { status: 400 });
     }
 

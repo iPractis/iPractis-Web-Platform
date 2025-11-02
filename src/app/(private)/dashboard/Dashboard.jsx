@@ -9,6 +9,7 @@ import WorkScheduleTable from "@/src/components/Shared/WorkScheduleTable"; // âœ
 import { useEffect, useState } from "react";
 import GoogleCalendarDayView from "./GoogleCalendarDayView";
 import axios from "axios";
+import { useAuth } from "@/src/hooks/useAuth";
 
 export default function Dashboard() {
   const [active, setActive] = useState("English");
@@ -53,16 +54,17 @@ export default function Dashboard() {
   useEffect(() => {
     axios.get("/api/fetch-teachers").then(res=>{
       setTeachers(res.data.data);
-      console.log("Fetched teachers:", res.data.data);  
     }).catch(err=>{
       console.error("Error fetching teachers:", err);
     });
   }, []);
 
+  const {role}  = useAuth();
+
   return (
     <div>
       <ProfileBrief />
-      <div className="flex justify-center mt-10">
+      {role === "student" && <div className="flex justify-center mt-10">
         <Link href="/teacher-registration">
           <HeaderCard
             invertImage={true}
@@ -71,7 +73,7 @@ export default function Dashboard() {
             subtitle="Find any feature or setting quickly."
           />
         </Link>
-      </div>
+      </div>}
 
       {/* âœ… Teachers Section */}
       <div className="mt-12">

@@ -1,82 +1,86 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-import BrowserNotifications from "./BrowserNotifications";
-import AudioNotification from "./AudioNotification";
-import Notifications from "./Notifications";
 
-import { notificationTypes } from "@/src/data/dataAccountSettings";
+const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-export const generateDefaultNotificationValues = () => {
-  const defaults = {
-    receiveiPractisNotifications: false,
-    playSoundOnReceivedNotification: true,
-    playSoundOnReceivedMessage: true,
-    notifications: {},
-  };
+const TabAvailability = ({ activeTab, teacherId }) => {
+  const [loading, setLoading] = useState(false);
 
-  notificationTypes.forEach((type) => {
-    type.items.forEach((item) => {
-      const key = item.replace(/\s+/g, "");
-      defaults.notifications[`${key}_web`] = false;
-      defaults.notifications[`${key}_mail`] = false;
-    });
-  });
-
-  return defaults;
-};
-
-const TabNotification = ({ activeTab }) => {
-  const defaultValues = generateDefaultNotificationValues();
+  // Default structure like: { Mon: [], Tue: [], ... }
+  const defaultAvailability = DAYS.reduce((acc, day) => {
+    acc[day] = [];
+    return acc;
+  }, {});
 
   const {
     control,
-    formState: { isDirty, isSubmitting },
+    watch,
+    setValue,
     handleSubmit,
     reset,
+    formState: { isDirty, isSubmitting },
   } = useForm({
-    mode: "onBlur",
-    defaultValues,
+    defaultValues: {
+      availability: defaultAvailability,
+    },
   });
 
-  // ✅ Load saved preferences from Supabase / API
+  const availability = watch("availability");
+
+  // ✅ Load teacher availability from API
   useEffect(() => {
-    async function loadPreferences() {
+    async function fetchAvailability() {
+      if (!teacherId) return;
+      setLoading(true);
       try {
-        const res = await fetch("/api/notifications/preferences");
-        if (!res.ok) return;
+        const res = await fetch(`/api/teacher/${teacherId}`);
+        if (!res.ok) throw new Error("Failed to fetch teacher data");
         const data = await res.json();
-        reset({ ...defaultValues, ...data }); // merge and reset cleanly
-      } catch (error) {
-        console.error("Error loading preferences:", error);
+
+        // The API returns { availability: { Mon: ["09:00","09:30"], ... } }
+        reset({
+          availability: data.availability || defaultAvailability,
+        });
+      } catch (err) {
+        console.error("Error loading availability:", err);
+      } finally {
+        setLoading(false);
       }
     }
-    loadPreferences();
-  }, [reset]);
 
+    fetchAvailability();
+  }, [teacherId, reset]);
+
+  // ✅ Submit handler — save availability
   const onSubmit = async (data) => {
-    console.log("Saving preferences:", data);
+    try {
+      const res = await fetch(`/api/teacher/${teacherId}/availability`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data.availability),
+      });
 
-    await fetch("/api/notifications/preferences/save-all", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+      if (!res.ok) throw new Error("Failed to save availability");
 
-    reset(data); // reset to the newly saved state
+      reset(data); // reset dirty state
+    } catch (err) {
+      console.error("Error saving availability:", err);
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${activeTab !== 3 && "hidden"} space-y-16 mb-24`}
+      className={`${activeTab !== 5 && "hidden"} space-y-8 mb-16`}
     >
-      <BrowserNotifications control={control} />
-      <Notifications control={control} />
-      <AudioNotification control={control} />
+      <h2 className="text-2xl font-semibold text-gray-800">Weekly Availability</h2>
+
+      
 
       {isDirty && (
-        <div className="flex justify-end pt-8">
+        <div className="flex justify-end pt-6">
           <button
             type="submit"
             disabled={isSubmitting}
@@ -90,4 +94,4 @@ const TabNotification = ({ activeTab }) => {
   );
 };
 
-export default TabNotification;
+export default TabAvailability;

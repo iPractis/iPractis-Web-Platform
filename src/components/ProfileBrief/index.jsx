@@ -88,7 +88,7 @@ function ProfileBrief() {
 
                         {/* Bottom: chevron button centered */}
                         <div className="flex justify-end mt-6">
-                            <div className="bg-black p-3 rounded-lg shadow flex justify-center items-center">
+                            <Link href={"/teacher-registration"} className="bg-black p-3 rounded-lg shadow flex justify-center items-center">
                                 <Image
                                     src="/icons/chevron-right.png"
                                     alt="right"
@@ -96,7 +96,7 @@ function ProfileBrief() {
                                     height={10}
                                     className='filter invert'
                                     />
-                            </div>
+                            </Link>
                         </div>
                     </div>
                                     </div>

@@ -31,7 +31,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
               } p-1 rounded-[10px]`}
             >
               <TabButton.Icon
-                fillColor={
+                fillcolor={
                   activeTab === TabIndex
                     ? "fill-primary-color-P12"
                     : "fill-primary-color-P1"
@@ -48,7 +48,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
 
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 rounded-[32px] p-4 space-y-4"
-        titleIcon={<SearchBigIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<SearchBigIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionText={"Find any feature or settings quickly."}
         titleText={"Search for a feature or an option"}
         headerContainerClassName="p-3"
@@ -63,7 +63,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
           placeholder={"Search for a feature"}
           startContent={
             <InputBGWrapperIcon className="bg-primary-color-P11">
-              <SearchBigIcon fillColor={"fill-primary-color-P1"} />
+              <SearchBigIcon fillcolor={"fill-primary-color-P1"} />
             </InputBGWrapperIcon>
           }
           endContent={

@@ -65,8 +65,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
         subSubject: data.subSubject,
       };
 
-      console.log("SUBJECT PAYLOAD TO DRAFT API:", payload);
-
       // 🔥 Save/merge into teacher_draft
       const res = await fetch("/api/teacher-draft", {
         method: "PUT",

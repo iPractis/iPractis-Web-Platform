@@ -25,7 +25,7 @@ const BottomContent = () => {
         href={"/support-request"}
       >
         <InputBGWrapperIcon>
-          <HelpIcon fillColor={"fill-primary-color-P1"} />
+          <HelpIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <span>Contact support</span>

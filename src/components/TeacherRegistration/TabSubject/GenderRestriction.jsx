@@ -13,7 +13,7 @@ const GenderRestriction = ({ isSubmitted, control }) => {
       <div className="w-full">
         <div className="flex items-center gap-[10px] mb-[30px] h-[48px]">
           <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-            <UserLuggageIcon fillColor={"fill-primary-color-P1"} />
+            <UserLuggageIcon fillcolor={"fill-primary-color-P1"} />
           </div>
           <div className="flex flex-col justify-center h-[48px]">
             <h3 className="MT-SB-1 text-sm leading-none">Gender restriction</h3>

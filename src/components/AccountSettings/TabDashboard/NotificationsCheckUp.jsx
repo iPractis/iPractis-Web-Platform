@@ -18,7 +18,7 @@ const NotificationsCheckUp = () => {
         }
         wrapperSectionHeaderClassName="px-4"
         titleIcon={
-          <NotificationBiggerIcon fillColor={"fill-primary-color-P1"} />
+          <NotificationBiggerIcon fillcolor={"fill-primary-color-P1"} />
         }
         descriptionClassName={"mt-[4px] mb-4"}
         titleText={"Notifications Check-Up"}

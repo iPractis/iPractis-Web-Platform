@@ -22,7 +22,7 @@ const Notifications = ({ control }) => {
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
         descriptionText="Here, you can control the notifications you receive."
-        titleIcon={<NotificationBiggestIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<NotificationBiggestIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName="mt-[4px]"
         titleText="Notifications"
         titleClassName="MT-SB-1"

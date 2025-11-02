@@ -6,7 +6,7 @@ const TeacherInfoSpecialties = ({draftData}) => {
   return (
     <article className="my-5">
       <SectionHeader
-        titleIcon={<TagIcon fillColor={"fill-primary-color-P1 "} />}
+        titleIcon={<TagIcon fillcolor={"fill-primary-color-P1 "} />}
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
         titleText={"Specialties"}
       />

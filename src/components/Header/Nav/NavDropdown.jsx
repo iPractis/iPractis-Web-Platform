@@ -142,7 +142,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <DashboardMediumIcon fillColor={"fill-primary-color-P1"} />
+                <DashboardMediumIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Dashboard</h3>
@@ -159,7 +159,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
                 <CameraBoxMediumIcon
-                  fillColor={"fill-primary-color-P1"}
+                  fillcolor={"fill-primary-color-P1"}
                   strokeColor={"stroke-primary-color-P1"}
                 />
               </InputBGWrapperIcon>
@@ -177,7 +177,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <SearchSmallerIcon fillColor={"fill-primary-color-P1"} />
+                <SearchSmallerIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Find a Tutor</h3>
@@ -193,7 +193,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <UserSmallerIcon fillColor={"fill-primary-color-P1"} />
+                <UserSmallerIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Profile</h3>
@@ -209,7 +209,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <UserToolsIcon fillColor={"fill-primary-color-P1"} />
+                <UserToolsIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Profile&#39;s settings</h3>
@@ -225,7 +225,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <GearSmallIcon fillColor={"fill-primary-color-P1"} />
+                <GearSmallIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Account&#39;s settings</h3>
@@ -241,7 +241,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <HeartSmallIcon fillColor={"fill-primary-color-P1"} />
+                <HeartSmallIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Favorite teachers</h3>
@@ -260,7 +260,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <UserTieSmallerIcon fillColor={"fill-primary-color-P1"} />
+                <UserTieSmallerIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Become a teacher</h3>
@@ -276,7 +276,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
               >
-                <HelpSmallerIcon fillColor={"fill-primary-color-P1"} />
+                <HelpSmallerIcon fillcolor={"fill-primary-color-P1"} />
               </InputBGWrapperIcon>
 
               <h3 className="ST-3">Assistance</h3>
@@ -292,7 +292,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             >
               <InputBGWrapperIcon className={"size-6 p-0 rounded-lg"}>
                 <ChevronRightSmallerIcon
-                  fillColor={"fill-septenary-color-MA6"}
+                  fillcolor={"fill-septenary-color-MA6"}
                 />
               </InputBGWrapperIcon>
 

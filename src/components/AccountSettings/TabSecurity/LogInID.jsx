@@ -31,7 +31,7 @@ const LogInID = ({ errors, userEmail }) => {
         descriptionText={
           "Manage the primary contact details associated with your account for login and recovery purposes."
         }
-        titleIcon={<RightArrowBiggerIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<RightArrowBiggerIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName={"mt-[4px]"}
         titleText={"Log in ID"}
         titleClassName="MT-SB-1"
@@ -53,13 +53,13 @@ const LogInID = ({ errors, userEmail }) => {
               readOnly
               label={
                 <span className="flex gap-1.5 items-center">
-                  Email <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  Email <QuestionMark fillcolor={"fill-primary-color-P4"} />
                 </span>
               }
               labelPlacement="outside"
               startContent={
                 <InputBGWrapperIcon>
-                  <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                  <UserBigIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
@@ -68,9 +68,9 @@ const LogInID = ({ errors, userEmail }) => {
                   onClick={() => setShowEmail(!showEmail)}
                 >
                   {showEmail ? (
-                    <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                    <EyeWithoutDashIcon fillcolor={"fill-primary-color-P4"} />
                   ) : (
-                    <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                    <EyeWithDashIcon fillcolor={"fill-primary-color-P4"} />
                   )}
                 </InputBGWrapperIcon>
               }

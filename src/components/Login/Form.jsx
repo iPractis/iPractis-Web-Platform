@@ -63,7 +63,6 @@ const onSubmit = async (data) => {
     }
 
     // ✅ Success
-    console.log("Login successful:", result);
     await refreshAuth(); // make sure AuthContext is updated
     router.push("/dashboard"); // navigate client-side (no full reload)
   } catch (error) {
@@ -126,7 +125,7 @@ const onSubmit = async (data) => {
             placeholder="Email address"
             startContent={
               <InputBGWrapperIcon className="ml-[1px]">
-                <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                <UserBigIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
@@ -184,7 +183,7 @@ const onSubmit = async (data) => {
             placeholder="Password"
             startContent={
               <InputBGWrapperIcon className="ml-[1px]">
-                <PadLockClosedBigIcon fillColor={"fill-primary-color-P4"} />
+                <PadLockClosedBigIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
@@ -201,9 +200,9 @@ const onSubmit = async (data) => {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithDashIcon fillcolor={"fill-primary-color-P4"} />
                     ) : (
-                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithoutDashIcon fillcolor={"fill-primary-color-P4"} />
                     )}
                   </InputBGWrapperIcon>
                 )}
@@ -276,7 +275,7 @@ const onSubmit = async (data) => {
         >
           <span>Log in</span>
           <div className="absolute right-1.5 w-9 h-9 bg-white rounded-[10px] p-2 flex items-center justify-center">
-            <ChevronRightDoorIcon fillColor={"fill-[#1A47FF]"} />
+            <ChevronRightDoorIcon fillcolor={"fill-[#1A47FF]"} />
           </div>
         </ButtonSubmitForm>
       </div>

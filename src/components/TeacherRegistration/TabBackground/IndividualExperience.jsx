@@ -66,7 +66,7 @@ const IndividualExperience = ({
             placeholder="Example: Google"
             startContent={
               <InputBGWrapperIcon>
-                <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                <LuggageBiggerIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             classNames={{
@@ -89,7 +89,7 @@ const IndividualExperience = ({
             placeholder="From"
             startContent={
               <InputBGWrapperIcon>
-                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+                <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
@@ -105,7 +105,7 @@ const IndividualExperience = ({
                     variant="flat"
                     type="button"
                   >
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                    <ChevronDownBigIcon fillcolor={"fill-primary-color-P4"} />
                   </Button>
                 </DropdownTrigger>
 
@@ -150,7 +150,7 @@ const IndividualExperience = ({
             placeholder="To"
             startContent={
               <InputBGWrapperIcon>
-                <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+                <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
@@ -166,7 +166,7 @@ const IndividualExperience = ({
                     variant="flat"
                     type="button"
                   >
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+                    <ChevronDownBigIcon fillcolor={"fill-primary-color-P4"} />
                   </Button>
                 </DropdownTrigger>
 
@@ -223,9 +223,9 @@ const IndividualExperience = ({
               // } btn-septenary rounded-2xl w-[48px] h-[48px] cursor-pointer`}
             >
               {image?.name ? (
-                <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+                <CheckedDocumentIcon fillcolor={"fill-primary-color-P4"} />
               ) : (
-                <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+                <TopArrowCloudIcon fillcolor={"fill-primary-color-P4"} />
               )}
             </InputBGWrapperIcon>
           </label>
@@ -241,7 +241,7 @@ const IndividualExperience = ({
             >
               <TrashBinIcon
                 strokeColor={"stroke-primary-color-P4"}
-                fillColor={"fill-primary-color-P4"}
+                fillcolor={"fill-primary-color-P4"}
               />
             </InputBGWrapperIcon>
           </button>

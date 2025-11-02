@@ -36,10 +36,6 @@ export const TabBody = ({ draftData }) => {
   const [draft, setDraft] = useState({ ...defaultValue, ...draftData });
   const [activeTab, setActiveTab] = useState(0);
 
-  // Debug when draft state changes
-  useEffect(() => {
-    console.log("DRAFT IN TAB BODY CHANGED:", draft);
-  }, [draft]);
   return (
     <section className={`max-w-[1000px] mb-[100px] mx-auto space-y-16 px-2`}>
       {/* Tabs buttons (top) */}

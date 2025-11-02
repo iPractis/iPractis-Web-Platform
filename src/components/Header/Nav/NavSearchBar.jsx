@@ -31,7 +31,7 @@ const NavSearchBar = () => {
             value: "w-auto text-primary-color-P1 ST-1",
           }}
           endContent={
-            <ChevronDownMediumIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronDownMediumIcon fillcolor={"fill-primary-color-P1"} />
           }
           defaultSelectedKeys={["english"]}
           items={searchBarSubjects}

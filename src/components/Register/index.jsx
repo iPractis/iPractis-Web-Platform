@@ -43,7 +43,7 @@ export const Register = () => {
 
               <InputBGWrapperIcon>
                 <ChevronRightDoorIcon
-                  fillColor={
+                  fillcolor={
                     "fill-primary-color-P1"
                   }
                 />

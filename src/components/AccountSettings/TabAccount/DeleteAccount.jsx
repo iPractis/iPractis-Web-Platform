@@ -15,7 +15,7 @@ const DeleteAccount = () => {
       }
       titleIcon={
         <TrashBinSmallerIcon
-          fillColor={"fill-primary-color-P1"}
+          fillcolor={"fill-primary-color-P1"}
           strokeColor={"stroke-primary-color-P1"}
         />
       }
@@ -32,7 +32,7 @@ const DeleteAccount = () => {
           <span className="MT-1 px-1.5">Delete account</span>{" "}
           <InputBGWrapperIcon>
             <TrashBinSmallerIcon
-              fillColor={"fill-septenary-color-MA6"}
+              fillcolor={"fill-septenary-color-MA6"}
               strokeColor={"stroke-septenary-color-MA6"}
             />
           </InputBGWrapperIcon>

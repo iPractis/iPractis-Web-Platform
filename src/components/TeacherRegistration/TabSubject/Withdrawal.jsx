@@ -21,7 +21,7 @@
 //     <div className="md:px-8 mt-[50px]">
 //       <SectionHeader
 //         descriptionText="You have the freedom to establish a rate that aligns with your professional standards."
-//         titleIcon={<WalletIcon fillColor={"fill-primary-color-P1"} />}
+//         titleIcon={<WalletIcon fillcolor={"fill-primary-color-P1"} />}
 //         titleText="Withdrawal"
 //         titleClassName="MT-SB-1"
 //         wrapperSectionHeaderClassName="mb-[50px]"
@@ -94,7 +94,7 @@
 //               <div className="flex flex-col">
 //                 <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
 //                   Withdrawal your revenue
-//                   <QuestionMark fillColor={"fill-primary-color-P4"} />
+//                   <QuestionMark fillcolor={"fill-primary-color-P4"} />
 //                 </span>
 
 //                 <div className="self-start">
@@ -107,7 +107,7 @@
 //             labelPlacement="outside"
 //             startContent={
 //               <InputBGWrapperIcon>
-//                 <TownhallIcon fillColor={"fill-primary-color-P4"} />
+//                 <TownhallIcon fillcolor={"fill-primary-color-P4"} />
 //               </InputBGWrapperIcon>
 //             }
 //           />

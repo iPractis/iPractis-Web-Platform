@@ -180,7 +180,7 @@ const FormInputsBox = ({
               placeholder={firstInputPlaceholder}
               startContent={
                 <InputBGWrapperIcon>
-                  <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                  <LuggageBiggerIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               {...companyField}
@@ -195,7 +195,7 @@ const FormInputsBox = ({
             <InputBGWrapperIcon
               className={"btn-septenary rounded-2xl bg-[#f8f7f5] w-[48px] h-[48px]"}
             >
-              <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
+              <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillcolor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           </button>
         </div>
@@ -218,7 +218,7 @@ const FormInputsBox = ({
               placeholder="From (e.g. 2022)"
               startContent={
                 <InputBGWrapperIcon>
-                  <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+                  <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               classNames={{
@@ -244,7 +244,7 @@ const FormInputsBox = ({
               placeholder="To (e.g. 2025)"
               startContent={
                 <InputBGWrapperIcon>
-                  <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+                  <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               classNames={{
@@ -303,7 +303,7 @@ const FormInputsBox = ({
           <div className={`w-full h-[48px] flex items-center`}>
             {/* Left Upload Icon Container */}
             <div className="w-[54px] h-[48px] bg-[#F8F7F5] rounded-2xl flex items-center justify-center">
-              <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+              <TopArrowCloudIcon fillcolor={"fill-primary-color-P4"} />
             </div>
             
             {/* Increased Gap */}

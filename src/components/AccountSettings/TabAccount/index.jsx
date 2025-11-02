@@ -33,8 +33,6 @@ const TabAccount = ({ activeTab }) => {
       setIsSaving(true);
       const formData = getValues();
 
-      console.log("Saving account settings:", formData);
-
       const res = await fetch("/api/account-update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -42,7 +40,6 @@ const TabAccount = ({ activeTab }) => {
       });
 
       const result = await res.json();
-      console.log("✅ API Response:", result);
 
       if (res.ok) {
         alert("Settings saved successfully!");

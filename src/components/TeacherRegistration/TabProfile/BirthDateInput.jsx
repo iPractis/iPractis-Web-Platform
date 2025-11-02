@@ -171,7 +171,7 @@ const BirthDateInput = ({ errors, control }) => {
   return (
     <div className="!mt-4 group">
       <span className="flex gap-1.5 ps-[5px] items-center MT-SB-1 mb-1 text-primary-color-P4">
-        Birth date <QuestionMark fillColor={"fill-primary-color-P4"} />
+        Birth date <QuestionMark fillcolor={"fill-primary-color-P4"} />
       </span>
 
       <InputLeftStickStatus
@@ -190,7 +190,7 @@ const BirthDateInput = ({ errors, control }) => {
         >
           <div>
             <InputBGWrapperIcon>
-              <BabyWalkerIcon fillColor={"fill-primary-color-P4"} />
+              <BabyWalkerIcon fillcolor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           </div>
 
@@ -356,7 +356,7 @@ const BirthDateInput = ({ errors, control }) => {
                   className="p-1.5 rounded-[10px] bg-primary-color-P12"
                   type="button"
                 >
-                  <CalendarBiggerIcon fillColor={"fill-primary-color-P4"} />
+                  <CalendarBiggerIcon fillcolor={"fill-primary-color-P4"} />
                 </button>
               }
             />

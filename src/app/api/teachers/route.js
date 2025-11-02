@@ -16,8 +16,6 @@ export async function POST(req) {
       return NextResponse.json({ message: "userId is required" }, { status: 400 });
     }
 
-    console.log("Saving teacher draft for user:", userId);
-
     // 1️⃣ Upsert into teachers
     const { data: teacher, error: teacherError } = await supabaseServer
       .from("teachers")
@@ -128,23 +126,37 @@ export async function POST(req) {
     }
 
     // 5️⃣ Optimized Availability — save as JSON instead of many rows
-    if (draft.availability && Array.isArray(draft.availability)) {
-      const availabilityJson = mapUiToDbAvailability(draft.availability); // returns something like { Mon: ["04:30", "05:30"], Tue: [...] }
-      const { error: availError } = await supabaseServer
-        .from("teacher_availability")
-        .upsert(
-          {
-            teacher_id: teacherId,
-            availability: availabilityJson,
-            updated_at: new Date().toISOString(),
-          },
-          { onConflict: "teacher_id" }
-        );
 
-      if (availError) {
-        console.error("Availability save failed:", availError);
-      }
+    // 5️⃣ Optimized Availability — save as multiple rows (per half-hour slot)
+console.log("Saving availability for teacher:", draft.availability);
+console.log("Teacher ID:", teacherId);
+
+if (draft.availability && Array.isArray(draft.availability)) {
+  // Map UI format to DB-ready rows
+  const slots = mapUiToDbAvailability(draft.availability, teacherId);
+
+  // Clear old records
+  const { error: delError } = await supabaseServer
+    .from("teacher_availability")
+    .delete()
+    .eq("teacher_id", teacherId);
+
+  if (delError) {
+    console.error("Failed to clear previous availability:", delError);
+  }
+
+  // Insert new records
+  if (slots.length > 0) {
+    const { error: insertError } = await supabaseServer
+      .from("teacher_availability")
+      .insert(slots);
+
+    if (insertError) {
+      console.error("Availability insert failed:", insertError);
     }
+  }
+}
+
 
     // 6️⃣ Mark draft as published
     await supabaseServer

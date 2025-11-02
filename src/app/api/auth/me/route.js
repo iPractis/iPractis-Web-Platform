@@ -10,7 +10,6 @@ export async function GET() {
     const token = cookieStore.get('auth-token')?.value;
     
     if (!token) {
-      console.log("No auth-token cookie found");
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
@@ -22,25 +21,29 @@ export async function GET() {
           .eq("user_id", decoded.userId)
           .single();
 
-          console.log(user, error);
+        
+    const { data: teacher, error: teacherError } = await supabaseServer
+          .from("teachers")
+          .select(" teacher_id")
+          .eq("user_id", decoded.userId)
+          .single();
+
 
     if (error || !user) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
-    console.log("Authenticated user:", decoded);
     return NextResponse.json({ 
       authenticated: true,
       user: { 
         userId: decoded.userId, 
-        teacherId: user.teacher_id,
+        teacherId: teacher.teacher_id,
         email: decoded.email, 
         role: decoded.role || "student",
         firstName: decoded.name || decoded.email.split('@')[0]
       } 
     });
   } catch (error) {
-    console.log(error)
     return NextResponse.json({ authenticated: false }, { status: 401 });
   }
 }

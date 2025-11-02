@@ -23,7 +23,7 @@ const PersonalInfoNationalitySelect = ({
         popoverContent: "overflow-y-auto max-h-[20rem] w-[15rem]",
       }}
       selectorIcon={
-        <ChevronDownSmallIcon fillColor={"fill-primary-color-P4"} />
+        <ChevronDownSmallIcon fillcolor={"fill-primary-color-P4"} />
       }
       startContent={
         selectedCountry && (

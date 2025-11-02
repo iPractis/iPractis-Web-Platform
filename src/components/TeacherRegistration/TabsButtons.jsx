@@ -13,7 +13,6 @@ import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
-  console.log("final data",draft)
   const [submitError, setSubmitError] = useState(null); // 👈 error state
   const { user } = useAuth();
   const normalizedDraft = {
@@ -26,12 +25,6 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const completedTabBackground = hasIncompleteFields(tabBackgroundFields, normalizedDraft);
   const completedTabAvailability = hasIncompleteFields(tabAvailabilityFields, normalizedDraft);
   const allTabsCompleted = !completedTabProfile && !completedTabSubject && !completedTabBackground && !completedTabAvailability;
-
-  console.log("allTabCompleted",allTabsCompleted)
-  console.log("completedTabProfile",completedTabProfile)
-  console.log("completedTabSubject",completedTabSubject)
-  console.log("completedTabBackground",completedTabBackground)
-  console.log("completedTabAvailability",completedTabAvailability)
 
   const handleApplyNowClick = async () => {
   const userId = user?.userId;
@@ -64,7 +57,6 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
     }
 
     const result = await response.json();
-    console.log("Application submitted:", result);
     setActiveTab(5); // Move to "Success" tab
   } catch (error) {
     console.error("Error submitting draft:", error);
@@ -104,7 +96,7 @@ const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
               }`}
             >
               <TabButton.Icon
-                fillColor={
+                fillcolor={
                   activeTab === TabIndex
                     ? "fill-primary-color-P12"
                     : "fill-primary-color-P1"

@@ -24,14 +24,12 @@ export async function registerUser(prevState, reactHookFormData) {
 
 // WITHOUT AUTHJS
 export const logInUser = async (data) => {
-  console.log("user login data", data)
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    console.log("response", res)
     return await res.json();
   } catch (err) {
     console.error(err);

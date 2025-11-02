@@ -30,7 +30,7 @@ const TutorCards = () => {
             >
               <span className="px-1.5">Discover more teachers</span>{" "}
               <InputBGWrapperIcon>
-                <ChevronRightBiggerIcon fillColor={"fill-tertiary-color-SC5"} />
+                <ChevronRightBiggerIcon fillcolor={"fill-tertiary-color-SC5"} />
               </InputBGWrapperIcon>
             </button>
           </div>

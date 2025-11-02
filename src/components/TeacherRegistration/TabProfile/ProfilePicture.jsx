@@ -19,17 +19,15 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
     name: "profile_url",
     control,
   });
-  console.log(draftUrl, "DRAFT URL IN PROFILE PICTURE")
 
   const currentImageUrl =profileUrlField.value || draftUrl  || null;
-console.log("CURRENT IMAGE URL:", currentImageUrl)
   return (
     <WhiteSpaceWrapper className="p-0">
       <SectionHeader
         descriptionText="Upload a photo to personalize your profile."
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <UserIcon fillColor={"fill-primary-color-P1"} />
+            <UserIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
@@ -60,7 +58,7 @@ console.log("CURRENT IMAGE URL:", currentImageUrl)
               ) : (
                 <div className="w-[100px] h-[100px] rounded-2xl p-[25px] bg-[#F8F7F5]">
                   <UserBigIcon
-                    fillColor={profileUrlError?.message ? "fill-senary-color-W10" : "fill-primary-color-P1"}
+                    fillcolor={profileUrlError?.message ? "fill-senary-color-W10" : "fill-primary-color-P1"}
                   />
                 </div>
               )}

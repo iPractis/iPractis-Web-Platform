@@ -11,7 +11,7 @@ const ErrorMessageiPractis = ({ typeError, descError }) => {
     >
       <div className="flex items-start gap-4 p-4 rounded-2xl mt-2 bg-quaternary-color-A8">
         <InputBGWrapperIcon className={"bg-quaternary-color-A12"}>
-          <WarningTriangleIcon fillColor={"fill-quaternary-color-A1"} />
+          <WarningTriangleIcon fillcolor={"fill-quaternary-color-A1"} />
         </InputBGWrapperIcon>
 
         <div>

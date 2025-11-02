@@ -47,7 +47,6 @@ const NoticeBox = ({ draftData }) => {
       }
 
       const result = await response.json();
-      console.log("Application submitted:", result);
       // Redirect to status tab
       window.location.href = "/teacher-registration?tab=status";
     } catch (error) {
@@ -82,7 +81,7 @@ const NoticeBox = ({ draftData }) => {
             {isLoading ? "Loading..." : "Send application"}
           </button>
           <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
-            <ChevronRightIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </div>
       </SectionHeader>
@@ -255,7 +254,7 @@ const AvailabilityRevision = ({draftData}) => {
       <div className="bg-white rounded-[32px] p-4 mb-8 h-[48px] flex items-center gap-[10px]">
         {/* Icon container */}
         <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-          <PersonIcon fillColor={"fill-primary-color-P1"} />
+          <PersonIcon fillcolor={"fill-primary-color-P1"} />
         </div>
       
         {/* Text content */}
@@ -303,10 +302,10 @@ const AvailabilityRevision = ({draftData}) => {
         {/* Right side - Action buttons with same attributes as profile picture */}
         <div className="flex gap-[10px]">
           <button className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] hover:bg-[#f0efed] transition-colors flex items-center justify-center p-[14px]">
-            <FlagIcon fillColor={"fill-black"} />
+            <FlagIcon fillcolor={"fill-black"} />
           </button>
           <button className="w-[48px] h-[48px] rounded-[16px] bg-[#FFB8BC] hover:bg-[#ffc0e1] transition-colors flex items-center justify-center p-[14px]">
-            <HeartSmallIcon fillColor={"fill-white"} />
+            <HeartSmallIcon fillcolor={"fill-white"} />
           </button>
         </div>
       </div>
@@ -350,7 +349,7 @@ const AvailabilityRevision = ({draftData}) => {
                   <span className="ST-2 text-primary-color-P4">{draftData.totalLessons} Lessons</span>
                   <div className="flex items-center gap-1">
                     <span className="MT-SB-1 text-primary-color-P1">5.0</span>
-                    <StarIcon fillColor={"fill-quaternary-color-A5"} />
+                    <StarIcon fillcolor={"fill-quaternary-color-A5"} />
                   </div>
                 </>
               ) : (
@@ -388,7 +387,7 @@ const AvailabilityRevision = ({draftData}) => {
             {/* Teaching levels */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
               <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
-                <UserSpeakingIcon fillColor={"fill-primary-color-P1"} />
+                <UserSpeakingIcon fillcolor={"fill-primary-color-P1"} />
               </span>
               <p className="ST-3 text-primary-color-P1">
                 {draftData.studentLevel ? `Teaches ${Array.isArray(draftData.studentLevel) ? draftData.studentLevel.join(', ') : draftData.studentLevel} level${Array.isArray(draftData.studentLevel) && draftData.studentLevel.length > 1 ? 's' : ''}` : 'Teaches all levels'}
@@ -397,7 +396,7 @@ const AvailabilityRevision = ({draftData}) => {
             {/* Teaching ages */}
             <div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center gap-[10px] px-4 py-3">
               <span className="w-[36px] h-[36px] bg-white rounded-[10px] p-2 -ml-2.5 flex items-center justify-center">
-                <UserHatIcon fillColor={"fill-primary-color-P1"} />
+                <UserHatIcon fillcolor={"fill-primary-color-P1"} />
               </span>
               <p className="ST-3 text-primary-color-P1">{getAgeText()}</p>
             </div>
@@ -491,7 +490,7 @@ const AvailabilityRevision = ({draftData}) => {
         {/* From/To Date Picker - Using Working Components */}
         <div className="flex items-center justify-center gap-8 mb-4">
           <button onClick={handleDecrementWeek} type="button">
-            <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronLeftBigIcon fillcolor={"fill-primary-color-P1"} />
           </button>
 
           <h3 className="text-primary-color-P1 ST-4">From</h3>
@@ -551,7 +550,7 @@ const AvailabilityRevision = ({draftData}) => {
           </div>
 
           <button onClick={handleIncrementWeek} type="button">
-            <ChevronRightMediumIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightMediumIcon fillcolor={"fill-primary-color-P1"} />
           </button>
         </div>
 
@@ -581,9 +580,7 @@ const AvailabilityRevision = ({draftData}) => {
           ].map(({ day, num, dbDay }, dayIndex) => {
             // Find the availability data for this day using the database day format
             const dayAvailability = draftData?.availability?.find(slot => slot.day === dbDay);
-            
-            console.log(`Checking ${day} (${dbDay}):`, dayAvailability);
-            
+                        
             return (
               <div key={day} className="flex gap-1">
                 {/* Day Label: white day name + black number pill */}

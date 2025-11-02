@@ -60,7 +60,7 @@ const ProfileTitle = ({ control, errors }) => {
           descError={"The text cannot exceed 120 characters."}
           startContent={
             <InputBGWrapperIcon>
-              <ThreeXBlocks fillColor={"fill-primary-color-P4"} />
+              <ThreeXBlocks fillcolor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
           }
           endContent={

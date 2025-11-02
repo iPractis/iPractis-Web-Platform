@@ -10,7 +10,7 @@ const AudioNotification = ({ control }) => {
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
         descriptionText="Here, you can control the notifications you receive."
-        titleIcon={<AudioMediumIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<AudioMediumIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName="mt-[4px]"
         titleText="Audio Notification"
         titleClassName="MT-SB-1"

@@ -164,7 +164,7 @@ const Form = () => {
             </span>
             <InputBGWrapperIcon>
               <ChevronRightDoorIcon
-                fillColor={
+                fillcolor={
                   "fill-tertiary-color-SC5 group-hover:fill-tertiary-color-SC5"
                 }
               />

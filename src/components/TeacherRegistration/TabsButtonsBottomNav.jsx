@@ -21,7 +21,7 @@ const TabsButtonsBottomNav = ({ buttonRef, setActiveTab, activeTab }) => {
             type="button"
           >
             <span className="flex-0">
-              <ChevronLeftIcon fillColor={"fill-primary-color-P12"} />
+              <ChevronLeftIcon fillcolor={"fill-primary-color-P12"} />
             </span>
 
             <span className="flex-1">Back</span>
@@ -42,7 +42,7 @@ const TabsButtonsBottomNav = ({ buttonRef, setActiveTab, activeTab }) => {
             </div>
 
             <div className="flex-0">
-              <ChevronRightIcon fillColor={"fill-primary-color-P12"} />
+              <ChevronRightIcon fillcolor={"fill-primary-color-P12"} />
             </div>
           </ButtonSubmitForm>
         </div>

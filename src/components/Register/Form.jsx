@@ -147,9 +147,9 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeWithDashIcon fillColor="fill-primary-color-P4" />
+                  <EyeWithDashIcon fillcolor="fill-primary-color-P4" />
                 ) : (
-                  <EyeWithoutDashIcon fillColor="fill-primary-color-P4" />
+                  <EyeWithoutDashIcon fillcolor="fill-primary-color-P4" />
                 )}
               </InputBGWrapperIcon>
             )}
@@ -178,12 +178,12 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
         {renderInput({
           name: "firstName",
           placeholder: "First name",
-          startIcon: <UserBigIcon fillColor="fill-primary-color-P4" />,
+          startIcon: <UserBigIcon fillcolor="fill-primary-color-P4" />,
         })}
         {renderInput({
           name: "lastName",
           placeholder: "Last name",
-          startIcon: <ThreeUsersIcon fillColor="fill-primary-color-P4" />,
+          startIcon: <ThreeUsersIcon fillcolor="fill-primary-color-P4" />,
         })}
       </div>
       <DynamicInputErrorMessageWithZod
@@ -201,7 +201,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
       {renderInput({
         name: "email",
         placeholder: "Enter your email address",
-        startIcon: <MailIcon fillColor="fill-primary-color-P4" />,
+        startIcon: <MailIcon fillcolor="fill-primary-color-P4" />,
       })}
       <DynamicInputErrorMessageWithZod
         frontEndErrors={errors}
@@ -213,7 +213,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
       {renderInput({
         name: "password",
         placeholder: "Enter your password",
-        startIcon: <PadLockClosedBigIcon fillColor="fill-primary-color-P4" />,
+        startIcon: <PadLockClosedBigIcon fillcolor="fill-primary-color-P4" />,
         type: "password",
         toggleable: true,
       })}
@@ -239,7 +239,7 @@ router.push(`/authenticator?email=${encodeURIComponent(data.email)}`);
           {isPending ? "Loading..." : "Create an account"}
         </span>
         <InputBGWrapperIcon>
-          <UserAddCircleMediumIcon fillColor="fill-tertiary-color-SC5" />
+          <UserAddCircleMediumIcon fillcolor="fill-tertiary-color-SC5" />
         </InputBGWrapperIcon>
       </button>
 

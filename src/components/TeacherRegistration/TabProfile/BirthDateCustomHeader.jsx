@@ -13,7 +13,7 @@ const BirthDateCustomHeader = ({
       {/* Group of arrows (Months) */}
       <div className="flex-[60%] flex justify-between items-center rounded-xl p-1.5 bg-primary-color-P12">
         <button type="button" onClick={decreaseMonth}>
-          <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          <LeftArrowMediumIcon fillcolor={"fill-primary-color-P8"} />
         </button>
 
         <span className="fill-primary-color-P4 mx-1.5 ST-3">
@@ -21,14 +21,14 @@ const BirthDateCustomHeader = ({
         </span>
 
         <button type="button" onClick={increaseMonth}>
-          <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          <RightArrowMediumIcon fillcolor={"fill-primary-color-P8"} />
         </button>
       </div>
 
       {/* Group of arrows (Years) */}
       <div className="flex-1 flex justify-between items-center rounded-xl p-1.5 bg-primary-color-P12">
         <button type="button" onClick={decreaseYear}>
-          <LeftArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          <LeftArrowMediumIcon fillcolor={"fill-primary-color-P8"} />
         </button>
 
         <span className="fill-primary-color-P4 mx-1.5 ST-3">
@@ -36,7 +36,7 @@ const BirthDateCustomHeader = ({
         </span>
 
         <button type="button" onClick={increaseYear}>
-          <RightArrowMediumIcon fillColor={"fill-primary-color-P8"} />
+          <RightArrowMediumIcon fillcolor={"fill-primary-color-P8"} />
         </button>
       </div>
     </div>

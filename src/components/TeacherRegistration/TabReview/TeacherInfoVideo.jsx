@@ -70,14 +70,14 @@ const TutorCard = () => {
           <div>
             <h4 className="ST-2 text-primary-color-P4">1201 Lessons</h4>
             <h2 className="MT-SB-1 text-primary-color-P1 flex items-center justify-end gap-2.5">
-              5.0 <StarIcon fillColor={"fill-quaternary-color-A5"} />
+              5.0 <StarIcon fillcolor={"fill-quaternary-color-A5"} />
             </h2>
           </div>
 
           <div className="border-x border-primary-color-P4 px-4">
             <h4 className="ST-2 text-primary-color-P4">Active students</h4>
             <h2 className="MT-SB-1 text-primary-color-P1 flex items-start justify-center gap-2.5">
-              50+ <UserHatMediumIcon fillColor={"fill-primary-color-P1"} />
+              50+ <UserHatMediumIcon fillcolor={"fill-primary-color-P1"} />
             </h2>
           </div>
 
@@ -96,7 +96,7 @@ const TutorCard = () => {
               type="button"
               className="btn btn-secondary rounded-2xl p-1.5 w-11 h-10 flex justify-center items-center"
             >
-              <MessageIcon fillColor={"fill-primary-color-P12"} />
+              <MessageIcon fillcolor={"fill-primary-color-P12"} />
             </button>
           </div>
 

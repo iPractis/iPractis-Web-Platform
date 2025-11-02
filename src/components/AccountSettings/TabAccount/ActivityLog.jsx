@@ -100,7 +100,7 @@ const ActivityLog = () => {
       <SectionHeader
         wrapperSectionHeaderClassName="flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
         descriptionText="View a detailed history of recent account activities."
-        titleIcon={<CalendarIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
         headerContainerClassName="flex-[40%]"
         descriptionClassName="mt-[4px]"
         titleText="Activity Log"
@@ -119,7 +119,7 @@ const ActivityLog = () => {
               {downloading ? "Downloading..." : "Download"}
             </span>
             <InputBGWrapperIcon className="bg-primary-color-P1">
-              <DownloadMediumIcon fillColor={"fill-primary-color-P12"} />
+              <DownloadMediumIcon fillcolor={"fill-primary-color-P12"} />
             </InputBGWrapperIcon>
           </button>
         </div>

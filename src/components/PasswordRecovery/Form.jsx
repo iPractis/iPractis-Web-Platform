@@ -118,7 +118,7 @@ const PasswordResetForm = () => {
         <CustomNextUiInput
           aria-label="Email address"
           placeholder="Enter your email address"
-          startContent={<MailIcon fillColor="fill-primary-color-P4" />}
+          startContent={<MailIcon fillcolor="fill-primary-color-P4" />}
           endContent={
             watch("email") && (
               <CloseIcon className="cursor-pointer" onClick={() => setValue("email", "")} />
@@ -186,9 +186,9 @@ const PasswordResetForm = () => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <EyeWithDashIcon fillColor="fill-primary-color-P4" />
+                  <EyeWithDashIcon fillcolor="fill-primary-color-P4" />
                 ) : (
-                  <EyeWithoutDashIcon fillColor="fill-primary-color-P4" />
+                  <EyeWithoutDashIcon fillcolor="fill-primary-color-P4" />
                 )}
               </InputBGWrapperIcon>
             }
@@ -224,7 +224,7 @@ const PasswordResetForm = () => {
             ? "Verify OTP"
             : "Reset Password"}
         </span>
-        <ChevronRightBiggerIcon fillColor="fill-tertiary-color-SC5" />
+        <ChevronRightBiggerIcon fillcolor="fill-tertiary-color-SC5" />
       </ButtonSubmitForm>
     </form>
   );

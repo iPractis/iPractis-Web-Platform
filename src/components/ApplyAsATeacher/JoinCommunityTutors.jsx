@@ -41,7 +41,7 @@ const JoinCommunityTutors = () => {
             <span className="flex-1 ml-[16px] text-left">Apply now!</span>
 
             <InputBGWrapperIcon className={"sm:block hidden"}>
-              <ChevronRightBiggerIcon fillColor={"fill-primary-color-P1"} />
+              <ChevronRightBiggerIcon fillcolor={"fill-primary-color-P1"} />
             </InputBGWrapperIcon>
           </Link>
         </div>
