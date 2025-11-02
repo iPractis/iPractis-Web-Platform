@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    const { email, password, first_name, last_name } = await req.json();
+    const {email, password, firstName, lastName} = await req.json();
 
     if (!email || !password) {
       return NextResponse.json({ message: "Email and password are required" }, { status: 400 });
@@ -37,8 +37,8 @@ export async function POST(req) {
       .insert([
         {
           email,
-          first_name: first_name || null,
-          last_name: last_name || null,
+          first_name: firstName || null,
+          last_name: lastName || null,
           password_hash: hashedPassword,
           role: "student",
           is_verified: false,
@@ -72,7 +72,7 @@ export async function POST(req) {
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #f9f9f9;">
           <h2 style="color: #333; text-align: center;">Verify Your Account</h2>
           <p style="color: #555; font-size: 16px;">
-            Hi ${first_name || "there"},<br /><br />
+            Hi ${firstName || "there"},<br /><br />
             Use the following One-Time Password (OTP) to verify your account:
           </p>
           <div style="text-align: center; margin: 30px 0;">
@@ -98,7 +98,7 @@ export async function POST(req) {
         userId: user.user_id,
         email: user.email,
         role: "student",
-        firstName: first_name || email.split("@")[0],
+        firstName: firstName || email.split("@")[0],
       },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }

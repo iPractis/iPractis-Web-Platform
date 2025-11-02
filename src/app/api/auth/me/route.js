@@ -10,13 +10,14 @@ export async function GET() {
     const token = cookieStore.get('auth-token')?.value;
     
     if (!token) {
+      console.log("No auth-token cookie found");
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     const { data: user, error } = await supabaseServer
-          .from("teachers")
+          .from("users")
           .select(" *")
           .eq("user_id", decoded.userId)
           .single();
@@ -27,6 +28,7 @@ export async function GET() {
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
+    console.log("Authenticated user:", decoded);
     return NextResponse.json({ 
       authenticated: true,
       user: { 
@@ -34,7 +36,7 @@ export async function GET() {
         teacherId: user.teacher_id,
         email: decoded.email, 
         role: decoded.role || "student",
-        firstName: decoded.firstName || decoded.email.split('@')[0]
+        firstName: decoded.name || decoded.email.split('@')[0]
       } 
     });
   } catch (error) {

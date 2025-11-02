@@ -16,7 +16,7 @@ const TeacherCard = ({ teacher }) => {
   const name = teacher.name
 
   const profileImage =
-    teacher.user?.profileImage || "/images/tutor-image-preview.png";
+    teacher.profile_image || "/images/tutor-image-preview.png";
 
   const embedUrl = getYouTubeEmbedUrl(teacher.videoLink);
 

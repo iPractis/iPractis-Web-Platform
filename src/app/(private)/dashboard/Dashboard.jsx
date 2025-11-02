@@ -62,7 +62,6 @@ export default function Dashboard() {
   return (
     <div>
       <ProfileBrief />
-
       <div className="flex justify-center mt-10">
         <Link href="/teacher-registration">
           <HeaderCard

@@ -2,6 +2,7 @@ import AveragePricesLanguaguesCarousel from "./AveragePricesLanguaguesCarousel";
 
 import hero from "@/public/images/home-hero.jpg";
 import Image from "next/image";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -35,12 +36,13 @@ const Hero = () => {
               </li>
             </ul>
 
-            <button
+            <Link
               className="btn btn-primary py-3 px-4 MT-SB-1 rounded-2xl md:mt-0 mt-10"
               type="button"
+              href="/dashboard"
             >
               Get Started
-            </button>
+            </Link>
           </div>
         </div>
 

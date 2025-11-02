@@ -2,8 +2,10 @@ import React from 'react'
 import HeaderCard from './HeaderCard'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useAuth } from '@/src/hooks/useAuth'
 
 function ProfileBrief() {
+    const {user} = useAuth();
     return (
         <div className="gap-4 justify-center w-full">
             {/* Top welcome card */}
@@ -13,7 +15,7 @@ function ProfileBrief() {
 
                     <HeaderCard
                         image="/images/tutor-image-preview.png"
-                        title="Welcome, Alexandra"
+                        title={`Welcome back, ${user?.firstName || "User"}!`}
                         subtitle="Find any feature or setting quickly."
                     />
                     {/* Section Header */}
