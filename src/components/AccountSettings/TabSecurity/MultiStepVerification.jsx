@@ -38,7 +38,7 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
         descriptionText={
           "Enable multi-step verification for an added layer of security. Choose from various verification options for your account."
         }
-        titleIcon={<PadLockUserIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<PadLockUserIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName={"mt-[4px]"}
         titleText={"Multi-Step Verification"}
         titleClassName="MT-SB-1"
@@ -111,7 +111,7 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               classNames={{

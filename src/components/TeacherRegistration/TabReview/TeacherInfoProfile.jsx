@@ -34,7 +34,6 @@ const TeacherInfoProfile = ({ draftData }) => {
     loadCountries();
   }, [draftData?.country]);
 
-  console.log("Draft Data in TeacherInfoProfile:", draftData);
   return (
     <div className="flex gap-2.5">
       <div className="relative">

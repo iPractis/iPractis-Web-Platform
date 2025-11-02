@@ -435,7 +435,7 @@ const WorkScheduleTable = ({
       {fromToFilter && (
         <div className="flex items-center justify-center gap-8 mb-4">
           <button onClick={handleDecrementWeek} type="button">
-            <ChevronLeftBigIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronLeftBigIcon fillcolor={"fill-primary-color-P1"} />
           </button>
 
           <h3 className="text-primary-color-P1 ST-4">From</h3>
@@ -495,7 +495,7 @@ const WorkScheduleTable = ({
           </div>
 
           <button onClick={handleIncrementWeek} type="button">
-            <ChevronRightMediumIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightMediumIcon fillcolor={"fill-primary-color-P1"} />
           </button>
         </div>
       )}
@@ -679,12 +679,12 @@ const WorkScheduleTable = ({
               isOpen={isOpen}
               startContent={
                 <InputBGWrapperIcon>
-                  <EarthIcon fillColor={"fill-primary-color-P4"} />
+                  <EarthIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               classNames={{

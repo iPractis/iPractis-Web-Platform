@@ -22,7 +22,7 @@ const Password = () => {
         titleIcon={
           <PadLockClosedBigIcon
             versionIcon={2}
-            fillColor={"fill-primary-color-P1"}
+            fillcolor={"fill-primary-color-P1"}
           />
         }
         descriptionClassName={"mt-[4px]"}
@@ -36,11 +36,11 @@ const Password = () => {
           href={"#"}
         >
           <InputBGWrapperIcon>
-            <ThreeAstheristiksIcon fillColor={"fill-tertiary-color-SC5"} />
+            <ThreeAstheristiksIcon fillcolor={"fill-tertiary-color-SC5"} />
           </InputBGWrapperIcon>
           Update password
           <InputBGWrapperIcon>
-            <ChevronRightIcon fillColor={"fill-tertiary-color-SC5"} />
+            <ChevronRightIcon fillcolor={"fill-tertiary-color-SC5"} />
           </InputBGWrapperIcon>
         </Link>
       </div>

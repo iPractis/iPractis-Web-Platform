@@ -56,7 +56,7 @@ const NavResponsive = () => {
               >
                 <div className="flex-1">
                   <ChevronRightDoorBoldIcon
-                    fillColor={"fill-primary-color-P12"}
+                    fillcolor={"fill-primary-color-P12"}
                   />
                 </div>
 
@@ -84,7 +84,7 @@ const NavResponsive = () => {
                 <span>Find a Tutor</span>
 
                 <div>
-                  <SearchIcon fillColor={"fill-primary-color-P12"} />
+                  <SearchIcon fillcolor={"fill-primary-color-P12"} />
                 </div>
               </Link>
             </DropdownItem>

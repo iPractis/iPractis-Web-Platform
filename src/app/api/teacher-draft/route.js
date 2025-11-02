@@ -12,7 +12,6 @@ export async function GET(req) {
       return NextResponse.json({ message: "userId is required" }, { status: 400 });
     }
 
-    console.log("Fetching draft for userId:", userId);
 
     // Fetch draft for user
     const { data: draftData, error: fetchError } = await supabaseServer
@@ -89,7 +88,6 @@ export async function PUT(req) {
       ...newData,
     };
 
-    console.log("Saving draft update for:", userId);
 
     // Upsert draft entry
     const { error: upsertError } = await supabaseServer

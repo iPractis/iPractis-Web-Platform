@@ -13,7 +13,7 @@ const Devices = () => {
           "flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
         }
         descriptionText={"Review and manage devices connected to your account"}
-        titleIcon={<MonitorMediumIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<MonitorMediumIcon fillcolor={"fill-primary-color-P1"} />}
         headerContainerClassName="flex-[40%]"
         descriptionClassName={"mt-[4px]"}
         titleText={"Devices"}
@@ -27,7 +27,7 @@ const Devices = () => {
             <span className="ST-3 px-1.5">Log out from everywhere</span>{" "}
             <InputBGWrapperIcon>
               <ChevronRightDoorBiggestIcon
-                fillColor={"fill-primary-color-P1"}
+                fillcolor={"fill-primary-color-P1"}
               />
             </InputBGWrapperIcon>
           </button>

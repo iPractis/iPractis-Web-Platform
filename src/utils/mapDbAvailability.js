@@ -28,18 +28,27 @@ export const mapDbAvailability = (dbSlots = []) => {
 };
 
 
-// utils/mapUiToDbAvailability.js
-// utils/mapUiToDbAvailability.js
-export const mapUiToDbAvailability = (uiSlots = []) => {
-  return uiSlots.flatMap((slot) =>
-    slot.hour.map((h) => {
-      let [hh, mm] = h.split(":");
-      hh = hh.padStart(2, "0");
-      mm = mm.padStart(2, "0");
-      return {
-        day_of_week: slot.day,       // ✅ matches DB column
-        hour: `${hh}:${mm}:00`,      // ✅ Postgres `time` type
-      };
-    })
-  );
-};
+/**
+ * Converts UI availability [{ day: 'Mon', hour: ['09:00', '09:30'] }, ...]
+ * into DB-ready slot rows.
+ */
+export function mapUiToDbAvailability(uiAvailability, teacherId) {
+  const slots = [];
+
+  for (const { day, hour } of uiAvailability) {
+    for (const h of hour) {
+      const [hr, min] = h.split(":");
+      const formattedTime = `${hr.padStart(2, "0")}:${min.padStart(2, "0")}:00`;
+
+      slots.push({
+        teacher_id: teacherId,
+        day_of_week: day,
+        hour: formattedTime,
+        is_available: true,
+      });
+    }
+  }
+
+  return slots;
+}
+

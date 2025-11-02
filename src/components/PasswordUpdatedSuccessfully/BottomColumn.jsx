@@ -12,7 +12,7 @@ const BottomColumn = () => {
         <span className="flex-1">Go to login page</span>
 
         <InputBGWrapperIcon>
-          <ChevronRightBiggerIcon fillColor={"fill-primary-color-P1"} />
+          <ChevronRightBiggerIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
       </Link>
     </div>

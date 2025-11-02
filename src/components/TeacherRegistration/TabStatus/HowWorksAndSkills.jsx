@@ -12,7 +12,7 @@ const HowWorksAndSkills = () => {
           descriptionText={
             "Take a quick tour of the platform’s features and see exactly how it supports you in planning lessons, tracking progress, and showcasing achievements."
           }
-          titleIcon={<AnalyticIcon fillColor={"fill-primary-color-P1"} />}
+          titleIcon={<AnalyticIcon fillcolor={"fill-primary-color-P1"} />}
           titleText="How it works"
           titleClassName="MT-SB-1"
         />
@@ -24,7 +24,7 @@ const HowWorksAndSkills = () => {
           <span>I want to know more</span>
 
           <InputBGWrapperIcon>
-            <ChevronRightIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightIcon fillcolor={"fill-primary-color-P1"} />
           </InputBGWrapperIcon>
         </Link>
       </div>
@@ -34,7 +34,7 @@ const HowWorksAndSkills = () => {
           descriptionText={
             "Explore interactive lessons, proven strategies, and quick tips to help you make every class session more dynamic."
           }
-          titleIcon={<AnalyticIcon fillColor={"fill-primary-color-P1"} />}
+          titleIcon={<AnalyticIcon fillcolor={"fill-primary-color-P1"} />}
           titleText="Start improving your teaching skills"
           titleClassName="MT-SB-1"
         />
@@ -47,7 +47,7 @@ const HowWorksAndSkills = () => {
             <span>Start learning</span>
 
             <InputBGWrapperIcon>
-              <ChevronRightIcon fillColor={"fill-tertiary-color-SC5"} />
+              <ChevronRightIcon fillcolor={"fill-tertiary-color-SC5"} />
             </InputBGWrapperIcon>
           </Link>
         </div>

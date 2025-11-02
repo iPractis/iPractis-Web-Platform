@@ -17,7 +17,7 @@ const ConnectYourAccount = () => {
         descriptionText={
           "Easily link your account using Google, Microsoft, or Apple for a seamless login experience."
         }
-        titleIcon={<SpinnerMediumIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<SpinnerMediumIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName={"mt-[4px]"}
         titleText={"Connect your account"}
         titleClassName="MT-SB-1"

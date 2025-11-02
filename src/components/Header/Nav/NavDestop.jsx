@@ -36,7 +36,7 @@ const NavDesktop = () => {
           >
             <div className="bg-primary-color-P1 rounded-[10px] p-1">
               <ChevronRightDoorSmallIcon
-                fillColor={
+                fillcolor={
                   "fill-primary-color-P12"
                 }
               />
@@ -51,7 +51,7 @@ const NavDesktop = () => {
           >
             <InputBGWrapperIcon className={"bg-primary-color-P1 p-0 w-7 h-7"}>
               <UserAddCircleSmallerIcon
-                fillColor={"fill-primary-color-P1"}
+                fillcolor={"fill-primary-color-P1"}
                 strokeColor={"stroke-primary-color-P1"}
               />
             </InputBGWrapperIcon>

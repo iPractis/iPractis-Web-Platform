@@ -12,7 +12,7 @@ const BottomColumn = () => {
         href={"/password-recovery"}
       >
         <InputBGWrapperIcon>
-          <ThreeAstheristiksIcon fillColor={"fill-primary-color-P1"} />
+          <ThreeAstheristiksIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <span>Password Recovery</span>
@@ -23,7 +23,7 @@ const BottomColumn = () => {
         className="btn btn-primary w-full p-1.5 rounded-2xl flex items-center gap-4 MT-1 mt-3"
       >
         <InputBGWrapperIcon>
-          <HelpIcon fillColor={"fill-primary-color-P1"} />
+          <HelpIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <span>Contact Support</span>

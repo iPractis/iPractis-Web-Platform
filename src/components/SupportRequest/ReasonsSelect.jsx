@@ -51,12 +51,12 @@ const ReasonsSelect = ({ frontEndErrors, backEndErrors, control, watch }) => {
                 isOpen={isOpen}
                 startContent={
                   <InputBGWrapperIcon className="cursor-pointer">
-                    <HelpIcon fillColor="fill-primary-color-P4" />
+                    <HelpIcon fillcolor="fill-primary-color-P4" />
                   </InputBGWrapperIcon>
                 }
                 endContent={
                   <InputBGWrapperIcon>
-                    <ChevronDownBigIcon fillColor="fill-primary-color-P4" />
+                    <ChevronDownBigIcon fillcolor="fill-primary-color-P4" />
                   </InputBGWrapperIcon>
                 }
                 classNames={{

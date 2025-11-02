@@ -11,7 +11,7 @@ const HeadingTitle = () => {
         descriptionText={`Please enter your new password to access your account.`}
         titleIcon={
           <PadLockClosedIcon
-            fillColor={"fill-primary-color-P1"}
+            fillcolor={"fill-primary-color-P1"}
             versionIcon={2}
           />
         }

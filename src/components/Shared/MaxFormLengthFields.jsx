@@ -36,7 +36,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
             <div className="mb-2">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                 {labelTitle}{" "}
-                <QuestionMark fillColor={"fill-primary-color-P4"} />
+                <QuestionMark fillcolor={"fill-primary-color-P4"} />
               </span>
 
               <span className="text-primary-color-P4 ST-3">
@@ -123,7 +123,7 @@ export const CustomNextUiInputWithMaxLength = ({
             <div className="mb-2">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                 {labelTitle}{" "}
-                <QuestionMark fillColor={"fill-primary-color-P4"} />
+                <QuestionMark fillcolor={"fill-primary-color-P4"} />
               </span>
 
               <span className="text-primary-color-P4 ST-3">

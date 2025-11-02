@@ -60,7 +60,7 @@ const SubSubject = ({
                   startContent={
                     <InputBGWrapperIcon>
                       <UserSpeakingRightIcon
-                        fillColor={"fill-primary-color-P4"}
+                        fillcolor={"fill-primary-color-P4"}
                       />
                     </InputBGWrapperIcon>
                   }
@@ -83,7 +83,7 @@ const SubSubject = ({
           type="button"
         >
           <TrashBinIcon
-            fillColor={"fill-primary-color-P4"}
+            fillcolor={"fill-primary-color-P4"}
             strokeColor={"stroke-primary-color-P4"}
           />
         </button>

@@ -19,7 +19,6 @@ const ImageUploader = ({ userId, setValue }) => {
       if (!res.ok) throw new Error("Upload failed");
 
       const data = await res.json();
-      console.log("Uploaded to Supabase:", data.url);
 
       // update form
       setValue("profile_url", data.url, { shouldValidate: true });

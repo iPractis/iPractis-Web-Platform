@@ -23,7 +23,7 @@ const SaveAndContinueBox = ({ buttonRef }) => {
         >
           <span className="ST-3 ml-[8px] whitespace-nowrap">Save, and continue</span>
           <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
-            <ChevronRightIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </ButtonSubmitForm>
       </SectionHeader>

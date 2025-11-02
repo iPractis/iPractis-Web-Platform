@@ -20,7 +20,7 @@ const NotificationItem = ({
         <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
           <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
             <div className="flex flex-col items-center text-center p-2.5 gap-1">
-              <MonitorMediumIcon fillColor={"fill-primary-color-P1"} />
+              <MonitorMediumIcon fillcolor={"fill-primary-color-P1"} />
               <h4 className="ST-3 text-primary-color-P1">Web</h4>
             </div>
           </InputBGWrapperIcon>
@@ -54,7 +54,7 @@ const NotificationItem = ({
         <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
           <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
             <div className="flex flex-col items-center text-center p-2.5 gap-1">
-              <MailIcon fillColor={"fill-primary-color-P1"} />
+              <MailIcon fillcolor={"fill-primary-color-P1"} />
               <h4 className="ST-3 text-primary-color-P1">Mail</h4>
             </div>
           </InputBGWrapperIcon>

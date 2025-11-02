@@ -32,7 +32,7 @@ const NavDesktopTeacher = ({ userName }) => {
 
         <div className="flex items-center gap-3 rounded-2xl h-[38px] p-1.5 text-primary-color-P1 bg-primary-color-P12">
           <div className="rounded-[10px] bg-primary-color-P1">
-            <WalletBgIcon fillColor={"fill-primary-color-P1"} />
+            <WalletBgIcon fillcolor={"fill-primary-color-P1"} />
           </div>
 
           <p className="ST-SB-4">0</p>
@@ -57,7 +57,7 @@ const NavDesktopTeacher = ({ userName }) => {
           {/* Message Button */}
           <div className="flex px-4 py-2">
             <button className="relative">
-              <NewMessageIcon fillColor={"fill-primary-color-P12"} />
+              <NewMessageIcon fillcolor={"fill-primary-color-P12"} />
 
               <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
             </button>

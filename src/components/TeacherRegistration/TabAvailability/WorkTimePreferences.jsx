@@ -51,7 +51,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between mb-[50px]"
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <LuggageClockIcon fillColor={"fill-primary-color-P1"} />
+            <LuggageClockIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         titleText="Work time preferences"
@@ -84,12 +84,12 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
               isOpen={isOpen}
               startContent={
                 <InputBGWrapperIcon>
-                  <EarthIcon fillColor={"fill-primary-color-P4"} />
+                  <EarthIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([timeZone.value])}
@@ -164,7 +164,7 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
                 }}
                 startContent={
                   <InputBGWrapperIcon>
-                    <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+                    <LuggageBiggerIcon fillcolor={"fill-primary-color-P4"} />
                   </InputBGWrapperIcon>
                 }
                 onChange={(e) => {

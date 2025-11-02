@@ -13,7 +13,7 @@ const PlatformExperience = () => {
       <div className="container-page-v1 md:py-[60px] py-10">
         <SectionHeader
           descriptionText="Our platform provides a secure, monitored space with verified tutors, ensuring a safe and supportive learning experience for all."
-          titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P12"} />}
+          titleIcon={<CheckedShieldIcon fillcolor={"fill-primary-color-P12"} />}
           descriptionClassName="mt-1.5 text-primary-color-P12"
           titleClassName="MT-SB-2 text-primary-color-P12"
           titleText="Cross platform experience"

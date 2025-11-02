@@ -8,7 +8,6 @@ import {usePathname} from "next/navigation";
 const Layout = ({ children }) => {
   const { authenticated, user, loading } = useAuth();
   const pathname = usePathname();
-console.log(authenticated, user, loading, "LAYOUT SESSION");
   useEffect(() => {
     if (!loading && !authenticated) {
       redirect("/login");

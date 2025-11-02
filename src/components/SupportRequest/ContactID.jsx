@@ -71,7 +71,7 @@ const ContactID = ({
               placeholder="Contact Email"
               startContent={
                 <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <MailIcon fillColor={"fill-primary-color-P4"} />
+                  <MailIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
@@ -121,7 +121,7 @@ const ContactID = ({
               })}
               startContent={
                 <InputBGWrapperIcon className={"cursor-pointer"}>
-                  <MailIcon fillColor={"fill-primary-color-P4"} />
+                  <MailIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={

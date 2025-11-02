@@ -12,7 +12,6 @@ const getYouTubeEmbedUrl = (url) => {
 };
 
 const TeacherCard = ({ teacher }) => {
-  console.log("Rendering TeacherCard for teacher:", teacher);
   const name = teacher.name
 
   const profileImage =

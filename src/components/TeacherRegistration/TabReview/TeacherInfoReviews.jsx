@@ -10,7 +10,7 @@ const TeacherInfoReviews = () => {
   return (
     <article className="my-5">
       <SectionHeader
-        titleIcon={<StarIcon fillColor={"fill-primary-color-P1 "} />}
+        titleIcon={<StarIcon fillcolor={"fill-primary-color-P1 "} />}
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
         titleText={"Review"}
       />
@@ -18,16 +18,16 @@ const TeacherInfoReviews = () => {
       <div className="flex items-center justify-between my-5 text-primary-color-P1">
         <div className="flex items-center gap-4">
           <h3 className="flex items-center gap-1.5 ST-SB-4">
-            <CalendarIcon fillColor={"fill-primary-color-P1"} />
+            <CalendarIcon fillcolor={"fill-primary-color-P1"} />
             25 Reviews
           </h3>
 
           <div className="flex gap-[5px] my-4">
-            <StarIcon fillColor={"fill-primary-color-P1"} />
-            <StarIcon fillColor={"fill-primary-color-P1"} />
-            <StarIcon fillColor={"fill-primary-color-P1"} />
-            <StarIcon fillColor={"fill-primary-color-P1"} />
-            <StarIcon fillColor={"fill-primary-color-P1"} />
+            <StarIcon fillcolor={"fill-primary-color-P1"} />
+            <StarIcon fillcolor={"fill-primary-color-P1"} />
+            <StarIcon fillcolor={"fill-primary-color-P1"} />
+            <StarIcon fillcolor={"fill-primary-color-P1"} />
+            <StarIcon fillcolor={"fill-primary-color-P1"} />
           </div>
 
           <h3 className="ST-SB-4">5.0</h3>
@@ -60,16 +60,16 @@ const TeacherInfoReviews = () => {
 
           <div className="flex items-center gap-2.5">
             <p className="ST-4 text-primary-color-P4">October 19, 2024</p>
-            <CalendarIcon fillColor={"fill-primary-color-P1"} />
+            <CalendarIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </div>
 
         <div className="flex gap-[5px] my-4">
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
         </div>
 
         <ul className="list-disc pl-5 ST-4 text-primary-color-P4">
@@ -109,16 +109,16 @@ const TeacherInfoReviews = () => {
 
           <div className="flex items-center gap-2.5">
             <p className="ST-4 text-primary-color-P4">October 19, 2024</p>
-            <CalendarIcon fillColor={"fill-primary-color-P1"} />
+            <CalendarIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </div>
 
         <div className="flex gap-[5px] my-4">
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
-          <StarIcon fillColor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
+          <StarIcon fillcolor={"fill-quaternary-color-A5"} />
         </div>
 
         <ul className="list-disc pl-5 ST-4 text-primary-color-P4">

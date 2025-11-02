@@ -11,7 +11,7 @@ const DeviceItem = ({ operatingSystem, searchEngine, location }) => {
     <div className="flex items-center gap-2.5">
       <div className="flex-1 flex gap-4 items-center rounded-2xl p-1.5 bg-primary-color-P11">
         <InputBGWrapperIcon>
-          <ComputerSmallestIcon fillColor={"fill-primary-color-P1"} />
+          <ComputerSmallestIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <div>
@@ -23,7 +23,7 @@ const DeviceItem = ({ operatingSystem, searchEngine, location }) => {
 
         <Link className="ms-auto" href={"#"}>
           <InputBGWrapperIcon>
-            <ChevronRightSmallestIcon fillColor={"fill-primary-color-P1"} />
+            <ChevronRightSmallestIcon fillcolor={"fill-primary-color-P1"} />
           </InputBGWrapperIcon>
         </Link>
       </div>

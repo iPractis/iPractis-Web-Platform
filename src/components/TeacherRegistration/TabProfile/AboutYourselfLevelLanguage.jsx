@@ -89,7 +89,7 @@ const AboutYourselfLevelLanguage = ({
                     onChange(selectedValue);
                   }}
                   endContent={
-                    <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                    <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                   }
                   classNames={{
                     base: "!w-full",
@@ -120,7 +120,7 @@ const AboutYourselfLevelLanguage = ({
               type="button"
             >
               <TrashBinIcon
-                fillColor={"fill-primary-color-P4"}
+                fillcolor={"fill-primary-color-P4"}
                 strokeColor={"stroke-primary-color-P4"}
               />
             </button>

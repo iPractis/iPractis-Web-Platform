@@ -32,10 +32,8 @@ export async function GET() {
     if (teacherError) throw teacherError;
 
     const teacherId = teacherRecord?.teacher_id;
-    console.log("Fetched teacherId:", teacherId);
     // 4️⃣ Fetch logs for both user and teacher
 
-    console.log("Fetching logs for userId:", userId, "and teacherId:", teacherId);
     const [userLogsRes, teacherLogsRes] = await Promise.all([
       supabaseServer
         .from("user_change_logs")

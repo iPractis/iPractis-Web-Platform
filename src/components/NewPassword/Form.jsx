@@ -102,7 +102,7 @@ const Form = () => {
               startContent={
                 <InputBGWrapperIcon>
                   <ThreeAstheristiksBiggerIcon
-                    fillColor={"fill-primary-color-P4"}
+                    fillcolor={"fill-primary-color-P4"}
                   />
                 </InputBGWrapperIcon>
               }
@@ -119,9 +119,9 @@ const Form = () => {
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? (
-                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithDashIcon fillcolor={"fill-primary-color-P4"} />
                     ) : (
-                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithoutDashIcon fillcolor={"fill-primary-color-P4"} />
                     )}
                   </InputBGWrapperIcon>
 
@@ -175,7 +175,7 @@ const Form = () => {
               startContent={
                 <InputBGWrapperIcon>
                   <ThreeAstheristiksBiggerIcon
-                    fillColor={"fill-primary-color-P4"}
+                    fillcolor={"fill-primary-color-P4"}
                   />
                 </InputBGWrapperIcon>
               }
@@ -188,9 +188,9 @@ const Form = () => {
                     }
                   >
                     {showRepeatedPassword ? (
-                      <EyeWithDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithDashIcon fillcolor={"fill-primary-color-P4"} />
                     ) : (
-                      <EyeWithoutDashIcon fillColor={"fill-primary-color-P4"} />
+                      <EyeWithoutDashIcon fillcolor={"fill-primary-color-P4"} />
                     )}
                   </InputBGWrapperIcon>
 

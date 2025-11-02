@@ -10,7 +10,7 @@ const TeacherInfoEducation = ({ draftData }) => {
   return (
     <article className="my-5">
       <SectionHeader
-        titleIcon={<GraduationCapIcon fillColor={"fill-primary-color-P1 "} />}
+        titleIcon={<GraduationCapIcon fillcolor={"fill-primary-color-P1 "} />}
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
         titleText={"Education"}
       />
@@ -30,12 +30,12 @@ const TeacherInfoEducation = ({ draftData }) => {
             <div className="flex items-center gap-4 md:mt-0 mt-5">
               <div className="flex items-center gap-2.5 bg-white px-3 py-2 rounded-[16px]">
                 <span className="w-[36px] h-[36px] rounded-[10px] p-2 bg-[#f8f7f5] opacity-80 flex items-center justify-center">
-                  <CalendarIcon fillColor={"fill-primary-color-P1"} />
+                  <CalendarIcon fillcolor={"fill-primary-color-P1"} />
                 </span>
                 <p className="ST-4 text-primary-color-P4">From {edu.from} to {edu.to}</p>
               </div>
               <span className="w-[48px] h-[48px] bg-white rounded-[16px] p-3 flex items-center justify-center">
-                <CheckedShieldIcon fillColor={"fill-primary-color-P1"} />
+                <CheckedShieldIcon fillcolor={"fill-primary-color-P1"} />
               </span>
             </div>
           </div>

@@ -28,7 +28,6 @@ const AccountObservationCenter = () => {
       try {
         const res = await fetch(`/api/teachers/logs?teacher_id=${user?.teacherId}`);
         const data = await res.json();
-       console.log("Fetched logs:", data);
         setLogs(data.logs || []);
       } catch (err) {
         console.error("Error fetching logs:", err);
@@ -63,14 +62,14 @@ const AccountObservationCenter = () => {
 
   // 🧩 Table → Icon mapping
   const TABLE_ICON_MAP = {
-    teachers: <TeacherBigIcon fillColor="fill-primary-color-P1" />,
-    teacher_education: <EducationBigIcon fillColor="fill-primary-color-P1" />,
-    teacher_experiences: <FileBigIcon fillColor="fill-primary-color-P1" />,
-    teacher_languages: <LanguageBigIcon fillColor="fill-primary-color-P1" />,
-    teacher_availability: <Clock5Icon fillColor="fill-primary-color-P1" />,
-    users: <UserBigIcon fillColor="fill-primary-color-P1" />,
-    profiles: <UserBigIcon fillColor="fill-primary-color-P1" />,
-    teacher_sub_subjects: <EducationBigIcon fillColor="fill-primary-color-P1" />,
+    teachers: <TeacherBigIcon fillcolor="fill-primary-color-P1" />,
+    teacher_education: <EducationBigIcon fillcolor="fill-primary-color-P1" />,
+    teacher_experiences: <FileBigIcon fillcolor="fill-primary-color-P1" />,
+    teacher_languages: <LanguageBigIcon fillcolor="fill-primary-color-P1" />,
+    teacher_availability: <Clock5Icon fillcolor="fill-primary-color-P1" />,
+    users: <UserBigIcon fillcolor="fill-primary-color-P1" />,
+    profiles: <UserBigIcon fillcolor="fill-primary-color-P1" />,
+    teacher_sub_subjects: <EducationBigIcon fillcolor="fill-primary-color-P1" />,
   };
 
   // 🧠 Smart text for what changed
@@ -94,7 +93,7 @@ const AccountObservationCenter = () => {
   const getTableIcon = (tableName) => {
     return (
       TABLE_ICON_MAP[tableName] || (
-        <DatabaseBigIcon fillColor="fill-primary-color-P1" />
+        <DatabaseBigIcon fillcolor="fill-primary-color-P1" />
       )
     );
   };
@@ -103,7 +102,7 @@ const AccountObservationCenter = () => {
     <div>
       <SectionHeader
         wrapperSectionHeaderClassName="px-4"
-        titleIcon={<EyeBiggerIcon fillColor="fill-primary-color-P1" />}
+        titleIcon={<EyeBiggerIcon fillcolor="fill-primary-color-P1" />}
         titleText="Account’s Observation Center"
         descriptionText="Monitor recent data and account updates across entities."
         descriptionClassName="mt-[4px] mb-4"

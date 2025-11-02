@@ -69,7 +69,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
         descriptionText="Fill in your basic details to complete your profile."
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <UserIcon fillColor={"fill-primary-color-P1"} />
+            <UserIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
@@ -96,13 +96,13 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   label={
                     <span className="flex gap-1.5 items-center">
                       First name{" "}
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
                     </span>
                   }
                   labelPlacement="outside"
                   startContent={
                     <InputBGWrapperIcon>
-                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                      <UserBigIcon fillcolor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
                   classNames={{
@@ -134,13 +134,13 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   label={
                     <span className="flex gap-1.5 items-center">
                       Middle name{" "}
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
                     </span>
                   }
                   labelPlacement="outside"
                   startContent={
                     <InputBGWrapperIcon>
-                      <UserBigIcon fillColor={"fill-primary-color-P4"} />
+                      <UserBigIcon fillcolor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
                   classNames={{
@@ -168,13 +168,13 @@ const PersonalInfo = ({ control, errors, watch }) => {
                   label={
                     <span className="flex gap-1.5 items-center">
                       Last name{" "}
-                      <QuestionMark fillColor={"fill-primary-color-P4"} />
+                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
                     </span>
                   }
                   labelPlacement="outside"
                   startContent={
                     <InputBGWrapperIcon>
-                      <ThreeUsersIcon fillColor={"fill-primary-color-P1"} />
+                      <ThreeUsersIcon fillcolor={"fill-primary-color-P1"} />
                     </InputBGWrapperIcon>
                   }
                   classNames={{
@@ -201,7 +201,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
               label={
                 <span className="flex gap-1.5 items-center">
                   Country
-                  <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  <QuestionMark fillcolor={"fill-primary-color-P4"} />
                 </span>
               }
               name={"country"}
@@ -218,7 +218,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
               label={
                 <span className="flex gap-1.5 items-center">
                   Nationality
-                  <QuestionMark fillColor={"fill-primary-color-P4"} />
+                  <QuestionMark fillcolor={"fill-primary-color-P4"} />
                 </span>
               }
               name={"nationality"}

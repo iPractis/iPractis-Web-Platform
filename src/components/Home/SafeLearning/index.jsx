@@ -12,7 +12,7 @@ const SafeLearning = () => {
     <section className="container-page-v1 md:my-[60px] my-10">
       <SectionHeader
         descriptionText="Our platform provides a secure, monitored space with verified tutors, ensuring a safe and supportive learning experience for all."
-        titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<CheckedShieldIcon fillcolor={"fill-primary-color-P1"} />}
         titleText="Safe Learning Environment"
       />
 

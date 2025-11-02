@@ -81,7 +81,7 @@ const Preferences = ({ errors, control, watch }) => {
     <div>
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-16"
-        titleIcon={<SparkleIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<SparkleIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionText={"Customize your account settings."}
         descriptionClassName={"mt-[4px]"}
         titleText={"Preferences"}
@@ -106,7 +106,7 @@ const Preferences = ({ errors, control, watch }) => {
                 <div className="ps-0 mb-2">
                   <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                     Language{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
                   </p>
                 </div>
               }
@@ -117,7 +117,7 @@ const Preferences = ({ errors, control, watch }) => {
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([language.value])}
@@ -174,18 +174,18 @@ const Preferences = ({ errors, control, watch }) => {
                 <div className="ps-0 mb-2">
                   <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                     Timezone{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
                   </p>
                 </div>
               }
               startContent={
                 <InputBGWrapperIcon>
-                  <Clock5Icon fillColor={"fill-primary-color-P4"} />
+                  <Clock5Icon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([timeZone.value])}
@@ -242,18 +242,18 @@ const Preferences = ({ errors, control, watch }) => {
                 <div className="ps-0 mb-2">
                   <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                     Currency{" "}
-                    <QuestionMark fillColor={"fill-primary-color-P4"} />
+                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
                   </p>
                 </div>
               }
               startContent={
                 <InputBGWrapperIcon>
-                  <DollarSignCircleIcon fillColor={"fill-primary-color-P4"} />
+                  <DollarSignCircleIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               endContent={
                 <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />
+                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([currency.value])}
@@ -296,7 +296,7 @@ const Preferences = ({ errors, control, watch }) => {
         <div className="relative">
           <div className="absolute -top-8">
             <span className="flex ps-[5px] gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
-              Time format <QuestionMark fillColor={"fill-primary-color-P4"} />
+              Time format <QuestionMark fillcolor={"fill-primary-color-P4"} />
             </span>
           </div>
 
@@ -312,7 +312,7 @@ const Preferences = ({ errors, control, watch }) => {
                 className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
               >
                 <InputBGWrapperIcon>
-                  <SunAndMoonIcon fillColor={"fill-primary-color-P4"} />
+                  <SunAndMoonIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
 
                 <CustomNextUiInput

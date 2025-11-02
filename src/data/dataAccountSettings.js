@@ -34,6 +34,10 @@ export const tabsButtons = [
     textButton: "Finance",
     Icon: WalletMediumIcon,
   },
+  {
+    textButton: "Availability",
+    Icon: UserMonitorMediumIcon,
+  }
 ];
 
 export const languages = [
@@ -83,7 +87,7 @@ export const notificationTypes = [
     title: "Student's Notification",
     description:
       "Stay on top of your learning journey with personalized notifications.",
-    icon: <ExclamationShieldMediumIcon fillColor={"fill-primary-color-P1"} />,
+    icon: <ExclamationShieldMediumIcon fillcolor={"fill-primary-color-P1"} />,
     items: ["New features or tools", "Maintenance", "Policy Updates"],
   },
 
@@ -91,7 +95,7 @@ export const notificationTypes = [
     title: "Student's Notification",
     description:
       "Stay on top of your learning journey with personalized notifications.",
-    icon: <UserHatNormalIcon fillColor={"fill-primary-color-P1"} />,
+    icon: <UserHatNormalIcon fillcolor={"fill-primary-color-P1"} />,
     items: [
       "Lesson starting soon",
       "Lesson rescheduled or canceled",
@@ -105,7 +109,7 @@ export const notificationTypes = [
     title: "Teacher's Notification",
     description:
       "Streamline your teaching experience by managing notifications.",
-    icon: <UserMonitorMediumIcon fillColor={"fill-primary-color-P1"} />,
+    icon: <UserMonitorMediumIcon fillcolor={"fill-primary-color-P1"} />,
     items: [
       "Lesson starting soon",
       "Lesson rescheduled or canceled",

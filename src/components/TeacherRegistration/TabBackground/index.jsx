@@ -42,7 +42,6 @@ const TabBackground = ({ setActiveTab, activeTab, draft, setDraft }) => {
         education: data.education,
       };
 
-      console.log("BACKGROUND PAYLOAD TO DRAFT API:", payload);
 
       // 🔥 Save/merge into teacher_drafts
       const res = await fetch("/api/teacher-draft", {

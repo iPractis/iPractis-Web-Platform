@@ -29,7 +29,7 @@ const NavResponsiveTeacher = ({ userName }) => {
             <button className="relative">
               <InputBGWrapperIcon className={"p-1 size-[26px]"}>
                 <NotificationCustomIcon
-                  fillColor={"fill-primary-color-P1"}
+                  fillcolor={"fill-primary-color-P1"}
                   fillCircleColor={"fill-septenary-color-MA5"}
                 />
               </InputBGWrapperIcon>
@@ -41,7 +41,7 @@ const NavResponsiveTeacher = ({ userName }) => {
             <button type="button">
               <InputBGWrapperIcon className={"p-1 size-[26px]"}>
                 <NewMessageCustomIcon
-                  fillColor={"fill-primary-color-P1"}
+                  fillcolor={"fill-primary-color-P1"}
                   fillCircleColor={"fill-septenary-color-MA5"}
                 />
               </InputBGWrapperIcon>

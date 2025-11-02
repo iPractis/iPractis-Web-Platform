@@ -17,7 +17,7 @@ const SecurityCheckUp = () => {
           "Review and monitor your account's security status to stay protected and informed of any recent activity."
         }
         wrapperSectionHeaderClassName="px-4"
-        titleIcon={<CheckedShieldIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<CheckedShieldIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName={"mt-[4px] mb-4"}
         titleText={"Security Check-Up"}
         titleClassName="MT-SB-1"

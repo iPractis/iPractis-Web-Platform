@@ -18,7 +18,7 @@ const SyncYourCalendar = () => {
       <SectionHeader
         wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
         descriptionText="Connect your external calendar to keep your schedule up-to-date."
-        titleIcon={<CalendarIcon fillColor="fill-primary-color-P1" />}
+        titleIcon={<CalendarIcon fillcolor="fill-primary-color-P1" />}
         titleText="Sync your calendar"
         titleClassName="MT-SB-1"
       />

@@ -29,7 +29,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
   return (
     <div className="!mt-4">
       <span className="flex ps-[5px] gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
-        Gender <QuestionMark fillColor={"fill-primary-color-P4"} />
+        Gender <QuestionMark fillcolor={"fill-primary-color-P4"} />
       </span>
 
       <InputLeftStickStatus
@@ -44,7 +44,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
             className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-[#F8F7F5] group-hover:bg-secondary-color-S9`}
           >
             <InputBGWrapperIcon>
-              <PersonIcon fillColor={"fill-primary-color-P4"} />
+              <PersonIcon fillcolor={"fill-primary-color-P4"} />
             </InputBGWrapperIcon>
 
             <CustomNextUiInput

@@ -100,7 +100,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
             selectorIcon={<span></span>}
             startContent={
               <InputBGWrapperIcon>
-                <UserSpeakingIcon fillColor={"fill-primary-color-P4"} />
+                <UserSpeakingIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={
@@ -176,7 +176,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                             />
                           )
                         }
-                        endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                        endContent={<ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />}
                         classNames={{
                           trigger: [
                             "select-wrapper-ipractis",
@@ -216,7 +216,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                            updateSelector(selector.id, "level", selected);
                          }}
                          selectorIcon={<span></span>}
-                         endContent={<ChevronDownBigIcon fillColor={"fill-primary-color-P1"} />}
+                         endContent={<ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />}
                          classNames={{
                            trigger: [
                              "select-wrapper-ipractis",
@@ -248,7 +248,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                   type="button"
                 >
                   <TrashBinIcon
-                    fillColor={"fill-primary-color-P4"}
+                    fillcolor={"fill-primary-color-P4"}
                     strokeColor={"stroke-primary-color-P4"}
                   />
                 </button>

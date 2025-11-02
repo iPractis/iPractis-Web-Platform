@@ -11,11 +11,11 @@ const InfoCard = ({
 }) => {
   return (
     <div className="bg-primary-color-P11 p-8 rounded-[32px] flex flex-col justify-center items-center text-center">
-      {IconComponent && <IconComponent fillColor={"fill-primary-color-P1"} />}
+      {IconComponent && <IconComponent fillcolor={"fill-primary-color-P1"} />}
 
       <div className="mt-4">
         <h3 className="text-primary-color-P1 MT-SB-1 flex gap-1.5 items-center justify-center">
-          {title} <QuestionMark fillColor={"fill-primary-color-P1"} />
+          {title} <QuestionMark fillcolor={"fill-primary-color-P1"} />
         </h3>
 
         <h5 className="text-primary-color-P4 space-x-1.5 mt-0.5">

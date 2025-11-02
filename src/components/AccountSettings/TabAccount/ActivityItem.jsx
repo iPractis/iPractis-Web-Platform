@@ -33,7 +33,7 @@ const ActivityItem = ({ date, time, title, location, device, changedAt }) => {
       {/* Left section — Date + Time */}
       <div className="flex-none flex gap-4 items-center rounded-2xl p-1.5 pe-4 bg-primary-color-P11">
         <InputBGWrapperIcon>
-          <CalendarSmallerIcon fillColor={"fill-primary-color-P1"} />
+          <CalendarSmallerIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <div>
@@ -47,7 +47,7 @@ const ActivityItem = ({ date, time, title, location, device, changedAt }) => {
       {/* Right section — Activity details */}
       <div className="flex-1 flex gap-4 items-center rounded-2xl p-1.5 bg-primary-color-P11">
         <InputBGWrapperIcon>
-          <PadLockClosedSmallerIcon fillColor={"fill-primary-color-P1"} />
+          <PadLockClosedSmallerIcon fillcolor={"fill-primary-color-P1"} />
         </InputBGWrapperIcon>
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-wrap">
@@ -55,7 +55,7 @@ const ActivityItem = ({ date, time, title, location, device, changedAt }) => {
           {device && <h4 className="ST-2 text-primary-color-P4">• {device}</h4>}
           {location && (
             <div className="flex items-center gap-1 text-primary-color-P4 ST-3">
-              <LocationSmallerIcon fillColor={"fill-primary-color-P4"} />
+              <LocationSmallerIcon fillcolor={"fill-primary-color-P4"} />
               <span>{location}</span>
             </div>
           )}

@@ -16,7 +16,7 @@ const CalendarCheckUp = () => {
           "Ensure your calendar is synced and up-to-date for seamless lesson scheduling and time management."
         }
         wrapperSectionHeaderClassName="px-4"
-        titleIcon={<CalendarBiggerIcon fillColor={"fill-primary-color-P1"} />}
+        titleIcon={<CalendarBiggerIcon fillcolor={"fill-primary-color-P1"} />}
         descriptionClassName={"mt-[4px] mb-4"}
         titleText={"Calender Check-Up"}
         titleClassName="MT-SB-1"

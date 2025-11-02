@@ -56,7 +56,6 @@ const IndividualEducation = ({
   const onFileChange = async (e) => {
     const file = e.target.files && e.target.files[0];
     if (!file) return;
-    console.log("triggered")
 
     // quick client-side validation (optional)
     const allowed = [".pdf", ".png", ".jpeg", ".jpg"];
@@ -128,7 +127,7 @@ const IndividualEducation = ({
     //         placeholder="Example: Google"
     //         startContent={
     //           <InputBGWrapperIcon>
-    //             <LuggageBiggerIcon fillColor={"fill-primary-color-P4"} />
+    //             <LuggageBiggerIcon fillcolor={"fill-primary-color-P4"} />
     //           </InputBGWrapperIcon>
     //         }
     //       />
@@ -144,7 +143,7 @@ const IndividualEducation = ({
     //         placeholder="From"
     //         startContent={
     //           <InputBGWrapperIcon>
-    //             <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+    //             <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
     //           </InputBGWrapperIcon>
     //         }
     //         endContent={
@@ -156,7 +155,7 @@ const IndividualEducation = ({
     //                 type="button"
     //                 aria-label="Open from date picker"
     //               >
-    //                 <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+    //                 <ChevronDownBigIcon fillcolor={"fill-primary-color-P4"} />
     //               </Button>
     //             </DropdownTrigger>
 
@@ -187,7 +186,7 @@ const IndividualEducation = ({
     //         placeholder="To"
     //         startContent={
     //           <InputBGWrapperIcon>
-    //             <CalendarAddIcon fillColor={"fill-primary-color-P4"} />
+    //             <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
     //           </InputBGWrapperIcon>
     //         }
     //         endContent={
@@ -199,7 +198,7 @@ const IndividualEducation = ({
     //                 type="button"
     //                 aria-label="Open to date picker"
     //               >
-    //                 <ChevronDownBigIcon fillColor={"fill-primary-color-P4"} />
+    //                 <ChevronDownBigIcon fillcolor={"fill-primary-color-P4"} />
     //               </Button>
     //             </DropdownTrigger>
 
@@ -237,9 +236,9 @@ const IndividualEducation = ({
     //             // simple visual hint; replace with spinner component if you have one
     //             <span className="text-xs">Uploading...</span>
     //           ) : image?.name ? (
-    //             <CheckedDocumentIcon fillColor={"fill-primary-color-P4"} />
+    //             <CheckedDocumentIcon fillcolor={"fill-primary-color-P4"} />
     //           ) : (
-    //             <TopArrowCloudIcon fillColor={"fill-primary-color-P4"} />
+    //             <TopArrowCloudIcon fillcolor={"fill-primary-color-P4"} />
     //           )}
     //         </InputBGWrapperIcon>
     //       </button>
@@ -249,7 +248,7 @@ const IndividualEducation = ({
     //     <div className="flex-1">
     //       <button type="button" onClick={() => handleDeleteEducation(index)} aria-label="Delete education entry">
     //         <InputBGWrapperIcon className={"btn-septenary rounded-2xl bg-primary-color-P11 w-[48px] h-[48px]"}>
-    //           <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillColor={"fill-primary-color-P4"} />
+    //           <TrashBinIcon strokeColor={"stroke-primary-color-P4"} fillcolor={"fill-primary-color-P4"} />
     //         </InputBGWrapperIcon>
     //       </button>
     //     </div>
