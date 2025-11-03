@@ -108,7 +108,6 @@ const TabAvailability = ({ setActiveTab, activeTab }) => {
 
   if (activeTab !== 5) return null;
 
-  console.log("set",setDailyWorkTimeLimit)
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
