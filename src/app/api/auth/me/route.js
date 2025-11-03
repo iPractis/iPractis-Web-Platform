@@ -37,7 +37,7 @@ export async function GET() {
       authenticated: true,
       user: { 
         userId: decoded.userId, 
-        teacherId: teacher.teacher_id,
+        teacherId: teacher?.teacher_id,
         email: decoded.email, 
         role: decoded.role || "student",
         firstName: decoded.name || decoded.email.split('@')[0]
