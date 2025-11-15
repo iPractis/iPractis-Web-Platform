@@ -7,7 +7,7 @@ import { useController } from "react-hook-form";
 import Image from "next/image";
 
 // Icons
-import { UserBigIcon, UserIcon , CameraBoxIcon, ChevronDownBigIcon} from "../../Icons";
+import { UserBigIcon, Camera }from "../../Icons";
 import ImageUploader from "./ImageUploader";
 
 const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }) => {
@@ -22,15 +22,15 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
 
   const currentImageUrl =profileUrlField.value || draftUrl  || null;
   return (
-    <WhiteSpaceWrapper className="p-0">
+    <WhiteSpaceWrapper className="p-0" >
       <SectionHeader
         descriptionText="Upload a photo to personalize your profile."
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <UserIcon fillcolor={"fill-primary-color-P1"} />
+            <Camera/>
           </div>
         }
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
+        wrapperSectionHeaderClassName="relative bg-secondary-color-S11 p-8 rounded-[32px] w-[1000px] h-[112px] flex items-center gap-16"
         titleText="Profile Picture"
         titleClassName="MT-SB-1 ml-[80px]"
         descriptionClassName="ml-[80px]"
@@ -65,13 +65,16 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
             </div>
           </InputLeftStickStatus>
 
-          <ul className="ps-4 py-3 ST-1 list-disc text-primary-color-P4">
-            <li>You must be clearly visible and centered in the picture.</li>
-            <li>Use a plain background to avoid distractions.</li>
-            <li>The picture should be a recent, high-quality image.</li>
-            <li>Ensure good lighting so your face is well-lit and clearly visible.</li>
-            <li>Avoid using filters or overly edited images.</li>
-          </ul>
+          <div className="flex-1">
+            <h4 className="ST-SB-3 text-primary-color-P4">Rules</h4>
+            <ul className="ps-4 py-3 ST-1 list-disc text-primary-color-P4">
+              <li>You must be clearly visible and centered in the picture.</li>
+              <li>Use a plain background to avoid distractions.</li>
+              <li>The picture should be a recent, high-quality image.</li>
+              <li>Ensure good lighting so your face is well-lit and clearly visible.</li>
+              <li>Avoid using filters or overly edited images.</li>
+            </ul>
+          </div>
         </div>
 
         {/* uploader is separate – shows button to change image */}

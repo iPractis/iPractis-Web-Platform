@@ -7,7 +7,7 @@ const SaveAndContinueBox = ({ buttonRef }) => {
     <div className="mt-20">
       <SectionHeader
         descriptionText="These information will be subject to review"
-        wrapperSectionHeaderClassName="relative bg-[#FFF4B8] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
+        wrapperSectionHeaderClassName="relative bg-quaternary-color-A11 p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <CircleImportantIcon />

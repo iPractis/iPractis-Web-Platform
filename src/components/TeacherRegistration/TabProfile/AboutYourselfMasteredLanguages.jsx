@@ -5,17 +5,15 @@ import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 
 // External imports
-import { useController, useFieldArray } from "react-hook-form";
+import { useController } from "react-hook-form";
 import { Select, SelectItem } from "@nextui-org/react";
 
 // React imports
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 // Icons
 import {
-  AddBoxIcon,
-  QuestionMark,
-  UserSpeakingIcon,
+  UserSpeakingRightIcon,
   ChevronDownBigIcon,
   TrashBinIcon,
 } from "../../Icons";
@@ -89,6 +87,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
   return (
     <div className="mx-[285px] mt-[32px]">
       <div className="space-y-4">
+
         {/* Add Language Button - Keep existing styling at top */}
         <div>
           <Select
@@ -100,7 +99,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
             selectorIcon={<span></span>}
             startContent={
               <InputBGWrapperIcon>
-                <UserSpeakingIcon fillcolor={"fill-primary-color-P4"} />
+                <UserSpeakingRightIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={

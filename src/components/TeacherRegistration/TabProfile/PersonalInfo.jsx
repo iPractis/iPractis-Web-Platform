@@ -72,7 +72,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
             <UserIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between"
+        wrapperSectionHeaderClassName="relative bg-secondary-color-S11 p-8 rounded-[32px] w-[1000px] h-[112px] flex items-center gap-16"
         titleText="Personal Informations"
         titleClassName="MT-SB-1 ml-[80px]"
         descriptionClassName="ml-[80px]"
@@ -106,7 +106,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper: firstNameError?.message ? "form-input-error" : "!bg-[#F8F7F5]",
+                    inputWrapper: firstNameError?.message ? "form-input-error" : "!bg-secondary-color-S11",
                   }}
                   onBlur={firstName.onBlur}
                   onChange={firstName.onChange}
@@ -130,7 +130,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
                 <CustomNextUiInput
                   name="middleName"
                   type="text"
-                  placeholder="Enter your middle name (Optional)"
+                  placeholder="Enter your middle name"
                   label={
                     <span className="flex gap-1.5 items-center">
                       Middle name{" "}
@@ -144,7 +144,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper: "!bg-[#F8F7F5]",
+                    inputWrapper: "!bg-secondary-color-S11",
                   }}
                   onChange={middleName.onChange}
                   value={middleName.value}
@@ -178,7 +178,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    inputWrapper: lastNameError?.message ? "form-input-error" : "!bg-[#F8F7F5]",
+                    inputWrapper: lastNameError?.message ? "form-input-error" : "!bg-secondary-color-S11",
                   }}
                   onBlur={lastName.onBlur}
                   onChange={lastName.onChange}
@@ -191,6 +191,14 @@ const PersonalInfo = ({ control, errors, watch }) => {
 
             {/* Birthdate inputs (3) */}
             <BirthDateInput control={control} errors={errors} />
+
+            {/* Gender checkboxes */}
+            <PersonalInfoGenderCheck
+              control={control}
+              errors={errors}
+              watch={watch}
+            />
+
             {/* Country of residence */}
             <BaseCountryInput
               SelectComponent={PersonalInfoCountrySelect}
@@ -225,12 +233,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
               errors={errors}
             />
 
-            {/* Gender checkboxes */}
-            <PersonalInfoGenderCheck
-              control={control}
-              errors={errors}
-              watch={watch}
-            />
+
         </div>
 
         {/* Introduction about yourself */}

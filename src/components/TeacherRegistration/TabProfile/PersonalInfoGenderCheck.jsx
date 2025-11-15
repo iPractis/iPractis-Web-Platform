@@ -9,7 +9,7 @@ import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { useController } from "react-hook-form";
 
 // Icons
-import { PersonIcon, QuestionMark } from "../../Icons";
+import { GenderIcon, QuestionMark, ManIcon, WomanIcon } from "../../Icons";
 
 const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
   const {
@@ -41,10 +41,10 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
       >
         <div className="flex items-center gap-2">
           <div
-            className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-[#F8F7F5] group-hover:bg-secondary-color-S9`}
+            className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-secondary-color-S11 group-hover:bg-secondary-color-S9`}
           >
             <InputBGWrapperIcon>
-              <PersonIcon fillcolor={"fill-primary-color-P4"} />
+              <GenderIcon fillcolor={"black"} />
             </InputBGWrapperIcon>
 
             <CustomNextUiInput
@@ -53,6 +53,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               name="gender"
               placeholder="Male"
               labelPlacement="outside"
+              startContent={<div className="px-3"><ManIcon /></div>}
               endContent={
                 <CustomNextUiCheckbox
                   className="checkbox-label-ipractis"
@@ -75,6 +76,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
               type="text"
               placeholder="Female"
               labelPlacement="outside"
+              startContent={<div className="px-3"><WomanIcon /></div>}
               endContent={
                 <CustomNextUiCheckbox
                   className="checkbox-label-ipractis"
