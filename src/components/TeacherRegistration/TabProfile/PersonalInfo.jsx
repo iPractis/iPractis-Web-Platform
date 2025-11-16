@@ -22,7 +22,6 @@ import {
   ThreeUsersIcon,
   UserBigIcon,
   UserIcon,
-  ChevronDownBigIcon,
 } from "../../Icons";
 
 const PersonalInfo = ({ control, errors, watch }) => {
