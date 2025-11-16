@@ -47,7 +47,7 @@ const ProfileTitle = ({ control, errors }) => {
           base={"!mt-0"}
           nameInput={"profileTitle"}
           labelTitle={"Write a catchy headline"}
-          labelSubtitle={"Find a catchy title"}
+          labelSubtitle={"Pick an engaging title that reflects your lessons."}
           labelClassName={"!-top-[52px]"}
           labelDisabled={false}
           nameTextarea={"profileTitle"}

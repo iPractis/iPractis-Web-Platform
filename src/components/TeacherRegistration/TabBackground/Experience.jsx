@@ -1,15 +1,16 @@
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import SectionHeader from "../../Shared/SectionHeader";
 import FormInputsBox from "./FormInputsBox";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 
 // External imports
 import { Controller, useFieldArray } from "react-hook-form";
 import { Select } from "@nextui-org/react";
 
 // Icons
-import { AddBoxBiggerIcon, UserTieIcon } from "../../Icons";
+import { NotebookOpenedIconBigger, OfficeIcon } from "../../Icons";
 
 const Experience = ({ errors, control }) => {
   const {
@@ -42,10 +43,10 @@ const Experience = ({ errors, control }) => {
         <div>
           <SectionHeader
             descriptionText="Tell us about your career and experience"
-            wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
+            wrapperSectionHeaderClassName="relative bg-secondary-color-S11 lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
             titleIcon={
               <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-                <UserTieIcon fillcolor={"fill-primary-color-P1"} />
+                <NotebookOpenedIconBigger fillcolor={"fill-primary-color-P1"} />
               </div>
             }
             titleText="Professional background"
@@ -54,48 +55,63 @@ const Experience = ({ errors, control }) => {
           />
 
           <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:-mt-[24px] md:-mt-[24px] -mt-[24px]">
-            <Select
-              name="addExperience"
-              selectedKeys={[]}
-              onChange={() => {}} // This won't be used
-              labelPlacement="outside"
-              placeholder="Add professional experience"
-              selectorIcon={<span></span>}
-              startContent={
-                <InputBGWrapperIcon>
-                  <UserTieIcon fillcolor={"fill-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon 
-                  className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px] cursor-pointer"
+            <InputLeftStickStatus
+              inputBarStatusClassName={`${getInputStatusBorder(
+                errors,
+                careerExperience,
+                "careerExperience"
+              )}`}
+            >
+              <div className="relative">
+                <Select
+                  name="addExperience"
+                  selectedKeys={[]}
+                  onChange={() => {}} // This won't be used
+                  labelPlacement="outside"
+                  placeholder="Add an experience"
+                  selectorIcon={<span></span>}
+                  startContent={
+                    <InputBGWrapperIcon>
+                      <OfficeIcon fillcolor={"black"} />
+                    </InputBGWrapperIcon>
+                  }
+                  classNames={{
+                    trigger: [
+                      "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
+                      error?.message && "form-input-error",
+                    ],
+                    innerWrapper: ["text-white placeholder:text-white", "w-full"],
+                    value: [
+                      "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
+                    ],
+                    listbox: ["text-primary-color-P4"],
+                    base: "!mt-0",
+                  }}
+                >
+                  {/* Empty - this is just for styling */}
+                </Select>
+
+                {/* Add button positioned absolutely outside the Select */}
+                <button
+                  type="button"
+                  aria-label="Add experience"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
                   onClick={handleAddExperience}
                 >
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
-                    <path
-                      d="M8 2V14M2 8H14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </InputBGWrapperIcon>
-              }
-              classNames={{
-                trigger: [
-                  "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
-                  error?.message && "form-input-error",
-                ],
-                innerWrapper: ["text-white placeholder:text-white", "w-full"],
-                value: [
-                  "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
-                ],
-                listbox: ["text-primary-color-P4"],
-                base: "!mt-0",
-              }}
-            >
-              {/* Empty - this is just for styling */}
-            </Select>
+                  <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1" role="img" aria-label="Add experience">
+                      <title>Add experience</title>
+                      <path
+                        d="M8 2V14M2 8H14"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </InputBGWrapperIcon>
+                </button>
+              </div>
+            </InputLeftStickStatus>
           </div>
 
           <SplitDynamicErrorZod message={error?.message} />
@@ -103,7 +119,7 @@ const Experience = ({ errors, control }) => {
           <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[32px] md:mt-[32px] mt-[32px]">
             {careerExperience?.map((experience, index) => (
               <FormInputsBox
-                firstInputPlaceholder={"Example: Google"}
+                firstInputPlaceholder={"Example: University Of Somewhere"}
                 handleDelete={handleDeleteExperience}
                 array={"careerExperience"}
                 key={experience.id}

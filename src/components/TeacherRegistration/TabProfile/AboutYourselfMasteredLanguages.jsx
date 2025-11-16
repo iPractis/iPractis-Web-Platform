@@ -89,7 +89,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
       <div className="space-y-4">
 
         {/* Add Language Button - Keep existing styling at top */}
-        <div>
+        <div className="relative">
           <Select
             name="languages"
             selectedKeys={[]}
@@ -102,29 +102,9 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                 <UserSpeakingRightIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
-            endContent={
-              <div 
-                className="w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddSelector();
-                }}
-              >
-                <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1 pointer-events-none">
-                    <path
-                      d="M8 2V14M2 8H14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </InputBGWrapperIcon>
-              </div>
-            }
             classNames={{
               trigger: [
-                "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
+                "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
                 (languagesError?.message || languagesError !== undefined) &&
                   "form-input-error",
               ],
@@ -138,6 +118,26 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           >
             {/* Empty - this is just for styling */}
           </Select>
+
+          {/* Add button positioned absolutely outside the Select */}
+          <button
+            type="button"
+            aria-label="Add language"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+            onClick={handleAddSelector}
+          >
+            <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" role="img" aria-label="Add language" className="text-primary-color-P1">
+                <title>Add language</title>
+                <path
+                  d="M8 2V14M2 8H14"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </InputBGWrapperIcon>
+          </button>
         </div>
 
                                    {/* Show selector boxes */}

@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 // React imports
 import { useRef, useState } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
+import { ChevronDownBigIcon } from "../../Icons";
 
 const TabBackground = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const [loading, setLoading] = useState(false);
@@ -82,7 +83,7 @@ const TabBackground = ({ setActiveTab, activeTab, draft, setDraft }) => {
       <Education errors={errors} control={control} />
 
       {/* Save and Continue Box */}
-      <SaveAndContinueBox buttonRef={buttonRef} />
+      <SaveAndContinueBox buttonRef={buttonRef} ChevronIcon={ChevronDownBigIcon} />
     </form>
   );
 };

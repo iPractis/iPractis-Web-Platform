@@ -2,7 +2,7 @@ import ButtonSubmitForm from "../../Shared/ButtonSubmitForm";
 import SectionHeader from "../../Shared/SectionHeader";
 import { ChevronRightIcon, CircleImportantIcon } from "../../Icons";
 
-const SaveAndContinueBox = ({ buttonRef }) => {
+const SaveAndContinueBox = ({ buttonRef, ChevronIcon = ChevronRightIcon }) => {
   return (
     <div className="mt-20">
       <SectionHeader
@@ -23,7 +23,7 @@ const SaveAndContinueBox = ({ buttonRef }) => {
         >
           <span className="ST-3 ml-[8px] whitespace-nowrap">Save, and continue</span>
           <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
-            <ChevronRightIcon fillcolor={"fill-primary-color-P1"} />
+            <ChevronIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </ButtonSubmitForm>
       </SectionHeader>
