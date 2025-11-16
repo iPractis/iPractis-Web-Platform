@@ -36,12 +36,12 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
         descriptionClassName="ml-[80px]"
       />
 
-      <div className="mt-8 mb-16 md:px-8 ml-[285px]">
-        <div className="flex items-start sm:gap-8 gap-4">
+      <div className="mt-8 mb-16 md:px-8">
+        <div className="flex items-start justify-center sm:gap-8 gap-4">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(errors, profileUrlField.value, "profile_url")} !h-[68px] !rounded-[2px]`}
           >
-            <div 
+            <div
               className="relative cursor-pointer"
               onClick={() => document.getElementById('profile-image-upload')?.click()}
             >
@@ -65,7 +65,7 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
             </div>
           </InputLeftStickStatus>
 
-          <div className="flex-1">
+          <div className="text-left">
             <h4 className="ST-SB-3 text-primary-color-P4">Rules</h4>
             <ul className="ps-4 py-3 ST-1 list-disc text-primary-color-P4">
               <li>You must be clearly visible and centered in the picture.</li>
