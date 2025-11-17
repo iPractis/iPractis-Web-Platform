@@ -16,11 +16,10 @@ import { useState } from "react";
 
 // Images && icons
 import {
-  AddBoxIcon,
   ChevronDownBigIcon,
+  GraduationCapIcon,
   NotebookOpenedIconBigger,
   QuestionMark,
-  UserBoxIcon,
 } from "../../Icons";
 
 const SubjectsToTeach = ({ errors, control }) => {
@@ -57,7 +56,7 @@ const SubjectsToTeach = ({ errors, control }) => {
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between"
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <UserBoxIcon fillcolor={"fill-primary-color-P1"} />
+            <NotebookOpenedIconBigger fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         titleText="Set up your teaching subject"
@@ -108,7 +107,7 @@ const SubjectsToTeach = ({ errors, control }) => {
                 isOpen={isOpen}
                 startContent={
                   <InputBGWrapperIcon>
-                    <NotebookOpenedIconBigger
+                    <GraduationCapIcon
                       fillcolor={"fill-primary-color-P4"}
                     />
                   </InputBGWrapperIcon>
