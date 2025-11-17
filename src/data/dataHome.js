@@ -17,55 +17,49 @@ import {
   subjects,
   availableTranslatedLanguages,
   searchBarSubjects,
+  countryAveragePrices,
 } from "./sharedData";
 
 export const averagePricesLanguagues = [
   {
-    image: flags.unitedKingdom,
+    image: countryAveragePrices["United Kingdom"].flag,
     title: "Average Price",
-    price: "15 USD For 30 mins",
+    price: `${countryAveragePrices["United Kingdom"].price} For 30 mins`,
   },
-
   {
-    image: flags.france,
+    image: countryAveragePrices.France.flag,
     title: "Average Price",
-    price: "14 EUR For 30 mins",
+    price: `${countryAveragePrices.France.price} For 30 mins`,
   },
-
   {
-    image: flags.italy,
+    image: countryAveragePrices.Italy.flag,
     title: "Average Price",
-    price: "13 EUR For 30 mins",
+    price: `${countryAveragePrices.Italy.price} For 30 mins`,
   },
-
   {
-    image: flags.spain,
+    image: countryAveragePrices.Spain.flag,
     title: "Average Price",
-    price: "13 EUR For 30 mins",
+    price: `${countryAveragePrices.Spain.price} For 30 mins`,
   },
-
   {
-    image: flags.unitedKingdom,
+    image: countryAveragePrices["United States"].flag,
     title: "Average Price",
-    price: "18 USD For 30 mins",
+    price: `${countryAveragePrices["United States"].price} For 30 mins`,
   },
-
   {
-    image: flags.france,
+    image: countryAveragePrices.Germany.flag,
     title: "Average Price",
-    price: "16 EUR For 30 mins",
+    price: `${countryAveragePrices.Germany.price} For 30 mins`,
   },
-
   {
-    image: flags.italy,
+    image: countryAveragePrices.Canada.flag,
     title: "Average Price",
-    price: "17 CAD For 30 mins",
+    price: `${countryAveragePrices.Canada.price} For 30 mins`,
   },
-
   {
-    image: flags.spain,
+    image: countryAveragePrices.Australia.flag,
     title: "Average Price",
-    price: "20 AUD For 30 mins",
+    price: `${countryAveragePrices.Australia.price} For 30 mins`,
   },
 ];
 
