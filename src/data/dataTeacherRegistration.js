@@ -353,3 +353,43 @@ export const countryFlags = {
   Spain: spain,
   Italy: italy,
 };
+
+export const countryAveragePrices = {
+  "United Kingdom": {
+    price: "15 USD",
+    flag: unitedKingdom,
+  },
+  "United States": {
+    price: "18 USD",
+    flag: unitedKingdom, // Using UK flag as placeholder
+  },
+  France: {
+    price: "14 EUR",
+    flag: france,
+  },
+  Spain: {
+    price: "13 EUR",
+    flag: spain,
+  },
+  Italy: {
+    price: "13 EUR",
+    flag: italy,
+  },
+  Germany: {
+    price: "16 EUR",
+    flag: null, // Placeholder
+  },
+  Canada: {
+    price: "17 CAD",
+    flag: null, // Placeholder
+  },
+  Australia: {
+    price: "20 AUD",
+    flag: null, // Placeholder
+  },
+  // Default fallback for other countries
+  default: {
+    price: "13 USD",
+    flag: null,
+  },
+};

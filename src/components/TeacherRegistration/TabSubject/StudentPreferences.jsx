@@ -7,9 +7,9 @@ import SectionHeader from "../../Shared/SectionHeader";
 import { Controller } from "react-hook-form";
 
 // Icons
-import { AnalyticVerticalLinesIcon, EyeIcon } from "../../Icons";
+import { AnalyticVerticalLinesIcon, PersonWithGraduationCapLikeIcon } from "../../Icons";
 
-const StudentPreference = ({ control, errors }) => {
+const StudentPreference = ({ control }) => {
   return (
     <div>
       <SectionHeader
@@ -17,7 +17,7 @@ const StudentPreference = ({ control, errors }) => {
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <EyeIcon fillcolor={"fill-primary-color-P1"} />
+            <PersonWithGraduationCapLikeIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         titleText="Student preferences"
@@ -40,16 +40,17 @@ const StudentPreference = ({ control, errors }) => {
           </div>
 
           {/* Multiple Selection Checkboxes */}
-          <Controller
-            name="studentLevel"
-            control={control}
-            render={({ field, fieldState: { error: studentLevelError } }) => (
-              <>
-                {studentLevels?.map((level) => (
-                  <div
-                    key={level.value}
-                    className={level.value === "intermediate" ? "my-2" : ""}
-                  >
+          <div className="ml-2">
+            <Controller
+              name="studentLevel"
+              control={control}
+              render={({ field, fieldState: { error: studentLevelError } }) => (
+                <>
+                  {studentLevels?.map((level) => (
+                    <div
+                      key={level.value}
+                      className={level.value === "intermediate" ? "my-2" : ""}
+                    >
                     <CustomNextUiCheckbox
                       name="studentLevel"
                       classNames={{
@@ -78,9 +79,10 @@ const StudentPreference = ({ control, errors }) => {
                 ))}
 
                 <SplitDynamicErrorZod message={studentLevelError?.message} />
-              </>
-            )}
-          />
+                </>
+              )}
+            />
+          </div>
         </div>
       </div>
     </div>

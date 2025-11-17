@@ -139,8 +139,10 @@ export const tabSubjectSchema = z.object({
   subSubject: z
     .array(
       z.object({
-        selected: z.string(),
-        description: z.string().min(3, {
+        selected: z.string().trim().min(3, {
+          message: "Invalid field --- Must contain 3 or more characters long.",
+        }),
+        description: z.string().trim().min(3, {
           message: "Invalid field --- Must contain 3 or more characters long.",
         }),
       })

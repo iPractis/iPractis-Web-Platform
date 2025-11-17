@@ -1,7 +1,7 @@
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
-import { subjectImages } from "@/src/data/dataTeacherRegistration";
+import { subjectImages, countryAveragePrices } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import SectionHeader from "../../Shared/SectionHeader";
@@ -13,8 +13,16 @@ import Image from "next/image";
 // Icons
 import { DollarSignIcon, QuestionMark } from "../../Icons";
 
-const AveragePrice = ({ control, errors, watch }) => {
+const AveragePrice = ({ control, errors, watch, userCountry }) => {
   const subjectToTeachImage = subjectImages[watch("subject")];
+
+  // Get country-specific average price data
+  const getCountryAveragePrice = (country) => {
+    if (!country) return countryAveragePrices.default;
+    return countryAveragePrices[country] || countryAveragePrices.default;
+  };
+
+  const countryPriceData = getCountryAveragePrice(userCountry);
 
   const {
     field: hourlyPrice,
@@ -100,34 +108,29 @@ const AveragePrice = ({ control, errors, watch }) => {
                   </InputBGWrapperIcon>
                 }
                 endContent={
-                  <div 
-                    className="bg-[#FFD600] rounded-[10px] flex items-center justify-center px-[12px] py-[6px] h-full"
+                  <div
+                    className="bg-[#FFD600] rounded-[10px] flex items-center justify-center px-2 py-1 h-full"
                     style={{
-                      width: '159px',
-                      height: '36px',
-                      gap: '10px',
+                      width: '160px',
+                      height: '28px',
+                      gap: '6px',
                       opacity: 1,
-                      paddingTop: '6px',
-                      paddingRight: '12px',
-                      paddingBottom: '6px',
-                      paddingLeft: '12px',
-                      borderRadius: '10px',
                       fontFamily: 'Poppins',
                       fontWeight: 500,
-                      fontSize: '11.2px',
+                      fontSize: '9px',
                       lineHeight: '100%',
-                      letterSpacing: '0%'
+                      letterSpacing: '0%',
                     }}
                   >
-                    <span className="text-gray-800 font-medium whitespace-nowrap">For 30 minutes sessions</span>
+                    <span className="text-gray-800 font-medium whitespace-nowrap text-xs">For 30 min sessions</span>
                   </div>
                 }
-                                                                   value={hourlyPrice.value || ''}
+                  value={hourlyPrice.value || ''}
                   onChange={handlePriceChange}
                   onBlur={hourlyPrice.onBlur}
                 />
-                                                                   {hourlyPrice.value && (
-                    <span 
+                  {hourlyPrice.value && (
+                    <span
                       className="absolute top-1/2 -translate-y-1/2 text-primary-color-P4 ST-3 pointer-events-none whitespace-nowrap"
                       style={{ left: `${(String(hourlyPrice.value).length * 8) + 65}px` }}
                     >
@@ -140,21 +143,53 @@ const AveragePrice = ({ control, errors, watch }) => {
 
           <SplitDynamicErrorZod message={hourlyPriceError?.message} />
 
-          {subjectToTeachImage && (
+          {(subjectToTeachImage || countryPriceData.flag) && (
             <div className="flex w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center mt-4">
-              <div className="me-3">
+              <div
+                className="me-3"
+                style={{
+                  width: '44px',
+                  height: '38px',
+                  borderRadius: '10px',
+                  flex: 'none',
+                  order: 0,
+                  flexGrow: 0
+                }}
+              >
                 <Image
-                  src={subjectToTeachImage}
+                  src={countryPriceData.flag || subjectToTeachImage}
                   alt={"Country Image"}
-                  className="w-[51px]"
+                  className="w-full h-full object-cover"
+                  style={{
+                    borderRadius: '10px'
+                  }}
                 />
               </div>
 
-              <div>
-                <h3 className="ST-SB-1">Average price</h3>
-                <p className="text-primary-color-P6 group-active:text-primary-color-P12 ST-1">
-                  13 USD/30 mins
-                </p>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'flex-start',
+                  padding: '0px',
+                  gap: '3px',
+                  width: '130px',
+                  height: '38px',
+                  flex: 'none',
+                  order: 1,
+                  flexGrow: 0
+                }}
+              >
+                <h3 className="text-gray-500 text-[12px]">Average Price</h3>
+                <div className="flex items-center gap-1 whitespace-nowrap">
+                  <span className="text-black font-bold text-[12px] group-active:text-primary-color-P12">
+                    {countryPriceData.price}
+                  </span>
+                  <span className="text-gray-500 text-[10px] group-active:text-primary-color-P12">
+                    For 30 mins
+                  </span>
+                </div>
               </div>
             </div>
           )}

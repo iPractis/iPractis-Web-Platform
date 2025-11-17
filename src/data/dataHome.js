@@ -19,58 +19,50 @@ import spain from "@/public/flags/spain.png";
 export const averagePricesLanguagues = [
   {
     image: unitedKingdom,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "15 USD For 30 mins",
   },
 
   {
     image: france,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "14 EUR For 30 mins",
   },
 
   {
     image: italy,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "13 EUR For 30 mins",
   },
 
   {
     image: spain,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "13 EUR For 30 mins",
   },
 
   {
     image: unitedKingdom,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "18 USD For 30 mins",
   },
 
   {
     image: france,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "16 EUR For 30 mins",
   },
 
   {
     image: italy,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "17 CAD For 30 mins",
   },
 
   {
     image: spain,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    title: "Average Price",
+    price: "20 AUD For 30 mins",
   },
 ];
 

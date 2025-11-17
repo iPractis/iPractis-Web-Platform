@@ -10,9 +10,9 @@ import { useController } from "react-hook-form";
 
 // Images && icons
 import {
-  AnalyticVerticalLinesIcon,
   LinkHorizontalIcon,
   CameraIcon,
+  QuestionMark,
 } from "../../Icons";
 
 const PresentYourSelf = ({ control, errors }) => {
@@ -34,7 +34,7 @@ const PresentYourSelf = ({ control, errors }) => {
             <CameraIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
-        titleText="Introduce yourself"
+        titleText="Video presentation"
         titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
         descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
       />
@@ -54,18 +54,18 @@ const PresentYourSelf = ({ control, errors }) => {
               name="videoLink"
               label={
                 <SectionHeader
-                  descriptionText="Upload your video on YouTube and paste the link in the field below."
-                  titleIcon={
-                    <AnalyticVerticalLinesIcon
-                      strokeColor={"stroke-primary-color-P1"}
-                    />
+                  descriptionText="Put the YouTube link of your video presentation."
+                  titleText={
+                    <span className="flex gap-1.5 items-center">
+                      Video Link{" "}
+                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
+                    </span>
                   }
-                  titleText="Video Link"
                   titleClassName="MT-SB-1"
                 />
               }
               classNames={{
-                label: "!-top-20",
+                label: "!-top-14",
                 inputWrapper: `${videoLinkError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
               }}
               value={videoLink.value}
