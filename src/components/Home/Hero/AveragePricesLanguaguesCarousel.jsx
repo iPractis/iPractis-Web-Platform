@@ -68,40 +68,17 @@ const AveragePricesLanguaguesCarousel = () => {
               <SwiperSlide className="w-[153px]" key={index}>
                 <div className="flex mx-auto w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center">
                   <div
-                    className="me-3"
-                    style={{
-                      width: '44px',
-                      height: '38px',
-                      borderRadius: '10px',
-                      flex: 'none',
-                      order: 0,
-                      flexGrow: 0
-                    }}
+                    className="me-3 w-[44px] h-[38px] rounded-[10px] flex-none order-0 grow-0"
                   >
                     <Image
                       alt={"Country Image"}
                       src={country?.image}
-                      className="w-full h-full object-cover"
-                      style={{
-                        borderRadius: '10px'
-                      }}
+                      className="w-full h-full object-cover rounded-[10px]"
                     />
                   </div>
 
                   <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      alignItems: 'flex-start',
-                      padding: '0px',
-                      gap: '3px',
-                      width: '130px',
-                      height: '38px',
-                      flex: 'none',
-                      order: 1,
-                      flexGrow: 0
-                    }}
+                    className="flex flex-col justify-start items-start p-0 gap-[3px] w-[130px] h-[38px] flex-none order-1 grow-0"
                   >
                     <h3 className="ST-SB-1 text-gray-500 text-base">{country?.title}</h3>
                     <div className="flex items-center gap-1 whitespace-nowrap">
