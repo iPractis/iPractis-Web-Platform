@@ -1,96 +1,71 @@
-import { languages as allLanguages, languagesLevels, masteredLanguagesImages } from "@/src/data/dataTeacherRegistration";
-import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
-import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-
 // External imports
-import { useController, useFieldArray } from "react-hook-form";
+import Image from "next/image";
 import { Select, SelectItem } from "@nextui-org/react";
+import { useFieldArray, useController } from "react-hook-form";
 
-// React imports
-import { useRef, useState, useEffect } from "react";
-
-// Icons
+// Project imports
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
+import { languages as allLanguages, languagesLevels, masteredLanguagesImages } from "@/src/data/dataTeacherRegistration";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import {
-  AddBoxIcon,
-  QuestionMark,
-  UserSpeakingIcon,
   ChevronDownBigIcon,
   TrashBinIcon,
+  UserSpeakingRightIcon,
 } from "../../Icons";
-import Image from "next/image";
 
 const AboutYourselfMasteredLanguages = ({ errors, control }) => {
-  // State for managing multiple selector boxes
-  const [selectors, setSelectors] = useState([
-    { language: "", level: "", id: 0 }
-  ]);
-  const [nextId, setNextId] = useState(1);
-
-  // Get the languages field array for validation
+  // Use useFieldArray for proper form array management
   const {
-    field: language,
+    fields,
+    append,
+    remove,
+    update,
+  } = useFieldArray({
+    control,
+    name: "languages",
+  });
+
+  // Get the languages field for validation and error display
+  const {
     fieldState: { error: languagesError },
   } = useController({
     name: "languages",
     control: control,
   });
 
-  // Initialize selectors from draft data
-  useEffect(() => {
-    if (language?.value && language.value.length > 0) {
-      const draftSelectors = language.value.map((lang, idx) => ({
-        language: lang.name,
-        level: lang.level,
-        id: idx,
-      }));
-      setSelectors(draftSelectors);
-      setNextId(draftSelectors.length);
-    }
-  }, []);
-
-  // Sync selectors to form array
-  const syncToFormArray = () => {
-    const validLanguages = selectors
-      .filter(sel => sel.language && sel.level)
-      .map(sel => ({ name: sel.language, level: sel.level }));
-    
-    if (language?.onChange) {
-      language.onChange(validLanguages);
-    }
+  // Add new language entry
+  const handleAddLanguage = () => {
+    append({ name: "", level: "" });
   };
 
-  // Update selector
-  const updateSelector = (id, field, value) => {
-    setSelectors(prev => {
-      const updated = prev.map(sel => sel.id === id ? { ...sel, [field]: value } : sel);
-      return updated;
-    });
+  // Update language field
+  const updateLanguage = (index, field, value) => {
+    update(index, { ...fields[index], [field]: value });
   };
 
-  // Add new selector box when + is clicked
-  const handleAddSelector = () => {
-    const newId = nextId;
-    setSelectors(prev => [...prev, { language: "", level: "", id: newId }]);
-    setNextId(prev => prev + 1);
+  // Delete language entry
+  const handleDeleteLanguage = (index) => {
+    remove(index);
   };
 
-  // Delete selector
-  const handleDeleteSelector = (id) => {
-    setSelectors(prev => prev.filter(sel => sel.id !== id));
-  };
-
-  // Sync whenever selectors change
-  useEffect(() => {
-    syncToFormArray();
-  }, [selectors]);
+  // Check if all language entries are valid (both name and level selected)
+  const allSelectorsValid = fields.length > 0 && fields.every(field => field.name && field.level);
 
   return (
     <div className="mx-[285px] mt-[32px]">
       <div className="space-y-4">
+
         {/* Add Language Button - Keep existing styling at top */}
-        <div>
+        <InputLeftStickStatus
+          inputBarStatusClassName={getInputStatusBorder(
+            errors,
+            allSelectorsValid ? "valid" : null,
+            "languages"
+          )}
+        >
+          <div className="relative">
           <Select
             name="languages"
             selectedKeys={[]}
@@ -100,32 +75,12 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
             selectorIcon={<span></span>}
             startContent={
               <InputBGWrapperIcon>
-                <UserSpeakingIcon fillcolor={"fill-primary-color-P4"} />
+                <UserSpeakingRightIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
-            }
-            endContent={
-              <div 
-                className="w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddSelector();
-                }}
-              >
-                <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1 pointer-events-none">
-                    <path
-                      d="M8 2V14M2 8H14"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </InputBGWrapperIcon>
-              </div>
             }
             classNames={{
               trigger: [
-                "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none",
+                "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
                 (languagesError?.message || languagesError !== undefined) &&
                   "form-input-error",
               ],
@@ -139,19 +94,40 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           >
             {/* Empty - this is just for styling */}
           </Select>
-        </div>
 
-                                   {/* Show selector boxes */}
-          {selectors.map((selector) => {
-            const selectedLanguageImage = masteredLanguagesImages[selector.language];
-            
+          {/* Add button positioned absolutely outside the Select */}
+          <button
+            type="button"
+            aria-label="Add language"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+            onClick={handleAddLanguage}
+          >
+            <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" role="img" aria-label="Add language" className="text-primary-color-P1">
+                <title>Add language</title>
+                <path
+                  d="M8 2V14M2 8H14"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            </InputBGWrapperIcon>
+          </button>
+        </div>
+        </InputLeftStickStatus>
+
+          {/* Show language entries */}
+          {fields.map((field, index) => {
+            const selectedLanguageImage = masteredLanguagesImages[field.name];
+
             return (
-              <div key={selector.id} className="flex items-center gap-[2px]">
+              <div key={field.id} className="flex items-center gap-[2px]">
                 <InputLeftStickStatus
                   inputBarStatusClassName={getInputStatusBorder(
                     errors,
-                    selector.language && selector.level ? "valid" : null,
-                    "languages"
+                    field.name && field.level ? { name: field.name, level: field.level } : field.name ? { name: field.name, level: "" } : null,
+                    `languages.${index}`
                   )}
                 >
                   <div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
@@ -159,10 +135,10 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                      <div className="mt-[6px] mb-[6px] ml-[6px] w-[195px] h-[36px] bg-white rounded-[10px]">
                        <Select
                         placeholder="Language"
-                        selectedKeys={selector.language ? [selector.language] : []}
+                        selectedKeys={field.name ? [field.name] : []}
                         onSelectionChange={(keys) => {
                           const selected = Array.from(keys).join("");
-                          updateSelector(selector.id, "language", selected);
+                          updateLanguage(index, "name", selected);
                         }}
                         selectorIcon={<span></span>}
                         startContent={
@@ -170,7 +146,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                             <Image
                               className="h-6 w-[39px] rounded-[4px]"
                               src={selectedLanguageImage.src}
-                              alt={selector.language}
+                              alt={field.name}
                               width={39}
                               height={24}
                             />
@@ -196,9 +172,9 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                         {allLanguages
                           ?.filter(
                             (language) =>
-                              !selectors.some(
-                                (sel) => sel.language === language && sel.id !== selector.id
-                              ) || language === selector.language
+                              !fields.some(
+                                (f, idx) => f.name === language && idx !== index
+                              ) || language === field.name
                           )
                           .map((language) => (
                             <SelectItem key={language}>{language}</SelectItem>
@@ -210,10 +186,10 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                       <div className="mt-[6px] mb-[6px] mr-[6px] w-[153px] h-[36px] bg-white rounded-[10px] ml-1">
                         <Select
                          placeholder="Level"
-                         selectedKeys={selector.level ? [selector.level] : []}
+                         selectedKeys={field.level ? [field.level] : []}
                          onSelectionChange={(keys) => {
                            const selected = Array.from(keys).join("");
-                           updateSelector(selector.id, "level", selected);
+                           updateLanguage(index, "level", selected);
                          }}
                          selectorIcon={<span></span>}
                          endContent={<ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />}
@@ -244,7 +220,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
                 {/* Delete Button - separated with 2px gap */}
                 <button
                   className="bg-[#F8F7F5] hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-                  onClick={() => handleDeleteSelector(selector.id)}
+                  onClick={() => handleDeleteLanguage(index)}
                   type="button"
                 >
                   <TrashBinIcon

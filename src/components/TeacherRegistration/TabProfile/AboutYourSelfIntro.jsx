@@ -32,13 +32,13 @@ const AboutYourSelfIntro = ({ control, errors }) => {
           "introduction"
         )} -translate-y-0 top-[30%] h-[129px]`}
       >
-        <div className="[&_.textarea-wrapper]:!bg-[#F8F7F5]">
+        <div className="[&_.textarea-wrapper]:!bg-secondary-color-S11">
           <CustomNextUiTextareaWithMaxLength
             value={introduction.value}
             nameTextarea="introduction"
             inputClassName={"h-[150px]"}
             onChange={introTextOnChange}
-            placeholder={"Enter a text"}
+            placeholder={"Enter a description"}
             maxCharactersLength={1000}
             typeError={"Max Length Exceeded"}
             descError={"The text cannot exceed 1000 characters."}

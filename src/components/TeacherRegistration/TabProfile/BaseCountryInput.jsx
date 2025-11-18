@@ -98,7 +98,7 @@ const BaseCountryInput = ({
             placeholder={placeholder}
             label={label}
             classNames={{
-              inputWrapper: fieldError?.message ? "form-input-error" : "!bg-[#F8F7F5]",
+              inputWrapper: fieldError?.message ? "form-input-error" : "!bg-secondary-color-S11",
               input: "relative z-10 bg-transparent",
             }}
             value={field?.value || ""}
@@ -110,7 +110,7 @@ const BaseCountryInput = ({
             startContent={
               <span ref={prefixRef} className="flex items-center gap-1.5">
                 <InputBGWrapperIcon>
-                  <FlagIcon />
+                  <FlagIcon fillcolor={"black"} />
                 </InputBGWrapperIcon>
 
                 <SelectComponent

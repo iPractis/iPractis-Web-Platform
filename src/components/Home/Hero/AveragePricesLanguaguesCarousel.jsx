@@ -67,19 +67,28 @@ const AveragePricesLanguaguesCarousel = () => {
             return (
               <SwiperSlide className="w-[153px]" key={index}>
                 <div className="flex mx-auto w-fit animation-fade cursor-pointer p-2 rounded-[16px] btn-quaternary group leading-[.9rem] items-center">
-                  <div className="me-3">
+                  <div
+                    className="me-3 w-[44px] h-[38px] rounded-[10px] flex-none order-0 grow-0"
+                  >
                     <Image
                       alt={"Country Image"}
                       src={country?.image}
-                      className="w-[51px]"
+                      className="w-full h-full object-cover rounded-[10px]"
                     />
                   </div>
 
-                  <div>
-                    <h3 className="ST-SB-1">{country?.title}</h3>
-                    <p className="text-primary-color-P6 group-active:text-primary-color-P12 ST-1">
-                      {`${country?.price}${country?.time}`}
-                    </p>
+                  <div
+                    className="flex flex-col justify-start items-start p-0 gap-[3px] w-[130px] h-[38px] flex-none order-1 grow-0"
+                  >
+                    <h3 className="ST-SB-1 text-gray-500 text-base">{country?.title}</h3>
+                    <div className="flex items-center gap-1 whitespace-nowrap">
+                      <span className="text-black font-bold text-sm group-active:text-primary-color-P12">
+                        {country?.price?.split(' For')[0]}
+                      </span>
+                      <span className="text-gray-500 text-xs group-active:text-primary-color-P12">
+                        For 30 mins
+                      </span>
+                    </div>
                   </div>
                 </div>
               </SwiperSlide>

@@ -11,141 +11,66 @@ import card from "@/public/icons/card.png";
 import tutorVideoPreview from "@/public/images/tutor-video-preview.png";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
 
-import unitedKingdom from "@/public/flags/united-kingdom.png";
-import france from "@/public/flags/france.png";
-import italy from "@/public/flags/italy.png";
-import spain from "@/public/flags/spain.png";
+// Import from shared data
+import {
+  flags,
+  subjects,
+  availableTranslatedLanguages,
+  searchBarSubjects,
+  countryAveragePrices,
+} from "./sharedData";
 
 export const averagePricesLanguagues = [
   {
-    image: unitedKingdom,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices["United Kingdom"].flag,
+    title: "Average Price",
+    price: `${countryAveragePrices["United Kingdom"].price} For 30 mins`,
   },
-
   {
-    image: france,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.France.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.France.price} For 30 mins`,
   },
-
   {
-    image: italy,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.Italy.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.Italy.price} For 30 mins`,
   },
-
   {
-    image: spain,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.Spain.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.Spain.price} For 30 mins`,
   },
-
   {
-    image: unitedKingdom,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices["United States"].flag,
+    title: "Average Price",
+    price: `${countryAveragePrices["United States"].price} For 30 mins`,
   },
-
   {
-    image: france,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.Germany.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.Germany.price} For 30 mins`,
   },
-
   {
-    image: italy,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.Canada.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.Canada.price} For 30 mins`,
   },
-
   {
-    image: spain,
-    title: "Average price",
-    price: "13 USD",
-    time: "/ 30 mins",
+    image: countryAveragePrices.Australia.flag,
+    title: "Average Price",
+    price: `${countryAveragePrices.Australia.price} For 30 mins`,
   },
 ];
 
-export const subjects = [
-  {
-    name: "English",
-  },
-
-  {
-    name: "French",
-  },
-
-  {
-    name: "Italian",
-  },
-
-  {
-    name: "Spanish",
-  },
-
-  {
-    name: "Chinese",
-  },
-
-  {
-    name: "Mathematic",
-  },
-
-  {
-    name: "Physics",
-  },
-
-  {
-    name: "Science",
-  },
-
-  {
-    name: "English",
-  },
-
-  {
-    name: "French",
-  },
-
-  {
-    name: "Italian",
-  },
-
-  {
-    name: "Spanish",
-  },
-
-  {
-    name: "Chinese",
-  },
-
-  {
-    name: "Mathematic",
-  },
-
-  {
-    name: "Physics",
-  },
-
-  {
-    name: "Science",
-  },
-];
+export const subjectsList = subjects.map(subject => ({ name: subject }));
 
 export const subjectsAndTutors = [
   {
     imageSrc: tutorVideoPreview,
     tutorImagePreview: tutorImagePreview,
     tutorName: "Alexandra",
-    tutorFlag: unitedKingdom,
+    tutorFlag: flags.unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
     videoSrc: "https://www.youtube.com/embed/NCtzkaL2t_Y?si=PmnDqW2Y6oKvkJ3L",
@@ -155,7 +80,7 @@ export const subjectsAndTutors = [
     imageSrc: tutorVideoPreview,
     tutorImagePreview: tutorImagePreview,
     tutorName: "Alexandra",
-    tutorFlag: unitedKingdom,
+    tutorFlag: flags.unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
     videoSrc: "https://www.youtube.com/embed/A_MjCqQoLLA?si=zffSiFsL7n2tV6vc",
@@ -165,7 +90,7 @@ export const subjectsAndTutors = [
     imageSrc: tutorVideoPreview,
     tutorImagePreview: tutorImagePreview,
     tutorName: "Alexandra",
-    tutorFlag: unitedKingdom,
+    tutorFlag: flags.unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
     videoSrc: "https://www.youtube.com/embed/CGj85pVzRJs?si=IT7cp45C3LXmoTgL",
@@ -175,7 +100,7 @@ export const subjectsAndTutors = [
     imageSrc: tutorVideoPreview,
     tutorImagePreview: tutorImagePreview,
     tutorName: "Alexandra",
-    tutorFlag: unitedKingdom,
+    tutorFlag: flags.unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
     videoSrc: "https://www.youtube.com/embed/2RicaUqd9Hg?si=hAQ-TEynRpyKSdPt",
@@ -185,7 +110,7 @@ export const subjectsAndTutors = [
     imageSrc: tutorVideoPreview,
     tutorImagePreview: tutorImagePreview,
     tutorName: "Alexandra",
-    tutorFlag: unitedKingdom,
+    tutorFlag: flags.unitedKingdom,
     tutorProfession: "Teaches English",
     tutorExtraLanguages: "+1",
     videoSrc: "https://www.youtube.com/embed/VOgFZfRVaww?si=qThhJhk_G_4GzOY3",
@@ -258,34 +183,5 @@ export const variousInterestingSubjects = [
   },
 ];
 
-export const availableTranslatedLanguages = [
-  { value: "en", language: "English" },
-  { value: "es", language: "Español" },
-];
-
-export const searchBarSubjects = [
-  {
-    subject: "English",
-    key: "english",
-  },
-
-  {
-    subject: "Mathematics",
-    key: "mathematics",
-  },
-
-  {
-    subject: "Science",
-    key: "science",
-  },
-
-  {
-    subject: "Physics",
-    key: "physics",
-  },
-
-  {
-    subject: "Spanish",
-    key: "spanish",
-  },
-];
+// Re-export from shared data
+export { availableTranslatedLanguages, searchBarSubjects };

@@ -7,24 +7,12 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 
 // External imports
-import {
-  Calendar,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  Button,
-  DropdownItem,
-} from "@nextui-org/react";
-import { CalendarDate } from "@internationalized/date";
 import { useController } from "react-hook-form";
-import DatePicker from "react-datepicker";
 
 // Icons
 import {
   CalendarAddIcon,
-  CheckedDocumentIcon,
-  ChevronDownBigIcon,
-  LuggageBiggerIcon,
+  PersonWithGraduationCapIcon,
   TopArrowCloudIcon,
   TrashBinIcon,
 } from "../../Icons";
@@ -180,7 +168,7 @@ const FormInputsBox = ({
               placeholder={firstInputPlaceholder}
               startContent={
                 <InputBGWrapperIcon>
-                  <LuggageBiggerIcon fillcolor={"fill-primary-color-P4"} />
+                  <PersonWithGraduationCapIcon fillcolor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               {...companyField}
@@ -215,7 +203,7 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarFromField}
               type="text"
-              placeholder="From (e.g. 2022)"
+              placeholder="Starting year"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
@@ -241,7 +229,7 @@ const FormInputsBox = ({
             <CustomNextUiInput
               {...calendarToField}
               type="text"
-              placeholder="To (e.g. 2025)"
+              placeholder="Ending year"
               startContent={
                 <InputBGWrapperIcon>
                   <CalendarAddIcon fillcolor={"fill-primary-color-P4"} />
@@ -284,6 +272,7 @@ const FormInputsBox = ({
             nameTextarea={"description"}
             placeholder={"Enter a text"}
             maxCharactersLength={1000}
+            maxCharactersLengthText={1000}
             labelDisabled={true}
           />
         </InputLeftStickStatus>
@@ -293,45 +282,54 @@ const FormInputsBox = ({
 
       {/* Upload Document Button - Below Description */}
       <div className="mt-2.5">
-        <label className="relative cursor-pointer">
-          <input
-            className="opacity-0 absolute inset-0 z-10 cursor-pointer"
-            onChange={handleFileSelect}
-            accept=".pdf, .png, .jpeg"
-            type="file"
-          />
-          <div className={`w-full h-[48px] flex items-center`}>
-            {/* Left Upload Icon Container */}
-            <div className="w-[54px] h-[48px] bg-[#F8F7F5] rounded-2xl flex items-center justify-center">
-              <TopArrowCloudIcon fillcolor={"fill-primary-color-P4"} />
-            </div>
-            
-            {/* Increased Gap */}
-            <div className="w-[8px] h-[48px]"></div>
-            
-            {/* Right Section with Text and Plus */}
-            <div className="w-[366px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center justify-between pt-[6px] pr-[6px] pb-[6px] pl-[16px]">
-              <span className="text-primary-color-P4 ST-3">
-                {uploadStatus === "uploading" 
-                  ? "Uploading..." 
-                  : uploadFile?.value 
-                    ? "Document uploaded" 
-                    : "Upload your document"
-                }
-              </span>
-              <div className="flex items-center justify-center w-[36px] h-[36px] bg-white rounded-[10px]">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1">
-                  <path
-                    d="M8 2V14M2 8H14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
+        <InputLeftStickStatus
+          inputBarStatusClassName={`${getInputStatusBorder(
+            errors,
+            uploadFile.value,
+            `${array}.${index}.uploadFile`
+          )}`}
+        >
+          <label className="relative cursor-pointer">
+            <input
+              className="opacity-0 absolute inset-0 z-10 cursor-pointer"
+              onChange={handleFileSelect}
+              accept=".pdf, .png, .jpeg"
+              type="file"
+            />
+            <div className={`w-full h-[48px] flex items-center`}>
+              {/* Left Upload Icon Container */}
+              <div className="w-[54px] h-[48px] bg-[#F8F7F5] rounded-2xl flex items-center justify-center">
+                <TopArrowCloudIcon fillcolor={"fill-primary-color-P4"} />
+              </div>
+              
+              {/* Increased Gap */}
+              <div className="w-[8px] h-[48px]"></div>
+              
+              {/* Right Section with Text and Plus */}
+              <div className="w-[366px] h-[48px] bg-[#F8F7F5] rounded-[16px] flex items-center justify-between pt-[6px] pr-[6px] pb-[6px] pl-[16px]">
+                <span className="text-primary-color-P4 ST-3">
+                  {uploadStatus === "uploading" 
+                    ? "Uploading..." 
+                    : uploadFile?.value 
+                      ? "Document uploaded" 
+                      : "Upload your document"
+                  }
+                </span>
+                <div className="flex items-center justify-center w-[36px] h-[36px] bg-white rounded-[10px]">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1" role="img" aria-label="Add document">
+                    <title>Add document</title>
+                    <path
+                      d="M8 2V14M2 8H14"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-        </label>
+          </label>
+        </InputLeftStickStatus>
         <SplitDynamicErrorZod message={uploadFileError?.message} />
       </div>
     </div>

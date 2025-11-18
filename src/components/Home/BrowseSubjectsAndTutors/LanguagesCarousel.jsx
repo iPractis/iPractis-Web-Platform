@@ -1,10 +1,10 @@
 "use client";
 
-import { subjects } from "@/src/data/dataHome";
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
+
+import { subjects } from "@/src/data/sharedData";
 
 // import required modules
 import { Navigation, Pagination } from "swiper/modules";
@@ -56,14 +56,14 @@ const LanguagesCarousel = () => {
               >
                 <button
                   className={`${
-                    selectedLanguage === subject?.name
+                    selectedLanguage === subject
                       ? "btn-primary"
                       : "btn-tertiary"
                   } w-full h-8 ST-SB-3 mx-auto px-4 py-1 text-center animation-fade rounded-xl`}
-                  onClick={() => setSelectedLanguage(subject?.name)}
+                  onClick={() => setSelectedLanguage(subject)}
                   type="button"
                 >
-                  {subject?.name}
+                  {subject}
                 </button>
               </SwiperSlide>
             );

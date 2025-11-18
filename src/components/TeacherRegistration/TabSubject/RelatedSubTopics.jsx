@@ -1,24 +1,16 @@
+import { Select } from "@nextui-org/react";
+import { useFieldArray, useController } from "react-hook-form";
+
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import { subSubjects } from "@/src/data/dataTeacherRegistration";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import SectionHeader from "../../Shared/SectionHeader";
 import SubSubject from "./SubSubject";
 
-// External imports
-import { useFieldArray, useController } from "react-hook-form";
-import { Select, SelectItem } from "@nextui-org/react";
-
-// React imports
-import { useState } from "react";
-
-// Images && icons
-import { AddBoxIcon, ChevronDownBigIcon, QuestionMark, TagIcon } from "../../Icons";
+import { BookOpenedIcon, NotebookOpenedIcon } from "../../Icons";
 
 const RelatedSubTopics = ({ control, errors }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   const {
     fields: subSubjectsFields,
     append,
@@ -26,19 +18,19 @@ const RelatedSubTopics = ({ control, errors }) => {
   } = useFieldArray({ control, name: "subSubject" });
 
   const {
-    field: { value, onBlur },
     fieldState: { error },
   } = useController({
     name: "subSubject",
     control,
   });
 
-  // Add sub-subject
-  const handleAddSubSubject = (e) => {
-    const subSubjectSelected = e?.target?.value;
+  // Check if all sub-subject entries are valid (both name and description filled)
+  const allSelectorsValid = subSubjectsFields.length > 0 && subSubjectsFields.every(field => field.selected && field.description);
 
+  // Add sub-subject
+  const handleAddSubSubject = () => {
     append({
-      selected: subSubjectSelected,
+      selected: "",
       description: "",
     });
   };
@@ -55,7 +47,7 @@ const RelatedSubTopics = ({ control, errors }) => {
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
         titleIcon={
           <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <TagIcon fillcolor={"fill-primary-color-P1"} />
+            <BookOpenedIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
         titleText="Pick specialties or sub-subject"
@@ -63,66 +55,67 @@ const RelatedSubTopics = ({ control, errors }) => {
         descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
       />
 
-      <div className="lg:mx-[285px] md:mx-[100px] mx-4">
-        <div className="lg:space-y-[40px] md:space-y-[32px] space-y-[24px]">
-          {/* Select Sub-subject */}
+      <div className="mx-[285px] mt-[32px]">
+        <div className="space-y-4">
+          {/* Add Sub-subject Button */}
           <div>
             <InputLeftStickStatus
               inputBarStatusClassName={getInputStatusBorder(
                 errors,
-                value,
+                allSelectorsValid ? "valid" : null,
                 "subSubject"
               )}
             >
-              <Select
-                  name="subSubject"
-                  selectedKeys={value}
-                  onChange={(e) => handleAddSubSubject(e)}
-                  onOpenChange={(open) => {
-                    setIsOpen(open);
-
-                    if (!open) {
-                      onBlur();
-                    }
-                  }}
+              <div className="relative">
+                <Select
+                  name="addSubSubject"
+                  selectedKeys={[]}
+                  onChange={() => {}} // This won't be used
                   labelPlacement="outside"
-                  placeholder="Select a sub-subject"
+                  placeholder="Add a sub-subject"
                   selectorIcon={<span></span>}
-                  isOpen={isOpen}
                   startContent={
                     <InputBGWrapperIcon>
-                      <TagIcon fillcolor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  endContent={
-                    <InputBGWrapperIcon>
-                      <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
+                      <NotebookOpenedIcon fillcolor={"fill-primary-color-P4"} />
                     </InputBGWrapperIcon>
                   }
                   classNames={{
-                    trigger: `px-1 py-1.5 h-auto !bg-[#f8f7f5] ${
+                    trigger: [
+                      "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
                       (error?.message || error !== undefined) &&
-                      "form-input-error"
-                    }`,
-                    innerWrapper: ["select-ipractis", "w-full"],
+                        "form-input-error",
+                    ],
+                    innerWrapper: ["text-white placeholder:text-white", "w-full"],
                     value: [
-                      "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+                      "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
                     ],
                     listbox: ["text-primary-color-P4"],
-                    base: "w-full",
+                    base: "!mt-0",
                   }}
                 >
-                  {subSubjects
-                    ?.filter(
-                      (subSubject) =>
-                        !subSubjectsFields.some(
-                          (field) => field.selected === subSubject
-                        )
-                    )
-                    .map((subSubject) => (
-                      <SelectItem key={subSubject}>{subSubject}</SelectItem>
-                    ))}
+                  {/* Empty - this is just for styling */}
                 </Select>
+
+                {/* Add button positioned absolutely outside the Select */}
+                <button
+                  type="button"
+                  aria-label="Add sub-subject"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+                  onClick={handleAddSubSubject}
+                >
+                  <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1" role="img" aria-label="Add sub-subject">
+                      <title>Add sub-subject</title>
+                      <path
+                        d="M8 2V14M2 8H14"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </InputBGWrapperIcon>
+                </button>
+              </div>
             </InputLeftStickStatus>
           </div>
 
