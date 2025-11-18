@@ -18,7 +18,11 @@ import {
 } from "../Icons";
 
 // React imports
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+
+// Constants for day handling - defined outside component to prevent recreation on every render
+const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const getDayIndex = (dayKey) => DAY_ORDER.indexOf(dayKey);
 
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
@@ -39,6 +43,29 @@ const WorkScheduleTable = ({
   const [startCell, setStartCell] = useState(null);
   const [selectionEnd, setSelectionEnd] = useState(null);
   const [selectionMode, setSelectionMode] = useState('select'); // 'select' or 'erase'
+
+  // Refs for frequently changing state to avoid useCallback dependency issues
+  const startCellRef = useRef(startCell);
+  const selectionEndRef = useRef(selectionEnd);
+  const selectionModeRef = useRef(selectionMode);
+  const isDraggingRef = useRef(isDragging);
+
+  // Update refs when state changes
+  useEffect(() => {
+    startCellRef.current = startCell;
+  }, [startCell]);
+
+  useEffect(() => {
+    selectionEndRef.current = selectionEnd;
+  }, [selectionEnd]);
+
+  useEffect(() => {
+    selectionModeRef.current = selectionMode;
+  }, [selectionMode]);
+
+  useEffect(() => {
+    isDraggingRef.current = isDragging;
+  }, [isDragging]);
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
@@ -57,10 +84,6 @@ const WorkScheduleTable = ({
     };
     return map[twoLetter] || twoLetter;
   };
-
-  // Constants for day handling - defined outside render cycle
-  const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const getDayIndex = (dayKey) => DAY_ORDER.indexOf(dayKey);
 
   // We use "useFieldArray" to manage the selected slots
   const { fields, append, remove, update } = useFieldArray({
@@ -345,7 +368,7 @@ const WorkScheduleTable = ({
     }
 
     return cells;
-  }, [getDayIndex]);
+  }, []);
 
   // Get preview state for a cell during rectangle selection
   const getCellPreviewState = (hour, day, isSecondButton) => {
@@ -505,12 +528,16 @@ const WorkScheduleTable = ({
   };
 
   // Handles mouse-up events to stop the drag selection and resets dragging state and clears the starting cell
-  const handleMouseUp = (e) => {
+  const handleMouseUp = useCallback((e) => {
     e.preventDefault();
 
-    if (isDragging && startCell && selectionEnd) {
+    if (isDraggingRef.current && startCellRef.current) {
+      // If selectionEnd is not set (e.g., unclicked on border or outside canvas),
+      // use startCell as both start and end for single cell selection
+      const endCell = selectionEndRef.current || startCellRef.current;
+
       // Apply the rectangle selection immediately
-      const cellsToProcess = getCellsInRectangle(startCell, selectionEnd);
+      const cellsToProcess = getCellsInRectangle(startCellRef.current, endCell);
 
       // Group operations by day for efficiency
       const operationsByDay = {};
@@ -527,12 +554,12 @@ const WorkScheduleTable = ({
           const existingHours = fields[existingIndex].hour;
           const isCurrentlySelected = existingHours.includes(timeString);
 
-          if (selectionMode === 'select' && !isCurrentlySelected) {
+          if (selectionModeRef.current === 'select' && !isCurrentlySelected) {
             operationsByDay[cell.day].toAdd.push(timeString);
-          } else if (selectionMode === 'erase' && isCurrentlySelected) {
+          } else if (selectionModeRef.current === 'erase' && isCurrentlySelected) {
             operationsByDay[cell.day].toRemove.push(timeString);
           }
-        } else if (selectionMode === 'select') {
+        } else if (selectionModeRef.current === 'select') {
           operationsByDay[cell.day].toAdd.push(timeString);
         }
       });
@@ -604,7 +631,21 @@ const WorkScheduleTable = ({
     setStartCell(null);
     setSelectionEnd(null);
     setSelectionMode('select');
-  };
+  }, [fields, append, remove, update, getCellsInRectangle]);
+
+  // Add global mouse-up listener to handle cases where user unclicks outside the component
+  useEffect(() => {
+    const handleGlobalMouseUp = (e) => {
+      if (isDragging) {
+        handleMouseUp(e);
+      }
+    };
+
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, handleMouseUp]);
 
   // Sets dragging state, stores the starting cell, and determines selection mode
   const handleMouseDown = (hour, day, isSecondButton) => {
