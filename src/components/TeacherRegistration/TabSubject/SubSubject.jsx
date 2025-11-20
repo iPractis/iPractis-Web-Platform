@@ -1,15 +1,13 @@
-import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
+import { useController } from "react-hook-form";
+
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import { CustomNextUiTextareaWithMaxLength } from "../../Shared/MaxFormLengthFields";
 
-// External imports
-import { Controller, useController } from "react-hook-form";
-
-// Icons
-import { UserSpeakingRightIcon, TrashBinIcon } from "../../Icons";
+import { TrashBinIcon, UserSpeakingRightIcon } from "../../Icons";
 
 const SubSubject = ({
   handleDeleteSelectedSubSuject,
@@ -20,11 +18,20 @@ const SubSubject = ({
   name,
 }) => {
   const {
+    field: selectedField,
+    fieldState: { error: selectedError },
+  } = useController({
+    name: `${name}.${index}.selected`,
+    defaultValue: subSubject?.selected || "",
+    control,
+  });
+
+  const {
     field: descriptionField,
     fieldState: { error: descriptionError },
   } = useController({
     name: `${name}.${index}.description`,
-    defaultValue: subSubject?.description,
+    defaultValue: subSubject?.description || "",
     control,
   });
 
@@ -38,42 +45,37 @@ const SubSubject = ({
 
   return (
     <div>
-      <div className="flex items-end mt-10 mb-2.5 gap-2">
-        {/* Selected sub-subject */}
+      <div className="flex items-end mb-2.5 gap-2">
+        {/* Sub-subject name input */}
         <div className="flex-1">
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
               errors,
-              subSubject?.selected,
+              selectedField.value,
               `subSubject.${index}.selected`
             )}`}
           >
-            <Controller
-              name={`${name}.${index}.selected`}
-              defaultValue={subSubject?.selected}
-              control={control}
-              render={({ field }) => (
-                <CustomNextUiInput
-                  name="selectedSubSuject"
-                  className="pointer-events-none"
-                  placeholder="Selected sub-subject"
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <UserSpeakingRightIcon
-                        fillcolor={"fill-primary-color-P4"}
-                      />
-                    </InputBGWrapperIcon>
-                  }
-                  type="text"
-                  {...field}
-                  isReadOnly
-                  classNames={{
-                    inputWrapper: "!bg-[#f8f7f5]"
-                  }}
-                />
-              )}
+            <CustomNextUiInput
+              name="selectedSubSubject"
+              placeholder="Conversational"
+              startContent={
+                <InputBGWrapperIcon>
+                  <UserSpeakingRightIcon
+                    fillcolor={"fill-primary-color-P4"}
+                  />
+                </InputBGWrapperIcon>
+              }
+              type="text"
+              value={selectedField.value}
+              onChange={selectedField.onChange}
+              onBlur={selectedField.onBlur}
+              classNames={{
+                inputWrapper: "!bg-[#f8f7f5]"
+              }}
             />
           </InputLeftStickStatus>
+
+          <SplitDynamicErrorZod message={selectedError?.message} />
         </div>
 
         {/* Delete button */}
@@ -107,7 +109,7 @@ const SubSubject = ({
             onChange={descriptionTextOnChange}
             value={descriptionField.value}
             nameTextarea={"description"}
-            placeholder={"Enter a text"}
+            placeholder={"Enter a description"}
             maxCharactersLength={1000}
             labelDisabled={true}
           />

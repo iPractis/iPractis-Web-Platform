@@ -21,6 +21,8 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
   const [loading, setLoading] = useState(false);
   const buttonRef = useRef(null);
 
+  const { user } = useAuth();
+
   const {
     formState: { errors, isSubmitted },
     handleSubmit,
@@ -43,8 +45,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       subSubject: draft?.subSubject || [],
     },
   });
-
-  const { user } = useAuth();
 
   const onSubmit = async (data) => {
     try {
@@ -112,7 +112,7 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
         <GenderRestriction isSubmitted={isSubmitted} control={control} />
 
-        <AveragePrice control={control} errors={errors} watch={watch} />
+        <AveragePrice control={control} errors={errors} watch={watch} userCountry={draft?.country} />
         <SaveAndContinueBox buttonRef={buttonRef} />
       </WhiteSpaceWrapper>
 

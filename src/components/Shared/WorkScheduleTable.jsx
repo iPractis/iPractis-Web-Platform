@@ -18,7 +18,11 @@ import {
 } from "../Icons";
 
 // React imports
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+
+// Constants for day handling - defined outside component to prevent recreation on every render
+const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+const getDayIndex = (dayKey) => DAY_ORDER.indexOf(dayKey);
 
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
@@ -37,6 +41,31 @@ const WorkScheduleTable = ({
   const [isDragging, setIsDragging] = useState(false);
   const [currentDay, setCurrentDay] = useState("");
   const [startCell, setStartCell] = useState(null);
+  const [selectionEnd, setSelectionEnd] = useState(null);
+  const [selectionMode, setSelectionMode] = useState('select'); // 'select' or 'erase'
+
+  // Refs for frequently changing state to avoid useCallback dependency issues
+  const startCellRef = useRef(startCell);
+  const selectionEndRef = useRef(selectionEnd);
+  const selectionModeRef = useRef(selectionMode);
+  const isDraggingRef = useRef(isDragging);
+
+  // Update refs when state changes
+  useEffect(() => {
+    startCellRef.current = startCell;
+  }, [startCell]);
+
+  useEffect(() => {
+    selectionEndRef.current = selectionEnd;
+  }, [selectionEnd]);
+
+  useEffect(() => {
+    selectionModeRef.current = selectionMode;
+  }, [selectionMode]);
+
+  useEffect(() => {
+    isDraggingRef.current = isDragging;
+  }, [isDragging]);
   const [weekDates, setWeekDates] = useState([]);
   const [minDate, setMinDate] = useState("");
   const [maxDate, setMaxDate] = useState("");
@@ -228,6 +257,176 @@ const WorkScheduleTable = ({
     return daySlot.hour.includes(timeToCheck);
   };
 
+  // Time-based color helper functions
+  const getTimeBasedColor = (hour, isSelected) => {
+    // Before 7:00 AM (hours 0-6): use primary-color-p11 for unselected, attention-a12 for selected
+    if (hour < 7) {
+      return isSelected ? "bg-quaternary-color-A12" : "bg-primary-color-P11";
+    }
+    // From 7:00 AM onwards (hours 7-23): use secondary-s11 for unselected, attention-a12 for selected
+    return isSelected ? "bg-quaternary-color-A12" : "bg-secondary-color-S11";
+  };
+
+  const getTimeBasedHoverColor = (hour) => {
+    // Before 7:00 AM (hours 0-6): use primary-color-p11 with transparency
+    if (hour < 7) {
+      return "hover:bg-primary-color-P11/30";
+    }
+    // From 7:00 AM onwards (hours 7-23): use secondary-s11 with transparency
+    return "hover:bg-secondary-color-S11/30";
+  };
+
+  // Rectangle selection helper functions
+  const getCellsInRectangle = useCallback((start, end) => {
+    if (!start || !end) return [];
+
+    const startDayIndex = getDayIndex(start.day);
+    const endDayIndex = getDayIndex(end.day);
+
+    const minHour = Math.min(start.hour, end.hour);
+    const maxHour = Math.max(start.hour, end.hour);
+    const minDayIndex = Math.min(startDayIndex, endDayIndex);
+    const maxDayIndex = Math.max(startDayIndex, endDayIndex);
+
+    const cells = [];
+
+    for (let dayIdx = minDayIndex; dayIdx <= maxDayIndex; dayIdx++) {
+      for (let hour = minHour; hour <= maxHour; hour++) {
+        // For the start hour, respect the starting half-hour boundary
+        if (hour === minHour && hour === maxHour) {
+          // Same hour - include only the range between start and end halves
+          const startHalf = start.isSecondButton ? 1 : 0;
+          const endHalf = end.isSecondButton ? 1 : 0;
+          const minHalf = Math.min(startHalf, endHalf);
+          const maxHalf = Math.max(startHalf, endHalf);
+
+          for (let half = minHalf; half <= maxHalf; half++) {
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: half === 1,
+            });
+          }
+        } else if (hour === minHour) {
+          // Start hour - include only from start half onwards
+          if (start.isSecondButton) {
+            // Start from bottom half (:30)
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: true,
+            });
+          } else {
+            // Start from top half (:00) - include both halves
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: false,
+            });
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: true,
+            });
+          }
+        } else if (hour === maxHour) {
+          // End hour - include only up to end half
+          if (end.isSecondButton) {
+            // End at bottom half (:30) - include both halves
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: false,
+            });
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: true,
+            });
+          } else {
+            // End at top half (:00) - include only top half
+            cells.push({
+              day: DAY_ORDER[dayIdx],
+              hour: hour,
+              isSecondButton: false,
+            });
+          }
+        } else {
+          // Middle hours - include both halves
+          cells.push({
+            day: DAY_ORDER[dayIdx],
+            hour: hour,
+            isSecondButton: false,
+          });
+          cells.push({
+            day: DAY_ORDER[dayIdx],
+            hour: hour,
+            isSecondButton: true,
+          });
+        }
+      }
+    }
+
+    return cells;
+  }, []);
+
+  // Get preview state for a cell during rectangle selection
+  const getCellPreviewState = (hour, day, isSecondButton) => {
+    if (!isDragging || !startCell || !selectionEnd) return null;
+
+    const startDayIndex = getDayIndex(startCell.day);
+    const endDayIndex = getDayIndex(selectionEnd.day);
+    const currentDayIndex = getDayIndex(day);
+
+    const minHour = Math.min(startCell.hour, selectionEnd.hour);
+    const maxHour = Math.max(startCell.hour, selectionEnd.hour);
+    const minDayIndex = Math.min(startDayIndex, endDayIndex);
+    const maxDayIndex = Math.max(startDayIndex, endDayIndex);
+
+    // Check if current cell is within the rectangle bounds
+    const isDayInRectangle = currentDayIndex >= minDayIndex && currentDayIndex <= maxDayIndex;
+    const isHourInRectangle = hour >= minHour && hour <= maxHour;
+
+    if (!isDayInRectangle || !isHourInRectangle) return null;
+
+    // Check half-hour boundaries for edge hours
+    if (hour === minHour && hour === maxHour) {
+      // Same hour - check if within half range
+      const startHalf = startCell.isSecondButton ? 1 : 0;
+      const endHalf = selectionEnd.isSecondButton ? 1 : 0;
+      const currentHalf = isSecondButton ? 1 : 0;
+      const minHalf = Math.min(startHalf, endHalf);
+      const maxHalf = Math.max(startHalf, endHalf);
+
+      if (currentHalf < minHalf || currentHalf > maxHalf) return null;
+    } else if (hour === minHour) {
+      // Start hour - check if after start half
+      const startHalf = startCell.isSecondButton ? 1 : 0;
+      const currentHalf = isSecondButton ? 1 : 0;
+
+      if (currentHalf < startHalf) return null;
+    } else if (hour === maxHour) {
+      // End hour - check if before end half
+      const endHalf = selectionEnd.isSecondButton ? 1 : 0;
+      const currentHalf = isSecondButton ? 1 : 0;
+
+      if (currentHalf > endHalf) return null;
+    }
+
+    const timeString = isSecondButton ? `${hour}:30` : `${hour}:00`;
+    const daySlot = fields.find(slot => slot.day === day);
+    const isCurrentlySelected = daySlot?.hour.includes(timeString);
+
+    // Preview state based on selection mode
+    if (selectionMode === 'select' && !isCurrentlySelected) {
+      return 'will-select';
+    } else if (selectionMode === 'erase' && isCurrentlySelected) {
+      return 'will-erase';
+    }
+
+    return null;
+  };
+
   // This is for decrementing days of a month (- 7)
   const handleDecrementWeek = () => {
     setWeekDates((prevDates) =>
@@ -323,23 +522,143 @@ const WorkScheduleTable = ({
   // Only acts if the click is pressed AND it is a different cell from the initial one
   const handleMouseEnter = (hour, day, isSecondButton) => {
     if (isDragging && startCell) {
-      handleGetDayAndHour(hour, day, isSecondButton);
+      // Update the end cell for rectangle selection
+      setSelectionEnd({ hour, day, isSecondButton });
     }
   };
 
   // Handles mouse-up events to stop the drag selection and resets dragging state and clears the starting cell
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback((e) => {
+    e.preventDefault();
+
+    if (isDraggingRef.current && startCellRef.current) {
+      // If selectionEnd is not set (e.g., unclicked on border or outside canvas),
+      // use startCell as both start and end for single cell selection
+      const endCell = selectionEndRef.current || startCellRef.current;
+
+      // Apply the rectangle selection immediately
+      const cellsToProcess = getCellsInRectangle(startCellRef.current, endCell);
+
+      // Group operations by day for efficiency
+      const operationsByDay = {};
+
+      cellsToProcess.forEach(cell => {
+        const timeString = cell.isSecondButton ? `${cell.hour}:30` : `${cell.hour}:00`;
+
+        if (!operationsByDay[cell.day]) {
+          operationsByDay[cell.day] = { toAdd: [], toRemove: [] };
+        }
+
+        const existingIndex = fields.findIndex(slot => slot.day === cell.day);
+        if (existingIndex !== -1) {
+          const existingHours = fields[existingIndex].hour;
+          const isCurrentlySelected = existingHours.includes(timeString);
+
+          if (selectionModeRef.current === 'select' && !isCurrentlySelected) {
+            operationsByDay[cell.day].toAdd.push(timeString);
+          } else if (selectionModeRef.current === 'erase' && isCurrentlySelected) {
+            operationsByDay[cell.day].toRemove.push(timeString);
+          }
+        } else if (selectionModeRef.current === 'select') {
+          operationsByDay[cell.day].toAdd.push(timeString);
+        }
+      });
+
+      // Apply operations in the correct order - first snapshots, then updates
+      const fieldsSnapshot = [...fields];
+      const updatesToApply = [];
+      const removalsToApply = [];
+
+      Object.keys(operationsByDay).forEach(day => {
+        const ops = operationsByDay[day];
+        const existingIndex = fieldsSnapshot.findIndex(slot => slot.day === day);
+
+        if (existingIndex !== -1) {
+          let updatedHours = [...fieldsSnapshot[existingIndex].hour];
+
+          // Remove unwanted hours
+          if (ops.toRemove.length > 0) {
+            updatedHours = updatedHours.filter(hour => !ops.toRemove.includes(hour));
+          }
+
+          // Add new hours
+          if (ops.toAdd.length > 0) {
+            updatedHours = [...updatedHours, ...ops.toAdd];
+          }
+
+          // Sort the hours
+          updatedHours.sort((a, b) => {
+            const [aHour, aMin] = a.split(":").map(Number);
+            const [bHour, bMin] = b.split(":").map(Number);
+            return aHour - bHour || aMin - bMin;
+          });
+
+          if (updatedHours.length > 0) {
+            updatesToApply.push({ index: existingIndex, day, hour: updatedHours });
+          } else {
+            removalsToApply.push(existingIndex);
+          }
+        } else if (ops.toAdd.length > 0) {
+          // New day entry - sort first
+          const sortedHours = [...ops.toAdd].sort((a, b) => {
+            const [aHour, aMin] = a.split(":").map(Number);
+            const [bHour, bMin] = b.split(":").map(Number);
+            return aHour - bHour || aMin - bMin;
+          });
+          updatesToApply.push({ index: -1, day, hour: sortedHours });
+        }
+      });
+
+      // Apply removals first (in reverse order to maintain indices)
+      removalsToApply.sort((a, b) => b - a).forEach(index => {
+        remove(index);
+      });
+
+      // Then apply updates
+      updatesToApply.forEach(({ index, day, hour }) => {
+        if (index === -1) {
+          // New day
+          append({ day, hour });
+        } else {
+          // Update existing day
+          update(index, { day, hour });
+        }
+      });
+    }
+
+    // Reset all drag states
     setIsDragging(false);
     setStartCell(null);
-  };
+    setSelectionEnd(null);
+    setSelectionMode('select');
+  }, [fields, append, remove, update, getCellsInRectangle]);
 
-  // Sets dragging state, stores the starting cell, and immediately selects the initial cell.
+  // Add global mouse-up listener to handle cases where user unclicks outside the component
+  useEffect(() => {
+    const handleGlobalMouseUp = (e) => {
+      if (isDragging) {
+        handleMouseUp(e);
+      }
+    };
+
+    document.addEventListener('mouseup', handleGlobalMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging, handleMouseUp]);
+
+  // Sets dragging state, stores the starting cell, and determines selection mode
   const handleMouseDown = (hour, day, isSecondButton) => {
     setIsDragging(true);
     setStartCell({ hour, day, isSecondButton });
+    setSelectionEnd({ hour, day, isSecondButton });
 
-    // Selects the initial cell inmediately
-    handleGetDayAndHour(hour, day, isSecondButton);
+    // Determine selection mode based on the first clicked cell's state
+    const timeString = isSecondButton ? `${hour}:30` : `${hour}:00`;
+    const daySlot = fields.find(slot => slot.day === day);
+    const isCurrentlySelected = daySlot && daySlot.hour.includes(timeString);
+
+    setSelectionMode(isCurrentlySelected ? 'erase' : 'select');
   };
 
   // If users clicks on HOURS of the day (0-23 or 1-12)
@@ -588,6 +907,10 @@ const WorkScheduleTable = ({
                   const isBottomHalfSelected = isSelected(hourIndex, column.key, true);
                   const bothSelected = isTopHalfSelected && isBottomHalfSelected;
 
+                  // Get preview states for rectangle selection
+                  const topHalfPreview = getCellPreviewState(hourIndex, column.key, false);
+                  const bottomHalfPreview = getCellPreviewState(hourIndex, column.key, true);
+
                   return (
                     <div
                       className={`flex-1 h-[40px] relative group rounded-md overflow-hidden ${
@@ -600,28 +923,40 @@ const WorkScheduleTable = ({
                       {/* Top half visual layer */}
                       <div
                         className={`absolute top-0 left-0 w-full h-1/2 ${
-                          isTopHalfSelected
-                            ? "bg-quinary-color-VS10"
-                            : "bg-[#f8f7f5]"
+                          showCurrentActiveDay && isToday
+                            ? "bg-tertiary-color-SC5"
+                            : topHalfPreview === 'will-select'
+                            ? "bg-blue-400/50"
+                            : topHalfPreview === 'will-erase'
+                            ? "bg-red-400/50"
+                            : getTimeBasedColor(hourIndex, isTopHalfSelected)
                         } ${
-                          !bothSelected && isTopHalfSelected ? "rounded-t-md" : ""
+                          !bothSelected && isTopHalfSelected && !topHalfPreview ? "rounded-t-md" : ""
                         }`}
                       />
-                      
+
                       {/* Bottom half visual layer */}
                       <div
                         className={`absolute bottom-0 left-0 w-full h-1/2 ${
-                          isBottomHalfSelected
-                            ? "bg-quinary-color-VS10"
-                            : "bg-[#f8f7f5]"
+                          showCurrentActiveDay && isToday
+                            ? "bg-tertiary-color-SC5"
+                            : bottomHalfPreview === 'will-select'
+                            ? "bg-blue-400/50"
+                            : bottomHalfPreview === 'will-erase'
+                            ? "bg-red-400/50"
+                            : getTimeBasedColor(hourIndex, isBottomHalfSelected)
                         } ${
-                          !bothSelected && isBottomHalfSelected ? "rounded-b-md" : ""
+                          !bothSelected && isBottomHalfSelected && !bottomHalfPreview ? "rounded-b-md" : ""
                         }`}
                       />
                       
                       {/* Top half button - invisible, just for click handling */}
                       <button
-                        className="w-full h-1/2 cursor-pointer absolute top-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
+                        className={`w-full h-1/2 cursor-pointer absolute top-0 left-0 z-10 transition-colors ${
+                          showCurrentActiveDay && isToday
+                            ? "hover:bg-tertiary-color-SC5/50"
+                            : getTimeBasedHoverColor(hourIndex)
+                        }`}
                         onMouseDown={() =>
                           handleMouseDown(hourIndex, column.key, false)
                         }
@@ -632,10 +967,14 @@ const WorkScheduleTable = ({
                         type="button"
                         aria-label={`Select first 30 minutes of ${hourIndex}:00`}
                       ></button>
-                      
+
                       {/* Bottom half button - invisible, just for click handling */}
                       <button
-                        className="w-full h-1/2 cursor-pointer absolute bottom-0 left-0 z-10 hover:bg-secondary-color-S9/30 transition-colors"
+                        className={`w-full h-1/2 cursor-pointer absolute bottom-0 left-0 z-10 transition-colors ${
+                          showCurrentActiveDay && isToday
+                            ? "hover:bg-tertiary-color-SC5/50"
+                            : getTimeBasedHoverColor(hourIndex)
+                        }`}
                         onMouseDown={() =>
                           handleMouseDown(hourIndex, column.key, true)
                         }

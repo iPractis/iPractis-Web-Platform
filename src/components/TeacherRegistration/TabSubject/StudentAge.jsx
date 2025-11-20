@@ -6,7 +6,7 @@ import { Controller } from "react-hook-form";
 import { Switch } from "@nextui-org/react";
 
 // Icons
-import { CheckIcon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
+import { CheckIcon, Clock1220Icon, CloseBoxIcon, UserLuggageIcon } from "../../Icons";
 
 const StudentAge = ({ isSubmitted, control }) => {
   return (
@@ -14,7 +14,7 @@ const StudentAge = ({ isSubmitted, control }) => {
       <div className="w-full">
         <div className="flex items-center gap-[10px] mb-[30px] h-[48px]">
           <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-            <UserLuggageIcon fillcolor={"fill-primary-color-P1"} />
+            <Clock1220Icon fillcolor={"fill-primary-color-P1"} />
           </div>
           <div className="flex flex-col justify-center h-[48px]">
             <h3 className="MT-SB-1 text-sm leading-none">Age restriction</h3>

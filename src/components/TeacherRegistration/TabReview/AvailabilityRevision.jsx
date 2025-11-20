@@ -4,7 +4,7 @@ import TeacherInfoExperience from "./TeacherInfoExperience";
 import TeacherInfoEducation from "./TeacherInfoEducation";
 import TeacherInfo from "./TeacherInfo";
 import SectionHeader from "../../Shared/SectionHeader";
-import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon, FlagIcon } from "../../Icons";
+import { PersonIcon, StarIcon, HeartSmallIcon, UserSpeakingIcon, UserHatIcon, ChevronLeftBigIcon, ChevronRightMediumIcon, CircleImportantIcon, ChevronRightIcon, FlagIcon, TeacherInfoIcon } from "../../Icons";
 import Image from "next/image";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
@@ -15,6 +15,7 @@ import { fetchCountries } from "@/src/lib/utils/fetchCountries";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
 import { useAuth } from "@/src/hooks/useAuth";
 import { getYoutubeVideoIdUrl } from "@/src/lib/utils/getYoutubeVideoIdUrl";
+import { InfoIcon } from "lucide-react";
 
 const NoticeBox = ({ draftData }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -249,18 +250,18 @@ const AvailabilityRevision = ({draftData}) => {
   };
 
   return (
-    <section className="max-w-[1126px] mx-auto">
+    <section className="max-w-[1400px] mx-auto">
       {/* Teacher's information header box */}
-      <div className="bg-white rounded-[32px] p-4 mb-8 h-[48px] flex items-center gap-[10px]">
+      <div className="bg-white rounded-[32px] p-4 mb-8 h-[48px] flex items-center gap-[10px] max-w-none w-[calc(100%+160px)] md:w-[calc(100%+120px)] sm:w-[calc(100%+48px)] ml-[-80px] md:ml-[-50px] sm:ml-[-20px]">
         {/* Icon container */}
-        <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-          <PersonIcon fillcolor={"fill-primary-color-P1"} />
+        <div className="ml-[-36px] md:ml-[-24px] sm:ml-[-12px] w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
+          <TeacherInfoIcon fillcolor={"fill-primary-color-P1"} />
         </div>
       
         {/* Text content */}
-        <div className="flex flex-col justify-center">
+        <div className="flex flex-col justify-center mr-[-36px] md:mr-[-24px] sm:mr-[-12px]">
           <h3 className="MT-SB-1 text-primary-color-P1">Teacher&apos;s information</h3>
-          <p className="ST-3 text-primary-color-P4">Text</p>
+          <p className="ST-3 text-primary-color-P4">Comprehensive overview of the teacher’s background, expertise, and instructional approach.</p>
         </div>
       </div>
 
