@@ -36,7 +36,7 @@ const JoinCommunityTutors = () => {
 
           <Link
             href={"#"}
-            className="btn btn-primary lg:w-[390px] w-full sm:p-1.5 p-2.5 rounded-xl sm:MT-SB-1 MT-SB-2 lg:mt-0 mt-[50px] flex items-center"
+            className="btn btn-primary lg:w-[390px] w-full sm:p-1.5 p-2.5 rounded-[16px] sm:MT-SB-1 MT-SB-2 lg:mt-0 mt-[50px] flex items-center"
           >
             <span className="flex-1 ml-[16px] text-left">Apply now!</span>
 
