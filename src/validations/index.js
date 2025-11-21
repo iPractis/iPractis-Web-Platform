@@ -246,14 +246,23 @@ export const tabAvailabilitySchema = z.object({
   timeZone: z.string().trim().min(1, {
     message: "Invalid timezone --- Please provide a timezone from select.",
   }),
-  dailyWorkTime: z.coerce.number().min(1, {
-    message:
-      "Working time doesn't meet requirement — minimum is 1 hour per day.",
-  }),
+  enableWorkTimeLimit: z.boolean().default(false),
+  dailyWorkTime: z.coerce.number().optional(),
   workSchedule: z.array(
     z.object({
       day: z.string(),
       hour: z.array(z.string()),
     })
   ),
+}).superRefine((data, ctx) => {
+  // Only validate dailyWorkTime if enableWorkTimeLimit is true
+  if (data.enableWorkTimeLimit) {
+    if (!data.dailyWorkTime || data.dailyWorkTime < 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Working time doesn't meet requirement — minimum is 1 hour per day.",
+        path: ["dailyWorkTime"],
+      });
+    }
+  }
 });

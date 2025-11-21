@@ -29,6 +29,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
       dailyWorkTime: draft?.dailyWorkTime || 0,
       workSchedule: mappedSchedule,
       timeZone: draft?.timeZone || "America/Chicago",
+      enableWorkTimeLimit: draft?.enableWorkTimeLimit || false,
     },
   });
 
@@ -39,6 +40,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
         dailyWorkTime: draft?.dailyWorkTime || 0,
         workSchedule: draft?.availability ,
         timeZone: draft?.timeZone || "America/Chicago",
+        enableWorkTimeLimit: draft?.enableWorkTimeLimit || false,
       });
     }
   }, [draft, reset]);
@@ -59,6 +61,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
           dailyWorkTime: data?.dailyWorkTime,
           availability: availabilityForDb, // DB-ready format
           timeZone: data?.timeZone,
+          enableWorkTimeLimit: data?.enableWorkTimeLimit,
         };
 
         console.log("AVAILABILITY PAYLOAD TO DRAFT API:", payload);
