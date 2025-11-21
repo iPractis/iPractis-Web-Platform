@@ -1,10 +1,4 @@
-import Image from "next/image";
-
-// Images && icons
-import book from "@/public/icons/book-opened-black.png";
-import dollar from "@/public/icons/dollar-black.png";
-import user from "@/public/icons/user-black.png";
-import hat from "@/public/icons/hat-black.png";
+import { GraduationCapIcon, DollarSignIcon, NotebookOpenedIconBigger, UserIcon } from "../Icons/index";
 
 const StepsToStartCareer = () => {
   return (
@@ -27,7 +21,9 @@ const StepsToStartCareer = () => {
           <div className="absolute top-6 -z-10 w-[80%] bg-primary-color-P1 h-[4px]"></div>
 
           <div>
-            <Image alt="Book Icon" className="w-[50px]" src={book} />
+            <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center">
+              <NotebookOpenedIconBigger fillcolor="fill-primary-color-P12" />
+            </div>
 
             <div className="mt-[15px]">
               <h3 className="MT-SB-1 text-primary-color-P1">Pick a subject</h3>
@@ -39,7 +35,9 @@ const StepsToStartCareer = () => {
           </div>
 
           <div>
-            <Image alt="User Icon" className="w-[50px]" src={user} />
+            <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center">
+              <UserIcon fillcolor="fill-primary-color-P12" />
+            </div> 
 
             <div className="mt-[15px]">
               <h3 className="MT-SB-1 text-primary-color-P1">
@@ -53,7 +51,9 @@ const StepsToStartCareer = () => {
           </div>
 
           <div>
-            <Image alt="Hat Icon" className="w-[50px]" src={hat} />
+            <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center">
+              <GraduationCapIcon fillcolor="fill-primary-color-P12" />
+            </div> 
 
             <div className="mt-[15px]">
               <h3 className="MT-SB-1 text-primary-color-P1">Get approved</h3>
@@ -66,13 +66,15 @@ const StepsToStartCareer = () => {
 
           <div>
             <div className="flex gap-[15px]">
-              <Image alt="Dollar Icon" className="w-[50px]" src={dollar} />
+            <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center shrink-0">
+              <DollarSignIcon fillcolor="fill-primary-color-P12" />
+            </div> 
 
               <button
-                className="btn btn-primary w-full MT-SB-2 rounded-[10px] p-2.5"
+                className="btn btn-primary w-full MT-SB-2 rounded-[16px] p-2.5"
                 type="button"
               >
-                Start!
+                Start !
               </button>
             </div>
 
@@ -92,8 +94,8 @@ const StepsToStartCareer = () => {
       {/* From 640px to bottom - Responsive */}
       <article className="sm:hidden block space-y-[33px]">
         <div className="flex items-center gap-3">
-          <div>
-            <Image alt="Book Icon" className="w-[50px]" src={book} />
+          <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center shrink-0">
+            <NotebookOpenedIconBigger fillcolor="fill-primary-color-P12" />
           </div>
 
           <div>
@@ -106,8 +108,8 @@ const StepsToStartCareer = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div>
-            <Image alt="User Icon" className="w-[50px]" src={user} />
+          <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center shrink-0">
+            <UserIcon fillcolor="fill-primary-color-P12" />
           </div>
           <div>
             <h3 className="MT-SB-1 text-primary-color-P1">
@@ -120,8 +122,8 @@ const StepsToStartCareer = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div>
-            <Image alt="Hat Icon" className="w-[50px]" src={hat} />
+          <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center shrink-0">
+            <GraduationCapIcon fillcolor="fill-primary-color-P12" />
           </div>
           <div>
             <h3 className="MT-SB-1 text-primary-color-P1">Get approved</h3>
@@ -132,8 +134,8 @@ const StepsToStartCareer = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div>
-            <Image alt="Dollar Icon" className="w-[50px]" src={dollar} />
+          <div className="bg-primary-color-P1 w-[50px] h-[50px] rounded-[16px] flex items-center justify-center shrink-0">
+            <DollarSignIcon fillcolor="fill-primary-color-P12" />
           </div>
           <div>
             <h3 className="MT-SB-1 text-primary-color-P1">
@@ -145,8 +147,8 @@ const StepsToStartCareer = () => {
           </div>
         </div>
 
-        <button className="btn btn-primary w-full MT-SB-2 rounded-[10px] p-2.5" type="button">
-          Start!
+        <button className="btn btn-primary w-full MT-SB-2 rounded-[16px] p-2.5" type="button">
+          Start !
         </button>
       </article>
     </section>
