@@ -1,5 +1,5 @@
+import { getPayPalClient } from "@/src/lib/paypal";
 import paypal from "@paypal/checkout-server-sdk";
-import { getPayPalClient } from "@/lib/paypal";
 
 export async function POST(req) {
   try {
