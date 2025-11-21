@@ -13,7 +13,7 @@ const HowWorksAndSkills = () => {
           <h2 className="ST-SB-4 text-primary-color-P1">How it works</h2>
         </div>
         <p className="text-primary-color-P4 mb-[50px] ST-3">
-          Take a quick tour of the platform's features and see exactly how it supports you in planning lessons, tracking progress, and showcasing achievements.
+          Take a quick tour of the platform&apos;s features and see exactly how it supports you in planning lessons, tracking progress, and showcasing achievements.
         </p>
 
         <div className="mt-[10px]">

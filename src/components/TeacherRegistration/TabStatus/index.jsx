@@ -13,7 +13,7 @@ const TabStatus = ({ activeTab }) => {
           <h2 className="ST-SB-4 text-primary-color-P1">Form completed and sent successfully</h2>
         </div>
         <p className="text-primary-color-P4 ST-3">
-          Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we'll update you as soon as possible. Thank you for your patience!
+          Your form has been successfully submitted! Our team will carefully review your application within 14 days, and we&apos;ll update you as soon as possible. Thank you for your patience!
         </p>
       </div>
 
