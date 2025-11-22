@@ -242,12 +242,14 @@ const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
             </div>
           </InputLeftStickStatus>
 
-          <SplitDynamicErrorZod
-            message={
-              dailyWorkTimeError?.message &&
-              "Working time doesn't meet requirement — minimum is 1 hour per day."
-            }
-          />
+          {enableWorkTimeLimit.value && (
+            <SplitDynamicErrorZod
+              message={
+                dailyWorkTimeError?.message &&
+                "Working time doesn't meet requirement — minimum is 1 hour per day."
+              }
+            />
+          )}
         </div>
       </div>
     </>
