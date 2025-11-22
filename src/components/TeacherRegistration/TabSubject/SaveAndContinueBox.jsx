@@ -17,7 +17,7 @@ const SaveAndContinueBox = ({
         descriptionText={descriptionText}
         wrapperSectionHeaderClassName={`relative bg-quaternary-color-A11 p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between ${wrapperSectionHeaderClassName}`}
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             {titleIcon}
           </div>
         }

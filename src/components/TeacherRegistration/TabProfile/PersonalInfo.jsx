@@ -67,7 +67,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
       <SectionHeader
         descriptionText="Fill in your basic details to complete your profile."
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <UserIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
