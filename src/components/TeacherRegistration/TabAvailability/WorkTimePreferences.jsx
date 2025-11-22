@@ -11,15 +11,13 @@ import { Select, SelectItem, Switch } from "@nextui-org/react";
 import { useController, Controller } from "react-hook-form";
 
 // React imports
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Icons
 import {
   ChevronDownBigIcon,
   LuggageBiggerIcon,
   LuggageClockIcon,
-  Clock1220Icon,
-  Clock12Icon,
   EarthIcon,
   GenderIcon,
   QuestionMark,
@@ -27,7 +25,7 @@ import {
   CloseBoxIcon,
 } from "../../Icons";
 
-const WorkTimePreferences = ({ dailyWorkTimeLimit, errors, control }) => {
+const WorkTimePreferences = ({ errors, control }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const {
