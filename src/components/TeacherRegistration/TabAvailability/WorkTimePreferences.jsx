@@ -209,7 +209,7 @@ const WorkTimePreferences = ({ errors, control }) => {
                 isDisabled={!enableWorkTimeLimit.value}
                 classNames={{
                   inputWrapper: [
-                    dailyWorkTimeError?.message && "form-input-error",
+                    enableWorkTimeLimit.value && dailyWorkTimeError?.message && "form-input-error",
                     !enableWorkTimeLimit.value ? "!bg-[#e5e5e5]" : "!bg-[#f8f7f5]",
                   ],
                 }}
