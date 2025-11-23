@@ -4,6 +4,7 @@ import { poppins } from "@/src/ui/font";
 import "./globals.css";
 import { AuthProvider } from "@/src/hooks/useAuth";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: "iPractis",
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
+        <Analytics>
         <SessionProvider>
           
         <AuthProvider>
@@ -24,6 +26,7 @@ export default function RootLayout({ children }) {
         </Providers>
         </AuthProvider>
         </SessionProvider>
+        </Analytics>
       </body>
     </html>
   );
