@@ -32,9 +32,11 @@ const SaveAndContinueBox = ({
           loadingText="Saving..."
           spinnerClassName="w-4 h-4 text-primary-color-P1"
         >
-          <span className="ST-3 ml-[8px] whitespace-nowrap">{buttonText}</span>
-          <div className="w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
-            <ChevronIcon fillcolor={"fill-primary-color-P1"} />
+          <div className="flex items-center justify-between gap-[13px]">
+            <span className="ST-3 whitespace-nowrap ml-[4px]">{buttonText}</span>
+            <div className="w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] p-[6px]">
+              <ChevronIcon fillcolor={"fill-primary-color-P1"} />
+            </div>
           </div>
         </ButtonSubmitForm>
       </SectionHeader>
