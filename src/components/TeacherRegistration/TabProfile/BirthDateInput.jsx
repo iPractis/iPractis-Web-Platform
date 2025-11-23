@@ -261,7 +261,7 @@ const BirthDateInput = ({ errors, control }) => {
           <div className="flex-[65%] relative">
             <input
               ref={monthInputRef}
-              className="w-full outline-none rounded-xl !p-0 text-center h-9 px-2 bg-white focus:bg-white placeholder:!text-black"
+              className="ST-3 w-full outline-none rounded-xl h-9 bg-primary-color-P12 text-primary-color-P4 text-center px-2"
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={() => {
@@ -277,13 +277,17 @@ const BirthDateInput = ({ errors, control }) => {
             {/* Invisible mirror span for typed text */}
             <span
               ref={monthMirrorRef}
-              className="absolute top-0 left-1/2 -translate-x-1/2 invisible whitespace-pre px-2 py-2 font-inherit text-base text-center"
+              className="absolute invisible"
               style={{
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
                 fontFamily: 'inherit',
                 fontSize: 'inherit',
                 fontWeight: 'inherit',
                 letterSpacing: 'inherit',
-                lineHeight: 'inherit'
+                lineHeight: 'inherit',
+                whiteSpace: 'pre'
               }}
             >
               {inputValue}
@@ -292,17 +296,17 @@ const BirthDateInput = ({ errors, control }) => {
             {/* Ghost suggestion - positioned right after typed text */}
             {suggestions.length > 0 && inputValue && (
               <span
-                className="absolute text-primary-color-P7 pointer-events-none whitespace-pre text-center"
+                className="absolute text-primary-color-P7 pointer-events-none"
                 style={{
                   top: '50%',
-                  left: `calc(50% + ${textWidth / 2}px + 1px)`,
+                  left: `calc(50% + ${textWidth / 2}px)`,
                   transform: 'translateY(-50%)',
                   fontFamily: 'inherit',
                   fontSize: 'inherit',
                   fontWeight: 'inherit',
                   letterSpacing: 'inherit',
                   lineHeight: 'inherit',
-                  height: 'inherit'
+                  whiteSpace: 'pre'
                 }}
               >
                 {suggestions[0].slice(inputValue.length)}
