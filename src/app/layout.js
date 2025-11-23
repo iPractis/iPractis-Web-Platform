@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${poppins.className} antialiased`}>
-        <Analytics>
+        
         <SessionProvider>
           
         <AuthProvider>
@@ -23,10 +23,10 @@ export default function RootLayout({ children }) {
           <Header />
 
           <main>{children}</main>
+          <Analytics></Analytics>
         </Providers>
         </AuthProvider>
         </SessionProvider>
-        </Analytics>
       </body>
     </html>
   );
