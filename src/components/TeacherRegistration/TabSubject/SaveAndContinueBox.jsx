@@ -26,11 +26,14 @@ const SaveAndContinueBox = ({
         descriptionClassName="ml-[80px]"
       >
         <ButtonSubmitForm
-          buttonClassName="absolute top-[32px] bottom-[32px] right-[32px] w-[190px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px] text-primary-color-P1 cursor-pointer"
+          buttonClassName="absolute top-[32px] bottom-[32px] right-[32px] w-[190px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px] text-primary-color-P1 cursor-pointer border border-transparent hover:border-primary-color-P1 transition-colors"
           ref={buttonRef}
+          showLoadingText={true}
+          loadingText="Saving..."
+          spinnerClassName="w-4 h-4 text-primary-color-P1"
         >
           <span className="ST-3 ml-[8px] whitespace-nowrap">{buttonText}</span>
-          <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
+          <div className="w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
             <ChevronIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         </ButtonSubmitForm>
