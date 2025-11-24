@@ -24,8 +24,8 @@ import {
   EarthBorderedIcon,
   SunAndMoonIcon,
   QuestionMark,
-  SparkleIcon,
   Clock5Icon,
+  CircleImportantIcon,
 } from "../../Icons";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { useAuth } from "@/src/hooks/useAuth";
@@ -80,15 +80,11 @@ const Preferences = ({ errors, control, watch }) => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-16"
-        titleIcon={<SparkleIcon fillcolor={"fill-primary-color-P1"} />}
+        titleIcon={<CircleImportantIcon fillcolor={"fill-primary-color-P1"} />}
+        titleText={"Account's Preferences"}
         descriptionText={"Customize your account settings."}
-        descriptionClassName={"mt-[4px]"}
-        titleText={"Preferences"}
-        titleClassName="MT-SB-1"
       />
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-[50px] lg:px-8">
+      <div className="space-y-12 max-w-[430px] mx-auto pt-6">
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
@@ -104,8 +100,8 @@ const Preferences = ({ errors, control, watch }) => {
               isOpen={isOpenLanguage}
               label={
                 <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Language{" "}
+                  <p className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+                    Account Language{" "}
                     <QuestionMark fillcolor={"fill-primary-color-P4"} />
                   </p>
                 </div>
@@ -121,10 +117,10 @@ const Preferences = ({ errors, control, watch }) => {
                 </InputBGWrapperIcon>
               }
               defaultSelectedKeys={new Set([language.value])}
-               onSelectionChange={(keys) => {
-    const selectedKey = Array.from(keys).at(0);
-    language.onChange(selectedKey);
-  }}
+              onSelectionChange={(keys) => {
+                const selectedKey = Array.from(keys).at(0);
+                language.onChange(selectedKey);
+              }}
               onOpenChange={(open) => {
                 setIsOpenLanguage(open);
 
@@ -134,7 +130,7 @@ const Preferences = ({ errors, control, watch }) => {
               }}
               classNames={{
                 trigger: [
-                  "select-wrapper-ipractis min-h-fit",
+                  "select-wrapper-ipractis min-h-fit bg-secondary-color-S11",
                   languageError?.message && "form-input-error",
                 ],
                 innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
@@ -172,7 +168,7 @@ const Preferences = ({ errors, control, watch }) => {
               isOpen={isOpenTimezone}
               label={
                 <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                  <p className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
                     Timezone{" "}
                     <QuestionMark fillcolor={"fill-primary-color-P4"} />
                   </p>
@@ -202,7 +198,7 @@ const Preferences = ({ errors, control, watch }) => {
               }}
               classNames={{
                 trigger: [
-                  "select-wrapper-ipractis min-h-fit",
+                  "select-wrapper-ipractis min-h-fit bg-secondary-color-S11",
                   timeZoneError?.message && "form-input-error",
                 ],
                 innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
@@ -270,7 +266,7 @@ const Preferences = ({ errors, control, watch }) => {
               }}
               classNames={{
                 trigger: [
-                  "select-wrapper-ipractis min-h-fit",
+                  "select-wrapper-ipractis min-h-fit bg-secondary-color-S11",
                   currencyError?.message && "form-input-error",
                 ],
                 innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
@@ -295,7 +291,7 @@ const Preferences = ({ errors, control, watch }) => {
         {/* Time format */}
         <div className="relative">
           <div className="absolute -top-8">
-            <span className="flex ps-[5px] gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
+            <span className="flex ps-[5px] gap-1.5 items-center ST-SB-4 mb-1 text-primary-color-P4">
               Time format <QuestionMark fillcolor={"fill-primary-color-P4"} />
             </span>
           </div>
@@ -309,7 +305,7 @@ const Preferences = ({ errors, control, watch }) => {
           >
             <div className="flex items-center gap-2">
               <div
-                className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-primary-color-P11 group-hover:bg-secondary-color-S9`}
+                className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-secondary-color-S11 group-hover:bg-secondary-color-S9`}
               >
                 <InputBGWrapperIcon>
                   <SunAndMoonIcon fillcolor={"fill-primary-color-P4"} />

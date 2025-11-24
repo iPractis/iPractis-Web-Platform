@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
 import ActivityItem from "./ActivityItem";
 
 // Icons
-import { DownloadMediumIcon, CalendarIcon } from "../../Icons";
+import { CalendarIcon } from "../../Icons";
 
 // Time formatting
 import dayjs from "dayjs";
@@ -24,6 +23,7 @@ const ActivityLog = () => {
       try {
         const res = await fetch("/api/logs");
         const data = await res.json();
+        console.log("Fetched logs:", data);
         setLogs(data.logs.slice(0, 5) || []);
       } catch (err) {
         console.error("Error fetching activity logs:", err);
@@ -98,32 +98,11 @@ const ActivityLog = () => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
-        descriptionText="View a detailed history of recent account activities."
         titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
-        headerContainerClassName="flex-[40%]"
-        descriptionClassName="mt-[4px]"
         titleText="Activity Log"
+        descriptionText="Monitor your account activities."
         titleClassName="MT-SB-1"
-      >
-        <div className="flex-1">
-          <button
-            className={`btn btn-tertiary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl ${
-              downloading ? "opacity-70 cursor-not-allowed" : ""
-            }`}
-            type="button"
-            onClick={handleDownloadAllLogs}
-            disabled={downloading}
-          >
-            <span className="MT-1 px-1.5">
-              {downloading ? "Downloading..." : "Download"}
-            </span>
-            <InputBGWrapperIcon className="bg-primary-color-P1">
-              <DownloadMediumIcon fillcolor={"fill-primary-color-P12"} />
-            </InputBGWrapperIcon>
-          </button>
-        </div>
-      </SectionHeader>
+      />
 
       {/* Loading / Empty states */}
       {loading ? (

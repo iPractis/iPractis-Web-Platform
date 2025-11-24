@@ -1,11 +1,11 @@
-import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { tabsButtons } from "@/src/data/dataAccountSettings";
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
+import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import SectionHeader from "../Shared/SectionHeader";
+import { tabsButtons } from "@/src/data/dataAccountSettings";
 import { useState } from "react";
 
 // Images && icons
-import { CloseIcon, SearchBigIcon } from "../Icons";
+import { CircleImportantIcon, CloseIcon, SearchBigIcon } from "../Icons";
 
 const TabsButtons = ({ activeTab, setActiveTab }) => {
   const [featureSearch, setFeatureSearch] = useState("");
@@ -17,11 +17,12 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       >
         {tabsButtons.map((TabButton, TabIndex) => (
           <button
-            key={TabIndex}
+            key={TabButton?.id ?? TabButton?.textButton}
             className={`w-full flex gap-3 items-center md:justify-start justify-center p-1.5 rounded-2xl ST-SB-4 ${
               activeTab === TabIndex ? "btn btn-tertiary" : "btn btn-primary"
             }`}
             onClick={() => setActiveTab(TabIndex)}
+            type="button"
           >
             <span
               className={`${
@@ -47,35 +48,34 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 rounded-[32px] p-4 space-y-4"
-        titleIcon={<SearchBigIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionText={"Find any feature or settings quickly."}
+        titleIcon={<CircleImportantIcon fillcolor={"fill-primary-color-P1"} />}
         titleText={"Search for a feature or an option"}
-        headerContainerClassName="p-3"
-        descriptionClassName={"mt-[4px]"}
-        titleClassName="MT-SB-1"
-      >
-        <CustomNextUiInput
-          classNames={{ inputWrapper: "!bg-primary-color-P12" }}
-          nameInput={"featureSearch"}
-          value={featureSearch}
-          onChange={(e) => setFeatureSearch(e.target.value)}
-          placeholder={"Search for a feature"}
-          startContent={
-            <InputBGWrapperIcon className="bg-primary-color-P11">
-              <SearchBigIcon fillcolor={"fill-primary-color-P1"} />
-            </InputBGWrapperIcon>
-          }
-          endContent={
-            <InputBGWrapperIcon
-              className={"bg-primary-color-P11 cursor-pointer"}
-              onClick={() => setFeatureSearch("")}
-            >
-              <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-            </InputBGWrapperIcon>
-          }
-        />
-      </SectionHeader>
+        titleClassName={"MT-SB-1"}
+        descriptionText={"Find any feature or settings quickly."}
+        rightElement={
+          <CustomNextUiInput
+            classNames={{ inputWrapper: "!bg-primary-color-P12"}}
+            nameInput={"featureSearch"}
+            value={featureSearch}
+            onChange={(e) => setFeatureSearch(e.target.value)}
+            placeholder={"Search for a feature"}
+            startContent={
+              <InputBGWrapperIcon className="bg-secondary-color-S11">
+                <SearchBigIcon fillcolor={"fill-primary-color-P1"} />
+              </InputBGWrapperIcon>
+            }
+            endContent={
+              <InputBGWrapperIcon
+                className={"bg-secondary-color-S11 cursor-pointer"}
+                onClick={() => setFeatureSearch("")}
+              >
+                <CloseIcon strokeColor={"stroke-primary-color-P1"} />
+              </InputBGWrapperIcon>
+            }
+          />
+        }
+        rightElementClassName={"w-1/2"}
+      />
     </section>
   );
 };

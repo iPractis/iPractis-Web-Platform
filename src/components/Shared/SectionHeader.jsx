@@ -1,24 +1,31 @@
 import { twMerge } from "tailwind-merge";
 
 const SectionHeader = ({
-  titleClassName = "MT-SB-2",
-  descriptionClassName = "mt-1.5",
-  wrapperSectionHeaderClassName = "",
-  headerContainerClassName = "",
+  titleClassName,
+  descriptionClassName,
+  wrapperSectionHeaderClassName,
+  headerContainerClassName,
   descriptionText,
   titleText,
   titleIcon,
+  titleIconBox,
+  rightElement,
+  rightElementClassName,
   children,
 }) => (
   <>
-    <div className={wrapperSectionHeaderClassName}>
-      <div className={headerContainerClassName}>
-        <div className="flex gap-2.5 items-center">
-          {titleIcon}
+    <div className={twMerge("bg-secondary-color-S11 p-[32px] rounded-[32px] mb-[40px]",
+      wrapperSectionHeaderClassName)}>
+      <div className={twMerge("flex justify-between items-center",
+        headerContainerClassName)}>
+        <div className="flex gap-[16px] items-center">
+          <div className={twMerge("bg-primary-color-P12 p-[14px] rounded-[16px]", titleIconBox)}>
+            {titleIcon}
+          </div>
           <div className="flex flex-col">
             <h3
               className={twMerge(
-                "text-primary-color-P1",
+                "ST-SB-4 text-primary-color-P1",
                 titleClassName
               )}
             >
@@ -34,6 +41,9 @@ const SectionHeader = ({
               {descriptionText}
             </p>
           </div>
+        </div>
+        <div className={twMerge("", rightElementClassName)}>
+          {rightElement}
         </div>
       </div>
 

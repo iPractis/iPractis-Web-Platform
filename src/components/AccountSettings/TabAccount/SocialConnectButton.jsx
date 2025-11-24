@@ -1,4 +1,4 @@
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import { ChevronDownMediumPlusIcon, LinkHorizontalIcon, LinkHorizontalMediumPlusIcon } from "../../Icons";
 
 const SocialConnectButton = ({
   isConnected = false,
@@ -8,25 +8,34 @@ const SocialConnectButton = ({
   disabled
 }) => {
   return (
-    <div className="bg-primary-color-P11 flex justify-between items-center gap-4 p-1.5 rounded-2xl">
-      <div className="flex-[28%] flex items-center gap-4">
-        <InputBGWrapperIcon>
+    <div className="flex justify-between items-center p-1.5 rounded-2xl">
+      <div className="flex items-center gap-4">
+        <div className="bg-secondary-color-S11 p-[12px] rounded-[16px] gap-[10px]">
           <IconComponent />
-        </InputBGWrapperIcon>
+        </div>
 
-        <h3 className="text-primary-color-P4 MT-1">{label}</h3>
+        <h3 className="text-primary-color-P4 ST-3">{label}</h3>
       </div>
 
-      <div className="flex-1">
+      <div className="">
         <button
           className={`${
-            isConnected ? "bg-quinary-color-VS8" : "bg-primary-color-P12"
-          } btn w-full px-7 py-1.5 rounded-[10px]`}
+            isConnected ? "bg-quinary-color-VS11" : "bg-secondary-color-S11"
+          } p-[6px] flex items-center justify-between rounded-[16px] pl-[16px] ST-3 w-[160px]`}
           onClick={onClick}
           type="button"
           disabled={disabled}
         >
-          {isConnected ? "Connected" : "Connect"}
+          <span>{isConnected ? "Connected" : "Connect"}</span>
+          <div className="bg-primary-color-P12 p-[8px] rounded-[10px]">
+            {
+              isConnected ? (
+                <LinkHorizontalMediumPlusIcon fillcolor="fill-primary-color-P1" />
+              ): (
+                <ChevronDownMediumPlusIcon fillcolor="fill-primary-color-P1" />
+              )
+            }
+          </div>
         </button>
       </div>
     </div>
