@@ -99,7 +99,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
           <button
             type="button"
             aria-label="Add language"
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+            className="absolute right-[6px] top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
             onClick={handleAddLanguage}
           >
             <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">

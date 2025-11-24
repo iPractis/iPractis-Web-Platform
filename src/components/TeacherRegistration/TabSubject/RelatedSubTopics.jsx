@@ -46,7 +46,7 @@ const RelatedSubTopics = ({ control, errors }) => {
         descriptionText="Highlight your teaching methods and the subtopics you've mastered."
         wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             <BookOpenedIcon fillcolor={"fill-primary-color-P1"} />
           </div>
         }
@@ -100,7 +100,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                 <button
                   type="button"
                   aria-label="Add sub-subject"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+                  className="absolute right-[6px] top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
                   onClick={handleAddSubSubject}
                 >
                   <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">

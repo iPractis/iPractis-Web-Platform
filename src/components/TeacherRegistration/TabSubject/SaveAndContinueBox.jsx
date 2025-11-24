@@ -17,7 +17,7 @@ const SaveAndContinueBox = ({
         descriptionText={descriptionText}
         wrapperSectionHeaderClassName={`relative bg-quaternary-color-A11 p-4 rounded-[30px] max-w-[1000px] h-[112px] flex items-center justify-between ${wrapperSectionHeaderClassName}`}
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[20px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
+          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
             {titleIcon}
           </div>
         }
@@ -26,12 +26,17 @@ const SaveAndContinueBox = ({
         descriptionClassName="ml-[80px]"
       >
         <ButtonSubmitForm
-          buttonClassName="absolute top-[32px] bottom-[32px] right-[32px] w-[190px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px] text-primary-color-P1 cursor-pointer"
+          buttonClassName="absolute top-[32px] bottom-[32px] right-[32px] w-[190px] h-[48px] bg-white rounded-[16px] p-[6px] flex items-center justify-between gap-[2px] text-primary-color-P1 cursor-pointer border border-transparent hover:border-primary-color-P1 transition-colors"
           ref={buttonRef}
+          showLoadingText={true}
+          loadingText="Saving..."
+          spinnerClassName="w-4 h-4 text-primary-color-P1"
         >
-          <span className="ST-3 ml-[8px] whitespace-nowrap">{buttonText}</span>
-          <div className="mr-[1px] w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-end p-[6px]">
-            <ChevronIcon fillcolor={"fill-primary-color-P1"} />
+          <div className="flex items-center justify-between">
+            <span className="ST-3 whitespace-nowrap ml-[4px]">{buttonText}</span>
+            <div className="absolute w-[36px] h-[36px] bg-[#F8F7F5] rounded-[10px] flex items-center justify-center right-[6px]">
+              <ChevronIcon fillcolor={"fill-primary-color-P1"} />
+            </div>
           </div>
         </ButtonSubmitForm>
       </SectionHeader>
