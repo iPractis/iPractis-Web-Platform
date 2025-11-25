@@ -1,4 +1,4 @@
-import { ChevronDownMediumPlusIcon, LinkHorizontalIcon, LinkHorizontalMediumPlusIcon } from "../../Icons";
+import { ChevronDownMediumPlusIcon, LinkHorizontalMediumPlusIcon } from "../../Icons";
 
 const SocialConnectButton = ({
   isConnected = false,

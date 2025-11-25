@@ -54,7 +54,6 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
         descriptionText={"Find any feature or settings quickly."}
         rightElement={
           <CustomNextUiInput
-            classNames={{ inputWrapper: "!bg-primary-color-P12"}}
             nameInput={"featureSearch"}
             value={featureSearch}
             onChange={(e) => setFeatureSearch(e.target.value)}
@@ -65,12 +64,14 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
               </InputBGWrapperIcon>
             }
             endContent={
-              <InputBGWrapperIcon
-                className={"bg-secondary-color-S11 cursor-pointer"}
-                onClick={() => setFeatureSearch("")}
-              >
-                <CloseIcon strokeColor={"stroke-primary-color-P1"} />
-              </InputBGWrapperIcon>
+              featureSearch && (
+                <InputBGWrapperIcon
+                  className={"bg-secondary-color-S11 cursor-pointer"}
+                  onClick={() => setFeatureSearch("")}
+                >
+                  <CloseIcon strokeColor={"stroke-primary-color-P1"} />
+                </InputBGWrapperIcon>
+              )
             }
           />
         }
