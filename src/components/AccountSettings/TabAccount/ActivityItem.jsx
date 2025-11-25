@@ -4,22 +4,24 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-
 // Icons
 import {
-  PadLockClosedSmallerIcon,
-  CalendarSmallerIcon,
   LocationSmallerIcon,
+  EarthMediumPlusIcon,
+  PasswordDotsDashIcon,
+  Clock5Icon,
+  Clock5SmallIcon,
+  MonitorSmallestIcon,
 } from "../../Icons";
+import { Clock } from "lucide-react";
 
-const ActivityItem = ({ date, time, title, location, device, changedAt }) => {
+const ActivityItem = ({ event, changedAt, date, device = "unknown", location }) => {
   // 🔹 Use either provided timestamp (changedAt) or date string
   const now = dayjs();
   const logTime = dayjs(changedAt || date);
-  let displayDate;
 
   // 🔹 Display relative or formatted date
+  let displayDate;
   if (now.diff(logTime, "hour") < 24) {
     displayDate = logTime.fromNow(); // e.g. "3 hours ago"
   } else if (now.diff(logTime, "day") === 1) {
@@ -29,37 +31,32 @@ const ActivityItem = ({ date, time, title, location, device, changedAt }) => {
   }
 
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-2.5 max-w-[430px] mx-auto">
       {/* Left section — Date + Time */}
-      <div className="flex-none flex gap-4 items-center rounded-2xl p-1.5 pe-4 bg-primary-color-P11">
-        <InputBGWrapperIcon>
-          <CalendarSmallerIcon fillcolor={"fill-primary-color-P1"} />
-        </InputBGWrapperIcon>
+      <div className="flex-none flex gap-4 items-center rounded-2xl p-1.5 pe-4">
+        <div className="flex items-center justify-center p-[14px] bg-secondary-color-S11 rounded-[16px]">
+          <PasswordDotsDashIcon fillcolor={"fill-primary-color-P1"} />
+        </div>
 
         <div>
-          <h3 className="ST-SB-1 text-primary-color-P1">{displayDate}</h3>
-          <h4 className="ST-1 text-primary-color-P4">
-            {logTime.format("hh:mm A")}
-          </h4>
+          <h3 className="ST-2 text-primary-color-P1">{event}</h3>
+          <div className="flex">
+            <span className="ST-1 text-primary-color-P5 flex gap-1">
+              <Clock5SmallIcon fillcolor={"fill-primary-color-P5"}/>
+              {displayDate}
+              <MonitorSmallestIcon fillcolor={"fill-primary-color-P5"}/>
+              {device}
+            </span>
+          </div>
         </div>
       </div>
 
       {/* Right section — Activity details */}
-      <div className="flex-1 flex gap-4 items-center rounded-2xl p-1.5 bg-primary-color-P11">
-        <InputBGWrapperIcon>
-          <PadLockClosedSmallerIcon fillcolor={"fill-primary-color-P1"} />
-        </InputBGWrapperIcon>
-
-        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 flex-wrap">
-          <h4 className="ST-2 text-primary-color-P1">{title}</h4>
-          {device && <h4 className="ST-2 text-primary-color-P4">• {device}</h4>}
-          {location && (
-            <div className="flex items-center gap-1 text-primary-color-P4 ST-3">
-              <LocationSmallerIcon fillcolor={"fill-primary-color-P4"} />
-              <span>{location}</span>
-            </div>
-          )}
+      <div className="flex gap-2 items-center p-[6px] rounded-[16px] bg-secondary-color-S11 w-[214px]">
+        <div className="flex items-center justify-center p-[8px] bg-primary-color-P12 rounded-[10px]">
+          <EarthMediumPlusIcon fillcolor={"fill-primary-color-P1"} size={20} />
         </div>
+        <span className="ST-2 text-primary-color-P1">{location}</span>
       </div>
     </div>
   );

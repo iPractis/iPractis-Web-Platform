@@ -99,7 +99,7 @@ const ActivityLog = () => {
     <div>
       <SectionHeader
         titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
-        titleText="Activity Log"
+        titleText="Activities Log"
         descriptionText="Monitor your account activities."
         titleClassName="MT-SB-1"
       />
@@ -116,15 +116,15 @@ const ActivityLog = () => {
       ) : (
         <section className="space-y-2.5 lg:px-8">
           {logs.map((log, idx) => {
-            const formattedDate = dayjs(log.changed_at).format("DD MMM, YYYY");
             const formattedTime = dayjs(log.changed_at).format("hh:mm A");
 
             return (
               <ActivityItem
                 key={idx}
-                date={formattedDate}
-                time={formattedTime}
-                title={getActivityTitle(log.table_name, log.column_name)}
+                event={log.column_name}
+                displayDate={formattedTime}
+                device="Web"
+                location="Algiers, Algeria"
               />
             );
           })}

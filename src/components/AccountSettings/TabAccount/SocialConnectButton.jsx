@@ -20,8 +20,8 @@ const SocialConnectButton = ({
       <div className="">
         <button
           className={`${
-            isConnected ? "bg-quinary-color-VS11" : "bg-secondary-color-S11"
-          } p-[6px] flex items-center justify-between rounded-[16px] pl-[16px] ST-3 w-[160px]`}
+            isConnected ? "bg-quinary-color-VS11" : "bg-secondary-color-S11 hover:bg-secondary-color-S8"
+          } p-[6px] flex items-center justify-between rounded-[16px] pl-[16px] ST-3 w-[160px] transition-colors duration-200`}
           onClick={onClick}
           type="button"
           disabled={disabled}
