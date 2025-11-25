@@ -6,14 +6,11 @@ dayjs.extend(relativeTime);
 
 // Icons
 import {
-  LocationSmallerIcon,
   EarthMediumPlusIcon,
   PasswordDotsDashIcon,
-  Clock5Icon,
   Clock5SmallIcon,
   MonitorSmallestIcon,
 } from "../../Icons";
-import { Clock } from "lucide-react";
 
 const ActivityItem = ({ event, changedAt, date, device = "unknown", location }) => {
   // 🔹 Use either provided timestamp (changedAt) or date string
