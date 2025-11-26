@@ -39,7 +39,7 @@ const ContactID = ({
     <article>
       <SectionHeader
         descriptionText="We need this information to assist you effectively"
-        titleIcon={<CircleImportantIcon />}
+        titleIcon={<CircleImportantIcon fillcolor="fill-primary-color-P1" />}
         descriptionClassName="mt-1"
         wrapperSectionHeaderClassName="sm:px-4"
         titleClassName="MT-SB-1"

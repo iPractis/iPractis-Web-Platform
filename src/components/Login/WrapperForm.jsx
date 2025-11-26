@@ -13,13 +13,9 @@ const WrapperForm = () => {
       <SectionHeader
         descriptionText="Log in to continue your journey with iPractis."
         wrapperSectionHeaderClassName={
-          "bg-[#F8F7F5] rounded-[32px] p-8"
+          "bg-secondary-color-S11 rounded-[32px] p-8"
         }
-        titleIcon={
-          <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
-            <SparkleIcon />
-          </div>
-        }
+        titleIcon={<SparkleIcon fillcolor="fill-primary-color-P1" />}
         titleClassName="MT-SB-1"
         descriptionClassName="mt-0.5"
         titleText="Welcome back"
@@ -29,12 +25,7 @@ const WrapperForm = () => {
       <div className="px-8 mt-8 rounded-xl">
         <SectionHeader
           descriptionText="Enter your account details to access to your account."
-          // headerContainerClassName="px-4"
-          titleIcon={
-            <div className="w-12 h-12 bg-[#F8F7F5] rounded-2xl p-3.5 flex items-center justify-center">
-              <PadLockUserIcon />
-            </div>
-          }
+          titleIcon={<PadLockUserIcon fillcolor="fill-primary-color-P1" />}
           descriptionClassName="mt-1"
           titleClassName="MT-SB-1"
           titleText="Account Credentials"
