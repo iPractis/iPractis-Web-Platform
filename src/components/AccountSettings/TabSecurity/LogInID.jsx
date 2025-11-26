@@ -27,17 +27,14 @@ const LogInID = ({ errors, userEmail }) => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
-        descriptionText={
-          "Manage the primary contact details associated with your account for login and recovery purposes."
-        }
         titleIcon={<RightArrowBiggerIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px]"}
-        titleText={"Log in ID"}
-        titleClassName="MT-SB-1"
+        titleText={"Log in information"}
+        descriptionText={
+          "Manage your account log in information."
+        }
       />
 
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8">
+      <div className="max-w-[430px] mx-auto">
         <div className="mt-3">
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
@@ -51,11 +48,6 @@ const LogInID = ({ errors, userEmail }) => {
               type="text"
               placeholder="Enter your email"
               readOnly
-              label={
-                <span className="flex gap-1.5 items-center">
-                  Email <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                </span>
-              }
               labelPlacement="outside"
               startContent={
                 <InputBGWrapperIcon>

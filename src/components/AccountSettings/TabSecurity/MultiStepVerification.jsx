@@ -34,14 +34,11 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
-        descriptionText={
-          "Enable multi-step verification for an added layer of security. Choose from various verification options for your account."
-        }
         titleIcon={<PadLockUserIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px]"}
-        titleText={"Multi-Step Verification"}
-        titleClassName="MT-SB-1"
+        titleText={"Multi-Step authentication"}
+        descriptionText={
+          "Enable multi-step authentication to add layer of security."
+        }
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-4 lg:px-8">

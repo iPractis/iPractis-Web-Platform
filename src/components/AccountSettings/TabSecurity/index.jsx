@@ -26,7 +26,7 @@ const TabSecurity = ({ activeTab }) => {
     <form className={`${activeTab !== 2 && "hidden"} space-y-16 mb-24`}>
       <LogInID userEmail={user?.email} errors={errors} />
 
-      <Password />
+      {/* <Password /> */}
 
       <MultiStepVerification
         isSubmitted={isSubmitted}
