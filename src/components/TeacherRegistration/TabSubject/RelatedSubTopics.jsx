@@ -43,16 +43,10 @@ const RelatedSubTopics = ({ control, errors }) => {
   return (
     <div className="flex-1">
       <SectionHeader
-        descriptionText="Highlight your teaching methods and the subtopics you've mastered."
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
-        titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <BookOpenedIcon fillcolor={"fill-primary-color-P1"} />
-          </div>
-        }
+        titleIcon={<BookOpenedIcon fillcolor="fill-primary-color-P1" />}
         titleText="Pick specialties or sub-subject"
-        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
-        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionText="Highlight your teaching methods and the subtopics you've mastered."
+        titleClassName="MT-SB-1"
       />
 
       <div className="mx-[285px] mt-[32px]">

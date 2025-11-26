@@ -24,16 +24,11 @@ const ProfilePicture = ({ errors, control, userId = "anon", setValue, draftUrl }
   return (
     <WhiteSpaceWrapper className="p-0" >
       <SectionHeader
-        descriptionText="Upload a photo to personalize your profile."
         titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <Camera/>
-          </div>
+          <Camera fillcolor="fill-primary-color-P1 "/>
         }
-        wrapperSectionHeaderClassName="relative bg-secondary-color-S11 p-8 rounded-[32px] w-[1000px] h-[112px] flex items-center gap-16"
         titleText="Profile Picture"
-        titleClassName="MT-SB-1 ml-[80px]"
-        descriptionClassName="ml-[80px]"
+        descriptionText="Upload a photo to personalize your profile."
       />
 
       <div className="mt-8 mb-16 md:px-8">

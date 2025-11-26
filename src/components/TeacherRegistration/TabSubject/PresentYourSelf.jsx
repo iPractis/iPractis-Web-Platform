@@ -27,16 +27,10 @@ const PresentYourSelf = ({ control, errors }) => {
   return (
     <>
       <SectionHeader
-        descriptionText="Introduce yourself to your future students"
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
-        titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <CameraIcon fillcolor={"fill-primary-color-P1"} />
-          </div>
-        }
+        titleIcon={<CameraIcon fillcolor="fill-primary-color-P1" />}
         titleText="Video presentation"
-        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
-        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionText="Introduce yourself to your future students"
+        titleClassName="MT-SB-1"
       />
 
       <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[120px] md:mt-[120px] mt-[120px]">

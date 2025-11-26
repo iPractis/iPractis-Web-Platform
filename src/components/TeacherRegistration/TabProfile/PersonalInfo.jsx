@@ -65,16 +65,10 @@ const PersonalInfo = ({ control, errors, watch }) => {
   return (
     <WhiteSpaceWrapper className={"p-0"}>
       <SectionHeader
-        descriptionText="Fill in your basic details to complete your profile."
-        titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <UserIcon fillcolor={"fill-primary-color-P1"} />
-          </div>
-        }
-        wrapperSectionHeaderClassName="relative bg-secondary-color-S11 p-8 rounded-[32px] w-[1000px] h-[112px] flex items-center gap-16"
+        titleIcon={<UserIcon fillcolor="fill-primary-color-P1" />}
         titleText="Personal Informations"
-        titleClassName="MT-SB-1 ml-[80px]"
-        descriptionClassName="ml-[80px]"
+        descriptionText="Fill in your basic details to complete your profile."
+        titleClassName="MT-SB-1"
       />
 
       <div className="mx-[285px] mt-[64px]">
