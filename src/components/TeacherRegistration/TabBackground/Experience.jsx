@@ -1,9 +1,12 @@
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
-import SectionHeader from "../../Shared/SectionHeader";
+
 import FormInputsBox from "./FormInputsBox";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import SectionContent from "../../Shared/SectionContent";
+import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
 
 // External imports
 import { Controller, useFieldArray } from "react-hook-form";
@@ -40,15 +43,14 @@ const Experience = ({ errors, control }) => {
       name={`careerExperience`}
       control={control}
       render={({ fieldState: { error } }) => (
-        <div>
+        <SectionWrapper>
           <SectionHeader
             titleIcon={<NotebookOpenedIconBigger fillcolor="fill-primary-color-P1" />}
             titleText="Professional background"
             descriptionText="Tell us about your career and experience"
             titleClassName="MT-SB-1"
           />
-
-          <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:-mt-[24px] md:-mt-[24px] -mt-[24px]">
+          <SectionContent>
             <InputLeftStickStatus
               inputBarStatusClassName={`${getInputStatusBorder(
                 errors,
@@ -106,25 +108,25 @@ const Experience = ({ errors, control }) => {
                 </button>
               </div>
             </InputLeftStickStatus>
-          </div>
 
-          <SplitDynamicErrorZod message={error?.message} />
+            <SplitDynamicErrorZod message={error?.message} />
 
-          <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[32px] md:mt-[32px] mt-[32px]">
-            {careerExperience?.map((experience, index) => (
-              <FormInputsBox
-                firstInputPlaceholder={"Example: University Of Somewhere"}
-                handleDelete={handleDeleteExperience}
-                array={"careerExperience"}
-                key={experience.id}
-                item={experience}
-                control={control}
-                errors={errors}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
+            <div>
+              {careerExperience?.map((experience, index) => (
+                <FormInputsBox
+                  firstInputPlaceholder={"Example: University Of Somewhere"}
+                  handleDelete={handleDeleteExperience}
+                  array={"careerExperience"}
+                  key={experience.id}
+                  item={experience}
+                  control={control}
+                  errors={errors}
+                  index={index}
+                />
+              ))}
+            </div>
+          </SectionContent>
+        </SectionWrapper>
       )}
     />
   );

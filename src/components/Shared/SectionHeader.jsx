@@ -14,7 +14,7 @@ const SectionHeader = ({
   children,
 }) => (
   <>
-    <div className={twMerge("bg-secondary-color-S11 p-[32px] rounded-[32px] mb-[40px]",
+    <div className={twMerge("bg-secondary-color-S11 p-[32px] rounded-[32px]",
       wrapperSectionHeaderClassName)}>
       <div className={twMerge("flex justify-between items-center",
         headerContainerClassName)}>

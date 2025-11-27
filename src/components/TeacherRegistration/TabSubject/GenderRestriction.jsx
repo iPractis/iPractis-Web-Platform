@@ -1,25 +1,23 @@
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
+import IconHeader from "../../Shared/IconHeader";
 
 // External imports
 import { Controller } from "react-hook-form";
 import { Switch } from "@nextui-org/react";
 
 // Icons
-import { CheckIcon, CloseBoxIcon, GenderIcon } from "../../Icons";
+import { CheckIcon, CloseBoxIcon } from "../../Icons";
+import { GenderIcon } from "../../Icons";
 
 const GenderRestriction = ({ isSubmitted, control }) => {
   return (
     <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[40px] md:mt-[40px] mt-[40px]">
       <div className="w-full">
-        <div className="flex items-center gap-[10px] mb-[30px] h-[48px]">
-          <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-            <GenderIcon fillcolor={"black"} />
-          </div>
-          <div className="flex flex-col justify-center h-[48px]">
-            <h3 className="MT-SB-1 text-sm leading-none">Gender 2 restriction</h3>
-            <p className="text-xs leading-none mt-1">Pick your student gender preference.</p>
-          </div>
-        </div>
+        <IconHeader
+          icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
+          title="Gender restriction"
+          description="Pick your student gender preference."
+        />
 
         <div>
           <Controller

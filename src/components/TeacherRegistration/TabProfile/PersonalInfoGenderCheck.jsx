@@ -27,8 +27,8 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
   };
 
   return (
-    <div className="!mt-4">
-      <span className="flex ps-[5px] gap-1.5 items-center MT-SB-1 mb-1 text-primary-color-P4">
+    <div>
+      <span className="flex ps-[5px] gap-1.5 items-center ST-SB-4 mb-1 text-primary-color-P4 relative z-20">
         Gender <QuestionMark fillcolor={"fill-primary-color-P4"} />
       </span>
 
@@ -44,7 +44,7 @@ const PersonalInfoGenderCheck = ({ control, errors, watch }) => {
             className={`flex items-center gap-1.5 w-full rounded-2xl p-1.5 ST-3 bg-secondary-color-S11 group-hover:bg-secondary-color-S9`}
           >
             <InputBGWrapperIcon>
-              <GenderIcon fillcolor={"black"} />
+              <GenderIcon/>
             </InputBGWrapperIcon>
 
             <CustomNextUiInput

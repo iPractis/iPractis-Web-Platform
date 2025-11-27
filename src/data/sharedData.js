@@ -183,9 +183,9 @@ export const searchBarSubjects = [
 
 // Student levels
 export const studentLevels = [
-  { value: "advanced", label: "Advanced" },
   { value: "beginner", label: "Beginner" },
   { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
 ];
 
 // Consolidated subjects list (unique values)

@@ -4,6 +4,7 @@ import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
+import IconHeader from "../../Shared/IconHeader";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
@@ -19,11 +20,11 @@ import {
   LuggageBiggerIcon,
   LuggageClockIcon,
   EarthIcon,
-  GenderIcon,
   QuestionMark,
   CheckIcon,
   CloseBoxIcon,
 } from "../../Icons";
+import { GenderIcon } from "../../Icons";
 
 const WorkTimePreferences = ({ errors, control }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,19 +66,6 @@ const WorkTimePreferences = ({ errors, control }) => {
       <div className="flex flex-col gap-[50px] ml-[285px] max-w-[430px]">
         {/* Set your time zone */}
         <div>
-          <SectionHeader
-            descriptionText="Please set your time zone to ensure that all session times are displayed accurately in your local time. This helps avoid any scheduling conflicts and ensures smooth coordination between tutor and students."
-            wrapperSectionHeaderClassName={"p-0 mb-2"}
-            titleIcon={null}
-            titleText={
-              <div className="flex items-center gap-2">
-                Time zone
-                <QuestionMark fillcolor={"fill-primary-color-P4"} />
-              </div>
-            }
-            titleClassName="MT-SB-1"
-          />
-
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -112,6 +100,18 @@ const WorkTimePreferences = ({ errors, control }) => {
                   timeZone.onBlur();
                 }
               }}
+              label={
+                <div className="flex flex-col lg:mb-2 mb-2 ps-1.5">
+                    <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+                      Time zone{" "}
+                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
+                    </span>
+
+                    <span className=" text-primary-color-P4 ST-3 text-left">
+                      Please set your time zone to ensure that all session times are displayed accurately in your local time. This helps avoid any scheduling conflicts and ensures smooth coordination between tutor and students.
+                    </span>
+                  </div>
+              }
               classNames={{
                 trigger: [
                   "select-wrapper-ipractis",
@@ -143,16 +143,10 @@ const WorkTimePreferences = ({ errors, control }) => {
 
         {/* Set your daily work time limit */}
         <div>
-          <SectionHeader
-            descriptionText="Define the operational cap for your daily working hour to ensure consistent alignment with your capacity."
-            wrapperSectionHeaderClassName={"p-0 mb-5"}
-            titleIcon={
-              <div className="p-[14px] bg-secondary-color-S11 rounded-[16px]">
-                <GenderIcon/>
-              </div>
-            }
-            titleText="Work time limit"
-            titleClassName="MT-SB-1"
+          <IconHeader
+            icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
+            title="Work time limit"
+            description="Define the operational cap for your daily working hour to ensure consistent alignment with your capacity."
           />
 
           <Controller

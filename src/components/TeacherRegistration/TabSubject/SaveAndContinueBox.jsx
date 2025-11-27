@@ -2,6 +2,7 @@ import ButtonSubmitForm from "../../Shared/ButtonSubmitForm";
 import SectionHeader from "../../Shared/SectionHeader";
 import { ChevronRightIcon, CircleImportantIcon } from "../../Icons";
 import { twMerge } from "tailwind-merge";
+import SectionWrapper from "../../Shared/SectionWrapper";
 
 const SaveAndContinueBox = ({
   buttonRef,
@@ -13,7 +14,7 @@ const SaveAndContinueBox = ({
   titleIcon = <CircleImportantIcon />,
 }) => {
   return (
-    <div className="mt-20">
+    <SectionWrapper>
       <SectionHeader
         titleIcon={titleIcon}
         titleText={titleText}
@@ -35,7 +36,7 @@ const SaveAndContinueBox = ({
         }
       />
 
-    </div>
+    </SectionWrapper>
   );
 };
 

@@ -87,6 +87,9 @@ const BaseCountryInput = ({
 
   return (
     <div className="relative">
+      <span className="flex ps-[5px] gap-1.5 items-center ST-SB-4 mb-1 text-primary-color-P4 relative z-20">
+        {label}
+      </span>
       <InputLeftStickStatus
         inputBarStatusClassName={getInputStatusBorder(errors, field?.value, name)}
       >
@@ -96,7 +99,6 @@ const BaseCountryInput = ({
             ref={inputRef}
             type="text"
             placeholder={placeholder}
-            label={label}
             classNames={{
               inputWrapper: fieldError?.message ? "form-input-error" : "!bg-secondary-color-S11",
               input: "relative z-10 bg-transparent",
@@ -106,7 +108,6 @@ const BaseCountryInput = ({
             onChange={(e) => handleInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             name={name}
-            labelPlacement="outside"
             startContent={
               <span ref={prefixRef} className="flex items-center gap-1.5">
                 <InputBGWrapperIcon>

@@ -4,6 +4,8 @@ import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { teachingSubjects } from "@/src/data/dataTeacherRegistration";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import SectionHeader from "../../Shared/SectionHeader";
 import ProfileTitle from "./ProfileTitle";
 
@@ -50,7 +52,7 @@ const SubjectsToTeach = ({ errors, control }) => {
   };
 
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<NotebookOpenedIconBigger fillcolor="fill-primary-color-P1" />}
         titleText="Set up your teaching subject"
@@ -58,45 +60,39 @@ const SubjectsToTeach = ({ errors, control }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[92px] md:mt-[64px] mt-[80px]">
+      <SectionContent>
         {/* Select subject to teach */}
         <div>
-            <InputLeftStickStatus
-              inputBarStatusClassName={getInputStatusBorder(
-                errors,
-                subject.value,
-                "subject"
-              )}
-            >
-              <Select
-                selectedKeys={new Set([subject.value])}
-                onSelectionChange={(keys) => {
-                  const key = Array.from(keys)[0];
-                  subject.onChange(key);
-                }}
-                onOpenChange={(open) => {
-                  setIsOpen(open);
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+              Select the subject you wish to teach{" "}
+              <QuestionMark fillcolor={"fill-primary-color-P4"} />
+            </span>
+            <span className="text-primary-color-P4 ST-3">
+              You can teach only one subject.
+            </span>
+          </div>
+          <InputLeftStickStatus
+            inputBarStatusClassName={getInputStatusBorder(
+              errors,
+              subject.value,
+              "subject"
+            )}
+          >
+            <Select
+              selectedKeys={new Set([subject.value])}
+              onSelectionChange={(keys) => {
+                const key = Array.from(keys)[0];
+                subject.onChange(key);
+              }}
+              onOpenChange={(open) => {
+                setIsOpen(open);
 
-                  if (!open) {
-                    subject.onBlur();
-                  }
-                }}
-                labelPlacement="outside"
-                label={
-                  <div className="flex flex-col lg:mb-2 mb-2 ps-1.5">
-                    <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                      Select the subject you wish to teach{" "}
-                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                    </span>
-
-                    <div className="self-start">
-                      <span className=" text-primary-color-P4 ST-3">
-                        You can teach only one subject.
-                      </span>
-                    </div>
-                  </div>
+                if (!open) {
+                  subject.onBlur();
                 }
-                placeholder="Select a teaching subject"
+              }}
+              placeholder="Select a teaching subject"
                 selectorIcon={<span></span>}
                 isOpen={isOpen}
                 startContent={
@@ -141,13 +137,12 @@ const SubjectsToTeach = ({ errors, control }) => {
         </div>
 
         {/* Profile title and description */}
-        <div className="lg:mt-[80px] md:mt-[60px] mt-[64px]">
+        <div>
           <ProfileTitle errors={errors} control={control} />
         </div>
 
-             
-                 {/* Subject Introduction */}
-         <div className="lg:mt-[32px] md:mt-[24px] mt-[20px]">
+        {/* Subject Introduction */}
+        <div>
            <InputLeftStickStatus
              inputBarStatusClassName={`${getInputStatusBorder(
                errors,
@@ -180,9 +175,8 @@ const SubjectsToTeach = ({ errors, control }) => {
 
           <SplitDynamicErrorZod message={subjectIntroductionError?.message} />
         </div>
-        </div> 
-      </div>
-   
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

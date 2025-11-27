@@ -7,6 +7,8 @@ import {
 } from "@/src/data/dataTeacherRegistration";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // React imports
@@ -45,11 +47,8 @@ const AveragePrice = ({ control, errors, watch, userCountry }) => {
 		hourlyPrice.onChange(numericValue);
 	};
 
-	// Display value with USD suffix for better UX
-	const displayValue = hourlyPrice.value ? `${hourlyPrice.value} USD` : "";
-
 	return (
-		<>
+		<SectionWrapper>
 			<SectionHeader
 				titleIcon={<DollarSignIcon fillcolor="fill-primary-color-P1" />}
 				titleText="Class Rate"
@@ -57,29 +56,25 @@ const AveragePrice = ({ control, errors, watch, userCountry }) => {
 				titleClassName="MT-SB-1"
 			/>
 
-			<div className="lg:mx-[285px] md:mx-[100px] mx-4">
-				<div className="w-full">
-					<div className="">
+			<SectionContent>
+				<div>
+					<div className="flex flex-col mb-2 ps-1.5">
 						<span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
 							Private lesson rate
 							<QuestionMark fillcolor={"fill-primary-color-P4"} />
 						</span>
-
-						<div className="">
-							<span className=" text-primary-color-P4 ST-3">
-								Define your rate for 1:1 private lesson.
-							</span>
-						</div>
+						<span className="text-primary-color-P4 ST-3">
+							Define your rate for 1:1 private lesson.
+						</span>
 					</div>
 					<InputLeftStickStatus
 						inputBarStatusClassName={`${getInputStatusBorder(
 							errors,
 							hourlyPrice.value,
 							"hourlyPrice",
-						)} top-1/2 -translate-y-1/2`}
+						)}`}
 					>
-						<div className="mt-7">
-							<div className="relative">
+						<div className="relative">
 								<CustomNextUiInput
 									type="text"
 									name="hourlyPrice"
@@ -137,7 +132,6 @@ const AveragePrice = ({ control, errors, watch, userCountry }) => {
 									</span>
 								)}
 							</div>
-						</div>
 					</InputLeftStickStatus>
 
 					<SplitDynamicErrorZod message={hourlyPriceError?.message} />
@@ -193,8 +187,8 @@ const AveragePrice = ({ control, errors, watch, userCountry }) => {
 						</div>
 					)}
 				</div>
-			</div>
-		</>
+			</SectionContent>
+		</SectionWrapper>
 	);
 };
 

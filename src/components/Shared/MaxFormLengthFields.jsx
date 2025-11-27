@@ -33,8 +33,8 @@ export const CustomNextUiTextareaWithMaxLength = ({
         label={
           // If labelDisabled is false, then we display it!
           !labelDisabled && (
-            <div className="mb-2">
-              <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+            <div className="mb-0">
+              <span className="flex gap-1.5 items-center text-primary-color-P4 !ST-SB-4">
                 {labelTitle}{" "}
                 <QuestionMark fillcolor={"fill-primary-color-P4"} />
               </span>
@@ -120,7 +120,7 @@ export const CustomNextUiInputWithMaxLength = ({
         label={
           // If labelDisabled is false, then we display it!
           !labelDisabled && (
-            <div className="mb-2">
+            <div className="mb-1">
               <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
                 {labelTitle}{" "}
                 <QuestionMark fillcolor={"fill-primary-color-P4"} />

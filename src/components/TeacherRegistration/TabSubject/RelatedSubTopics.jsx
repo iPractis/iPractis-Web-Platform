@@ -5,6 +5,8 @@ import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import SectionHeader from "../../Shared/SectionHeader";
 import SubSubject from "./SubSubject";
 
@@ -41,7 +43,7 @@ const RelatedSubTopics = ({ control, errors }) => {
   };
 
   return (
-    <div className="flex-1">
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<BookOpenedIcon fillcolor="fill-primary-color-P1" />}
         titleText="Pick specialties or sub-subject"
@@ -49,7 +51,7 @@ const RelatedSubTopics = ({ control, errors }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="mx-[285px] mt-[32px]">
+      <SectionContent>
         <div className="space-y-4">
           {/* Add Sub-subject Button */}
           <div>
@@ -128,8 +130,8 @@ const RelatedSubTopics = ({ control, errors }) => {
         </div>
 
         <SplitDynamicErrorZod message={error?.message} />
-      </div>
-    </div>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

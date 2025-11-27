@@ -375,7 +375,7 @@ tr:last-of-type td.isSelected {
   }
 
   .input-label-ipractis {
-    @apply text-primary-color-P4 MT-SB-1 -top-7 translate-y-0 mt-0 !important;
+    @apply text-primary-color-P4 ST-SB-4 -top-7 translate-y-0 mt-0 !important;
   }
 
   .textarea-wrapper {

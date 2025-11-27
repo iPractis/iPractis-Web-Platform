@@ -3,6 +3,8 @@ import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
@@ -25,7 +27,7 @@ const PresentYourSelf = ({ control, errors }) => {
   });
 
   return (
-    <>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<CameraIcon fillcolor="fill-primary-color-P1" />}
         titleText="Video presentation"
@@ -33,8 +35,7 @@ const PresentYourSelf = ({ control, errors }) => {
         titleClassName="MT-SB-1"
       />
 
-      <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[120px] md:mt-[120px] mt-[120px]">
-        <div className="w-full">
+      <SectionContent>
         <div>
           <InputLeftStickStatus
             inputBarStatusClassName={`${getInputStatusBorder(
@@ -85,9 +86,8 @@ const PresentYourSelf = ({ control, errors }) => {
             </li>
           </ul>
         </div>
-        </div>
-      </div>
-    </>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

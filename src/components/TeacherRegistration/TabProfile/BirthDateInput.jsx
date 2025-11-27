@@ -169,8 +169,8 @@ const BirthDateInput = ({ errors, control }) => {
   };
 
   return (
-    <div className="!mt-4 group">
-      <span className="flex gap-1.5 ps-[5px] items-center MT-SB-1 mb-1 text-primary-color-P4">
+    <div>
+      <span className="flex gap-1.5 ps-[5px] items-center ST-SB-4 mb-1 text-primary-color-P4 relative z-20">
         Birth date <QuestionMark fillcolor={"fill-primary-color-P4"} />
       </span>
 
