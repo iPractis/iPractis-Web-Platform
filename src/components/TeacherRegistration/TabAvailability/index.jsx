@@ -99,7 +99,7 @@ const TabAvailability = ({ setActiveTab, activeTab, draft, setDraft }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={`${activeTab !== 3 && "hidden"}`}
+      className={`${activeTab !== 3 && "hidden"} space-y-[64px]`}
     >
       <WorkTimePreferences
         dailyWorkTimeLimit={dailyWorkTimeLimit}

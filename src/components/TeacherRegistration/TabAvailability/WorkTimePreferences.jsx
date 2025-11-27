@@ -1,11 +1,14 @@
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
 import { SplitDynamicErrorZod } from "../../../lib/utils/getZodValidations";
-import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { timeZones } from "@/src/data/dataTeacherRegistration";
+
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import IconHeader from "../../Shared/IconHeader";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import SectionContent from "../../Shared/SectionContent";
 import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
 
 // External imports
 import { Select, SelectItem, Switch } from "@nextui-org/react";
@@ -55,17 +58,25 @@ const WorkTimePreferences = ({ errors, control }) => {
   // dailyWorkTime should be a static user-defined value (hours/day)
 
   return (
-    <>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<LuggageClockIcon fillcolor="fill-primary-color-P1" />}
         titleText="Work time preferences"
         descriptionText="Minimum working time is set to 8 hours par week, please consider your weekly tasks and commitment to define your work time."
         titleClassName="MT-SB-1"
       />
-
-      <div className="flex flex-col gap-[50px] ml-[285px] max-w-[430px]">
+      <SectionContent className="space-y-[50px]">
         {/* Set your time zone */}
         <div>
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+              Time zone{" "}
+              <QuestionMark fillcolor={"fill-primary-color-P4"} />
+            </span>
+            <span className="text-primary-color-P4 ST-3 text-left">
+              Please set your time zone to ensure that all session times are displayed accurately in your local time. This helps avoid any scheduling conflicts and ensures smooth coordination between tutor and students.
+            </span>
+          </div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -100,23 +111,11 @@ const WorkTimePreferences = ({ errors, control }) => {
                   timeZone.onBlur();
                 }
               }}
-              label={
-                <div className="flex flex-col lg:mb-2 mb-2 ps-1.5">
-                    <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                      Time zone{" "}
-                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                    </span>
-
-                    <span className=" text-primary-color-P4 ST-3 text-left">
-                      Please set your time zone to ensure that all session times are displayed accurately in your local time. This helps avoid any scheduling conflicts and ensures smooth coordination between tutor and students.
-                    </span>
-                  </div>
-              }
               classNames={{
                 trigger: [
                   "select-wrapper-ipractis",
                   timeZoneError?.message && "form-input-error",
-                  "!bg-[#f8f7f5]",
+                  "!bg-secondary-color-S11",
                 ],
                 innerWrapper: ["select-ipractis", "w-full"],
                 value: [
@@ -183,7 +182,7 @@ const WorkTimePreferences = ({ errors, control }) => {
           <InputLeftStickStatus
             inputBarStatusClassName={
               !enableWorkTimeLimit.value
-                ? "border-[#e5e5e5]"
+                ? "border-primary-color-P6"
                 : getInputStatusBorder(errors, dailyWorkTime.value, "dailyWorkTime")
             }
             className={!enableWorkTimeLimit.value ? "opacity-50" : ""}
@@ -198,7 +197,7 @@ const WorkTimePreferences = ({ errors, control }) => {
                 classNames={{
                   inputWrapper: [
                     enableWorkTimeLimit.value && dailyWorkTimeError?.message && "form-input-error",
-                    !enableWorkTimeLimit.value ? "!bg-[#e5e5e5]" : "!bg-[#f8f7f5]",
+                    !enableWorkTimeLimit.value ? "!bg-primary-color-P6" : "!bg-secondary-color-S11",
                   ],
                 }}
                 startContent={
@@ -237,8 +236,8 @@ const WorkTimePreferences = ({ errors, control }) => {
             />
           )}
         </div>
-      </div>
-    </>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 
