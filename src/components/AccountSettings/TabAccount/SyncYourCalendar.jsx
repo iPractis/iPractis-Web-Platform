@@ -1,5 +1,7 @@
 import { signIn, useSession } from "next-auth/react";
 import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import SocialConnectButton from "./SocialConnectButton";
 import { GoogleLargeIcon, CalendarIcon } from "../../Icons";
 
@@ -13,15 +15,14 @@ const SyncYourCalendar = () => {
   };
 
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<CalendarIcon fillcolor="fill-primary-color-P1" />}
         titleText="External Calendar"
         descriptionText="Connect your external calendar to keep your schedule up-to-date."
-        titleClassName="MT-SB-1"
       />
 
-      <div className="max-w-[430px] mx-auto">
+      <SectionContent>
         <SocialConnectButton
           IconComponent={GoogleLargeIcon}
           label={session?.accessToken ? "Connected to Google" : "Join with Google"}
@@ -29,8 +30,8 @@ const SyncYourCalendar = () => {
           disabled={session?.accessToken}
           onClick={handleGoogleConnect}
         />
-      </div>
-    </div>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

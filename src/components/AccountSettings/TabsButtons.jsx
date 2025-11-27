@@ -54,6 +54,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
         descriptionText={"Find any feature or settings quickly."}
         rightElement={
           <CustomNextUiInput
+            bgColor="white"
             nameInput={"featureSearch"}
             value={featureSearch}
             onChange={(e) => setFeatureSearch(e.target.value)}

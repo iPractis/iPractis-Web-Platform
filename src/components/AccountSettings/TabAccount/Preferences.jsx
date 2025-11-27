@@ -4,6 +4,8 @@ import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import {
   currencies,
   languages,
@@ -78,14 +80,20 @@ const Preferences = ({ errors, control, watch }) => {
   const isTeacher = user.role.toLowerCase() === "teacher";
 
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<CircleImportantIcon fillcolor={"fill-primary-color-P1"} />}
         titleText={"Account's Preferences"}
         descriptionText={"Customize your account settings."}
       />
-      <div className="space-y-12 max-w-[430px] mx-auto pt-6">
+      <SectionContent>
         <div>
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+              Account Language{" "}
+              <QuestionMark fillcolor={"fill-primary-color-P4"} />
+            </span>
+          </div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -98,14 +106,6 @@ const Preferences = ({ errors, control, watch }) => {
               placeholder="Select a language"
               selectorIcon={<span></span>}
               isOpen={isOpenLanguage}
-              label={
-                <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
-                    Account Language{" "}
-                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                  </p>
-                </div>
-              }
               startContent={
                 <InputBGWrapperIcon>
                   <EarthBorderedIcon strokeColor={"stroke-primary-color-P4"} />
@@ -138,12 +138,11 @@ const Preferences = ({ errors, control, watch }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-12 !scale-100",
               }}
             >
-              {languages?.map((tz, index) => (
-                <SelectItem key={index} value={tz}>
-                  {tz}
+              {languages?.map((language) => (
+                <SelectItem key={language} value={language}>
+                  {language}
                 </SelectItem>
               ))}
             </Select>
@@ -154,6 +153,12 @@ const Preferences = ({ errors, control, watch }) => {
 
         {/* Timezone */}
         <div>
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+              Timezone{" "}
+              <QuestionMark fillcolor={"fill-primary-color-P4"} />
+            </span>
+          </div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -166,14 +171,6 @@ const Preferences = ({ errors, control, watch }) => {
               placeholder="Select a time zone"
               selectorIcon={<span></span>}
               isOpen={isOpenTimezone}
-              label={
-                <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
-                    Timezone{" "}
-                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                  </p>
-                </div>
-              }
               startContent={
                 <InputBGWrapperIcon>
                   <Clock5Icon fillcolor={"fill-primary-color-P4"} />
@@ -206,7 +203,6 @@ const Preferences = ({ errors, control, watch }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-12 !scale-100",
               }}
             >
               {timeZones?.map((tz) => (
@@ -222,6 +218,12 @@ const Preferences = ({ errors, control, watch }) => {
 
         {/* Currency */}
         {isTeacher && <div>
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+              Currency{" "}
+              <QuestionMark fillcolor={"fill-primary-color-P4"} />
+            </span>
+          </div>
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -234,14 +236,6 @@ const Preferences = ({ errors, control, watch }) => {
               placeholder="Select a currency"
               selectorIcon={<span></span>}
               isOpen={isOpenCurrency}
-              label={
-                <div className="ps-0 mb-2">
-                  <p className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
-                    Currency{" "}
-                    <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                  </p>
-                </div>
-              }
               startContent={
                 <InputBGWrapperIcon>
                   <DollarSignCircleIcon fillcolor={"fill-primary-color-P4"} />
@@ -274,12 +268,11 @@ const Preferences = ({ errors, control, watch }) => {
                   "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
                 ],
                 listbox: ["text-primary-color-P4"],
-                label: "mb-12 !scale-100",
               }}
             >
-              {currencies?.map((tz, index) => (
-                <SelectItem key={index} value={tz}>
-                  {tz}
+              {currencies?.map((currency) => (
+                <SelectItem key={currency} value={currency}>
+                  {currency}
                 </SelectItem>
               ))}
             </Select>
@@ -289,13 +282,12 @@ const Preferences = ({ errors, control, watch }) => {
         </div>}
 
         {/* Time format */}
-        <div className="relative">
-          <div className="absolute -top-8">
-            <span className="flex ps-[5px] gap-1.5 items-center ST-SB-4 mb-1 text-primary-color-P4">
+        <div>
+          <div className="flex flex-col mb-2 ps-1.5">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
               Time format <QuestionMark fillcolor={"fill-primary-color-P4"} />
             </span>
           </div>
-
           <InputLeftStickStatus
             inputBarStatusClassName={getInputStatusBorder(
               errors,
@@ -360,8 +352,8 @@ const Preferences = ({ errors, control, watch }) => {
 
           <SplitDynamicErrorZod message={timeFormatError?.message} />
         </div>
-      </div>
-    </div>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

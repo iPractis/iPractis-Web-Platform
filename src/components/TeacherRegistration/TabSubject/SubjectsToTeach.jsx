@@ -64,7 +64,7 @@ const SubjectsToTeach = ({ errors, control }) => {
         {/* Select subject to teach */}
         <div>
           <div className="flex flex-col mb-2 ps-1.5">
-            <span className="flex gap-1.5 items-center text-primary-color-P4 MT-SB-1">
+            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
               Select the subject you wish to teach{" "}
               <QuestionMark fillcolor={"fill-primary-color-P4"} />
             </span>

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import ActivityItem from "./ActivityItem";
 
 // Icons
@@ -96,41 +98,43 @@ const ActivityLog = () => {
   };
 
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
         titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
         titleText="Activities Log"
         descriptionText="Monitor your account activities."
-        titleClassName="MT-SB-1"
       />
 
-      {/* Loading / Empty states */}
-      {loading ? (
-        <p className="text-center text-primary-color-P4 ST-3">
-          Loading activity logs...
-        </p>
-      ) : logs.length === 0 ? (
-        <p className="text-center text-primary-color-P4 ST-3">
-          No recent activities found.
-        </p>
-      ) : (
-        <section className="space-y-2.5 lg:px-8">
-          {logs.map((log, idx) => {
-            const formattedTime = dayjs(log.changed_at).format("hh:mm A");
+      <SectionContent className="w-full">
+        {/* Loading / Empty states */}
+        {loading ? (
+          <p className="text-center text-primary-color-P4 ST-3">
+            Loading activity logs...
+          </p>
+        ) : logs.length === 0 ? (
+          <p className="text-center text-primary-color-P4 ST-3">
+            No recent activities found.
+          </p>
+        ) : (
+          <section className="space-y-2.5">
+            {logs.map((log) => {
+              const formattedTime = dayjs(log.changed_at).format("hh:mm A");
+              const uniqueKey = `${log.id}-${log.changed_at}-${log.column_name}`;
 
-            return (
-              <ActivityItem
-                key={idx}
-                event={log.column_name}
-                displayDate={formattedTime}
-                device="Web"
-                location="Algiers, Algeria"
-              />
-            );
-          })}
-        </section>
-      )}
-    </div>
+              return (
+                <ActivityItem
+                  key={uniqueKey}
+                  event={log.column_name}
+                  displayDate={formattedTime}
+                  device="Web"
+                  location="Algiers, Algeria"
+                />
+              );
+            })}
+          </section>
+        )}
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

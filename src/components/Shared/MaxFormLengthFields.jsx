@@ -27,24 +27,21 @@ export const CustomNextUiTextareaWithMaxLength = ({
 
   return (
     <>
+      {!labelDisabled && (
+        <div className="mb-2 ps-1.5">
+          <span className="flex gap-1.5 items-center text-primary-color-P4 !ST-SB-4">
+            {labelTitle}{" "}
+            <QuestionMark fillcolor={"fill-primary-color-P4"} />
+          </span>
+
+          <span className="text-primary-color-P4 ST-3">
+            {labelSubtitle}
+          </span>
+        </div>
+      )}
       <CustomNextUiTextarea
         defaultValue={defaultValue}
         name={nameTextarea}
-        label={
-          // If labelDisabled is false, then we display it!
-          !labelDisabled && (
-            <div className="mb-0">
-              <span className="flex gap-1.5 items-center text-primary-color-P4 !ST-SB-4">
-                {labelTitle}{" "}
-                <QuestionMark fillcolor={"fill-primary-color-P4"} />
-              </span>
-
-              <span className="text-primary-color-P4 ST-3">
-                {labelSubtitle}
-              </span>
-            </div>
-          )
-        }
         {...inputProps}
         onChange={onChange}
         value={value}
@@ -56,9 +53,7 @@ export const CustomNextUiTextareaWithMaxLength = ({
             (exceedValueMaxLength && "form-input-error") ||
             (backgroundError && "form-input-error"),
             "!bg-[#f8f7f5]"
-          ],
-          label: [labelClassName],
-          label: "ps-[5px]"
+          ]
         }}
         size="primaryiPractis"
         disableAutosize
