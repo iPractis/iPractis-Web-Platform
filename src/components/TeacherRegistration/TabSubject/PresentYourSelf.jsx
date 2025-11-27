@@ -47,21 +47,11 @@ const PresentYourSelf = ({ control, errors }) => {
               type="text"
               name="videoLink"
               label={
-                <SectionHeader
-                  descriptionText="Put the YouTube link of your video presentation."
-                  titleText={
-                    <span className="flex gap-1.5 items-center">
-                      Video Link{" "}
-                      <QuestionMark fillcolor={"fill-primary-color-P4"} />
-                    </span>
-                  }
-                  titleClassName="MT-SB-1"
-                />
+                <span className="flex gap-1.5 items-center">
+                  Video Link
+                  <QuestionMark fillcolor={"fill-primary-color-P4"} />
+                </span>
               }
-              classNames={{
-                label: "!-top-14",
-                inputWrapper: `${videoLinkError?.message ? "form-input-error" : ""} !bg-[#F8F7F5]`,
-              }}
               value={videoLink.value}
               onChange={videoLink.onChange}
               onBlur={videoLink.onBlur}
