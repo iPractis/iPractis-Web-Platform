@@ -50,54 +50,58 @@ const Experience = ({ errors, control }) => {
             titleClassName="MT-SB-1"
           />
           <SectionContent>
-            <InputLeftStickStatus
-              inputBarStatusClassName={`${getInputStatusBorder(
-                errors,
-                careerExperience,
-                "careerExperience"
-              )}`}
-            >
-              <div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
-                    <ExperienceBuildingIcon fillColor={"fill-primary-color-P4"} />
-                  </div>
-                  <div>
-                    <span className="ST-3 text-primary-color-P12">
-                      Add an experience
-                    </span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  aria-label="Add experience"
-                  className=""
-                  onClick={handleAddExperience}
-                >
-                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
-                    <PlusIcon />
-                  </div>
-                </button>
-              </div>
-            </InputLeftStickStatus>
-
-            <SplitDynamicErrorZod message={error?.message} />
-
+          <div className="space-y-4">
+            {/* Add Experience Button */}
             <div>
-              {careerExperience?.map((experience, index) => (
-                <FormInputsBox
-                  firstInputPlaceholder={"Example: University Of Somewhere"}
-                  handleDelete={handleDeleteExperience}
-                  array={"careerExperience"}
-                  key={experience.id}
-                  item={experience}
-                  control={control}
-                  errors={errors}
-                  index={index}
-                />
-              ))}
+              <InputLeftStickStatus
+                inputBarStatusClassName={`${getInputStatusBorder(
+                  errors,
+                  careerExperience,
+                  "careerExperience"
+                )}`}
+              >
+                <div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+                      <ExperienceBuildingIcon fillColor={"fill-primary-color-P4"} />
+                    </div>
+                    <div>
+                      <span className="ST-3 text-primary-color-P12">
+                        Add an experience
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Add experience"
+                    className=""
+                    onClick={handleAddExperience}
+                  >
+                    <div className="p-[8px] rounded-[10px] bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors">
+                      <PlusIcon />
+                    </div>
+                  </button>
+                </div>
+              </InputLeftStickStatus>
             </div>
-          </SectionContent>
+
+            {/* Experience Items */}
+            {careerExperience?.map((experience, index) => (
+              <FormInputsBox
+                firstInputPlaceholder={"Example: University Of Somewhere"}
+                handleDelete={handleDeleteExperience}
+                array={"careerExperience"}
+                key={experience.id}
+                item={experience}
+                control={control}
+                errors={errors}
+                index={index}
+              />
+            ))}
+          </div>
+
+          <SplitDynamicErrorZod message={error?.message} />
+        </SectionContent>
         </SectionWrapper>
       )}
     />

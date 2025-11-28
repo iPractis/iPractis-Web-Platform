@@ -319,6 +319,39 @@ export const UserSpeakingRightIcon = ({ fillcolor }) => (
   </svg>
 );
 
+// Language Speaking Icon
+export const LanguageSpeakingIcon = ({
+  fillColor = "fill-primary-color-P1",
+  width = 20,
+  height = 20,
+  className,
+  ariaLabel,
+  ...props
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label={ariaLabel}
+    aria-hidden={ariaLabel ? "false" : "true"}
+    className={className}
+    {...props}
+  >
+      <g clipPath="url(#clip0_7961_33667)">
+      <path d="M8 11.008C10.2091 11.008 12 9.21713 12 7.00799C12 4.79885 10.2091 3.00799 8 3.00799C5.79086 3.00799 4 4.79885 4 7.00799C4 9.21713 5.79086 11.008 8 11.008Z" className={fillColor}/>
+      <path d="M14.39 13.568C12.71 12.708 10.53 12.008 8 12.008C5.47 12.008 3.29 12.708 1.61 13.568C0.61 14.078 0 15.108 0 16.228V17.008C0 18.108 0.9 19.008 2 19.008H14C15.1 19.008 16 18.108 16 17.008V16.228C16 15.108 15.39 14.078 14.39 13.568Z" className={fillColor}/>
+      <path d="M18.52 1.38799C18.15 0.90799 17.44 0.86799 17.02 1.29799C16.67 1.64799 16.63 2.20799 16.93 2.59799C18.1 4.09799 19.57 7.82799 16.93 11.208C16.63 11.598 16.67 12.158 17.02 12.508C17.45 12.938 18.15 12.888 18.52 12.418C20.02 10.488 21.87 5.69799 18.52 1.38799Z" className={fillColor}/>
+      <path d="M15.72 4.37799C15.39 3.80799 14.61 3.70799 14.14 4.16799C13.81 4.49799 13.78 5.00799 14.01 5.41799C14.26 5.85799 14.75 7.10799 14 8.40799C13.77 8.80799 13.81 9.30799 14.14 9.62799C14.61 10.098 15.39 9.97799 15.72 9.40799C16.88 7.41799 16.3 5.38799 15.72 4.37799Z" className={fillColor}/>
+      </g>
+      <defs>
+      <clipPath id="clip0_7961_33667">
+      <rect width="20" height="20" fill="white"/>
+      </clipPath>
+      </defs>
+  </svg>
+);
+
 export const UserScreenIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -530,6 +563,31 @@ export const PersonWithGraduationCapLikeIcon = () => (
     <path fillRule="evenodd" clipRule="evenodd" d="M15.0007 11.6665C16.8416 11.6665 18.334 13.1589 18.334 14.9998C18.334 16.8408 16.8416 18.3332 15.0007 18.3332C13.1597 18.3332 11.6673 16.8408 11.6673 14.9998C11.6673 13.1589 13.1597 11.6665 15.0007 11.6665ZM16.4232 14.4106C16.0977 14.0852 15.5702 14.0852 15.2448 14.4106L15.0007 14.6548L14.7565 14.4106C14.4311 14.0852 13.9036 14.0852 13.5781 14.4106C13.2527 14.7361 13.2527 15.2636 13.5781 15.589L14.2935 16.3044C14.684 16.6948 15.3173 16.6949 15.7078 16.3044L16.4232 15.589C16.7486 15.2636 16.7486 14.7361 16.4232 14.4106Z" fill="black"/>
   </svg>
 )
+
+// Person With Graduation Cap Modern Icon
+export const PersonWithGraduationCapModernIcon = ({
+  fillColor = "fill-primary-color-P1",
+  width = 24,
+  height = 24,
+  className,
+  ariaLabel,
+  ...props
+}) => (
+  <svg
+    width={width}
+    height={height}
+    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+    role="img"
+    aria-label={ariaLabel}
+    aria-hidden={ariaLabel ? "false" : "true"}
+    className={className}
+    {...props}
+  >
+      <path d="M20 19.2419C20 23.2415 16.2998 22.997 11.8815 22.997C7.4632 22.997 4 23.2415 4 19.2419C4 15.2422 7.58172 11.9999 12 11.9999C16.4183 11.9999 20 15.2422 20 19.2419Z" className={fillColor}/>
+      <path d="M15.3857 4.87098C15.7743 5.48761 16 6.21721 16 6.99989C16 9.20902 14.2091 10.9999 12 10.9999C9.79086 10.9999 8 9.20902 8 6.99989C8 6.21739 8.22491 5.48752 8.61328 4.87098L11.9053 5.96864C11.9667 5.98906 12.0333 5.98906 12.0947 5.96864L15.3857 4.87098Z" className={fillColor}/>
+      <path d="M6.85382 2.71528L11.9051 1.03151C11.9667 1.01098 12.0333 1.01098 12.0949 1.03151L17.1462 2.71528C17.4197 2.80645 17.4197 3.19332 17.1462 3.28449L12.0949 4.96826C12.0333 4.98879 11.9667 4.98879 11.9051 4.96826L6.85381 3.28449C6.58031 3.19332 6.58031 2.80645 6.85382 2.71528Z" className={fillColor}/>
+  </svg>
+);
 
 export const GraduationCapIcon = ({ fillcolor }) => (
   <svg

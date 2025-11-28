@@ -12,7 +12,7 @@ import { useController } from "react-hook-form";
 // Icons
 import {
   CalendarAddIcon,
-  PersonWithGraduationCapIcon,
+  PersonWithGraduationCapModernIcon,
   TopArrowCloudIcon,
   TrashBinIcon,
 } from "../../Icons";
@@ -150,7 +150,7 @@ const FormInputsBox = ({
   };
 
   return (
-    <div className="mb-8 ml-2">
+    <div className="mb-8">
       {/* Company/Experience Title with Delete Button */}
       <div className="flex items-center gap-2.5 mb-2.5">
         <div className="flex-1">
@@ -168,7 +168,7 @@ const FormInputsBox = ({
               placeholder={firstInputPlaceholder}
               startContent={
                 <InputBGWrapperIcon>
-                  <PersonWithGraduationCapIcon fillcolor={"fill-primary-color-P4"} />
+                  <PersonWithGraduationCapModernIcon fillColor={"fill-primary-color-P4"} />
                 </InputBGWrapperIcon>
               }
               {...companyField}

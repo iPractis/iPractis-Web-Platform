@@ -22,7 +22,7 @@ const SaveAndContinueBox = ({
         wrapperSectionHeaderClassName={twMerge("bg-quaternary-color-A11", wrapperSectionHeaderClassName)}
         rightElement={
           <ButtonSubmitForm
-            buttonClassName="flex items-center justify-between bg-primary-color-P12 p-[6px] pl-[16px] rounded-[16px] gap-[16px]"
+            buttonClassName="flex items-center justify-between bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors p-[6px] pl-[16px] rounded-[16px] gap-[16px]"
             ref={buttonRef}
             showLoadingText={true}
             loadingText="Saving..."

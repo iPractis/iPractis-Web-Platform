@@ -80,7 +80,7 @@ const RelatedSubTopics = ({ control, errors }) => {
                   className=""
                   onClick={handleAddSubSubject}
                 >
-                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors">
                     <PlusIcon />
                   </div>
                 </button>

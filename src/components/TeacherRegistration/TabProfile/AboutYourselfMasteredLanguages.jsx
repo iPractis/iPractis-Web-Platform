@@ -17,6 +17,8 @@ import SectionHeader from "../../Shared/SectionHeader";
 import SectionContent from "../../Shared/SectionContent";
 import {
 	ChevronDownBigIcon,
+	LanguageSpeakingIcon,
+	PlusIcon,
 	TrashBinIcon,
 	UserSpeakingRightIcon,
 } from "../../Icons";
@@ -67,7 +69,8 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
 
 			<SectionContent>
 				<div className="space-y-4">
-					{/* Add Language Button - Keep existing styling at top */}
+				{/* Add Language Button */}
+				<div>
 					<InputLeftStickStatus
 						inputBarStatusClassName={getInputStatusBorder(
 							errors,
@@ -75,88 +78,52 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
 							"languages",
 						)}
 					>
-						<div className="relative">
-							<Select
-								name="languages"
-								selectedKeys={[]}
-								onChange={() => {}} // This won't be used
-								labelPlacement="outside"
-								placeholder="Add a language"
-								selectorIcon={<span></span>}
-								startContent={
-									<InputBGWrapperIcon>
-										<UserSpeakingRightIcon
-											fillcolor={"fill-primary-color-P4"}
-										/>
-									</InputBGWrapperIcon>
-								}
-								classNames={{
-									trigger: [
-										"!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
-										(languagesError?.message || languagesError !== undefined) &&
-											"form-input-error",
-									],
-									innerWrapper: ["text-white placeholder:text-white", "w-full"],
-									value: [
-										"group-data-[has-value=true]:text-white text-white ST-3 ml-4",
-									],
-									listbox: ["text-primary-color-P4"],
-									base: "!mt-0",
-								}}
-							>
-								{/* Empty - this is just for styling */}
-							</Select>
-
-							{/* Add button positioned absolutely outside the Select */}
+						<div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
+							<div className="flex items-center gap-3">
+								<div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+									<LanguageSpeakingIcon fillColor={"fill-primary-color-P4"} />
+								</div>
+								<div>
+									<span className="ST-3 text-primary-color-P12">
+										Add a language
+									</span>
+								</div>
+							</div>
 							<button
 								type="button"
 								aria-label="Add language"
-								className="absolute right-[6px] top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+								className=""
 								onClick={handleAddLanguage}
 							>
-								<InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
-									<svg
-										width="16"
-										height="16"
-										viewBox="0 0 16 16"
-										fill="none"
-										role="img"
-										aria-label="Add language"
-										className="text-primary-color-P1"
-									>
-										<title>Add language</title>
-										<path
-											d="M8 2V14M2 8H14"
-											stroke="currentColor"
-											strokeWidth="2"
-											strokeLinecap="round"
-										/>
-									</svg>
-								</InputBGWrapperIcon>
+								<div className="p-[8px] rounded-[10px] bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors">
+									<PlusIcon />
+								</div>
 							</button>
 						</div>
 					</InputLeftStickStatus>
+				</div>
 
-					{/* Show language entries */}
-					{fields.map((field, index) => {
+				{/* Language Entries */}
+				{fields.map((field, index) => {
 						const selectedLanguageImage = masteredLanguagesImages[field.name];
 
 						return (
-							<div key={field.id} className="flex items-center gap-[2px]">
-								<InputLeftStickStatus
-									inputBarStatusClassName={getInputStatusBorder(
-										errors,
-										field.name && field.level
-											? { name: field.name, level: field.level }
-											: field.name
-												? { name: field.name, level: "" }
-												: null,
-										`languages.${index}`,
-									)}
-								>
-									<div className="w-full h-[48px] bg-[#F8F7F5] rounded-2xl opacity-100 gap-[2px] flex items-center relative">
+							<InputLeftStickStatus
+								key={field.id}
+								inputBarStatusClassName={getInputStatusBorder(
+									errors,
+									field.name && field.level
+										? { name: field.name, level: field.level }
+										: field.name
+											? { name: field.name, level: "" }
+											: null,
+									`languages.${index}`,
+								)}
+							>
+								<div className="flex items-center gap-[6px]">
+									<div className="w-full flex gap-[6px] bg-secondary-color-S11 p-[6px] rounded-[16px]">
 										{/* Language Selector Dropdown */}
-										<div className="mt-[6px] mb-[6px] ml-[6px] w-[195px] h-[36px] bg-white rounded-[10px]">
+										<div className="w-1/2">
 											<Select
 												placeholder="Language"
 												selectedKeys={field.name ? [field.name] : []}
@@ -212,7 +179,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
 										</div>
 
 										{/* Level Dropdown */}
-										<div className="mt-[6px] mb-[6px] mr-[6px] w-[153px] h-[36px] bg-white rounded-[10px] ml-1">
+										<div className="w-1/2">
 											<Select
 												placeholder="Level"
 												selectedKeys={field.level ? [field.level] : []}
@@ -248,20 +215,20 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
 											</Select>
 										</div>
 									</div>
-								</InputLeftStickStatus>
 
-								{/* Delete Button - separated with 2px gap */}
-								<button
-									className="bg-[#F8F7F5] hover:bg-secondary-color-S9 animation-fade flex justify-center items-center w-12 h-12 p-3 rounded-2xl"
-									onClick={() => handleDeleteLanguage(index)}
-									type="button"
-								>
-									<TrashBinIcon
-										fillcolor={"fill-primary-color-P4"}
-										strokeColor={"stroke-primary-color-P4"}
-									/>
-								</button>
-							</div>
+									{/* Delete Button - separated with 2px gap */}
+									<button
+										className="bg-secondary-color-S11 hover:bg-secondary-color-S8 p-[12px] rounded-[16px] transition-colors"
+										onClick={() => handleDeleteLanguage(index)}
+										type="button"
+									>
+										<TrashBinIcon
+											fillcolor={"fill-primary-color-P4"}
+											strokeColor={"stroke-primary-color-P4"}
+										/>
+									</button>
+								</div>
+							</InputLeftStickStatus>
 						);
 					})}
 				</div>
