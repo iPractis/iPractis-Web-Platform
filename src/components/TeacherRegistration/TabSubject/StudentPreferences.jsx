@@ -27,7 +27,7 @@ const StudentPreference = ({ control, isSubmitted }) => {
 
       <SectionContent className="space-y-[50px]">
         {/* Student Level */}
-        <div>
+        <div className="space-y-[30px]">
           <IconHeader
             icon={<AnalyticVerticalLinesIcon strokeColor="stroke-primary-color-P1" />}
             title="Student's level"
@@ -80,14 +80,14 @@ const StudentPreference = ({ control, isSubmitted }) => {
         </div>
 
         {/* Age Restriction */}
-        <div>
+        <div className="space-y-[30px]">
           <IconHeader
             icon={<Clock1220Icon fillcolor="fill-primary-color-P1" />}
             title="Age restriction"
             description="Define your preferred student age groups"
           />
 
-          <div className="mb-2.5">
+          <div className="space-y-[10px]">
             <Controller
               name="teachToYoungPersons"
               control={control}
@@ -115,16 +115,14 @@ const StudentPreference = ({ control, isSubmitted }) => {
                       )
                     }
                   >
-                    I accept to teach to young student
+                    I accept to teach to young students
                   </Switch>
 
                   <SplitDynamicErrorZod message={error?.message} />
                 </>
               )}
             />
-          </div>
 
-          <div className="mb-2.5">
             <Controller
               name="teachToAmateurPersons"
               control={control}
@@ -163,7 +161,7 @@ const StudentPreference = ({ control, isSubmitted }) => {
         </div>
 
         {/* Gender Restriction */}
-        <div>
+        <div className="space-y-[30px]">
           <IconHeader
             icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
             title="Gender restriction"

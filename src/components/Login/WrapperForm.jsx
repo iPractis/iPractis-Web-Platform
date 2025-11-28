@@ -21,7 +21,7 @@ const WrapperForm = () => {
       />
 
       {/* Log In Section */}
-      <div className="w-[430px] mx-auto">
+      <div className="w-[430px] mx-auto space-y-[30px]">
         <IconHeader
           title="Account Credentials"
           description="Enter your account details to access to your account."

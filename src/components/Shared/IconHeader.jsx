@@ -1,6 +1,6 @@
 const IconHeader = ({ icon, title, description }) => {
   return (
-    <div className="flex items-center gap-[10px] mb-[30px] h-[48px]">
+    <div className="flex items-center gap-[16px] h-[48px]">
       <div className="w-[48px] h-[48px] rounded-[16px] bg-secondary-color-S11 flex items-center justify-center p-[14px]">
         {icon}
       </div>

@@ -14,7 +14,7 @@ const AccountPrompt = ({
 }) => {
   return (
     <div className="bg-[#F8F7F5] w-full max-w-[494px] sm:mt-[50px] mt-8 rounded-[32px] p-8 mx-auto">
-      <div className={"flex flex-col items-stretch"}>
+      <div className={"flex flex-col items-stretch space-y-[30px]"}>
         <div className="flex-1">
           <IconHeader
             title={titleText}

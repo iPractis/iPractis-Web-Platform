@@ -12,7 +12,7 @@ import { GenderIcon } from "../../Icons";
 const GenderRestriction = ({ isSubmitted, control }) => {
   return (
     <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[40px] md:mt-[40px] mt-[40px]">
-      <div className="w-full">
+      <div className="w-full space-y-[30px]">
         <IconHeader
           icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
           title="Gender restriction"

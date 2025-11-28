@@ -141,7 +141,7 @@ const WorkTimePreferences = ({ errors, control }) => {
         </div>
 
         {/* Set your daily work time limit */}
-        <div>
+        <div className="space-y-[30px]">
           <IconHeader
             icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
             title="Work time limit"
