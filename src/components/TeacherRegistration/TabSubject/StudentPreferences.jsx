@@ -1,46 +1,41 @@
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import { studentLevels } from "@/src/data/dataTeacherRegistration";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
+import IconHeader from "../../Shared/IconHeader";
 import SectionHeader from "../../Shared/SectionHeader";
 
 // External imports
 import { Controller } from "react-hook-form";
+import { Switch } from "@nextui-org/react";
 
 // Icons
-import { AnalyticVerticalLinesIcon, PersonWithGraduationCapLikeIcon } from "../../Icons";
+import { PersonWithGraduationCapLikeIcon } from "../../Icons";
+import { AnalyticVerticalLinesIcon } from "../../Icons";
+import { CheckIcon, CloseBoxIcon, Clock1220Icon, GenderIcon } from "../../Icons";
 
-const StudentPreference = ({ control }) => {
+const StudentPreference = ({ control, isSubmitted }) => {
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
-        descriptionText="Select your preferences to connect with suitable students"
-        wrapperSectionHeaderClassName="relative bg-[#F8F7F5] lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
-        titleIcon={
-          <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-            <PersonWithGraduationCapLikeIcon fillcolor={"fill-primary-color-P1"} />
-          </div>
-        }
+        titleIcon={<PersonWithGraduationCapLikeIcon fillcolor="fill-primary-color-P1" />}
         titleText="Student preferences"
-        titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
-        descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
+        descriptionText="Select your preferences to connect with suitable students"
+        titleClassName="MT-SB-1"
       />
 
-      <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:-mt-[32px] md:-mt-[32px] -mt-[32px]">
-        <div className="w-full">
-          <div className="flex items-center gap-[10px] mb-[32px] h-[48px]">
-            <div className="w-[48px] h-[48px] rounded-[16px] bg-[#F8F7F5] flex items-center justify-center p-[14px]">
-              <AnalyticVerticalLinesIcon
-                strokeColor={"stroke-primary-color-P1"}
-              />
-            </div>
-            <div className="flex flex-col justify-center h-[48px]">
-              <h3 className="MT-SB-1 text-sm leading-none">Student&apos;s level</h3>
-              <p className="text-xs leading-none mt-1">Select the level you can teach</p>
-            </div>
-          </div>
+      <SectionContent className="space-y-[50px]">
+        {/* Student Level */}
+        <div className="space-y-[30px]">
+          <IconHeader
+            icon={<AnalyticVerticalLinesIcon strokeColor="stroke-primary-color-P1" />}
+            title="Student's level"
+            description="Select the level you can teach"
+          />
 
           {/* Multiple Selection Checkboxes */}
-          <div className="ml-2">
+          <div className="ml-2 space-y-1">
             <Controller
               name="studentLevel"
               control={control}
@@ -49,7 +44,6 @@ const StudentPreference = ({ control }) => {
                   {studentLevels?.map((level) => (
                     <div
                       key={level.value}
-                      className={level.value === "intermediate" ? "my-2" : ""}
                     >
                     <CustomNextUiCheckbox
                       name="studentLevel"
@@ -84,8 +78,135 @@ const StudentPreference = ({ control }) => {
             />
           </div>
         </div>
-      </div>
-    </div>
+
+        {/* Age Restriction */}
+        <div className="space-y-[30px]">
+          <IconHeader
+            icon={<Clock1220Icon fillcolor="fill-primary-color-P1" />}
+            title="Age restriction"
+            description="Define your preferred student age groups"
+          />
+
+          <div className="space-y-[10px]">
+            <Controller
+              name="teachToYoungPersons"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <>
+                  <Switch
+                    name="teachToYoungPersons"
+                    isSelected={value}
+                    onValueChange={onChange}
+                    size="sm"
+                    classNames={{
+                      wrapper: `${
+                        !value && isSubmitted
+                          ? "form-input-error"
+                          : "bg-primary-color-P6"
+                      } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+                      thumb: "bg-primary-color-P12",
+                      label: "text-primary-color-P1 ST-4 ml-1",
+                    }}
+                    thumbIcon={({ isSelected }) =>
+                      isSelected ? (
+                        <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+                      ) : (
+                        <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+                      )
+                    }
+                  >
+                    I accept to teach to young students
+                  </Switch>
+
+                  <SplitDynamicErrorZod message={error?.message} />
+                </>
+              )}
+            />
+
+            <Controller
+              name="teachToAmateurPersons"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <>
+                  <Switch
+                    name="teachToAmateurPersons"
+                    isSelected={value}
+                    onValueChange={onChange}
+                    size="sm"
+                    classNames={{
+                      wrapper: `${
+                        !value && isSubmitted
+                          ? "form-input-error"
+                          : "bg-primary-color-P6"
+                      } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+                      thumb: "bg-primary-color-P12",
+                      label: "text-primary-color-P1 ST-4 ml-1",
+                    }}
+                    thumbIcon={({ isSelected }) =>
+                      isSelected ? (
+                        <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+                      ) : (
+                        <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+                      )
+                    }
+                  >
+                    I accept to teach to mature students
+                  </Switch>
+
+                  <SplitDynamicErrorZod message={error?.message} />
+                </>
+              )}
+            />
+          </div>
+        </div>
+
+        {/* Gender Restriction */}
+        <div className="space-y-[30px]">
+          <IconHeader
+            icon={<GenderIcon fillcolor="fill-primary-color-P1" />}
+            title="Gender restriction"
+            description="Pick your student gender preference."
+          />
+
+          <div>
+            <Controller
+              name="teachToSameGender"
+              control={control}
+              render={({ field: { onChange, value }, fieldState: { error } }) => (
+                <>
+                  <Switch
+                    name="teachToSameGender"
+                    isSelected={value}
+                    onValueChange={onChange}
+                    size="sm"
+                    classNames={{
+                      wrapper: `${
+                        !value && isSubmitted
+                          ? "form-input-error"
+                          : "bg-primary-color-P6"
+                      } group-data-[selected=true]:bg-tertiary-color-SC5 p-0.5 w-[36px] h-fit`,
+                      thumb: "bg-primary-color-P12",
+                      label: "text-primary-color-P1 ST-4 ml-1",
+                    }}
+                    thumbIcon={({ isSelected }) =>
+                      isSelected ? (
+                        <CheckIcon strokeColor={"stroke-tertiary-color-SC5"} />
+                      ) : (
+                        <CloseBoxIcon strokeColor={"stroke-primary-color-P6"} />
+                      )
+                    }
+                  >
+                    I want only to teach my own gender
+                  </Switch>
+
+                  <SplitDynamicErrorZod message={error?.message} />
+                </>
+              )}
+            />
+          </div>
+        </div>
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

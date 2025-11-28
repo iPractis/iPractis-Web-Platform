@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
+import SectionContent from "../../Shared/SectionContent";
 import ActivityItem from "./ActivityItem";
 
 // Icons
-import { DownloadMediumIcon, CalendarIcon } from "../../Icons";
+import { CalendarIcon, CalendarMediumIcon } from "../../Icons";
 
 // Time formatting
 import dayjs from "dayjs";
@@ -24,6 +25,7 @@ const ActivityLog = () => {
       try {
         const res = await fetch("/api/logs");
         const data = await res.json();
+        console.log("Fetched logs:", data);
         setLogs(data.logs.slice(0, 5) || []);
       } catch (err) {
         console.error("Error fetching activity logs:", err);
@@ -96,62 +98,43 @@ const ActivityLog = () => {
   };
 
   return (
-    <div>
+    <SectionWrapper>
       <SectionHeader
-        wrapperSectionHeaderClassName="flex justify-between bg-primary-color-P11 rounded-[32px] p-8 mb-8"
-        descriptionText="View a detailed history of recent account activities."
-        titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
-        headerContainerClassName="flex-[40%]"
-        descriptionClassName="mt-[4px]"
-        titleText="Activity Log"
-        titleClassName="MT-SB-1"
-      >
-        <div className="flex-1">
-          <button
-            className={`btn btn-tertiary flex w-full gap-2.5 p-1.5 ps-2.5 items-center justify-between rounded-2xl ${
-              downloading ? "opacity-70 cursor-not-allowed" : ""
-            }`}
-            type="button"
-            onClick={handleDownloadAllLogs}
-            disabled={downloading}
-          >
-            <span className="MT-1 px-1.5">
-              {downloading ? "Downloading..." : "Download"}
-            </span>
-            <InputBGWrapperIcon className="bg-primary-color-P1">
-              <DownloadMediumIcon fillcolor={"fill-primary-color-P12"} />
-            </InputBGWrapperIcon>
-          </button>
-        </div>
-      </SectionHeader>
+        titleIcon={<CalendarMediumIcon fillcolor={"fill-primary-color-P1"} />}
+        titleText="Activities Log"
+        descriptionText="Monitor your account activities."
+      />
 
-      {/* Loading / Empty states */}
-      {loading ? (
-        <p className="text-center text-primary-color-P4 ST-3">
-          Loading activity logs...
-        </p>
-      ) : logs.length === 0 ? (
-        <p className="text-center text-primary-color-P4 ST-3">
-          No recent activities found.
-        </p>
-      ) : (
-        <section className="space-y-2.5 lg:px-8">
-          {logs.map((log, idx) => {
-            const formattedDate = dayjs(log.changed_at).format("DD MMM, YYYY");
-            const formattedTime = dayjs(log.changed_at).format("hh:mm A");
+      <SectionContent className="w-full">
+        {/* Loading / Empty states */}
+        {loading ? (
+          <p className="text-center text-primary-color-P4 ST-3">
+            Loading activity logs...
+          </p>
+        ) : logs.length === 0 ? (
+          <p className="text-center text-primary-color-P4 ST-3">
+            No recent activities found.
+          </p>
+        ) : (
+          <section className="space-y-2.5">
+            {logs.map((log) => {
+              const formattedTime = dayjs(log.changed_at).format("hh:mm A");
+              const uniqueKey = `${log.id}-${log.changed_at}-${log.column_name}`;
 
-            return (
-              <ActivityItem
-                key={idx}
-                date={formattedDate}
-                time={formattedTime}
-                title={getActivityTitle(log.table_name, log.column_name)}
-              />
-            );
-          })}
-        </section>
-      )}
-    </div>
+              return (
+                <ActivityItem
+                  key={uniqueKey}
+                  event={log.column_name}
+                  displayDate={formattedTime}
+                  device="Web"
+                  location="Algiers, Algeria"
+                />
+              );
+            })}
+          </section>
+        )}
+      </SectionContent>
+    </SectionWrapper>
   );
 };
 

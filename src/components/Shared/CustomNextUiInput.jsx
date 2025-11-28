@@ -12,10 +12,23 @@ const CustomNextUiInput = extendVariants(Input, {
         label: ["input-label-ipractis"],
       },
     },
+    // Background color variant - allows switching input wrapper background
+    bgColor: {
+      secondary: {
+        inputWrapper: ["!bg-secondary-color-S11"],
+      },
+      primary: {
+        inputWrapper: ["!bg-primary-color-P11"],
+      },
+      white: {
+        inputWrapper: ["!bg-primary-color-P12"],
+      },
+    },
   },
   defaultVariants: {
     color: "modern",
     removeLabel: true,
+    bgColor: "secondary",
   },
 });
 

@@ -355,7 +355,7 @@ tr:last-of-type td.isSelected {
   }
 
   .input-wrapper-ipractis {
-    @apply bg-primary-color-P11 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S9 has-[input:invalid]:bg-senary-color-W10 data-[focus=true]:bg-secondary-color-S9 shadow-none !important;
+    @apply bg-primary-color-P12 rounded-2xl h-auto border-0 p-1.5 data-[hover=true]:bg-secondary-color-S8 has-[input:invalid]:bg-senary-color-W10 data-[focus=true]:bg-secondary-color-S9 shadow-none !important;
 
     & > label {
       padding-left: 5px !important;
@@ -375,11 +375,11 @@ tr:last-of-type td.isSelected {
   }
 
   .input-label-ipractis {
-    @apply text-primary-color-P4 MT-SB-1 -top-7 translate-y-0 mt-0 !important;
+    @apply text-primary-color-P4 ST-SB-4 -top-7 translate-y-0 mt-0 !important;
   }
 
   .textarea-wrapper {
-    @apply bg-primary-color-P11 rounded-2xl data-[hover=true]:bg-secondary-color-S9 data-[focus=true]:bg-secondary-color-S9 p-0 shadow-none !important;
+    @apply bg-primary-color-P11 rounded-2xl data-[hover=true]:bg-secondary-color-S8 data-[focus=true]:bg-secondary-color-S9 p-0 shadow-none !important;
   }
 
   .textarea-ipractis {
@@ -387,7 +387,7 @@ tr:last-of-type td.isSelected {
   }
 
   .select-wrapper-ipractis {
-    @apply bg-primary-color-P11 rounded-2xl animation-fade h-auto p-1.5 data-[hover=true]:bg-secondary-color-S9 shadow-none !important;
+    @apply bg-secondary-color-S11 rounded-2xl animation-fade h-auto p-1.5 data-[hover=true]:bg-secondary-color-S8 shadow-none !important;
   }
 
   .select-ipractis {

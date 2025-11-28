@@ -1,54 +1,42 @@
 "use client";
 
 import SectionHeader from "../Shared/SectionHeader";
+import SectionContent from "../Shared/SectionContent";
 import Form from "./Form";
 
 // Icons
 import { PadLockUserIcon, SparkleIcon } from "../Icons";
+import IconHeader from "../Shared/IconHeader";
+import SectionWrapper from "../Shared/SectionWrapper";
 
 const WrapperForm = () => {
   return (
-    <>
+    <SectionWrapper>
       {/* Heading Title */}
       <SectionHeader
-        descriptionText="Log in to continue your journey with iPractis."
-        wrapperSectionHeaderClassName={
-          "bg-[#F8F7F5] rounded-[32px] p-8"
-        }
-        titleIcon={
-          <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
-            <SparkleIcon />
-          </div>
-        }
-        titleClassName="MT-SB-1"
-        descriptionClassName="mt-0.5"
         titleText="Welcome back"
+        titleIcon={<SparkleIcon fillcolor="fill-primary-color-P1" />}
+        titleClassName="MT-SB-1"
+        descriptionText="Log in to continue your journey with iPractis."
       />
 
       {/* Log In Section */}
-      <div className="px-8 mt-8 rounded-xl">
-        <SectionHeader
-          descriptionText="Enter your account details to access to your account."
-          // headerContainerClassName="px-4"
-          titleIcon={
-            <div className="w-12 h-12 bg-[#F8F7F5] rounded-2xl p-3.5 flex items-center justify-center">
-              <PadLockUserIcon />
-            </div>
-          }
-          descriptionClassName="mt-1"
-          titleClassName="MT-SB-1"
-          titleText="Account Credentials"
+      <div className="w-[430px] mx-auto space-y-[30px]">
+        <IconHeader
+          title="Account Credentials"
+          description="Enter your account details to access to your account."
+          icon={<PadLockUserIcon fillcolor="fill-primary-color-P1" />}
         />
 
         {/* Social media buttons to login */}
         {/* <SocialMediaButtons /> */}
 
         {/* Login form inputs */}
-        <div className="-ml-6 -mr-8">
+        <div className="-mt-8">
           <Form />
         </div>
       </div>
-    </>
+    </SectionWrapper>
   );
 };
 

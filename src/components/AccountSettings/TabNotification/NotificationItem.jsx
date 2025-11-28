@@ -1,8 +1,8 @@
 import { Controller } from "react-hook-form";
 import { CustomNextUiCheckbox } from "../../Shared/CustomNextUiCheckbox";
 import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-import SectionHeader from "../../Shared/SectionHeader";
-import { MonitorMediumIcon, MailIcon } from "../../Icons";
+import IconHeader from "../../Shared/IconHeader";
+import { EarthBorderedIcon, MailIcon } from "../../Icons";
 
 const NotificationItem = ({
   hasMailOption = true,
@@ -12,37 +12,37 @@ const NotificationItem = ({
   title,
   icon,
   control,
+  notificationKey = "",
 }) => {
   return (
-    <article className="flex items-start gap-4 lg:px-8">
-      {/* 🖥️ Web Column */}
+    <article className="flex items-start gap-[16px]">
+      {/* 🌐 Web Column */}
       {hasWebOption && (
-        <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
-          <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
-            <div className="flex flex-col items-center text-center p-2.5 gap-1">
-              <MonitorMediumIcon fillcolor={"fill-primary-color-P1"} />
-              <h4 className="ST-3 text-primary-color-P1">Web</h4>
-            </div>
+        <div className="bg-primary-color-P11 p-[6px] pb-[24px] rounded-[22px]">
+          <InputBGWrapperIcon className="p-[14px] rounded-[16px] flex items-center justify-center">
+            <EarthBorderedIcon strokeColor={"stroke-primary-color-P1"} />
           </InputBGWrapperIcon>
 
-          <div className="notifications-checkboxes flex flex-col items-center justify-center gap-8">
+          <div className="flex flex-col items-center justify-center mt-[16px]">
             {items.map((item) => {
-              const fieldName = `notifications.${item.replace(/\s+/g, "")}_web`;
+              const fieldName = `notifications.${notificationKey}_${item.replace(/\s+/g, "")}_web`;
 
               return (
-                <Controller
-                  key={fieldName}
-                  name={fieldName}
-                  control={control}
-                  defaultValue={false}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomNextUiCheckbox
-                      isSelected={value}
-                      onChange={onChange}
-                      size="sm"
-                    />
-                  )}
-                />
+                <div key={fieldName} className="h-[32px] flex items-center justify-center">
+                  <Controller
+                    name={fieldName}
+                    control={control}
+                    defaultValue={false}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomNextUiCheckbox
+                        isSelected={value}
+                        onChange={onChange}
+                        size="sm"
+                        classNames={{ wrapper: "m-0" }}
+                      />
+                    )}
+                  />
+                </div>
               );
             })}
           </div>
@@ -51,52 +51,44 @@ const NotificationItem = ({
 
       {/* 📧 Mail Column */}
       {hasMailOption && (
-        <div className="bg-primary-color-P11 p-1.5 pb-6 rounded-[22px] space-y-7">
-          <InputBGWrapperIcon className={"h-[68px] w-[50px] p-2.5 rounded-2xl"}>
-            <div className="flex flex-col items-center text-center p-2.5 gap-1">
-              <MailIcon fillcolor={"fill-primary-color-P1"} />
-              <h4 className="ST-3 text-primary-color-P1">Mail</h4>
-            </div>
+        <div className="bg-primary-color-P11 p-[6px] pb-[24px] rounded-[22px]">
+          <InputBGWrapperIcon className="p-[14px] rounded-[16px] flex items-center justify-center">
+            <MailIcon fillcolor={"fill-primary-color-P1"} />
           </InputBGWrapperIcon>
 
-          <div className="notifications-checkboxes flex flex-col items-center justify-center gap-8">
+          <div className="flex flex-col items-center justify-center mt-[16px]">
             {items.map((item) => {
-              const fieldName = `notifications.${item.replace(/\s+/g, "")}_mail`;
+              const fieldName = `notifications.${notificationKey}_${item.replace(/\s+/g, "")}_mail`;
 
               return (
-                <Controller
-                  key={fieldName}
-                  name={fieldName}
-                  control={control}
-                  defaultValue={false}
-                  render={({ field: { value, onChange } }) => (
-                    <CustomNextUiCheckbox
-                      isSelected={value}
-                      onChange={onChange}
-                      size="sm"
-                    />
-                  )}
-                />
+                <div key={fieldName} className="h-[32px] flex items-center justify-center">
+                  <Controller
+                    name={fieldName}
+                    control={control}
+                    defaultValue={false}
+                    render={({ field: { value, onChange } }) => (
+                      <CustomNextUiCheckbox
+                        isSelected={value}
+                        onChange={onChange}
+                        size="sm"
+                        classNames={{ wrapper: "m-0" }}
+                      />
+                    )}
+                  />
+                </div>
               );
             })}
           </div>
         </div>
       )}
 
-      {/* 🧩 Right side - Description */}
-      <div className="pt-1.5">
-        <SectionHeader
-          wrapperSectionHeaderClassName="mb-4 py-2.5"
-          descriptionText={description}
-          titleIcon={icon}
-          descriptionClassName={"mt-[4px]"}
-          titleText={title}
-          titleClassName="MT-SB-1"
-        />
+      {/* 🧩 Right side - Title & Items */}
+      <div className="flex-1 pt-[6px] space-y-[20px]">
+        <IconHeader icon={icon} title={title} description={description} />
 
-        <ul className="space-y-[10.5px] pb-4">
-          {items.map((item, index) => (
-            <li key={index} className="ST-4 text-primary-color-P1">
+        <ul>
+          {items.map((item) => (
+            <li key={item} className="ST-4 text-primary-color-P1 h-[32px] flex items-center">
               {item}
             </li>
           ))}

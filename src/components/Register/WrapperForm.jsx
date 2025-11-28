@@ -11,24 +11,9 @@ const WrapperForm = () => {
       <SectionHeader
         descriptionText="Create an account to begin your journey with iPractis."
         titleText="Welcome on iPractis!"
-        titleIcon={
-          <div 
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '16px',
-              padding: '14px',
-              gap: '10px',
-              opacity: 1,
-              backgroundColor: 'white'
-            }}
-            className="flex items-center justify-center"
-          >
-            <SparkleIcon />
-          </div>
-        }
+        titleIcon={<SparkleIcon fillcolor="fill-primary-color-P1" />}
         wrapperSectionHeaderClassName={
-          "bg-[#F8F7F5] rounded-[32px] p-8 -ml-1.5"
+          "bg-secondary-color-S11 rounded-[32px] p-8 -ml-1.5"
         }
         titleClassName="MT-SB-1"
         descriptionClassName="mt-0.5"
@@ -40,22 +25,7 @@ const WrapperForm = () => {
           descriptionText="Enter your details to create a secure account."
           wrapperSectionHeaderClassName={"px-0 -ml-1.5"}
           titleText="Create an account using ID"
-          titleIcon={
-            <div 
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '16px',
-                padding: '14px',
-                gap: '10px',
-                opacity: 1,
-                backgroundColor: '#F8F7F5'
-              }}
-              className="flex items-center justify-center"
-            >
-              <UserAddCircleIcon />
-            </div>
-          }
+          titleIcon={<UserAddCircleIcon fillcolor="fill-primary-color-P1" />}
           descriptionClassName="mt-0.5"
           titleClassName="MT-SB-1"
         />

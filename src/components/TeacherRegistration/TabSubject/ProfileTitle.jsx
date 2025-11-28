@@ -8,7 +8,7 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import { useController } from "react-hook-form";
 
 // Icons
-import { CloseIcon, ThreeXBlocks } from "../../Icons";
+import { CloseIcon, ThreeXBlocks, QuestionMark } from "../../Icons";
 
 const ProfileTitle = ({ control, errors }) => {
   const {
@@ -33,23 +33,27 @@ const ProfileTitle = ({ control, errors }) => {
 
   return (
     <div>
+      <div className="flex flex-col mb-2 ps-1.5">
+        <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
+          Write a catchy headline
+          <QuestionMark fillcolor={"fill-primary-color-P4"} />
+        </span>
+        <span className="text-primary-color-P4 ST-3">
+          Pick an engaging title that reflects your lessons.
+        </span>
+      </div>
       <InputLeftStickStatus
         inputBarStatusClassName={`${getInputStatusBorder(
           errors,
           profileTitle?.value,
           "profileTitle"
-        )} -translate-y-0 ${
-          profileTitle?.value?.length === 120 ? "top-[12%]" : "top-[25%]"
-        }`}
+        )}`}
       >
         <div className="[&_.input-wrapper-ipractis]:!bg-[#F8F7F5]">
           <CustomNextUiInputWithMaxLength
           base={"!mt-0"}
           nameInput={"profileTitle"}
-          labelTitle={"Write a catchy headline"}
-          labelSubtitle={"Pick an engaging title that reflects your lessons."}
-          labelClassName={"!-top-[52px]"}
-          labelDisabled={false}
+          labelDisabled={true}
           nameTextarea={"profileTitle"}
           value={profileTitle?.value}
           onChange={profileTitleTextOnChange}

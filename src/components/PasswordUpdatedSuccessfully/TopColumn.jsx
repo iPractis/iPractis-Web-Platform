@@ -10,9 +10,9 @@ const TopColumn = () => {
         titleText="Password Changed Successfully"
         titleClassName="MT-SB-1"
         wrapperSectionHeaderClassName={
-          "sm:bg-primary-color-P11 rounded-[32px] sm:p-8"
+          "sm:bg-secondary-color-S11 rounded-[32px] sm:p-8"
         }
-        titleIcon={<PadLockOpenedIcon />}
+        titleIcon={<PadLockOpenedIcon fillcolor="fill-primary-color-P1" />}
       />
     </article>
   );

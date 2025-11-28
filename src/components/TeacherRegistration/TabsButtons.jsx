@@ -1,16 +1,12 @@
 import { hasIncompleteFields } from "@/src/lib/utils/hasIncompleteFields";
 import {
   tabAvailabilityFields,
-  sectionHeaderContent,
   tabBackgroundFields,
   tabProfileFields,
   tabSubjectFields,
   tabsButtons,
 } from "@/src/data/dataTeacherRegistration";
 import { useAuth } from "@/src/hooks/useAuth";
-import { ChevronRightBiggerIcon, DocumentIcon } from "../Icons";
-import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import SectionHeader from "../Shared/SectionHeader";
 import { useState } from "react";
 const TabsButtons = ({ activeTab, setActiveTab, draft }) => {
   const [submitError, setSubmitError] = useState(null); // 👈 error state

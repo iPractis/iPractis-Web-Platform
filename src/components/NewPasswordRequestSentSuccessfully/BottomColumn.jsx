@@ -11,7 +11,7 @@ const BottomColumn = () => {
         titleText={`Password change request sent successfully`}
         titleIcon={<PadLockClosedIcon fillcolor={"fill-primary-color-P1"} />}
         wrapperSectionHeaderClassName={
-          "sm:bg-primary-color-P11 rounded-[32px] sm:p-8"
+          "sm:bg-secondary-color-S11 rounded-[32px] sm:p-8"
         }
         descriptionClassName="mt-1"
         titleClassName="MT-SB-1"

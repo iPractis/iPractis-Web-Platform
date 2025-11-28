@@ -1,4 +1,4 @@
-import { useImperativeHandle, useState, useEffect, forwardRef } from "react";
+import { useImperativeHandle, useState, useEffect, forwardRef, Children, isValidElement, cloneElement } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Spinner = ({ className = "w-4 h-4", ariaHidden = true, title = "Loading" }) => (
@@ -41,7 +41,7 @@ const ButtonSubmitForm = (
   },
   ref
 ) => {
-  const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
   // allow controlled loading prop
   useEffect(() => {
@@ -60,13 +60,16 @@ const ButtonSubmitForm = (
     },
   }));
 
-  const isDisabled = typeof controlledDisabled === "boolean" ? controlledDisabled : isLoading;
-  const disabledClasses = isLoading
-    ? "disabled:pointer-events-none"
-    : "disabled:opacity-20 disabled:pointer-events-none";
+    const isDisabled = typeof controlledDisabled === "boolean" ? controlledDisabled : isLoading;
 
-  // subtle dim while loading so background remains visible but indicates activity
-  const loadingDimClass = isLoading ? "opacity-95" : "";
+    // If `disabled` is explicitly controlled keep the stronger disabled style.
+    // If disabled only because of loading, keep pointer-events disabled but apply a mild dim via `loadingDimClass` instead
+    const disabledClasses = typeof controlledDisabled === "boolean"
+      ? "disabled:opacity-20 disabled:pointer-events-none"
+      : "disabled:pointer-events-none";
+
+    // subtle dim while loading so background remains visible but indicates activity
+    const loadingDimClass = isLoading ? "opacity-80" : "";
 
   return (
     <button
@@ -76,8 +79,29 @@ const ButtonSubmitForm = (
       type={type}
       {...rest}
     >
-      {/* Main content: either loading text or children. Add left padding while spinner is visible. */}
-      <span className={twMerge("flex items-center justify-center", isLoading ? "pl-10" : "")}>{isLoading && showLoadingText ? loadingText : children}</span>
+        {/* Main content: render children but when loading swap the first child to `loadingText` while keeping other children (e.g. chevron) intact. */}
+        {(() => {
+          const childArray = Children.toArray(children);
+          if (isLoading && showLoadingText && childArray.length > 0) {
+            const first = childArray[0];
+            const paddedFirst = isValidElement(first)
+              ? cloneElement(first, {
+                  className: twMerge(first.props.className || "", "pl-10"),
+                  children: loadingText,
+                })
+              : <span className={twMerge("pl-10")}>{loadingText}</span>;
+
+            return [paddedFirst, ...childArray.slice(1)];
+          }
+
+          // Not loading or nothing to swap — render children as-is (add left padding if loading but no showLoadingText)
+          return Children.map(children, (c) => c);
+        })()}
+
+        {/* Expose loading text for assistive tech when `showLoadingText` is false but loading is true */}
+        {isLoading && !showLoadingText ? (
+          <span className="sr-only" aria-live="polite" aria-atomic="true">{loadingText}</span>
+        ) : null}
 
       {/* Spinner: always visible when loading, positioned to the left */}
       {isLoading ? (

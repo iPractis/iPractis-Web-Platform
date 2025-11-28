@@ -100,7 +100,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
   return (
     <form
-      className={`${activeTab !== 0 && "hidden"}`}
+      className={`${activeTab !== 0 && "hidden"} space-y-[64px]`}
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Profile Picture */}
@@ -115,9 +115,7 @@ const TabProfile = ({ setActiveTab, activeTab, draft, setDraft }) => {
       <PersonalInfo control={control} errors={errors} watch={watch} />
 
       {/* Tell students about yourself */}
-      <AboutYourself>
-        <AboutYourselfMasteredLanguages errors={errors} control={control} />
-      </AboutYourself>
+      <AboutYourselfMasteredLanguages errors={errors} control={control} />
 
       {/* Save and Continue Section */}
       <SaveAndContinueBox buttonRef={buttonRef} />

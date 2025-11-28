@@ -10,9 +10,9 @@ const TeacherInfoReviews = () => {
   return (
     <article className="my-5">
       <SectionHeader
-        titleIcon={<StarIcon fillcolor={"fill-primary-color-P1 "} />}
+        titleIcon={<StarIcon fillcolor="fill-primary-color-P1" />}
+        titleText="Review"
         wrapperSectionHeaderClassName="py-2 px-4 mb-5"
-        titleText={"Review"}
       />
 
       <div className="flex items-center justify-between my-5 text-primary-color-P1">
