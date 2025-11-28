@@ -11,7 +11,6 @@ import {
 	languagesLevels,
 	masteredLanguagesImages,
 } from "@/src/data/dataTeacherRegistration";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import SectionHeader from "../../Shared/SectionHeader";
 import SectionContent from "../../Shared/SectionContent";

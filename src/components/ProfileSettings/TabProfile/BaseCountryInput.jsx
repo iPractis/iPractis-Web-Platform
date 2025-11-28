@@ -1,0 +1,165 @@
+import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
+import { getWordsCapitalized } from "@/src/lib/utils/getWordsCapitalized";
+import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import { fetchCountries } from "@/src/lib/utils/fetchCountries";
+import CustomNextUiInput from "../../Shared/CustomNextUiInput";
+import { useEffect, useState, useRef } from "react";
+import { FlagIcon } from "../../Icons";
+
+const BaseCountryInput = ({
+  SelectComponent,
+  nextInputName,
+  placeholder,
+  fieldError,
+  errors,
+  field,
+  label,
+  name,
+}) => {
+  const [suggestions, setSuggestions] = useState([]);
+  const [countries, setCountries] = useState([]);
+  const mirrorRef = useRef(null);
+  const prefixRef = useRef(null);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    const getCountries = async () => {
+      const data = await fetchCountries();
+      setCountries(data);
+    };
+    getCountries();
+  }, []);
+
+  const handleInputChange = (value) => {
+    const capitalizedValue = getWordsCapitalized(value);
+    field.onChange(capitalizedValue);
+
+    if (capitalizedValue) {
+      const filteredSuggestions = countries
+        .filter((country) =>
+          country.name.toLowerCase().startsWith(capitalizedValue.toLowerCase())
+        )
+        .map((c) => c.name);
+
+      setSuggestions(filteredSuggestions);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (
+      (e.key === "Tab" || e.key === "ArrowRight" || e.key === "Enter") &&
+      suggestions.length > 0
+    ) {
+      e.preventDefault();
+      const completedCountry = suggestions[0];
+      field.onChange(completedCountry);
+      setSuggestions([]);
+
+      if (nextInputName) {
+        const nextInput = document.querySelector(
+          `input[name="${nextInputName}"]`
+        );
+        if (nextInput) nextInput.focus();
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    const value = field?.value?.trim();
+    if (!value) {
+      setSuggestions([]);
+      return;
+    }
+
+    const exists = countries.some(
+      (country) => country.name.toLowerCase() === value.toLowerCase()
+    );
+
+    if (!exists) {
+      field.onChange(""); // clear invalid
+      setSuggestions([]);
+    }
+  };
+
+  return (
+    <div className="relative">
+      <span className="flex ps-[5px] gap-1.5 items-center ST-SB-4 mb-1 text-primary-color-P4 relative z-20">
+        {label}
+      </span>
+      <InputLeftStickStatus
+        inputBarStatusClassName={getInputStatusBorder(errors, field?.value, name)}
+      >
+        <div className="relative w-full">
+          {/* Input with startContent */}
+          <CustomNextUiInput
+            ref={inputRef}
+            type="text"
+            placeholder={placeholder}
+            classNames={{
+              inputWrapper: fieldError?.message ? "form-input-error" : "!bg-secondary-color-S11",
+              input: "relative z-10 bg-transparent",
+            }}
+            value={field?.value || ""}
+            onBlur={handleBlur}
+            onChange={(e) => handleInputChange(e.target.value)}
+            onKeyDown={handleKeyDown}
+            name={name}
+            startContent={
+              <span ref={prefixRef} className="flex items-center gap-1.5">
+                <InputBGWrapperIcon>
+                  <FlagIcon fillcolor={"black"} />
+                </InputBGWrapperIcon>
+
+                <SelectComponent
+                  setCountries={setCountries}
+                  countries={countries}
+                  field={field}
+                />
+              </span>
+            }
+          />
+
+          {/* Invisible mirror span for typed text */}
+          <span
+            ref={mirrorRef}
+            className="absolute top-0 left-0 invisible whitespace-pre px-3 py-2 font-inherit text-base"
+            style={{
+              fontFamily: 'inherit',
+              fontSize: 'inherit',
+              fontWeight: 'inherit',
+              letterSpacing: 'inherit',
+              lineHeight: 'inherit'
+            }}
+          >
+            {field?.value}
+          </span>
+
+          {/* Ghost suggestion - positioned right after typed text */}
+          {suggestions.length > 0 && field?.value && (
+            <span
+              className="absolute top-1/2 -translate-y-1/2 text-primary-color-P7 pointer-events-none whitespace-pre"
+              style={{
+                left: `calc(${(prefixRef.current?.offsetWidth || 0)}px + ${(mirrorRef.current?.offsetWidth || 0)}px + 4px)`,
+                fontFamily: 'inherit',
+                fontSize: 'inherit',
+                fontWeight: 'inherit',
+                letterSpacing: 'inherit',
+                lineHeight: 'inherit'
+              }}
+            >
+              {suggestions[0].slice(field.value.length)}
+            </span>
+          )}
+        </div>
+      </InputLeftStickStatus>
+
+      <SplitDynamicErrorZod message={fieldError?.message} />
+    </div>
+  );
+};
+
+export default BaseCountryInput;
