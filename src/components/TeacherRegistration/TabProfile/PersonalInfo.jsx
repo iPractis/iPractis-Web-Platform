@@ -23,6 +23,7 @@ import {
 	ThreeUsersIcon,
 	UserBigIcon,
 	UserIcon,
+	UserProfileIcon,
 } from "../../Icons";
 
 const PersonalInfo = ({ control, errors, watch }) => {
@@ -90,7 +91,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
 							placeholder="Enter your first name"
 							startContent={
 								<InputBGWrapperIcon>
-									<UserBigIcon fillcolor={"fill-primary-color-P4"} />
+									<UserProfileIcon fillcolor={"fill-primary-color-P4"} />
 								</InputBGWrapperIcon>
 							}
 							classNames={{
@@ -126,7 +127,7 @@ const PersonalInfo = ({ control, errors, watch }) => {
 							placeholder="Enter your middle name"
 							startContent={
 								<InputBGWrapperIcon>
-									<UserBigIcon fillcolor={"fill-primary-color-P4"} />
+									<UserProfileIcon fillcolor={"fill-primary-color-P4"} />
 								</InputBGWrapperIcon>
 							}
 							classNames={{

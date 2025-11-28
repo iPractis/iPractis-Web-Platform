@@ -118,7 +118,7 @@ const MultiStepVerification = ({ errors, control, isSubmitted }) => {
               listbox: "text-primary-color-P4",
             }}
           >
-            {["Option 1", "Option 2", "Option 3"].map((subSubject) => (
+            {["Email", "Authentication App"].map((subSubject) => (
               <SelectItem key={subSubject}>{subSubject}</SelectItem>
             ))}
           </Select>

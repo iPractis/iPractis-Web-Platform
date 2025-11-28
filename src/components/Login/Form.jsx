@@ -21,6 +21,7 @@ import {
   EyeWithDashIcon,
   UserBigIcon,
   CloseIcon,
+  UserProfileIcon,
 } from "../Icons";
 
 const Form = () => {
@@ -125,7 +126,7 @@ const onSubmit = async (data) => {
             placeholder="Email address"
             startContent={
               <InputBGWrapperIcon className="ml-[1px]">
-                <UserBigIcon fillcolor={"fill-primary-color-P4"} />
+                <UserProfileIcon fillcolor={"fill-primary-color-P4"} />
               </InputBGWrapperIcon>
             }
             endContent={

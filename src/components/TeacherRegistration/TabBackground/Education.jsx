@@ -10,10 +10,9 @@ import SectionWrapper from "../../Shared/SectionWrapper";
 
 // External imports
 import { Controller, useFieldArray } from "react-hook-form";
-import { Select } from "@nextui-org/react";
 
 // Icons
-import { NotebookOpenedIconBigger, PersonWithTieIcon } from "../../Icons";
+import { NotebookOpenedIconBigger, SchoolCurriculumIcon, PlusIcon } from "../../Icons";
 
 const Education = ({ errors, control }) => {
   const {
@@ -58,53 +57,26 @@ const Education = ({ errors, control }) => {
                 "education"
               )}`}
             >
-              <div className="relative">
-                <Select
-                  name="addEducation"
-                  selectedKeys={[]}
-                  onChange={() => {}} // This won't be used
-                  labelPlacement="outside"
-                  placeholder="Add a school curriculum"
-                  selectorIcon={<span></span>}
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <PersonWithTieIcon fillcolor={"fill-primary-color-P4"} />
-                    </InputBGWrapperIcon>
-                  }
-                  classNames={{
-                    trigger: [
-                      "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
-                      error?.message && "form-input-error",
-                    ],
-                    innerWrapper: ["text-white placeholder:text-white", "w-full"],
-                    value: [
-                      "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
-                    ],
-                    listbox: ["text-primary-color-P4"],
-                    base: "!mt-0",
-                  }}
-                >
-                  {/* Empty - this is just for styling */}
-                </Select>
-
-                {/* Add button positioned absolutely outside the Select */}
+              <div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+                    <SchoolCurriculumIcon fillColor={"fill-primary-color-P4"} />
+                  </div>
+                  <div>
+                    <span className="ST-3 text-primary-color-P12">
+                      Add a school curriculum
+                    </span>
+                  </div>
+                </div>
                 <button
                   type="button"
                   aria-label="Add education"
-                  className="absolute right-[6px] top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
+                  className=""
                   onClick={handleAddEducation}
                 >
-                  <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1" role="img" aria-label="Add education">
-                      <title>Add education</title>
-                      <path
-                        d="M8 2V14M2 8H14"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </InputBGWrapperIcon>
+                  <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+                    <PlusIcon />
+                  </div>
                 </button>
               </div>
             </InputLeftStickStatus>
