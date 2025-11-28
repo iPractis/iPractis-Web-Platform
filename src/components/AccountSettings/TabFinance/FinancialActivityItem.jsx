@@ -7,10 +7,8 @@ dayjs.extend(relativeTime);
 
 // Icons
 import {
-  HorizontalDotsIcon,
   Clock5SmallIcon,
   MonitorSmallestIcon,
-  RightArrowMediumIcon,
   PasswordDotsDashIcon,
   CreditCardSmallIcon,
   ArrowRightSolidIcon,
@@ -60,7 +58,7 @@ const FinancialActivityItem = ({
       </div>
 
       {/* Right section — Transaction visualization */}
-      <div className="flex items-center gap-[8px] bg-secondary-color-S11 p-[5px] rounded-[16px] ml-auto">
+      <div className="flex items-center gap-[8px] bg-secondary-color-S11 p-[6px] rounded-[16px] ml-auto">
         {type === "lesson" ? (
           // Lesson purchase: Avatar → Amount → Avatar
           <>
