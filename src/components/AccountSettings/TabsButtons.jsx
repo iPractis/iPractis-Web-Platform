@@ -5,7 +5,7 @@ import { tabsButtons } from "@/src/data/dataAccountSettings";
 import { useState } from "react";
 
 // Images && icons
-import { CircleImportantIcon, CloseIcon, SearchBigIcon } from "../Icons";
+import { CircleImportantIcon, CircleLocationIcon, CloseIcon, SearchBigIcon } from "../Icons";
 
 const TabsButtons = ({ activeTab, setActiveTab }) => {
   const [featureSearch, setFeatureSearch] = useState("");
@@ -48,7 +48,7 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
       </div>
 
       <SectionHeader
-        titleIcon={<CircleImportantIcon fillcolor={"fill-primary-color-P1"} />}
+        titleIcon={<CircleLocationIcon fillcolor={"fill-primary-color-P1"} />}
         titleText={"Search for a feature or an option"}
         titleClassName={"MT-SB-1"}
         descriptionText={"Find any feature or settings quickly."}

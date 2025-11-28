@@ -4,7 +4,7 @@ const InputBGWrapperIcon = ({ children, className, onClick }) => {
   return (
     <div
       className={twMerge(
-        "bg-primary-color-P12 p-1.5 flex justify-center items-center rounded-[10px] w-9 h-9",
+        "bg-primary-color-P12 p-[6px] flex justify-center items-center rounded-[10px]",
         className
       )}
       onClick={onClick}

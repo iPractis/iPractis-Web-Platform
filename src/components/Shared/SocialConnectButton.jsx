@@ -1,4 +1,4 @@
-import { ChevronDownMediumPlusIcon, LinkHorizontalMediumPlusIcon } from "../../Icons";
+import { ChevronDownMediumPlusIcon, LinkHorizontalMediumPlusIcon } from "../Icons";
 
 const SocialConnectButton = ({
   isConnected = false,
@@ -8,7 +8,7 @@ const SocialConnectButton = ({
   disabled
 }) => {
   return (
-    <div className="flex justify-between items-center p-1.5 rounded-2xl">
+    <div className="flex justify-between items-center rounded-2xl">
       <div className="flex items-center gap-4">
         <div className="bg-secondary-color-S11 p-[12px] rounded-[16px] gap-[10px]">
           <IconComponent />

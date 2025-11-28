@@ -28,6 +28,7 @@ import {
   QuestionMark,
   Clock5Icon,
   CircleImportantIcon,
+  CircleLocationIcon,
 } from "../../Icons";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
 import { useAuth } from "@/src/hooks/useAuth";
@@ -82,7 +83,7 @@ const Preferences = ({ errors, control, watch }) => {
   return (
     <SectionWrapper>
       <SectionHeader
-        titleIcon={<CircleImportantIcon fillcolor={"fill-primary-color-P1"} />}
+        titleIcon={<CircleLocationIcon fillcolor={"fill-primary-color-P1"} />}
         titleText={"Account's Preferences"}
         descriptionText={"Customize your account settings."}
       />

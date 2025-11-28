@@ -1,45 +1,35 @@
-import SocialConnectButton from "./SocialConnectButton";
-import SectionHeader from "../../Shared/SectionHeader";
-
+import SocialConnectButton from "../../Shared/SocialConnectButton";
 // Icons
 import {
   MicrosoftMediumIcon,
-  SpinnerMediumIcon,
   GoogleMediumIcon,
   AppleMediumIcon,
 } from "../../Icons";
 
 const ConnectYourAccount = () => {
   return (
-    <div>
-      <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
-        descriptionText={
-          "Easily link your account using Google, Microsoft, or Apple for a seamless login experience."
-        }
-        titleIcon={<SpinnerMediumIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px]"}
-        titleText={"Connect your account"}
-        titleClassName="MT-SB-1"
-      />
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[50px] gap-y-4 lg:px-8">
-        <SocialConnectButton
-          IconComponent={GoogleMediumIcon}
-          label={"Join with Google"}
-          isConnected={true}
-        />
-
-        <SocialConnectButton
-          IconComponent={MicrosoftMediumIcon}
-          label={"Join with Microsoft"}
-          isConnected={false}
-        />
-
+    <div className="space-y-[16px]">
+      <div className="grid grid-cols-1 gap-y-[16px]">
         <SocialConnectButton
           IconComponent={AppleMediumIcon}
           label={"Join with Apple"}
           isConnected={false}
+          disabled={false}
+          onClick={() => {}}
+        />
+        <SocialConnectButton
+          IconComponent={GoogleMediumIcon}
+          label={"Join with Google"}
+          isConnected={true}
+          disabled={false}
+          onClick={() => {}}
+        />
+        <SocialConnectButton
+          IconComponent={MicrosoftMediumIcon}
+          label={"Join with Microsoft"}
+          isConnected={false}
+          disabled={false}
+          onClick={() => {}}
         />
       </div>
     </div>

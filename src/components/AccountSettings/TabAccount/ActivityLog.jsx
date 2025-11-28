@@ -7,7 +7,7 @@ import SectionContent from "../../Shared/SectionContent";
 import ActivityItem from "./ActivityItem";
 
 // Icons
-import { CalendarIcon } from "../../Icons";
+import { CalendarIcon, CalendarMediumIcon } from "../../Icons";
 
 // Time formatting
 import dayjs from "dayjs";
@@ -100,7 +100,7 @@ const ActivityLog = () => {
   return (
     <SectionWrapper>
       <SectionHeader
-        titleIcon={<CalendarIcon fillcolor={"fill-primary-color-P1"} />}
+        titleIcon={<CalendarMediumIcon fillcolor={"fill-primary-color-P1"} />}
         titleText="Activities Log"
         descriptionText="Monitor your account activities."
       />

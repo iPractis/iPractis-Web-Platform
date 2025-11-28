@@ -2,8 +2,8 @@ import { signIn, useSession } from "next-auth/react";
 import SectionHeader from "../../Shared/SectionHeader";
 import SectionWrapper from "../../Shared/SectionWrapper";
 import SectionContent from "../../Shared/SectionContent";
-import SocialConnectButton from "./SocialConnectButton";
-import { GoogleLargeIcon, CalendarIcon } from "../../Icons";
+import SocialConnectButton from "../../Shared/SocialConnectButton";
+import { GoogleLargeIcon, CalendarIcon, MicrosoftMediumIcon, AppleMediumIcon, CalendarMediumIcon } from "../../Icons";
 
 const SyncYourCalendar = () => {
   const { data: session } = useSession();
@@ -17,7 +17,7 @@ const SyncYourCalendar = () => {
   return (
     <SectionWrapper>
       <SectionHeader
-        titleIcon={<CalendarIcon fillcolor="fill-primary-color-P1" />}
+        titleIcon={<CalendarMediumIcon fillcolor="fill-primary-color-P1" />}
         titleText="External Calendar"
         descriptionText="Connect your external calendar to keep your schedule up-to-date."
       />
@@ -29,6 +29,20 @@ const SyncYourCalendar = () => {
           isConnected={!!session?.accessToken}
           disabled={session?.accessToken}
           onClick={handleGoogleConnect}
+        />
+        <SocialConnectButton
+          IconComponent={MicrosoftMediumIcon}
+          label={"Join with Microsoft"}
+          isConnected={false}
+          disabled={false}
+          onClick={() => {}}
+        />
+        <SocialConnectButton
+          IconComponent={AppleMediumIcon}
+          label={"Join with Apple"}
+          isConnected={false}
+          disabled={false}
+          onClick={() => {}}
         />
       </SectionContent>
     </SectionWrapper>
