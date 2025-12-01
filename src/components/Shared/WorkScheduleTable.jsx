@@ -259,20 +259,20 @@ const WorkScheduleTable = ({
 
   // Time-based color helper functions
   const getTimeBasedColor = (hour, isSelected) => {
-    // Before 7:00 AM (hours 0-6): use primary-color-p11 for unselected, attention-a12 for selected
-    if (hour < 7) {
+    // Before 8:00 AM (hours 0-7): use primary-color-p11 for unselected, attention-a12 for selected
+    if (hour < 8) {
       return isSelected ? "bg-quaternary-color-A12" : "bg-primary-color-P11";
     }
-    // From 7:00 AM onwards (hours 7-23): use secondary-s11 for unselected, attention-a12 for selected
+    // From 8:00 AM onwards (hours 8-23): use secondary-s11 for unselected, attention-a12 for selected
     return isSelected ? "bg-quaternary-color-A12" : "bg-secondary-color-S11";
   };
 
   const getTimeBasedHoverColor = (hour) => {
-    // Before 7:00 AM (hours 0-6): use primary-color-p11 with transparency
-    if (hour < 7) {
+    // Before 8:00 AM (hours 0-7): use primary-color-p11 with transparency
+    if (hour < 8) {
       return "hover:bg-primary-color-P11/30";
     }
-    // From 7:00 AM onwards (hours 7-23): use secondary-s11 with transparency
+    // From 8:00 AM onwards (hours 8-23): use secondary-s11 with transparency
     return "hover:bg-secondary-color-S11/30";
   };
 
@@ -820,13 +820,13 @@ const WorkScheduleTable = ({
       )}
 
       {/* Calendar */}
-      <main className="flex flex-row gap-3 max-w-[1000px] mx-auto w-full">
+      <main className="flex flex-row gap-8 max-w-[1000px] mx-auto w-full">
         {/* Left column - time slots */}
-        <div className="flex flex-col gap-3 min-w-[110px] flex-shrink-0">
+        <div className="flex flex-col gap-3 min-w-[100px] flex-shrink-0">
           {/* Format button placeholder to align with day headers */}
-          <div className="h-[40px] flex items-center">
+            <div className="h-[36px] flex items-center">
             <button
-              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
+              className="bg-primary-color-P1 text-primary-color-P12 text-center MT-1 p-[6px] w-[114px] rounded-[10px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -844,14 +844,19 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className="w-[110px] h-[40px] flex items-center justify-between gap-2"
+                  className="w-[114px] h-[36px] flex items-center justify-between"
                   key={`hour-${index}`}
                 >
-                  <div className="bg-white text-black rounded-[10px] h-full flex-1 flex items-center justify-center px-3">
+                  <div className={`bg-white text-black rounded-[10px] h-full flex-1 flex items-center ${is12 ? 'justify-start' : 'justify-center'} px-3`}>
                     <span className="ST-3 font-bold">{displayNumeric}</span>
                   </div>
                   {is12 && (
-                    <div className="bg-[#f8f7f5] text-black rounded-[10px] h-full w-[46px] flex items-center justify-center">
+                    <div
+                      className={`text-black rounded-[10px] h-full w-[46px] flex items-center justify-center ${getTimeBasedColor(
+                        index,
+                        false
+                      )}`}
+                    >
                       <span className="ST-3 font-bold">{period}</span>
                     </div>
                   )}
@@ -862,7 +867,7 @@ const WorkScheduleTable = ({
         </div>
 
         {/* Calendar grid */}
-        <div className="flex flex-col gap-3 flex-1 min-w-0">
+        <div className="flex flex-col gap-[10px] flex-1 min-w-0">
           {/* Days header row */}
           <div className="flex flex-row gap-3 items-center">
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
@@ -876,10 +881,10 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className={`text-black rounded-md text-center p-2 min-w-[100px] w-full h-[40px] flex items-center justify-center ${
+                  className={`text-primary-color-P1 text-center p-[6px] rounded-[10px] h-[36px] min-w-[100px] w-full flex items-center justify-center ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
-                      : "bg-white"
+                      : "bg-secondary-color-S11"
                   }`}
                   key={column.key}
                 >
@@ -913,7 +918,7 @@ const WorkScheduleTable = ({
 
                   return (
                     <div
-                      className={`flex-1 h-[40px] relative group rounded-md overflow-hidden ${
+                      className={`flex-1 min-w-[100px] h-[36px] relative group rounded-[10px] overflow-hidden flex flex-col items-start p-0 ${
                         showCurrentActiveDay &&
                         isToday &&
                         "bg-tertiary-color-SC5"
