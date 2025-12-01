@@ -1,6 +1,6 @@
 import { tabBackgroundSchema } from "@/src/validations";
-import Experience from "../../TeacherRegistration/TabBackground/Experience";
-import Education from "../../TeacherRegistration/TabBackground/Education";
+import Experience from "./Experience";
+import Education from "./Education";
 import SaveAndContinueBox from "../TabProfile/SaveAndContinueBox";
 
 // External imports
@@ -94,9 +94,6 @@ const TabBackground = ({ activeTab }) => {
 
       {/* Experience Section */}
       <Experience errors={errors} control={control} />
-
-      {/* Save and Continue Box (Profile Settings style) */}
-      <SaveAndContinueBox buttonRef={buttonRef} buttonText={"Save changes"} />
     </form>
   );
 };
