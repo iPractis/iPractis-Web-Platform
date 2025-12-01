@@ -1,5 +1,5 @@
 import SectionHeader from "@/src/components/Shared/SectionHeader";
-import { PadLockOpenedIcon } from "../Icons";
+import { LockWithUserIcon } from "../Icons";
 
 const TopColumn = () => {
   return (
@@ -12,7 +12,7 @@ const TopColumn = () => {
         wrapperSectionHeaderClassName={
           "sm:bg-secondary-color-S11 rounded-[32px] sm:p-8"
         }
-        titleIcon={<PadLockOpenedIcon fillcolor="fill-primary-color-P1" />}
+        titleIcon={<LockWithUserIcon fillColor="fill-primary-color-P1" />}
       />
     </article>
   );

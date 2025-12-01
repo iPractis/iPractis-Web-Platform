@@ -16,7 +16,7 @@ const ActionButton = ({
       <button
         type="button"
         onClick={onClick}
-        className={`w-full bg-primary-color-P1 p-[6px] rounded-[16px] flex items-center ${className}`}
+        className={`w-full bg-primary-color-P1 hover:bg-primary-color-P4 transition-colors p-[6px] rounded-[16px] flex items-center ${className}`}
       >
         <div className="bg-primary-color-P12 rounded-[10px] p-[8px]">
           <IconComponent fillcolor={iconFillColor} />

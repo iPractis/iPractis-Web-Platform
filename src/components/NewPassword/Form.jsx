@@ -5,7 +5,6 @@ import { getSecurityLevelMessage } from "@/src/lib/utils/getSecurityLevelMessage
 import { DynamicInputErrorMessage } from "../../lib/utils/getZodValidations";
 import CustomNextUiInput from "@/src/components/Shared/CustomNextUiInput";
 import InputLeftStickStatus from "../Shared/InputLeftStickStatus";
-import { newPasswordInputs } from "@/src/lib/actions/authAction";
 import { errorFormMessages } from "@/src/data/dataNewPassword";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
 import ButtonSubmitForm from "../Shared/ButtonSubmitForm";
@@ -22,6 +21,7 @@ import {
   CloseIcon,
   EyeWithDashIcon,
   EyeWithoutDashIcon,
+  LoginIcon,
   ThreeAstheristiksBiggerIcon,
 } from "../Icons";
 
@@ -31,13 +31,15 @@ const Form = () => {
     handleSubmit,
     formState: { errors: frontEndErrors },
     watch,
+    setValue,
   } = useForm({ mode: "onBlur" });
   const [showRepeatedPassword, setShowRepeatedPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [backEndErrors, setBackEndErrors] = useState("");
   const [securityLevel, setSecurityLevel] = useState("");
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const email = searchParams.get("email");
+  const otp = searchParams.get("otp");
   const buttonRef = useRef(null);
   const router = useRouter();
 
@@ -45,22 +47,35 @@ const Form = () => {
     buttonRef.current.loading();
 
     try {
-      const newPasswordDetails = { ...data, token };
+      const res = await fetch("/api/auth/reset-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          otp,
+          newPassword: data.password,
+        }),
+      });
 
-      const response = await newPasswordInputs(newPasswordDetails);
+      const response = await res.json();
 
       // If there's error we display the error
-      if (response?.message && response?.title) {
+      if (!res.ok) {
         return setBackEndErrors({
-          field: response?.field,
-          message: response.message,
-          title: response.title,
+          field: "password",
+          message: response.message || "Failed to reset password",
+          title: "Error",
         });
       } else {
         router.push(`/password-updated-successfully`);
       }
     } catch (error) {
       console.log(error);
+      setBackEndErrors({
+        field: "password",
+        message: "Something went wrong. Please try again.",
+        title: "Error",
+      });
     } finally {
       buttonRef.current.notIsLoading();
     }
@@ -125,9 +140,14 @@ const Form = () => {
                     )}
                   </InputBGWrapperIcon>
 
-                  <InputBGWrapperIcon className={"cursor-pointer"}>
-                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                  </InputBGWrapperIcon>
+                  {watch("password") && (
+                    <InputBGWrapperIcon
+                      className={"cursor-pointer"}
+                      onClick={() => setValue("password", "")}
+                    >
+                      <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  )}
                 </>
               }
               isClearable
@@ -194,9 +214,14 @@ const Form = () => {
                     )}
                   </InputBGWrapperIcon>
 
-                  <InputBGWrapperIcon className={"cursor-pointer"}>
-                    <CloseIcon strokeColor={"stroke-primary-color-P4"} />
-                  </InputBGWrapperIcon>
+                  {watch("repeatedPassword") && (
+                    <InputBGWrapperIcon
+                      className={"cursor-pointer"}
+                      onClick={() => setValue("repeatedPassword", "")}
+                    >
+                      <CloseIcon strokeColor={"stroke-primary-color-P4"} />
+                    </InputBGWrapperIcon>
+                  )}
                 </>
               }
               isClearable
@@ -228,15 +253,21 @@ const Form = () => {
 
       <DualButton
         leftButtonText={"Cancel"}
+        leftButtonClassName={"ST-3 h-[48px]"}
         leftButtonHref={"/login"}
         customSubmitButton={
           <ButtonSubmitForm
             buttonClassName={
-              "btn btn-secondary w-full MT-SB-1 rounded-2xl py-3 px-4"
+              "w-full flex justify-between items-center ST-3 p-[6px] rounded-[16px] bg-tertiary-color-SC6 hover:bg-tertiary-color-SC5 transition-colors"
             }
             ref={buttonRef}
           >
-            Change password
+            <span className="ST-3 w-full text-primary-color-P12 text-center">
+              Apply changes
+            </span>
+            <div className="ml-auto rounded-[10px] p-[8px] bg-primary-color-P12">
+              <LoginIcon fillColor="fill-tertiary-color-SC5"/>
+            </div>
           </ButtonSubmitForm>
         }
       />

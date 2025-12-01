@@ -56,7 +56,7 @@ const NavDesktop = () => {
               />
             </InputBGWrapperIcon>
 
-            <span className="flex-1">Register</span>
+            <span className="flex-1 ST-3">Register</span>
           </Link>
         </div>
 
