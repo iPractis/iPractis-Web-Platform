@@ -18,7 +18,9 @@ import {
 	CalendarIcon,
 	GraphImportantIcon,
 	ChevronDownBigIcon,
+	EarthIcon,
 } from "../../Icons";
+import { Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 import tutorImagePreview from "@/public/images/tutor-image-preview.png";
@@ -34,7 +36,6 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 const AvailabilityRevision = ({ draftData }) => {
 	// Function to get color based on language level
 	console.log("Draft Data:", draftData);
-  
 
 	const { user } = useAuth();
 	const buttonRef = useRef(null);
@@ -127,17 +128,57 @@ const AvailabilityRevision = ({ draftData }) => {
 
 	// Date picker state (extracted from WorkScheduleTable logic)
 	const [weekDates, setWeekDates] = useState([]);
-	const [minDate, setMinDate] = useState("");
-	const [maxDate, setMaxDate] = useState("");
+	const [minDate, setMinDate] = useState({ actualDate: "", actualMonth: "", actualYear: "" });
+	const [maxDate, setMaxDate] = useState({ actualDate: "", actualMonth: "", actualYear: "" });
+	const [isCurrentWeek, setIsCurrentWeek] = useState(true);
+	const [todayDayOfWeek, setTodayDayOfWeek] = useState("");
+	const [isTimezoneOpen, setIsTimezoneOpen] = useState(false);
+	const [selectedTimeZone, setSelectedTimeZone] = useState(
+		draftData?.timeZone || "America/Chicago",
+	);
 
 	// Country data state
-	const [countries, setCountries] = useState([]);
 	const [selectedCountryFlag, setSelectedCountryFlag] = useState(unitedKingdom);
 
-	// Get timezone label from timezone value
-	const getTimezoneLabel = (timezoneValue) => {
-		const tz = timeZones.find((tz) => tz.value === timezoneValue);
-		return tz?.label || timezoneValue || "GMT+1";
+	// Timezone display labels with city names
+	const timezoneDisplayLabels = {
+		"Etc/GMT+12": "GMT-12 (Baker Island)",
+		"Pacific/Midway": "GMT-11 (Midway)",
+		"Pacific/Honolulu": "GMT-10 (Honolulu)",
+		"America/Anchorage": "GMT-9 (Anchorage)",
+		"America/Los_Angeles": "GMT-8 (Los Angeles)",
+		"America/Denver": "GMT-7 (Denver)",
+		"America/Chicago": "GMT-6 (Chicago)",
+		"America/New_York": "GMT-5 (New York)",
+		"America/Santiago": "GMT-4 (Santiago)",
+		"America/Argentina/Buenos_Aires": "GMT-3 (Buenos Aires)",
+		"Atlantic/South_Georgia": "GMT-2 (South Georgia)",
+		"Atlantic/Azores": "GMT-1 (Azores)",
+		"Etc/UTC": "GMT (UTC)",
+		"Europe/Madrid": "GMT+1 (Madrid)",
+		"Africa/Algiers": "GMT+1 (Algeria, Algiers)",
+		"Europe/Athens": "GMT+2 (Athens)",
+		"Europe/Moscow": "GMT+3 (Moscow)",
+		"Asia/Dubai": "GMT+4 (Dubai)",
+		"Asia/Karachi": "GMT+5 (Karachi)",
+		"Asia/Dhaka": "GMT+6 (Dhaka)",
+		"Asia/Bangkok": "GMT+7 (Bangkok)",
+		"Asia/Singapore": "GMT+8 (Singapore)",
+		"Asia/Tokyo": "GMT+9 (Tokyo)",
+		"Australia/Sydney": "GMT+10 (Sydney)",
+		"Pacific/Noumea": "GMT+11 (Noumea)",
+		"Pacific/Auckland": "GMT+12 (Auckland)",
+		"Pacific/Tongatapu": "GMT+13 (Tongatapu)",
+		"Pacific/Kiritimati": "GMT+14 (Kiritimati)",
+	};
+
+	// Get display label for timezone
+	const getTimezoneDisplayLabel = (timezoneValue) => {
+		return (
+			timezoneDisplayLabels[timezoneValue] ||
+			timezoneValue ||
+			"GMT+1 (Algeria, Algiers)"
+		);
 	};
 
 	const getLevelText = (levels) =>
@@ -171,17 +212,36 @@ const AvailabilityRevision = ({ draftData }) => {
 		return "Teaches all ages";
 	};
 
-	// Initialize week dates (same logic as WorkScheduleTable)
+	// Map day of week number to day abbreviation (0 = Sunday)
+	const dayOfWeekMap = {
+		0: "Su",
+		1: "Mo",
+		2: "Tu",
+		3: "We",
+		4: "Th",
+		5: "Fr",
+		6: "Sa",
+	};
+
+	// Initialize week dates - start from Saturday of current week
 	useEffect(() => {
 		const today = new Date();
-		const currentDay = today.getDay();
-		const daysToMonday = currentDay === 0 ? -6 : 1 - currentDay;
-		const mondayDate = new Date(today);
-		mondayDate.setDate(today.getDate() + daysToMonday);
+		const currentDayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
+
+		// Set today's day abbreviation for highlighting
+		setTodayDayOfWeek(dayOfWeekMap[currentDayOfWeek]);
+
+		// Calculate days to Saturday (start of our week view)
+		// If today is Saturday (6), daysToSaturday = 0
+		// If today is Sunday (0), daysToSaturday = -1 (go back 1 day)
+		// If today is Monday (1), daysToSaturday = -2 (go back 2 days)
+		const daysToSaturday = currentDayOfWeek === 6 ? 0 : -(currentDayOfWeek + 1);
+		const saturdayDate = new Date(today);
+		saturdayDate.setDate(today.getDate() + daysToSaturday);
 
 		const weekDatesArray = Array.from({ length: 7 }, (_, index) => {
-			const date = new Date(mondayDate);
-			date.setDate(mondayDate.getDate() + index);
+			const date = new Date(saturdayDate);
+			date.setDate(saturdayDate.getDate() + index);
 			return {
 				actualDate: date.getDate(),
 				actualMonth: date.getMonth(),
@@ -192,6 +252,7 @@ const AvailabilityRevision = ({ draftData }) => {
 		setWeekDates(weekDatesArray);
 		setMinDate(weekDatesArray[0]);
 		setMaxDate(weekDatesArray[6]);
+		setIsCurrentWeek(true);
 	}, []);
 
 	// Fetch countries and set correct flag
@@ -199,7 +260,6 @@ const AvailabilityRevision = ({ draftData }) => {
 		const loadCountries = async () => {
 			try {
 				const countriesData = await fetchCountries();
-				setCountries(countriesData);
 
 				// Find the correct country flag based on draftData.country
 				if (draftData?.country && countriesData.length > 0) {
@@ -220,7 +280,23 @@ const AvailabilityRevision = ({ draftData }) => {
 		loadCountries();
 	}, [draftData?.country]);
 
-	// Week navigation functions (same logic as WorkScheduleTable)
+	// Check if a week contains today
+	const checkIfCurrentWeek = (weekDatesArray) => {
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+
+		return weekDatesArray.some((date) => {
+			const weekDate = new Date(
+				date.actualYear,
+				date.actualMonth,
+				date.actualDate,
+			);
+			weekDate.setHours(0, 0, 0, 0);
+			return weekDate.getTime() === today.getTime();
+		});
+	};
+
+	// Week navigation functions
 	const handleDecrementWeek = () => {
 		const newWeekDates = weekDates.map((date) => {
 			const newDate = new Date(
@@ -237,6 +313,7 @@ const AvailabilityRevision = ({ draftData }) => {
 		setWeekDates(newWeekDates);
 		setMinDate(newWeekDates[0]);
 		setMaxDate(newWeekDates[6]);
+		setIsCurrentWeek(checkIfCurrentWeek(newWeekDates));
 	};
 
 	const handleIncrementWeek = () => {
@@ -255,7 +332,78 @@ const AvailabilityRevision = ({ draftData }) => {
 		setWeekDates(newWeekDates);
 		setMinDate(newWeekDates[0]);
 		setMaxDate(newWeekDates[6]);
+		setIsCurrentWeek(checkIfCurrentWeek(newWeekDates));
 	};
+
+	// Handle timezone change
+	const handleTimeZoneChange = (e) => {
+		setSelectedTimeZone(e.target.value);
+	};
+
+	// Get timezone offset in hours for a given timezone
+	const getTimezoneOffset = (timezone) => {
+		const date = new Date();
+		const utcDate = new Date(date.toLocaleString("en-US", { timeZone: "UTC" }));
+		const tzDate = new Date(date.toLocaleString("en-US", { timeZone: timezone }));
+		return (tzDate - utcDate) / (1000 * 60 * 60); // offset in hours
+	};
+
+	// Convert availability from source timezone to target timezone
+	const convertAvailabilityToTimezone = (availability, sourceTimezone, targetTimezone) => {
+		if (!availability || !sourceTimezone || !targetTimezone) return availability;
+		if (sourceTimezone === targetTimezone) return availability;
+
+		const sourceOffset = getTimezoneOffset(sourceTimezone);
+		const targetOffset = getTimezoneOffset(targetTimezone);
+		const hourDifference = targetOffset - sourceOffset;
+
+		// Day mapping for shifting
+		const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+		
+		// Create a new availability structure
+		const convertedAvailability = days.map(day => ({ day, hour: [] }));
+
+		availability.forEach((slot) => {
+			const dayIndex = days.indexOf(slot.day);
+			if (dayIndex === -1 || !slot.hour) return;
+
+			slot.hour.forEach((timeStr) => {
+				// Parse the time string (e.g., "14:00" or "14:30")
+				const [hourStr, minuteStr] = timeStr.split(":");
+				const hour = parseInt(hourStr, 10);
+				const minute = minuteStr;
+
+				// Apply timezone offset
+				let newHour = hour + hourDifference;
+				let newDayIndex = dayIndex;
+
+				// Handle day overflow/underflow
+				if (newHour >= 24) {
+					newHour -= 24;
+					newDayIndex = (dayIndex + 1) % 7;
+				} else if (newHour < 0) {
+					newHour += 24;
+					newDayIndex = (dayIndex - 1 + 7) % 7;
+				}
+
+				// Add to converted availability
+				const newTimeStr = `${newHour}:${minute}`;
+				const targetDay = convertedAvailability.find(d => d.day === days[newDayIndex]);
+				if (targetDay && !targetDay.hour.includes(newTimeStr)) {
+					targetDay.hour.push(newTimeStr);
+				}
+			});
+		});
+
+		return convertedAvailability;
+	};
+
+	// Get converted availability based on selected timezone
+	const displayAvailability = convertAvailabilityToTimezone(
+		draftData?.availability,
+		draftData?.timeZone || "America/Chicago",
+		selectedTimeZone
+	);
 
 	return (
 		<form onSubmit={handleSendApplication}>
@@ -554,203 +702,279 @@ const AvailabilityRevision = ({ draftData }) => {
 				</div>
 
 				{/* Duplicate Teacher's Availability Section with Custom Grid */}
-				<div className="w-[1000px] max-w-[1000px] mx-auto mb-8 bg-white rounded-[32px] p-8 flex flex-col gap-8">
-					{/* Section Header */}
-
-					{/* From/To Date Picker - Using Working Components */}
-					<div className="flex items-center justify-center gap-8 mb-4">
-						<button onClick={handleDecrementWeek} type="button">
+				<div className="mx-auto flex flex-col gap-[16px] p-0 mb-[32px]">
+					{/* From/To Date Picker Row */}
+					<div className="flex items-center justify-between h-[48px] mx-[25px]">
+						{/* Left arrow */}
+						<button
+							onClick={handleDecrementWeek}
+							type="button"
+							className="flex items-center justify-center"
+						>
 							<ChevronLeftBigIcon fillcolor={"fill-primary-color-P1"} />
 						</button>
 
-						<h3 className="text-primary-color-P1 ST-4">From</h3>
+						<span className="text-primary-color-P1 ST-3">From</span>
+						{/* From section */}
+						<div className="flex items-center gap-[8px]">
+							<InputLeftStickStatus inputBarStatusClassName="bg-senary-color-W5 !h-[16px] !rounded-[8px]">
+								<div className="flex items-center gap-[6px] rounded-[16px] p-[6px] bg-secondary-color-S11 h-[48px]">
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[48px] h-[36px]"
+										value={minDate?.actualDate || ""}
+										name="birthDateNumber"
+										readOnly
+									/>
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[141px] h-[36px]"
+										value={getMonthNumberAsText(
+											minDate?.actualMonth + 1,
+										) || ""}
+										name="birthDateMonth"
+										readOnly
+									/>
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[71px] h-[36px]"
+										value={minDate?.actualYear || ""}
+										name="birthDateYear"
+										readOnly
+									/>
+								</div>
+							</InputLeftStickStatus>
+						</div>
 
-						<InputLeftStickStatus inputBarStatusClassName="bg-quinary-color-VS5 !h-[15px] !rounded-[10px]">
-							<div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-[#f8f7f5] group-hover:bg-secondary-color-S9 w-[284px]">
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-2 !py-1.5 w-[48px] h-9"
-									defaultValue={minDate?.actualDate}
-									name="birthDateNumber"
-									readOnly
-								/>
+						<span className="text-primary-color-P1 ST-3">To</span>
+						{/* To section */}
+						<div className="flex items-center gap-[8px]">
+							<InputLeftStickStatus inputBarStatusClassName="bg-senary-color-W5 !h-[16px] !rounded-[8px]">
+								<div className="flex items-center gap-[6px] rounded-[16px] p-[6px] bg-secondary-color-S11 h-[48px]">
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[48px] h-[36px]"
+										name="birthDateNumber"
+										value={maxDate?.actualDate || ""}
+										readOnly
+									/>
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[141px] h-[36px]"
+										value={getMonthNumberAsText(
+											maxDate?.actualMonth + 1,
+										) || ""}
+										name="birthDateMonth"
+										readOnly
+									/>
+									<input
+										type="text"
+										className="bg-primary-color-P12 text-primary-color-P1 ST-3 text-center outline-none rounded-[10px] w-[71px] h-[36px]"
+										name="birthDateYear"
+										value={maxDate?.actualYear || ""}
+										readOnly
+									/>
+								</div>
+							</InputLeftStickStatus>
+						</div>
 
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
-									defaultValue={getMonthNumberAsText(minDate?.actualMonth + 1)}
-									name="birthDateMonth"
-									readOnly
-								/>
-
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-									defaultValue={minDate?.actualYear}
-									name="birthDateYear"
-									readOnly
-								/>
-							</div>
-						</InputLeftStickStatus>
-
-						<h3 className="text-primary-color-P1 ST-4">To</h3>
-
-						<InputLeftStickStatus inputBarStatusClassName="bg-quinary-color-VS5 !h-[15px] !rounded-[10px]">
-							<div className="flex items-center gap-1.5 rounded-2xl p-1.5 ST-3 bg-[#f8f7f5] group-hover:bg-secondary-color-S9 w-[284px]">
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
-									name="birthDateNumber"
-									defaultValue={maxDate?.actualDate}
-									readOnly
-								/>
-
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
-									defaultValue={getMonthNumberAsText(maxDate?.actualMonth + 1)}
-									name="birthDateMonth"
-									readOnly
-								/>
-
-								<input
-									type="text"
-									className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-									name="birthDateYear"
-									defaultValue={maxDate?.actualYear}
-									readOnly
-								/>
-							</div>
-						</InputLeftStickStatus>
-						<button onClick={handleIncrementWeek} type="button">
+						{/* Right arrow */}
+						<button
+							onClick={handleIncrementWeek}
+							type="button"
+							className="flex items-center justify-center"
+						>
 							<ChevronRightMediumIcon fillcolor={"fill-primary-color-P1"} />
 						</button>
 					</div>
 
 					{/* Custom Availability Grid */}
-					<div className="flex flex-col gap-1">
+					<div className="flex flex-col max-w-[1000px] w-full mx-auto">
 						{/* Top row: Format button + Hour headers (0-23) */}
-						<div className="flex gap-1">
-							<button className="bg-black text-white rounded-[8px] px-3 py-2 text-xs font-medium w-[80px] h-[32px] flex items-center justify-center mr-2">
-								Format
-							</button>
-							{Array.from({ length: 24 }).map((_, hour) => (
-								<div
-									key={hour}
-									className="bg-black text-white rounded-[8px] w-[32px] h-[32px] flex items-center justify-center text-xs font-medium"
+						<div className="flex items-center mb-[16px] w-full">
+							<div className="flex items-center w-[72px] h-[32px] mr-[16px] shrink-0">
+								<button
+									type="button"
+									className="bg-primary-color-P1 text-primary-color-P12 rounded-[8px] w-[72px] h-[48px] flex items-center justify-center ST-SB-3"
 								>
-									{hour}
-								</div>
-							))}
+									Format
+								</button>
+							</div>
+							<div className="flex items-center flex-1" style={{ gap: 'calc((100% - 24 * 30px) / 23)' }}>
+								{Array.from({ length: 24 }).map((_, hour) => (
+									<div
+										key={hour}
+										className="bg-primary-color-P1 text-primary-color-P12 rounded-[8px] w-[30px] h-[48px] flex items-center justify-center ST-SB-3 shrink-0"
+									>
+										{hour}
+									</div>
+								))}
+							</div>
 						</div>
 
 						{/* Day rows: Day labels + Availability cells */}
-						{[
-							{ day: "Sa", num: 1, dbDay: "Sat" },
-							{ day: "Su", num: 2, dbDay: "Sun" },
-							{ day: "Mo", num: 3, dbDay: "Mon" },
-							{ day: "Tu", num: 4, dbDay: "Tue" },
-							{ day: "We", num: 5, dbDay: "Wed" },
-							{ day: "Th", num: 6, dbDay: "Thu" },
-							{ day: "Fr", num: 7, dbDay: "Fri" },
-						].map(({ day, num, dbDay }, dayIndex) => {
-							// Find the availability data for this day using the database day format
-							const dayAvailability = draftData?.availability?.find(
-								(slot) => slot.day === dbDay,
-							);
+						<div className="flex flex-col gap-[6px] w-full">
+							{[
+								{ day: "Sa", num: 1, dbDay: "Sat" },
+								{ day: "Su", num: 2, dbDay: "Sun" },
+								{ day: "Mo", num: 3, dbDay: "Mon" },
+								{ day: "Tu", num: 4, dbDay: "Tue" },
+								{ day: "We", num: 5, dbDay: "Wed" },
+								{ day: "Th", num: 6, dbDay: "Thu" },
+								{ day: "Fr", num: 7, dbDay: "Fri" },
+							].map(({ day, num, dbDay }) => {
+								// Find the availability data for this day using the database day format
+								// Use displayAvailability which is converted to the selected timezone
+								const dayAvailability = displayAvailability?.find(
+									(slot) => slot.day === dbDay,
+								);
 
-							return (
-								<div key={day} className="flex gap-1">
-									{/* Day Label: white day name + black number pill */}
-									<div className="w-[80px] h-[32px] flex items-center gap-1 mr-2">
-										<div className="bg-white text-black rounded-[8px] h-full flex-1 flex items-center justify-center text-xs font-medium">
-											{day}
+								// Check if this day is today (only highlight if on current week)
+								const isToday = isCurrentWeek && day === todayDayOfWeek;
+
+								return (
+									<div key={day} className="flex items-center w-full">
+										{/* Day Label Box: day name + number pill - SEPARATE yellow wrapper */}
+										<div className="relative mr-[16px] shrink-0">
+											{/* Yellow background overlay for today - doesn't affect layout */}
+											{isToday && (
+												<div className="absolute -left-[2px] -right-[2px] -top-[4px] -bottom-[4px] bg-quaternary-color-A5 rounded-[6px] -z-0" />
+											)}
+											<div className="flex items-center gap-[2px] w-[72px] h-[22px] relative z-10">
+												<div
+													className={`rounded-[6px] w-[36px] h-[22px] flex items-center justify-center ST-SB-3 ${
+														isToday
+															? "bg-quaternary-color-A5 text-primary-color-P1"
+															: "bg-primary-color-P12 text-primary-color-P1"
+													}`}
+												>
+													{day}
+												</div>
+												<div
+													className={`rounded-[6px] w-[32px] h-[22px] flex items-center justify-center ST-SB-3 ${
+														isToday
+															? "bg-primary-color-P12 text-primary-color-P1"
+															: "bg-primary-color-P1 text-primary-color-P12"
+													}`}
+												>
+													{num}
+												</div>
+											</div>
 										</div>
-										<div className="bg-black text-white rounded-[8px] h-full w-[32px] flex items-center justify-center text-xs font-bold">
-											{num}
+
+										{/* Hours Box: Availability Cells - SEPARATE yellow wrapper */}
+										<div className="relative flex-1">
+											{/* Yellow background overlay for today - doesn't affect layout */}
+											{isToday && (
+												<div className="absolute -inset-[4px] bg-quaternary-color-A5 rounded-[6px] -z-0" />
+											)}
+											<div className="flex items-center relative z-10" style={{ gap: 'calc((100% - 24 * 30px) / 23)' }}>
+												{Array.from({ length: 24 }).map((_, hour) => {
+													// Check for specific time markers: hour:00 for left half, hour:30 for right half
+													const isLeftHalfSelected =
+														dayAvailability?.hour?.includes(`${hour}:00`);
+													const isRightHalfSelected =
+														dayAvailability?.hour?.includes(`${hour}:30`);
+
+													return (
+														<div
+															key={`${day}-${hour}`}
+															className="w-[30px] h-[22px] relative rounded-[6px] overflow-hidden shrink-0"
+														>
+															{/* Left half (first 30 min) */}
+															<div
+																className={`absolute top-0 left-0 w-1/2 h-full ${
+																	isLeftHalfSelected
+																		? "bg-quaternary-color-A12"
+																		: "bg-secondary-color-S11"
+																}`}
+															/>
+															{/* Right half (second 30 min) */}
+															<div
+																className={`absolute top-0 right-0 w-1/2 h-full ${
+																	isRightHalfSelected
+																		? "bg-quaternary-color-A12"
+																		: "bg-secondary-color-S11"
+																}`}
+															/>
+														</div>
+													);
+												})}
+											</div>
 										</div>
 									</div>
-									{/* Availability Cells for the day - split into vertical halves */}
-									{Array.from({ length: 24 }).map((_, hour) => {
-										// Check for specific time markers: hour:00 for left half, hour:30 for right half
-										const isLeftHalfSelected = dayAvailability?.hour?.includes(
-											`${hour}:00`,
-										);
-										const isRightHalfSelected = dayAvailability?.hour?.includes(
-											`${hour}:30`,
-										);
-										const bothHalvesSelected =
-											isLeftHalfSelected && isRightHalfSelected;
-
-										return (
-											<div
-												key={`${day}-${hour}`}
-												className={`w-[32px] h-[32px] relative rounded-[4px] overflow-hidden`}
-											>
-												{/* Left half (first 30 min) */}
-												<div
-													className={`absolute top-0 left-0 w-1/2 h-full ${
-														isLeftHalfSelected
-															? "bg-yellow-300"
-															: "bg-[#f8f7f5]"
-													}`}
-												/>
-
-												{/* Right half (second 30 min) */}
-												<div
-													className={`absolute top-0 right-0 w-1/2 h-full ${
-														isRightHalfSelected
-															? "bg-yellow-300"
-															: "bg-[#f8f7f5]"
-													}`}
-												/>
-											</div>
-										);
-									})}
-								</div>
-							);
-						})}
+								);
+							})}
+						</div>
 					</div>
 
-					{/* Legend and Timezone */}
-					<div className="flex items-center justify-between">
-						<div className="flex items-center gap-6">
-							<div className="flex items-center gap-2">
-								<div className="w-4 h-4 bg-gray-200 rounded"></div>
+					{/* Legend and Timezone Row */}
+					<div className="flex items-center justify-between h-[48px]">
+						{/* Legend items */}
+						<div className="flex items-center gap-[24px]">
+							<div className="flex items-center gap-[8px]">
+								<div className="w-[16px] h-[16px] bg-quaternary-color-A10 rounded-[4px]"></div>
 								<span className="ST-3 text-primary-color-P1">
 									Booked lesson
 								</span>
 							</div>
-							<div className="flex items-center gap-2">
-								<div className="w-4 h-4 bg-yellow-300 rounded"></div>
+							<div className="flex items-center gap-[8px]">
+								<div className="w-[16px] h-[16px] bg-quinary-color-VS10 rounded-[4px]"></div>
 								<span className="ST-3 text-primary-color-P1">
 									Available for lesson
 								</span>
 							</div>
-							<div className="flex items-center gap-2">
-								<div className="w-4 h-4 bg-gray-600 rounded"></div>
+							<div className="flex items-center gap-[8px]">
+								<div className="w-[16px] h-[16px] bg-secondary-color-S11 rounded-[4px]"></div>
 								<span className="ST-3 text-primary-color-P1">Unavailable</span>
 							</div>
 						</div>
 
-						{/* Timezone Indicator */}
-						<div className="w-[430px] h-[48px] bg-[#F8F7F5] rounded-full px-3 py-2 flex items-center gap-2">
-							<svg
-								width="16"
-								height="16"
-								viewBox="0 0 24 24"
-								fill="none"
-								xmlns="http://www.w.org/2000/svg"
-							>
-								<path
-									d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"
-									fill="currentColor"
-								/>
-							</svg>
-							<span className="ST-3 text-primary-color-P1">
-								{getTimezoneLabel(draftData.timeZone)}
-							</span>
-						</div>
+						{/* Timezone Dropdown */}
+						<Select
+							value={selectedTimeZone}
+							onChange={handleTimeZoneChange}
+							defaultSelectedKeys={[selectedTimeZone]}
+							name="timeZoneCalendar"
+							onOpenChange={(open) =>
+								open !== isTimezoneOpen && setIsTimezoneOpen(open)
+							}
+							placeholder="Select a time zone"
+							selectorIcon={<span></span>}
+							isOpen={isTimezoneOpen}
+							renderValue={(items) => {
+								return items.map((item) => (
+									<span key={item.key} className="ST-3 text-primary-color-P4">
+										{getTimezoneDisplayLabel(item.key)}
+									</span>
+								));
+							}}
+							startContent={
+								<InputBGWrapperIcon>
+									<EarthIcon fillcolor={"fill-primary-color-P4"} />
+								</InputBGWrapperIcon>
+							}
+							endContent={
+								<InputBGWrapperIcon>
+									<ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
+								</InputBGWrapperIcon>
+							}
+							classNames={{
+								base: ["w-auto min-w-[320px]"],
+								trigger: ["select-wrapper-ipractis"],
+								innerWrapper: ["select-ipractis", "w-full"],
+								value: [
+									"group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
+								],
+								listbox: ["text-primary-color-P4"],
+							}}
+						>
+							{timeZones?.map((tz) => (
+								<SelectItem key={tz.value} value={tz.value}>
+									{getTimezoneDisplayLabel(tz.value)}
+								</SelectItem>
+							))}
+						</Select>
 					</div>
 				</div>
 
