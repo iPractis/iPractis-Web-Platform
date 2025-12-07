@@ -18,7 +18,7 @@ import {
 } from "../Icons";
 
 // React imports
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 
 // Constants for day handling - defined outside component to prevent recreation on every render
 const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -49,6 +49,14 @@ const WorkScheduleTable = ({
   const selectionEndRef = useRef(selectionEnd);
   const selectionModeRef = useRef(selectionMode);
   const isDraggingRef = useRef(isDragging);
+  
+  // Ref for the grid container to calculate cell positions from mouse coordinates
+  const gridContainerRef = useRef(null);
+  
+  // Ref to track pending animation frame for smooth updates
+  const rafIdRef = useRef(null);
+  // Ref to store the latest mouse event for RAF processing
+  const latestMouseEventRef = useRef(null);
 
   // Update refs when state changes
   useEffect(() => {
@@ -259,21 +267,12 @@ const WorkScheduleTable = ({
 
   // Time-based color helper functions
   const getTimeBasedColor = (hour, isSelected) => {
-    // Before 7:00 AM (hours 0-6): use primary-color-p11 for unselected, attention-a12 for selected
-    if (hour < 7) {
+    // Before 8:00 AM (hours 0-7): use primary-color-p11 for unselected, attention-a12 for selected
+    if (hour < 8) {
       return isSelected ? "bg-quaternary-color-A12" : "bg-primary-color-P11";
     }
-    // From 7:00 AM onwards (hours 7-23): use secondary-s11 for unselected, attention-a12 for selected
+    // From 8:00 AM onwards (hours 8-23): use secondary-s11 for unselected, attention-a12 for selected
     return isSelected ? "bg-quaternary-color-A12" : "bg-secondary-color-S11";
-  };
-
-  const getTimeBasedHoverColor = (hour) => {
-    // Before 7:00 AM (hours 0-6): use primary-color-p11 with transparency
-    if (hour < 7) {
-      return "hover:bg-primary-color-P11/30";
-    }
-    // From 7:00 AM onwards (hours 7-23): use secondary-s11 with transparency
-    return "hover:bg-secondary-color-S11/30";
   };
 
   // Rectangle selection helper functions
@@ -288,19 +287,24 @@ const WorkScheduleTable = ({
     const minDayIndex = Math.min(startDayIndex, endDayIndex);
     const maxDayIndex = Math.max(startDayIndex, endDayIndex);
 
+    // Determine which half-hour markers to use based on direction
+    // If start hour <= end hour, start's half is the minHour half, end's half is the maxHour half
+    // If start hour > end hour, it's reversed
+    const startHalf = start.isSecondButton ? 1 : 0;
+    const endHalf = end.isSecondButton ? 1 : 0;
+    const minHourHalf = start.hour <= end.hour ? startHalf : endHalf;
+    const maxHourHalf = start.hour <= end.hour ? endHalf : startHalf;
+
     const cells = [];
 
     for (let dayIdx = minDayIndex; dayIdx <= maxDayIndex; dayIdx++) {
       for (let hour = minHour; hour <= maxHour; hour++) {
-        // For the start hour, respect the starting half-hour boundary
         if (hour === minHour && hour === maxHour) {
-          // Same hour - include only the range between start and end halves
-          const startHalf = start.isSecondButton ? 1 : 0;
-          const endHalf = end.isSecondButton ? 1 : 0;
-          const minHalf = Math.min(startHalf, endHalf);
-          const maxHalf = Math.max(startHalf, endHalf);
+          // Same hour - include only the range between the halves
+          const actualMinHalf = Math.min(startHalf, endHalf);
+          const actualMaxHalf = Math.max(startHalf, endHalf);
 
-          for (let half = minHalf; half <= maxHalf; half++) {
+          for (let half = actualMinHalf; half <= actualMaxHalf; half++) {
             cells.push({
               day: DAY_ORDER[dayIdx],
               hour: hour,
@@ -308,47 +312,21 @@ const WorkScheduleTable = ({
             });
           }
         } else if (hour === minHour) {
-          // Start hour - include only from start half onwards
-          if (start.isSecondButton) {
-            // Start from bottom half (:30)
+          // Min hour - include from minHourHalf onwards
+          for (let half = minHourHalf; half <= 1; half++) {
             cells.push({
               day: DAY_ORDER[dayIdx],
               hour: hour,
-              isSecondButton: true,
-            });
-          } else {
-            // Start from top half (:00) - include both halves
-            cells.push({
-              day: DAY_ORDER[dayIdx],
-              hour: hour,
-              isSecondButton: false,
-            });
-            cells.push({
-              day: DAY_ORDER[dayIdx],
-              hour: hour,
-              isSecondButton: true,
+              isSecondButton: half === 1,
             });
           }
         } else if (hour === maxHour) {
-          // End hour - include only up to end half
-          if (end.isSecondButton) {
-            // End at bottom half (:30) - include both halves
+          // Max hour - include up to maxHourHalf
+          for (let half = 0; half <= maxHourHalf; half++) {
             cells.push({
               day: DAY_ORDER[dayIdx],
               hour: hour,
-              isSecondButton: false,
-            });
-            cells.push({
-              day: DAY_ORDER[dayIdx],
-              hour: hour,
-              isSecondButton: true,
-            });
-          } else {
-            // End at top half (:00) - include only top half
-            cells.push({
-              day: DAY_ORDER[dayIdx],
-              hour: hour,
-              isSecondButton: false,
+              isSecondButton: half === 1,
             });
           }
         } else {
@@ -370,18 +348,32 @@ const WorkScheduleTable = ({
     return cells;
   }, []);
 
-  // Get preview state for a cell during rectangle selection
-  const getCellPreviewState = (hour, day, isSecondButton) => {
+  // Memoize the selection bounds to prevent flickering during drag
+  // This ensures all cells use the same consistent bounds during a single render
+  const selectionBounds = useMemo(() => {
     if (!isDragging || !startCell || !selectionEnd) return null;
 
     const startDayIndex = getDayIndex(startCell.day);
     const endDayIndex = getDayIndex(selectionEnd.day);
-    const currentDayIndex = getDayIndex(day);
 
-    const minHour = Math.min(startCell.hour, selectionEnd.hour);
-    const maxHour = Math.max(startCell.hour, selectionEnd.hour);
-    const minDayIndex = Math.min(startDayIndex, endDayIndex);
-    const maxDayIndex = Math.max(startDayIndex, endDayIndex);
+    return {
+      minHour: Math.min(startCell.hour, selectionEnd.hour),
+      maxHour: Math.max(startCell.hour, selectionEnd.hour),
+      minDayIndex: Math.min(startDayIndex, endDayIndex),
+      maxDayIndex: Math.max(startDayIndex, endDayIndex),
+      startHalf: startCell.isSecondButton ? 1 : 0,
+      endHalf: selectionEnd.isSecondButton ? 1 : 0,
+      startHour: startCell.hour,
+      endHour: selectionEnd.hour,
+    };
+  }, [isDragging, startCell, selectionEnd]);
+
+  // Get preview state for a cell during rectangle selection
+  const getCellPreviewState = useCallback((hour, day, isSecondButton) => {
+    if (!selectionBounds) return null;
+
+    const { minHour, maxHour, minDayIndex, maxDayIndex, startHalf, endHalf, startHour, endHour } = selectionBounds;
+    const currentDayIndex = getDayIndex(day);
 
     // Check if current cell is within the rectangle bounds
     const isDayInRectangle = currentDayIndex >= minDayIndex && currentDayIndex <= maxDayIndex;
@@ -389,28 +381,26 @@ const WorkScheduleTable = ({
 
     if (!isDayInRectangle || !isHourInRectangle) return null;
 
+    // Determine the actual min/max half based on which hour is min/max
+    const minHourHalf = startHour <= endHour ? startHalf : endHalf;
+    const maxHourHalf = startHour <= endHour ? endHalf : startHalf;
+
     // Check half-hour boundaries for edge hours
     if (hour === minHour && hour === maxHour) {
       // Same hour - check if within half range
-      const startHalf = startCell.isSecondButton ? 1 : 0;
-      const endHalf = selectionEnd.isSecondButton ? 1 : 0;
       const currentHalf = isSecondButton ? 1 : 0;
-      const minHalf = Math.min(startHalf, endHalf);
-      const maxHalf = Math.max(startHalf, endHalf);
+      const actualMinHalf = Math.min(startHalf, endHalf);
+      const actualMaxHalf = Math.max(startHalf, endHalf);
 
-      if (currentHalf < minHalf || currentHalf > maxHalf) return null;
+      if (currentHalf < actualMinHalf || currentHalf > actualMaxHalf) return null;
     } else if (hour === minHour) {
       // Start hour - check if after start half
-      const startHalf = startCell.isSecondButton ? 1 : 0;
       const currentHalf = isSecondButton ? 1 : 0;
-
-      if (currentHalf < startHalf) return null;
+      if (currentHalf < minHourHalf) return null;
     } else if (hour === maxHour) {
       // End hour - check if before end half
-      const endHalf = selectionEnd.isSecondButton ? 1 : 0;
       const currentHalf = isSecondButton ? 1 : 0;
-
-      if (currentHalf > endHalf) return null;
+      if (currentHalf > maxHourHalf) return null;
     }
 
     const timeString = isSecondButton ? `${hour}:30` : `${hour}:00`;
@@ -425,7 +415,7 @@ const WorkScheduleTable = ({
     }
 
     return null;
-  };
+  }, [selectionBounds, selectionMode, fields]);
 
   // This is for decrementing days of a month (- 7)
   const handleDecrementWeek = () => {
@@ -506,26 +496,115 @@ const WorkScheduleTable = ({
     setIs12HourFormat(!is12HourFormat);
   };
 
-  // Format hour (12H or 24H format) with proper display
-  const formatHourDisplay = (hour) => {
-    if (!is12HourFormat) {
-      // 24h format: 00:00 to 23:00
-      return hour < 10 ? `0${hour}:00` : `${hour}:00`;
-    }
-    
-    // 12h format: 12:00 AM to 11:00 PM
-    const hour12 = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-    const period = hour < 12 ? 'AM' : 'PM';
-    return `${hour12}:00 ${period}`;
-  };
+  // Calculate which cell the mouse is over based on grid position
+  // This treats gaps as belonging to the nearest cell, creating a continuous selection canvas
+  const getCellFromMousePosition = useCallback((e) => {
+    const container = gridContainerRef.current;
+    if (!container) return null;
 
-  // Only acts if the click is pressed AND it is a different cell from the initial one
-  const handleMouseEnter = (hour, day, isSecondButton) => {
-    if (isDragging && startCell) {
-      // Update the end cell for rectangle selection
-      setSelectionEnd({ hour, day, isSecondButton });
+    const containerRect = container.getBoundingClientRect();
+    const mouseX = e.clientX - containerRect.left;
+    const mouseY = e.clientY - containerRect.top;
+
+    // Get the grid dimensions
+    const containerWidth = containerRect.width;
+    const containerHeight = containerRect.height;
+
+    // We have 7 columns (days) and 24 rows (hours), each row has 2 half-hour slots
+    const numCols = 7;
+    const numRows = 24;
+
+    // Calculate which column (day) - treat gaps as part of adjacent cells
+    // Each column takes equal space including its share of gaps
+    const colWidth = containerWidth / numCols;
+    let dayIndex = Math.floor(mouseX / colWidth);
+    
+    // Clamp to valid range
+    dayIndex = Math.max(0, Math.min(numCols - 1, dayIndex));
+
+    // Calculate which row (hour) and half (top/bottom)
+    // Each row takes equal space including its share of gaps
+    const rowHeight = containerHeight / numRows;
+    let hourIndex = Math.floor(mouseY / rowHeight);
+    
+    // Clamp to valid range
+    hourIndex = Math.max(0, Math.min(numRows - 1, hourIndex));
+
+    // Determine if top or bottom half of the hour cell
+    const positionInRow = mouseY - (hourIndex * rowHeight);
+    const isSecondButton = positionInRow > (rowHeight / 2);
+
+    return {
+      hour: hourIndex,
+      day: DAY_ORDER[dayIndex],
+      isSecondButton
+    };
+  }, []);
+
+  // Handle mouse move on the grid container for continuous selection tracking
+  // Uses requestAnimationFrame for smooth, flicker-free updates
+  const handleGridMouseMove = useCallback((e) => {
+    if (!isDraggingRef.current || !startCellRef.current) return;
+
+    // Store the latest mouse event
+    latestMouseEventRef.current = e;
+
+    // Cancel any pending animation frame to avoid stacking
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
     }
-  };
+
+    // Schedule the update on the next animation frame
+    rafIdRef.current = requestAnimationFrame(() => {
+      const event = latestMouseEventRef.current;
+      if (!event || !isDraggingRef.current) return;
+
+      const cell = getCellFromMousePosition(event);
+      if (cell) {
+        // Only update if the cell has changed to avoid unnecessary re-renders
+        const currentEnd = selectionEndRef.current;
+        if (!currentEnd || 
+            currentEnd.hour !== cell.hour || 
+            currentEnd.day !== cell.day || 
+            currentEnd.isSecondButton !== cell.isSecondButton) {
+          setSelectionEnd(cell);
+        }
+      }
+      rafIdRef.current = null;
+    });
+  }, [getCellFromMousePosition]);
+
+  // Cleanup RAF on unmount
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, []);
+
+  // Handle mouse down on the grid container
+  const handleGridMouseDown = useCallback((e) => {
+    // Only handle left mouse button
+    if (e.button !== 0) return;
+
+    const cell = getCellFromMousePosition(e);
+    if (!cell) return;
+
+    setIsDragging(true);
+    setStartCell(cell);
+    setSelectionEnd(cell);
+
+    // Determine selection mode based on the clicked cell's state
+    const timeString = cell.isSecondButton ? `${cell.hour}:30` : `${cell.hour}:00`;
+    const daySlot = fields.find(slot => slot.day === cell.day);
+    const isCurrentlySelected = daySlot?.hour.includes(timeString);
+
+    setSelectionMode(isCurrentlySelected ? 'erase' : 'select');
+
+    // Prevent text selection during drag
+    e.preventDefault();
+  }, [getCellFromMousePosition, fields]);
 
   // Handles mouse-up events to stop the drag selection and resets dragging state and clears the starting cell
   const handleMouseUp = useCallback((e) => {
@@ -626,6 +705,12 @@ const WorkScheduleTable = ({
       });
     }
 
+    // Cancel any pending animation frame to prevent stale updates
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+      rafIdRef.current = null;
+    }
+
     // Reset all drag states
     setIsDragging(false);
     setStartCell(null);
@@ -646,20 +731,6 @@ const WorkScheduleTable = ({
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
   }, [isDragging, handleMouseUp]);
-
-  // Sets dragging state, stores the starting cell, and determines selection mode
-  const handleMouseDown = (hour, day, isSecondButton) => {
-    setIsDragging(true);
-    setStartCell({ hour, day, isSecondButton });
-    setSelectionEnd({ hour, day, isSecondButton });
-
-    // Determine selection mode based on the first clicked cell's state
-    const timeString = isSecondButton ? `${hour}:30` : `${hour}:00`;
-    const daySlot = fields.find(slot => slot.day === day);
-    const isCurrentlySelected = daySlot && daySlot.hour.includes(timeString);
-
-    setSelectionMode(isCurrentlySelected ? 'erase' : 'select');
-  };
 
   // If users clicks on HOURS of the day (0-23 or 1-12)
   const handleHourClick = (hour) => {
@@ -820,13 +891,13 @@ const WorkScheduleTable = ({
       )}
 
       {/* Calendar */}
-      <main className="flex flex-row gap-3 max-w-[1000px] mx-auto w-full">
+      <main className="flex flex-row gap-8 max-w-[1000px] mx-auto w-full">
         {/* Left column - time slots */}
-        <div className="flex flex-col gap-3 min-w-[110px] flex-shrink-0">
+        <div className="flex flex-col gap-3 min-w-[100px] flex-shrink-0">
           {/* Format button placeholder to align with day headers */}
-          <div className="h-[40px] flex items-center">
+            <div className="h-[36px] flex items-center">
             <button
-              className="bg-black text-white text-center rounded-md ST-SB-3 px-4 py-2 w-[110px] h-[40px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
+              className="bg-primary-color-P1 text-primary-color-P12 text-center MT-1 p-[6px] w-[114px] rounded-[10px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
               onClick={handleChangeHoursDisplayed}
               type="button"
             >
@@ -844,14 +915,19 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className="w-[110px] h-[40px] flex items-center justify-between gap-2"
+                  className="w-[114px] h-[36px] flex items-center justify-between"
                   key={`hour-${index}`}
                 >
-                  <div className="bg-white text-black rounded-[10px] h-full flex-1 flex items-center justify-center px-3">
+                  <div className={`bg-white text-black rounded-[10px] h-full flex-1 flex items-center ${is12 ? 'justify-start' : 'justify-center'} px-3`}>
                     <span className="ST-3 font-bold">{displayNumeric}</span>
                   </div>
                   {is12 && (
-                    <div className="bg-[#f8f7f5] text-black rounded-[10px] h-full w-[46px] flex items-center justify-center">
+                    <div
+                      className={`text-black rounded-[10px] h-full w-[46px] flex items-center justify-center ${getTimeBasedColor(
+                        index,
+                        false
+                      )}`}
+                    >
                       <span className="ST-3 font-bold">{period}</span>
                     </div>
                   )}
@@ -862,7 +938,7 @@ const WorkScheduleTable = ({
         </div>
 
         {/* Calendar grid */}
-        <div className="flex flex-col gap-3 flex-1 min-w-0">
+        <div className="flex flex-col gap-[10px] flex-1 min-w-0">
           {/* Days header row */}
           <div className="flex flex-row gap-3 items-center">
             {columnsHeaderWorkSchedule.map((column, rowIndex) => {
@@ -876,10 +952,10 @@ const WorkScheduleTable = ({
 
               return (
                 <div
-                  className={`text-black rounded-md text-center p-2 min-w-[100px] w-full h-[40px] flex items-center justify-center ${
+                  className={`text-primary-color-P1 text-center p-[6px] rounded-[10px] h-[36px] min-w-[100px] w-full flex items-center justify-center ${
                     showCurrentActiveDay && isToday
                       ? "bg-tertiary-color-SC5"
-                      : "bg-white"
+                      : "bg-secondary-color-S11"
                   }`}
                   key={column.key}
                 >
@@ -889,8 +965,13 @@ const WorkScheduleTable = ({
             })}
           </div>
 
-          {/* Calendar grid rows */}
-          <div className="flex flex-col gap-3">
+          {/* Calendar grid rows - using container-level mouse tracking for seamless selection */}
+          <div  // eslint-disable-line jsx-a11y/no-static-element-interactions
+            className="flex flex-col gap-3 select-none cursor-pointer"
+            ref={gridContainerRef}
+            onMouseDown={handleGridMouseDown}
+            onMouseMove={handleGridMouseMove}
+          >
             {Array.from({ length: 24 }, (_, hourIndex) => (
               <div className="flex flex-row gap-3" key={`hour-row-${hourIndex}`}>
                 {columnsHeaderWorkSchedule.map((column, dayIndex) => {
@@ -913,7 +994,7 @@ const WorkScheduleTable = ({
 
                   return (
                     <div
-                      className={`flex-1 h-[40px] relative group rounded-md overflow-hidden ${
+                      className={`flex-1 min-w-[100px] h-[36px] relative group rounded-[10px] overflow-hidden flex flex-col items-start p-0 ${
                         showCurrentActiveDay &&
                         isToday &&
                         "bg-tertiary-color-SC5"
@@ -950,41 +1031,25 @@ const WorkScheduleTable = ({
                         }`}
                       />
                       
-                      {/* Top half button - invisible, just for click handling */}
-                      <button
-                        className={`w-full h-1/2 cursor-pointer absolute top-0 left-0 z-10 transition-colors ${
+                      {/* Top half hover indicator - purely visual, mouse events handled by container */}
+                      <div
+                        className={`w-full h-1/2 pointer-events-none absolute top-0 left-0 z-10 transition-colors ${
                           showCurrentActiveDay && isToday
-                            ? "hover:bg-tertiary-color-SC5/50"
-                            : getTimeBasedHoverColor(hourIndex)
+                            ? "group-hover:bg-tertiary-color-SC5/50"
+                            : ""
                         }`}
-                        onMouseDown={() =>
-                          handleMouseDown(hourIndex, column.key, false)
-                        }
-                        onMouseEnter={() =>
-                          handleMouseEnter(hourIndex, column.key, false)
-                        }
-                        onMouseUp={handleMouseUp}
-                        type="button"
-                        aria-label={`Select first 30 minutes of ${hourIndex}:00`}
-                      ></button>
+                        aria-hidden="true"
+                      />
 
-                      {/* Bottom half button - invisible, just for click handling */}
-                      <button
-                        className={`w-full h-1/2 cursor-pointer absolute bottom-0 left-0 z-10 transition-colors ${
+                      {/* Bottom half hover indicator - purely visual, mouse events handled by container */}
+                      <div
+                        className={`w-full h-1/2 pointer-events-none absolute bottom-0 left-0 z-10 transition-colors ${
                           showCurrentActiveDay && isToday
-                            ? "hover:bg-tertiary-color-SC5/50"
-                            : getTimeBasedHoverColor(hourIndex)
+                            ? "group-hover:bg-tertiary-color-SC5/50"
+                            : ""
                         }`}
-                        onMouseDown={() =>
-                          handleMouseDown(hourIndex, column.key, true)
-                        }
-                        onMouseEnter={() =>
-                          handleMouseEnter(hourIndex, column.key, true)
-                        }
-                        onMouseUp={handleMouseUp}
-                        type="button"
-                        aria-label={`Select second 30 minutes of ${hourIndex}:00`}
-                      ></button>
+                        aria-hidden="true"
+                      />
                     </div>
                   );
                 })}

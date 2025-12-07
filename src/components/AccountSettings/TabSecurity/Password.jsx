@@ -15,19 +15,16 @@ const Password = () => {
   return (
     <div>
       <SectionHeader
-        wrapperSectionHeaderClassName="bg-primary-color-P11 px-4 rounded-[32px] !p-[32px] mb-8"
-        descriptionText={
-          "Change or reset your password to maintain the security of your account."
-        }
         titleIcon={
           <PadLockClosedBigIcon
             versionIcon={2}
             fillcolor={"fill-primary-color-P1"}
           />
         }
-        descriptionClassName={"mt-[4px]"}
-        titleText={"Password"}
-        titleClassName="MT-SB-1"
+        titleText={"Multi-Steps authentication"}
+        descriptionText={
+          "Enable multi-step authentication to add layer of security."
+        }
       />
 
       <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8">

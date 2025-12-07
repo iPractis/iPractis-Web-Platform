@@ -1,21 +1,20 @@
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import { ChevronRightBiggerIcon } from "../Icons";
+import { ChevronRightBiggerIcon, PlayIcon } from "../Icons";
 import Link from "next/link";
+import SectionWrapper from "../Shared/SectionWrapper";
 
 const BottomColumn = () => {
   return (
-    <div className="sm:px-8 mt-8">
       <Link
         href={"/login"}
-        className="btn btn-primary w-full p-1.5 rounded-2xl flex justify-center items-center MT-SB-1 mt-3"
+        className="bg-tertiary-color-SC6 hover:bg-tertiary-color-SC5 transition-colors w-full flex justify-between items-center ST-3 mt-[32px] p-[6px] rounded-[16px]"
       >
-        <span className="flex-1">Go to login page</span>
+        <span className="text-primary-color-P12 px-[16px]">Go to login page</span>
 
-        <InputBGWrapperIcon>
-          <ChevronRightBiggerIcon fillcolor={"fill-primary-color-P1"} />
-        </InputBGWrapperIcon>
+        <div className="bg-primary-color-P12 p-[8px] rounded-[10px]">
+          <PlayIcon fillColor={"fill-tertiary-color-SC5"} />
+        </div>
       </Link>
-    </div>
   );
 };
 

@@ -1,5 +1,4 @@
 import {
-  ExclamationShieldMediumIcon,
   PadLockClosedMediumIcon,
   NotificationMediumIcon,
   UserMonitorMediumIcon,
@@ -7,6 +6,8 @@ import {
   UserHatNormalIcon,
   WalletMediumIcon,
   UserMediumIcon,
+  LocationStarIcon,
+  UserCardIcon,
 } from "../components/Icons";
 
 export const tabsButtons = [
@@ -84,15 +85,18 @@ export const currencies = ["USD", "EUR", "CLP", "GBP", "BRL", "JPY", "CNY"];
 
 export const notificationTypes = [
   {
-    title: "Student's Notification",
+    key: "accountSystem",
+    title: "Account and system's notifications",
     description:
       "Stay on top of your learning journey with personalized notifications.",
-    icon: <ExclamationShieldMediumIcon fillcolor={"fill-primary-color-P1"} />,
+    icon: <LocationStarIcon fillcolor={"fill-primary-color-P1"} />,
     items: ["New features or tools", "Maintenance", "Policy Updates"],
+    forRoles: ["student", "teacher"],
   },
 
   {
-    title: "Student's Notification",
+    key: "student",
+    title: "Student's notification",
     description:
       "Stay on top of your learning journey with personalized notifications.",
     icon: <UserHatNormalIcon fillcolor={"fill-primary-color-P1"} />,
@@ -103,13 +107,15 @@ export const notificationTypes = [
       "Time zone change alert",
       "Teacher downtime",
     ],
+    forRoles: ["student"],
   },
 
   {
-    title: "Teacher's Notification",
+    key: "teacher",
+    title: "Teacher's notification",
     description:
       "Streamline your teaching experience by managing notifications.",
-    icon: <UserMonitorMediumIcon fillcolor={"fill-primary-color-P1"} />,
+    icon: <UserCardIcon fillcolor={"fill-primary-color-P1"} />,
     items: [
       "Lesson starting soon",
       "Lesson rescheduled or canceled",
@@ -118,5 +124,6 @@ export const notificationTypes = [
       "Payment",
       "Time zone change alert",
     ],
+    forRoles: ["teacher"],
   },
 ];

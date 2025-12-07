@@ -21,7 +21,7 @@ const DescribeYourIssue = ({
         wrapperSectionHeaderClassName="sm:px-4"
         titleText="Describe Your Issue"
         descriptionClassName="mt-1"
-        titleIcon={<WrenchIcon />}
+        titleIcon={<WrenchIcon fillcolor="fill-primary-color-P1" />}
         titleClassName="MT-SB-1"
       />
 

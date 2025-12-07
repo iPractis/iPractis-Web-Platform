@@ -24,7 +24,7 @@ const AboutYourSelfIntro = ({ control, errors }) => {
   };
 
   return (
-    <div className="!mt-9">
+    <div>
       <InputLeftStickStatus
         inputBarStatusClassName={`${getInputStatusBorder(
           errors,

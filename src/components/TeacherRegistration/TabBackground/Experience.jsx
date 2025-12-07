@@ -1,16 +1,17 @@
 import { SplitDynamicErrorZod } from "@/src/lib/utils/getZodValidations";
 import { getInputStatusBorder } from "@/src/lib/utils/getInputStatusBorder";
-import SectionHeader from "../../Shared/SectionHeader";
+
 import FormInputsBox from "./FormInputsBox";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
+import SectionContent from "../../Shared/SectionContent";
+import SectionHeader from "../../Shared/SectionHeader";
+import SectionWrapper from "../../Shared/SectionWrapper";
 
 // External imports
 import { Controller, useFieldArray } from "react-hook-form";
-import { Select } from "@nextui-org/react";
 
 // Icons
-import { NotebookOpenedIconBigger, OfficeIcon } from "../../Icons";
+import { NotebookOpenedIconBigger, ExperienceBuildingIcon, PlusIcon } from "../../Icons";
 
 const Experience = ({ errors, control }) => {
   const {
@@ -40,83 +41,50 @@ const Experience = ({ errors, control }) => {
       name={`careerExperience`}
       control={control}
       render={({ fieldState: { error } }) => (
-        <div>
+        <SectionWrapper>
           <SectionHeader
-            descriptionText="Tell us about your career and experience"
-            wrapperSectionHeaderClassName="relative bg-secondary-color-S11 lg:p-4 p-8 lg:rounded-[30px] rounded-[32px] lg:max-w-[1000px] max-w-[398px] lg:h-[112px] h-[122px] flex items-center justify-between my-16"
-            titleIcon={
-              <div className="absolute top-[32px] bottom-[32px] left-[32px] w-[48px] h-[48px] rounded-[16px] bg-white flex items-center justify-center gap-[10px] p-[14px]">
-                <NotebookOpenedIconBigger fillcolor={"fill-primary-color-P1"} />
-              </div>
-            }
+            titleIcon={<NotebookOpenedIconBigger fillcolor="fill-primary-color-P1" />}
             titleText="Professional background"
-            titleClassName="MT-SB-1 lg:ml-[80px] md:ml-[60px] ml-[80px]"
-            descriptionClassName="lg:ml-[80px] md:ml-[60px] ml-[80px]"
+            descriptionText="Tell us about your career and experience"
+            titleClassName="MT-SB-1"
           />
+          <SectionContent>
+          <div className="space-y-4">
+            {/* Add Experience Button */}
+            <div>
+              <InputLeftStickStatus
+                inputBarStatusClassName={`${getInputStatusBorder(
+                  errors,
+                  careerExperience,
+                  "careerExperience"
+                )}`}
+              >
+                <div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-[8px] rounded-[10px] bg-primary-color-P12">
+                      <ExperienceBuildingIcon fillColor={"fill-primary-color-P4"} />
+                    </div>
+                    <div>
+                      <span className="ST-3 text-primary-color-P12">
+                        Add an experience
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Add experience"
+                    className=""
+                    onClick={handleAddExperience}
+                  >
+                    <div className="p-[8px] rounded-[10px] bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors">
+                      <PlusIcon />
+                    </div>
+                  </button>
+                </div>
+              </InputLeftStickStatus>
+            </div>
 
-          <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:-mt-[24px] md:-mt-[24px] -mt-[24px]">
-            <InputLeftStickStatus
-              inputBarStatusClassName={`${getInputStatusBorder(
-                errors,
-                careerExperience,
-                "careerExperience"
-              )}`}
-            >
-              <div className="relative">
-                <Select
-                  name="addExperience"
-                  selectedKeys={[]}
-                  onChange={() => {}} // This won't be used
-                  labelPlacement="outside"
-                  placeholder="Add an experience"
-                  selectorIcon={<span></span>}
-                  startContent={
-                    <InputBGWrapperIcon>
-                      <OfficeIcon fillcolor={"black"} />
-                    </InputBGWrapperIcon>
-                  }
-                  classNames={{
-                    trigger: [
-                      "!bg-black rounded-2xl p-1.5 h-auto border-0 shadow-none pr-12", // Added right padding for button
-                      error?.message && "form-input-error",
-                    ],
-                    innerWrapper: ["text-white placeholder:text-white", "w-full"],
-                    value: [
-                      "group-data-[has-value=true]:text-white text-white ST-3 ml-4",
-                    ],
-                    listbox: ["text-primary-color-P4"],
-                    base: "!mt-0",
-                  }}
-                >
-                  {/* Empty - this is just for styling */}
-                </Select>
-
-                {/* Add button positioned absolutely outside the Select */}
-                <button
-                  type="button"
-                  aria-label="Add experience"
-                  className="absolute right-[6px] top-1/2 -translate-y-1/2 w-[36px] h-[36px] flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity bg-transparent border-none"
-                  onClick={handleAddExperience}
-                >
-                  <InputBGWrapperIcon className="w-[36px] h-[36px] rounded-[10px] gap-[10px] p-[8px]">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="text-primary-color-P1" role="img" aria-label="Add experience">
-                      <title>Add experience</title>
-                      <path
-                        d="M8 2V14M2 8H14"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </InputBGWrapperIcon>
-                </button>
-              </div>
-            </InputLeftStickStatus>
-          </div>
-
-          <SplitDynamicErrorZod message={error?.message} />
-
-          <div className="lg:mx-[285px] md:mx-[100px] mx-4 lg:mt-[32px] md:mt-[32px] mt-[32px]">
+            {/* Experience Items */}
             {careerExperience?.map((experience, index) => (
               <FormInputsBox
                 firstInputPlaceholder={"Example: University Of Somewhere"}
@@ -130,7 +98,10 @@ const Experience = ({ errors, control }) => {
               />
             ))}
           </div>
-        </div>
+
+          <SplitDynamicErrorZod message={error?.message} />
+        </SectionContent>
+        </SectionWrapper>
       )}
     />
   );

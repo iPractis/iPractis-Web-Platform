@@ -204,7 +204,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           <DropdownItem className="p-0 mb-1.5" key="profileSettings">
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
-              href={"#"}
+              href={"/profile-settings"}
             >
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}

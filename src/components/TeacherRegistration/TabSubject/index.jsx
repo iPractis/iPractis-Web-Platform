@@ -1,12 +1,9 @@
-import WhiteSpaceWrapper from "../../Shared/WhiteSpaceWrapper";
 import StudentPreference from "./StudentPreferences";
 import { tabSubjectSchema } from "@/src/validations";
 import RelatedSubTopics from "./RelatedSubTopics";
 import SubjectsToTeach from "./SubjectsToTeach";
 import PresentYourSelf from "./PresentYourSelf";
 import AveragePrice from "./AveragePrice";
-import StudentAge from "./StudentAge";
-import GenderRestriction from "./GenderRestriction";
 import SaveAndContinueBox from "./SaveAndContinueBox";
 
 // External imports
@@ -14,11 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 // React imports
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 
 const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
-  const [loading, setLoading] = useState(false);
   const buttonRef = useRef(null);
 
   const { user } = useAuth();
@@ -48,7 +44,6 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
 
   const onSubmit = async (data) => {
     try {
-      setLoading(true);
       buttonRef.current?.loading();
 
       const payload = {
@@ -83,14 +78,12 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
       
       // Reset button state BEFORE navigation
       buttonRef.current?.notIsLoading();
-      setLoading(false);
 
       setActiveTab((prev) => prev + 1);
     } catch (err) {
       console.error("Save error:", err);
       setError("general", { message: err.message });
       buttonRef.current?.notIsLoading();
-      setLoading(false);
     }
   };
 
@@ -101,22 +94,14 @@ const TabSubject = ({ setActiveTab, activeTab, draft, setDraft }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit, onError)}
-      className={`${activeTab !== 1 && "hidden"}`}
+      className={`${activeTab !== 1 && "hidden"} space-y-[64px]`}
     >
-      <WhiteSpaceWrapper className="p-0">
-        <SubjectsToTeach control={control} errors={errors} />
-        <RelatedSubTopics control={control} errors={errors} />
-        <PresentYourSelf control={control} errors={errors} />
-        <StudentPreference control={control} errors={errors} />
-        <StudentAge isSubmitted={isSubmitted} control={control} />
-
-        <GenderRestriction isSubmitted={isSubmitted} control={control} />
-
-        <AveragePrice control={control} errors={errors} watch={watch} userCountry={draft?.country} />
-        <SaveAndContinueBox buttonRef={buttonRef} />
-      </WhiteSpaceWrapper>
-
-    
+      <SubjectsToTeach control={control} errors={errors} />
+      <RelatedSubTopics control={control} errors={errors} />
+      <PresentYourSelf control={control} errors={errors} />
+      <StudentPreference control={control} errors={errors} isSubmitted={isSubmitted} />
+      <AveragePrice control={control} errors={errors} watch={watch} userCountry={draft?.country} />
+      <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
 };

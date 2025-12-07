@@ -1,4 +1,4 @@
-import SectionHeader from "./SectionHeader";
+import IconHeader from "./IconHeader";
 import Link from "next/link";
 
 const AccountPrompt = ({
@@ -13,16 +13,14 @@ const AccountPrompt = ({
   titleText,
 }) => {
   return (
-    <div className="bg-[#F8F7F5] w-full max-w-[494px] sm:mt-[50px] mt-8 rounded-[32px] p-8 mx-auto">
-      <div className={"flex flex-col items-stretch gap-8"}>
+    <div className="bg-[#F8F7F5] w-full max-w-[494px] mt-[32px] rounded-[48px] p-8 mx-auto">
+      <div className={"flex flex-col items-stretch space-y-[30px]"}>
         <div className="flex-1">
-          <SectionHeader
-            headerContainerClassName={headerContainerClassName}
-            descriptionClassName="mt-0.5"
-            descriptionText={descText}
-            titleClassName="MT-SB-1"
-            titleIcon={titleIcon}
-            titleText={titleText}
+          <IconHeader
+            title={titleText}
+            description={descText}
+            icon={titleIcon}
+            className={headerContainerClassName}
           />
         </div>
 

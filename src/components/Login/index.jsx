@@ -1,25 +1,23 @@
+// Icons
+import { UserWithAddIcon } from "../Icons";
 import AccountPrompt from "../Shared/AccountPrompt";
 import WrapperForm from "./WrapperForm";
-
-// Icons
-import { UserAddIcon } from "../Icons";
 
 export const Login = () => {
   return (
     <section className="container-page-v8 sm:px-0 px-8">
-      <div className="sm:my-8 my-4">
+      <div className="space-y-[32px] mt-8">
         {/* Login if there's an account */}
         <WrapperForm />
 
         {/* Register if user doesn't have an account */}
-        <div className="sm:-mt-[45px] -mt-16">
-          <AccountPrompt
+        <AccountPrompt
           descText={'Press on "Register" to create your account.'}
-          titleText={`You don't have an account yet?`}
-          headerContainerClassName={"px-0 -ml-[1px]"}
+          titleText={"You want to create an account?"}
+          headerContainerClassName={"px-0"}
           titleIcon={
-            <div className="w-12 h-12 bg-white rounded-2xl p-3.5 flex items-center justify-center">
-              <UserAddIcon />
+            <div className="w-12 h-12 bg-primary-color-P12 rounded-2xl p-3.5 flex items-center justify-center">
+              <UserWithAddIcon />
             </div>
           }
           btnColor={"btn-primary"}
@@ -32,7 +30,6 @@ export const Login = () => {
             </p>
           }
         />
-        </div>
       </div>
     </section>
   );

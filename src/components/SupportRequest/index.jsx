@@ -12,9 +12,9 @@ export const SupportRequest = () => {
         descriptionText="We are sorry to see you here, we hope your problem will be resolved soon."
         titleText="Account support service"
         wrapperSectionHeaderClassName={
-          "sm:bg-primary-color-P11 rounded-[32px] sm:p-8"
+          "sm:bg-secondary-color-S11 rounded-[32px] sm:p-8"
         }
-        titleIcon={<SparkleIcon />}
+        titleIcon={<SparkleIcon fillcolor="fill-primary-color-P1" />}
         titleClassName="MT-SB-1"
       />
 
