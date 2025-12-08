@@ -8,11 +8,12 @@ dayjs.extend(utc);
 export const GET = async (req, context) => {
   try {
     const teacherId = context?.params?.id;
+
     if (!teacherId) {
       return NextResponse.json({ error: "Missing teacherId" }, { status: 400 });
     }
 
-    // 1️⃣ Fetch teacher’s availability slots
+    // 1️⃣ Fetch all teacher weekly availability
     const { data: availability, error: availError } = await supabaseClient
       .from("teacher_availability")
       .select("day_of_week, hour")
@@ -21,62 +22,59 @@ export const GET = async (req, context) => {
 
     if (availError) throw availError;
 
-    // 2️⃣ Fetch booked slots for the next 7 days
-    const startOfToday = dayjs().utc().startOf("day");
-    const weekLater = startOfToday.add(7, "day");
+    // 2️⃣ Fetch all future bookings (not limited to 7 days)
+    const now = dayjs().utc().toISOString();
 
     const { data: bookings, error: bookError } = await supabaseClient
       .from("bookings")
-      .select("start_time, end_time")
+      .select("start_time")
       .eq("teacher_id", teacherId)
       .eq("status", "booked")
-      .gte("start_time", startOfToday.toISOString())
-      .lte("start_time", weekLater.toISOString());
+      .gte("start_time", now);
 
     if (bookError) throw bookError;
 
-    const booked = bookings ?? [];
+    // Build a Set of booked weekday+hour (e.g. "Mon|06:00")
+    const bookedSet = new Set();
 
-    // 3️⃣ Build a Set of booked slots (in 30-min increments)
-    const bookedSet = new Set(
-      booked.map((b) => dayjs.utc(b.start_time).format("YYYY-MM-DDTHH:mm"))
-    );
+    bookings.forEach((b) => {
+      const dt = dayjs.utc(b.start_time);
+      const weekday = dt.format("ddd");
+      const hour = dt.format("HH:mm");
+      bookedSet.add(`${weekday}|${hour}`);
+    });
 
-    // 4️⃣ Generate next 7 days (including today)
-    const freeSlotsByDate = {};
-    let totalFreeSlots = 0;
+    // 3️⃣ Group: weekday → free hours
+    const slotMap = {};
 
-    for (let i = 0; i < 7; i++) {
-      const currentDate = startOfToday.add(i, "day");
-      const weekday = currentDate.format("ddd"); // e.g. Mon, Tue, etc.
-      const dateKey = currentDate.format("YYYY-MM-DD");
+    for (const slot of availability) {
+      const weekday = slot.day_of_week;
+      const hour = slot.hour.slice(0, 5); // HH:MM
 
-      // Initialize day with empty array (important!)
-      freeSlotsByDate[dateKey] = [];
+      const key = `${weekday}|${hour}`;
 
-      // Find availability for this weekday
-      const daySlots = availability.filter(
-        (slot) => slot.day_of_week === weekday
-      );
+      // Skip booked times
+      if (bookedSet.has(key)) continue;
 
-      for (const slot of daySlots) {
-        const slotTime = dayjs.utc(`${dateKey}T${slot.hour}`);
-        const slotKey = slotTime.format("YYYY-MM-DDTHH:mm");
-
-        // Skip if already booked or in the past
-        if (!bookedSet.has(slotKey) && slotTime.isAfter(dayjs().utc())) {
-          freeSlotsByDate[dateKey].push(slot.hour);
-          totalFreeSlots++;
-        }
-      }
+      if (!slotMap[weekday]) slotMap[weekday] = [];
+      slotMap[weekday].push(hour);
     }
 
-    // 5️⃣ Return clean response
+    // Sort hours
+    Object.keys(slotMap).forEach((d) => {
+      slotMap[d].sort();
+    });
+
+    // Convert to array format
+    const result = Object.entries(slotMap).map(([day, hours]) => ({
+      day,
+      hours,
+    }));
+
     return NextResponse.json(
       {
         teacherId,
-        freeSlotsByDate,
-        totalFreeSlots,
+        availability: result, // <-- final output
       },
       { status: 200 }
     );
