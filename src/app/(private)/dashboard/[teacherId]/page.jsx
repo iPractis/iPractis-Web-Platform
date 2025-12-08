@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { use, useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import PayPalPayment from "@/src/components/Payment/PayPalButton";
 import { useAuth } from "@/src/hooks/useAuth";
 import dayjs from "dayjs";
+import axios from "axios";
 
 /* ---------------------------
    Utilities
@@ -182,7 +183,7 @@ function BookingCalendar({ availability = [], selectedDateISO, onDateTimeSelect 
   const availMap = useMemo(() => {
     const m = {};
     availability.forEach((a) => {
-      m[a.day] = a.hour ? a.hour.slice() : [];
+      m[a.day] = a.hours ? a.hours.slice() : []; // <-- FIX HERE
     });
     return m;
   }, [availability]);
@@ -207,22 +208,22 @@ function BookingCalendar({ availability = [], selectedDateISO, onDateTimeSelect 
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold">Pick a date</h2>
+
         <div className="flex items-center gap-2 text-sm">
           <button
-            onClick={() =>
-              setCurrentMonth((m) => new Date(m.getFullYear(), m.getMonth() - 1, 1))
-            }
+            onClick={() => setCurrentMonth(m => new Date(m.getFullYear(), m.getMonth() - 1, 1))}
             className="px-2 py-1 rounded hover:bg-gray-100"
           >
             ◀
           </button>
+
           <div className="font-semibold">
-            {currentMonth.toLocaleString(undefined, { month: "long" })} {currentMonth.getFullYear()}
+            {currentMonth.toLocaleString(undefined, { month: "long" })}{" "}
+            {currentMonth.getFullYear()}
           </div>
+
           <button
-            onClick={() =>
-              setCurrentMonth((m) => new Date(m.getFullYear(), m.getMonth() + 1, 1))
-            }
+            onClick={() => setCurrentMonth(m => new Date(m.getFullYear(), m.getMonth() + 1, 1))}
             className="px-2 py-1 rounded hover:bg-gray-100"
           >
             ▶
@@ -233,9 +234,7 @@ function BookingCalendar({ availability = [], selectedDateISO, onDateTimeSelect 
       {/* Weekday headings */}
       <div className="grid grid-cols-7 gap-2 text-center text-xs mb-2">
         {WEEKDAY_NAMES.map((d) => (
-          <div key={d} className="font-semibold text-gray-600">
-            {d}
-          </div>
+          <div key={d} className="font-semibold text-gray-600">{d}</div>
         ))}
       </div>
 
@@ -260,22 +259,17 @@ function BookingCalendar({ availability = [], selectedDateISO, onDateTimeSelect 
                 }
               }}
               disabled={isDisabled}
-              className={`rounded p-2 text-sm h-12 flex flex-col items-center justify-center transition
+              className={`rounded p-2 h-12 flex flex-col items-center justify-center text-sm transition
                 ${isCurrentMonth ? "" : "opacity-40"}
-                ${
-                  isDisabled
-                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                    : "bg-white hover:bg-gray-100"
-                }
+                ${isDisabled ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-white hover:bg-gray-100"}
                 ${isSelected ? "bg-primary-color-P4 text-white" : ""}
               `}
             >
-              <div className="text-sm font-medium">{d.getDate()}</div>
+              <div className="font-medium">{d.getDate()}</div>
 
-              {/* No slot count for past dates */}
               {!isPast ? (
                 <div className="text-xs mt-1 text-green-600">
-                  {slots.length} slot{slots.length > 1 ? "s" : ""}
+                  {slots.length} slot{slots.length !== 1 ? "s" : ""}
                 </div>
               ) : (
                 <div className="text-xs mt-1 text-gray-300">—</div>
@@ -398,6 +392,16 @@ export default function TeacherBookingPage() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [bookingStatus, setBookingStatus] = useState("idle");
+
+
+  const [time, setTime] = useState();
+
+  useEffect(()=>{
+    const data= axios.get("/api/availablity/"+teacherId).then(res=>{
+      setTime(res.data.availability);
+    }).catch(err=>{console.log(err);
+    });
+  },[])
 
   useEffect(() => {
     let active = true;
@@ -557,7 +561,7 @@ const handleBooking = async () => {
           {/* Calendar + summary */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <BookingCalendar
-              availability={teacher.availability}
+              availability={time}
               selectedDateISO={selectedDate}
               onDateTimeSelect={(dateISO, time) => {
                 setSelectedDate(dateISO || "");
