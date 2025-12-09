@@ -1,8 +1,5 @@
 import hero from "@/public/images/home-hero.jpg";
 import Image from "next/image";
-import Link from "next/link";
-import { PlayIcon } from "../../Icons";
-import ActionButton from "../../Shared/ActionButton";
 import ActionButtonRightIcon from "../../Shared/ActionButtonRightIcon";
 
 const Hero = () => {
