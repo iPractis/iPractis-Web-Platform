@@ -1,8 +1,9 @@
-import AveragePricesLanguaguesCarousel from "./AveragePricesLanguaguesCarousel";
-
 import hero from "@/public/images/home-hero.jpg";
 import Image from "next/image";
 import Link from "next/link";
+import { PlayIcon } from "../../Icons";
+import ActionButton from "../../Shared/ActionButton";
+import ActionButtonRightIcon from "../../Shared/ActionButtonRightIcon";
 
 const Hero = () => {
   return (
@@ -24,7 +25,7 @@ const Hero = () => {
               />
             </div>
 
-            <ul className="MT-SB-1 list-disc text-primary-color-P6 ps-5 space-y-2">
+            <ul className="ST-4 list-disc text-primary-color-P4 ps-5 space-y-2">
               <li>
                 <p>1 : 1 Online Lessons with a real matched tutors</p>
               </li>
@@ -35,14 +36,9 @@ const Hero = () => {
                 <p>Access to a library</p>
               </li>
             </ul>
-
-            <Link
-              className="btn btn-primary py-3 px-4 MT-SB-1 rounded-2xl md:mt-0 mt-10"
-              type="button"
-              href="/dashboard"
-            >
-              Get Started
-            </Link>
+            <ActionButtonRightIcon
+              description="Get Started"
+            />
           </div>
         </div>
 
@@ -57,9 +53,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-      {/* Carousel of Languages */}
-      <AveragePricesLanguaguesCarousel />
     </section>
   );
 };
