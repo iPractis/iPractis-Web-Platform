@@ -4,13 +4,12 @@ import EasyStepsGetStarted from "../components/Home/EasyStepsGetStarted";
 import MeetOurServices from "../components/Home/MeetOurServices";
 import VariousInterestingSubject from "../components/Home/VariousInterestingSubject";
 import LessonsSupport from "../components/Home/LessonsSupport";
-import SafeLearning from "../components/Home/SafeLearning";
 import PlatformExperience from "../components/Home/PlatformExperience";
 import Footer from "../components/Home/Footer";
 
 const page = () => {
   return (
-    <main>
+    <main className="flex flex-col space-y-[64px]">
       {/* Hero and Carousel of Languagues top */}
       <Hero />
 
@@ -23,7 +22,6 @@ const page = () => {
       {/* Meet Our Services */}
       <MeetOurServices />
 
-
       {/* Various Interesting Subject */}
       <VariousInterestingSubject />
 
@@ -31,7 +29,7 @@ const page = () => {
       <LessonsSupport />
 
       {/* Safe learning environment */}
-      <SafeLearning />
+      {/* <SafeLearning /> */}
 
       {/* Cross platform experience */}
       <PlatformExperience />

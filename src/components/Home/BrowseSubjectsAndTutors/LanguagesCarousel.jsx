@@ -9,19 +9,19 @@ import { subjects } from "@/src/data/sharedData";
 // import required modules
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import CarouselArrow from "../../Shared/CarouselArrow";
 
 // Images && Icons
-import chevronRight from "@/public/icons/chevron-right.png";
-import chevronLeft from "@/public/icons/chevron-left.png";
 import { useState } from "react";
+import { ChevronLeftSmallIcon, PlayIcon } from "../../Icons";
 
 const LanguagesCarousel = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("English");
 
   return (
-    <div className="relative rounded-xl bg-white xs:px-4 px-3 py-1.5 my-[30px]">
-      <div className="relative xs:px-11 px-6">
+    <div className="relative flex w-[1000px] items-center">
+      <div className="bg-primary-color-P1 rounded-[10px] p-[6px] mr-[16px]">
+        <ChevronLeftSmallIcon fillColor="fill-primary-color-P12"/>
+      </div>
         <Swiper
           loop={true}
           pagination={{
@@ -69,19 +69,9 @@ const LanguagesCarousel = () => {
             );
           })}
         </Swiper>
+      <div className="bg-primary-color-P1 rounded-[10px] p-[6px] ml-[16px]">
+        <PlayIcon fillColor="fill-primary-color-P12"/>
       </div>
-
-      <CarouselArrow
-        carouselSwiperButtonName={"subjects-carousel-swiper-button-prev"}
-        srcArrow={chevronLeft}
-        arrowPosition={"left"}
-      />
-
-      <CarouselArrow
-        carouselSwiperButtonName={"subjects-carousel-swiper-button-next"}
-        srcArrow={chevronRight}
-        arrowPosition={"right"}
-      />
     </div>
   );
 };

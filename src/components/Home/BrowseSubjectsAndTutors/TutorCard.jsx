@@ -6,6 +6,8 @@ import Image from "next/image";
 // Icons && images
 import videoThumbnail404 from "@/public/images/video-thumbnail-404.png";
 import playVideo from "@/public/icons/play-video.png";
+import ActionButtonRightIcon from "../../Shared/ActionButtonRightIcon";
+import { PlayIcon } from "../../Icons";
 
 const TutorCard = ({ subjectAndTutor }) => {
   const [playingVideo, setPlayingVideo] = useState(false);
@@ -20,8 +22,7 @@ const TutorCard = ({ subjectAndTutor }) => {
   };
 
   return (
-    <>
-      <div className="bg-primary-color-P12 rounded-2xl group relative">
+      <div className="bg-secondary-color-S11 rounded-2xl group relative w-[312px]">
         <div className="relative">
           {playingVideo ? (
             <iframe
@@ -37,10 +38,9 @@ const TutorCard = ({ subjectAndTutor }) => {
               onClick={() => setPlayingVideo(true)}
               className="cursor-pointer"
             >
-              <div className="relative w-full h-[190px]">
+              <div className="relative w-[312px] h-[175px]">
                 <Image
                   src={thumbnailError ? videoThumbnail404 : videoThumbnail}
-                  sizes="(max-width: 640px) 100vw, 100%"
                   style={{ objectFit: "inherit" }}
                   onError={handleImageError}
                   className="rounded-t-2xl"
@@ -90,53 +90,49 @@ const TutorCard = ({ subjectAndTutor }) => {
             </div>
           </div>
 
-          <div className="flex gap-3 items-center justify-between my-5">
+          <div className="flex gap-3 items-center justify-between my-5 group-hover:hidden">
             <ul className="flex items-center gap-[10px]">
-              <li className="ST-SB-2 text-primary-color-P1">English</li>
+              <li className="ST-2 text-primary-color-P1">English</li>
 
-              <li className="ST-SB-1 py-[2px] px-1.5 rounded-md bg-primary-color-P1 text-primary-color-P12">
+              <li className="ST-1 py-[2px] px-1.5 rounded-md bg-primary-color-P1 text-primary-color-P12">
                 Native
               </li>
 
-              <li className="ST-SB-2 text-primary-color-P1">French</li>
+              <li className="ST-2 text-primary-color-P1">French</li>
 
               <li className="ST-1 py-[2px] px-1.5 rounded-md bg-quinary-color-VS10 text-primary-color-P1">
                 Fluent C2
               </li>
-            </ul>
 
-            <div className="flex items-center justify-center bg-primary-color-P11 px-[4px] py-[2px] w-6 h-6 rounded-full">
-              <h4 className="ST-SB-1 text-center text-primary-color-P4 flex h-full items-center justify-center">
-                {subjectAndTutor?.tutorExtraLanguages}
-              </h4>
-            </div>
+              <div className="flex items-center justify-center bg-primary-color-P11 px-[4px] py-[2px] w-6 h-6 rounded-full">
+                <h4 className="ST-SB-1 text-center text-primary-color-P4 flex h-full items-center justify-center">
+                  {subjectAndTutor?.tutorExtraLanguages}
+                </h4>
+              </div>
+            </ul>
           </div>
 
           <div className="flex justify-between py-1">
             {/* Lesson Rate which disappears on hover */}
-            <div>
+            <div className="group-hover:hidden">
               <h4 className="text-primary-color-P6 ST-1 pb-[2px]">
                 Lesson rate
               </h4>
               <h3 className="sm:text-primary-color-P1 text-primary-color-P4">
-                <span className="MT-SB-1">8 USD/</span>
-                <span className="ST-3">30 mins</span>
+                <span className="ST-SB-2">8 USD</span>
+                <span className="ST-1 bg-quaternary-color-A6 px-[8px] py-[2px] rounded-[6px] ml-1">For 30 minutes session</span>
               </h3>
             </div>
-
-            {/* Buttons that appear on hover */}
-            <div className="sm:hidden sm:group-hover:flex gap-4 transition-all duration-300 ease-in-out">
-              <button
-                className="btn btn-primary px-4 py-2 rounded-lg sm:w-auto w-[155px] ST-SB-4"
-                type="button"
-              >
-                Book a trial
-              </button>
-            </div>
+          </div>
+          <div className="w-full justify-center">
+            <ActionButtonRightIcon 
+              className="hidden group-hover:mt-[55px] group-hover:flex w-[271px] group-hover:transition-all group-hover:duration-300 group-hover:ease-in-out bg-tertiary-color-SC6 hover:bg-tertiary-color-SC5" 
+              description={"Plan a lesson"}
+              icon={<PlayIcon fillColor="fill-tertiary-color-SC5"/>}
+            />
           </div>
         </div>
       </div>
-    </>
   );
 };
 
