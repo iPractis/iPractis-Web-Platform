@@ -5,10 +5,38 @@ import { supabaseClient } from "@/src/lib/supabaseClient";
 
 dayjs.extend(utc);
 
+// ---------------------------------------------------------
+// 🔑 STEP 1 — Generate a unique room key (Supabase-verified)
+// ---------------------------------------------------------
+async function generateUniqueRoomKey() {
+  let key;
+  let exists = true;
+
+  while (exists) {
+    // Create a 12-character random ID
+    key = crypto.randomUUID().replace(/-/g, "").slice(0, 12);
+
+    // Check in Supabase if the key already exists
+    const { data } = await supabaseClient
+      .from("bookings")
+      .select("id")
+      .eq("room_key", key)
+      .maybeSingle();
+
+    exists = !!data; // If found → regenerate
+  }
+
+  return key;
+}
+
+// ---------------------------------------------------------
+// 📅 POST: Create Booking
+// ---------------------------------------------------------
 export const POST = async (req) => {
   try {
     const { teacherId, studentId, date, time } = await req.json();
 
+    // Basic validation
     if (!teacherId || !studentId || !date || !time) {
       return NextResponse.json(
         { error: "Missing teacherId, studentId, date, or time" },
@@ -20,6 +48,7 @@ export const POST = async (req) => {
     const endTime = startTime.add(30, "minute");
     const now = dayjs.utc();
 
+    // Prevent past bookings
     if (startTime.isBefore(now)) {
       return NextResponse.json(
         { error: "Cannot book a past time slot." },
@@ -27,9 +56,9 @@ export const POST = async (req) => {
       );
     }
 
-    // 1️⃣ Check teacher availability
     const dayOfWeek = startTime.format("ddd");
 
+    // 1️⃣ Check teacher availability
     const { data: availability, error: availError } = await supabaseClient
       .from("teacher_availability")
       .select("id")
@@ -40,6 +69,7 @@ export const POST = async (req) => {
       .maybeSingle();
 
     if (availError) throw availError;
+
     if (!availability) {
       return NextResponse.json(
         { error: "Teacher not available at that time." },
@@ -47,7 +77,7 @@ export const POST = async (req) => {
       );
     }
 
-    // 2️⃣ Supabase-safe overlap check
+    // 2️⃣ Check overlapping bookings for the teacher
     const { data: conflicts, error: conflictError } = await supabaseClient
       .from("bookings")
       .select("id")
@@ -65,7 +95,10 @@ export const POST = async (req) => {
       );
     }
 
-    // 3️⃣ Create booking
+    // 3️⃣ Generate guaranteed unique room key
+    const roomKey = await generateUniqueRoomKey();
+
+    // 4️⃣ Create booking
     const { data: booking, error: insertError } = await supabaseClient
       .from("bookings")
       .insert([
@@ -75,6 +108,7 @@ export const POST = async (req) => {
           start_time: startTime.toISOString(),
           end_time: endTime.toISOString(),
           status: "booked",
+          room_key: roomKey, // 🔥 Insert here
         },
       ])
       .select()
@@ -82,6 +116,7 @@ export const POST = async (req) => {
 
     if (insertError) throw insertError;
 
+    // Success
     return NextResponse.json(
       {
         success: true,
@@ -90,6 +125,7 @@ export const POST = async (req) => {
       },
       { status: 201 }
     );
+
   } catch (err) {
     console.error("Error creating booking:", err);
     return NextResponse.json(
