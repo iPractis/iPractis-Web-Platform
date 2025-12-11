@@ -1,20 +1,20 @@
-import { OneFooterColumn, TwoFooterColumn } from "./FooterColumns";
+import { OneFooterColumn } from "./FooterColumns";
 import SmallFooter from "./SmallFooter";
-
-// Icon && images
-import linkedin from "@/public/icons/linkedin-black.png";
-import instagram from "@/public/icons/instagram-black.png";
-import facebook from "@/public/icons/facebook-black.png";
-import youtube from "@/public/icons/youtube-black.png";
+import {
+  LinkedInIcon,
+  YoutubeIcon,
+  InstagramIcon,
+  RedditIcon
+} from "../../Icons";
 
 const Footer = () => {
   return (
     <footer>
-      <div className="bg-primary-color-P2">
+      <div className="bg-primary-color-P12 text-primary-color-P1">
         <div className="container-page-v1 md:py-[60px] py-10">
           <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px]">
-            <TwoFooterColumn
-              columnOne={{
+            <OneFooterColumn
+              column={{
                 title: "About iPractis",
                 columns: [
                   { title: "Corporate Entity" },
@@ -22,18 +22,10 @@ const Footer = () => {
                   { title: "External Services" },
                 ],
               }}
-              columnTwo={{
-                title: "Legal",
-                columns: [
-                  { title: "Terms of use" },
-                  { title: "Privacy policy" },
-                  { title: "Cookie policy" },
-                ],
-              }}
             />
 
-            <TwoFooterColumn
-              columnOne={{
+            <OneFooterColumn
+              column={{
                 title: "Services",
                 columns: [
                   { title: "1:1 Online lesson" },
@@ -41,13 +33,6 @@ const Footer = () => {
                   { title: "Family account" },
                   { title: "Enterprise account" },
                   { title: "Government account" },
-                ],
-              }}
-              columnTwo={{
-                title: "Teaching",
-                columns: [
-                  { title: "Become a teacher" },
-                  { title: "Code of conduct" },
                 ],
               }}
             />
@@ -72,18 +57,55 @@ const Footer = () => {
 
                   {
                     icons: [
-                      { src: linkedin },
-                      { src: youtube },
-                      { src: instagram },
-                      { src: facebook },
+                      {
+                        src: <LinkedInIcon fillColor="fill-primary-color-P1" ariaLabel="LinkedIn" />,
+                        href: "https://www.linkedin.com/company/ipractis",
+                        size: "w-[36px] h-[36px]"
+                      },
+                      {
+                        src: <YoutubeIcon fillColor="fill-primary-color-P1" ariaLabel="YouTube" />,
+                        href: "https://www.youtube.com/@iPractis",
+                        size: "w-[36px] h-[36px]"
+                      },
+                      {
+                        src: <InstagramIcon fillColor="fill-primary-color-P1" ariaLabel="Instagram" />,
+                        href: "https://www.instagram.com/ipractis/",
+                        size: "w-[36px] h-[36px]"
+                      },
+                      {
+                        src: <RedditIcon fillColor="fill-primary-color-P1" ariaLabel="Reddit" />,
+                        href: "https://www.reddit.com/r/iPractis/",
+                        size: "w-[36px] h-[36px]"
+                      },
                     ],
                   },
                 ],
               }}
             />
+
+            <OneFooterColumn
+              column={{
+                title: "Teaching",
+                columns: [
+                  { title: "Become a teacher" },
+                  { title: "Code of conduct" },
+                ],
+              }}
+            />
+
+            <OneFooterColumn
+              column={{
+                title: "Legal",
+                columns: [
+                  { title: "Terms of use" },
+                  { title: "Privacy policy" },
+                  { title: "Cookie policy" },
+                ],
+              }}
+            />
           </article>
 
-          <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px] xs:mt-[100px] mt-[31px]">
+          <article className="grid xs:grid-cols-2 sm:grid-cols-4 grid-cols-1 place-items-stretch xs:text-start text-center gap-[30px] mt-[100px]">
             <OneFooterColumn
               column={{
                 title: "Linguistic subjects",

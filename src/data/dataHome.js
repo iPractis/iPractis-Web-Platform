@@ -145,7 +145,7 @@ export const easyStepsGetStarted = [
     stepIcon: userScreen,
     stepIconAlt: "User Screen",
     stepTitle: "Start learning",
-    stepDesc: "Pay only for the lessons you take, no contracts or hidden fees.",
+    stepDesc: "Join your live session and begin making real progress with guidance tailored to your needs.",
   },
 ];
 
@@ -177,7 +177,7 @@ export const variousInterestingSubjects = [
   {
     subjectIcon: wrist,
     subjectIconAlt: "Icon Wrist",
-    subjectTitle: "Start learning",
+    subjectTitle: "Professional subjects",
     subjectDesc:
       "Learn career-focused skills like coding, business, and digital marketing.",
   },

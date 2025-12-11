@@ -6,46 +6,43 @@ import sun from "@/public/icons/sun.png";
 import Image from "next/image";
 
 const BottomSection = () => {
-  return (
-    <article className="flex flex-col md:flex-row sm:gap-4 gap-[30px]">
-      <div className="flex-[30%]">
-        <Image
-          alt="Woman Taking Classes"
-          className="w-full sm:h-[428px] h-full object-cover rounded-[20px]"
-          src={womanComputer}
-        />{" "}
-      </div>
+	return (
+		<article className="flex gap-[32px] justify-between">
+			<div className="">
+				<Image
+					alt="Woman Taking Classes"
+					className="w-[600px] h-[444px] object-cover rounded-[32px]"
+					src={womanComputer}
+				/>
+			</div>
 
-      <div className="flex-1">
-        <div className="flex flex-col h-full sm:gap-4 gap-[30px] justify-between">
-          <div className="bg-primary-color-P12 flex-1 text-center rounded-[20px] py-8 px-4">
-            <Image alt={"Icon Sun"} className="w-[46px] mx-auto" src={sun} />
+			<div className="flex flex-col h-[444px] gap-[32px] justify-between">
+				<div className="bg-secondary-color-S11 flex-1 text-center rounded-[32px] w-[368px] p-[32px]">
+					<Image alt={"Icon Sun"} className="w-[46px] mx-auto" src={sun} />
 
-            <h2 className="text-primary-color-P4 MT-SB-1 md:mb-2 mb-[10px] md:mt-5 mt-3">
-              Initiation lessons
-            </h2>
+					<h2 className="text-primary-color-P4 MT-SB-1 md:mb-2 mb-[10px] md:mt-5 mt-3">
+						Initiation lessons
+					</h2>
 
-            <p className="text-primary-color-P6 ST-3">
-              Start from the basics and build a strong foundation in any
-              subject.
-            </p>
-          </div>
+					<p className="text-primary-color-P6 ST-3">
+						Start from the basics and build a strong foundation in any subject.
+					</p>
+				</div>
 
-          <div className="bg-primary-color-P12 flex-1 text-center rounded-[20px] py-8 px-4">
-            <Image alt={"Icon Bee"} className="w-[42px] mx-auto" src={bee} />
+				<div className="bg-secondary-color-S11 flex-1 text-center rounded-[32px] w-[368px] p-[32px]">
+					<Image alt={"Icon Bee"} className="w-[42px] mx-auto" src={bee} />
 
-            <h2 className="text-primary-color-P4 MT-SB-1 md:mb-2 mb-[10px] mt-5">
-              Professional skills improvement
-            </h2>
-            <p className="text-primary-color-P6 ST-3">
-              Enhance your career by developing essential skills for the
-              workplace.
-            </p>
-          </div>
-        </div>
-      </div>
-    </article>
-  );
+					<h2 className="text-primary-color-P4 MT-SB-1 md:mb-2 mb-[10px] mt-5">
+						Professional skills improvement
+					</h2>
+					<p className="text-primary-color-P6 ST-3">
+						Enhance your career by developing essential skills for the
+						workplace.
+					</p>
+				</div>
+			</div>
+		</article>
+	);
 };
 
 export default BottomSection;

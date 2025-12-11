@@ -1,6 +1,6 @@
-const IconHeader = ({ icon, title, description }) => {
+const IconHeader = ({ icon, title, description, className }) => {
   return (
-    <div className="flex items-center gap-[16px] h-[48px]">
+    <div className={`flex items-center gap-[16px] h-[48px] ${className}`}>
       <div className="w-[48px] h-[48px] rounded-[16px] bg-secondary-color-S11 flex items-center justify-center p-[14px]">
         {icon}
       </div>
