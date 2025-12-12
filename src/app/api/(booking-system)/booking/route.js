@@ -110,6 +110,22 @@ export const POST = async (req) => {
 
     const bookingId = booking.id;
 
+    const { data: teacher, error: teacherError } = await supabaseClient
+    .from("teachers")
+    .select("user_id")
+    .eq("teacher_id", teacherId)
+    .single();
+
+    console.log("Teacher data:", teacher.user_id, "Error:", teacherError);
+
+    const { data: userData , setUserDataError } = await supabaseClient
+    .from("users")
+    .select("*")
+    .eq("user_id", teacher.user_id)
+    .single();
+
+    console.log("User data:", userData, "Error:", setUserDataError);
+
     // ---------------------------------------------------------
     // 🔥 STEP 5 — Create Chat Room
     // ---------------------------------------------------------
@@ -118,7 +134,7 @@ export const POST = async (req) => {
       .insert([
         {
           booking_id: bookingId,
-          room_name: `Lesson Chat ${bookingId}`,
+          room_name: `Lesson Chat with ${userData.first_name} `,
           student_id: studentId,
           teacher_id: teacherId,
           type: "lesson",
