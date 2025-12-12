@@ -14,7 +14,7 @@ export async function POST(req) {
 
     // 1️⃣ Authenticate user via YOUR JWT
     const user = await getUserFromJWT();
-    console.log("Authenticated user:", user);
+    console.log("Authenticated user for chat:", user);
     if (!user) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
     }
