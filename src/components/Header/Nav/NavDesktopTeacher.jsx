@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AddBGIcon,
   NewMessageIcon,
@@ -6,6 +8,7 @@ import {
 } from "../../Icons";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 import NavDropdown from "./NavDropdown";
 import NavSearchBar from "./NavSearchBar";
@@ -14,6 +17,61 @@ import NavSearchBar from "./NavSearchBar";
 import logo from "@/public/logos/ipractis-logo-1.png";
 
 const NavDesktopTeacher = ({ userName }) => {
+  const [unreadMessages, setUnreadMessages] = useState(0);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+
+  // ------------------------------
+  // 🔥 Fetch unread message count
+  // ------------------------------
+  useEffect(() => {
+    async function loadUnread() {
+      try {
+        const res = await fetch("/api/chat/unread", {
+          credentials: "include",
+        });
+        const data = await res.json();
+
+        setUnreadMessages(data.unreadCount || 0);
+      } catch (err) {
+        console.log("Unread message load error:", err);
+      }
+    }
+
+    loadUnread();
+
+    // Optional: Refresh every 10 seconds
+    const timer = setInterval(loadUnread, 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // ------------------------------
+  // 🔥 Fetch unread notifications
+  // ------------------------------
+  useEffect(() => {
+    async function loadNotifications() {
+      try {
+        const res = await fetch("/api/chat/unread", {
+          credentials: "include",
+        });
+        const data = await res.json();
+
+        setUnreadNotifications(data.unread || 0);
+      } catch (err) {
+        console.log("Unread notification error:", err);
+      }
+    }
+
+    loadNotifications();
+  }, []);
+
+  // ---------------------------------
+  // 🔥 Small badge formatter
+  // ---------------------------------
+  const formatBadge = (num) => {
+    if (!num || num <= 0) return null;
+    return num > 9 ? "9+" : num;
+  };
+
   return (
     <div className="flex justify-between items-center gap-1.5">
       {/* Left Column */}
@@ -30,13 +88,13 @@ const NavDesktopTeacher = ({ userName }) => {
       <div className="flex items-center gap-4">
         <NavSearchBar />
 
+        {/* Wallet Section */}
         <div className="flex items-center gap-3 rounded-2xl h-[38px] p-1.5 text-primary-color-P1 bg-primary-color-P12">
           <div className="rounded-[10px] bg-primary-color-P1">
             <WalletBgIcon fillcolor={"fill-primary-color-P1"} />
           </div>
 
           <p className="ST-SB-4">0</p>
-
           <p className="ST-3">USD</p>
 
           <button className="rounded-[10px] bg-primary-color-P1">
@@ -45,21 +103,47 @@ const NavDesktopTeacher = ({ userName }) => {
         </div>
 
         <div className="flex items-center">
-          {/* Notifications Button */}
+          {/* --------------------- */}
+          {/* 🔔 Notifications Icon */}
+          {/* --------------------- */}
           <div className="flex px-4 py-2">
             <button className="relative">
               <NotificationIcon />
 
-              <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
+              {unreadNotifications > 0 && (
+                <span className="
+                  absolute -top-1 -right-1 bg-red-500 text-white 
+                  text-[10px] h-4 min-w-4 px-1 rounded-full 
+                  flex items-center justify-center 
+                  border border-white 
+                  animate-pulse
+                ">
+                  {formatBadge(unreadNotifications)}
+                </span>
+              )}
             </button>
           </div>
 
-          {/* Message Button */}
+          {/* --------------------- */}
+          {/* 💬 Messages Icon */}
+          {/* --------------------- */}
           <div className="flex px-4 py-2">
-            <button className="relative">
+            <button
+              className="relative"
+              onClick={() => (window.location.href = "/chat")}
+            >
               <NewMessageIcon fillcolor={"fill-primary-color-P12"} />
 
-              <div className="bg-septenary-color-MA5 rounded-full h-[5px] w-[5px] absolute right-0 top-0"></div>
+              {unreadMessages > 0 && (
+                <span className="
+                  absolute -top-1 -right-1 bg-red-600 text-white 
+                  text-[10px] h-4 min-w-4 px-1 rounded-full 
+                  flex items-center justify-center 
+                  border border-white 
+                ">
+                  {formatBadge(unreadMessages)}
+                </span>
+              )}
             </button>
           </div>
         </div>
