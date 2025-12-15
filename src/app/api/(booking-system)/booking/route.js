@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { supabaseClient } from "@/src/lib/supabaseClient";
+import { notify } from "@/src/lib/notification/notify";
 
 dayjs.extend(utc);
 
@@ -28,7 +29,7 @@ async function generateUniqueRoomKey() {
 }
 
 // ---------------------------------------------------------
-// 📅 POST: Create Booking + Chat Room + Members
+// 📅 POST: Create Booking + Chat Room + Members + Notifications
 // ---------------------------------------------------------
 export const POST = async (req) => {
   try {
@@ -54,7 +55,9 @@ export const POST = async (req) => {
 
     const dayOfWeek = startTime.format("ddd");
 
-    // 1️⃣ Check availability
+    // ---------------------------------------------------------
+    // 1️⃣ Check teacher availability
+    // ---------------------------------------------------------
     const { data: availability } = await supabaseClient
       .from("teacher_availability")
       .select("id")
@@ -71,7 +74,9 @@ export const POST = async (req) => {
       );
     }
 
+    // ---------------------------------------------------------
     // 2️⃣ Check overlapping bookings
+    // ---------------------------------------------------------
     const { data: conflicts } = await supabaseClient
       .from("bookings")
       .select("id")
@@ -87,11 +92,15 @@ export const POST = async (req) => {
       );
     }
 
+    // ---------------------------------------------------------
     // 3️⃣ Generate unique chat room key
+    // ---------------------------------------------------------
     const roomKey = await generateUniqueRoomKey();
 
-    // 4️⃣ Create the Booking
-    const { data: booking, error: insertError } = await supabaseClient
+    // ---------------------------------------------------------
+    // 4️⃣ Create Booking
+    // ---------------------------------------------------------
+    const { data: booking, error: bookingError } = await supabaseClient
       .from("bookings")
       .insert([
         {
@@ -106,35 +115,43 @@ export const POST = async (req) => {
       .select()
       .maybeSingle();
 
-    if (insertError) throw insertError;
+    if (bookingError) throw bookingError;
 
     const bookingId = booking.id;
 
+    // ---------------------------------------------------------
+    // 5️⃣ Resolve teacher.user_id
+    // ---------------------------------------------------------
     const { data: teacher, error: teacherError } = await supabaseClient
-    .from("teachers")
-    .select("user_id")
-    .eq("teacher_id", teacherId)
-    .single();
+      .from("teachers")
+      .select("user_id")
+      .eq("teacher_id", teacherId)
+      .single();
 
-    console.log("Teacher data:", teacher.user_id, "Error:", teacherError);
+    if (teacherError || !teacher) {
+      throw new Error("Failed to resolve teacher user");
+    }
 
-    const { data: userData , setUserDataError } = await supabaseClient
-    .from("users")
-    .select("*")
-    .eq("user_id", teacher.user_id)
-    .single();
-
-    console.log("User data:", userData, "Error:", setUserDataError);
+    const teacherUserId = teacher.user_id;
 
     // ---------------------------------------------------------
-    // 🔥 STEP 5 — Create Chat Room
+    // 6️⃣ Fetch teacher user details (for naming)
+    // ---------------------------------------------------------
+    const { data: teacherUser } = await supabaseClient
+      .from("users")
+      .select("first_name")
+      .eq("user_id", teacherUserId)
+      .single();
+
+    // ---------------------------------------------------------
+    // 7️⃣ Create Chat Room
     // ---------------------------------------------------------
     const { data: chatRoom, error: chatError } = await supabaseClient
       .from("chat_rooms")
       .insert([
         {
           booking_id: bookingId,
-          room_name: `Lesson Chat with ${userData.first_name} `,
+          room_name: `Lesson with ${teacherUser?.first_name ?? "Teacher"}`,
           student_id: studentId,
           teacher_id: teacherId,
           type: "lesson",
@@ -147,41 +164,70 @@ export const POST = async (req) => {
     if (chatError) throw chatError;
 
     // ---------------------------------------------------------
-    // 🔥 STEP 6 — Insert Student + Teacher into chat_room_members
+    // 8️⃣ Insert Chat Members
     // ---------------------------------------------------------
-    const { data: teacherUser, error: teacherUserError } = await supabaseClient
-  .from("teachers")
-  .select("user_id")
-  .eq("teacher_id", teacherId)
-  .maybeSingle();
+    await supabaseClient.from("chat_room_members").insert([
+      {
+        room_id: chatRoom.id,
+        user_id: studentId,
+        role: "student",
+        unread_count: 0,
+      },
+      {
+        room_id: chatRoom.id,
+        user_id: teacherUserId,
+        role: "teacher",
+        unread_count: 0,
+      },
+    ]);
 
-if (teacherUserError || !teacherUser) {
-  throw new Error("Failed to resolve teacher.user_id");
-}
-
-const teacherUserId = teacherUser.user_id;
-
-// STEP 7 — Insert Chat Members
-await supabaseClient.from("chat_room_members").insert([
-  { room_id: chatRoom.id, user_id: studentId, role: "student", unread_count: 0 },
-  { room_id: chatRoom.id, user_id: teacherUserId, role: "teacher", unread_count: 0 },
-]);
+    // ---------------------------------------------------------
+    // 🔔 9️⃣ Notifications (FINAL STEP)
     // ---------------------------------------------------------
 
+    // Student notification
+    await notify({
+      userId: studentId,
+      type: "APPOINTMENT_CONFIRMED",
+      entityType: "booking",
+      entityId: bookingId,
+      channels: ["inapp", "email"],
+      payload: {
+        startTime: startTime.format("DD MMM YYYY, HH:mm"),
+        teacherName: teacherUser?.first_name,
+        link: `/bookings/${bookingId}`,
+      },
+    });
+
+    // Teacher notification
+    await notify({
+      userId: teacherUserId,
+      type: "APPOINTMENT_CONFIRMED",
+      entityType: "booking",
+      entityId: bookingId,
+      channels: ["inapp"],
+      payload: {
+        startTime: startTime.format("DD MMM YYYY, HH:mm"),
+        link: `/teacher/bookings/${bookingId}`,
+      },
+    });
+
+    // ---------------------------------------------------------
+    // ✅ Success response
+    // ---------------------------------------------------------
     return NextResponse.json(
       {
         success: true,
-        message: "Booking & Chat Room created successfully",
+        message: "Booking, chat room & notifications created successfully",
         booking,
         chatRoom,
       },
       { status: 201 }
     );
-
   } catch (err) {
-    console.error("Error creating booking:", err);
+    console.error("CREATE_BOOKING_FAILED", err);
     return NextResponse.json(
-      { error: err.message ?? "Server error" },
+      { error: err.message || "Server error" },
       { status: 500 }
     );
   }
