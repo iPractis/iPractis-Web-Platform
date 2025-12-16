@@ -26,7 +26,7 @@ export async function POST(req) {
   }
 
   /* ---------------------------------------------------------
-     1️⃣ Only care about successful payments
+     1️⃣ Only handle successful payments
   --------------------------------------------------------- */
   if (event.type !== "payment_intent.succeeded") {
     return new Response("Ignored", { status: 200 });
@@ -45,13 +45,13 @@ export async function POST(req) {
   } = pi.metadata || {};
 
   if (!bookingId || !payerUserId) {
-    console.error("❌ Missing required Stripe metadata:", pi.metadata);
+    console.error("❌ Missing Stripe metadata:", pi.metadata);
     return new Response("Missing metadata", { status: 400 });
   }
 
   try {
     /* ---------------------------------------------------------
-       3️⃣ Resolve teacher_id + teacher_user_id SAFELY (DB truth)
+       3️⃣ Fetch booking (source of truth)
     --------------------------------------------------------- */
     const { data: booking, error: bookingErr } = await supabaseClient
       .from("bookings")
@@ -63,12 +63,13 @@ export async function POST(req) {
       throw new Error("Booking not found");
     }
 
-    const teacherId = booking.teacher_id;
-
+    /* ---------------------------------------------------------
+       4️⃣ Resolve teacher → user → name
+    --------------------------------------------------------- */
     const { data: teacher, error: teacherErr } = await supabaseClient
       .from("teachers")
       .select("user_id")
-      .eq("teacher_id", teacherId)
+      .eq("teacher_id", booking.teacher_id)
       .single();
 
     if (teacherErr || !teacher?.user_id) {
@@ -77,17 +78,27 @@ export async function POST(req) {
 
     const teacherUserId = teacher.user_id;
 
-    /* ---------------------------------------------------------
-       4️⃣ Idempotency check (payments table)
-    --------------------------------------------------------- */
-    const { data: existingPayment, error: paymentCheckErr } =
-      await supabaseClient
-        .from("payments")
-        .select("id")
-        .eq("stripe_payment_intent_id", pi.id)
-        .maybeSingle();
+    const { data: teacherUser, error: userErr } = await supabaseClient
+      .from("users")
+      .select("first_name, last_name")
+      .eq("user_id", teacherUserId)
+      .single();
 
-    if (paymentCheckErr) throw paymentCheckErr;
+    if (userErr || !teacherUser) {
+      throw new Error("Teacher profile not found");
+    }
+
+    const teacherName = `${teacherUser.first_name ?? ""} ${teacherUser.last_name ?? ""}`.trim();
+    const roomName = `Chat with ${teacherName || "Teacher"}`;
+
+    /* ---------------------------------------------------------
+       5️⃣ Idempotency check (payments)
+    --------------------------------------------------------- */
+    const { data: existingPayment } = await supabaseClient
+      .from("payments")
+      .select("id")
+      .eq("stripe_payment_intent_id", pi.id)
+      .maybeSingle();
 
     if (existingPayment) {
       console.log("⚠️ Payment already processed:", pi.id);
@@ -95,7 +106,7 @@ export async function POST(req) {
     }
 
     /* ---------------------------------------------------------
-       5️⃣ Ensure wallets exist (ONLY valid users)
+       6️⃣ Ensure wallets exist (VALID users only)
     --------------------------------------------------------- */
     const { error: walletErr } = await supabaseClient
       .from("wallets")
@@ -110,7 +121,7 @@ export async function POST(req) {
     if (walletErr) throw walletErr;
 
     /* ---------------------------------------------------------
-       6️⃣ Insert payment record
+       7️⃣ Insert payment record
     --------------------------------------------------------- */
     const { data: payment, error: paymentErr } = await supabaseClient
       .from("payments")
@@ -118,7 +129,7 @@ export async function POST(req) {
         {
           booking_id: bookingId,
           payer_user_id: payerUserId,
-          teacher_id: teacherId,
+          teacher_id: booking.teacher_id,
           stripe_payment_intent_id: pi.id,
           amount_total: pi.amount / 100,
           platform_fee: Number(platform_fee),
@@ -133,7 +144,7 @@ export async function POST(req) {
     if (paymentErr) throw paymentErr;
 
     /* ---------------------------------------------------------
-       7️⃣ Ledger entries
+       8️⃣ Ledger entries
     --------------------------------------------------------- */
     const { error: ledgerErr } = await supabaseClient
       .from("ledger_entries")
@@ -159,13 +170,13 @@ export async function POST(req) {
     if (ledgerErr) throw ledgerErr;
 
     /* ---------------------------------------------------------
-       8️⃣ Update booking (VALID STATUS ONLY)
+       9️⃣ Update booking (VALID enum)
     --------------------------------------------------------- */
     const { error: bookingUpdateErr } = await supabaseClient
       .from("bookings")
       .update({
         payment_status: "paid",
-        status: "booked", // ✅ valid per DB constraint
+        status: "booked",
         updated_at: new Date().toISOString(),
       })
       .eq("id", bookingId);
@@ -173,22 +184,20 @@ export async function POST(req) {
     if (bookingUpdateErr) throw bookingUpdateErr;
 
     /* ---------------------------------------------------------
-       9️⃣ Create chat room (IDEMPOTENT)
+       🔟 Create chat room (IDEMPOTENT + NAMED)
     --------------------------------------------------------- */
-    const { data: existingRoom, error: roomCheckErr } =
-      await supabaseClient
-        .from("chat_rooms")
-        .select("id")
-        .eq("booking_id", bookingId)
-        .maybeSingle();
-
-    if (roomCheckErr) throw roomCheckErr;
+    const { data: existingRoom } = await supabaseClient
+      .from("chat_rooms")
+      .select("id")
+      .eq("booking_id", bookingId)
+      .maybeSingle();
 
     if (!existingRoom) {
       const { data: room, error: roomErr } = await supabaseClient
         .from("chat_rooms")
         .insert([
           {
+            room_name: roomName,
             booking_id: booking.id,
             student_id: booking.student_id,
             teacher_id: booking.teacher_id,
