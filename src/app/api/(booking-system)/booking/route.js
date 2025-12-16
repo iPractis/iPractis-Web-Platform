@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import Stripe from "stripe";
 import { supabaseClient } from "@/src/lib/supabaseClient";
+import { notify } from "@/src/lib/notification/notify";
 
 dayjs.extend(utc);
 
@@ -33,7 +34,7 @@ async function generateUniqueRoomKey() {
 }
 
 // ---------------------------------------------------------
-// 📅 POST: Create Booking + Stripe PaymentIntent
+// 📅 POST: Create Booking + Stripe PaymentIntent + Notifications
 // ---------------------------------------------------------
 export const POST = async (req) => {
   try {
@@ -97,10 +98,15 @@ export const POST = async (req) => {
     }
 
     // ---------------------------------------------------------
+    // ---------------------------------------------------------
     // 3️⃣ Create booking (PENDING PAYMENT)
+    // ---------------------------------------------------------
     // ---------------------------------------------------------
     const roomKey = await generateUniqueRoomKey();
 
+    // ---------------------------------------------------------
+    // 4️⃣ Create Booking
+    // ---------------------------------------------------------
     const { data: booking, error: bookingError } = await supabaseClient
       .from("bookings")
       .insert([{
@@ -117,17 +123,34 @@ export const POST = async (req) => {
 
     if (bookingError) throw bookingError;
 
+    const bookingId = booking.id;
+
     // ---------------------------------------------------------
-    // 4️⃣ Fetch teacher user_id
+    // 5️⃣ Resolve teacher.user_id
     // ---------------------------------------------------------
-    const { data: teacher } = await supabaseClient
+    const { data: teacher, error: teacherError } = await supabaseClient
       .from("teachers")
       .select("user_id")
       .eq("teacher_id", teacherId)
       .single();
 
+    if (teacherError || !teacher) {
+      throw new Error("Failed to resolve teacher user");
+    }
+
+    const teacherUserId = teacher.user_id;
+
     // ---------------------------------------------------------
-    // 5️⃣ Create Stripe PaymentIntent
+    // 6️⃣ Fetch teacher user details (for naming)
+    // ---------------------------------------------------------
+    const { data: teacherUser } = await supabaseClient
+      .from("users")
+      .select("first_name")
+      .eq("user_id", teacherUserId)
+      .single();
+
+    // ---------------------------------------------------------
+    // 7️⃣ Create Chat Room
     // ---------------------------------------------------------
     const classPrice = booking.class_price ?? 15;
     const amount = Math.round(classPrice * 100);
@@ -150,12 +173,64 @@ export const POST = async (req) => {
     // ---------------------------------------------------------
     // 6️⃣ Return client secret
     // ---------------------------------------------------------
-    return NextResponse.json({
-      success: true,
-      bookingId: booking.id,
-      clientSecret: paymentIntent.client_secret,
+    await supabaseClient.from("chat_room_members").insert([
+      {
+        room_id: chatRoom.id,
+        user_id: studentId,
+        role: "student",
+        unread_count: 0,
+      },
+      {
+        room_id: chatRoom.id,
+        user_id: teacherUserId,
+        role: "teacher",
+        unread_count: 0,
+      },
+    ]);
+
+    // ---------------------------------------------------------
+    // 🔔 9️⃣ Notifications (FINAL STEP)
+    // ---------------------------------------------------------
+
+    // Student notification
+    await notify({
+      userId: studentId,
+      type: "APPOINTMENT_CONFIRMED",
+      entityType: "booking",
+      entityId: bookingId,
+      channels: ["inapp", "email"],
+      payload: {
+        startTime: startTime.format("DD MMM YYYY, HH:mm"),
+        teacherName: teacherUser?.first_name,
+        link: `/bookings/${bookingId}`,
+      },
     });
 
+    // Teacher notification
+    await notify({
+      userId: teacherUserId,
+      type: "APPOINTMENT_CONFIRMED",
+      entityType: "booking",
+      entityId: bookingId,
+      channels: ["inapp"],
+      payload: {
+        startTime: startTime.format("DD MMM YYYY, HH:mm"),
+        link: `/teacher/bookings/${bookingId}`,
+      },
+    });
+
+    // ---------------------------------------------------------
+    // ✅ Success response
+    // ---------------------------------------------------------
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Booking, chat room & notifications created successfully",
+        booking,
+        chatRoom,
+      },
+      { status: 201 }
+    );
   } catch (err) {
     console.error("Booking error:", err);
     return NextResponse.json(

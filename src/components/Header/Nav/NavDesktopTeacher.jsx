@@ -13,12 +13,36 @@ import { useEffect, useState } from "react";
 import NavDropdown from "./NavDropdown";
 import NavSearchBar from "./NavSearchBar";
 
-// Images && icons
-import logo from "@/public/logos/ipractis-logo-1.png";
+import { useNotifications } from "@/src/hooks/useNotifications";
 
-const NavDesktopTeacher = ({ userName }) => {
+// Images
+import logo from "@/public/logos/ipractis-logo-1.png";
+import NotificationDropdown from "../../Notifications/NotificationDropdown";
+import { useAuth } from "@/src/hooks/useAuth";
+
+const NavDesktopTeacher = ({ userName, userId }) => {
+  // ------------------------------
+  // 💬 Unread chat messages
+  // ------------------------------
   const [unreadMessages, setUnreadMessages] = useState(0);
-  const [unreadNotifications, setUnreadNotifications] = useState(0);
+
+  // ------------------------------
+  // 🔔 Notification dropdown toggle
+  // ------------------------------
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
+
+  // ------------------------------
+  // 🔔 Notifications (Realtime)
+  // ------------------------------
+  const {user} = useAuth();
+  console.log("User in NavDesktopTeacher:", user.userId);
+  const {
+    notifications,
+    unreadCount: unreadNotifications,
+    setNotifications,
+  } = useNotifications(user.userId);
+  console.log("Notifications:", notifications);
+  console.log("Unread notifications:", unreadNotifications);
 
   // ------------------------------
   // 🔥 Fetch unread message count
@@ -30,7 +54,6 @@ const NavDesktopTeacher = ({ userName }) => {
           credentials: "include",
         });
         const data = await res.json();
-
         setUnreadMessages(data.unreadCount || 0);
       } catch (err) {
         console.log("Unread message load error:", err);
@@ -38,35 +61,13 @@ const NavDesktopTeacher = ({ userName }) => {
     }
 
     loadUnread();
-
-    // Optional: Refresh every 10 seconds
     const timer = setInterval(loadUnread, 10000);
     return () => clearInterval(timer);
   }, []);
 
   // ------------------------------
-  // 🔥 Fetch unread notifications
+  // 🔢 Badge formatter
   // ------------------------------
-  useEffect(() => {
-    async function loadNotifications() {
-      try {
-        const res = await fetch("/api/chat/unread", {
-          credentials: "include",
-        });
-        const data = await res.json();
-
-        setUnreadNotifications(data.unread || 0);
-      } catch (err) {
-        console.log("Unread notification error:", err);
-      }
-    }
-
-    loadNotifications();
-  }, []);
-
-  // ---------------------------------
-  // 🔥 Small badge formatter
-  // ---------------------------------
   const formatBadge = (num) => {
     if (!num || num <= 0) return null;
     return num > 9 ? "9+" : num;
@@ -74,7 +75,9 @@ const NavDesktopTeacher = ({ userName }) => {
 
   return (
     <div className="flex justify-between items-center gap-1.5">
-      {/* Left Column */}
+      {/* ------------------------------ */}
+      {/* Left Column — Logo */}
+      {/* ------------------------------ */}
       <Link href="/">
         <Image
           className="w-[113px] p-1.5"
@@ -84,11 +87,15 @@ const NavDesktopTeacher = ({ userName }) => {
         />
       </Link>
 
+      {/* ------------------------------ */}
       {/* Right Column */}
+      {/* ------------------------------ */}
       <div className="flex items-center gap-4">
         <NavSearchBar />
 
-        {/* Wallet Section */}
+        {/* ------------------------------ */}
+        {/* Wallet */}
+        {/* ------------------------------ */}
         <div className="flex items-center gap-3 rounded-2xl h-[38px] p-1.5 text-primary-color-P1 bg-primary-color-P12">
           <div className="rounded-[10px] bg-primary-color-P1">
             <WalletBgIcon fillcolor={"fill-primary-color-P1"} />
@@ -102,31 +109,42 @@ const NavDesktopTeacher = ({ userName }) => {
           </button>
         </div>
 
-        <div className="flex items-center">
-          {/* --------------------- */}
-          {/* 🔔 Notifications Icon */}
-          {/* --------------------- */}
-          <div className="flex px-4 py-2">
-            <button className="relative">
+        {/* ------------------------------ */}
+        {/* Icons */}
+        {/* ------------------------------ */}
+        <div className="flex items-center relative">
+          {/* 🔔 Notifications */}
+          <div className="flex px-4 py-2 relative">
+            <button
+              className="relative"
+              onClick={() => setIsNotifOpen((prev) => !prev)}
+            >
               <NotificationIcon />
 
               {unreadNotifications > 0 && (
-                <span className="
-                  absolute -top-1 -right-1 bg-red-500 text-white 
-                  text-[10px] h-4 min-w-4 px-1 rounded-full 
-                  flex items-center justify-center 
-                  border border-white 
-                  animate-pulse
-                ">
+                <span
+                  className="
+                    absolute -top-1 -right-1 bg-red-500 text-white
+                    text-[10px] h-4 min-w-4 px-1 rounded-full
+                    flex items-center justify-center
+                    border border-white
+                    animate-pulse
+                  "
+                >
                   {formatBadge(unreadNotifications)}
                 </span>
               )}
             </button>
+
+            {isNotifOpen && (
+              <NotificationDropdown
+                notifications={notifications}
+                setNotifications={setNotifications}
+              />
+            )}
           </div>
 
-          {/* --------------------- */}
-          {/* 💬 Messages Icon */}
-          {/* --------------------- */}
+          {/* 💬 Messages */}
           <div className="flex px-4 py-2">
             <button
               className="relative"
@@ -135,12 +153,14 @@ const NavDesktopTeacher = ({ userName }) => {
               <NewMessageIcon fillcolor={"fill-primary-color-P12"} />
 
               {unreadMessages > 0 && (
-                <span className="
-                  absolute -top-1 -right-1 bg-red-600 text-white 
-                  text-[10px] h-4 min-w-4 px-1 rounded-full 
-                  flex items-center justify-center 
-                  border border-white 
-                ">
+                <span
+                  className="
+                    absolute -top-1 -right-1 bg-red-600 text-white
+                    text-[10px] h-4 min-w-4 px-1 rounded-full
+                    flex items-center justify-center
+                    border border-white
+                  "
+                >
                   {formatBadge(unreadMessages)}
                 </span>
               )}
@@ -148,8 +168,13 @@ const NavDesktopTeacher = ({ userName }) => {
           </div>
         </div>
 
-        {/* Tutor Dropdown */}
-        <NavDropdown isDropdownHidden={"lg:block hidden"} userName={userName} />
+        {/* ------------------------------ */}
+        {/* Profile Dropdown */}
+        {/* ------------------------------ */}
+        <NavDropdown
+          isDropdownHidden={"lg:block hidden"}
+          userName={userName}
+        />
       </div>
     </div>
   );
