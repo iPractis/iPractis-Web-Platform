@@ -1,13 +1,18 @@
 import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+import Stripe from "stripe";
 import { supabaseClient } from "@/src/lib/supabaseClient";
 import { notify } from "@/src/lib/notification/notify";
 
 dayjs.extend(utc);
 
+export const runtime = "nodejs";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 // ---------------------------------------------------------
-// 🔑 STEP 1 — Generate a unique room key (Supabase-verified)
+// 🔑 Generate unique room key (used AFTER payment)
 // ---------------------------------------------------------
 async function generateUniqueRoomKey() {
   let key;
@@ -29,7 +34,7 @@ async function generateUniqueRoomKey() {
 }
 
 // ---------------------------------------------------------
-// 📅 POST: Create Booking + Chat Room + Members + Notifications
+// 📅 POST: Create Booking + Stripe PaymentIntent + Notifications
 // ---------------------------------------------------------
 export const POST = async (req) => {
   try {
@@ -37,7 +42,7 @@ export const POST = async (req) => {
 
     if (!teacherId || !studentId || !date || !time) {
       return NextResponse.json(
-        { error: "Missing teacherId, studentId, date, or time" },
+        { error: "Missing required fields" },
         { status: 400 }
       );
     }
@@ -48,7 +53,7 @@ export const POST = async (req) => {
 
     if (startTime.isBefore(now)) {
       return NextResponse.json(
-        { error: "Cannot book a past time slot." },
+        { error: "Cannot book a past time slot" },
         { status: 400 }
       );
     }
@@ -56,7 +61,7 @@ export const POST = async (req) => {
     const dayOfWeek = startTime.format("ddd");
 
     // ---------------------------------------------------------
-    // 1️⃣ Check teacher availability
+    // 1️⃣ Availability check
     // ---------------------------------------------------------
     const { data: availability } = await supabaseClient
       .from("teacher_availability")
@@ -69,13 +74,13 @@ export const POST = async (req) => {
 
     if (!availability) {
       return NextResponse.json(
-        { error: "Teacher not available at that time." },
+        { error: "Teacher not available" },
         { status: 400 }
       );
     }
 
     // ---------------------------------------------------------
-    // 2️⃣ Check overlapping bookings
+    // 2️⃣ Conflict check
     // ---------------------------------------------------------
     const { data: conflicts } = await supabaseClient
       .from("bookings")
@@ -87,13 +92,15 @@ export const POST = async (req) => {
 
     if (conflicts?.length > 0) {
       return NextResponse.json(
-        { error: "This time slot is already booked." },
+        { error: "Slot already booked" },
         { status: 400 }
       );
     }
 
     // ---------------------------------------------------------
-    // 3️⃣ Generate unique chat room key
+    // ---------------------------------------------------------
+    // 3️⃣ Create booking (PENDING PAYMENT)
+    // ---------------------------------------------------------
     // ---------------------------------------------------------
     const roomKey = await generateUniqueRoomKey();
 
@@ -102,18 +109,17 @@ export const POST = async (req) => {
     // ---------------------------------------------------------
     const { data: booking, error: bookingError } = await supabaseClient
       .from("bookings")
-      .insert([
-        {
-          teacher_id: teacherId,
-          student_id: studentId,
-          start_time: startTime.toISOString(),
-          end_time: endTime.toISOString(),
-          status: "booked",
-          room_key: roomKey,
-        },
-      ])
+      .insert([{
+        teacher_id: teacherId,
+        student_id: studentId,
+        start_time: startTime.toISOString(),
+        end_time: endTime.toISOString(),
+        status: "booked",
+        payment_status: "pending",
+        room_key: roomKey,
+      }])
       .select()
-      .maybeSingle();
+      .single();
 
     if (bookingError) throw bookingError;
 
@@ -146,25 +152,26 @@ export const POST = async (req) => {
     // ---------------------------------------------------------
     // 7️⃣ Create Chat Room
     // ---------------------------------------------------------
-    const { data: chatRoom, error: chatError } = await supabaseClient
-      .from("chat_rooms")
-      .insert([
-        {
-          booking_id: bookingId,
-          room_name: `Lesson with ${teacherUser?.first_name ?? "Teacher"}`,
-          student_id: studentId,
-          teacher_id: teacherId,
-          type: "lesson",
-          expires_at: endTime.toISOString(),
-        },
-      ])
-      .select()
-      .maybeSingle();
+    const classPrice = booking.class_price ?? 15;
+    const amount = Math.round(classPrice * 100);
+    const platformFee = Math.round(amount * 0.2);
+    const teacherAmount = amount - platformFee;
 
-    if (chatError) throw chatError;
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount,
+      currency: "usd",
+      automatic_payment_methods: { enabled: true },
+      metadata: {
+        booking_id: booking.id,
+        payer_user_id: studentId,
+        teacher_user_id: teacher.user_id,
+        platform_fee: platformFee / 100,
+        teacher_amount: teacherAmount / 100,
+      },
+    });
 
     // ---------------------------------------------------------
-    // 8️⃣ Insert Chat Members
+    // 6️⃣ Return client secret
     // ---------------------------------------------------------
     await supabaseClient.from("chat_room_members").insert([
       {
@@ -225,7 +232,7 @@ export const POST = async (req) => {
       { status: 201 }
     );
   } catch (err) {
-    console.error("CREATE_BOOKING_FAILED", err);
+    console.error("Booking error:", err);
     return NextResponse.json(
       { error: err.message || "Server error" },
       { status: 500 }
