@@ -25,9 +25,14 @@ function CheckoutForm() {
   const elements = useElements();
 
   const handleSubmit = async (e) => {
+    console.log(`[Stripe Checkout] Form submitted`);
     e.preventDefault();
-    if (!stripe || !elements) return;
+    if (!stripe || !elements) {
+      console.log(`[Stripe Checkout] Stripe or elements not loaded`);
+      return;
+    }
 
+    console.log(`[Stripe Checkout] Confirming payment`);
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -36,7 +41,10 @@ function CheckoutForm() {
     });
 
     if (error) {
+      console.error(`[Stripe Checkout] Payment confirmation error:`, error.message);
       alert(error.message);
+    } else {
+      console.log(`[Stripe Checkout] Payment confirmed, redirecting`);
     }
   };
 

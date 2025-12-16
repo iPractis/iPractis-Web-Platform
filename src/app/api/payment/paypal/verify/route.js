@@ -10,12 +10,17 @@ export async function POST(req) {
   try {
     const { orderId, lectureId, studentId, teacherId } = await req.json();
 
+    console.log(`[PayPal Verify] Received request: orderId=${orderId}, lectureId=${lectureId}, studentId=${studentId}, teacherId=${teacherId}`);
+
     const accessToken = await generateAccessToken();
+    console.log(`[PayPal Verify] Generated access token`);
+
     const response = await fetch(`${process.env.NEXT_PUBLIC_PAYPAL_API_URL}/v2/checkout/orders/${orderId}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
     const order = await response.json();
+    console.log(`[PayPal Verify] Fetched order: status=${order.status}, id=${order.id}`);
 
     if (order.status === "COMPLETED") {
       const paymentData = {
@@ -28,16 +33,19 @@ export async function POST(req) {
         method: "paypal",
       };
 
+      console.log(`[PayPal Verify] Inserting payment: amount=${paymentData.amount}, currency=${paymentData.currency}`);
       const { data, error } = await supabase.from("payments").insert(paymentData);
 
       if (error) throw error;
 
+      console.log(`[PayPal Verify] Payment inserted successfully: data=${JSON.stringify(data)}`);
       return NextResponse.json({ success: true, data });
     } else {
+      console.log(`[PayPal Verify] Order not completed: status=${order.status}`);
       return NextResponse.json({ success: false, status: order.status });
     }
   } catch (error) {
-    console.error("Verify payment error:", error);
+    console.error("[PayPal Verify] Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

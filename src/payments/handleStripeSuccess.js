@@ -14,7 +14,10 @@ export async function handleStripeSuccess({
   platformFee,
   teacherAmount,
 }) {
+  console.log(`[HandleStripeSuccess] Starting for bookingId=${bookingId}, total=${total}, platformFee=${platformFee}, teacherAmount=${teacherAmount}`);
+
   await withTransaction(async (client) => {
+    console.log(`[HandleStripeSuccess] Ensuring wallets exist for teacher=${teacherUserId} and payer=${payerUserId}`);
     // ---------------------------------------------------------
     // Ensure wallets exist
     // ---------------------------------------------------------
@@ -30,6 +33,7 @@ export async function handleStripeSuccess({
     // ---------------------------------------------------------
     // Create payment record
     // ---------------------------------------------------------
+    console.log(`[HandleStripeSuccess] Creating payment record`);
     const paymentRes = await client.query(
       `
       INSERT INTO payments (
@@ -57,10 +61,12 @@ export async function handleStripeSuccess({
     );
 
     const paymentId = paymentRes.rows[0].id;
+    console.log(`[HandleStripeSuccess] Payment record created: paymentId=${paymentId}`);
 
     // ---------------------------------------------------------
     // Ledger entries
     // ---------------------------------------------------------
+    console.log(`[HandleStripeSuccess] Adding ledger entries`);
     await addLedgerEntry(client, {
       userId: teacherUserId,
       entryType: "payment_received",
@@ -88,7 +94,10 @@ export async function handleStripeSuccess({
     // ---------------------------------------------------------
     // Wallet updates
     // ---------------------------------------------------------
+    console.log(`[HandleStripeSuccess] Updating wallets`);
     await creditPending(client, teacherUserId, teacherAmount);
     await trackSpend(client, payerUserId, total);
   });
+
+  console.log(`[HandleStripeSuccess] Completed for bookingId=${bookingId}`);
 }
