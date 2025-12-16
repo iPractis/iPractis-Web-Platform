@@ -61,7 +61,7 @@ const NavDesktopTeacher = ({ userName, userId }) => {
     }
 
     loadUnread();
-    const timer = setInterval(loadUnread, 10000);
+    const timer = setInterval(loadUnread, 100000000000000);
     return () => clearInterval(timer);
   }, []);
 
