@@ -4,7 +4,6 @@ import { supabaseClient } from "@/src/lib/supabaseClient";
 import { handleStripeSuccess } from "@/src/payments/handleStripeSuccess";
 
 export const runtime = "nodejs";
-
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
@@ -32,7 +31,7 @@ export async function POST(req) {
   const teacherUserId = pi.metadata.teacher_user_id;
 
   // ---------------------------------------------------------
-  // 1️⃣ IDEMPOTENCY CHECK (CRITICAL)
+  // 1️⃣ Idempotency check
   // ---------------------------------------------------------
   const { data: existingPayment } = await supabaseClient
     .from("payments")
@@ -45,7 +44,7 @@ export async function POST(req) {
   }
 
   // ---------------------------------------------------------
-  // 2️⃣ Ledger + Wallet Transaction
+  // 2️⃣ Ledger + Wallet
   // ---------------------------------------------------------
   await handleStripeSuccess({
     bookingId,
@@ -58,7 +57,7 @@ export async function POST(req) {
   });
 
   // ---------------------------------------------------------
-  // 3️⃣ Update booking status
+  // 3️⃣ Update booking
   // ---------------------------------------------------------
   await supabaseClient
     .from("bookings")
@@ -90,7 +89,7 @@ export async function POST(req) {
     .single();
 
   // ---------------------------------------------------------
-  // 5️⃣ Chat room idempotency
+  // 5️⃣ Create chat room (IDEMPOTENT)
   // ---------------------------------------------------------
   const { data: existingChat } = await supabaseClient
     .from("chat_rooms")
