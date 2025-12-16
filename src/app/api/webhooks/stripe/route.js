@@ -9,11 +9,14 @@ export async function POST(req) {
   let event;
 
   /* ---------------------------------------------------------
-     0️⃣ Verify Stripe signature
+     0️⃣ Verify webhook signature
   --------------------------------------------------------- */
+  let body;
+  let sig;
+
   try {
-    const body = await req.text();
-    const sig = req.headers.get("stripe-signature");
+    body = await req.text();
+    sig = req.headers.get("stripe-signature");
 
     event = stripe.webhooks.constructEvent(
       body,
@@ -29,7 +32,7 @@ export async function POST(req) {
      1️⃣ Only handle successful payments
   --------------------------------------------------------- */
   if (event.type !== "payment_intent.succeeded") {
-    return new Response("Ignored", { status: 200 });
+    return new Response("Ignored event", { status: 200 });
   }
 
   const pi = event.data.object;
@@ -40,6 +43,8 @@ export async function POST(req) {
   const {
     booking_id: bookingId,
     payer_user_id: payerUserId,
+    teacher_user_id: teacherUserId,
+    teacher_id: teacherId,
     platform_fee,
     teacher_amount,
   } = pi.metadata || {};
@@ -108,7 +113,7 @@ export async function POST(req) {
     /* ---------------------------------------------------------
        6️⃣ Ensure wallets exist (VALID users only)
     --------------------------------------------------------- */
-    const { error: walletErr } = await supabaseClient
+    const { error: walletError } = await supabaseClient
       .from("wallets")
       .upsert(
         [
@@ -118,12 +123,12 @@ export async function POST(req) {
         { onConflict: "user_id" }
       );
 
-    if (walletErr) throw walletErr;
+    if (walletError) throw walletError;
 
     /* ---------------------------------------------------------
        7️⃣ Insert payment record
     --------------------------------------------------------- */
-    const { data: payment, error: paymentErr } = await supabaseClient
+    const { data: payment, error: paymentError } = await supabaseClient
       .from("payments")
       .insert([
         {
@@ -141,12 +146,12 @@ export async function POST(req) {
       .select()
       .single();
 
-    if (paymentErr) throw paymentErr;
+    if (paymentError) throw paymentError;
 
     /* ---------------------------------------------------------
        8️⃣ Ledger entries
     --------------------------------------------------------- */
-    const { error: ledgerErr } = await supabaseClient
+    const { error: ledgerError } = await supabaseClient
       .from("ledger_entries")
       .insert([
         {
@@ -167,12 +172,12 @@ export async function POST(req) {
         },
       ]);
 
-    if (ledgerErr) throw ledgerErr;
+    if (ledgerError) throw ledgerError;
 
     /* ---------------------------------------------------------
        9️⃣ Update booking (VALID enum)
     --------------------------------------------------------- */
-    const { error: bookingUpdateErr } = await supabaseClient
+    const { error: bookingUpdateError } = await supabaseClient
       .from("bookings")
       .update({
         payment_status: "paid",
@@ -181,7 +186,7 @@ export async function POST(req) {
       })
       .eq("id", bookingId);
 
-    if (bookingUpdateErr) throw bookingUpdateErr;
+    if (bookingUpdateError) throw bookingUpdateError;
 
     /* ---------------------------------------------------------
        🔟 Create chat room (IDEMPOTENT + NAMED)
@@ -203,21 +208,20 @@ export async function POST(req) {
             teacher_id: booking.teacher_id,
             type: "booking",
             expires_at: booking.end_time,
-          },
-        ])
-        .select()
-        .single();
+          }])
+          .select()
+          .single();
 
-      if (roomErr) throw roomErr;
+      if (roomCreateError) throw roomCreateError;
 
-      const { error: membersErr } = await supabaseClient
+      const { error: memberError } = await supabaseClient
         .from("chat_room_members")
         .insert([
           { room_id: room.id, user_id: booking.student_id, role: "student" },
           { room_id: room.id, user_id: teacherUserId, role: "teacher" },
         ]);
 
-      if (membersErr) throw membersErr;
+      if (memberError) throw memberError;
     }
 
     console.log("✅ Stripe payment fully processed:", pi.id);

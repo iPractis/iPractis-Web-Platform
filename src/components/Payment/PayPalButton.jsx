@@ -17,9 +17,11 @@ export default function PayPalPayment({ amount, description, onSuccess }) {
     });
 
   const onApprove = async (data, actions) => {
+    console.log(`[PayPal Button] onApprove called: orderID=${data.orderID}`);
     setIsProcessing(true);
     try {
       const order = await actions.order.get();
+      console.log(`[PayPal Button] Order details: payer=${order?.payer?.name?.given_name}, email=${order?.payer?.email_address}`);
 
       const paymentData = {
         name: order?.payer?.name?.given_name || "",
@@ -28,6 +30,7 @@ export default function PayPalPayment({ amount, description, onSuccess }) {
         orderID: data.orderID,
       };
 
+      console.log(`[PayPal Button] Sending payment data to /api/payment: ${JSON.stringify(paymentData)}`);
       const response = await fetch("/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -36,9 +39,11 @@ export default function PayPalPayment({ amount, description, onSuccess }) {
 
       if (!response.ok) throw new Error("API error");
       const result = await response.json();
+      console.log(`[PayPal Button] API response: ${JSON.stringify(result)}`);
 
       onSuccess?.(result);
     } catch (err) {
+      console.error(`[PayPal Button] Error:`, err);
       setPaypalError("Payment failed. Try again.");
     } finally {
       setIsProcessing(false);

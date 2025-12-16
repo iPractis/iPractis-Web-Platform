@@ -1,6 +1,7 @@
 import checkoutNodeJssdk from "@paypal/checkout-server-sdk";
 
 export function getPayPalClient() {
+  console.log(`[PayPal Client] Initializing client for env: ${process.env.PAYPAL_ENV || 'sandbox'}`);
   const env =
     process.env.PAYPAL_ENV === "live"
       ? new checkoutNodeJssdk.core.LiveEnvironment(
