@@ -15,7 +15,21 @@ export async function handleStripeSuccess({
   teacherAmount,
 }) {
   await withTransaction(async (client) => {
-    // 1️⃣ Create payment record
+    // ---------------------------------------------------------
+    // Ensure wallets exist
+    // ---------------------------------------------------------
+    await client.query(
+      `INSERT INTO wallets (user_id) VALUES ($1) ON CONFLICT (user_id) DO NOTHING`,
+      [teacherUserId]
+    );
+    await client.query(
+      `INSERT INTO wallets (user_id) VALUES ($1) ON CONFLICT (user_id) DO NOTHING`,
+      [payerUserId]
+    );
+
+    // ---------------------------------------------------------
+    // Create payment record
+    // ---------------------------------------------------------
     const paymentRes = await client.query(
       `
       INSERT INTO payments (
@@ -44,7 +58,9 @@ export async function handleStripeSuccess({
 
     const paymentId = paymentRes.rows[0].id;
 
-    // 2️⃣ Ledger entries (earning user)
+    // ---------------------------------------------------------
+    // Ledger entries
+    // ---------------------------------------------------------
     await addLedgerEntry(client, {
       userId: teacherUserId,
       entryType: "payment_received",
@@ -69,7 +85,9 @@ export async function handleStripeSuccess({
       paymentId,
     });
 
-    // 3️⃣ Wallet updates
+    // ---------------------------------------------------------
+    // Wallet updates
+    // ---------------------------------------------------------
     await creditPending(client, teacherUserId, teacherAmount);
     await trackSpend(client, payerUserId, total);
   });
