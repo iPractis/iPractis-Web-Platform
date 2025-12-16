@@ -1,121 +1,221 @@
 import Stripe from "stripe";
-import { headers } from "next/headers";
 import { supabaseClient } from "@/src/lib/supabaseClient";
-import { handleStripeSuccess } from "@/src/payments/handleStripeSuccess";
 
 export const runtime = "nodejs";
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
-  const body = await req.text();
-  const sig = headers().get("stripe-signature");
-
   let event;
+
+  /* ---------------------------------------------------------
+     0️⃣ Verify Stripe signature
+  --------------------------------------------------------- */
   try {
+    const body = await req.text();
+    const sig = req.headers.get("stripe-signature");
+
     event = stripe.webhooks.constructEvent(
       body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
-    return new Response(`Webhook Error: ${err.message}`, { status: 400 });
+    console.error("❌ Stripe signature verification failed:", err.message);
+    return new Response("Invalid signature", { status: 400 });
   }
 
+  /* ---------------------------------------------------------
+     1️⃣ Only care about successful payments
+  --------------------------------------------------------- */
   if (event.type !== "payment_intent.succeeded") {
-    return new Response(JSON.stringify({ received: true }), { status: 200 });
+    return new Response("Ignored", { status: 200 });
   }
 
   const pi = event.data.object;
-  const bookingId = pi.metadata.booking_id;
-  const payerUserId = pi.metadata.payer_user_id;
-  const teacherUserId = pi.metadata.teacher_user_id;
 
-  // ---------------------------------------------------------
-  // 1️⃣ Idempotency check
-  // ---------------------------------------------------------
-  const { data: existingPayment } = await supabaseClient
-    .from("payments")
-    .select("id")
-    .eq("stripe_payment_intent_id", pi.id)
-    .maybeSingle();
+  /* ---------------------------------------------------------
+     2️⃣ Validate required metadata
+  --------------------------------------------------------- */
+  const {
+    booking_id: bookingId,
+    payer_user_id: payerUserId,
+    platform_fee,
+    teacher_amount,
+  } = pi.metadata || {};
 
-  if (existingPayment) {
-    return new Response(JSON.stringify({ received: true }), { status: 200 });
+  if (!bookingId || !payerUserId) {
+    console.error("❌ Missing required Stripe metadata:", pi.metadata);
+    return new Response("Missing metadata", { status: 400 });
   }
 
-  // ---------------------------------------------------------
-  // 2️⃣ Ledger + Wallet
-  // ---------------------------------------------------------
-  await handleStripeSuccess({
-    bookingId,
-    payerUserId,
-    teacherUserId,
-    stripePaymentIntentId: pi.id,
-    total: pi.amount / 100,
-    platformFee: Number(pi.metadata.platform_fee),
-    teacherAmount: Number(pi.metadata.teacher_amount),
-  });
+  try {
+    /* ---------------------------------------------------------
+       3️⃣ Resolve teacher_id + teacher_user_id SAFELY (DB truth)
+    --------------------------------------------------------- */
+    const { data: booking, error: bookingErr } = await supabaseClient
+      .from("bookings")
+      .select("id, teacher_id, student_id, end_time")
+      .eq("id", bookingId)
+      .single();
 
-  // ---------------------------------------------------------
-  // 3️⃣ Update booking
-  // ---------------------------------------------------------
-  await supabaseClient
-    .from("bookings")
-    .update({
-      payment_status: "paid",
-      status: "confirmed",
-    })
-    .eq("id", bookingId);
+    if (bookingErr || !booking) {
+      throw new Error("Booking not found");
+    }
 
-  // ---------------------------------------------------------
-  // 4️⃣ Fetch booking + teacher
-  // ---------------------------------------------------------
-  const { data: booking } = await supabaseClient
-    .from("bookings")
-    .select("*")
-    .eq("id", bookingId)
-    .single();
+    const teacherId = booking.teacher_id;
 
-  const { data: teacher } = await supabaseClient
-    .from("teachers")
-    .select("user_id")
-    .eq("teacher_id", booking.teacher_id)
-    .single();
+    const { data: teacher, error: teacherErr } = await supabaseClient
+      .from("teachers")
+      .select("user_id")
+      .eq("teacher_id", teacherId)
+      .single();
 
-  const { data: teacherUser } = await supabaseClient
-    .from("users")
-    .select("first_name")
-    .eq("user_id", teacher.user_id)
-    .single();
+    if (teacherErr || !teacher?.user_id) {
+      throw new Error("Teacher user not found");
+    }
 
-  // ---------------------------------------------------------
-  // 5️⃣ Create chat room (IDEMPOTENT)
-  // ---------------------------------------------------------
-  const { data: existingChat } = await supabaseClient
-    .from("chat_rooms")
-    .select("id")
-    .eq("booking_id", bookingId)
-    .maybeSingle();
+    const teacherUserId = teacher.user_id;
 
-  if (!existingChat) {
-    const { data: chatRoom } = await supabaseClient
-      .from("chat_rooms")
-      .insert([{
-        booking_id: bookingId,
-        room_name: `Lesson with ${teacherUser.first_name}`,
-        student_id: booking.student_id,
-        teacher_id: booking.teacher_id,
-        type: "lesson",
-        expires_at: booking.end_time,
-      }])
+    /* ---------------------------------------------------------
+       4️⃣ Idempotency check (payments table)
+    --------------------------------------------------------- */
+    const { data: existingPayment, error: paymentCheckErr } =
+      await supabaseClient
+        .from("payments")
+        .select("id")
+        .eq("stripe_payment_intent_id", pi.id)
+        .maybeSingle();
+
+    if (paymentCheckErr) throw paymentCheckErr;
+
+    if (existingPayment) {
+      console.log("⚠️ Payment already processed:", pi.id);
+      return new Response("Already processed", { status: 200 });
+    }
+
+    /* ---------------------------------------------------------
+       5️⃣ Ensure wallets exist (ONLY valid users)
+    --------------------------------------------------------- */
+    const { error: walletErr } = await supabaseClient
+      .from("wallets")
+      .upsert(
+        [
+          { user_id: payerUserId },
+          { user_id: teacherUserId },
+        ],
+        { onConflict: "user_id" }
+      );
+
+    if (walletErr) throw walletErr;
+
+    /* ---------------------------------------------------------
+       6️⃣ Insert payment record
+    --------------------------------------------------------- */
+    const { data: payment, error: paymentErr } = await supabaseClient
+      .from("payments")
+      .insert([
+        {
+          booking_id: bookingId,
+          payer_user_id: payerUserId,
+          teacher_id: teacherId,
+          stripe_payment_intent_id: pi.id,
+          amount_total: pi.amount / 100,
+          platform_fee: Number(platform_fee),
+          teacher_amount: Number(teacher_amount),
+          currency: pi.currency.toUpperCase(),
+          status: "paid",
+        },
+      ])
       .select()
       .single();
 
-    await supabaseClient.from("chat_room_members").insert([
-      { room_id: chatRoom.id, user_id: booking.student_id, role: "student" },
-      { room_id: chatRoom.id, user_id: teacher.user_id, role: "teacher" },
-    ]);
-  }
+    if (paymentErr) throw paymentErr;
 
-  return new Response(JSON.stringify({ received: true }), { status: 200 });
+    /* ---------------------------------------------------------
+       7️⃣ Ledger entries
+    --------------------------------------------------------- */
+    const { error: ledgerErr } = await supabaseClient
+      .from("ledger_entries")
+      .insert([
+        {
+          user_id: payerUserId,
+          booking_id: bookingId,
+          payment_id: payment.id,
+          entry_type: "payment_received",
+          amount: pi.amount / 100,
+          currency: pi.currency.toUpperCase(),
+        },
+        {
+          user_id: teacherUserId,
+          booking_id: bookingId,
+          payment_id: payment.id,
+          entry_type: "earning_pending",
+          amount: Number(teacher_amount),
+          currency: pi.currency.toUpperCase(),
+        },
+      ]);
+
+    if (ledgerErr) throw ledgerErr;
+
+    /* ---------------------------------------------------------
+       8️⃣ Update booking (VALID STATUS ONLY)
+    --------------------------------------------------------- */
+    const { error: bookingUpdateErr } = await supabaseClient
+      .from("bookings")
+      .update({
+        payment_status: "paid",
+        status: "booked", // ✅ valid per DB constraint
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", bookingId);
+
+    if (bookingUpdateErr) throw bookingUpdateErr;
+
+    /* ---------------------------------------------------------
+       9️⃣ Create chat room (IDEMPOTENT)
+    --------------------------------------------------------- */
+    const { data: existingRoom, error: roomCheckErr } =
+      await supabaseClient
+        .from("chat_rooms")
+        .select("id")
+        .eq("booking_id", bookingId)
+        .maybeSingle();
+
+    if (roomCheckErr) throw roomCheckErr;
+
+    if (!existingRoom) {
+      const { data: room, error: roomErr } = await supabaseClient
+        .from("chat_rooms")
+        .insert([
+          {
+            booking_id: booking.id,
+            student_id: booking.student_id,
+            teacher_id: booking.teacher_id,
+            type: "booking",
+            expires_at: booking.end_time,
+          },
+        ])
+        .select()
+        .single();
+
+      if (roomErr) throw roomErr;
+
+      const { error: membersErr } = await supabaseClient
+        .from("chat_room_members")
+        .insert([
+          { room_id: room.id, user_id: booking.student_id, role: "student" },
+          { room_id: room.id, user_id: teacherUserId, role: "teacher" },
+        ]);
+
+      if (membersErr) throw membersErr;
+    }
+
+    console.log("✅ Stripe payment fully processed:", pi.id);
+    return new Response("OK", { status: 200 });
+
+  } catch (err) {
+    console.error("🔥 Stripe webhook failed:", err);
+    return new Response("Webhook processing failed", { status: 500 });
+  }
 }
