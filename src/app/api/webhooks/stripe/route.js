@@ -9,14 +9,11 @@ export async function POST(req) {
   let event;
 
   /* ---------------------------------------------------------
-     0️⃣ Verify webhook signature
+     0️⃣ Verify Stripe signature
   --------------------------------------------------------- */
-  let body;
-  let sig;
-
   try {
-    body = await req.text();
-    sig = req.headers.get("stripe-signature");
+    const body = await req.text();
+    const sig = req.headers.get("stripe-signature");
 
     event = stripe.webhooks.constructEvent(
       body,
@@ -32,7 +29,7 @@ export async function POST(req) {
      1️⃣ Only handle successful payments
   --------------------------------------------------------- */
   if (event.type !== "payment_intent.succeeded") {
-    return new Response("Ignored event", { status: 200 });
+    return new Response("Ignored", { status: 200 });
   }
 
   const pi = event.data.object;
@@ -43,8 +40,6 @@ export async function POST(req) {
   const {
     booking_id: bookingId,
     payer_user_id: payerUserId,
-    teacher_user_id: teacherUserId,
-    teacher_id: teacherId,
     platform_fee,
     teacher_amount,
   } = pi.metadata || {};
@@ -94,8 +89,7 @@ export async function POST(req) {
     }
 
     const teacherName = `${teacherUser.first_name ?? ""} ${teacherUser.last_name ?? ""}`.trim();
-    const roomName = `Chat with ${teacherName || "Teacher"}`;
-
+const roomName = `Chat with ${teacherName} • ${booking.id.slice(0, 6)}`;
     /* ---------------------------------------------------------
        5️⃣ Idempotency check (payments)
     --------------------------------------------------------- */
@@ -113,7 +107,7 @@ export async function POST(req) {
     /* ---------------------------------------------------------
        6️⃣ Ensure wallets exist (VALID users only)
     --------------------------------------------------------- */
-    const { error: walletError } = await supabaseClient
+    const { error: walletErr } = await supabaseClient
       .from("wallets")
       .upsert(
         [
@@ -123,12 +117,12 @@ export async function POST(req) {
         { onConflict: "user_id" }
       );
 
-    if (walletError) throw walletError;
+    if (walletErr) throw walletErr;
 
     /* ---------------------------------------------------------
        7️⃣ Insert payment record
     --------------------------------------------------------- */
-    const { data: payment, error: paymentError } = await supabaseClient
+    const { data: payment, error: paymentErr } = await supabaseClient
       .from("payments")
       .insert([
         {
@@ -146,12 +140,12 @@ export async function POST(req) {
       .select()
       .single();
 
-    if (paymentError) throw paymentError;
+    if (paymentErr) throw paymentErr;
 
     /* ---------------------------------------------------------
        8️⃣ Ledger entries
     --------------------------------------------------------- */
-    const { error: ledgerError } = await supabaseClient
+    const { error: ledgerErr } = await supabaseClient
       .from("ledger_entries")
       .insert([
         {
@@ -172,12 +166,12 @@ export async function POST(req) {
         },
       ]);
 
-    if (ledgerError) throw ledgerError;
+    if (ledgerErr) throw ledgerErr;
 
     /* ---------------------------------------------------------
        9️⃣ Update booking (VALID enum)
     --------------------------------------------------------- */
-    const { error: bookingUpdateError } = await supabaseClient
+    const { error: bookingUpdateErr } = await supabaseClient
       .from("bookings")
       .update({
         payment_status: "paid",
@@ -186,7 +180,7 @@ export async function POST(req) {
       })
       .eq("id", bookingId);
 
-    if (bookingUpdateError) throw bookingUpdateError;
+    if (bookingUpdateErr) throw bookingUpdateErr;
 
     /* ---------------------------------------------------------
        🔟 Create chat room (IDEMPOTENT + NAMED)
@@ -208,20 +202,21 @@ export async function POST(req) {
             teacher_id: booking.teacher_id,
             type: "booking",
             expires_at: booking.end_time,
-          }])
-          .select()
-          .single();
+          },
+        ])
+        .select()
+        .single();
 
-      if (roomCreateError) throw roomCreateError;
+      if (roomErr) throw roomErr;
 
-      const { error: memberError } = await supabaseClient
+      const { error: membersErr } = await supabaseClient
         .from("chat_room_members")
         .insert([
           { room_id: room.id, user_id: booking.student_id, role: "student" },
           { room_id: room.id, user_id: teacherUserId, role: "teacher" },
         ]);
 
-      if (memberError) throw memberError;
+      if (membersErr) throw membersErr;
     }
 
     console.log("✅ Stripe payment fully processed:", pi.id);
