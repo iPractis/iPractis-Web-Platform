@@ -13,17 +13,17 @@ const Nav = () => {
   const { authenticated, user, loading } = useAuth();
   const pathname = usePathname();
 
-  // Optional: avoid flicker
+  // Avoid flicker
   if (loading) return null;
 
-  const isLoginPage = pathname === "/login";
+  const isAuthPage = pathname === "/login" || pathname === "/register";
 
   return (
     <nav
-      className={`m-2 p-1.5 rounded-[22px] ${isLoginPage ? "bg-transparent" : "bg-primary-color-P1"
-        }`}
+      className={`m-2 p-1.5 rounded-[22px] ${
+        isAuthPage ? "bg-transparent" : "bg-primary-color-P1"
+      }`}
     >
-
       {authenticated && user ? (
         <>
           {/* Authenticated */}
@@ -35,9 +35,9 @@ const Nav = () => {
             <NavResponsiveTeacher userName={user?.firstName || user?.email} />
           </div>
         </>
-      ) : isLoginPage ? (
+      ) : isAuthPage ? (
         <>
-          {/* Login Page */}
+          {/* Login & Register */}
           <div className="hidden lg:block">
             <NavDesktopLogin />
           </div>

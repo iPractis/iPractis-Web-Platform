@@ -1,14 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// Images && icons
 import {
     ChevronRightDoorSmallIcon,
     UserAddCircleSmallerIcon,
 } from "../../Icons";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import themeLight from "@/public/icons/theme-light.png";
-import logo from "@/public/logos/ipractis-logo-1.png";
+import logo from "@/public/icons/ipractis-icon.png";
 import world from "@/public/icons/world.png";
 
 const NavDesktopLogin = () => {
@@ -19,7 +17,7 @@ const NavDesktopLogin = () => {
                 <div>
                     <Link href="/">
                         <Image
-                            className="w-[113px] p-1.5 bg-black rounded-2xl overflow-hidden"
+                            className="w-[48px] p-1.5 bg-black rounded-2xl overflow-hidden"
                             alt="Logo iPractis"
                             src={logo}
                             priority
