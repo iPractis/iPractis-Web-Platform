@@ -1,34 +1,59 @@
 "use client";
+
+import { usePathname } from "next/navigation";
+import { useAuth } from "@/src/hooks/useAuth";
+
 import NavResponsiveTeacher from "./NavResponsiveTeacher";
 import NavDesktopTeacher from "./NavDesktopTeacher";
-import { useAuth } from "@/src/hooks/useAuth";
 import NavResponsive from "./NavResponsive";
 import NavDesktop from "./NavDestop";
+import NavDesktopLogin from "./NavDesktopLogin";
 
 const Nav = () => {
-  // const { data: session } = useSession();
   const { authenticated, user, loading } = useAuth();
+  const pathname = usePathname();
 
+  // Optional: avoid flicker
+  if (loading) return null;
+
+  const isLoginPage = pathname === "/login";
 
   return (
-    <nav className="bg-primary-color-P1 m-2 p-1.5 rounded-[22px]">
-      {authenticated && user? (
+    <nav
+      className={`m-2 p-1.5 rounded-[22px] ${isLoginPage ? "bg-transparent" : "bg-primary-color-P1"
+        }`}
+    >
+
+      {authenticated && user ? (
         <>
-          <div className="lg:block hidden">
+          {/* Authenticated */}
+          <div className="hidden lg:block">
             <NavDesktopTeacher userName={user?.firstName || user?.email} />
           </div>
 
-          <div className="lg:hidden block">
+          <div className="block lg:hidden">
             <NavResponsiveTeacher userName={user?.firstName || user?.email} />
+          </div>
+        </>
+      ) : isLoginPage ? (
+        <>
+          {/* Login Page */}
+          <div className="hidden lg:block">
+            <NavDesktopLogin />
+          </div>
+
+          <div className="block lg:hidden">
+            <NavResponsive />
           </div>
         </>
       ) : (
         <>
-          <div className="lg:block hidden">
+          {/* Public (Before Login) */}
+          <div className="hidden lg:block">
             <NavDesktop />
           </div>
 
-          <div className="lg:hidden block">
+          <div className="block lg:hidden">
             <NavResponsive />
           </div>
         </>
