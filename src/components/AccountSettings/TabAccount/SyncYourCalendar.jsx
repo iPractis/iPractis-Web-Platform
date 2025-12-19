@@ -1,17 +1,77 @@
-import { signIn, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import SectionHeader from "../../Shared/SectionHeader";
 import SectionWrapper from "../../Shared/SectionWrapper";
 import SectionContent from "../../Shared/SectionContent";
 import SocialConnectButton from "../../Shared/SocialConnectButton";
-import { GoogleLargeIcon, CalendarIcon, MicrosoftMediumIcon, AppleMediumIcon, CalendarMediumIcon } from "../../Icons";
+import {
+  GoogleLargeIcon,
+  MicrosoftMediumIcon,
+  AppleMediumIcon,
+  CalendarMediumIcon,
+} from "../../Icons";
 
 const SyncYourCalendar = () => {
-  const { data: session } = useSession();
+  const [googleConnected, setGoogleConnected] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchGoogleStatus = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch("/api/google/status", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          const text = await res.text();
+          console.error("[GoogleCalendar][Status] API error", {
+            status: res.status,
+            response: text,
+          });
+          throw new Error("Failed to fetch Google calendar status");
+        }
+
+        const data = await res.json();
+
+        if (isMounted) {
+          setGoogleConnected(Boolean(data?.connected));
+        }
+      } catch (err) {
+        console.error("[GoogleCalendar][Status] Fetch error", {
+          message: err?.message,
+          stack: err?.stack,
+        });
+
+        if (isMounted) {
+          setGoogleConnected(false);
+          setError("Unable to check Google Calendar connection");
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchGoogleStatus();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // ✅ Calendar-only OAuth (NOT NextAuth login)
   const handleGoogleConnect = () => {
-    signIn("google", {
-      callbackUrl: "/dashboard?connected=google",
-    });
+    try {
+      window.location.href = "/api/google/connect";
+    } catch (err) {
+      console.error("[GoogleCalendar][Connect] redirect failed", err);
+    }
   };
 
   return (
@@ -25,23 +85,35 @@ const SyncYourCalendar = () => {
       <SectionContent>
         <SocialConnectButton
           IconComponent={GoogleLargeIcon}
-          label={session?.accessToken ? "Connected to Google" : "Join with Google"}
-          isConnected={!!session?.accessToken}
-          disabled={session?.accessToken}
+          label={
+            loading
+              ? "Checking Google status..."
+              : googleConnected
+              ? "Connected to Google"
+              : "Connect Google Calendar"
+          }
+          isConnected={googleConnected}
+          disabled={googleConnected || loading}
           onClick={handleGoogleConnect}
         />
+
+        {error && (
+          <p className="mt-2 text-sm text-red-500">{error}</p>
+        )}
+
         <SocialConnectButton
           IconComponent={MicrosoftMediumIcon}
-          label={"Join with Microsoft"}
+          label="Join with Microsoft"
           isConnected={false}
-          disabled={false}
+          disabled
           onClick={() => {}}
         />
+
         <SocialConnectButton
           IconComponent={AppleMediumIcon}
-          label={"Join with Apple"}
+          label="Join with Apple"
           isConnected={false}
-          disabled={false}
+          disabled
           onClick={() => {}}
         />
       </SectionContent>
@@ -49,4 +121,4 @@ const SyncYourCalendar = () => {
   );
 };
 
-export default SyncYourCalendar
+export default SyncYourCalendar;

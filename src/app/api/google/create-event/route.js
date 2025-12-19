@@ -1,12 +1,15 @@
 import { auth } from "@/src/lib/auth";
+import { getValidGoogleAccessToken } from "@/src/lib/googleCalendarAuth";
 
 export const POST = async (req) => {
   try {
     const session = await auth();
 
-    if (!session || !session.accessToken) {
+    if (!session?.user?.id) {
       return Response.json({ error: "Not authenticated" }, { status: 401 });
     }
+
+    const accessToken = await getValidGoogleAccessToken(session.user.id);
 
     const { summary, description, start, end, timeZone } = await req.json();
 
@@ -32,7 +35,7 @@ export const POST = async (req) => {
       {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${session.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(event),
@@ -43,12 +46,18 @@ export const POST = async (req) => {
 
     if (!googleRes.ok) {
       console.error("Google API error:", data);
-      return Response.json({ error: "Failed to create event", details: data }, { status: 400 });
+      return Response.json(
+        { error: "Failed to create event", details: data },
+        { status: 400 }
+      );
     }
 
     return Response.json({ success: true, event: data });
   } catch (err) {
     console.error("Error creating event:", err);
-    return Response.json({ error: err.message || "Unexpected error" }, { status: 500 });
+    return Response.json(
+      { error: err.message || "Unexpected error" },
+      { status: 500 }
+    );
   }
 };
