@@ -14,23 +14,29 @@ export async function POST(req) {
       );
     }
 
-    // 🟩 Fetch user from unified users table
-    const { data: user, error: userError } = await supabaseServer
+    // ✅ Normalize email (case-insensitive login)
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // 🔍 Fetch user
+    const { data: user, error } = await supabaseServer
       .from("users")
       .select("user_id, email, password_hash, first_name, last_name, role")
-      .eq("email", email)
+      .eq("email", normalizedEmail)
       .maybeSingle();
 
-    if (userError || !user) {
-      console.error("User lookup error:", userError);
+    if (error || !user) {
       return NextResponse.json(
         { message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // 🟦 Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    // 🔐 Verify password (case-sensitive, untouched)
+    const isPasswordValid = await bcrypt.compare(
+      password,
+      user.password_hash
+    );
+
     if (!isPasswordValid) {
       return NextResponse.json(
         { message: "Invalid credentials" },
@@ -38,13 +44,13 @@ export async function POST(req) {
       );
     }
 
-    // 🧩 Determine display name
+    // 🧩 Display name
     const displayName =
       user.first_name || user.last_name
         ? `${user.first_name || ""} ${user.last_name || ""}`.trim()
         : user.email.split("@")[0];
 
-    // 🛡️ Generate JWT token
+    // 🛡️ Create JWT
     const token = jwt.sign(
       {
         userId: user.user_id,
@@ -56,7 +62,7 @@ export async function POST(req) {
       { expiresIn: "7d" }
     );
 
-    // 🧁 Build response
+    // 🍪 Response + cookie
     const response = NextResponse.json(
       {
         success: true,
@@ -70,12 +76,11 @@ export async function POST(req) {
       { status: 200 }
     );
 
-    // 🍪 Set HttpOnly cookie for JWT
     response.cookies.set("auth-token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
+      maxAge: 7 * 24 * 60 * 60,
       path: "/",
     });
 

@@ -39,7 +39,7 @@ export async function getValidGoogleAccessToken(userId) {
 
   if (!res.ok) {
     // token revoked
-    await supabaseAdmin
+    await supabaseServer
       .from("users")
       .update({ google_connected: false })
       .eq("user_id", userId);
@@ -47,7 +47,7 @@ export async function getValidGoogleAccessToken(userId) {
     throw new Error("Google token refresh failed");
   }
 
-  await supabaseAdmin
+  await supabaseServer
     .from("users")
     .update({
       google_access_token: data.access_token,
