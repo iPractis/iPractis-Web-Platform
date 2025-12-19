@@ -7,24 +7,22 @@ export const runtime = "nodejs";
 /* ---------------------------------------------------------
    CONFIG
 --------------------------------------------------------- */
-const WISE_API_URL = process.env.WISE_API_URL;
-const WISE_API_TOKEN = process.env.WISE_API_TOKEN;
+const WISE_API_URL = process.env.WISE_BASE_URL;
+const WISE_API_TOKEN = process.env.WISE_API_KEY;
 const WISE_PROFILE_ID = Number(process.env.WISE_PROFILE_ID);
-const CRON_SECRET = process.env.CRON_SECRET;
 
 /* ---------------------------------------------------------
-   POST /api/cron/weekly-payout
+   HELPERS
 --------------------------------------------------------- */
-export async function POST(req) {
-  /* -------------------- CRON AUTH -------------------- */
-  const authHeader = req.headers.get("authorization");
-  if (authHeader !== `Bearer ${CRON_SECRET}`) {
-    return NextResponse.json(
-      { error: "Unauthorized cron request" },
-      { status: 401 }
-    );
-  }
+const buildPaymentReference = (payoutId) => {
+  // Wise-safe: <= 18 chars (US rails are strict)
+  return `P-${payoutId.slice(-8)}`;
+};
 
+/* ---------------------------------------------------------
+   GET /api/cron/weekly-payout
+--------------------------------------------------------- */
+export async function GET() {
   try {
     /* -------------------- FETCH PAYABLE EARNINGS -------------------- */
     const { data: earnings, error } = await supabaseClient.rpc(
@@ -32,6 +30,7 @@ export async function POST(req) {
     );
 
     if (error) throw error;
+
     if (!earnings || earnings.length === 0) {
       return NextResponse.json({ message: "No payouts this week" });
     }
@@ -41,7 +40,6 @@ export async function POST(req) {
     /* -------------------- PROCESS PER TEACHER -------------------- */
     for (const row of earnings) {
       const { teacher_id, teacher_user_id, total_amount } = row;
-
       let payoutId = null;
 
       try {
@@ -69,7 +67,6 @@ export async function POST(req) {
           .from("payout_recipients")
           .select("wise_recipient_id, currency")
           .eq("user_id", teacher_user_id)
-          .eq("is_active", true)
           .single();
 
         if (!recipient) {
@@ -116,13 +113,23 @@ export async function POST(req) {
         );
 
         /* ---------- CREATE WISE TRANSFER ---------- */
+        const reference = buildPaymentReference(payout.id);
+
+        console.log(
+          "[PAYOUT][REFERENCE]",
+          reference,
+          reference.length
+        );
+
         const transferRes = await axios.post(
           `${WISE_API_URL}/v1/transfers`,
           {
             targetAccount: recipient.wise_recipient_id,
             quoteUuid: quoteRes.data.id,
             customerTransactionId: payout.id, // Wise idempotency
-            details: { reference: "Weekly teacher payout" },
+            details: {
+              reference, // ✅ SAFE
+            },
           },
           {
             headers: {
