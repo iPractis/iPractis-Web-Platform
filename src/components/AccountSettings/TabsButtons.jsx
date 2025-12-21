@@ -1,6 +1,5 @@
 import CustomNextUiInput from "../Shared/CustomNextUiInput";
 import InputBGWrapperIcon from "../Shared/InputBGWrapperIcon";
-import SectionHeader from "../Shared/SectionHeader";
 import { tabsButtons } from "@/src/data/dataAccountSettings";
 import { useState } from "react";
 
@@ -8,7 +7,6 @@ import { useState } from "react";
 import { CircleImportantIcon, CircleLocationIcon, CloseIcon, SearchBigIcon } from "../Icons";
 
 const TabsButtons = ({ activeTab, setActiveTab }) => {
-  const [featureSearch, setFeatureSearch] = useState("");
 
   return (
     <section>
@@ -46,38 +44,6 @@ const TabsButtons = ({ activeTab, setActiveTab }) => {
           </button>
         ))}
       </div>
-
-      <SectionHeader
-        titleIcon={<CircleLocationIcon fillcolor={"fill-primary-color-P1"} />}
-        titleText={"Search for a feature or an option"}
-        titleClassName={"MT-SB-1"}
-        descriptionText={"Find any feature or settings quickly."}
-        rightElement={
-          <CustomNextUiInput
-            bgColor="white"
-            nameInput={"featureSearch"}
-            value={featureSearch}
-            onChange={(e) => setFeatureSearch(e.target.value)}
-            placeholder={"Search for a feature"}
-            startContent={
-              <InputBGWrapperIcon className="bg-secondary-color-S11">
-                <SearchBigIcon fillcolor={"fill-primary-color-P1"} />
-              </InputBGWrapperIcon>
-            }
-            endContent={
-              featureSearch && (
-                <InputBGWrapperIcon
-                  className={"bg-secondary-color-S11 cursor-pointer"}
-                  onClick={() => setFeatureSearch("")}
-                >
-                  <CloseIcon strokeColor={"stroke-primary-color-P1"} />
-                </InputBGWrapperIcon>
-              )
-            }
-          />
-        }
-        rightElementClassName={"w-1/2"}
-      />
     </section>
   );
 };
