@@ -11,7 +11,7 @@ import {
 
 const NotificationsCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-6">
       <SectionHeader
         descriptionText={
           "Verify your notification settings on all devices to receive timely updates and alerts."

@@ -99,7 +99,7 @@ const AccountObservationCenter = () => {
   };
 
   return (
-    <div>
+    <div className="space-y-6">
       <SectionHeader
         wrapperSectionHeaderClassName="px-4"
         titleIcon={<EyeBiggerIcon fillcolor="fill-primary-color-P1" />}

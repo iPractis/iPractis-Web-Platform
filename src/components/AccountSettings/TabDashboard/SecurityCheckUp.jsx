@@ -11,7 +11,7 @@ import {
 
 const SecurityCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-6">
       <SectionHeader
         descriptionText={
           "Review and monitor your account's security status to stay protected and informed of any recent activity."

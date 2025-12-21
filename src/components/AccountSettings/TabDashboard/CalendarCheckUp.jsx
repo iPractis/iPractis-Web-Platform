@@ -10,7 +10,7 @@ import {
 
 const CalendarCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-6">
       <SectionHeader
         descriptionText={
           "Ensure your calendar is synced and up-to-date for seamless lesson scheduling and time management."
