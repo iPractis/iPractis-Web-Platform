@@ -10,14 +10,14 @@ import {
 
 const CalendarCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-8">
       <SectionHeader
         descriptionText={
           "Ensure your calendar is synced and up-to-date for seamless lesson scheduling and time management."
         }
-        wrapperSectionHeaderClassName="px-4"
+        wrapperSectionHeaderClassName="px-0"
         titleIcon={<CalendarBiggerIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px] mb-4"}
+        descriptionClassName={"mt-[4px]"}
         titleText={"Calender Check-Up"}
         titleClassName="MT-SB-1"
       />
