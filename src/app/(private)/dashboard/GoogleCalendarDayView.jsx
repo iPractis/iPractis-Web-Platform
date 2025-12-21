@@ -4,16 +4,10 @@ import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 const dayNames = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  "Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"
 ];
 
-const HOUR_HEIGHT = 56;
+const HOUR_HEIGHT = 52.3;
 
 export default function GoogleCalendarWeekView({
   timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -24,32 +18,12 @@ export default function GoogleCalendarWeekView({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [now, setNow] = useState(() => new Date());
-  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const abortRef = useRef(null);
 
-  /* --------------------------------------------------
-     JOIN ELIGIBILITY (CORE RULE)
-  -------------------------------------------------- */
-  const canJoinEvent = (event) => {
-    if (!event || event.source !== "booking") return false;
-
-    const now = new Date();
-    const start = new Date(event.startISO);
-    const end = new Date(event.endISO);
-
-    const EARLY_JOIN_MS = 5 * 60 * 1000;   // 5 min before
-    const LATE_JOIN_MS = 10 * 60 * 1000;   // 10 min after
-
-    return (
-      now.getTime() >= start.getTime() - EARLY_JOIN_MS &&
-      now.getTime() <= end.getTime() + LATE_JOIN_MS
-    );
-  };
-
-  /* --------------------------------------------------
+  /* -----------------------------
      Normalize API schedule
-  -------------------------------------------------- */
+  ----------------------------- */
   const normalizeSchedule = (schedule = []) => {
     const map = new Map();
 
@@ -61,9 +35,6 @@ export default function GoogleCalendarWeekView({
         day: dayNames[new Date(entry.date).getDay()],
         events: entry.events.map((ev) => ({
           title: ev.title,
-          source: ev.source,
-          booking_id: ev.booking_id,
-          url: ev.url,
           startISO: `${entry.date}T${ev.start}:00`,
           endISO: `${entry.date}T${ev.end}:00`,
         })),
@@ -73,9 +44,9 @@ export default function GoogleCalendarWeekView({
     return map;
   };
 
-  /* --------------------------------------------------
+  /* -----------------------------
      Build week frame
-  -------------------------------------------------- */
+  ----------------------------- */
   const buildWeekFrame = (startISO) => {
     const start = new Date(startISO);
     return Array.from({ length: 7 }, (_, i) => {
@@ -89,62 +60,80 @@ export default function GoogleCalendarWeekView({
     });
   };
 
-  /* --------------------------------------------------
-     Fetch calendar data
-  -------------------------------------------------- */
-  const fetchCalendar = async () => {
-    setLoading(true);
-    setError(null);
+  /* -----------------------------
+     Fetch calendar
+  ----------------------------- */
+const fetchCalendar = React.useCallback(async () => {
+  setLoading(true);
+  setError(null);
 
-    if (abortRef.current) abortRef.current.abort();
-    const controller = new AbortController();
-    abortRef.current = controller;
+  abortRef.current?.abort();
+  const controller = new AbortController();
+  abortRef.current = controller;
 
-    try {
-      const res = await fetch("/api/dashboard/calendar-event", {
-        signal: controller.signal,
-      });
+  try {
+    const res = await fetch("/api/dashboard/calendar-event", {
+      signal: controller.signal,
+    });
 
-      if (!res.ok) throw new Error("Calendar not synced");
+    if (!res.ok) throw new Error("Calendar not synced");
 
-      const data = await res.json();
+    const data = await res.json();
 
-      const weekStart =
-        startDateISO ||
-        (() => {
-          const d = new Date();
-          d.setDate(d.getDate() - d.getDay());
-          return d.toISOString().split("T")[0];
-        })();
+    const weekStart =
+      startDateISO ||
+      (() => {
+        const d = new Date();
+        d.setDate(d.getDate() - d.getDay());
+        return d.toISOString().split("T")[0];
+      })();
 
-      const normalized = normalizeSchedule(data.schedule || []);
-      const frame = buildWeekFrame(weekStart);
+    const normalized = normalizeSchedule(data.schedule || []);
+    const frame = buildWeekFrame(weekStart);
 
-      setDays(
-        frame.map((d) => ({
-          ...d,
-          events: normalized.get(d.date)?.events || [],
-        }))
-      );
-    } catch (e) {
-      if (e.name !== "AbortError") setError(e.message);
-    } finally {
-      setLoading(false);
+    setDays(
+      frame.map((d) => ({
+        ...d,
+        events: normalized.get(d.date)?.events || [],
+      }))
+    );
+  } catch (e) {
+    if (e.name !== "AbortError") setError(e.message);
+  } finally {
+    setLoading(false);
+  }
+}, [startDateISO]);
+
+ useEffect(() => {
+  fetchCalendar(); // initial load
+
+  const POLL_INTERVAL = 30_000; // 🔥 30 sec (recommended)
+
+  const interval = setInterval(() => {
+    if (document.visibilityState === "visible") {
+      fetchCalendar();
+    }
+  }, POLL_INTERVAL);
+
+  const onVisibilityChange = () => {
+    if (document.visibilityState === "visible") {
+      fetchCalendar(); // instant refresh on tab focus
     }
   };
 
-  /* --------------------------------------------------
-     Effects
-  -------------------------------------------------- */
-  useEffect(() => {
-    fetchCalendar();
-    const t = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(t);
-  }, []);
+  document.addEventListener("visibilitychange", onVisibilityChange);
 
-  /* --------------------------------------------------
-     Current time (red line)
-  -------------------------------------------------- */
+  return () => {
+    clearInterval(interval);
+    document.removeEventListener("visibilitychange", onVisibilityChange);
+    abortRef.current?.abort();
+  };
+}, [fetchCalendar]);
+
+
+  /* -----------------------------
+     Current time
+  ----------------------------- */
   const nowParts = useMemo(() => {
     const parts = new Intl.DateTimeFormat("en-CA", {
       timeZone,
@@ -167,19 +156,25 @@ export default function GoogleCalendarWeekView({
     };
   }, [now, timeZone]);
 
-  /* --------------------------------------------------
-     Helpers
-  -------------------------------------------------- */
-  const isPastSlot = (date, hour) => {
-    const slotStart = new Date(`${date}T${String(hour).padStart(2, "0")}:00`);
-    return slotStart.getTime() < Date.now();
+  /* -----------------------------
+     Helpers (30-min aware)
+  ----------------------------- */
+  const isPastSlot = (date, hour, minute) => {
+    const start = new Date(
+      `${date}T${String(hour).padStart(2, "0")}:${minute === 0 ? "00" : "30"}`
+    ).getTime();
+
+    return Date.now() >= start + 30 * 60 * 1000;
   };
 
-  const isBusy = (date, hour) => {
+  const isBusy = (date, hour, minute) => {
     const day = days.find((d) => d.date === date);
     if (!day) return false;
 
-    const slotStart = new Date(`${date}T${hour}:00`).getTime();
+    const slotStart = new Date(
+      `${date}T${String(hour).padStart(2, "0")}:${minute === 0 ? "00" : "30"}`
+    ).getTime();
+
     const slotEnd = slotStart + 30 * 60 * 1000;
 
     return day.events.some((e) => {
@@ -188,10 +183,26 @@ export default function GoogleCalendarWeekView({
       return slotStart < en && slotEnd > s;
     });
   };
+  const getEventForSlot = (date, hour, minuteOffset) => {
+  const day = days.find((d) => d.date === date);
+  if (!day) return null;
 
-  /* --------------------------------------------------
+  const slotStart = new Date(
+    `${date}T${String(hour).padStart(2, "0")}:${minuteOffset === 0 ? "00" : "30"}`
+  ).getTime();
+
+  const slotEnd = slotStart + 30 * 60 * 1000;
+
+  return day.events.find((e) => {
+    const s = new Date(e.startISO).getTime();
+    const en = new Date(e.endISO).getTime();
+    return slotStart < en && slotEnd > s;
+  }) || null;
+};
+
+  /* -----------------------------
      Render
-  -------------------------------------------------- */
+  ----------------------------- */
   if (loading)
     return <div className="p-6 text-center text-gray-500">Loading calendar…</div>;
 
@@ -214,32 +225,22 @@ export default function GoogleCalendarWeekView({
         Weekly Calendar
       </header>
 
-      {/* Day headers */}
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] min-w-[1000px]">
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] w-full">
         <div />
         {days.map((d) => (
-          <div key={d.date} className="flex justify-center py-2">
-            <div
-              className={`px-4 py-1.5 mx-2 rounded-full w-full text-center text-sm font-medium
-                ${d.date === nowParts.date
-                  ? "bg-black text-white shadow"
-                  : "bg-gray-100 text-gray-700"
-                }`}
-            >
-              {d.day} {new Date(d.date).getDate()}
-            </div>
+          <div key={d.date} className="text-center py-2 text-sm font-medium">
+            {d.day}
           </div>
         ))}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] relative min-w-[1000px]">
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] min-w-[1000px]">
         {/* Time column */}
         <div>
           {Array.from({ length: TOTAL_HOURS }, (_, i) => {
             const h = i + VISIBLE_START_HOUR;
             return (
-              <div key={h} className="h-14 m-2 flex items-center justify-center text-xs text-gray-400 pr-2 text-right">
+              <div key={h} className="h-12 m-1 flex justify-center items-center text-xs text-gray-400 text-right pr-2">
                 {String(h).padStart(2, "0")}:00
               </div>
             );
@@ -248,116 +249,72 @@ export default function GoogleCalendarWeekView({
 
         {/* Days */}
         {days.map((day) => (
-          <div key={day.date} className="relative ">
-            {Array.from({ length: TOTAL_HOURS }, (_, i) => {
-              const h = i + VISIBLE_START_HOUR;
-              return (
-                <div
-                  key={h}
-                  className={`h-14 rounded-lg m-2 border ${isPastSlot(day.date, h)
-                      ? "bg-yellow-50"
-                      : isBusy(day.date, h)
-                        ? "cursor-not-allowed"
-                        : "hover:bg-yellow-100"
-                    }`}
-                />
-              );
-            })}
+  <div key={day.date} className="relative">
+    {Array.from({ length: TOTAL_HOURS }, (_, i) => {
+      const h = i + VISIBLE_START_HOUR;
 
-            {/* Events */}
-            {day.events.map((e, i) => {
-              const start = new Date(e.startISO);
-              const end = new Date(e.endISO);
+      const topEvent = getEventForSlot(day.date, h, 0);
+      const bottomEvent = getEventForSlot(day.date, h, 30);
 
-              const startMinutes =
-                (start.getHours() - VISIBLE_START_HOUR) * 60 +
-                start.getMinutes();
-              const endMinutes =
-                (end.getHours() - VISIBLE_START_HOUR) * 60 +
-                end.getMinutes();
-
-              if (endMinutes <= 0 || startMinutes >= TOTAL_HOURS * 60)
-                return null;
-
-              const top = (startMinutes / 60) * HOUR_HEIGHT;
-              const height =
-                ((endMinutes - startMinutes) / 60) * HOUR_HEIGHT;
-
-              const joinable = canJoinEvent(e);
-
-              return (
-                <div
-                  key={i}
-                  onClick={() => joinable && setSelectedEvent(e)}
-                  className={`absolute left-1 right-1 rounded-lg px-2 py-1 text-xs shadow-sm line-clamp-1
-                    ${e.source === "booking"
-                      ? joinable
-                        ? "bg-black text-white cursor-pointer hover:opacity-90"
-                        : "bg-gray-400 text-white cursor-not-allowed opacity-60"
-                      : "bg-gray-300 text-gray-800 cursor-default"
-                    }`}
-                  style={{ top, height }}
-                >
-                  <span className="line-clamp-1 text-center">{e.title}
-                  </span>
-                </div>
-              );
-            })}
-
-            {/* Current time indicator */}
-            {day.date === nowParts.date &&
-              nowParts.minutes / 60 >= VISIBLE_START_HOUR && (
-                <div
-                  className="absolute left-0 right-0 h-[2px] bg-red-500 z-30"
-                  style={{
-                    top:
-                      (nowParts.minutes / 60 - VISIBLE_START_HOUR) *
-                      HOUR_HEIGHT,
-                  }}
-                />
-              )}
+      return (
+        <div
+          key={h}
+          className="h-12 m-1 rounded-lg border overflow-hidden text-[10px]"
+        >
+          {/* TOP HALF :00–:30 */}
+          <div
+            onClick={() => {
+              if (isPastSlot(day.date, h, 0) || topEvent) return;
+            }}
+            className={`h-1/2 px-1 flex items-center justify-center truncate line-clamp-1
+              ${
+                isPastSlot(day.date, h, 0)
+                  ? "bg-yellow-100 cursor-not-allowed"
+                  : topEvent
+                  ? "bg-black text-white cursor-not-allowed"
+                  : "hover:bg-green-300 cursor-pointer"
+              }`}
+          >
+            {topEvent?.title}
           </div>
-        ))}
-      </div>
 
-      {/* Join modal */}
-      {selectedEvent && (
-        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
-          <div className="bg-white rounded-xl p-6 w-80 space-y-4 shadow-2xl">
-            <h3 className="text-lg font-semibold">{selectedEvent.title}</h3>
-
-            <p className="text-sm text-gray-600">
-              {selectedEvent.startISO.slice(11, 16)} –{" "}
-              {selectedEvent.endISO.slice(11, 16)}
-            </p>
-
-            <div className="flex justify-end gap-3">
-              <button
-                onClick={() => setSelectedEvent(null)}
-                className="px-4 py-2 text-gray-600"
-              >
-                Cancel
-              </button>
-
-              {canJoinEvent(selectedEvent) ? (
-                <Link
-                  href={selectedEvent.url}
-                  className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium"
-                >
-                  Join Class
-                </Link>
-              ) : (
-                <button
-                  disabled
-                  className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm cursor-not-allowed"
-                >
-                  Not Started Yet
-                </button>
-              )}
-            </div>
+          {/* BOTTOM HALF :30–:60 */}
+          <div
+            onClick={() => {
+              if (isPastSlot(day.date, h, 30) || bottomEvent) return;
+              console.log("Selected:", day.date, h, "30");
+            }}
+            className={`h-1/2 px-1 flex items-center justify-center truncate border-t
+              ${
+                isPastSlot(day.date, h, 30)
+                  ? "bg-yellow-100 cursor-not-allowed"
+                  : bottomEvent
+                  ? "bg-black text-white cursor-not-allowed"
+                  : "hover:bg-green-300 cursor-pointer"
+              }`}
+          >
+            {bottomEvent?.title}
           </div>
         </div>
+      );
+    })}
+
+    {/* Current time indicator */}
+    {day.date === nowParts.date &&
+      nowParts.minutes / 60 >= VISIBLE_START_HOUR && (
+        <div
+          className="absolute left-0 right-0 h-[2px] bg-red-500 z-30"
+          style={{
+            top:
+              (nowParts.minutes / 60 - VISIBLE_START_HOUR) *
+              HOUR_HEIGHT,
+          }}
+        />
       )}
+  </div>
+))}
+
+      </div>
     </div>
   );
 }
