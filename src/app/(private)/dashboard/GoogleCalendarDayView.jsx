@@ -1,345 +1,359 @@
 "use client";
+
 import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
-const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const dayNames = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+const HOUR_HEIGHT = 56;
 
 export default function GoogleCalendarWeekView({
   timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
   startDateISO = null,
   hourRange = { start: 0, end: 23 },
 }) {
-  const [events, setEvents] = useState([]);
+  const [days, setDays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedSlot, setSelectedSlot] = useState(null);
-  const [title, setTitle] = useState("");
-  const [creating, setCreating] = useState(false);
   const [now, setNow] = useState(() => new Date());
+  const [selectedEvent, setSelectedEvent] = useState(null);
+
   const abortRef = useRef(null);
 
-  function zonedDateFromDateAndTime(dateISO, hour, minute = 0, tz = timeZone) {
-    try {
-      const [year, month, day] = dateISO.split("-").map((s) => parseInt(s, 10));
-      const utcCandidate = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
-      const fmt = new Intl.DateTimeFormat("en-GB", {
-        timeZone: tz,
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-      });
-      const parts = fmt.formatToParts(utcCandidate).reduce((acc, p) => {
-        acc[p.type] = p.value;
-        return acc;
-      }, {});
-      const matches =
-        parts.year === String(year) &&
-        parts.month === String(month).padStart(2, "0") &&
-        parts.day === String(day).padStart(2, "0") &&
-        parts.hour === String(hour).padStart(2, "0") &&
-        parts.minute === String(minute).padStart(2, "0");
-      if (matches) return utcCandidate;
-      return new Date(`${dateISO}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`);
-    } catch {
-      return new Date(`${dateISO}T${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`);
-    }
-  }
+  /* --------------------------------------------------
+     JOIN ELIGIBILITY (CORE RULE)
+  -------------------------------------------------- */
+  const canJoinEvent = (event) => {
+    if (!event || event.source !== "booking") return false;
 
-  const normalizeSchedule = (rawSchedule = []) => {
+    const now = new Date();
+    const start = new Date(event.startISO);
+    const end = new Date(event.endISO);
+
+    const EARLY_JOIN_MS = 5 * 60 * 1000;   // 5 min before
+    const LATE_JOIN_MS = 10 * 60 * 1000;   // 10 min after
+
+    return (
+      now.getTime() >= start.getTime() - EARLY_JOIN_MS &&
+      now.getTime() <= end.getTime() + LATE_JOIN_MS
+    );
+  };
+
+  /* --------------------------------------------------
+     Normalize API schedule
+  -------------------------------------------------- */
+  const normalizeSchedule = (schedule = []) => {
     const map = new Map();
-    for (const entry of rawSchedule) {
-      const date = entry.date || entry.dayDate || null;
-      if (!date) continue;
-      const day = entry.day || dayNames[new Date(date).getDay()];
-      const eventsArr = [];
-      if (Array.isArray(entry.events)) {
-        for (const ev of entry.events) {
-          if (ev.startISO && ev.endISO) {
-            eventsArr.push({ startISO: ev.startISO, endISO: ev.endISO, title: ev.title || ev.summary || "" });
-          } else if (ev.start && ev.end) {
-            const startDate = zonedDateFromDateAndTime(date, Number(ev.start.split(":")[0]), Number(ev.start.split(":")[1] || 0));
-            const endDate = zonedDateFromDateAndTime(date, Number(ev.end.split(":")[0]), Number(ev.end.split(":")[1] || 0));
-            eventsArr.push({ startISO: startDate.toISOString(), endISO: endDate.toISOString(), title: ev.title || ev.summary || "" });
-          }
-        }
-      } else if (Array.isArray(entry.hour)) {
-        for (const h of entry.hour) {
-          const [hh, mm] = h.split(":").map(Number);
-          const startDate = zonedDateFromDateAndTime(date, hh, mm);
-          const endDate = new Date(startDate.getTime() + 30 * 60 * 1000);
-          eventsArr.push({ startISO: startDate.toISOString(), endISO: endDate.toISOString(), title: "Busy" });
-        }
-      }
-      map.set(date, { date, day, events: eventsArr });
+
+    for (const entry of schedule) {
+      if (!entry.date || !Array.isArray(entry.events)) continue;
+
+      map.set(entry.date, {
+        date: entry.date,
+        day: dayNames[new Date(entry.date).getDay()],
+        events: entry.events.map((ev) => ({
+          title: ev.title,
+          source: ev.source,
+          booking_id: ev.booking_id,
+          url: ev.url,
+          startISO: `${entry.date}T${ev.start}:00`,
+          endISO: `${entry.date}T${ev.end}:00`,
+        })),
+      });
     }
+
     return map;
   };
 
-  const buildWeekFrame = (startOfWeekISO) => {
-    const arr = [];
-    const startDate = new Date(startOfWeekISO);
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(startDate);
-      d.setDate(startDate.getDate() + i);
-      const date = d.toISOString().split("T")[0];
-      const day = dayNames[d.getDay()];
-      arr.push({ date, day, events: [] });
-    }
-    return arr;
+  /* --------------------------------------------------
+     Build week frame
+  -------------------------------------------------- */
+  const buildWeekFrame = (startISO) => {
+    const start = new Date(startISO);
+    return Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(start);
+      d.setDate(start.getDate() + i);
+      return {
+        date: d.toISOString().split("T")[0],
+        day: dayNames[d.getDay()],
+        events: [],
+      };
+    });
   };
 
-  const fetchGoogleEvents = async (opts = { retry: 0 }) => {
+  /* --------------------------------------------------
+     Fetch calendar data
+  -------------------------------------------------- */
+  const fetchCalendar = async () => {
     setLoading(true);
     setError(null);
-    if (abortRef.current) {
-      try {
-        abortRef.current.abort();
-      } catch {}
-    }
+
+    if (abortRef.current) abortRef.current.abort();
     const controller = new AbortController();
     abortRef.current = controller;
+
     try {
-      const res = await fetch("/api/google/events", { signal: controller.signal });
-      if (!res.ok) {
-        const body = await res.text();
-        try {
-          const json = JSON.parse(body);
-          throw new Error(json.error || `Failed to fetch events: ${res.status}`);
-        } catch {
-          throw new Error(`Failed to fetch events: ${res.statusText || res.status}`);
-        }
-      }
-      const data = await res.json();
-      const rawSchedule = data.schedule || data.events || [];
-      const weekStartISO =
-        startDateISO ||
-        data.weekStart ||
-        (() => {
-          const ref = new Date();
-          const dayIndex = ref.getDay();
-          const s = new Date(ref);
-          s.setDate(ref.getDate() - dayIndex);
-          return s.toISOString().split("T")[0];
-        })();
-      const mapped = normalizeSchedule(rawSchedule);
-      const frame = buildWeekFrame(weekStartISO);
-      const merged = frame.map((day) => {
-        const fromMap = mapped.get(day.date);
-        if (fromMap) return { ...day, events: fromMap.events || [] };
-        return day;
+      const res = await fetch("/api/dashboard/calendar-event", {
+        signal: controller.signal,
       });
-      setEvents(merged);
-    } catch (err) {
-      if (err.name === "AbortError") return;
-      setError(err.message || "Failed to load events");
-      if (opts.retry < 1) setTimeout(() => fetchGoogleEvents({ retry: opts.retry + 1 }), 1000);
+
+      if (!res.ok) throw new Error("Calendar not synced");
+
+      const data = await res.json();
+
+      const weekStart =
+        startDateISO ||
+        (() => {
+          const d = new Date();
+          d.setDate(d.getDate() - d.getDay());
+          return d.toISOString().split("T")[0];
+        })();
+
+      const normalized = normalizeSchedule(data.schedule || []);
+      const frame = buildWeekFrame(weekStart);
+
+      setDays(
+        frame.map((d) => ({
+          ...d,
+          events: normalized.get(d.date)?.events || [],
+        }))
+      );
+    } catch (e) {
+      if (e.name !== "AbortError") setError(e.message);
     } finally {
       setLoading(false);
-      abortRef.current = null;
     }
   };
 
+  /* --------------------------------------------------
+     Effects
+  -------------------------------------------------- */
   useEffect(() => {
-    fetchGoogleEvents();
-    const t = setInterval(() => setNow(new Date()), 60 * 1000);
-    return () => {
-      clearInterval(t);
-      if (abortRef.current) {
-        try {
-          abortRef.current.abort();
-        } catch {}
-      }
-    };
+    fetchCalendar();
+    const t = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(t);
   }, []);
 
+  /* --------------------------------------------------
+     Current time (red line)
+  -------------------------------------------------- */
   const nowParts = useMemo(() => {
-    const formatter = new Intl.DateTimeFormat("en-CA", {
+    const parts = new Intl.DateTimeFormat("en-CA", {
       timeZone,
+      hour12: false,
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
       hour: "2-digit",
       minute: "2-digit",
-      hour12: false,
-    });
-    const parts = formatter.formatToParts(now).reduce((acc, p) => {
-      if (p.type !== "literal") acc[p.type] = p.value;
-      return acc;
-    }, {});
+    })
+      .formatToParts(now)
+      .reduce((acc, p) => {
+        acc[p.type] = p.value;
+        return acc;
+      }, {});
+
     return {
-      isoDate: `${parts.year}-${parts.month}-${parts.day}`,
-      hour: Number(parts.hour),
-      minute: Number(parts.minute),
+      date: `${parts.year}-${parts.month}-${parts.day}`,
+      minutes: Number(parts.hour) * 60 + Number(parts.minute),
     };
   }, [now, timeZone]);
 
-  const currentDate = nowParts.isoDate;
-  const currentHour = nowParts.hour;
-  const currentMinute = nowParts.minute;
-  const progressWithinHour = (currentMinute / 60) * 100;
-
+  /* --------------------------------------------------
+     Helpers
+  -------------------------------------------------- */
   const isPastSlot = (date, hour) => {
-    try {
-      const slot = zonedDateFromDateAndTime(date, hour, 0, timeZone);
-      return slot.getTime() < new Date().getTime();
-    } catch {
-      if (date < currentDate) return true;
-      if (date === currentDate && hour < currentHour) return true;
-      return false;
-    }
+    const slotStart = new Date(`${date}T${String(hour).padStart(2, "0")}:00`);
+    return slotStart.getTime() < Date.now();
   };
 
   const isBusy = (date, hour) => {
-    const day = events.find((d) => d.date === date);
-    if (!day || !day.events) return false;
-    const slotStart = zonedDateFromDateAndTime(date, hour, 0, timeZone).getTime();
+    const day = days.find((d) => d.date === date);
+    if (!day) return false;
+
+    const slotStart = new Date(`${date}T${hour}:00`).getTime();
     const slotEnd = slotStart + 30 * 60 * 1000;
-    for (const ev of day.events) {
-      const start = new Date(ev.startISO).getTime();
-      const end = new Date(ev.endISO).getTime();
-      if (slotStart < end && slotEnd > start) return true;
-    }
-    return false;
+
+    return day.events.some((e) => {
+      const s = new Date(e.startISO).getTime();
+      const en = new Date(e.endISO).getTime();
+      return slotStart < en && slotEnd > s;
+    });
   };
 
-  const handleSlotClick = (dayObj, hour) => {
-    if (isPastSlot(dayObj.date, hour) || isBusy(dayObj.date, hour)) return;
-    setSelectedSlot({ ...dayObj, hour });
-    setTitle("");
-    setShowModal(true);
-  };
+  /* --------------------------------------------------
+     Render
+  -------------------------------------------------- */
+  if (loading)
+    return <div className="p-6 text-center text-gray-500">Loading calendar…</div>;
 
-  const handleCreateEvent = async () => {
-    if (!selectedSlot || !title.trim()) return;
-    setCreating(true);
-    try {
-      const target = new Date(`${selectedSlot.date}T${selectedSlot.hour}:00`);
-      const start = target;
-      const end = new Date(target.getTime() + 30 * 60 * 1000);
-      const res = await fetch("/api/google/create-event", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ summary: title, start, end, timeZone }),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        alert("Event created successfully!");
-        setShowModal(false);
-        await fetchGoogleEvents();
-      } else {
-        alert(`Failed: ${data.error || "Unknown error"}`);
-      }
-    } catch {
-      alert("Error creating event.");
-    } finally {
-      setCreating(false);
-    }
-  };
-
-  if (loading) return <div className="p-4 text-center text-gray-500">Loading calendar...</div>;
   if (error)
     return (
-      <div className="p-4 text-center">
-        Lets Sync the calendar <Link href="/account-settings" className="text-blue font-bold">Account Settings</Link>
+      <div className="p-6 text-center">
+        Sync Google Calendar from{" "}
+        <Link href="/account-settings" className="text-blue-600 font-semibold">
+          Account Settings
+        </Link>
       </div>
     );
 
-  const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const VISIBLE_START_HOUR = hourRange.start;
+  const TOTAL_HOURS = hourRange.end - hourRange.start + 1;
 
   return (
-    <div className="relative border border-gray-200 rounded-xl shadow-sm bg-white overflow-auto p-4">
-      <h2 className="text-lg font-semibold text-gray-700 mb-4">Google Calendar — Weekly View</h2>
-      <div className="grid grid-cols-[80px_repeat(7,1fr)] border-b border-gray-200 bg-gray-50 sticky top-0 z-10 min-w-[1000px]">
-        <div className="font-semibold text-gray-600 p-2 text-right">Time</div>
-        {sortedEvents.map((d) => {
-          const dateObj = new Date(d.date);
-          const dayLabel = dateObj.toLocaleDateString("en-US", { weekday: "short", day: "numeric" });
-          const isToday = d.date === currentDate;
-          return (
-            <div
-              key={d.date}
-              className={`text-center font-semibold py-2 ${isToday ? "text-blue-600 bg-blue-50" : "text-gray-600"}`}
-            >
-              {dayLabel}
-            </div>
-          );
-        })}
-      </div>
+    <div className="border rounded-2xl bg-white shadow-sm overflow-auto">
+      <header className="sticky top-0 z-20 bg-white border-b px-4 py-3 font-semibold text-gray-700 text-center">
+        Weekly Calendar
+      </header>
 
-      <div className="grid grid-cols-9 overflow-y-scroll border-t border-gray-200 relative">
-        <div className="col-span-1 border-r border-gray-200">
-          {Array.from({ length: 24 }, (_, hour) => (
-            <div key={hour} className="h-14 flex items-start justify-end pr-2 text-xs text-gray-400">
-              {hour.toString().padStart(2, "0")}:00
-            </div>
-          ))}
-        </div>
-        {sortedEvents.map((dayObj) => (
-          <div key={dayObj.date} className="relative border-l border-gray-100">
-            {Array.from({ length: 24 }, (_, hour) => (
-              <div
-                key={hour}
-                className={`h-14 border-b border-gray-50 transition-colors ${
-                  isPastSlot(dayObj.date, hour) ? "bg-gray-50" : "hover:bg-blue-50 cursor-pointer"
+      {/* Day headers */}
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] min-w-[1000px]">
+        <div />
+        {days.map((d) => (
+          <div key={d.date} className="flex justify-center py-2">
+            <div
+              className={`px-4 py-1.5 mx-2 rounded-full w-full text-center text-sm font-medium
+                ${d.date === nowParts.date
+                  ? "bg-black text-white shadow"
+                  : "bg-gray-100 text-gray-700"
                 }`}
-                onClick={() => handleSlotClick(dayObj, hour)}
-              />
-            ))}
-            {dayObj.events?.map((event, i) => {
-              const start = new Date(event.startISO);
-              const end = new Date(event.endISO);
-              const startH = start.getHours();
-              const startM = start.getMinutes();
-              const endH = end.getHours();
-              const endM = end.getMinutes();
-              const startMinutes = startH * 60 + startM;
-              const endMinutes = endH * 60 + endM;
-              const duration = endMinutes - startMinutes;
-              const HOUR_HEIGHT = 56;
-              const top = (startMinutes / 60) * HOUR_HEIGHT;
-              const height = (duration / 60) * HOUR_HEIGHT;
-              return (
-                <div
-                  key={i}
-                  className="absolute left-1 right-1 bg-gray-300 rounded-md text-gray-800 text-xs font-medium px-1 py-1 flex items-center justify-center shadow-sm"
-                  style={{ top, height }}
-                >
-                  {event.title}
-                </div>
-              );
-            })}
+            >
+              {d.day} {new Date(d.date).getDate()}
+            </div>
           </div>
         ))}
       </div>
 
-      {showModal && selectedSlot && (
-        <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl p-6 shadow-2xl w-96 space-y-4 border border-gray-100">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Create Event — {selectedSlot.day}, {selectedSlot.date} at {selectedSlot.hour.toString().padStart(2, "0")}:00
-            </h3>
-            <input
-              type="text"
-              placeholder="Event title..."
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-400"
-            />
+      {/* Grid */}
+      <div className="grid grid-cols-[80px_repeat(7,1fr)] relative min-w-[1000px]">
+        {/* Time column */}
+        <div>
+          {Array.from({ length: TOTAL_HOURS }, (_, i) => {
+            const h = i + VISIBLE_START_HOUR;
+            return (
+              <div key={h} className="h-14 m-2 flex items-center justify-center text-xs text-gray-400 pr-2 text-right">
+                {String(h).padStart(2, "0")}:00
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Days */}
+        {days.map((day) => (
+          <div key={day.date} className="relative ">
+            {Array.from({ length: TOTAL_HOURS }, (_, i) => {
+              const h = i + VISIBLE_START_HOUR;
+              return (
+                <div
+                  key={h}
+                  className={`h-14 rounded-lg m-2 border ${isPastSlot(day.date, h)
+                      ? "bg-yellow-50"
+                      : isBusy(day.date, h)
+                        ? "cursor-not-allowed"
+                        : "hover:bg-yellow-100"
+                    }`}
+                />
+              );
+            })}
+
+            {/* Events */}
+            {day.events.map((e, i) => {
+              const start = new Date(e.startISO);
+              const end = new Date(e.endISO);
+
+              const startMinutes =
+                (start.getHours() - VISIBLE_START_HOUR) * 60 +
+                start.getMinutes();
+              const endMinutes =
+                (end.getHours() - VISIBLE_START_HOUR) * 60 +
+                end.getMinutes();
+
+              if (endMinutes <= 0 || startMinutes >= TOTAL_HOURS * 60)
+                return null;
+
+              const top = (startMinutes / 60) * HOUR_HEIGHT;
+              const height =
+                ((endMinutes - startMinutes) / 60) * HOUR_HEIGHT;
+
+              const joinable = canJoinEvent(e);
+
+              return (
+                <div
+                  key={i}
+                  onClick={() => joinable && setSelectedEvent(e)}
+                  className={`absolute left-1 right-1 rounded-lg px-2 py-1 text-xs shadow-sm line-clamp-1
+                    ${e.source === "booking"
+                      ? joinable
+                        ? "bg-black text-white cursor-pointer hover:opacity-90"
+                        : "bg-gray-400 text-white cursor-not-allowed opacity-60"
+                      : "bg-gray-300 text-gray-800 cursor-default"
+                    }`}
+                  style={{ top, height }}
+                >
+                  <span className="line-clamp-1 text-center">{e.title}
+                  </span>
+                </div>
+              );
+            })}
+
+            {/* Current time indicator */}
+            {day.date === nowParts.date &&
+              nowParts.minutes / 60 >= VISIBLE_START_HOUR && (
+                <div
+                  className="absolute left-0 right-0 h-[2px] bg-red-500 z-30"
+                  style={{
+                    top:
+                      (nowParts.minutes / 60 - VISIBLE_START_HOUR) *
+                      HOUR_HEIGHT,
+                  }}
+                />
+              )}
+          </div>
+        ))}
+      </div>
+
+      {/* Join modal */}
+      {selectedEvent && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center">
+          <div className="bg-white rounded-xl p-6 w-80 space-y-4 shadow-2xl">
+            <h3 className="text-lg font-semibold">{selectedEvent.title}</h3>
+
+            <p className="text-sm text-gray-600">
+              {selectedEvent.startISO.slice(11, 16)} –{" "}
+              {selectedEvent.endISO.slice(11, 16)}
+            </p>
+
             <div className="flex justify-end gap-3">
-              <button onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-500 hover:text-gray-700">
+              <button
+                onClick={() => setSelectedEvent(null)}
+                className="px-4 py-2 text-gray-600"
+              >
                 Cancel
               </button>
-              <button
-                onClick={handleCreateEvent}
-                disabled={creating}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-              >
-                {creating ? "Creating..." : "Create"}
-              </button>
+
+              {canJoinEvent(selectedEvent) ? (
+                <Link
+                  href={selectedEvent.url}
+                  className="bg-black text-white px-4 py-2 rounded-lg text-sm font-medium"
+                >
+                  Join Class
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg text-sm cursor-not-allowed"
+                >
+                  Not Started Yet
+                </button>
+              )}
             </div>
           </div>
         </div>

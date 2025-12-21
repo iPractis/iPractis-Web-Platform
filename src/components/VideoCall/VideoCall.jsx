@@ -43,16 +43,16 @@ export default function VideoCallContainer() {
   }, [joined]);
 
   return (
-    <div className="h-screen w-screen bg-[#1b1c1e] text-white flex flex-col overflow-hidden">
+    <div className="h-screen w-screen bg-white text-black flex justify-center items-center overflow-hidden">
       {!joined ? (
         <div className="flex flex-col items-center gap-6 p-6 text-center h-full justify-center">
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">🎥 Group Video Call</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">Join Lesson Now!</h1>
           <p className="text-gray-400 text-sm sm:text-base">
-            Joining room: <span className="text-white font-medium">{roomId || "..."}</span>
+            Joining room: <span className="text-black font-medium">{roomId || "..."}</span>
           </p>
           <button
             onClick={joinRoom}
-            className="bg-green-600 hover:bg-green-700 active:scale-95 transition px-6 py-3 rounded-full text-lg font-semibold shadow-lg"
+            className="bg-black text-white active:scale-95 transition px-6 py-3 rounded-full text-lg font-semibold shadow-lg"
           >
             Join Room
           </button>
