@@ -7,7 +7,10 @@ import DeleteAccount from "./DeleteAccount";
 import { Button, Spinner } from "@nextui-org/react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { Toaster, toast } from "sonner";
+
+// 1. Import React-Toastify and its CSS
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TabAccount = ({ activeTab }) => {
   const {
@@ -37,29 +40,27 @@ const TabAccount = ({ activeTab }) => {
         const result = await res.json();
 
         if (res.ok && result.preferences) {
-          // Reset form with fetched data (clears isDirty until user types)
           reset(result.preferences);
         }
       } catch (err) {
         console.error("Error fetching preferences:", err);
-        // Optional: toast.error("Could not load saved settings.");
       } finally {
         setIsLoadingPrefs(false);
       }
     };
 
-    // Only fetch if this tab is active (optimization)
     if (activeTab === 1) {
       fetchPreferences();
     }
   }, [activeTab, reset]);
 
-  // ✅ 2. Handle Save
+  // ✅ 2. Handle Save with React-Toastify
   const handleSave = async () => {
-    try {
-      setIsSaving(true);
-      const toastId = toast.loading("Saving changes...");
+    // Start the loading toast and capture its ID
+    const toastId = toast.loading("Saving changes...");
+    setIsSaving(true);
 
+    try {
       const formData = getValues();
 
       const res = await fetch("/api/account-update", {
@@ -71,20 +72,34 @@ const TabAccount = ({ activeTab }) => {
       const result = await res.json();
 
       if (res.ok) {
-        toast.success("Settings saved successfully!", {
-          id: toastId,
+        // ✅ Success: Update the existing toast
+        toast.update(toastId, {
+          render: "Settings saved successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000, // Close after 3 seconds
         });
 
         // Reset form baseline to new values (clears isDirty)
         reset(formData);
       } else {
-        toast.error(result.error || "Failed to save settings.", {
-          id: toastId,
+        // ❌ API Error: Update toast to error
+        toast.update(toastId, {
+          render: result.error || "Failed to save settings.",
+          type: "error",
+          isLoading: false,
+          autoClose: 4000,
         });
       }
     } catch (err) {
       console.error("Error saving settings:", err);
-      toast.error("Something went wrong while saving.");
+      // ❌ Catch Error
+      toast.update(toastId, {
+        render: "Something went wrong while saving.",
+        type: "error",
+        isLoading: false,
+        autoClose: 4000,
+      });
     } finally {
       setIsSaving(false);
     }
@@ -92,7 +107,9 @@ const TabAccount = ({ activeTab }) => {
 
   return (
     <form className={`${activeTab !== 1 && "hidden"} space-y-[64px]`}>
-      <Toaster position="top-right" richColors />
+      
+      {/* 3. Add ToastContainer (Required for toasts to show) */}
+      <ToastContainer position="top-right" theme="light" />
 
       {/* Show Spinner while fetching initial data, or show form */}
       {isLoadingPrefs ? (
