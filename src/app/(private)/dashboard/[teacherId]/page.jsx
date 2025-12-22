@@ -1,12 +1,14 @@
 import React from 'react'
 import LessonBookingCard from './LessonBookingCard'
 
-function page() {
+function Page({ params }) {
+  const { teacherId } = params;
+console.log(teacherId)
   return (
     <div>
-      <LessonBookingCard></LessonBookingCard>
+      <LessonBookingCard teacherId={teacherId} />
     </div>
-  )
+  );
 }
 
-export default page
+export default Page;

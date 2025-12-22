@@ -11,17 +11,24 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(req) {
   try {
-    const { teacherId, studentId, date, time } = await req.json();
+    const { teacherId, studentId, date, time , duration } = await req.json();
 
     if (!teacherId || !studentId || !date || !time) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
     const startTime = dayjs.utc(`${date}T${time}`);
-    const endTime = startTime.add(30, "minute");
+    const endTime = startTime.add(duration, "minute");
 
+      const { data: teacher } = await supabaseClient
+      .from("teachers")
+      .select("user_id , hourly_price")
+      .eq("teacher_id", teacherId)
+      .single();
+
+      const cost = teacher.hourly_price * (duration/30)
     // 1️⃣ Create booking (PENDING)
-    const { data: booking } = await supabaseClient
+    const { data: booking , error: bookingError } = await supabaseClient
       .from("bookings")
       .insert([{
         teacher_id: teacherId,
@@ -30,19 +37,19 @@ export async function POST(req) {
         end_time: endTime.toISOString(),
         status: "booked",
         payment_status: "pending",
+        class_price : cost
       }])
       .select()
       .single();
 
-    // 2️⃣ Resolve teacher USER ID
-    const { data: teacher } = await supabaseClient
-      .from("teachers")
-      .select("user_id")
-      .eq("teacher_id", teacherId)
-      .single();
+      if(bookingError){
+        console.log(bookingError)
+      }
 
+    // 2️⃣ Resolve teacher USER ID
+  
     // 3️⃣ Create Stripe PaymentIntent
-    const amount = Math.round(booking.class_price * 100);
+    const amount = Math.round(teacher.hourly_price * 100 * (duration/30));
     const platformFee = Math.round(amount * 0.2);
     const teacherAmount = amount - platformFee;
 
