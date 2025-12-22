@@ -17,7 +17,7 @@ export async function fetchDraft() {
 
     // 🧠 Ensure base URL works in both local + deployed
 
-    const res = await fetch(`https://i-practis-web-platform.vercel.app/api/teacher-draft/${userId}`, {
+    const res = await fetch(`http:localhost:3000/api/teacher-draft/${userId}`, {
       headers: { Authorization: `Bearer ${token}` },
       cache: "no-store",
     });

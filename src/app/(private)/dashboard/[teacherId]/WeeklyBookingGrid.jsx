@@ -1,117 +1,153 @@
 "use client";
+
 import React, { useMemo } from "react";
+import dayjs from "dayjs";
 
-// Helper: format Date to YYYY-MM-DD
-function formatDateISO(date) {
-  return date.toISOString().split("T")[0];
-}
+/* -----------------------------
+   Config
+----------------------------- */
+const START_HOUR = 0;
+const END_HOUR = 23;
+const TOTAL_DAYS = 7;
 
-// Helper: map weekday index → text
-const weekdayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+/* -----------------------------
+   Hours (00 → 23)
+----------------------------- */
+const HOURS = Array.from(
+  { length: END_HOUR - START_HOUR + 1 },
+  (_, i) => START_HOUR + i
+);
 
-// You selected **Option B** → hide slots before 06:00
-const MIN_MINUTES = 6 * 60;
-
-function timeToMinutes(t) {
-  const [h, m] = t.split(":").map(Number);
-  return h * 60 + m;
-}
-
-export default function WeeklyBookingGrid({
-  availability = [],
+/* =====================================================
+   MINI Weekly Availability Grid
+===================================================== */
+export default function WeeklyAvailabilityGrid({
+  availability = {}, // { "YYYY-MM-DD": ["HH:mm"] }
   selectedDate,
   selectedTime,
   onSelect,
 }) {
-  // Build next 7 days
+  /* ---------------------------------------------
+     Days = next 7 days
+  --------------------------------------------- */
   const days = useMemo(() => {
-    const arr = [];
-    const today = new Date();
-
-    for (let i = 0; i < 7; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-      arr.push(d);
-    }
-    return arr;
+    const today = dayjs().startOf("day");
+    return Array.from({ length: TOTAL_DAYS }, (_, i) => {
+      const d = today.add(i, "day");
+      return {
+        iso: d.format("YYYY-MM-DD"),
+        weekday: d.format("ddd"),
+        label: d.format("DD MMM"),
+      };
+    });
   }, []);
 
-  // Make availability lookup: { Mon: ["10:00", ...], ... }
+  /* ---------------------------------------------
+     Availability lookup
+  --------------------------------------------- */
   const availabilityMap = useMemo(() => {
     const map = {};
-    availability.forEach((day) => {
-      map[day.day] = (day.hour || []).filter(
-        (t) => timeToMinutes(t) >= MIN_MINUTES
-      );
+    Object.entries(availability).forEach(([date, times]) => {
+      map[date] = new Set(times);
     });
     return map;
   }, [availability]);
 
+  /* ---------------------------------------------
+     Render
+  --------------------------------------------- */
   return (
-    <div className="mt-4">
-      <h3 className="font-semibold mb-3 text-lg">Pick a Slot</h3>
+    <div className="bg-white rounded-lg shadow-sm overflow-x-auto">
+      <div
+        className="grid"
+        style={{
+          gridTemplateColumns: `56px repeat(${TOTAL_DAYS}, minmax(40px, 1fr))`,
+        }}
+      >
+        {/* ---------- Header ---------- */}
+        <div />
+        {days.map((d) => (
+          <div
+            key={d.iso}
+            className="text-center py-1 border-b text-[11px]"
+          >
+            <div className="font-semibold leading-tight">
+              {d.weekday}
+            </div>
+            <div className="text-[10px] text-gray-400">
+              {d.label}
+            </div>
+          </div>
+        ))}
 
-      <div className="grid grid-cols-1 md:grid-cols-7 gap-3">
-        {days.map((dateObj) => {
-          const iso = formatDateISO(dateObj);
-          const weekday = weekdayNames[dateObj.getDay()];
-          const isPast = dateObj < new Date(new Date().setHours(0, 0, 0, 0));
-          const slots = availabilityMap[weekday] || [];
+        {/* ---------- Hour rows ---------- */}
+        {HOURS.map((hour) => {
+          const h = String(hour).padStart(2, "0");
 
           return (
-            <div
-              key={iso}
-              className={`p-3 rounded-lg border ${
-                selectedDate === iso ? "border-primary-color-P4 shadow" : "border-gray-200"
-              }`}
-            >
-              <div
-                className={`text-center font-semibold ${
-                  isPast ? "text-gray-400" : "text-primary-color-P1"
-                }`}
-              >
-                {weekday}
+            <React.Fragment key={hour}>
+              {/* Hour label */}
+              <div className="text-[10px] text-gray-400 px-1 py-1 border-r">
+                {h}:00
               </div>
 
-              <div className="text-center text-xs text-gray-500 mb-2">
-                {dateObj.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                })}
-              </div>
+              {days.map((d) => {
+                const topTime = `${h}:00`;
+                const bottomTime = `${h}:30`;
 
-              {/* No slots */}
-              {slots.length === 0 && (
-                <div className="text-xs text-gray-400 text-center py-2">
-                  No slots
-                </div>
-              )}
+                const topAvailable =
+                  availabilityMap[d.iso]?.has(topTime);
+                const bottomAvailable =
+                  availabilityMap[d.iso]?.has(bottomTime);
 
-              {/* Slots */}
-              <div className="flex flex-wrap gap-2 justify-center">
-                {slots.map((timeStr) => {
-                  const isSelected =
-                    selectedDate === iso && selectedTime === timeStr;
+                const topSelected =
+                  selectedDate === d.iso &&
+                  selectedTime === topTime;
 
-                  return (
+                const bottomSelected =
+                  selectedDate === d.iso &&
+                  selectedTime === bottomTime;
+
+                return (
+                  <div
+                    key={`${d.iso}-${hour}`}
+                    className="h-7 mx-[2px] my-[2px] rounded overflow-hidden border flex flex-col"
+                  >
+                    {/* :00–:30 */}
                     <button
-                      key={timeStr}
-                      disabled={isPast}
-                      onClick={() => onSelect(iso, timeStr)}
-                      className={`px-2 py-1 text-xs rounded-md border transition ${
-                        isPast
-                          ? "border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
-                          : isSelected
-                          ? "bg-primary-color-P4 text-white border-primary-color-P4"
-                          : "bg-white border-gray-200 hover:bg-gray-50"
-                      }`}
-                    >
-                      {timeStr}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+                      disabled={!topAvailable}
+                      onClick={() => onSelect(d.iso, topTime)}
+                      className={`
+                        flex-1 transition
+                        ${
+                          !topAvailable
+                            ? "bg-gray-100 cursor-not-allowed"
+                            : topSelected
+                            ? "bg-yellow-400"
+                            : "bg-yellow-200 hover:bg-yellow-300"
+                        }
+                      `}
+                    />
+
+                    {/* :30–:00 */}
+                    <button
+                      disabled={!bottomAvailable}
+                      onClick={() => onSelect(d.iso, bottomTime)}
+                      className={`
+                        flex-1 border-t transition
+                        ${
+                          !bottomAvailable
+                            ? "bg-gray-100 cursor-not-allowed"
+                            : bottomSelected
+                            ? "bg-yellow-400"
+                            : "bg-yellow-200 hover:bg-yellow-300"
+                        }
+                      `}
+                    />
+                  </div>
+                );
+              })}
+            </React.Fragment>
           );
         })}
       </div>
