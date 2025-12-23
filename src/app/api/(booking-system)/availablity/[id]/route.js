@@ -124,12 +124,15 @@ export const GET = async (req, context) => {
 
     /* Future bookings */
     const nowUTC = dayjs().utc().toISOString();
-    const { data: bookings } = await supabaseClient
+    const { data: bookings, error: bookinsError } = await supabaseClient
       .from("bookings")
-      .select("start_time")
+      .select("start_time, end_time")
       .eq("teacher_id", teacherId)
       .eq("status", "booked")
       .gte("start_time", nowUTC);
+
+
+      console.log("booking data", bookinsError, bookings)
 
     const bookedSet = new Set(
       (bookings || []).map(b =>

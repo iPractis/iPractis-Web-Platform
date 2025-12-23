@@ -126,7 +126,6 @@ export default function LessonBookingCard({teacherId}) {
       alert("Please log in to continue");
       return;
     }
-
     try {
       setBookingStatus("processing");
 
@@ -135,7 +134,7 @@ export default function LessonBookingCard({teacherId}) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           teacherId: TEACHER_ID,
-          studentId: user.userId,
+          studentId: user.user_id,
           date: selectedDate,
           time: `${selectedTime}:00`,
           duration: Number(selectedDuration),
@@ -149,6 +148,7 @@ export default function LessonBookingCard({teacherId}) {
       setClientSecret(data.clientSecret);
       setBookingStatus("idle");
     } catch (err) {
+      console.log(err)
       alert(err.message);
       setBookingStatus("error");
     }
@@ -202,7 +202,7 @@ export default function LessonBookingCard({teacherId}) {
               </p>
               <div className="flex items-center gap-1">
                 <span className="text-sm font-semibold">
-                  {formatCurrency(teacher.hourly_price)}
+                  {formatCurrency(teacher.hourly_price * (selectedDuration/30))}
                 </span>
                 <span className="text-[10px] bg-yellow-100 px-1.5 py-0.5 rounded-md">
                   {selectedDuration || 30} mins
