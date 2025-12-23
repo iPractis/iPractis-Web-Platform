@@ -6,16 +6,13 @@ import AboutYourselfMasteredLanguages from "./AboutYourselfMasteredLanguages";
 import ProfileDisplaySettings from "./ProfileDisplaySettings";
 import SaveAndContinueBox from "./SaveAndContinueBox";
 
-// External imports
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-
-// React imports
 import { useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 import { tabProfileSchema } from "@/src/validations/profileSettings";
 
-const TabProfile = ({ activeTab }) => {
+const TabProfile = ({ activeTab, userData, language }) => {
   const {
     formState: { errors },
     handleSubmit,
@@ -27,16 +24,16 @@ const TabProfile = ({ activeTab }) => {
     mode: "onBlur",
     resolver: zodResolver(tabProfileSchema),
     defaultValues: {
-      firstName: "",
-      middleName: "",
-      lastName: "",
-      profile_url: "",
-      introduction: "",
-      languages: [],
-      nationality: "United Kingdom",
-      country: "United Kingdom",
-      birthDate: "",
-      gender: "",
+      firstName: userData.first_name || "",
+      middleName: userData.middle_name || "",
+      lastName: userData.last_name || "",
+      profile_url: userData.profile_image || "",
+      introduction: userData.introduction || "",
+      languages: language || [],
+      nationality: userData.nationality || "",
+      country: userData.country || "",
+      birthDate: userData.birth_date || "2000-01-01",
+      gender: userData.gender || "",
       showProfilePublicly: true,
       showAchievements: true,
     },
@@ -45,43 +42,59 @@ const TabProfile = ({ activeTab }) => {
   const buttonRef = useRef(null);
   const { user } = useAuth();
 
+  /* ----------------------------------------
+     SUBMIT HANDLER
+  ---------------------------------------- */
   const onSubmit = async (data) => {
     try {
       buttonRef.current?.loading();
 
-      // Payload for profile settings update
+      // 🔐 Build SAFE payload (no userId from client)
       const payload = {
-        userId: user?.userId,
-        firstName: data.firstName,
-        middleName: data.middleName,
-        lastName: data.lastName,
-        profile_url: data.profile_url,
-        introduction: data.introduction,
-        languages: data.languages,
-        nationality: data.nationality,
-        country: data.country,
-        birthDate: data.birthDate,
-        gender: data.gender,
-        showProfilePublicly: data.showProfilePublicly,
-        showAchievements: data.showAchievements,
+        user: {
+          first_name: data.firstName,
+          middle_name: data.middleName,
+          last_name: data.lastName,
+          profile_image: data.profile_url,
+          nationality: data.nationality,
+          country: data.country,
+          birth_date: data.birthDate,
+          gender: data.gender,
+        },
       };
 
-      console.log("PROFILE SETTINGS PAYLOAD:", payload);
+      // Add teacher fields only if teacher
+      if (user?.role === "teacher") {
+        payload.teacher = {
+          introduction: data.introduction,
+        };
+      }
 
-      // TODO: Implement actual API call for profile settings
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const res = await fetch("/api/auth/me", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Profile update failed");
+      }
 
       buttonRef.current?.notIsLoading();
     } catch (err) {
       console.error("Save error:", err);
-      setError("general", { message: err.message });
+      setError("root", { message: err.message });
       buttonRef.current?.notIsLoading();
     }
   };
 
   return (
     <form
-      className={`${activeTab !== 2 && "hidden"} space-y-[64px]`}
+      className={`${activeTab !== 2 ? "hidden" : ""} space-y-[64px]`}
       onSubmit={handleSubmit(onSubmit)}
     >
       {/* Profile Picture */}
@@ -92,15 +105,22 @@ const TabProfile = ({ activeTab }) => {
       />
 
       {/* Personal Information */}
-      <PersonalInfo control={control} errors={errors} watch={watch} />
+      <PersonalInfo
+        control={control}
+        errors={errors}
+        watch={watch}
+      />
 
-      {/* Language Proficiency Level */}
-      <AboutYourselfMasteredLanguages errors={errors} control={control} />
+      {/* Language Proficiency */}
+      <AboutYourselfMasteredLanguages
+        errors={errors}
+        control={control}
+      />
 
       {/* Profile Display Settings */}
       <ProfileDisplaySettings control={control} />
 
-      {/* Save Section */}
+      {/* Save */}
       <SaveAndContinueBox buttonRef={buttonRef} />
     </form>
   );
