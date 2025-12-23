@@ -3,10 +3,13 @@ import { supabaseServer } from "../../../../lib/supabaseClient";
 import nodemailer from "nodemailer";
 
 export async function POST(req) {
+  console.log("api hit")
   try {
-    const { email } = await req.json();
+    let { email } = await req.json();
 
-    // check if user exists
+    email= email.trim().toLowerCase();
+    // check if user 
+    // exists
     const { data: user, error: fetchError } = await supabaseServer
       .from("users")
       .select("user_id, email")
@@ -14,6 +17,7 @@ export async function POST(req) {
       .single();
 
     if (fetchError || !user) {
+      console.log(fetchError)
       return new Response(JSON.stringify({ message: "User not found" }), { status: 404 });
     }
 
@@ -29,14 +33,17 @@ export async function POST(req) {
 
     if (updateError) throw updateError;
 
+
+    console.log(process.env.EMAIL_USER, process.env.EMAIL_PASS)
     // send OTP via email
     const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+          service: "gmail",
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS,
+          },
+        });
+    
 
     await transporter.sendMail({
       from: `"MyApp" <${process.env.EMAIL_USER}>`,

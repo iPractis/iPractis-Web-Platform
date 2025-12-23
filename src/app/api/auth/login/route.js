@@ -5,7 +5,6 @@ import { supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
   const requestId = crypto.randomUUID();
-
   try {
     console.log("🔐 LOGIN START", {
       requestId,
