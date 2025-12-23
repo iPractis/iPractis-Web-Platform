@@ -1,5 +1,4 @@
 import nodemailer from "nodemailer";
-import { supabaseServer } from "../supabaseServer";
 import { supabaseClient } from "../supabaseClient";
 
 export async function sendEmail({

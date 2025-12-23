@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { supabaseServer } from "@/src/lib/supabaseClient";
 
 export async function POST(req) {
+  console.log("API HIT")
   try {
     const { email, password } = await req.json();
 
