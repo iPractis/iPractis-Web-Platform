@@ -1,12 +1,20 @@
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
 import { getValidGoogleAccessToken } from "@/src/lib/googleCalendarAuth";
+import { supabaseServer } from "@/src/lib/supabaseClient";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export async function GET() {
   try {
     /* ─────────────────────────────────────────────
-       1️⃣ Authenticate via JWT cookie
+       1️⃣ Authenticate user
     ───────────────────────────────────────────── */
     const cookieStore = await cookies();
     const token = cookieStore.get("auth-token")?.value;
@@ -27,83 +35,159 @@ export async function GET() {
       );
     }
 
+    const userId = decoded.userId;
+
     /* ─────────────────────────────────────────────
-       2️⃣ Get valid Google access token
+       2️⃣ Determine time window (next 7 days)
     ───────────────────────────────────────────── */
-    const accessToken = await getValidGoogleAccessToken(decoded.userId);
+    const now = dayjs().utc();
+    const oneWeekLater = now.add(7, "day");
 
     /* ─────────────────────────────────────────────
        3️⃣ Fetch Google Calendar events
     ───────────────────────────────────────────── */
-    const now = new Date();
-    const oneWeekLater = new Date(now);
-    oneWeekLater.setDate(now.getDate() + 7);
+    let googleEvents = [];
 
-    const url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${now.toISOString()}&timeMax=${oneWeekLater.toISOString()}&singleEvents=true&orderBy=startTime`;
+    try {
+      const accessToken = await getValidGoogleAccessToken(userId);
 
-    const res = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      const url =
+        `https://www.googleapis.com/calendar/v3/calendars/primary/events` +
+        `?timeMin=${now.toISOString()}` +
+        `&timeMax=${oneWeekLater.toISOString()}` +
+        `&singleEvents=true&orderBy=startTime`;
 
-    const data = await res.json();
+      const res = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    if (!res.ok) {
-      console.error("[GoogleCalendar][Events] Google API error", data);
-      return NextResponse.json(
-        { error: "Failed to fetch events", details: data },
-        { status: 400 }
+      const data = await res.json();
+
+      if (res.ok) {
+        googleEvents = (data.items || [])
+          .filter(
+            (e) => e.start?.dateTime && e.end?.dateTime
+          )
+          .map((event) => {
+            const start = dayjs(event.start.dateTime);
+            const end = dayjs(event.end.dateTime);
+
+            return {
+              source: "google",
+              title: event.summary || "(No title)",
+              startDate: start.toDate(),
+              endDate: end.toDate(),
+              start: start.format("HH:mm"),
+              end: end.format("HH:mm"),
+            };
+          });
+      } else {
+        console.error(
+          "[GoogleCalendar][Events] API error",
+          data
+        );
+      }
+    } catch (err) {
+      console.error(
+        "[GoogleCalendar][Events] Fetch failed",
+        err
       );
     }
 
     /* ─────────────────────────────────────────────
-       4️⃣ Transform response
+       4️⃣ Fetch platform bookings
     ───────────────────────────────────────────── */
+    const { data: teacher } = await supabaseServer
+      .from("teachers")
+      .select("teacher_id")
+      .eq("user_id", userId)
+      .single();
+
+    const teacherId = teacher?.teacher_id;
+
+    const bookingQuery = supabaseServer
+      .from("bookings")
+      .select("start_time, end_time, status")
+      .gte("end_time", now.toISOString());
+
+    if (teacherId) {
+      bookingQuery.or(
+        `student_id.eq.${userId},teacher_id.eq.${teacherId}`
+      );
+    } else {
+      bookingQuery.eq("student_id", userId);
+    }
+
+    const { data: bookings, error: bookingError } =
+      await bookingQuery;
+
+    if (bookingError) {
+      console.error("[Bookings] Fetch error", bookingError);
+    }
+
+    const bookingEvents = (bookings || []).map((b) => {
+      const start = dayjs.utc(b.start_time).local();
+      const end = dayjs.utc(b.end_time).local();
+
+      return {
+        source: "booking",
+        title: "Booked Lesson",
+        startDate: start.toDate(),
+        endDate: end.toDate(),
+        start: start.format("HH:mm"),
+        end: end.format("HH:mm"),
+      };
+    });
+
+    /* ─────────────────────────────────────────────
+       5️⃣ Merge & group events by date
+    ───────────────────────────────────────────── */
+    const allEvents = [...googleEvents, ...bookingEvents];
     const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
     const weekSchedule = {};
 
-    for (const event of data.items || []) {
-      if (!event.start?.dateTime || !event.end?.dateTime) continue;
-
-      const start = new Date(event.start.dateTime);
-      const end = new Date(event.end.dateTime);
-
-      const dateKey = start.toISOString().split("T")[0];
-      const dayKey = days[start.getDay()];
+    for (const event of allEvents) {
+      const dateKey = dayjs(event.startDate)
+        .format("YYYY-MM-DD");
+      const dayKey =
+        days[dayjs(event.startDate).day()];
 
       if (!weekSchedule[dateKey]) {
-        weekSchedule[dateKey] = { day: dayKey, date: dateKey, events: [] };
+        weekSchedule[dateKey] = {
+          day: dayKey,
+          date: dateKey,
+          events: [],
+        };
       }
 
       weekSchedule[dateKey].events.push({
-        title: event.summary || "(No title)",
-        start: start.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-        end: end.toLocaleTimeString("en-GB", {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        source: event.source,
       });
     }
 
-    const schedule = Object.entries(weekSchedule)
-      .map(([_, value]) => ({
-        ...value,
-        events: value.events.sort((a, b) =>
+    /* ─────────────────────────────────────────────
+       6️⃣ Sort & return
+    ───────────────────────────────────────────── */
+    const schedule = Object.values(weekSchedule)
+      .map((day) => ({
+        ...day,
+        events: day.events.sort((a, b) =>
           a.start > b.start ? 1 : -1
         ),
       }))
       .sort(
         (a, b) =>
-          new Date(a.date).getTime() - new Date(b.date).getTime()
+          new Date(a.date) - new Date(b.date)
       );
 
     return NextResponse.json({ schedule });
   } catch (err) {
-    console.error("[GoogleCalendar][Events] Error", err);
+    console.error("[Calendar][Unified] Error", err);
     return NextResponse.json(
       { error: "Unauthorized or server error" },
       { status: 401 }

@@ -14,7 +14,6 @@ dayjs.extend(timezone);
 const DURATIONS = {
   30: 30,
   60: 60,
-  90: 90,
   120: 120,
 };
 
@@ -166,7 +165,13 @@ export const GET = async (req, context) => {
     const availabilityByDate = {};
 
     for (const utcTs of availableSet) {
+      const nowViewer = dayjs().tz(viewerTz);
       const viewerTs = dayjs.utc(utcTs).tz(viewerTz);
+
+  // ❌ Skip past slots
+  if (viewerTs.isBefore(nowViewer)) {
+    continue;
+  }
       const date = viewerTs.format("YYYY-MM-DD");
       const time = viewerTs.format("HH:mm");
 
