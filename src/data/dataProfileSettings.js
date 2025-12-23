@@ -17,9 +17,5 @@ export const tabsButtons = [
   {
     textButton: "Profile",
     Icon: UserCardIcon,
-  },
-  {
-    textButton: "Background",
-    Icon: LuggageIcon,
-  },
+  }
 ];

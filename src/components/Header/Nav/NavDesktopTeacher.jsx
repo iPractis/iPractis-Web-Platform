@@ -92,26 +92,6 @@ const NavDesktopTeacher = ({ userName, userId }) => {
       {/* ------------------------------ */}
       <div className="flex items-center gap-4">
         <NavSearchBar />
-
-        {/* ------------------------------ */}
-        {/* Wallet */}
-        {/* ------------------------------ */}
-        <div className="flex items-center gap-3 rounded-2xl h-[38px] p-1.5 text-primary-color-P1 bg-primary-color-P12">
-          <div className="rounded-[10px] bg-primary-color-P1">
-            <WalletBgIcon fillcolor={"fill-primary-color-P1"} />
-          </div>
-
-          <p className="ST-SB-4">0</p>
-          <p className="ST-3">USD</p>
-
-          <button className="rounded-[10px] bg-primary-color-P1">
-            <AddBGIcon strokeColor={"fill-primary-color-P12"} />
-          </button>
-        </div>
-
-        {/* ------------------------------ */}
-        {/* Icons */}
-        {/* ------------------------------ */}
         <div className="flex items-center relative">
           {/* 🔔 Notifications */}
           <div className="flex px-4 py-2 relative">

@@ -1,4 +1,5 @@
-const TabPersonal = ({ activeTab }) => {
+const TabPersonal = ({ activeTab , userData }) => {
+  console.log("tabpersonal", userData)
   return (
     <div className={`${activeTab !== 0 && "hidden"}`}>
       {/* Personal tab content - placeholder */}
