@@ -14,7 +14,6 @@ dayjs.extend(timezone);
 const DURATIONS = {
   30: 30,
   60: 60,
-  90: 90,
   120: 120,
 };
 
@@ -124,12 +123,15 @@ export const GET = async (req, context) => {
 
     /* Future bookings */
     const nowUTC = dayjs().utc().toISOString();
-    const { data: bookings } = await supabaseClient
+    const { data: bookings, error: bookinsError } = await supabaseClient
       .from("bookings")
-      .select("start_time")
+      .select("start_time, end_time")
       .eq("teacher_id", teacherId)
       .eq("status", "booked")
       .gte("start_time", nowUTC);
+
+
+      console.log("booking data", bookinsError, bookings)
 
     const bookedSet = new Set(
       (bookings || []).map(b =>
@@ -163,7 +165,13 @@ export const GET = async (req, context) => {
     const availabilityByDate = {};
 
     for (const utcTs of availableSet) {
+      const nowViewer = dayjs().tz(viewerTz);
       const viewerTs = dayjs.utc(utcTs).tz(viewerTz);
+
+  // ❌ Skip past slots
+  if (viewerTs.isBefore(nowViewer)) {
+    continue;
+  }
       const date = viewerTs.format("YYYY-MM-DD");
       const time = viewerTs.format("HH:mm");
 

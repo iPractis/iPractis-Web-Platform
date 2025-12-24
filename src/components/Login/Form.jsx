@@ -56,7 +56,10 @@ const onSubmit = async (data) => {
 
     const result = await response.json();
 
+    console.log("result", result)
+
     if (!response.ok) {
+      console.log("api")
       // API returned error
       return setBackEndErrors({
         field: result?.field || "email",

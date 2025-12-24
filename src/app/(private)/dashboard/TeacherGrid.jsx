@@ -110,9 +110,9 @@ const DiscoverCard = () => (
         based on your subject, goals, and budget.
       </p>
     </div>
-    <button className="mt-6 bg-blue-600 text-white py-3 px-5 rounded-full font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2">
+    <Link className="mt-6 text-center bg-blue-600 text-white py-3 px-5 rounded-full font-medium hover:bg-blue-700 transition flex items-center justify-center gap-2" href="/dashboard/tutors">
       See more teachers
-    </button>
+    </Link>
   </div>
 );
 
@@ -125,7 +125,7 @@ const TeacherGrid = ({ teachers = [], selectedSubject }) => {
     : teachers;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 m-4 max-w-5xl mx-auto bg-gray-100 rounded-2xl">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 m-4 max-w-5xl justify-between mx-auto bg-gray-100 rounded-2xl">
       {filteredTeachers.slice(0, 5).map((t) => (
         <TeacherCard key={t.teacherId} teacher={t} />
       ))}

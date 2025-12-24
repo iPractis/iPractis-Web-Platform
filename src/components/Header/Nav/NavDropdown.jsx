@@ -150,7 +150,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           </DropdownItem>
 
           {/* Classroom */}
-          <DropdownItem className="p-0 mb-1.5" key="classroom">
+          {/* <DropdownItem className="p-0 mb-1.5" key="classroom">
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
               href={"#"}
@@ -166,13 +166,13 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
               <h3 className="ST-3">Classroom</h3>
             </Link>
-          </DropdownItem>
+          </DropdownItem> */}
 
           {/* Find tutor */}
           <DropdownItem className="p-0 mb-1.5" key="findATutor">
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
-              href={"#"}
+              href={"/dashboard/tutor"}
             >
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
@@ -185,10 +185,10 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           </DropdownItem>
 
           {/* Profile */}
-          <DropdownItem className="p-0 mb-1.5" key="profile">
+          {/* <DropdownItem className="p-0 mb-1.5" key="profile">
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
-              href={"#"}
+              href={"/pro"}
             >
               <InputBGWrapperIcon
                 className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
@@ -198,7 +198,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
               <h3 className="ST-3">Profile</h3>
             </Link>
-          </DropdownItem>
+          </DropdownItem> */}
 
           {/* Profile Settings */}
           <DropdownItem className="p-0 mb-1.5" key="profileSettings">
@@ -232,21 +232,6 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
             </Link>
           </DropdownItem>
 
-          {/* Favorite teachers */}
-          <DropdownItem className="p-0 mb-1.5" key="favoriteTeachers">
-            <Link
-              className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
-              href={"#"}
-            >
-              <InputBGWrapperIcon
-                className={"size-6 p-0 rounded-lg bg-primary-color-P10"}
-              >
-                <HeartSmallIcon fillcolor={"fill-primary-color-P1"} />
-              </InputBGWrapperIcon>
-
-              <h3 className="ST-3">Favorite teachers</h3>
-            </Link>
-          </DropdownItem>
 
           {/* Become a teacher */}
           <DropdownItem
@@ -268,7 +253,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           </DropdownItem>
 
           {/* Assistance */}
-          <DropdownItem className="p-0 mb-1.5" key="assistance">
+          {/* <DropdownItem className="p-0 mb-1.5" key="assistance">
             <Link
               className="btn btn-nonary rounded-xl flex items-center gap-4 p-1 w-full"
               href={"#"}
@@ -281,7 +266,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
               <h3 className="ST-3">Assistance</h3>
             </Link>
-          </DropdownItem>
+          </DropdownItem> */}
 
           {/* Logout */}
           <DropdownItem className="p-0 disable-hover" key="logOut">

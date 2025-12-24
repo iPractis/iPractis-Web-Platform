@@ -4,7 +4,7 @@ import TabsDisplayedInfo from "./TabsDisplayedInfo";
 import TabsButtons from "./TabsButtons";
 import { useState } from "react";
 
-export const TabBody = () => {
+export const TabBody = ({userData }) => {
   const [activeTab, setActiveTab] = useState(2); // Default to Profile tab
 
   return (
@@ -13,7 +13,7 @@ export const TabBody = () => {
       <TabsButtons setActiveTab={setActiveTab} activeTab={activeTab} />
 
       {/* Tabs displayed info (bottom) */}
-      <TabsDisplayedInfo activeTab={activeTab} />
+      <TabsDisplayedInfo activeTab={activeTab} userData={userData}/>
     </section>
   );
 };
