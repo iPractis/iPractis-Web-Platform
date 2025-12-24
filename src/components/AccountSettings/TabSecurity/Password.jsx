@@ -1,46 +1,48 @@
-import SectionHeader from "../../Shared/SectionHeader";
-import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
-
-// React imports
 import Link from "next/link";
+import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
+import InputLeftStickStatus from "../../Shared/InputLeftStickStatus";
 
-// Icons
-import {
-  ChevronRightIcon,
-  PadLockClosedBigIcon,
-  ThreeAstheristiksIcon,
-} from "../../Icons";
+// --- Local Icon Definitions ---
+
+const ChevronRightIcon = ({ fillcolor = "fill-primary-color-P1" }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={fillcolor.replace('fill-', 'text-')} />
+  </svg>
+);
+
+const ThreeAsterisksIcon = ({ fillcolor = "fill-primary-color-P1" }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 12H18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={fillcolor.replace('fill-', 'text-')} strokeDasharray="0 4" />
+    <circle cx="8" cy="12" r="2" className={fillcolor} />
+    <circle cx="12" cy="12" r="2" className={fillcolor} />
+    <circle cx="16" cy="12" r="2" className={fillcolor} />
+  </svg>
+);
+
+// -----------------------------------------------------------
 
 const Password = () => {
   return (
-    <div>
-      <SectionHeader
-        titleIcon={
-          <PadLockClosedBigIcon
-            versionIcon={2}
-            fillcolor={"fill-primary-color-P1"}
-          />
-        }
-        titleText={"Multi-Steps authentication"}
-        descriptionText={
-          "Enable multi-step authentication to add layer of security."
-        }
-      />
-
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:px-8">
+    <div className="w-full mt-4 pt-4 border-t border-secondary-color-S11/50">
+      <InputLeftStickStatus inputBarStatusClassName="bg-primary-color-P1">
         <Link
-          className="btn btn-secondary flex items-center justify-between w-full p-1.5 rounded-2xl"
-          href={"#"}
+          href="/password-recovery" 
+          className="group w-full bg-secondary-color-S11 hover:bg-secondary-color-S9 transition-colors rounded-2xl p-1.5 flex items-center justify-between"
         >
-          <InputBGWrapperIcon>
-            <ThreeAstheristiksIcon fillcolor={"fill-tertiary-color-SC5"} />
-          </InputBGWrapperIcon>
-          Update password
-          <InputBGWrapperIcon>
-            <ChevronRightIcon fillcolor={"fill-tertiary-color-SC5"} />
-          </InputBGWrapperIcon>
+          <div className="flex items-center gap-2">
+            <InputBGWrapperIcon>
+              <ThreeAsterisksIcon fillcolor={"fill-primary-color-P1"} />
+            </InputBGWrapperIcon>
+            <span className="text-primary-color-P1 text-sm font-medium pl-1">
+              Update password
+            </span>
+          </div>
+          
+          <div className="pr-1">
+            <ChevronRightIcon fillcolor={"fill-primary-color-P1"} />
+          </div>
         </Link>
-      </div>
+      </InputLeftStickStatus>
     </div>
   );
 };

@@ -1,7 +1,9 @@
+//
 import MultiStepVerification from "./MultiStepVerification";
 import ConnectYourAccount from "./ConnectYourAccount";
 import LogInID from "./LogInID";
 import Devices from "./Devices";
+import Password from "./Password";
 import SectionWrapper from "../../Shared/SectionWrapper";
 import SectionHeader from "../../Shared/SectionHeader";
 import SectionContent from "../../Shared/SectionContent";
@@ -19,7 +21,12 @@ import {
 } from "../../Icons";
 
 const TabSecurity = ({ activeTab }) => {
-  const { user } = useAuth();
+  const { user, refreshAuth, optimisticallyUpdateUserEmail } = useAuth();
+
+  const handleEmailUpdate = (newEmail) => {
+    optimisticallyUpdateUserEmail(newEmail);
+    refreshAuth();
+  };
 
   const {
     formState: { errors },
@@ -33,7 +40,11 @@ const TabSecurity = ({ activeTab }) => {
   });
 
   return (
-    <form className={`${activeTab !== 2 && "hidden"} space-y-[64px]`}>
+    // ✅ FIX: Added onSubmit prevention to stop page refreshes
+    <form 
+      className={`${activeTab !== 2 && "hidden"} space-y-[64px]`}
+      onSubmit={(e) => e.preventDefault()}
+    >
       <SectionWrapper>
         <SectionHeader
           titleIcon={<LoginIcon fillcolor="fill-primary-color-P1" />}
@@ -42,11 +53,14 @@ const TabSecurity = ({ activeTab }) => {
           titleClassName="MT-SB-1"
         />
         <SectionContent>
-          <LogInID userEmail={user?.email} errors={errors} />
+          <LogInID
+            userEmail={user?.email}
+            errors={errors}
+            onEmailUpdate={handleEmailUpdate}
+          />
+          <Password />
         </SectionContent>
       </SectionWrapper>
-
-      {/* <Password /> */}
 
       <SectionWrapper>
         <SectionHeader
