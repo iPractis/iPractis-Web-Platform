@@ -31,9 +31,10 @@ import {
 import Link from "next/link";
 
 const NavDropdown = ({ isDropdownHidden, userName }) => {
-  const { logout } = useAuth();
+  const { logout , user } = useAuth();
+  console.log("User in NavDropdown:", user);
   const firstName = userName.split(" ")[0];
-
+  console.log("First name extracted:", user.profile_image);
   return (
     <Dropdown
       classNames={{
@@ -44,10 +45,12 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
       <DropdownTrigger>
         <button className="flex items-center gap-1 p-1.5 rounded-2xl bg-primary-color-P12">
           <Image
-            className="w-[26px] rounded-[10px]"
+            className="h-7 w-7 rounded-[10px]"
             alt="Tutor Profile Image"
-            src={tutor}
+            src={user.profile_image || tutor}
             priority
+            height={40}
+            width={40}
           />
 
           <Image
@@ -78,8 +81,10 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                 <div>
                   <Image
                     alt={"Tutor Image"}
+                    width={40}
+                    height={40}
                     className="size-9 object-cover rounded-[10px]"
-                    src={tutorImagePreview}
+                    src={user?.profile_image || tutorImagePreview}
                   />
                 </div>
 

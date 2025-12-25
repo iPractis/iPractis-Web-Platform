@@ -10,7 +10,7 @@ function HeaderCard({ title, subtitle, image, invertImage }) {
           width={50}
           height={50}
           alt="card-icon"
-          className={`shadow-md rounded-xl object-cover filter ${invertImage ? 'invert' : ''}`}
+          className={`shadow-md rounded-xl object-cover filter h-16 w-16 ${invertImage ? 'invert' : ''}`}
         />
       )}
       <div>

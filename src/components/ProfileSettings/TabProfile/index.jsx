@@ -29,12 +29,13 @@ const TabProfile = ({ activeTab, userData, language }) => {
       lastName: userData.last_name || "",
       profile_url: userData.profile_image || "",
       introduction: userData.introduction || "",
-      languages: language || [],
+      language: userData.language || [],
       nationality: userData.nationality || "",
       country: userData.country || "",
       birthDate: userData.birth_date || "2000-01-01",
       gender: userData.gender || "",
       showProfilePublicly: true,
+      introduction : userData.introduction || "",
       showAchievements: true,
     },
   });
@@ -58,8 +59,10 @@ const TabProfile = ({ activeTab, userData, language }) => {
           profile_image: data.profile_url,
           nationality: data.nationality,
           country: data.country,
+          language : data.languages,
           birth_date: data.birthDate,
           gender: data.gender,
+          introduction: data.introduction,
         },
       };
 
@@ -69,6 +72,7 @@ const TabProfile = ({ activeTab, userData, language }) => {
           introduction: data.introduction,
         };
       }
+      console.log("Payload to submit:", payload);
 
       const res = await fetch("/api/auth/me", {
         method: "PUT",

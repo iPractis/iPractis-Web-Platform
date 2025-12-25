@@ -14,8 +14,8 @@ function ProfileBrief() {
             <div className=" w-fit mx-auto">
 
                     <HeaderCard
-                        image="/images/tutor-image-preview.png"
-                        title={`Welcome back, ${user?.firstName || "User"}!`}
+                        image={user.profile_image || "/images/tutor-image-preview.png"}
+                        title={`Welcome back, ${user?.first_name || "User"}!`}
                         subtitle="Find any feature or setting quickly."
                     />
                     {/* Section Header */}

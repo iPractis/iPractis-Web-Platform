@@ -27,14 +27,14 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
   // Use useFieldArray for proper form array management
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: "languages",
+    name: "language",
   });
 
   // Get the languages field for validation and error display
   const {
     fieldState: { error: languagesError },
   } = useController({
-    name: "languages",
+    name: "language",
     control: control,
   });
 
@@ -74,7 +74,7 @@ const AboutYourselfMasteredLanguages = ({ errors, control }) => {
               inputBarStatusClassName={getInputStatusBorder(
                 errors,
                 allSelectorsValid ? "valid" : null,
-                "languages",
+                "language",
               )}
             >
               <div className="flex items-center bg-primary-color-P1 rounded-[16px] p-[6px] justify-between">
