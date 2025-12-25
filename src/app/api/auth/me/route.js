@@ -13,6 +13,7 @@ const USER_ALLOWED_FIELDS = [
   "language",
   "profile_image",
   "birth_date",
+  "introduction",
   "gender",
 ];
 
@@ -142,7 +143,7 @@ export async function GET() {
           middle_name,
           last_name,
           birth_date,
-          description,
+          introduction,
           role,
           profile_image,
           country,
@@ -166,7 +167,7 @@ export async function GET() {
     /* --------------------------------------------------
        3️⃣ Fetch teacher profile (if exists)
     -------------------------------------------------- */
-    const { data: teacher } = await supabaseServer
+    const { data: teacher , error : teacherError } = await supabaseServer
       .from("teachers")
       .select(`
         teacher_id,
@@ -187,10 +188,13 @@ export async function GET() {
       .eq("user_id", userId)
       .maybeSingle();
 
+
+      console.log("Teacher fetch error:", teacherError);
+
     /* --------------------------------------------------
        4️⃣ Wallet (always exists logically)
     -------------------------------------------------- */
-    const { data: wallet } = await supabaseServer
+    const { data: wallet , error : walletError } = await supabaseServer
       .from("wallets")
       .select(`
         earned_pending,
@@ -201,10 +205,11 @@ export async function GET() {
       .eq("user_id", userId)
       .maybeSingle();
 
+    console.log("Wallet fetch error:", walletError);
     /* --------------------------------------------------
        5️⃣ Bookings
     -------------------------------------------------- */
-    const { data: studentBookings } =
+    const { data: studentBookings , error : studentBookingsError } =
       await supabaseServer
         .from("bookings")
         .select(`
@@ -217,6 +222,7 @@ export async function GET() {
           class_price
         `)
         .eq("student_id", userId);
+    console.log("Student bookings fetch error:", studentBookingsError);
 
     let teacherBookings = [];
     if (teacher?.teacher_id) {
@@ -239,7 +245,7 @@ export async function GET() {
     /* --------------------------------------------------
        6️⃣ Payments
     -------------------------------------------------- */
-    const { data: paymentsMade } =
+    const { data: paymentsMade , error : paymentsMadeError } =
       await supabaseServer
         .from("payments")
         .select(`
@@ -252,6 +258,7 @@ export async function GET() {
         `)
         .eq("payer_user_id", userId);
 
+    console.log("Payments made fetch error:", paymentsMadeError);
     let paymentsReceived = [];
     if (teacher?.teacher_id) {
       const res = await supabaseServer

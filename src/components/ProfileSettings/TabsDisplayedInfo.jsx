@@ -13,8 +13,7 @@ const TabsDisplayedInfo = ({ activeTab , userData }) => {
       <TabDashboard activeTab={activeTab} />
 
       {/* 2 - Profile (main content from image) */}
-      <TabProfile activeTab={activeTab}  userData= {userData.user} language = {userData.teacher.teacher_languages}/>
-
+      <TabProfile activeTab={activeTab}  userData= {userData.user} language = {userData?.teacher?.teacher_languages || []}/>
       {/* 3 - Background */}
       {/* <TabBackground activeTab={activeTab} /> */}
     </main>
