@@ -11,23 +11,9 @@ const ConnectYourAccount = () => {
     <div className="space-y-[16px]">
       <div className="grid grid-cols-1 gap-y-[16px]">
         <SocialConnectButton
-          IconComponent={AppleMediumIcon}
-          label={"Join with Apple"}
-          isConnected={false}
-          disabled={false}
-          onClick={() => {}}
-        />
-        <SocialConnectButton
           IconComponent={GoogleMediumIcon}
           label={"Join with Google"}
           isConnected={true}
-          disabled={false}
-          onClick={() => {}}
-        />
-        <SocialConnectButton
-          IconComponent={MicrosoftMediumIcon}
-          label={"Join with Microsoft"}
-          isConnected={false}
           disabled={false}
           onClick={() => {}}
         />

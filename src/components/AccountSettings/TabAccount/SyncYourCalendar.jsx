@@ -5,8 +5,6 @@ import SectionContent from "../../Shared/SectionContent";
 import SocialConnectButton from "../../Shared/SocialConnectButton";
 import {
   GoogleLargeIcon,
-  MicrosoftMediumIcon,
-  AppleMediumIcon,
   CalendarMediumIcon,
 } from "../../Icons";
 
@@ -100,22 +98,6 @@ const SyncYourCalendar = () => {
         {error && (
           <p className="mt-2 text-sm text-red-500">{error}</p>
         )}
-
-        <SocialConnectButton
-          IconComponent={MicrosoftMediumIcon}
-          label="Join with Microsoft"
-          isConnected={false}
-          disabled
-          onClick={() => {}}
-        />
-
-        <SocialConnectButton
-          IconComponent={AppleMediumIcon}
-          label="Join with Apple"
-          isConnected={false}
-          disabled
-          onClick={() => {}}
-        />
       </SectionContent>
     </SectionWrapper>
   );

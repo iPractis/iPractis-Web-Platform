@@ -1,3 +1,4 @@
+//
 "use client";
 import { useState, useEffect, createContext, useContext } from 'react';
 
@@ -53,6 +54,17 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   };
 
+  // ✅ Added this function to fix the error
+  const optimisticallyUpdateUserEmail = (newEmail) => {
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      return {
+        ...prevUser,
+        email: newEmail
+      };
+    });
+  };
+
   useEffect(() => {
     checkAuthStatus();
   }, []);
@@ -63,7 +75,8 @@ export const AuthProvider = ({ children }) => {
       loading, 
       authenticated, 
       logout, 
-      refreshAuth 
+      refreshAuth,
+      optimisticallyUpdateUserEmail // ✅ Exported here
     }}>
       {children}
     </AuthContext.Provider>

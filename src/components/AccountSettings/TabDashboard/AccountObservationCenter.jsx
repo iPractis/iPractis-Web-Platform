@@ -5,7 +5,7 @@ import SectionHeader from "../../Shared/SectionHeader";
 
 // Icons (add yours as needed)
 import {
-  EyeBiggerIcon,
+  EyeIcon,
   DatabaseBigIcon,
   TeacherBigIcon,
   UserBigIcon,
@@ -99,13 +99,13 @@ const AccountObservationCenter = () => {
   };
 
   return (
-    <div>
+    <div className="space-y-8">
       <SectionHeader
-        wrapperSectionHeaderClassName="px-4"
-        titleIcon={<EyeBiggerIcon fillcolor="fill-primary-color-P1" />}
-        titleText="Account’s Observation Center"
+        wrapperSectionHeaderClassName="px-0"
+        titleIcon={<EyeIcon fillcolor="fill-primary-color-P1" />}
+        titleText="Account's Observation Center"
         descriptionText="Monitor recent data and account updates across entities."
-        descriptionClassName="mt-[4px] mb-4"
+        descriptionClassName="mt-[4px]"
         titleClassName="MT-SB-1"
       />
 

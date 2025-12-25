@@ -8,7 +8,7 @@ import TabAvailability from "./TabAvailablity";
 const TabsDisplayedInfo = ({ activeTab }) => {
   console.log("Active Tab in TabsDisplayedInfo:", activeTab);
   return (
-    <main className={`max-w-[1000px] mx-auto`}>
+    <main className={`max-w-[1000px] mx-auto space-y-16`}>
       {/* 0 */}
       <TabDashboard activeTab={activeTab} />
 
