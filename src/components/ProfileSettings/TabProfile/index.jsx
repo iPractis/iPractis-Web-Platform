@@ -35,7 +35,6 @@ const TabProfile = ({ activeTab, userData, language }) => {
       birthDate: userData.birth_date || "2000-01-01",
       gender: userData.gender || "",
       showProfilePublicly: true,
-      introduction : userData.introduction || "",
       showAchievements: true,
     },
   });
@@ -59,7 +58,7 @@ const TabProfile = ({ activeTab, userData, language }) => {
           profile_image: data.profile_url,
           nationality: data.nationality,
           country: data.country,
-          language : data.languages,
+          language : data.language,
           birth_date: data.birthDate,
           gender: data.gender,
           introduction: data.introduction,
