@@ -77,6 +77,7 @@ const ButtonSubmitForm = (
       disabled={isDisabled}
       aria-busy={isLoading}
       type={type}
+      aria-label={"Submit form"}
       {...rest}
     >
         {/* Main content: render children but when loading swap the first child to `loadingText` while keeping other children (e.g. chevron) intact. */}

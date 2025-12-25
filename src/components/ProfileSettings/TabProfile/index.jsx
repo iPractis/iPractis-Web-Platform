@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 import { tabProfileSchema } from "@/src/validations/profileSettings";
+import ButtonSubmitForm from "../../Shared/ButtonSubmitForm";
 
 const TabProfile = ({ activeTab, userData, language }) => {
   const {
@@ -96,36 +97,37 @@ const TabProfile = ({ activeTab, userData, language }) => {
   };
 
   return (
-    <form
-      className={`${activeTab !== 2 ? "hidden" : ""} space-y-[64px]`}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      {/* Profile Picture */}
-      <ProfilePicture
-        errors={errors}
-        control={control}
-        setValue={setValue}
-      />
+      <form
+        className={`${activeTab !== 2 ? "hidden" : ""} space-y-[64px]`}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* Profile Picture */}
+        <ProfilePicture
+          errors={errors}
+          control={control}
+          setValue={setValue}
+        />
 
-      {/* Personal Information */}
-      <PersonalInfo
-        control={control}
-        errors={errors}
-        watch={watch}
-      />
+        {/* Personal Information */}
+        <PersonalInfo
+          control={control}
+          errors={errors}
+          watch={watch}
+        />
 
-      {/* Language Proficiency */}
-      <AboutYourselfMasteredLanguages
-        errors={errors}
-        control={control}
-      />
+        {/* Language Proficiency */}
+        <AboutYourselfMasteredLanguages
+          errors={errors}
+          control={control}
+        />
 
-      {/* Profile Display Settings */}
-      <ProfileDisplaySettings control={control} />
+        {/* Profile Display Settings */}
+        <ProfileDisplaySettings control={control} />
 
-      {/* Save */}
-      <SaveAndContinueBox buttonRef={buttonRef} />
-    </form>
+        {/* Save */}
+        <SaveAndContinueBox buttonRef={buttonRef} />
+        
+      </form>
   );
 };
 
