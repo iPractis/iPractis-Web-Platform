@@ -239,7 +239,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
 
           {/* Become a teacher */}
-          {!teacher.form_accepted && <DropdownItem
+          { teacher && !teacher?.form_accepted && <DropdownItem
             className="p-0 py-4 my-4 border-y border-primary-color-P3 rounded-none"
             key="becomeATeacher"
           >
