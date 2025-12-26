@@ -177,6 +177,7 @@ export async function GET() {
         subject_intro,
         hourly_price,
         profile_image,
+        form_accepted,
         video_link,
         form_accepted,
         timezone,

@@ -31,9 +31,9 @@ import {
 import Link from "next/link";
 
 const NavDropdown = ({ isDropdownHidden, userName }) => {
-  const { logout , user } = useAuth();
-  console.log("User in NavDropdown:", user);
+  const { logout , user , teacher } = useAuth();
   const firstName = userName.split(" ")[0];
+  console.log("User data in NavDropdown:", user);
   console.log("First name extracted:", user.profile_image);
   return (
     <Dropdown
@@ -47,7 +47,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
           <Image
             className="h-7 w-7 rounded-[10px]"
             alt="Tutor Profile Image"
-            src={user.profile_image || tutor}
+            src={ teacher?.profile_image || user?.profile_image || tutor}
             priority
             height={40}
             width={40}
@@ -84,13 +84,13 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
                     width={40}
                     height={40}
                     className="size-9 object-cover rounded-[10px]"
-                    src={user?.profile_image || tutorImagePreview}
+                    src={ teacher?.profile_image || user?.profile_image || tutorImagePreview}
                   />
                 </div>
 
                 <div>
                   <h2 className="text-primary-color-P12 capitalize ST-3">
-                    Hi, {firstName}
+                    Hi, {teacher?.first_name || user?.first_name || firstName}
                   </h2>
                 </div>
               </div>
@@ -239,7 +239,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
 
           {/* Become a teacher */}
-          <DropdownItem
+          {!teacher.form_accepted && <DropdownItem
             className="p-0 py-4 my-4 border-y border-primary-color-P3 rounded-none"
             key="becomeATeacher"
           >
@@ -255,7 +255,7 @@ const NavDropdown = ({ isDropdownHidden, userName }) => {
 
               <h3 className="ST-3">Become a teacher</h3>
             </Link>
-          </DropdownItem>
+          </DropdownItem>}
 
           {/* Assistance */}
           {/* <DropdownItem className="p-0 mb-1.5" key="assistance">
