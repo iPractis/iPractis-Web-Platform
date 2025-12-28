@@ -14,13 +14,19 @@ import NavDropdown from "./NavDropdown";
 import NavSearchBar from "./NavSearchBar";
 
 import { useNotifications } from "@/src/hooks/useNotifications";
+import { useAuth } from "@/src/hooks/useAuth";
 
 // Images
 import logo from "@/public/logos/ipractis-logo-1.png";
 import NotificationDropdown from "../../Notifications/NotificationDropdown";
-import { useAuth } from "@/src/hooks/useAuth";
 
-const NavDesktopTeacher = ({ userName, userId }) => {
+const NavDesktopTeacher = ({ userName }) => {
+  // ------------------------------
+  // 🔐 Auth
+  // ------------------------------
+  const { user } = useAuth();
+  const userId = user?.userId; // ✅ SAFE ACCESS
+
   // ------------------------------
   // 💬 Unread chat messages
   // ------------------------------
@@ -34,20 +40,20 @@ const NavDesktopTeacher = ({ userName, userId }) => {
   // ------------------------------
   // 🔔 Notifications (Realtime)
   // ------------------------------
-  const {user} = useAuth();
-  console.log("User in NavDesktopTeacher:", user.userId);
   const {
     notifications,
     unreadCount: unreadNotifications,
     setNotifications,
-  } = useNotifications(user.userId);
-  console.log("Notifications:", notifications);
-  console.log("Unread notifications:", unreadNotifications);
+  } = useNotifications(userId, {
+    enabled: !!userId, // ✅ prevent hook firing without user
+  });
 
   // ------------------------------
   // 🔥 Fetch unread message count
   // ------------------------------
   useEffect(() => {
+    if (!userId) return;
+
     async function loadUnread() {
       try {
         const res = await fetch("/api/chat/unread", {
@@ -56,14 +62,14 @@ const NavDesktopTeacher = ({ userName, userId }) => {
         const data = await res.json();
         setUnreadMessages(data.unreadCount || 0);
       } catch (err) {
-        console.log("Unread message load error:", err);
+        console.error("Unread message load error:", err);
       }
     }
 
     loadUnread();
-    const timer = setInterval(loadUnread, 100000000000000);
+    const timer = setInterval(loadUnread, 60_000); // 1 min
     return () => clearInterval(timer);
-  }, []);
+  }, [userId]);
 
   // ------------------------------
   // 🔢 Badge formatter
@@ -92,6 +98,7 @@ const NavDesktopTeacher = ({ userName, userId }) => {
       {/* ------------------------------ */}
       <div className="flex items-center gap-4">
         <NavSearchBar />
+
         <div className="flex items-center relative">
           {/* 🔔 Notifications */}
           <div className="flex px-4 py-2 relative">
@@ -124,13 +131,10 @@ const NavDesktopTeacher = ({ userName, userId }) => {
             )}
           </div>
 
-          {/* 💬 Messages */}
+          {/* 💬 Messages — FIXED */}
           <div className="flex px-4 py-2">
-            <button
-              className="relative"
-              onClick={() => (window.location.href = "/chat")}
-            >
-              <NewMessageIcon fillcolor={"fill-primary-color-P12"} />
+            <Link href="/chat" className="relative">
+              <NewMessageIcon fillcolor="fill-primary-color-P12" />
 
               {unreadMessages > 0 && (
                 <span
@@ -144,7 +148,7 @@ const NavDesktopTeacher = ({ userName, userId }) => {
                   {formatBadge(unreadMessages)}
                 </span>
               )}
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -152,7 +156,7 @@ const NavDesktopTeacher = ({ userName, userId }) => {
         {/* Profile Dropdown */}
         {/* ------------------------------ */}
         <NavDropdown
-          isDropdownHidden={"lg:block hidden"}
+          isDropdownHidden="lg:block hidden"
           userName={userName}
         />
       </div>
