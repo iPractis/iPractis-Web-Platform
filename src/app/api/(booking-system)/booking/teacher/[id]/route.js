@@ -1,19 +1,43 @@
+import { requireUser } from '@/src/lib/requireUser';
 import { supabaseClient } from '@/src/lib/supabaseClient';
 import { NextResponse } from 'next/server';
 
-/*
-    GET /api/(booking-system)/teacher/booking/[id]
-    - Replace getMeetingById with your real DB call (Prisma, Sequelize, etc.)
-    - Returns 200 with meeting JSON, 404 if not found, 400 on bad request, 500 on error.
-*/
+export async function GET(req, { params }) {
+  try {
+    const { teacherId } = params;
+    const { user, role } = await requireUser();
 
-export async function GET(request, { params }) {
-    const { id } = params || {};
-    console.log("Fetching booking with ID:", id);
-    const { data, error} = await supabaseClient.from('bookings').select('*').eq('teacher_id', id);
-    if (error) {
-        console.error("Supabase error:", error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    // 🚫 Teachers cannot see other teachers
+    if (role === 'teacher' && user.user_id !== teacherId) {
+      return NextResponse.json(
+        { error: 'Forbidden' },
+        { status: 403 }
+      );
     }
-    return NextResponse.json({ message: `Booking ID requested: ${id}` , data : data }, { status: 200 });
+
+    // 🔐 Explicit column whitelist (FULL booking data, but safe)
+    const { data, error } = await supabaseClient
+      .from('bookings')
+      .select(`
+        id,
+        start_time,
+        end_time,
+        status,
+        student_id,
+        appointment_type_id,
+        created_at
+      `)
+      .eq('teacher_id', teacherId)
+      .order('start_time', { ascending: true });
+
+    if (error) throw error;
+
+    return NextResponse.json({ data }, { status: 200 });
+  } catch (err) {
+    console.error('Error fetching bookings:', err);
+    return NextResponse.json(
+      { error: err.message || 'Server error' },
+      { status: 500 }
+    );
+  }
 }

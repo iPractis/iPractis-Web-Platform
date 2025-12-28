@@ -34,10 +34,18 @@ export async function requireUser() {
       return { authorized: false, error: "User not found" };
     }
 
+    const { data: teacher, error: teacherError} = await supabaseServer.from("teachers").select("teacher_id").eq("user_id", decoded.userId);
+
+    if(teacherError || !teacher){
+      return {authorized : false, error: "user not a teacher"};
+    }
+
     // 4️⃣ Success
     return {
       authorized: true,
       user,
+      role : user.role,
+      teacher
     };
   } catch (err) {
     console.error("[Auth][requireUser]", err);

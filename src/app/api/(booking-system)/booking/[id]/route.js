@@ -2,11 +2,15 @@ import { NextResponse } from "next/server";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { supabaseClient } from "@/src/lib/supabaseClient";
+import { requireUser } from "@/src/lib/requireUser";
 
 dayjs.extend(utc);
 
 export const PATCH = async (req, { params }) => {
   try {
+
+    const {user} = await requireUser();
+
     const { id } = params;
     const body = await req.json();
 
@@ -23,6 +27,7 @@ export const PATCH = async (req, { params }) => {
       .from("bookings")
       .select("*")
       .eq("id", id)
+      .eq("student_id", user.user_id)
       .maybeSingle();
 
     if (fetchError) throw fetchError;
@@ -30,6 +35,14 @@ export const PATCH = async (req, { params }) => {
 
     const updates = { updated_at: new Date().toISOString() };
 
+    const allowedStudentStatuses = ["cancelled", "rescheduled"];
+
+if (!allowedStudentStatuses.includes(status)) {
+  return NextResponse.json(
+    { error: "Invalid status change" },
+    { status: 403 }
+  );
+}
     // 2️⃣ Handle cancellation
     if (status === "cancelled") {
       updates.status = "cancelled";
