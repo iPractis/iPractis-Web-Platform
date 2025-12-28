@@ -55,7 +55,7 @@ export const tabProfileSchema = z.object({
   nationality: z.string().min(1, {
     message: "Invalid field --- Input a flag of nationality please.",
   }),
-  languages: z
+  language: z
     .array(
       z.object({
         name: z.string(),

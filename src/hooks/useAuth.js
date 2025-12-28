@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-
+  const [teacher , setTeacher] = useState(null);
   const checkAuthStatus = async () => {
     try {
       const response = await fetch('/api/auth/me', {
@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
+        setTeacher(data.teacher || null);
         setAuthenticated(true);
       } else {
         setUser(null);
@@ -38,6 +39,7 @@ export const AuthProvider = ({ children }) => {
         credentials: 'include'
       });
       setUser(null);
+      setTeacher(null);
       setAuthenticated(false);
       window.location.href = '/login';
     } catch (error) {
@@ -69,10 +71,12 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
+  console.log("Auth state changed:", { user, authenticated, loading , teacher });
   return (
     <AuthContext.Provider value={{ 
       user, 
       loading, 
+      teacher,
       authenticated, 
       logout, 
       refreshAuth,

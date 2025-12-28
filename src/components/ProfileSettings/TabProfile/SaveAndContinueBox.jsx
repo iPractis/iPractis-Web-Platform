@@ -24,6 +24,7 @@ const SaveAndContinueBox = ({
           <ButtonSubmitForm
             buttonClassName="flex items-center justify-between bg-primary-color-P12 hover:bg-secondary-color-S8 transition-colors p-[6px] pl-[16px] rounded-[16px] gap-[16px]"
             ref={buttonRef}
+            aria-label="Save and continue"
             showLoadingText={true}
             loadingText="Saving..."
             spinnerClassName="w-4 h-4 text-primary-color-P1"

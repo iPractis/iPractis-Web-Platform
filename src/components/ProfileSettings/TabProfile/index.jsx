@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { useRef } from "react";
 import { useAuth } from "@/src/hooks/useAuth";
 import { tabProfileSchema } from "@/src/validations/profileSettings";
+import ButtonSubmitForm from "../../Shared/ButtonSubmitForm";
 
 const TabProfile = ({ activeTab, userData, language }) => {
   const {
@@ -35,7 +36,6 @@ const TabProfile = ({ activeTab, userData, language }) => {
       birthDate: userData.birth_date || "2000-01-01",
       gender: userData.gender || "",
       showProfilePublicly: true,
-      introduction : userData.introduction || "",
       showAchievements: true,
     },
   });
@@ -59,7 +59,7 @@ const TabProfile = ({ activeTab, userData, language }) => {
           profile_image: data.profile_url,
           nationality: data.nationality,
           country: data.country,
-          language : data.languages,
+          language : data.language,
           birth_date: data.birthDate,
           gender: data.gender,
           introduction: data.introduction,
@@ -97,36 +97,37 @@ const TabProfile = ({ activeTab, userData, language }) => {
   };
 
   return (
-    <form
-      className={`${activeTab !== 2 ? "hidden" : ""} space-y-[64px]`}
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      {/* Profile Picture */}
-      <ProfilePicture
-        errors={errors}
-        control={control}
-        setValue={setValue}
-      />
+      <form
+        className={`${activeTab !== 2 ? "hidden" : ""} space-y-[64px]`}
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/* Profile Picture */}
+        <ProfilePicture
+          errors={errors}
+          control={control}
+          setValue={setValue}
+        />
 
-      {/* Personal Information */}
-      <PersonalInfo
-        control={control}
-        errors={errors}
-        watch={watch}
-      />
+        {/* Personal Information */}
+        <PersonalInfo
+          control={control}
+          errors={errors}
+          watch={watch}
+        />
 
-      {/* Language Proficiency */}
-      <AboutYourselfMasteredLanguages
-        errors={errors}
-        control={control}
-      />
+        {/* Language Proficiency */}
+        <AboutYourselfMasteredLanguages
+          errors={errors}
+          control={control}
+        />
 
-      {/* Profile Display Settings */}
-      <ProfileDisplaySettings control={control} />
+        {/* Profile Display Settings */}
+        <ProfileDisplaySettings control={control} />
 
-      {/* Save */}
-      <SaveAndContinueBox buttonRef={buttonRef} />
-    </form>
+        {/* Save */}
+        <SaveAndContinueBox buttonRef={buttonRef} />
+        
+      </form>
   );
 };
 
