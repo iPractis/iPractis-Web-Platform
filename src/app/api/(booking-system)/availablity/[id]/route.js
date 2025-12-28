@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
+import { requireUser } from "@/src/lib/requireUser";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -92,6 +93,15 @@ function canFitDuration({
 
 export const GET = async (req, context) => {
   try {
+    
+    const {user} = await requireUser();
+
+    if(!user.authorized){
+       return NextResponse.json(
+        { error : "User not verified"},
+      {status : 400});
+    }
+
     const teacherId = context?.params?.id;
     if (!teacherId) {
       return NextResponse.json(
@@ -99,6 +109,7 @@ export const GET = async (req, context) => {
         { status: 400 }
       );
     }
+
 
     const { searchParams } = new URL(req.url);
     const viewerTz = searchParams.get("viewerTz") || "UTC";

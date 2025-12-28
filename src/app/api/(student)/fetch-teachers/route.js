@@ -9,6 +9,14 @@ export async function GET() {
     ------------------------------------------------- */
     const { user } = await requireUser();
 
+    if(user.authorized){
+      return NextResponse.json(
+        {message : "User not authorized"},
+        {status : 401}
+      )
+    }
+
+
     /* -------------------------------------------------
        2️⃣ Fetch accepted teachers (exclude self)
     ------------------------------------------------- */
