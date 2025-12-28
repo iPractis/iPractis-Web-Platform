@@ -11,16 +11,16 @@ import {
 
 const NotificationsCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-8">
       <SectionHeader
         descriptionText={
           "Verify your notification settings on all devices to receive timely updates and alerts."
         }
-        wrapperSectionHeaderClassName="px-4"
+        wrapperSectionHeaderClassName="px-0"
         titleIcon={
           <NotificationBiggerIcon fillcolor={"fill-primary-color-P1"} />
         }
-        descriptionClassName={"mt-[4px] mb-4"}
+        descriptionClassName={"mt-[4px]"}
         titleText={"Notifications Check-Up"}
         titleClassName="MT-SB-1"
       />

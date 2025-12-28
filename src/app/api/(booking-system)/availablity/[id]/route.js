@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import { supabaseClient, supabaseServer } from "@/src/lib/supabaseClient";
+import { requireUser } from "@/src/lib/requireUser";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -14,7 +15,6 @@ dayjs.extend(timezone);
 const DURATIONS = {
   30: 30,
   60: 60,
-  90: 90,
   120: 120,
 };
 
@@ -93,6 +93,15 @@ function canFitDuration({
 
 export const GET = async (req, context) => {
   try {
+    
+    const {user} = await requireUser();
+
+    if(!user.authorized){
+       return NextResponse.json(
+        { error : "User not verified"},
+      {status : 400});
+    }
+
     const teacherId = context?.params?.id;
     if (!teacherId) {
       return NextResponse.json(
@@ -100,6 +109,7 @@ export const GET = async (req, context) => {
         { status: 400 }
       );
     }
+
 
     const { searchParams } = new URL(req.url);
     const viewerTz = searchParams.get("viewerTz") || "UTC";
@@ -166,7 +176,13 @@ export const GET = async (req, context) => {
     const availabilityByDate = {};
 
     for (const utcTs of availableSet) {
+      const nowViewer = dayjs().tz(viewerTz);
       const viewerTs = dayjs.utc(utcTs).tz(viewerTz);
+
+  // ❌ Skip past slots
+  if (viewerTs.isBefore(nowViewer)) {
+    continue;
+  }
       const date = viewerTs.format("YYYY-MM-DD");
       const time = viewerTs.format("HH:mm");
 

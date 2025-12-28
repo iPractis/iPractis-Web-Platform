@@ -11,14 +11,14 @@ import {
 
 const SecurityCheckUp = () => {
   return (
-    <div>
+    <div className="space-y-8">
       <SectionHeader
         descriptionText={
           "Review and monitor your account's security status to stay protected and informed of any recent activity."
         }
-        wrapperSectionHeaderClassName="px-4"
+        wrapperSectionHeaderClassName="px-0"
         titleIcon={<CheckedShieldIcon fillcolor={"fill-primary-color-P1"} />}
-        descriptionClassName={"mt-[4px] mb-4"}
+        descriptionClassName={"mt-[4px]"}
         titleText={"Security Check-Up"}
         titleClassName="MT-SB-1"
       />
