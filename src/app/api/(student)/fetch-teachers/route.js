@@ -9,13 +9,12 @@ export async function GET() {
     ------------------------------------------------- */
     const { user } = await requireUser();
 
-    if(user.authorized){
+    if (!user) {
       return NextResponse.json(
-        {message : "User not authorized"},
-        {status : 401}
-      )
+        { message: "User not authorized" },
+        { status: 401 }
+      );
     }
-
 
     /* -------------------------------------------------
        2️⃣ Fetch accepted teachers (exclude self)
@@ -28,21 +27,20 @@ export async function GET() {
           user_id,
           subject,
           subject_intro,
-          introduction,
           profile_title,
           video_link,
           hourly_price,
-          profile_image,
           form_accepted,
           users:user_id (
             first_name,
             last_name,
             nationality,
-            profile_image
-          ),
-          teacher_languages (
-            name,
-            level
+            profile_image,
+            introduction,
+            user_languages (
+              name,
+              level
+            )
           )
         `)
         .eq("form_accepted", true)
@@ -71,6 +69,7 @@ export async function GET() {
         .from("bookings")
         .select("teacher_id, student_id")
         .in("teacher_id", teacherIds)
+        .in("status", ["confirmed", "completed"]);
 
     if (bookingError) {
       console.error("Bookings fetch error:", bookingError);
@@ -96,7 +95,7 @@ export async function GET() {
        5️⃣ Format final response
     ------------------------------------------------- */
     const formatted = teachers.map((t) => {
-      const languages = t.teacher_languages || [];
+      const languages = t.users?.user_languages || [];
       const mainLangs = languages.slice(0, 2);
       const extraCount =
         languages.length > 2 ? languages.length - 2 : 0;
@@ -109,13 +108,12 @@ export async function GET() {
         nationality: t.users?.nationality || "",
         subject: t.subject,
         subjectIntro: t.subject_intro,
-        introduction: t.introduction,
+        introduction: t.users?.introduction || "",
         profileTitle: t.profile_title,
-        profileImage: t.profile_image,
+        profileImage: t.users?.profile_image || null,
         videoLink: t.video_link,
         price: t.hourly_price,
 
-        /* ⭐ NEW */
         studentCount:
           studentCountMap[t.teacher_id]?.size || 0,
 

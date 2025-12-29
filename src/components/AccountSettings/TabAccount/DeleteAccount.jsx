@@ -6,7 +6,6 @@ import InputBGWrapperIcon from "../../Shared/InputBGWrapperIcon";
 import SectionHeader from "../../Shared/SectionHeader";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import {
   Modal,
   ModalContent,
@@ -16,6 +15,7 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
+import { toast } from "react-toastify";
 
 const DeleteAccount = () => {
   const [isDeleting, setIsDeleting] = useState(false);

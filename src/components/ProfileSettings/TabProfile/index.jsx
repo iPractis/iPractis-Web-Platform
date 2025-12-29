@@ -30,7 +30,7 @@ const TabProfile = ({ activeTab, userData, language }) => {
       lastName: userData.last_name || "",
       profile_url: userData.profile_image || "",
       introduction: userData.introduction || "",
-      language: userData.language || [],
+      language: language || [],
       nationality: userData.nationality || "",
       country: userData.country || "",
       birthDate: userData.birth_date || "2000-01-01",
@@ -40,61 +40,72 @@ const TabProfile = ({ activeTab, userData, language }) => {
     },
   });
 
+  console.log("User data in TabProfile:", userData);
   const buttonRef = useRef(null);
   const { user } = useAuth();
 
   /* ----------------------------------------
      SUBMIT HANDLER
   ---------------------------------------- */
-  const onSubmit = async (data) => {
-    try {
-      buttonRef.current?.loading();
+const onSubmit = async (data) => {
+  try {
+    buttonRef.current?.loading();
 
-      // 🔐 Build SAFE payload (no userId from client)
-      const payload = {
-        user: {
-          first_name: data.firstName,
-          middle_name: data.middleName,
-          last_name: data.lastName,
-          profile_image: data.profile_url,
-          nationality: data.nationality,
-          country: data.country,
-          language : data.language,
-          birth_date: data.birthDate,
-          gender: data.gender,
-          introduction: data.introduction,
-        },
-      };
+    /* ----------------------------------------
+       1️⃣ Update USER profile (NO languages)
+    ---------------------------------------- */
+    const profilePayload = {
+      user: {
+        first_name: data.firstName,
+        middle_name: data.middleName,
+        last_name: data.lastName,
+        profile_image: data.profile_url,
+        nationality: data.nationality,
+        country: data.country,
+        birth_date: data.birthDate,
+        gender: data.gender,
+        introduction: data.introduction,
+      },
+    };
 
-      // Add teacher fields only if teacher
-      if (user?.role === "teacher") {
-        payload.teacher = {
-          introduction: data.introduction,
-        };
-      }
-      console.log("Payload to submit:", payload);
+    const profileRes = await fetch("/api/auth/me", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(profilePayload),
+    });
 
-      const res = await fetch("/api/auth/me", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Profile update failed");
-      }
-
-      buttonRef.current?.notIsLoading();
-    } catch (err) {
-      console.error("Save error:", err);
-      setError("root", { message: err.message });
-      buttonRef.current?.notIsLoading();
+    if (!profileRes.ok) {
+      const err = await profileRes.json();
+      throw new Error(err.error || "Profile update failed");
     }
-  };
+
+    /* ----------------------------------------
+       2️⃣ Update LANGUAGES (separate API)
+    ---------------------------------------- */
+    const languagesRes = await fetch("/api/teachers/language", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        languages: data.language, // [{ name, level }]
+      }),
+    });
+
+    if (!languagesRes.ok) {
+      const err = await languagesRes.json();
+      console.log("Language update error response:", err);
+      throw new Error(err.error || "Language update failed");
+    }
+
+    buttonRef.current?.notIsLoading();
+  } catch (err) {
+    console.error("Save error:", err);
+    setError("root", { message: err.message });
+    buttonRef.current?.notIsLoading();
+  }
+};
+
 
   return (
       <form

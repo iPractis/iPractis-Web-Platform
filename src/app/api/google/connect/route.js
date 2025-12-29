@@ -3,10 +3,9 @@ import { requireUser } from "@/src/lib/requireUser";
 
 export const GET = async () => {
   const session = await auth();
+  console.log("Google Connect Session:", session);
   const {user} = await requireUser();
-  if (!session?.user?.email) {
-    return Response.json({ error: "Unauthorized" }, { status: 401 });
-  }
+
 
   const params = new URLSearchParams({
     client_id: process.env.GOOGLE_CLIENT_ID,

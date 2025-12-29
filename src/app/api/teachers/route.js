@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/src/lib/supabaseClient";
 import { mapUiToDbAvailability } from "@/src/utils/mapDbAvailability";
+import { requireUser } from "@/src/lib/requireUser";
 
 function normalizeNumeric(val) {
   if (val === undefined || val === null || val === "") return null;
@@ -10,20 +11,35 @@ function normalizeNumeric(val) {
 export async function POST(req) {
   try {
     const body = await req.json();
-    const { userId, ...draft } = body;
+    const {  ...draft } = body;
+
+    const { user } = await requireUser();
+
+    if (!user) {
+
+      return NextResponse.json(
+        { message: "User not authorized" },
+        { status: 401 }
+      );
+    }
+    const userId = user.user_id;
 
     if (!userId) {
-      return NextResponse.json({ message: "userId is required" }, { status: 400 });
+      return NextResponse.json(
+        { message: "userId is required" },
+        { status: 400 }
+      );
     }
 
-    // 1️⃣ Upsert into teachers
+    /* ----------------------------------------------------
+       1️⃣ Upsert TEACHER (capability-only data)
+    ---------------------------------------------------- */
     const { data: teacher, error: teacherError } = await supabaseServer
       .from("teachers")
       .upsert(
         {
           user_id: userId,
           profile_title: draft.profileTitle || null,
-          introduction: draft.introduction || null,
           subject: draft.subject || null,
           subject_intro: draft.subjectIntroduction || null,
           video_link: draft.videoLink || null,
@@ -33,7 +49,6 @@ export async function POST(req) {
           teach_young: draft.teachToYoungPersons ?? false,
           daily_work_time: normalizeNumeric(draft.dailyWorkTime),
           timezone: draft.timeZone || null,
-          profile_image: draft.profile_url || null,
           updated_at: new Date().toISOString(),
         },
         { onConflict: "user_id" }
@@ -43,12 +58,17 @@ export async function POST(req) {
 
     if (teacherError) {
       console.error("Teacher upsert failed:", teacherError);
-      return NextResponse.json({ message: "Failed to save teacher" }, { status: 500 });
+      return NextResponse.json(
+        { message: "Failed to save teacher data" },
+        { status: 500 }
+      );
     }
 
     const teacherId = teacher.teacher_id;
 
-    // 2️⃣ Update user details (since profiles merged → users)
+    /* ----------------------------------------------------
+       2️⃣ Update USER (identity/profile data)
+    ---------------------------------------------------- */
     const { error: userError } = await supabaseServer
       .from("users")
       .update({
@@ -59,36 +79,81 @@ export async function POST(req) {
         nationality: draft.nationality || null,
         country: draft.country || null,
         birth_date: draft.birthDate || null,
+        profile_image: draft.profile_url || null,
+        introduction: draft.introduction || null,
         updated_at: new Date().toISOString(),
       })
       .eq("user_id", userId);
 
     if (userError) {
       console.error("User update failed:", userError);
-      return NextResponse.json({ message: "Failed to update user info" }, { status: 500 });
+      return NextResponse.json(
+        { message: "Failed to update user info" },
+        { status: 500 }
+      );
     }
 
-    // 3️⃣ Clear old relational data
-    const deleteOps = [
-      supabaseServer.from("teacher_languages").delete().eq("teacher_id", teacherId),
-      supabaseServer.from("teacher_sub_subjects").delete().eq("teacher_id", teacherId),
-      supabaseServer.from("teacher_experiences").delete().eq("teacher_id", teacherId),
-      supabaseServer.from("teacher_education").delete().eq("teacher_id", teacherId),
-      supabaseServer.from("teacher_availability").delete().eq("teacher_id", teacherId),
-    ];
-    await Promise.all(deleteOps);
+    /* ----------------------------------------------------
+       3️⃣ Clear OLD relational data
+    ---------------------------------------------------- */
+    await Promise.all([
+      // user-scoped
+      supabaseServer.from("user_languages").delete().eq("user_id", userId),
+      supabaseServer.from("user_experiences").delete().eq("user_id", userId),
+      supabaseServer.from("user_education").delete().eq("user_id", userId),
 
-    // 4️⃣ Re-insert new relations (if present)
+      // teacher-scoped
+      supabaseServer.from("teacher_sub_subjects").delete().eq("teacher_id", teacherId),
+      supabaseServer.from("teacher_availability").delete().eq("teacher_id", teacherId),
+    ]);
+
+    /* ----------------------------------------------------
+       4️⃣ Insert USER-level relations
+    ---------------------------------------------------- */
+
+    // 🌍 Languages
     if (draft.languages?.length) {
-      await supabaseServer.from("teacher_languages").insert(
+      await supabaseServer.from("user_languages").insert(
         draft.languages.map((l) => ({
-          teacher_id: teacherId,
+          user_id: userId,
           name: l.name,
           level: l.level,
         }))
       );
     }
 
+    // 💼 Experiences
+    if (draft.careerExperience?.length) {
+      await supabaseServer.from("user_experiences").insert(
+        draft.careerExperience.map((e) => ({
+          user_id: userId,
+          company: e.company,
+          role: e.role || null,
+          year_from: e.from,
+          year_to: e.to,
+          description: e.description,
+        }))
+      );
+    }
+
+    // 🎓 Education
+    if (draft.education?.length) {
+      await supabaseServer.from("user_education").insert(
+        draft.education.map((ed) => ({
+          user_id: userId,
+          institution: ed.company,
+          year_from: ed.from,
+          year_to: ed.to,
+          description: ed.description,
+        }))
+      );
+    }
+
+    /* ----------------------------------------------------
+       5️⃣ Teacher-only relations
+    ---------------------------------------------------- */
+
+    // 📚 Sub-subjects
     if (draft.subSubject?.length) {
       await supabaseServer.from("teacher_sub_subjects").insert(
         draft.subSubject.map((s) => ({
@@ -99,66 +164,18 @@ export async function POST(req) {
       );
     }
 
-    if (draft.careerExperience?.length) {
-      await supabaseServer.from("teacher_experiences").insert(
-        draft.careerExperience.map((e) => ({
-          teacher_id: teacherId,
-          company: e.company,
-          year_from: e.from,
-          year_to: e.to,
-          description: e.description,
-          file_url: e.uploadFile?.url,
-        }))
-      );
+    // ⏰ Availability (slot-based)
+    if (Array.isArray(draft.availability)) {
+      const slots = mapUiToDbAvailability(draft.availability, teacherId);
+
+      if (slots.length > 0) {
+        await supabaseServer.from("teacher_availability").insert(slots);
+      }
     }
 
-    if (draft.education?.length) {
-      await supabaseServer.from("teacher_education").insert(
-        draft.education.map((ed) => ({
-          teacher_id: teacherId,
-          institution: ed.company,
-          year_from: ed.from,
-          year_to: ed.to,
-          description: ed.description,
-          file_url: ed.uploadFile?.url,
-        }))
-      );
-    }
-
-    // 5️⃣ Optimized Availability — save as JSON instead of many rows
-
-    // 5️⃣ Optimized Availability — save as multiple rows (per half-hour slot)
-console.log("Saving availability for teacher:", draft.availability);
-console.log("Teacher ID:", teacherId);
-
-if (draft.availability && Array.isArray(draft.availability)) {
-  // Map UI format to DB-ready rows
-  const slots = mapUiToDbAvailability(draft.availability, teacherId);
-
-  // Clear old records
-  const { error: delError } = await supabaseServer
-    .from("teacher_availability")
-    .delete()
-    .eq("teacher_id", teacherId);
-
-  if (delError) {
-    console.error("Failed to clear previous availability:", delError);
-  }
-
-  // Insert new records
-  if (slots.length > 0) {
-    const { error: insertError } = await supabaseServer
-      .from("teacher_availability")
-      .insert(slots);
-
-    if (insertError) {
-      console.error("Availability insert failed:", insertError);
-    }
-  }
-}
-
-
-    // 6️⃣ Mark draft as published
+    /* ----------------------------------------------------
+       6️⃣ Mark draft as published
+    ---------------------------------------------------- */
     await supabaseServer
       .from("teacher_drafts")
       .upsert(
@@ -171,11 +188,14 @@ if (draft.availability && Array.isArray(draft.availability)) {
       );
 
     return NextResponse.json(
-      { message: "Teacher draft saved successfully", teacherId },
+      { message: "Teacher profile saved successfully", teacherId },
       { status: 201 }
     );
   } catch (err) {
     console.error("Teacher Draft POST API error:", err);
-    return NextResponse.json({ message: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

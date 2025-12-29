@@ -27,7 +27,6 @@ import {
   SunAndMoonIcon,
   QuestionMark,
   Clock5Icon,
-  CircleImportantIcon,
   CircleLocationIcon,
 } from "../../Icons";
 import CustomNextUiInput from "../../Shared/CustomNextUiInput";
@@ -88,70 +87,6 @@ const Preferences = ({ errors, control, watch }) => {
         descriptionText={"Customize your account settings."}
       />
       <SectionContent>
-        <div>
-          <div className="flex flex-col mb-2 ps-1.5">
-            <span className="flex gap-1.5 items-center text-primary-color-P4 ST-SB-4">
-              Account Language{" "}
-              <QuestionMark fillcolor={"fill-primary-color-P4"} />
-            </span>
-          </div>
-          <InputLeftStickStatus
-            inputBarStatusClassName={getInputStatusBorder(
-              errors,
-              language.value,
-              "language"
-            )}
-          >
-            <Select
-              name="language"
-              placeholder="Select a language"
-              selectorIcon={<span></span>}
-              isOpen={isOpenLanguage}
-              startContent={
-                <InputBGWrapperIcon>
-                  <EarthBorderedIcon strokeColor={"stroke-primary-color-P4"} />
-                </InputBGWrapperIcon>
-              }
-              endContent={
-                <InputBGWrapperIcon>
-                  <ChevronDownBigIcon fillcolor={"fill-primary-color-P1"} />
-                </InputBGWrapperIcon>
-              }
-              defaultSelectedKeys={new Set([language.value])}
-              onSelectionChange={(keys) => {
-                const selectedKey = Array.from(keys).at(0);
-                language.onChange(selectedKey);
-              }}
-              onOpenChange={(open) => {
-                setIsOpenLanguage(open);
-
-                if (!open) {
-                  language.onBlur();
-                }
-              }}
-              classNames={{
-                trigger: [
-                  "select-wrapper-ipractis min-h-fit bg-secondary-color-S11",
-                  languageError?.message && "form-input-error",
-                ],
-                innerWrapper: ["select-ipractis", "w-full", "!pt-0"],
-                value: [
-                  "group-data-[has-value=true]:text-primary-color-P4 text-primary-color-P4 ST-3",
-                ],
-                listbox: ["text-primary-color-P4"],
-              }}
-            >
-              {languages?.map((language) => (
-                <SelectItem key={language} value={language}>
-                  {language}
-                </SelectItem>
-              ))}
-            </Select>
-          </InputLeftStickStatus>
-
-          <SplitDynamicErrorZod message={languageError?.message} />
-        </div>
-
         {/* Timezone */}
         <div>
           <div className="flex flex-col mb-2 ps-1.5">
@@ -172,6 +107,7 @@ const Preferences = ({ errors, control, watch }) => {
               placeholder="Select a time zone"
               selectorIcon={<span></span>}
               isOpen={isOpenTimezone}
+              multiple={false}
               startContent={
                 <InputBGWrapperIcon>
                   <Clock5Icon fillcolor={"fill-primary-color-P4"} />
@@ -235,6 +171,7 @@ const Preferences = ({ errors, control, watch }) => {
             <Select
               name="currency"
               placeholder="Select a currency"
+              multiple={false}
               selectorIcon={<span></span>}
               isOpen={isOpenCurrency}
               startContent={
@@ -336,7 +273,7 @@ const Preferences = ({ errors, control, watch }) => {
                     <CustomNextUiCheckbox
                       className="checkbox-label-ipractis"
                       isSelected={selectedTimeFormat === "24h"}
-                      onChange={() => handleCheckboxChange("24h")}
+                      onChange={() => handleCheckboxChange("2a4h")}
                       size="sm"
                     />
                   }

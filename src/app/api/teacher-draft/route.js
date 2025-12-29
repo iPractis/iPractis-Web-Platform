@@ -1,17 +1,28 @@
 // /api/teacher-draft
 import { NextResponse } from "next/server";
 import { supabaseServer } from "@/src/lib/supabaseClient";
+import { requireUser } from "@/src/lib/requireUser";
 
 // 🟩 GET — Fetch teacher draft by userId
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
-    const userId = searchParams.get("userId");
 
-    if (!userId) {
+    const { user } = await requireUser();
+
+    if (!user?.authorized) {
+      return NextResponse.json(
+        { message: "User not authorized" },
+        { status: 401 }
+      );
+    }
+
+    if (!user.user_id) {
       return NextResponse.json({ message: "userId is required" }, { status: 400 });
     }
 
+    const userId = user.user_id;
+    console.log("Fetching draft for userId:", userId);
 
     // Fetch draft for user
     const { data: draftData, error: fetchError } = await supabaseServer
@@ -39,7 +50,18 @@ export async function GET(req) {
 export async function PUT(req) {
   try {
     const body = await req.json();
-    const { userId, ...newData } = body;
+    const { ...newData } = body;
+
+    const { user } = await requireUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "User not authorized" },
+        { status: 401 }
+      );
+    }
+
+    const userId = user.user_id;
 
     if (!userId) {
       return NextResponse.json({ message: "userId is required" }, { status: 400 });
