@@ -96,7 +96,7 @@ export const GET = async (req, context) => {
     
     const {user} = await requireUser();
 
-    if(!user.authorized){
+    if(!user){
        return NextResponse.json(
         { error : "User not verified"},
       {status : 400});
