@@ -24,6 +24,39 @@ import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 const DAY_ORDER = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const getDayIndex = (dayKey) => DAY_ORDER.indexOf(dayKey);
 
+interface WorkScheduleTableProps {
+  showCurrentActiveDay?: boolean;
+  setDailyWorkTimeLimit: any;
+  wrapperClassName?: string;
+  bookedLessonSpot?: any;
+  timeZoneFilter?: any;
+  fromToFilter?: any;
+  control: any;
+  defaultTimeZone?: string;
+}
+
+interface Cell {
+  hour: number;
+  day: string;
+  isSecondButton: boolean;
+}
+
+interface WorkScheduleSlot {
+  day: string;
+  hour: string[];
+}
+
+interface WorkerScheduleFormValues {
+  workSchedule: WorkScheduleSlot[];
+}
+
+interface DateObject {
+  actualDate: number;
+  actualMonth: number;
+  actualYear: number;
+}
+
+
 const WorkScheduleTable = ({
   showCurrentActiveDay = true,
   setDailyWorkTimeLimit,
@@ -33,26 +66,26 @@ const WorkScheduleTable = ({
   fromToFilter,
   control,
   defaultTimeZone,
-}) => {
-  const [selectedTimeZone, setSelectedTimeZone] = useState(
+}: WorkScheduleTableProps) => {
+  const [selectedTimeZone, setSelectedTimeZone] = useState<string>(
     defaultTimeZone || "America/Chicago" // ✅ use draft timezone if available
   );
   const [is12HourFormat, setIs12HourFormat] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [currentDay, setCurrentDay] = useState("");
-  const [startCell, setStartCell] = useState(null);
-  const [selectionEnd, setSelectionEnd] = useState(null);
-  const [selectionMode, setSelectionMode] = useState('select'); // 'select' or 'erase'
+  const [currentDay, setCurrentDay] = useState<string | number>("");
+  const [startCell, setStartCell] = useState<Cell | null>(null);
+  const [selectionEnd, setSelectionEnd] = useState<Cell | null>(null);
+  const [selectionMode, setSelectionMode] = useState<'select' | 'erase'>('select'); // 'select' or 'erase'
 
   // Refs for frequently changing state to avoid useCallback dependency issues
   const startCellRef = useRef(startCell);
   const selectionEndRef = useRef(selectionEnd);
   const selectionModeRef = useRef(selectionMode);
   const isDraggingRef = useRef(isDragging);
-  
+
   // Ref for the grid container to calculate cell positions from mouse coordinates
   const gridContainerRef = useRef(null);
-  
+
   // Ref to track pending animation frame for smooth updates
   const rafIdRef = useRef(null);
   // Ref to store the latest mouse event for RAF processing
@@ -74,9 +107,9 @@ const WorkScheduleTable = ({
   useEffect(() => {
     isDraggingRef.current = isDragging;
   }, [isDragging]);
-  const [weekDates, setWeekDates] = useState([]);
-  const [minDate, setMinDate] = useState("");
-  const [maxDate, setMaxDate] = useState("");
+  const [weekDates, setWeekDates] = useState<Date[]>([]);
+  const [minDate, setMinDate] = useState<DateObject | "">("");
+  const [maxDate, setMaxDate] = useState<DateObject | "">("");
   const [isOpen, setIsOpen] = useState(false);
 
   // Map two-letter day labels to three-letter display labels without changing keys/logic
@@ -94,7 +127,7 @@ const WorkScheduleTable = ({
   };
 
   // We use "useFieldArray" to manage the selected slots
-  const { fields, append, remove, update } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray<WorkerScheduleFormValues>({
     control,
     name: "workSchedule",
   });
@@ -160,7 +193,7 @@ const WorkScheduleTable = ({
   const updateWeekDates = (selectedTimeZone) => {
     const adjustedWeekDates = weekDates?.map((date) => {
       // Convert the date to the selected time zone
-      const options = {
+      const options: Intl.DateTimeFormatOptions = {
         timeZone: selectedTimeZone,
         year: "numeric",
         month: "2-digit",
@@ -192,7 +225,7 @@ const WorkScheduleTable = ({
 
     // 🟢 Here we also adjust the current date according to the time zone
     const today = new Date();
-    const options = {
+    const options: Intl.DateTimeFormatOptions = {
       timeZone: selectedTimeZone,
       year: "numeric",
       month: "2-digit",
@@ -216,7 +249,7 @@ const WorkScheduleTable = ({
   };
 
   // Function to handle the selection of day and hour
-  const handleGetDayAndHour = (hour, day, isSecondButton = false) => {
+  const handleGetDayAndHour = (hour: number, day: string, isSecondButton: boolean = false) => {
     // Use independent markers for each half:
     // Top half (first 30 min): stores hour:00 (start of slot)
     // Bottom half (second 30 min): stores hour:30 (midpoint of slot)
@@ -428,10 +461,11 @@ const WorkScheduleTable = ({
     );
 
     setMinDate((prevMin) => {
+      const pm = prevMin as DateObject;
       const newDate = new Date(
-        prevMin.actualYear,
-        prevMin.actualMonth,
-        prevMin.actualDate - 7
+        pm.actualYear,
+        pm.actualMonth,
+        pm.actualDate - 7
       );
       return {
         actualDate: newDate.getDate(),
@@ -441,10 +475,11 @@ const WorkScheduleTable = ({
     });
 
     setMaxDate((prevMax) => {
+      const pm = prevMax as DateObject;
       const newDate = new Date(
-        prevMax.actualYear,
-        prevMax.actualMonth,
-        prevMax.actualDate - 7
+        pm.actualYear,
+        pm.actualMonth,
+        pm.actualDate - 7
       );
       return {
         actualDate: newDate.getDate(),
@@ -465,10 +500,11 @@ const WorkScheduleTable = ({
     );
 
     setMinDate((prevMin) => {
+      const pm = prevMin as DateObject;
       const newDate = new Date(
-        prevMin.actualYear,
-        prevMin.actualMonth,
-        prevMin.actualDate + 7
+        pm.actualYear,
+        pm.actualMonth,
+        pm.actualDate + 7
       );
       return {
         actualDate: newDate.getDate(),
@@ -478,10 +514,11 @@ const WorkScheduleTable = ({
     });
 
     setMaxDate((prevMax) => {
+      const pm = prevMax as DateObject;
       const newDate = new Date(
-        prevMax.actualYear,
-        prevMax.actualMonth,
-        prevMax.actualDate + 7
+        pm.actualYear,
+        pm.actualMonth,
+        pm.actualDate + 7
       );
       return {
         actualDate: newDate.getDate(),
@@ -518,7 +555,7 @@ const WorkScheduleTable = ({
     // Each column takes equal space including its share of gaps
     const colWidth = containerWidth / numCols;
     let dayIndex = Math.floor(mouseX / colWidth);
-    
+
     // Clamp to valid range
     dayIndex = Math.max(0, Math.min(numCols - 1, dayIndex));
 
@@ -526,7 +563,7 @@ const WorkScheduleTable = ({
     // Each row takes equal space including its share of gaps
     const rowHeight = containerHeight / numRows;
     let hourIndex = Math.floor(mouseY / rowHeight);
-    
+
     // Clamp to valid range
     hourIndex = Math.max(0, Math.min(numRows - 1, hourIndex));
 
@@ -563,10 +600,10 @@ const WorkScheduleTable = ({
       if (cell) {
         // Only update if the cell has changed to avoid unnecessary re-renders
         const currentEnd = selectionEndRef.current;
-        if (!currentEnd || 
-            currentEnd.hour !== cell.hour || 
-            currentEnd.day !== cell.day || 
-            currentEnd.isSecondButton !== cell.isSecondButton) {
+        if (!currentEnd ||
+          currentEnd.hour !== cell.hour ||
+          currentEnd.day !== cell.day ||
+          currentEnd.isSecondButton !== cell.isSecondButton) {
           setSelectionEnd(cell);
         }
       }
@@ -743,8 +780,8 @@ const WorkScheduleTable = ({
     const allSelected = days.every((day) => {
       const daySlot = fields.find((slot) => slot.day === day);
       return (
-        daySlot && 
-        daySlot.hour.includes(time1) && 
+        daySlot &&
+        daySlot.hour.includes(time1) &&
         daySlot.hour.includes(time2)
       );
     });
@@ -834,7 +871,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-2 !py-1.5 w-[48px] h-9"
-              defaultValue={minDate?.actualDate || ""}
+              defaultValue={(minDate as DateObject)?.actualDate || ""}
               name="birthDateNumber"
               readOnly
             />
@@ -842,7 +879,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[141px] h-9"
-              defaultValue={getMonthNumberAsText(minDate?.actualMonth + 1) || ""}
+              defaultValue={(typeof minDate === 'object') ? getMonthNumberAsText(minDate.actualMonth + 1) : ""}
               name="birthDateMonth"
               readOnly
             />
@@ -850,7 +887,7 @@ const WorkScheduleTable = ({
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
-              defaultValue={minDate?.actualYear || ""}
+              defaultValue={(minDate as DateObject)?.actualYear || ""}
               name="birthDateYear"
               readOnly
             />
@@ -863,14 +900,14 @@ const WorkScheduleTable = ({
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[52px] h-9"
               name="birthDateNumber"
-              defaultValue={maxDate?.actualDate || ""}
+              defaultValue={(maxDate as DateObject)?.actualDate || ""}
               readOnly
             />
 
             <input
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[137px] h-9"
-              defaultValue={getMonthNumberAsText(maxDate?.actualMonth + 1) || ""}
+              defaultValue={(typeof maxDate === 'object') ? getMonthNumberAsText(maxDate.actualMonth + 1) : ""}
               name="birthDateMonth"
               readOnly
             />
@@ -879,7 +916,7 @@ const WorkScheduleTable = ({
               type="text"
               className="input-ipractis !text-primary-color-P1 MT-1 text-center outline-none rounded-[10px] !px-4 !py-1.5 w-[71px] h-9"
               name="birthDateYear"
-              defaultValue={maxDate?.actualYear || ""}
+              defaultValue={(maxDate as DateObject)?.actualYear || ""}
               readOnly
             />
           </div>
@@ -895,7 +932,7 @@ const WorkScheduleTable = ({
         {/* Left column - time slots */}
         <div className="flex flex-col gap-3 min-w-[100px] flex-shrink-0">
           {/* Format button placeholder to align with day headers */}
-            <div className="h-[36px] flex items-center">
+          <div className="h-[36px] flex items-center">
             <button
               className="bg-primary-color-P1 text-primary-color-P12 text-center MT-1 p-[6px] w-[114px] rounded-[10px] flex items-center justify-center hover:bg-gray-800 transition-colors cursor-pointer"
               onClick={handleChangeHoursDisplayed}
@@ -945,18 +982,17 @@ const WorkScheduleTable = ({
               const columnDate = weekDates[rowIndex];
               const isToday =
                 columnDate instanceof Date &&
-                !isNaN(columnDate) &&
+                !isNaN(columnDate as any) &&
                 columnDate.getDate() === currentDay &&
                 columnDate.getMonth() === new Date().getMonth() &&
                 columnDate.getFullYear() === new Date().getFullYear();
 
               return (
                 <div
-                  className={`text-primary-color-P1 text-center p-[6px] rounded-[10px] h-[36px] min-w-[100px] w-full flex items-center justify-center ${
-                    showCurrentActiveDay && isToday
-                      ? "bg-tertiary-color-SC5"
-                      : "bg-secondary-color-S11"
-                  }`}
+                  className={`text-primary-color-P1 text-center p-[6px] rounded-[10px] h-[36px] min-w-[100px] w-full flex items-center justify-center ${showCurrentActiveDay && isToday
+                    ? "bg-tertiary-color-SC5"
+                    : "bg-secondary-color-S11"
+                    }`}
                   key={column.key}
                 >
                   <h3 className="ST-3">{toThreeLetterDay(column.label)}</h3>
@@ -978,7 +1014,7 @@ const WorkScheduleTable = ({
                   const columnDate = weekDates[dayIndex];
                   const isToday =
                     columnDate instanceof Date &&
-                    !isNaN(columnDate) &&
+                    !isNaN(columnDate as any) &&
                     columnDate.getDate() === currentDay &&
                     columnDate.getMonth() === new Date().getMonth() &&
                     columnDate.getFullYear() === new Date().getFullYear();
@@ -994,60 +1030,53 @@ const WorkScheduleTable = ({
 
                   return (
                     <div
-                      className={`flex-1 min-w-[100px] h-[36px] relative group rounded-[10px] overflow-hidden flex flex-col items-start p-0 ${
-                        showCurrentActiveDay &&
+                      className={`flex-1 min-w-[100px] h-[36px] relative group rounded-[10px] overflow-hidden flex flex-col items-start p-0 ${showCurrentActiveDay &&
                         isToday &&
                         "bg-tertiary-color-SC5"
-                      }`}
+                        }`}
                       key={`${column.key}-${hourIndex}`}
                     >
                       {/* Top half visual layer */}
                       <div
-                        className={`absolute top-0 left-0 w-full h-1/2 ${
-                          showCurrentActiveDay && isToday
-                            ? "bg-tertiary-color-SC5"
-                            : topHalfPreview === 'will-select'
+                        className={`absolute top-0 left-0 w-full h-1/2 ${showCurrentActiveDay && isToday
+                          ? "bg-tertiary-color-SC5"
+                          : topHalfPreview === 'will-select'
                             ? "bg-blue-400/50"
                             : topHalfPreview === 'will-erase'
-                            ? "bg-red-400/50"
-                            : getTimeBasedColor(hourIndex, isTopHalfSelected)
-                        } ${
-                          !bothSelected && isTopHalfSelected && !topHalfPreview ? "rounded-t-md" : ""
-                        }`}
+                              ? "bg-red-400/50"
+                              : getTimeBasedColor(hourIndex, isTopHalfSelected)
+                          } ${!bothSelected && isTopHalfSelected && !topHalfPreview ? "rounded-t-md" : ""
+                          }`}
                       />
 
                       {/* Bottom half visual layer */}
                       <div
-                        className={`absolute bottom-0 left-0 w-full h-1/2 ${
-                          showCurrentActiveDay && isToday
-                            ? "bg-tertiary-color-SC5"
-                            : bottomHalfPreview === 'will-select'
+                        className={`absolute bottom-0 left-0 w-full h-1/2 ${showCurrentActiveDay && isToday
+                          ? "bg-tertiary-color-SC5"
+                          : bottomHalfPreview === 'will-select'
                             ? "bg-blue-400/50"
                             : bottomHalfPreview === 'will-erase'
-                            ? "bg-red-400/50"
-                            : getTimeBasedColor(hourIndex, isBottomHalfSelected)
-                        } ${
-                          !bothSelected && isBottomHalfSelected && !bottomHalfPreview ? "rounded-b-md" : ""
-                        }`}
+                              ? "bg-red-400/50"
+                              : getTimeBasedColor(hourIndex, isBottomHalfSelected)
+                          } ${!bothSelected && isBottomHalfSelected && !bottomHalfPreview ? "rounded-b-md" : ""
+                          }`}
                       />
-                      
+
                       {/* Top half hover indicator - purely visual, mouse events handled by container */}
                       <div
-                        className={`w-full h-1/2 pointer-events-none absolute top-0 left-0 z-10 transition-colors ${
-                          showCurrentActiveDay && isToday
-                            ? "group-hover:bg-tertiary-color-SC5/50"
-                            : ""
-                        }`}
+                        className={`w-full h-1/2 pointer-events-none absolute top-0 left-0 z-10 transition-colors ${showCurrentActiveDay && isToday
+                          ? "group-hover:bg-tertiary-color-SC5/50"
+                          : ""
+                          }`}
                         aria-hidden="true"
                       />
 
                       {/* Bottom half hover indicator - purely visual, mouse events handled by container */}
                       <div
-                        className={`w-full h-1/2 pointer-events-none absolute bottom-0 left-0 z-10 transition-colors ${
-                          showCurrentActiveDay && isToday
-                            ? "group-hover:bg-tertiary-color-SC5/50"
-                            : ""
-                        }`}
+                        className={`w-full h-1/2 pointer-events-none absolute bottom-0 left-0 z-10 transition-colors ${showCurrentActiveDay && isToday
+                          ? "group-hover:bg-tertiary-color-SC5/50"
+                          : ""
+                          }`}
                         aria-hidden="true"
                       />
                     </div>

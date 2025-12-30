@@ -38,13 +38,15 @@ const TEACHER_ALLOWED_FIELDS = [
 export async function PUT(req) {
   try {
     /* ---------------- AUTH ---------------- */
-    const token = cookies().get("auth-token")?.value;
+    /* ---------------- AUTH ---------------- */
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth-token")?.value;
     if (!token) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = (decoded).userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
+    const userId = decoded.userId;
 
     const body = await req.json();
 
@@ -106,13 +108,15 @@ export async function PUT(req) {
 export async function GET() {
   try {
     /* ---------------- AUTH ---------------- */
-    const token = await cookies().get("auth-token")?.value;
+    /* ---------------- AUTH ---------------- */
+    const cookieStore = await cookies();
+    const token = cookieStore.get("auth-token")?.value;
     if (!token) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = (decoded).userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as jwt.JwtPayload;
+    const userId = decoded.userId;
 
     /* ---------------- USER ---------------- */
     let { data: user } = await supabaseServer
@@ -203,10 +207,10 @@ export async function GET() {
       paymentsReceived = res.data || [];
     }
 
-    user = {
+    const enrichedUser = {
       ...user,
       teacherId: teacher?.teacher_id || null,
-    }
+    };
 
     /* ---------------- STATS ---------------- */
     const stats = {
@@ -219,7 +223,7 @@ export async function GET() {
     /* ---------------- RESPONSE ---------------- */
     return NextResponse.json({
       authenticated: true,
-      user,
+      user: enrichedUser,
       teacher,
       languages: languages || [],
       wallet: wallet || {
