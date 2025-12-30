@@ -1,12 +1,13 @@
 import { requireUser } from "@/src/lib/requireUser";
 import { supabaseServer } from "@/src/lib/supabaseClient";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 export const GET = async (req) => {
 
-      const { authorized, user } = await requireUser();
+  const { authorized, user } = await requireUser();
 
-        console.log("authorized in callback" , authorized,  user)
+  console.log("authorized in callback", authorized, user)
   const { searchParams } = new URL(req.url);
   const code = searchParams.get("code");
   const email = searchParams.get("state");
@@ -37,22 +38,23 @@ export const GET = async (req) => {
 
   const userId = searchParams.get("state");
 
-if (!userId) {
-  return NextResponse.json({ error: "Missing state" }, { status: 400 });
-}
+  if (!userId) {
+    return NextResponse.json({ error: "Missing state" }, { status: 400 });
+  }
 
-await supabaseServer
-  .from("users")
-  .update({
-    google_access_token: tokens.access_token,
-    google_refresh_token: tokens.refresh_token,
-    google_token_expires_at: new Date(
-      Date.now() + tokens.expires_in * 1000
-    ),
-    google_connected: true,
-  })
-  .eq("user_id", userId);
+  await supabaseServer
+    .from("users")
+    .update({
+      google_access_token: tokens.access_token,
+      google_refresh_token: tokens.refresh_token,
+      google_token_expires_at: new Date(
+        Date.now() + tokens.expires_in * 1000
+      ),
+      google_connected: true,
+    })
+    .eq("user_id", userId);
 
-return Response.redirect(
-  new URL("/dashboard?calendar=connected", req.url)
-);};
+  return Response.redirect(
+    new URL("/dashboard?calendar=connected", req.url)
+  );
+};

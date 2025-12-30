@@ -1,5 +1,19 @@
 import { twMerge } from "tailwind-merge";
 
+interface SectionHeaderProps {
+  titleClassName?: string;
+  descriptionClassName?: string;
+  wrapperSectionHeaderClassName?: string;
+  headerContainerClassName?: string;
+  descriptionText?: string;
+  titleText: string;
+  titleIcon?: React.ReactNode;
+  titleIconBox?: string;
+  rightElement?: React.ReactNode;
+  rightElementClassName?: string;
+  children?: React.ReactNode;
+}
+
 const SectionHeader = ({
   titleClassName,
   descriptionClassName,
@@ -12,7 +26,7 @@ const SectionHeader = ({
   rightElement,
   rightElementClassName,
   children,
-}) => (
+}: SectionHeaderProps) => (
   <>
     <div className={twMerge("bg-secondary-color-S11 p-[32px] rounded-[32px]",
       wrapperSectionHeaderClassName)}>

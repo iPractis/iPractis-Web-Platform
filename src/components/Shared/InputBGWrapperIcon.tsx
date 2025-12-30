@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 
-const InputBGWrapperIcon = ({ children, className, onClick }) => {
+const InputBGWrapperIcon = ({ children, className = "", onClick }: { children: React.ReactNode; className?: string; onClick?: () => void }) => {
   return (
     <div
       className={twMerge(

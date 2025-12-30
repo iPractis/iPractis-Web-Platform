@@ -1,20 +1,49 @@
-//
 "use client";
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 
-const AuthContext = createContext();
+export interface User {
+  id?: string;
+  user_id?: string;
+  email?: string;
+  first_name?: string;
+  last_name?: string;
+  role?: string;
+  profile_image?: string;
+  [key: string]: any;
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export interface Teacher {
+  id?: string;
+  [key: string]: any;
+}
+
+interface AuthContextType {
+  user: User | null;
+  teacher: Teacher | null;
+  loading: boolean;
+  authenticated: boolean;
+  logout: () => Promise<void>;
+  refreshAuth: () => void;
+  optimisticallyUpdateUserEmail: (newEmail: string) => void;
+  role?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+const AuthContext = createContext<AuthContextType | null>(null);
+
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authenticated, setAuthenticated] = useState(false);
-  const [teacher , setTeacher] = useState(null);
+  const [teacher, setTeacher] = useState<Teacher | null>(null);
+
   const checkAuthStatus = async () => {
     try {
       const response = await fetch('/api/auth/me', {
         credentials: 'include' // Include httpOnly cookies
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
@@ -57,7 +86,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // ✅ Added this function to fix the error
-  const optimisticallyUpdateUserEmail = (newEmail) => {
+  const optimisticallyUpdateUserEmail = (newEmail: string) => {
     setUser((prevUser) => {
       if (!prevUser) return null;
       return {
@@ -71,14 +100,14 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  console.log("Auth state changed:", { user, authenticated, loading , teacher });
+  console.log("Auth state changed:", { user, authenticated, loading, teacher });
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      loading, 
+    <AuthContext.Provider value={{
+      user,
+      loading,
       teacher,
-      authenticated, 
-      logout, 
+      authenticated,
+      logout,
       refreshAuth,
       optimisticallyUpdateUserEmail // ✅ Exported here
     }}>
@@ -92,5 +121,10 @@ export const useAuth = () => {
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  return context;
+  return {
+    ...context,
+    role: context.user?.role,
+    firstName: context.user?.first_name,
+    lastName: context.user?.last_name,
+  };
 };
